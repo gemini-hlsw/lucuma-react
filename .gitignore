@@ -1,0 +1,5 @@
+*.class
+*.log
+target/
+.idea/
+react-virtualized
