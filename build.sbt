@@ -27,6 +27,8 @@ val root =
 
 lazy val facade =
   project.in(file("facade"))
+    .enablePlugins(GitVersioning)
+    .enablePlugins(GitBranchPrompt)
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
@@ -54,7 +56,6 @@ lazy val facade =
 
 lazy val commonSettings = Seq(
   scalaVersion            := "2.12.4",
-  version                 := "0.0.4",
   organization            := "io.github.cquiroz",
   description             := "scala.js facade for react-copy-to-clipboard",
   homepage                := Some(url("https://github.com/cquiroz/scalajs-react-clipboard")),
@@ -117,7 +118,12 @@ lazy val commonSettings = Seq(
       "-Ywarn-unused:privates",            // Warn if a private member is unused.
       "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
       "-P:scalajs:sjsDefinedByDefault"
-    )
+    ),
+    // Settings to use git to define the version of the project
+    git.useGitDescribe := true,
+    git.formattedShaVersion := git.gitHeadCommit.value map { sha => s"v$sha" },
+    git.uncommittedSignifier in ThisBuild := Some("UNCOMMITTED"),
+    useGpg := true
   ) ++ semanticdbScalacSettings
 
 lazy val pomData =
