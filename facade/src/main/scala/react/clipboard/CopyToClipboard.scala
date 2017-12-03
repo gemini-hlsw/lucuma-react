@@ -35,6 +35,7 @@ object CopyToClipboard {
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.text = text
+    p.onCopy = (s, b) => onCopy(s, b).runNow
     p
   }
 

@@ -24,6 +24,14 @@ class CopyToClipboardSpec extends FlatSpec with Matchers with NonImplicitAsserti
       CopyToClipboard(CopyToClipboard.props("text")).props.text should be("text")
     }
     it should "support onCopy callback" in {
-      CopyToClipboard(CopyToClipboard.props("text")).props.onCopy should be(())
+      val textVar = ReactTestVar("")
+      val stateSnapshot = textVar.stateSnapshot
+      val callback: OnCopy = (a, _) => {println("set");stateSnapshot.setState(a)}
+      CopyToClipboard(CopyToClipboard.props("text", callback), <<.div("Copy")).props.onCopy("text", true)
+      // Cannot simulate as node doesn't include copy support
+      // ReactTestUtils.withRenderedIntoDocument(unmounted) { m =>
+      //   Simulate.click(m)
+      // }
+      textVar.value.toString should be("text")
     }
 }
