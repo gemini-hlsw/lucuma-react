@@ -127,10 +127,6 @@ lazy val commonSettings = Seq(
   ) ++ semanticdbScalacSettings
 
 lazy val pomData =
-  <scm>
-    <url>git@github.com:cquiroz/scalajs-react-clipboard.git</url>
-    <connection>scm:git:git@github.com:cquiroz/scalajs-react-clipboard.git</connection>
-  </scm>
   <developers>
     <developer>
       <id>cquiroz</id>
