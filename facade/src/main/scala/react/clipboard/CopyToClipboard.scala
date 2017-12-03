@@ -3,7 +3,8 @@ package clipboard
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.VdomNode
-// import japgolly.scalajs.react.raw.ReactNode
+import scala.scalajs.js
+import js.JSConverters._
 import japgolly.scalajs.react.component.Js.{RawMounted, UnmountedMapped}
 import japgolly.scalajs.react.internal.Effect.Id
 
@@ -24,18 +25,19 @@ object CopyToClipboard {
     var text: String = js.native
     /** Optional callback, will be called when text is copied */
     var onCopy: RawOnCopy = js.native
-//     options: PropTypes.shape({
-//       debug: PropTypes.bool,
-//       message: PropTypes.string
+    /** Optional copy-to-clipboard options. */
+    var options: js.UndefOr[ClipboardOptions] = js.native
   }
 
   def props(
     text: String,
-    onCopy: OnCopy = (_, _) => Callback.empty
+    onCopy: OnCopy = (_, _) => Callback.empty,
+    options: Option[ClipboardOptions] = None
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.text = text
     p.onCopy = (s, b) => onCopy(s, b).runNow
+    p.options = options.orUndefined
     p
   }
 
