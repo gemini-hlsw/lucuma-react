@@ -1,4 +1,4 @@
-val reactJS = "15.6.1"
+val reactJS = "16.2.0"
 val reactCopyToClipboard = "5.0.0"
 val scalaJsReact = "1.1.1"
 
@@ -50,7 +50,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReact % "test",
         "org.scalatest"                     %%% "scalatest" % "3.0.3" % Test,
-        "org.typelevel"                     %%% "cats-core" % "1.0.0-MF" % Test
+        "org.typelevel"                     %%% "cats-core" % "1.1.0" % Test
       )
     )
 
