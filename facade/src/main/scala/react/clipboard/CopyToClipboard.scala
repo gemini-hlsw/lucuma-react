@@ -43,5 +43,5 @@ object CopyToClipboard {
 
   private val component = JsComponent[Props, Children.Varargs, Null](RawComponent)
 
-  def apply(p: Props, children: VdomNode*): UnmountedMapped[Id, Props, Null, RawMounted, Props, Null] = component(p)(children: _*)
+  def apply(p: Props, children: VdomNode*): UnmountedMapped[Id, Props, Null, RawMounted[Props, Null], Props, Null] = component(p)(children: _*)
 }

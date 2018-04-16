@@ -1,6 +1,6 @@
 val reactJS = "16.2.0"
 val reactCopyToClipboard = "5.0.0"
-val scalaJsReact = "1.1.1"
+val scalaJsReact = "1.2.0"
 
 parallelExecution in (ThisBuild, Test) := false
 
