@@ -20,6 +20,7 @@ package draggable {
   sealed trait Axis {
     def value: String
   }
+
   object Axis {
     case object Both extends Axis {
       val value = "both"
@@ -46,6 +47,7 @@ package draggable {
   }
 
   object ControlPosition {
+
     def apply(x: JsNumber, y: JsNumber): ControlPosition = {
       val p = (new js.Object).asInstanceOf[ControlPosition]
       p.x = x
@@ -63,7 +65,11 @@ package draggable {
   }
 
   object DraggableBounds {
-    def apply(left: JsNumber, right: JsNumber, top: JsNumber, bottom: JsNumber): DraggableBounds = {
+
+    def apply(left: JsNumber,
+              right: JsNumber,
+              top: JsNumber,
+              bottom: JsNumber): DraggableBounds = {
       val p = (new js.Object).asInstanceOf[DraggableBounds]
       p.left = left
       p.right = right
@@ -76,12 +82,12 @@ package draggable {
   @js.native
   trait DraggableData extends js.Object {
     var node: HTMLElement = js.native
-    var x: JsNumber = js.native
-    var y: JsNumber = js.native
-    var deltaX: JsNumber = js.native
-    var deltaY: JsNumber = js.native
-    var lastX: JsNumber = js.native
-    var lastY: JsNumber = js.native
+    var x: JsNumber       = js.native
+    var y: JsNumber       = js.native
+    var deltaX: JsNumber  = js.native
+    var deltaY: JsNumber  = js.native
+    var lastX: JsNumber   = js.native
+    var lastY: JsNumber   = js.native
   }
 
   case object FalseBounds
@@ -91,6 +97,8 @@ package draggable {
     */
   private[draggable] object raw {
     type RawOnMouseDown = js.Function1[MouseEvent, Unit]
-    type RawDraggableEventHandler = js.Function2[MouseEvent, DraggableData, Unit]
+
+    type RawDraggableEventHandler =
+      js.Function2[MouseEvent, DraggableData, Unit]
   }
 }
