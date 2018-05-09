@@ -37,9 +37,9 @@ lazy val demo =
       version in webpack := "4.6.0",
       version in startWebpackDevServer := "3.1.3",
       webpackConfigFile in fastOptJS := Some(
-        baseDirectory.value / "webpack" / "webpack-dev.config.js"),
+        baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"),
       webpackConfigFile in fullOptJS := Some(
-        baseDirectory.value / "webpack" / "webpack-prod.config.js"),
+        baseDirectory.value / "src" / "webpack" / "webpack-prod.config.js"),
       webpackMonitoredDirectories += (resourceDirectory in Compile).value,
       webpackResources := (baseDirectory.value / "webpack") * "*.js",
       includeFilter in webpackMonitoredFiles := "*",
