@@ -48,6 +48,7 @@ lazy val demo =
       webpackBundlingMode in fullOptJS := BundlingMode.Application,
       test := {},
       emitSourceMaps := false,
+      webpackDevServerPort := 9090,
       npmDevDependencies in Compile ++= Seq(
         "css-loader"                    -> "0.28.11",
         "less"                          -> "2.3.1",
@@ -64,6 +65,9 @@ lazy val demo =
         "react"           -> reactJS,
         "react-dom"       -> reactJS,
         "react-draggable" -> reactDraggable
+      ),
+      libraryDependencies ++= Seq(
+        "io.github.cquiroz" %%% "scalajs-react-virtualized"        % "0.2.0"
       ),
       // don't publish the demo
       publish := {},
@@ -104,7 +108,7 @@ lazy val facade =
         "com.lihaoyi"                       %%% "utest"       % "0.6.0" % Test,
         "org.typelevel"                     %%% "cats-core"   % "1.1.0" % Test
       ),
-      // webpackConfigFile in Test       := Some(baseDirectory.value / "test.webpack.config.js"),
+      webpackConfigFile in Test       := Some(baseDirectory.value / "test.webpack.config.js"),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
 
