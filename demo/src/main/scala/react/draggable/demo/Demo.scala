@@ -4,8 +4,11 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.raw.JsNumber
 import org.scalajs.dom
+import org.scalajs.dom.MouseEvent
 import react.virtualized._
+import react.draggable._
 import Data.DataRow
 
 object TableDemo {
@@ -13,11 +16,25 @@ object TableDemo {
   def datum(data: List[DataRow])(i: Int) = data(i % data.length)
   def rowheight(data: List[DataRow])(i: Int) = datum(data)(i).size
 
+  final case class Widths(index: Double, name: Double, random: Double)
   final case class Props(useDynamicRowHeight: Boolean, sortBy: String, s: Size)
-  final case class State(sortDirection: SortDirection, data: List[DataRow])
+  final case class State(sortDirection: SortDirection, data: List[DataRow], widths: Widths)
 
-  def headerRenderer(sortBy: String)(columnData: DataRow, dataKey: String, disableSort: Option[Boolean], label: VdomNode, sortByParam: Option[String], sortDirection: SortDirection): VdomNode =
-    <.div("Full Name", SortIndicator(SortDirection.ASC).when(sortBy == dataKey))
+  def headerRenderer(rs: (String, JsNumber) => Callback)(columnData: DataRow, dataKey: String, disableSort: Option[Boolean], label: VdomNode, sortByParam: Option[String], sortDirection: SortDirection): VdomNode =
+    ReactFragment.withKey(dataKey)(
+      <.div(
+        ^.cls := "ReactVirtualized__Table__headerTruncatedText",
+        label
+      ),
+      Draggable(Draggable.props(
+          axis = Axis.X,
+          defaultClassName = "DragHandle",
+          defaultClassNameDragging = "DragHandleActive",
+          onDrag = (ev: MouseEvent, d: DraggableData) => rs(dataKey, d.deltaX),
+          position = ControlPosition(0)),
+        <.span(^.cls := "DragHandleIcon", "⋮")
+      )
+    )
 
   def rowClassName(i: Int): String = i match {
     case x if x < 0      => "headerRow"
@@ -25,17 +42,33 @@ object TableDemo {
     case _               => "oddRow"
   }
 
+  implicit class JsNumberOps(val d: JsNumber) extends AnyVal {
+    def toDouble = (d: Any) match {
+      case d: Double => d
+    }
+  }
+
   val component = ScalaComponent.builder[Props]("TableDemo")
-    .initialState(State(SortDirection.ASC, Data.generateRandomList))
+    .initialState(State(SortDirection.ASC, Data.generateRandomList, Widths(0.1, 0.4, 0.6)))
     .renderPS{($, props, state) =>
+      def resizeRow(k: String, dx: JsNumber): Callback =
+        $.modState { s =>
+          val percentDelta = dx.toDouble / props.s.width
+          k match {
+            case "index" => s.copy(widths = s.widths.copy(s.widths.index + percentDelta, s.widths.name - percentDelta, s.widths.random - percentDelta))
+            case "name" => s.copy(widths = s.widths.copy(s.widths.index + percentDelta, s.widths.name + percentDelta, s.widths.random - percentDelta))
+            case "randow" => s.copy(widths = s.widths.copy(s.widths.index + percentDelta, s.widths.name + percentDelta, s.widths.random + percentDelta))
+          }
+        }
+
       def sort(index: String, sortDirection: SortDirection): Callback = {
         val sorted = state.data.sortBy(_.index)
         $.setState(state.copy(data = if (sortDirection == SortDirection.ASC) sorted else sorted.reverse, sortDirection = sortDirection))
       }
       val columns = List(
-        Column(Column.props(60, "index", label = "Index", disableSort = false)),
-        Column(Column.props(90, "name", disableSort = false, headerRenderer = headerRenderer(props.sortBy))),
-        Column(Column.props(210, "random", disableSort = true, className = "exampleColumn", label = "The description label is so long it will be truncated", flexGrow = 1, cellRenderer = (cellData: DataRow, _: js.Any, _: String, _: js.Any, _: Int) => cellData.toString))
+        Column(Column.props((props.s.width * state.widths.index).toInt, "index", label = "Index", disableSort = false, headerRenderer = headerRenderer(resizeRow))),
+        Column(Column.props((props.s.width * state.widths.name).toInt, "name", label = "Full Name", disableSort = false, headerRenderer = headerRenderer(resizeRow))),
+        Column(Column.props((props.s.width * state.widths.random).toInt, "random", disableSort = true, className = "exampleColumn", label = "The description label is so long it will be truncated", flexGrow = 1, cellRenderer = (cellData: DataRow, _: js.Any, _: String, _: js.Any, _: Int) => cellData.toString, headerRenderer = headerRenderer(resizeRow)))
       )
       val t = Table(
         Table.props(
@@ -47,7 +80,6 @@ object TableDemo {
           rowCount = 1000,
           rowHeight = if (props.useDynamicRowHeight) rowheight(state.data) _ else 40,
           onRowClick = x => Callback.log(x),
-          onScroll = (c, s, t) => Callback.log(s"$c $s $t"),
           width = props.s.width.toInt,
           rowGetter = datum(state.data),
           headerClassName = "headerColumn",

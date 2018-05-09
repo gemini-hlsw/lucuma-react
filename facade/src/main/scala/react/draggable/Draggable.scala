@@ -37,7 +37,7 @@ object Draggable {
     var defaultPosition: js.UndefOr[ControlPosition]
     var disabled: js.UndefOr[Boolean]
     // var enableUserSelectHack: js.UndefOr[Boolean]
-    var grid: js.UndefOr[js.Array[JsNumber]]
+    var grid: js.UndefOr[js.Array[JsNumber]]  
     var handle: js.UndefOr[String]
     var offsetParent: js.UndefOr[HTMLElement]
     var onMouseDown: js.UndefOr[raw.RawOnMouseDown]

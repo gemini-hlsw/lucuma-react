@@ -42,13 +42,13 @@ package draggable {
 
   @js.native
   trait ControlPosition extends js.Object {
-    var x: JsNumber
-    var y: JsNumber
+    var x: js.UndefOr[JsNumber]
+    var y: js.UndefOr[JsNumber]
   }
 
   object ControlPosition {
 
-    def apply(x: JsNumber, y: JsNumber): ControlPosition = {
+    def apply(x: js.UndefOr[JsNumber] = js.undefined, y: js.UndefOr[JsNumber] = js.undefined): ControlPosition = {
       val p = (new js.Object).asInstanceOf[ControlPosition]
       p.x = x
       p.y = y
