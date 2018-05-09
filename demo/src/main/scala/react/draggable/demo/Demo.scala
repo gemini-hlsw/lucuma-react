@@ -65,8 +65,14 @@ object TableDemo {
 
 @JSExportTopLevel("Demo")
 object Demo {
-   @JSExport
-   def main(): Unit = {
+  @JSImport("react-virtualized/styles.css", JSImport.Default)
+  @js.native
+  object ReactVirtualizedStyles extends js.Object
+
+  @JSExport
+  def main(): Unit = {
+    // needed to load the styles
+    ReactVirtualizedStyles
     val container = Option(dom.document.getElementById("root")).getOrElse {
       val elem = dom.document.createElement("div")
       elem.id = "root"
