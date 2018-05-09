@@ -1,33 +1,16 @@
-const generatedConfig = require("./scalajs.webpack.config");
 const path = require("path");
 const merge = require("webpack-merge");
-const common = require("./webpack.common");
+const commonConfig = require("./webpack.common");
 const Webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const parts = require("./webpack.parts");
 
-const developmentConfig = {
+const developmentConfig = merge(parts.devServer(), {
   mode: "development",
-  devtool: "none",
   entry: {
     app: [path.resolve(parts.resourcesDir, "./dev.js")]
   },
-  resolve: {
-    alias: {
-      resources: parts.resourcesDir,
-      node_modules: path.resolve(__dirname, "node_modules"),
-      root: __dirname
-    },
-    modules: [path.resolve(__dirname, "node_modules"), parts.resourcesDir]
-  },
-  output: {
-    path: __dirname,
-    publicPath: "/"
-  },
   module: {
-    noParse: function(content) {
-      return content.endsWith("-fastopt");
-    },
     rules: [
       {
         test: /\.less$/,
@@ -45,13 +28,7 @@ const developmentConfig = {
       }
     ]
   },
-  devServer: {
-    hot: true,
-    contentBase: [__dirname, parts.rootDir],
-    historyApiFallback: true
-  },
   plugins: [
-    new Webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       title: "Draggable Demo",
       filename: "index.html",
@@ -59,7 +36,6 @@ const developmentConfig = {
       // template: path.resolve(parts.resourcesDir, "./index.html")
     })
   ]
-};
-console.log(merge(generatedConfig, developmentConfig));
+});
 
-module.exports = merge(generatedConfig, developmentConfig);
+module.exports = merge(commonConfig, developmentConfig);
