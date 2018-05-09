@@ -27,7 +27,7 @@ module.exports.devServer = ({ host, port } = {}) => ({
 module.exports.resolve = () => ({
   resolve: {
     alias: {
-      // resources: resourcesDir;
+      // resources: resourcesDir,
       // node_modules: path.resolve(__dirname, "node_modules"),
       sjs: __dirname
     }
