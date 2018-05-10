@@ -60,3 +60,10 @@ module.exports.resolve = () => ({
     //   modules: [path.resolve(__dirname, "node_modules"), parts.resourcesDir]
   }
 });
+
+exports.autoprefix = () => ({
+  loader: "postcss-loader",
+  options: {
+    plugins: () => [require("autoprefixer")()]
+  }
+});

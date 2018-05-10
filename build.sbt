@@ -34,8 +34,8 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack := "4.6.0",
-      version in startWebpackDevServer := "3.1.3",
+      version in webpack := "4.8.1",
+      version in startWebpackDevServer := "3.1.4",
       webpackConfigFile in fastOptJS := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"),
       webpackConfigFile in fullOptJS := Some(
@@ -54,10 +54,10 @@ lazy val demo =
         "less"                          -> "2.3.1",
         "less-loader"                   -> "4.1.0",
         "mini-css-extract-plugin"       -> "0.4.0",
-        "file-loader"                   -> "1.1.11",
         "html-webpack-plugin"           -> "3.2.0",
         "url-loader"                    -> "1.0.1",
         "style-loader"                  -> "0.21.0",
+        "postcss-loader"                -> "2.1.5",
         "webpack-merge"                 -> "4.1.0",
         "webpack-dev-server-status-bar" -> "1.0.0"
       ),
@@ -86,8 +86,7 @@ lazy val facade =
     .settings(commonSettings: _*)
     .settings(
       name := "scalajs-react-draggable",
-      version in webpack := "4.6.0",
-      version in startWebpackDevServer := "3.1.3",
+      version in webpack := "4.8.1",
       // Requires the DOM for tests
       requiresDOM in Test := true,
       // Compile tests to JS using fast-optimisation
@@ -96,9 +95,6 @@ lazy val facade =
         "react"           -> reactJS,
         "react-dom"       -> reactJS,
         "react-draggable" -> reactDraggable
-      ),
-      npmDependencies in Test ++= Seq(
-        "raf" -> "3.4.0"
       ),
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"        % scalaJsReact,
