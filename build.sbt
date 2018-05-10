@@ -58,6 +58,8 @@ lazy val demo =
         "url-loader"                    -> "1.0.1",
         "style-loader"                  -> "0.21.0",
         "postcss-loader"                -> "2.1.5",
+        "cssnano"                       -> "3.10.0",
+        "optimize-css-assets-webpack-plugin"                       -> "4.0.1",
         "webpack-merge"                 -> "4.1.0",
         "webpack-dev-server-status-bar" -> "1.0.0"
       ),
