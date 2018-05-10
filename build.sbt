@@ -41,7 +41,7 @@ lazy val demo =
       webpackConfigFile in fullOptJS := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-prod.config.js"),
       webpackMonitoredDirectories += (resourceDirectory in Compile).value,
-      webpackResources := (baseDirectory.value / "webpack") * "*.js",
+      webpackResources := (baseDirectory.value / "src" / "webpack") * "*.js",
       includeFilter in webpackMonitoredFiles := "*",
       useYarn := true,
       webpackBundlingMode in fastOptJS := BundlingMode.LibraryOnly(),
@@ -53,7 +53,7 @@ lazy val demo =
         "css-loader"                    -> "0.28.11",
         "less"                          -> "2.3.1",
         "less-loader"                   -> "4.1.0",
-        "extract-text-webpack-plugin"   -> "4.0.0-beta.0",
+        "mini-css-extract-plugin"       -> "0.4.0",
         "file-loader"                   -> "1.1.11",
         "html-webpack-plugin"           -> "3.2.0",
         "url-loader"                    -> "1.0.1",

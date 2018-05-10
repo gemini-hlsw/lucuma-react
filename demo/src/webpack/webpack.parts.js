@@ -2,10 +2,13 @@ const path = require("path");
 
 const rootDir = path.resolve(__dirname, "../../../..");
 const resourcesDir = path.resolve(rootDir, "src/main/resources");
+
 const Webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports.rootDir = rootDir;
 module.exports.resourcesDir = resourcesDir;
+
 module.exports.devServer = ({ host, port } = {}) => ({
   devServer: {
     stats: "errors-only",
@@ -24,6 +27,29 @@ module.exports.devServer = ({ host, port } = {}) => ({
   },
   plugins: [new Webpack.HotModuleReplacementPlugin()]
 });
+
+module.exports.extractCSS = ({ include, exclude, use = [] }) => {
+  // Output extracted CSS to a file
+  const plugin = new MiniCssExtractPlugin({
+    filename: "[name].css"
+  });
+
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          include,
+          exclude,
+
+          use: [MiniCssExtractPlugin.loader].concat(use)
+        }
+      ]
+    },
+    plugins: [plugin]
+  };
+};
+
 module.exports.resolve = () => ({
   resolve: {
     alias: {
