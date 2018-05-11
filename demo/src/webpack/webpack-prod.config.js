@@ -5,6 +5,8 @@ const Webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const parts = require("./webpack.parts");
 
+const publicFolderName = "../docs";
+
 const productionConfig = merge(
   parts.extractCSS({ use: ["css-loader", parts.autoprefix()] }),
   parts.minifyCSS({
@@ -21,6 +23,12 @@ const productionConfig = merge(
     mode: "production",
     entry: {
       app: [path.resolve(parts.resourcesDir, "./app.js")]
+    },
+    output: {
+      filename: "[name].[chunkhash].js",
+      path: path.resolve(parts.rootDir, publicFolderName),
+      publicPath: "/scalajs-react-draggable"
+      // libraryTarget: "umd"
     },
     // output: {
     //   app: [path.resolve(parts.resourcesDir, "./app.js")]
