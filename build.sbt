@@ -1,16 +1,8 @@
 val reactJS = "16.2.0"
 val reactCopyToClipboard = "5.0.0"
-val scalaJsReact = "1.1.1"
+val scalaJsReact = "1.2.3"
 
 parallelExecution in (ThisBuild, Test) := false
-
-lazy val semanticdbScalacSettings = Seq(
-  addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "2.1.2" cross CrossVersion.full),
-  scalacOptions ++= Seq(
-    "-Yrangepos",
-    "-Xplugin-require:semanticdb"
-  )
-)
 
 val root =
   project.in(file("."))
@@ -49,13 +41,13 @@ lazy val facade =
       libraryDependencies            ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReact % "test",
-        "org.scalatest"                     %%% "scalatest" % "3.0.3" % Test,
+        "org.scalatest"                     %%% "scalatest" % "3.0.5" % Test,
         "org.typelevel"                     %%% "cats-core" % "1.1.0" % Test
       )
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion            := "2.12.4",
+  scalaVersion            := "2.12.6",
   organization            := "io.github.cquiroz",
   description             := "scala.js facade for react-copy-to-clipboard",
   homepage                := Some(url("https://github.com/cquiroz/scalajs-react-clipboard")),
@@ -124,7 +116,7 @@ lazy val commonSettings = Seq(
     git.formattedShaVersion := git.gitHeadCommit.value map { sha => s"v$sha" },
     git.uncommittedSignifier in ThisBuild := Some("UNCOMMITTED"),
     useGpg := true
-  ) ++ semanticdbScalacSettings
+  )
 
 lazy val pomData =
   <developers>
