@@ -1,5 +1,5 @@
 val reactJS        = "16.2.0"
-val scalaJsReact   = "1.2.0"
+val scalaJsReact   = "1.2.3"
 val reactDraggable = "3.0.5"
 val scalaJSDom     = "0.9.5"
 
@@ -89,6 +89,7 @@ lazy val facade =
     .settings(
       name := "scalajs-react-draggable",
       version in webpack := "4.8.1",
+      version in startWebpackDevServer := "3.1.4",
       // Requires the DOM for tests
       requiresDOM in Test := true,
       // Compile tests to JS using fast-optimisation
