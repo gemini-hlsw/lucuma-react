@@ -28,14 +28,10 @@ const productionConfig = merge(
       filename: "[name].[chunkhash].js",
       path: path.resolve(parts.rootDir, publicFolderName),
       publicPath: "/scalajs-react-draggable"
-      // libraryTarget: "umd"
     },
-    // output: {
-    //   app: [path.resolve(parts.resourcesDir, "./app.js")]
-    // },
     plugins: [
       new HtmlWebpackPlugin({
-        title: "ScalJS Draggable Demo",
+        title: "ScalaJS Draggable Demo",
         filename: "index.html",
         chunks: ["app"]
       })
