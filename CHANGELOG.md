@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.1
+
+* Updated to scalajs-react 1.2.3
+
 ## 0.3.0
 
 * Updated to scalajs-react 1.2.0 to support react 16
