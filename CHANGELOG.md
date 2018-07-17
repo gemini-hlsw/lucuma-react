@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.0
+
+* Converted to pure scala
+
 ## 0.3.1
 
 * Updated to scalajs-react 1.2.3

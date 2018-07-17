@@ -16,6 +16,8 @@ package clipboard {
       p.message = message
       p
     }
+
+    val Default: ClipboardOptions = ClipboardOptions(false, "Copy to clipboard: #{key}, Enter")
   }
 
 }
@@ -25,9 +27,4 @@ package clipboard {
 package object clipboard {
   // OnCopy callback
   type OnCopy = (String, Boolean) => Callback
-
-
-  private[clipboard] object raw {
-    type RawOnCopy = js.Function2[String, Boolean, Unit]
-  }
 }

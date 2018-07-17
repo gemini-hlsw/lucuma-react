@@ -1,5 +1,5 @@
 val reactJS = "16.2.0"
-val reactCopyToClipboard = "5.0.0"
+val copyToClipboard = "3.0.8"
 val scalaJsReact = "1.2.3"
 
 parallelExecution in (ThisBuild, Test) := false
@@ -28,13 +28,13 @@ lazy val facade =
       npmDependencies in Compile     ++= Seq(
         "react" -> reactJS,
         "react-dom" -> reactJS,
-        "react-copy-to-clipboard" -> reactCopyToClipboard
+        "copy-to-clipboard" -> copyToClipboard
       ),
       // Requires the DOM for tests
       requiresDOM in Test             := true,
       // Use yarn as it is faster than npm
       useYarn                         := true,
-      version in webpack              := "3.5.5",
+      version in webpack              := "4.16.2",
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test            := FastOptStage,
