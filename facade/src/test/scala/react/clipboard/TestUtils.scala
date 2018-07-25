@@ -23,21 +23,26 @@ trait TestUtils extends Matchers with NonImplicitAssertions { self: FlatSpec =>
     val aDict = a.asInstanceOf[js.Dictionary[Any]]
     val bDict = b.asInstanceOf[js.Dictionary[Any]]
     (aDict.keySet == bDict.keySet) &&
-      aDict.keySet.forall(key => aDict(key) === bDict(key))
+    aDict.keySet.forall(key => aDict(key) === bDict(key))
   }
 
   implicit val jsEq: Eq[Any] = Eq.instance { (a, b) =>
     (a, b) match {
       case (a: js.Array[_], b: js.Array[_]) =>
         a.length == b.length &&
-          a.zip(b).forall{ x => jsEq.eqv(x._1, x._2) }
+          a.zip(b).forall { x =>
+            jsEq.eqv(x._1, x._2)
+          }
 
-      case _ if a.asInstanceOf[js.Dynamic].constructor == js.constructorOf[js.Object] &&
-        b.asInstanceOf[js.Dynamic].constructor == js.constructorOf[js.Object] =>
+      case _
+          if a.asInstanceOf[js.Dynamic].constructor == js
+            .constructorOf[js.Object] &&
+            b.asInstanceOf[js.Dynamic].constructor == js
+              .constructorOf[js.Object] =>
         val aDict = a.asInstanceOf[js.Dictionary[Any]]
         val bDict = b.asInstanceOf[js.Dictionary[Any]]
         (aDict.keySet == bDict.keySet) &&
-          aDict.keySet.forall(key => aDict(key) === bDict(key))
+        aDict.keySet.forall(key => aDict(key) === bDict(key))
 
       case _ =>
         a == b
@@ -52,17 +57,18 @@ trait TestUtils extends Matchers with NonImplicitAssertions { self: FlatSpec =>
     rendered should be(expected.trim.replaceAll("\n", ""))
   }
 
-  def assertRender(e: React.Node, expected: String): Assertion = {
+  def assertRender(e: React.Node, expected: String): Assertion =
     assertRenderNode(Some(e), expected)
-  }
 
-  def assertRenderNode[N <: TopNode](e: Option[React.Node], expected: String): Assertion =
+  def assertRenderNode[N <: TopNode](e: Option[React.Node],
+                                     expected: String): Assertion =
     e.map(x => HtmlTag("div").apply(VdomNode(x))) match {
       case Some(e) => assertRender(e.rawElement, expected)
       case _       => fail()
     }
 
-  def assertRender[N <: TopNode](e: Option[TagOf[N]], expected: String): Assertion =
+  def assertRender[N <: TopNode](e: Option[TagOf[N]],
+                                 expected: String): Assertion =
     e match {
       case Some(e) => assertRender(e.rawElement, expected)
       case _       => fail()
@@ -72,7 +78,7 @@ trait TestUtils extends Matchers with NonImplicitAssertions { self: FlatSpec =>
     scrubReactHtml(node.outerHTML) should be(expect)
 
   private val reactRubbish =
-  """\s+data-react\S*?\s*?=\s*?".*?"|<!--(?:.|[\r\n])*?-->""".r
+    """\s+data-react\S*?\s*?=\s*?".*?"|<!--(?:.|[\r\n])*?-->""".r
 
   def scrubReactHtml(html: String): String =
     reactRubbish.replaceAllIn(html, "")
