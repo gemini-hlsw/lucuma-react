@@ -1,7 +1,7 @@
-val reactJS        = "16.2.0"
-val scalaJsReact   = "1.2.3"
+val reactJS        = "16.5.0"
+val scalaJsReact   = "1.3.0"
 val reactDraggable = "3.0.5"
-val scalaJSDom     = "0.9.5"
+val scalaJSDom     = "0.9.6"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -34,8 +34,8 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack := "4.8.1",
-      version in startWebpackDevServer := "3.1.4",
+      version in webpack := "4.19.1",
+      version in startWebpackDevServer := "3.1.8",
       webpackConfigFile in fastOptJS := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"),
       webpackConfigFile in fullOptJS := Some(
@@ -50,18 +50,19 @@ lazy val demo =
       emitSourceMaps := false,
       webpackDevServerPort := 9090,
       npmDevDependencies in Compile ++= Seq(
-        "css-loader"                    -> "0.28.11",
-        "less"                          -> "2.3.1",
-        "less-loader"                   -> "4.1.0",
-        "mini-css-extract-plugin"       -> "0.4.0",
-        "html-webpack-plugin"           -> "3.2.0",
-        "url-loader"                    -> "1.0.1",
-        "style-loader"                  -> "0.21.0",
-        "postcss-loader"                -> "2.1.5",
-        "cssnano"                       -> "3.10.0",
-        "optimize-css-assets-webpack-plugin"                       -> "4.0.1",
-        "webpack-merge"                 -> "4.1.0",
-        "webpack-dev-server-status-bar" -> "1.0.0"
+        "css-loader"                         -> "1.0.0",
+        "less"                               -> "3.8.1",
+        "less-loader"                        -> "4.1.0",
+        "mini-css-extract-plugin"            -> "0.4.3",
+        "html-webpack-plugin"                -> "3.2.0",
+        "url-loader"                         -> "1.1.1",
+        "style-loader"                       -> "0.23.0",
+        "postcss-loader"                     -> "3.0.0",
+        "cssnano"                            -> "4.1.0",
+        "optimize-css-assets-webpack-plugin" -> "5.0.1",
+        "webpack-merge"                      -> "4.1.4",
+        "webpack-dev-server-status-bar"      -> "1.1.0",
+        "autoprefixer"                       -> "9.1.5"
       ),
       npmDependencies in Compile ++= Seq(
         "react"           -> reactJS,
@@ -69,7 +70,7 @@ lazy val demo =
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz" %%% "scalajs-react-virtualized"        % "0.2.0"
+        "io.github.cquiroz" %%% "scalajs-react-virtualized"        % "0.4.0"
       ),
       // don't publish the demo
       publish := {},
@@ -88,8 +89,8 @@ lazy val facade =
     .settings(commonSettings: _*)
     .settings(
       name := "scalajs-react-draggable",
-      version in webpack := "4.8.1",
-      version in startWebpackDevServer := "3.1.4",
+      version in webpack := "4.19.1",
+      version in startWebpackDevServer := "3.1.8",
       // Requires the DOM for tests
       requiresDOM in Test := true,
       // Compile tests to JS using fast-optimisation
@@ -104,15 +105,15 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
-        "com.lihaoyi"                       %%% "utest"       % "0.6.0" % Test,
-        "org.typelevel"                     %%% "cats-core"   % "1.1.0" % Test
+        "com.lihaoyi"                       %%% "utest"       % "0.6.5" % Test,
+        "org.typelevel"                     %%% "cats-core"   % "1.4.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.4",
+  scalaVersion := "2.12.6",
   organization := "io.github.cquiroz",
   description := "scala.js facade for react-draggable ",
   homepage := Some(url("https://github.com/cquiroz/scalajs-react-semantic-ui")),
