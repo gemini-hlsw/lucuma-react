@@ -21,7 +21,7 @@ object TableDemo {
   final case class State(sortDirection: SortDirection, data: List[DataRow], widths: Widths)
 
   def headerRenderer(rs: (String, JsNumber) => Callback)(columnData: DataRow, dataKey: String, disableSort: Option[Boolean], label: VdomNode, sortByParam: Option[String], sortDirection: SortDirection): VdomNode =
-    ReactFragment.withKey(dataKey)(
+    React.Fragment.withKey(dataKey)(
       <.div(
         ^.cls := "ReactVirtualized__Table__headerTruncatedText",
         label
