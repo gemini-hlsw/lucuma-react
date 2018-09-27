@@ -1,5 +1,5 @@
 val reactJS        = "16.5.0"
-val scalaJsReact   = "1.3.0"
+val scalaJsReact   = "1.3.1"
 val reactDraggable = "3.0.5"
 val scalaJSDom     = "0.9.6"
 
@@ -34,7 +34,7 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack := "4.19.1",
+      version in webpack := "4.20.1",
       version in startWebpackDevServer := "3.1.8",
       webpackConfigFile in fastOptJS := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"),
@@ -70,7 +70,7 @@ lazy val demo =
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz" %%% "scalajs-react-virtualized"        % "0.4.0"
+        "io.github.cquiroz" %%% "scalajs-react-virtualized" % "0.4.1"
       ),
       // don't publish the demo
       publish := {},
@@ -105,7 +105,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
-        "com.lihaoyi"                       %%% "utest"       % "0.6.5" % Test,
+        "com.lihaoyi"                       %%% "utest"       % "0.6.6" % Test,
         "org.typelevel"                     %%% "cats-core"   % "1.4.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
