@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.2
+
+* Updated to react 16.5.1
+
 ## 0.5.1
 
 * Updated to scalajs-react 1.3.1

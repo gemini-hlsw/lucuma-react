@@ -1,4 +1,4 @@
-val reactJS = "16.5.0"
+val reactJS = "16.5.1"
 val copyToClipboard = "3.0.8"
 val scalaJsReact = "1.3.1"
 
