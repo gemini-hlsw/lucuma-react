@@ -1,4 +1,4 @@
-val reactJS        = "16.5.0"
+val reactJS        = "16.5.1"
 val scalaJsReact   = "1.3.1"
 val reactDraggable = "3.0.5"
 val scalaJSDom     = "0.9.6"
@@ -70,7 +70,7 @@ lazy val demo =
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz" %%% "scalajs-react-virtualized" % "0.4.1"
+        "io.github.cquiroz" %%% "scalajs-react-virtualized" % "0.4.2"
       ),
       // don't publish the demo
       publish := {},
