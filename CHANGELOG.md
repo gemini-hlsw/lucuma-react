@@ -1,5 +1,10 @@
 # Changes
 
+## 0.2.3
+
+* Updated to react-draggable 3.1.1
+* Updated scalajs-react 0.6.26
+
 ## 0.2.2
 
 * Updated react version to 16.5.1

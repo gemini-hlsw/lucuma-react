@@ -6,3 +6,4 @@ react-virtualized
 .metals/
 node_modules/
 package-lock.json
+.bloop/

@@ -1,6 +1,6 @@
 val reactJS        = "16.5.1"
 val scalaJsReact   = "1.3.1"
-val reactDraggable = "3.0.5"
+val reactDraggable = "3.1.1"
 val scalaJSDom     = "0.9.6"
 
 parallelExecution in (ThisBuild, Test) := false
@@ -34,8 +34,8 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack := "4.20.1",
-      version in startWebpackDevServer := "3.1.8",
+      version in webpack := "4.28.2",
+      version in startWebpackDevServer := "3.1.11",
       webpackConfigFile in fastOptJS := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"),
       webpackConfigFile in fullOptJS := Some(
@@ -70,7 +70,7 @@ lazy val demo =
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz" %%% "scalajs-react-virtualized" % "0.4.2"
+        "io.github.cquiroz" %%% "scalajs-react-virtualized" % "0.4.3"
       ),
       // don't publish the demo
       publish := {},
@@ -89,10 +89,10 @@ lazy val facade =
     .settings(commonSettings: _*)
     .settings(
       name := "scalajs-react-draggable",
-      version in webpack := "4.19.1",
-      version in startWebpackDevServer := "3.1.8",
+      version in webpack := "4.28.2",
+      version in startWebpackDevServer := "3.1.11",
       // Requires the DOM for tests
-      requiresDOM in Test := true,
+      requireJsDomEnv in Test          := true,
       // Compile tests to JS using fast-optimisation
       // scalaJSStage in Test            := FastOptStage,
       npmDependencies in Compile ++= Seq(
@@ -106,14 +106,14 @@ lazy val facade =
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "com.lihaoyi"                       %%% "utest"       % "0.6.6" % Test,
-        "org.typelevel"                     %%% "cats-core"   % "1.4.0" % Test
+        "org.typelevel"                     %%% "cats-core"   % "1.5.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.6",
+  scalaVersion := "2.12.8",
   organization := "io.github.cquiroz",
   description := "scala.js facade for react-draggable ",
   homepage := Some(url("https://github.com/cquiroz/scalajs-react-semantic-ui")),
