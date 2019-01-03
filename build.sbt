@@ -1,7 +1,7 @@
-val reactJS         = "16.2.0"
-val scalaJsReact    = "1.2.3"
+val reactJS         = "16.5.1"
+val scalaJsReact    = "1.3.1"
 val reactGridLayout = "0.16.6"
-val scalaJSDom      = "0.9.5"
+val scalaJSDom      = "0.9.6"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -34,8 +34,8 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack := "4.16.5",
-      version in startWebpackDevServer := "3.1.5",
+      version in webpack := "4.28.2",
+      version in startWebpackDevServer := "3.1.14",
       webpackConfigFile in fastOptJS := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"),
       webpackConfigFile in fullOptJS := Some(
@@ -48,7 +48,7 @@ lazy val demo =
       webpackBundlingMode in fullOptJS := BundlingMode.Application,
       test := {},
       emitSourceMaps := false,
-      webpackDevServerPort := 9090,
+      webpackDevServerPort := 6060,
       npmDevDependencies in Compile ++= Seq(
         "css-loader"                    -> "0.28.11",
         "less"                          -> "2.3.1",
@@ -85,10 +85,10 @@ lazy val facade =
     .settings(commonSettings: _*)
     .settings(
       name := "sjs-rgl",
-      version in webpack := "4.8.1",
-      version in startWebpackDevServer := "3.1.4",
+      version in webpack := "4.28.2",
+      version in startWebpackDevServer := "3.1.14",
       // Requires the DOM for tests
-      requiresDOM in Test := true,
+      requireJsDomEnv in Test          := true,
       // Compile tests to JS using fast-optimisation
       // scalaJSStage in Test            := FastOptStage,
       npmDependencies in Compile ++= Seq(
@@ -101,15 +101,15 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
-        "com.lihaoyi"                       %%% "utest"       % "0.6.0" % Test,
-        "org.typelevel"                     %%% "cats-core"   % "1.2.0" % Test
+        "com.lihaoyi"                       %%% "utest"       % "0.6.6" % Test,
+        "org.typelevel"                     %%% "cats-core"   % "1.5.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.6",
+  scalaVersion := "2.12.8",
   organization := "io.github.cquiroz",
   description := "scala.js facade for react-grid-layout ",
   homepage := Some(url("https://github.com/cquiroz/sjs-rgl")),
