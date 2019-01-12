@@ -8,6 +8,25 @@ package object common
 
 package common {
 
+  trait EnumValue[A] {
+    def value(a: A): String
+  }
+
+  object EnumValue {
+    @inline final def apply[A](implicit ev: EnumValue[A]): EnumValue[A] = ev
+
+    def instance[A](f: A => String): EnumValue[A] =
+      new EnumValue[A] {
+        def value(a: A): String = f(a)
+      }
+
+    def toLowerCaseString[A]: EnumValue[A] =
+      new EnumValue[A] {
+        def value(a: A): String = a.toString.toLowerCase
+      }
+
+  }
+
   /**
     * Simple class to represent styles
     */

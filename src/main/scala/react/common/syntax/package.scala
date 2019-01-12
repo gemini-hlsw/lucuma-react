@@ -6,7 +6,30 @@ import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.raw.React
 import japgolly.scalajs.react.vdom.VdomNode
 
-package object syntax {
+package syntax {
+
+  trait EnumValueSyntax {
+    implicit def syntaxEnumValue[A: EnumValue](a: A): EnumValueOps[A] =
+      new EnumValueOps(a)
+
+    implicit def syntaxEnumValue[A: EnumValue](a: js.UndefOr[A]): EnumValueUndefOps[A] =
+      new EnumValueUndefOps(a)
+
+  }
+
+  final class EnumValueOps[A](a: A)(implicit ev: EnumValue[A]) {
+    def toJs: String = ev.value(a)
+  }
+
+  final class EnumValueUndefOps[A](a: js.UndefOr[A])(implicit ev: EnumValue[A]) {
+
+    def toJs: js.UndefOr[String] =
+      a.map { ev.value }
+  }
+
+}
+
+package object syntax extends EnumValueSyntax {
   // Some useful conversions
   implicit class VdomToRaw(val node: VdomNode) extends AnyVal {
     def toRaw: React.Node = node.rawNode
