@@ -1,6 +1,7 @@
 package react.common
 
 import scala.scalajs.js
+import scala.scalajs.js.|
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.raw.React
@@ -15,6 +16,12 @@ package syntax {
     implicit def syntaxEnumValue[A: EnumValue](a: js.UndefOr[A]): EnumValueUndefOps[A] =
       new EnumValueUndefOps(a)
 
+    implicit def syntaxEnumValueB[A: EnumValueB](a: A): EnumValueOpsB[A] =
+      new EnumValueOpsB(a)
+
+    implicit def syntaxEnumValueB[A: EnumValueB](a: js.UndefOr[A]): EnumValueUndefOpsB[A] =
+      new EnumValueUndefOpsB(a)
+
   }
 
   final class EnumValueOps[A](a: A)(implicit ev: EnumValue[A]) {
@@ -24,6 +31,16 @@ package syntax {
   final class EnumValueUndefOps[A](a: js.UndefOr[A])(implicit ev: EnumValue[A]) {
 
     def toJs: js.UndefOr[String] =
+      a.map { ev.value }
+  }
+
+  final class EnumValueOpsB[A](a: A)(implicit ev: EnumValueB[A]) {
+    def toJs: Boolean | String = ev.value(a)
+  }
+
+  final class EnumValueUndefOpsB[A](a: js.UndefOr[A])(implicit ev: EnumValueB[A]) {
+
+    def toJs: js.UndefOr[Boolean | String] =
       a.map { ev.value }
   }
 
