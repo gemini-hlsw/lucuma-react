@@ -6,6 +6,7 @@ import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.raw.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
+import react.common.EnumValue
 
 package object gridlayout {
   type Margin           = (JsNumber, JsNumber)
@@ -98,15 +99,11 @@ package gridlayout {
       Layout(List(l.map(LayoutItem.fromRaw): _*))
   }
 
-  sealed trait CompactType
+  sealed trait CompactType extends Product with Serializable
   object CompactType {
+    implicit val enum: EnumValue[CompactType] = EnumValue.toLowerCaseString
     case object Vertical extends CompactType
     case object Horizontal extends CompactType
-
-    def toRaw(s: CompactType): String = s match {
-      case Vertical   => "vertical"
-      case Horizontal => "horizontal"
-    }
   }
 
 }
