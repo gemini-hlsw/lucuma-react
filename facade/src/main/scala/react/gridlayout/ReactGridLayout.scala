@@ -12,6 +12,7 @@ import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
+import react.common._
 
 trait ReactGridLayout extends js.Object
 

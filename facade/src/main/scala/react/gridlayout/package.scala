@@ -1,20 +1,13 @@
 package react
 
 import scala.scalajs.js
-import scala.scalajs.js.|
 import js.JSConverters._
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.raw.JsNumber
-import japgolly.scalajs.react.raw.React
-import japgolly.scalajs.react.vdom.VdomNode
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
 
 package object gridlayout {
-  implicit class VdomToRaw(val node: VdomNode) extends AnyVal {
-    def toRaw: React.Node = node.rawNode
-  }
-
   type Margin           = (JsNumber, JsNumber)
   type ContainerPadding = (JsNumber, JsNumber)
 
@@ -25,19 +18,6 @@ package object gridlayout {
 }
 
 package gridlayout {
-  final case class Style(styles: Map[String, String | Int])
-
-  object Style {
-    def toJsObject(style: Style): js.Object =
-      style.styles.toJSDictionary.asInstanceOf[js.Object]
-
-    def fromJsObject(o: js.Object): Style = {
-      val xDict = o.asInstanceOf[js.Dictionary[String | Int]]
-      val map   = (for ((prop, value) <- xDict) yield prop -> value).toMap
-      Style(map)
-    }
-  }
-
   final case class LayoutItem(
     w:           JsNumber,
     h:           JsNumber,
