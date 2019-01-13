@@ -41,7 +41,6 @@ lazy val commonSettings = Seq(
   homepage                := Some(url("https://github.com/cquiroz/scalajs-react-virtualized")),
   licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
   useGpg                  := true,
-  publishArtifact in Test := false,
   publishMavenStyle       := true,
   publishTo               := {
     val nexus = "https://oss.sonatype.org/"
