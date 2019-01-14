@@ -4,22 +4,10 @@ package react.gridlayout
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 // import org.scalajs.dom.MouseEvent
-import japgolly.scalajs.react.raw.JsNumber
+import react.common.syntax._
 import utest._
 
 object PackageTests extends TestSuite {
-
-  implicit class JsNumberOps(val d: JsNumber) extends AnyVal {
-
-    // Some uglies for js union types
-    def toDouble: Double = (d: Any) match {
-      case d: Float  => d.toDouble
-      case d: Double => d
-      case d: Byte   => d.toDouble
-      case d: Short  => d.toDouble
-      case d: Int    => d.toDouble
-    }
-  }
 
   val tests = Tests {
     'layouItem - {
@@ -36,7 +24,7 @@ object PackageTests extends TestSuite {
         val html =
           """<div class="react-grid-layout" style="height: 170px;"></div>""".stripMargin
             .replaceAll("[\n\r]", "")
-            println(m.outerHtmlScrubbed)
+        println(m.outerHtmlScrubbed)
         assert(m.outerHtmlScrubbed() == html)
       }
     }
