@@ -1,6 +1,6 @@
 package react
 
-package virtualized
+package common
 
 import japgolly.scalajs.react.ReactDOMServer
 import scala.scalajs.js

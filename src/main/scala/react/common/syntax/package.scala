@@ -44,6 +44,10 @@ package syntax {
       a.map { ev.value }
   }
 
+  final class CallbackPair[A](a: js.UndefOr[A => Callback], b: js.UndefOr[Callback]) {
+    def toJs: js.UndefOr[js.Function1[A, Unit]] = a.toJs.orElse(b.toJsE)
+  }
+
 }
 
 package object syntax extends EnumValueSyntax {
@@ -58,6 +62,7 @@ package object syntax extends EnumValueSyntax {
 
   implicit class CallbackOps(val c: js.UndefOr[Callback]) extends AnyVal {
     def toJs: js.UndefOr[js.Function0[Unit]] = c.map(x => () => x.runNow())
+    def toJsE[A]: js.UndefOr[js.Function1[A, Unit]] = c.map(x => (_: A) => x.runNow())
   }
 
   implicit class CallbackOps1[A](val c: js.UndefOr[A => Callback]) extends AnyVal {
