@@ -5,6 +5,7 @@ package common
 import japgolly.scalajs.react.ReactDOMServer
 import scala.scalajs.js
 import cats.Eq
+import cats.Show
 import cats.syntax.eq._
 import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.raw.React
@@ -20,11 +21,16 @@ trait TestUtils { self: TestSuite =>
     }
   }
 
-  implicit val jsObj: Eq[js.Object] = Eq.instance { (a, b) =>
+  implicit val eq: Eq[js.Object] = Eq.instance { (a, b) =>
     val aDict = a.asInstanceOf[js.Dictionary[Any]]
     val bDict = b.asInstanceOf[js.Dictionary[Any]]
     (aDict.keySet == bDict.keySet) &&
     aDict.keySet.forall(key => aDict(key) === bDict(key))
+  }
+
+  implicit val show: Show[js.Object] = Show.show { a =>
+    val aDict = a.asInstanceOf[js.Dictionary[Any]]
+    aDict.keySet.map(key => s"$key=${aDict(key)}").mkString("{", ",", "}")
   }
 
   implicit val jsEq: Eq[Any] = Eq.instance { (a, b) =>

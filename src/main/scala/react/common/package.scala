@@ -4,7 +4,25 @@ import scala.scalajs.js
 import scala.scalajs.js.|
 import js.JSConverters._
 
-package object common
+package object common {
+
+  def merge(a: js.Object, b: js.Object): js.Object = {
+    val m = js.Dictionary.empty[js.Any]
+    val c = a.asInstanceOf[js.Dictionary[js.Any]]
+    for {
+      p <- js.Object.getOwnPropertyNames(a)
+      v <- c.get(p)
+    } yield m(p) = v
+
+    val d = b.asInstanceOf[js.Dictionary[js.Any]]
+    for {
+      p <- js.Object.getOwnPropertyNames(b)
+      v <- d.get(p)
+    } yield m(p) = v
+
+    m.asInstanceOf[js.Object]
+  }
+}
 
 package common {
 
