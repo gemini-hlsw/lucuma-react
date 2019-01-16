@@ -44,13 +44,18 @@ package syntax {
       a.map { ev.value }
   }
 
-  final class CallbackPair[A](a: js.UndefOr[A => Callback], b: js.UndefOr[Callback]) {
+  trait CallbackPairSyntax {
+    implicit def syntaxCallbackPair[A](a: (js.UndefOr[A => Callback], js.UndefOr[Callback])): CallbackPairOps[A] =
+      new CallbackPairOps(a._1, a._2)
+  }
+
+  final class CallbackPairOps[A](a: js.UndefOr[A => Callback], b: js.UndefOr[Callback]) {
     def toJs: js.UndefOr[js.Function1[A, Unit]] = a.toJs.orElse(b.toJsE)
   }
 
 }
 
-package object syntax extends EnumValueSyntax {
+package object syntax extends EnumValueSyntax with CallbackPairSyntax {
   // Some useful conversions
   implicit class VdomToRaw(val node: VdomNode) extends AnyVal {
     def toRaw: React.Node = node.rawNode
@@ -61,7 +66,7 @@ package object syntax extends EnumValueSyntax {
   }
 
   implicit class CallbackOps(val c: js.UndefOr[Callback]) extends AnyVal {
-    def toJs: js.UndefOr[js.Function0[Unit]] = c.map(x => () => x.runNow())
+    def toJs: js.UndefOr[js.Function0[Unit]]        = c.map(x => () => x.runNow())
     def toJsE[A]: js.UndefOr[js.Function1[A, Unit]] = c.map(x => (_: A) => x.runNow())
   }
 
