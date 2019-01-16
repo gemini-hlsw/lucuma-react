@@ -114,7 +114,6 @@ lazy val commonSettings = Seq(
     git.useGitDescribe                    := true,
     git.formattedShaVersion               := git.gitHeadCommit.value map { sha => s"v$sha" },
     git.uncommittedSignifier in ThisBuild := Some("UNCOMMITTED"),
-    useGpg := true
   )
 
 lazy val pomData =
