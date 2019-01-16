@@ -50,7 +50,11 @@ package syntax {
   }
 
   final class CallbackPairOps[A](a: js.UndefOr[A => Callback], b: js.UndefOr[Callback]) {
-    def toJs: js.UndefOr[js.Function1[A, Unit]] = a.toJs.orElse(b.toJsE)
+    def toJs: js.UndefOr[js.Function1[A, Unit]] = a.toJs.orElse(b.toJs1)
+  }
+
+  final class CallbackPairOps2[A, B](a: js.UndefOr[(A, B) => Callback], b: js.UndefOr[Callback]) {
+    def toJs: js.UndefOr[js.Function2[A, B, Unit]] = a.toJs.orElse(b.toJs2)
   }
 
 }
@@ -67,7 +71,8 @@ package object syntax extends EnumValueSyntax with CallbackPairSyntax {
 
   implicit class CallbackOps(val c: js.UndefOr[Callback]) extends AnyVal {
     def toJs: js.UndefOr[js.Function0[Unit]]        = c.map(x => () => x.runNow())
-    def toJsE[A]: js.UndefOr[js.Function1[A, Unit]] = c.map(x => (_: A) => x.runNow())
+    def toJs1[A]: js.UndefOr[js.Function1[A, Unit]] = c.map(x => (_: A) => x.runNow())
+    def toJs2[A, B]: js.UndefOr[js.Function2[A, B, Unit]] = c.map(x => (_: A, _: B) => x.runNow())
   }
 
   implicit class CallbackOps1[A](val c: js.UndefOr[A => Callback]) extends AnyVal {
