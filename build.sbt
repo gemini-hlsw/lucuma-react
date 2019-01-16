@@ -11,10 +11,11 @@ inThisBuild(List(
     scmInfo := Some(ScmInfo(url("https://github.com/cquiroz/scalajs-react-common"), "scm:git:git@github.com:cquiroz/scalajs-react-common.git")),
 
     // These are the sbt-release-early settings to configure
-    pgpPublicRing := file("./travis/local.pubring.asc")
-    pgpSecretRing := file("./travis/local.secring.asc")
+    pgpPublicRing := file("./travis/local.pubring.asc"),
+    pgpSecretRing := file("./travis/local.secring.asc"),
     releaseEarlyWith := SonatypePublisher
 ))
+
 val scalajsReactCommon =
   project.in(file("."))
     .enablePlugins(GitVersioning)
