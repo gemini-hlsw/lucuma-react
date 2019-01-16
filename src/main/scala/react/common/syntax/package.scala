@@ -45,11 +45,14 @@ package syntax {
   }
 
   trait CallbackPairSyntax {
-    implicit def syntaxCallbackPair[A](a: (js.UndefOr[A => Callback], js.UndefOr[Callback])): CallbackPairOps[A] =
-      new CallbackPairOps(a._1, a._2)
+    implicit def syntaxCallbackPair1[A](a: (js.UndefOr[A => Callback], js.UndefOr[Callback])): CallbackPairOps1[A] =
+      new CallbackPairOps1(a._1, a._2)
+
+    implicit def syntaxCallbackPair2[A, B](a: (js.UndefOr[(A, B) => Callback], js.UndefOr[Callback])): CallbackPairOps2[A, B] =
+      new CallbackPairOps2(a._1, a._2)
   }
 
-  final class CallbackPairOps[A](a: js.UndefOr[A => Callback], b: js.UndefOr[Callback]) {
+  final class CallbackPairOps1[A](a: js.UndefOr[A => Callback], b: js.UndefOr[Callback]) {
     def toJs: js.UndefOr[js.Function1[A, Unit]] = a.toJs.orElse(b.toJs1)
   }
 
