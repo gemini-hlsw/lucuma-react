@@ -1,5 +1,10 @@
 # Changes
 
+## 0.0.5
+
+* Add merge method
+* Add Callback pair method
+
 ## 0.0.4
 
 * Publish test
