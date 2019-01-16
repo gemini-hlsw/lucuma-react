@@ -5,3 +5,4 @@ target/
 react-virtualized
 .metals/
 .bloop/
+local.*

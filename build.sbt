@@ -3,6 +3,18 @@ val scalaJsReact = "1.3.1"
 
 parallelExecution in (ThisBuild, Test) := false
 
+// sbt-release-early
+inThisBuild(List(
+    homepage                := Some(url("https://github.com/cquiroz/scalajs-react-virtualized")),
+    licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
+    developers := List(Developer("cquiroz", "Carlos Quiroz", "carlos.m.quiroz@gmail.com", url("https://github.com/cquiroz"))),
+    scmInfo := Some(ScmInfo(url("https://github.com/cquiroz/scalajs-react-common"), "scm:git:git@github.com:cquiroz/scalajs-react-common.git")),
+
+    // These are the sbt-release-early settings to configure
+    pgpPublicRing := file("./travis/local.pubring.asc")
+    pgpSecretRing := file("./travis/local.secring.asc")
+    releaseEarlyWith := SonatypePublisher
+))
 val scalajsReactCommon =
   project.in(file("."))
     .enablePlugins(GitVersioning)
@@ -38,8 +50,6 @@ lazy val commonSettings = Seq(
   scalaVersion            := "2.12.8",
   organization            := "io.github.cquiroz",
   description             := "scala.js react common utilities",
-  homepage                := Some(url("https://github.com/cquiroz/scalajs-react-virtualized")),
-  licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
   useGpg                  := true,
   publishMavenStyle       := true,
   publishTo               := {
