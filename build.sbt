@@ -18,8 +18,8 @@ inThisBuild(List(
 
 val scalajsReactCommon =
   project.in(file("."))
-    .enablePlugins(GitVersioning)
-    .enablePlugins(GitBranchPrompt)
+    // .enablePlugins(GitVersioning)
+    // .enablePlugins(GitBranchPrompt)
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
@@ -111,9 +111,9 @@ lazy val commonSettings = Seq(
       "-Yrangepos"
     ),
     // Settings to use git to define the version of the project
-    git.useGitDescribe                    := true,
-    git.formattedShaVersion               := git.gitHeadCommit.value map { sha => s"v$sha" },
-    git.uncommittedSignifier in ThisBuild := Some("UNCOMMITTED"),
+    // git.useGitDescribe                    := true,
+    // git.formattedShaVersion               := git.gitHeadCommit.value map { sha => s"v$sha" },
+    // git.uncommittedSignifier in ThisBuild := Some("UNCOMMITTED"),
   )
 
 lazy val pomData =
