@@ -51,8 +51,8 @@ lazy val commonSettings = Seq(
   scalaVersion            := "2.12.8",
   organization            := "io.github.cquiroz",
   description             := "scala.js react common utilities",
-  useGpg                  := true,
-  publishMavenStyle       := true,
+  // useGpg                  := true,
+  // publishMavenStyle       := true,
   publishTo               := {
     val nexus = "https://oss.sonatype.org/"
     if (isSnapshot.value)
