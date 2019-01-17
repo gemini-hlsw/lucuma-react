@@ -61,7 +61,7 @@ lazy val commonSettings = Seq(
       Some("releases"  at nexus + "service/local/staging/deploy/maven2")
     },
   // pomExtra                := pomData,
-  pomIncludeRepository    := { _ => false },
+  // pomIncludeRepository    := { _ => false },
   scalacOptions           := Seq(
       "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
       "-encoding", "utf-8",                // Specify character encoding used by source files.
@@ -115,15 +115,3 @@ lazy val commonSettings = Seq(
     // git.formattedShaVersion               := git.gitHeadCommit.value map { sha => s"v$sha" },
     // git.uncommittedSignifier in ThisBuild := Some("UNCOMMITTED"),
   )
-
-lazy val pomData =
-  <developers>
-    <developer>
-      <id>cquiroz</id>
-      <name>Carlos Quiroz</name>
-      <url>https://github.com/cquiroz</url>
-      <roles>
-        <role>Project Lead</role>
-      </roles>
-    </developer>
-  </developers>
