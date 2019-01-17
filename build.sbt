@@ -18,8 +18,6 @@ inThisBuild(List(
 
 val scalajsReactCommon =
   project.in(file("."))
-    // .enablePlugins(GitVersioning)
-    // .enablePlugins(GitBranchPrompt)
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
@@ -51,17 +49,7 @@ lazy val commonSettings = Seq(
   scalaVersion            := "2.12.8",
   organization            := "io.github.cquiroz",
   description             := "scala.js react common utilities",
-  // useGpg                  := true,
   publishMavenStyle       := true,
-  // publishTo               := {
-  //   val nexus = "https://oss.sonatype.org/"
-  //   if (isSnapshot.value)
-  //     Some("snapshots" at nexus + "content/repositories/snapshots")
-  //   else
-  //     Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-  //   },
-  // pomExtra                := pomData,
-  // pomIncludeRepository    := { _ => false },
   scalacOptions           := Seq(
       "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
       "-encoding", "utf-8",                // Specify character encoding used by source files.
@@ -109,9 +97,5 @@ lazy val commonSettings = Seq(
       "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
       "-P:scalajs:sjsDefinedByDefault",
       "-Yrangepos"
-    ),
-    // Settings to use git to define the version of the project
-    // git.useGitDescribe                    := true,
-    // git.formattedShaVersion               := git.gitHeadCommit.value map { sha => s"v$sha" },
-    // git.uncommittedSignifier in ThisBuild := Some("UNCOMMITTED"),
+    )
   )
