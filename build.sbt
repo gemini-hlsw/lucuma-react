@@ -60,7 +60,7 @@ lazy val commonSettings = Seq(
     else
       Some("releases"  at nexus + "service/local/staging/deploy/maven2")
     },
-  pomExtra                := pomData,
+  // pomExtra                := pomData,
   pomIncludeRepository    := { _ => false },
   scalacOptions           := Seq(
       "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
