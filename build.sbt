@@ -41,8 +41,6 @@ val root =
 lazy val demo =
   project
     .in(file("demo"))
-    .enablePlugins(GitVersioning)
-    .enablePlugins(GitBranchPrompt)
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
@@ -91,8 +89,6 @@ lazy val demo =
 lazy val facade =
   project
     .in(file("facade"))
-    .enablePlugins(GitVersioning)
-    .enablePlugins(GitBranchPrompt)
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
