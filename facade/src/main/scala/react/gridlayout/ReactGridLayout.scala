@@ -13,6 +13,7 @@ import japgolly.scalajs.react.vdom.VdomNode
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
 import react.common._
+import react.common.syntax._
 
 trait ReactGridLayout extends js.Object
 
@@ -101,7 +102,7 @@ object ReactGridLayout {
     p.cols             = cols
     p.draggableCancel  = draggableCancel
     p.draggableHandle  = draggableHandle
-    p.compactType      = compactType.map(CompactType.toRaw)
+    p.compactType      = compactType.toJs
     p.layout           = if (layout.l.nonEmpty) layout.toRaw else js.undefined
     p.margin           = margin
     p.containerPadding = containerPadding

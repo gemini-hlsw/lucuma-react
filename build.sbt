@@ -92,18 +92,18 @@ lazy val facade =
       // Compile tests to JS using fast-optimisation
       // scalaJSStage in Test            := FastOptStage,
       npmDependencies in Compile ++= Seq(
-        "react"           -> reactJS,
-        "react-dom"       -> reactJS,
+        "react"             -> reactJS,
+        "react-dom"         -> reactJS,
         "react-grid-layout" -> reactGridLayout
       ),
       libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core"        % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
-        "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz" %%% "scalajs-react-common"       % "0.0.4",
-        "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
-        "com.lihaoyi"                       %%% "utest"       % "0.6.6" % Test,
-        "org.typelevel"                     %%% "cats-core"   % "1.5.0" % Test
+        "com.github.japgolly.scalajs-react" %%% "core"                 % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "extra"                % scalaJsReact,
+        "org.scala-js"                      %%% "scalajs-dom"          % scalaJSDom,
+        "io.github.cquiroz"                 %%% "scalajs-react-common" % "0.0.6",
+        "com.github.japgolly.scalajs-react" %%% "test"                 % scalaJsReact % Test,
+        "com.lihaoyi"                       %%% "utest"                % "0.6.6" % Test,
+        "org.typelevel"                     %%% "cats-core"            % "1.5.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
       testFrameworks += new TestFramework("utest.runner.Framework")
