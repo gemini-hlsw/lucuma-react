@@ -13,6 +13,12 @@ package object raw {
   type RawItemCallback =
     js.Function6[Layout, LayoutItem, LayoutItem, LayoutItem, MouseEvent, HTMLElement, Unit]
 
+  type BreakpointChangeCallback =
+    js.Function2[Breakpoint, JsNumber, Unit]
+
+  type LayoutChangeCallback =
+    js.Function2[Layout, js.Object, Unit]
+
   type Layout = js.Array[LayoutItem]
 
   type Breakpoint = String

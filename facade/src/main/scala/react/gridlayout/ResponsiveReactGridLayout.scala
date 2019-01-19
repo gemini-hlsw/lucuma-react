@@ -25,14 +25,27 @@ object ResponsiveReactGridLayout {
 
   @js.native
   trait Props extends ReactGridLayout.Props {
+    // {name: pxVal}, e.g. {lg: 1200, md: 996, sm: 768, xs: 480}
+    // Breakpoint names are arbitrary but must match in the cols and layouts objects.
     var breakpoints: js.Object = js.native
+    // # of cols. This is a breakpoint -> cols map, e.g. {lg: 12, md: 10, ...}
     var columns: js.Object     = js.native
+    // layouts is an object mapping breakpoints to layouts.
+    // e.g. {lg: Layout, md: Layout, ...}
+    var layouts: js.Object     = js.native
+
+    // Calls back with breakpoint and new # cols
+    var onBreakpointChange: raw.BreakpointChangeCallback = js.native
+
+    // Callback so you can save the layout.
+    // AllLayouts are keyed by breakpoint.
+    // var onLayoutChange: raw.LayoutChangeCallback = js.native
+     // (currentLayout: Layout, allLayouts: {[key: $Keys<breakpoints>]: Layout}) => void,
   }
 
   def props(
     width:            JsNumber,
-    breakpoints:      Breakpoints,
-    columns:          Columns,
+    layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)],
     className:        js.UndefOr[String] = js.undefined,
     style:            js.UndefOr[Style] = js.undefined,
     autoSize:         js.UndefOr[Boolean] = js.undefined,
@@ -51,7 +64,8 @@ object ResponsiveReactGridLayout {
     onDragStop:       ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResizeStart:    ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResize:         ItemCallback = (_, _, _, _, _, _) => Callback.empty,
-    onResizeStop:     ItemCallback = (_, _, _, _, _, _) => Callback.empty
+    onResizeStop:     ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+    onBreakpointChange: OnBreakpointChange = (_, _) => Callback.empty,
   ): Props = {
     val p = ReactGridLayout.props(
       width,
@@ -76,17 +90,23 @@ object ResponsiveReactGridLayout {
       onResizeStop
     )
     val r = p.asInstanceOf[Props]
-    r.breakpoints = breakpoints.toRaw
-    r.columns     = columns.toRaw
+    val (br: Breakpoints, cl: Columns, ly: Layouts) = build(layouts)
+    r.breakpoints = br.toRaw
+    r.columns = cl.toRaw
+    r.layouts = ly.toRaw
+    r.onBreakpointChange = (x: raw.Breakpoint, c: JsNumber) => onBreakpointChange(BreakpointName(x), c).runNow()
     r
   }
 
-  def build(values: Map[BreakpointName, (JsNumber, JsNumber)]): (Breakpoints, Columns) =
+  def build(values: Map[BreakpointName, (JsNumber, JsNumber, Layout)]): (Breakpoints, Columns, Layouts) =
     (Breakpoints(values.collect {
-      case (v, (w, _)) => Breakpoint(v, w)
+      case (v, (w, _, _)) => Breakpoint(v, w)
     }.toList), Columns(values.collect {
-      case (v, (_, c)) => Column(v, c)
-    }.toList))
+      case (v, (_, c, _)) => Column(v, c)
+    }.toList), Layouts(values.collect {
+      case (v, (_, _, l)) => BreakpointLayout(v, l)
+    }.toList)
+  )
 
   val component = JsComponent[Props, Children.Varargs, Null](RawComponent)
 

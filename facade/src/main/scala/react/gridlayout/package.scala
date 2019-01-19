@@ -13,7 +13,8 @@ package object gridlayout {
   type ContainerPadding = (JsNumber, JsNumber)
 
   // Callbacks
-  type OnLayoutChange = Layout => Callback
+  type OnLayoutChange     = Layout => Callback
+  type OnBreakpointChange = (BreakpointName, JsNumber) => Callback
   type ItemCallback =
     (Layout, LayoutItem, LayoutItem, Option[LayoutItem], MouseEvent, HTMLElement) => Callback
 }
@@ -33,6 +34,7 @@ package gridlayout {
     val xs: BreakpointName = apply("xs")
     val xx: BreakpointName = apply("xx")
   }
+
   final case class Breakpoint(name: BreakpointName, pos: JsNumber)
   final case class Breakpoints(bps: List[Breakpoint]) {
     def toRaw: js.Object = {
@@ -47,6 +49,15 @@ package gridlayout {
     def toRaw: js.Object = {
       val p = js.Dynamic.literal()
       cols.foreach { case Column(name, v) => p.updateDynamic(name.name)(v.asInstanceOf[js.Any]) }
+      p
+    }
+  }
+
+  final case class BreakpointLayout(name: BreakpointName, layout: Layout)
+  final case class Layouts(layouts:       List[BreakpointLayout]) {
+    def toRaw: js.Object = {
+      val p = js.Dynamic.literal()
+      layouts.foreach { case BreakpointLayout(name, v) => p.updateDynamic(name.name)(v.toRaw) }
       p
     }
   }
@@ -121,7 +132,6 @@ package gridlayout {
 
   final case class Layout(l: List[LayoutItem]) {
     private[gridlayout] def toRaw: raw.Layout = l.toArray.map(_.toRaw).toJSArray
-
   }
 
   object Layout {
