@@ -19,6 +19,9 @@ package object raw {
   type LayoutChangeCallback =
     js.Function2[Layout, js.Object, Unit]
 
+  type WidthChangeCallback =
+    js.Function4[JsNumber, js.Array[JsNumber], JsNumber, js.Array[JsNumber], Unit]
+
   type Layout = js.Array[LayoutItem]
 
   type Breakpoint = String

@@ -14,7 +14,9 @@ package object gridlayout {
 
   // Callbacks
   type OnLayoutChange     = Layout => Callback
+  type OnLayoutsChange    = (Layout, Layouts) => Callback
   type OnBreakpointChange = (BreakpointName, JsNumber) => Callback
+  type OnWidthChange      = (JsNumber, (JsNumber, JsNumber), JsNumber, (JsNumber, JsNumber)) => Callback
   type ItemCallback =
     (Layout, LayoutItem, LayoutItem, Option[LayoutItem], MouseEvent, HTMLElement) => Callback
 }
