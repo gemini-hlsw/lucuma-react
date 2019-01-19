@@ -19,6 +19,38 @@ package object gridlayout {
 }
 
 package gridlayout {
+  trait BreakpointName {
+    val name: String
+  }
+
+  object BreakpointName {
+    private final case class BreakpointNameI(name: String) extends BreakpointName
+    def apply(name: String): BreakpointName = new BreakpointNameI(name)
+
+    val lg: BreakpointName = apply("lg")
+    val md: BreakpointName = apply("md")
+    val sm: BreakpointName = apply("sm")
+    val xs: BreakpointName = apply("xs")
+    val xx: BreakpointName = apply("xx")
+  }
+  final case class Breakpoint(name: BreakpointName, pos: JsNumber)
+  final case class Breakpoints(bps: List[Breakpoint]) {
+    def toRaw: js.Object = {
+      val p = js.Dynamic.literal()
+      bps.foreach { case Breakpoint(name, v) => p.updateDynamic(name.name)(v.asInstanceOf[js.Any]) }
+      p
+    }
+  }
+
+  final case class Column(col:   BreakpointName, pos: JsNumber)
+  final case class Columns(cols: List[Column]) {
+    def toRaw: js.Object = {
+      val p = js.Dynamic.literal()
+      cols.foreach { case Column(name, v) => p.updateDynamic(name.name)(v.asInstanceOf[js.Any]) }
+      p
+    }
+  }
+
   final case class LayoutItem(
     w:           JsNumber,
     h:           JsNumber,

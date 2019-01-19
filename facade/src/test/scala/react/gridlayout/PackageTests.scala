@@ -24,6 +24,23 @@ object PackageTests extends TestSuite {
         val html =
           """<div class="react-grid-layout" style="height: 170px;"></div>""".stripMargin
             .replaceAll("[\n\r]", "")
+        assert(m.outerHtmlScrubbed() == html)
+      }
+    }
+    'responisev - {
+      val (breakpoints, columns) = ResponsiveReactGridLayout.build(
+        Map((BreakpointName.lg, (1200, 12)),
+            (BreakpointName.md, (996, 10)),
+            (BreakpointName.sm, (768, 8)),
+            (BreakpointName.xs, (480, 6)),
+            (BreakpointName.xx, (0, 2))))
+      val layout = ResponsiveReactGridLayout(
+        ResponsiveReactGridLayout.props(200, breakpoints = breakpoints, columns = columns),
+        <.div("Abc"))
+      ReactTestUtils.withRenderedIntoDocument(layout) { m =>
+        val html =
+          """<div class="react-grid-layout" style="height: 170px;"></div>""".stripMargin
+            .replaceAll("[\n\r]", "")
         println(m.outerHtmlScrubbed)
         assert(m.outerHtmlScrubbed() == html)
       }
