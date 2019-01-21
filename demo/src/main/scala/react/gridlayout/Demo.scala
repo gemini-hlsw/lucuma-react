@@ -3,6 +3,7 @@ package react.gridlayout.demo
 import scala.scalajs.js
 import scala.scalajs.js.annotation._
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.gridlayout._
@@ -12,16 +13,31 @@ object RGLDemo {
   val component = ScalaComponent
     .builder[Unit]("RGLDemo")
     .render { _ =>
-      val layout = List(
-        LayoutItem(x = 0, y = 0, w = 1, h = 2, i = "a", static = true),
-        LayoutItem(x = 1, y = 0, w = 3, h = 2, i = "b", minW   = 2, maxW = 4),
-        LayoutItem(x = 4, y = 0, w = 1, h = 2, i = "c")
-      )
-      ReactGridLayout(
-        ReactGridLayout.props(1200, rowHeight = 30, cols = 12, layout = Layout(layout)),
+      val layout = Layout(
+        List(
+          LayoutItem(x = 0, y = 0, w = 6, h = 2, i = "a", static = true),
+          LayoutItem(x = 1, y = 0, w = 3, h = 2, i = "b", minW = 2, maxW = 4),
+          LayoutItem(x = 4, y = 0, w = 1, h = 2, i = "c")
+        ))
+      val layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)] =
+        Map(
+          (BreakpointName.lg, (1200, 12, layout)),
+          (BreakpointName.md, (996, 10, layout)),
+          (BreakpointName.sm, (768, 8, layout)),
+          (BreakpointName.xs, (480, 6, layout))
+        )
+      // ReactGridLayout(
+      //   ReactGridLayout.props(1200, className = "layout", rowHeight = 30, cols = 12, layout = layout),
+      //   <.div(^.key := "a", "a"),
+      //   <.div(^.key := "c", "c"),
+      //   <.div(^.key := "b", "b"))
+      ResponsiveReactGridLayout(
+        ResponsiveReactGridLayout
+          .props(1201, className = "layout", rowHeight = 30, layouts = layouts),
         <.div(^.key := "a", "a"),
         <.div(^.key := "c", "c"),
-        <.div(^.key := "b", "b"))
+        <.div(^.key := "b", "b")
+      )
     }
     .build
 

@@ -3,7 +3,6 @@ package react.gridlayout
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-// import org.scalajs.dom.MouseEvent
 import react.common.syntax._
 import utest._
 

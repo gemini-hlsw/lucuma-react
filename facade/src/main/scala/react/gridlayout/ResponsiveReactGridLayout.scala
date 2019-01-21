@@ -11,16 +11,13 @@ import japgolly.scalajs.react.internal.Effect.Id
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
-// import react.common.syntax._
-// import org.scalajs.dom.html.{Element => HTMLElement}
-// import org.scalajs.dom.MouseEvent
 
 trait ResponsiveReactGridLayout extends js.Object
 
 object ResponsiveReactGridLayout {
 
   @js.native
-  @JSImport("react-grid-layout", JSImport.Default)
+  @JSImport("react-grid-layout", "Responsive")
   object RawComponent extends js.Object
 
   @js.native
