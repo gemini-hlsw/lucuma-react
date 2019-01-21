@@ -22,6 +22,9 @@ object ReactGridLayout {
 
   @js.native
   trait Props extends BaseProps {
+    // layout is an array of object with the format:
+    // {x: Number, y: Number, w: Number, h: Number, i: String}
+    var layout: js.UndefOr[raw.Layout]
     // Callback so you can save the layout. Calls after each drag & resize stops.
     var onLayoutChange: raw.RawLayoutChange
   }
@@ -57,7 +60,6 @@ object ReactGridLayout {
       draggableCancel,
       draggableHandle,
       compactType,
-      layout,
       margin,
       containerPadding,
       rowHeight,
