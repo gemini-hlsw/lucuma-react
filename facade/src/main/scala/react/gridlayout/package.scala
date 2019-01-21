@@ -16,7 +16,7 @@ package object gridlayout {
   type OnLayoutChange     = Layout => Callback
   type OnLayoutsChange    = (Layout, Layouts) => Callback
   type OnBreakpointChange = (BreakpointName, JsNumber) => Callback
-  type OnWidthChange      = (JsNumber, (JsNumber, JsNumber), JsNumber, (JsNumber, JsNumber)) => Callback
+  type OnWidthChange      = (JsNumber, Margin, JsNumber, ContainerPadding) => Callback
   type ItemCallback =
     (Layout, LayoutItem, LayoutItem, Option[LayoutItem], MouseEvent, HTMLElement) => Callback
 }
@@ -56,12 +56,35 @@ package gridlayout {
   }
 
   final case class BreakpointLayout(name: BreakpointName, layout: Layout)
-  final case class Layouts(layouts:       List[BreakpointLayout]) {
+
+  object BreakpointLayout {
+    private[gridlayout] def layoutsFromRaw(l: js.Object): Layout = {
+      val c                   = l.asInstanceOf[js.Array[raw.LayoutItem]]
+      val i: List[LayoutItem] = c.map(LayoutItem.fromRaw).toList
+      Layout(i)
+    }
+  }
+
+  final case class Layouts(layouts: List[BreakpointLayout]) {
     def toRaw: js.Object = {
       val p = js.Dynamic.literal()
       layouts.foreach { case BreakpointLayout(name, v) => p.updateDynamic(name.name)(v.toRaw) }
       p
     }
+  }
+
+  object Layouts {
+    private[gridlayout] def fromRaw(l: js.Object): Layouts = {
+      val c = l.asInstanceOf[js.Dictionary[js.Any]]
+      val bp = for {
+        p <- js.Object.getOwnPropertyNames(l)
+        v <- c.get(p)
+      } yield
+        BreakpointLayout(BreakpointName(p),
+                         BreakpointLayout.layoutsFromRaw(v.asInstanceOf[js.Object]))
+      Layouts(bp.toList)
+    }
+
   }
 
   final case class LayoutItem(

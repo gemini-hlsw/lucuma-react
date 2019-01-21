@@ -43,4 +43,5 @@ package raw {
     val isDraggable: js.UndefOr[Boolean] = js.undefined,
     val isResizable: js.UndefOr[Boolean] = js.undefined
   ) extends js.Object
+
 }
