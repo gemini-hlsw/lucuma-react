@@ -18,7 +18,7 @@ object ReactGridLayout {
 
   @js.native
   @JSImport("react-grid-layout", JSImport.Default)
-  object RawComponent extends js.Object
+  private object RawComponent extends js.Object
 
   @js.native
   trait Props extends BaseProps {

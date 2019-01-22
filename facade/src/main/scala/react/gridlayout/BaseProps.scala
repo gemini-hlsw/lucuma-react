@@ -26,9 +26,9 @@ trait BaseProps extends js.Object {
   // Choose vertical or hotizontal compaction
   var compactType: js.UndefOr[String]
   // Margin between items [x, y] in px
-  var margin: js.UndefOr[Margin]
+  var margin: js.UndefOr[js.Array[JsNumber]]
   // Padding inside the container [x, y] in px
-  var containerPadding: js.UndefOr[ContainerPadding]
+  var containerPadding: js.UndefOr[js.Array[JsNumber]]
   // Rows have a static height, but you can change this based on breakpoints if you like
   var rowHeight: js.UndefOr[Int]
   var maxRows: js.UndefOr[Int]
@@ -84,8 +84,8 @@ object BaseProps {
     p.draggableCancel  = draggableCancel
     p.draggableHandle  = draggableHandle
     p.compactType      = compactType.toJs
-    p.margin           = margin
-    p.containerPadding = containerPadding
+    p.margin           = margin.map(x => js.Array(x._1, x._2))
+    p.containerPadding = containerPadding.map(x => js.Array(x._1, x._2))
     p.rowHeight        = rowHeight
     p.maxRows          = maxRows
     p.onDragStart = (layout: raw.Layout,

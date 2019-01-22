@@ -2,6 +2,7 @@
 body,
 html {
   height: 100%;
+  width: 100%;
 }
 body {
   padding: 0;
@@ -12,8 +13,6 @@ body {
   box-sizing: border-box;
 }
 /* Collection default theme */
-//===========================
-// Styles for column dragging
 .DragHandle {
   flex: 0 0 16px;
   z-index: 2;
@@ -139,8 +138,6 @@ body {
 }
 .ReactVirtualized__Table__Grid {
   outline: none;
-}
-.ReactVirtualized__Grid__innerScrollContainer {
 }
 .ReactVirtualized__Table__row {
   display: flex;
