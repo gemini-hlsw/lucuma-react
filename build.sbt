@@ -2,6 +2,7 @@ val reactJS         = "16.5.1"
 val scalaJsReact    = "1.3.1"
 val reactGridLayout = "0.16.6"
 val scalaJSDom      = "0.9.6"
+val reactVirtualized = "9.21.0"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -10,6 +11,8 @@ cancelable in Global := true
 addCommandAlias(
   "restartWDS",
   "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer")
+
+resolvers in Global += Resolver.sonatypeRepo("releases")
 
 // sbt-release-early
 inThisBuild(List(
@@ -76,8 +79,11 @@ lazy val demo =
       npmDependencies in Compile ++= Seq(
         "react"           -> reactJS,
         "react-dom"       -> reactJS,
-        "react-grid-layout" -> reactGridLayout
+        "react-grid-layout" -> reactGridLayout,
+        "react-virtualized" -> reactVirtualized
       ),
+      libraryDependencies +=
+        "io.github.cquiroz"                 %%% "scalajs-react-virtualized" % "0.4.5",
       // don't publish the demo
       publish := {},
       publishLocal := {},
@@ -108,7 +114,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "core"                 % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra"                % scalaJsReact,
         "org.scala-js"                      %%% "scalajs-dom"          % scalaJSDom,
-        "io.github.cquiroz"                 %%% "scalajs-react-common" % "0.0.6",
+        "io.github.cquiroz"                 %%% "scalajs-react-common"      % "0.0.6",
         "com.github.japgolly.scalajs-react" %%% "test"                 % scalaJsReact % Test,
         "com.lihaoyi"                       %%% "utest"                % "0.6.6" % Test,
         "org.typelevel"                     %%% "cats-core"            % "1.5.0" % Test
@@ -173,6 +179,8 @@ lazy val commonSettings = Seq(
     "-Ywarn-unused:patvars", // Warn if a variable bound in a pattern is unused.
     "-Ywarn-unused:privates", // Warn if a private member is unused.
     "-Ywarn-value-discard", // Warn when non-Unit expression results are unused.
+    "-Ycache-plugin-class-loader:last-modified",
+    "-Ycache-macro-class-loader:last-modified",
     "-Yrangepos",
     "-P:scalajs:sjsDefinedByDefault"
   ),

@@ -10,7 +10,7 @@ import japgolly.scalajs.react.component.Js.UnmountedMapped
 import japgolly.scalajs.react.internal.Effect.Id
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
-import react.common._
+import react.common.Style
 
 trait ResponsiveReactGridLayout extends js.Object
 
