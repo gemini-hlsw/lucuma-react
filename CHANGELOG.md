@@ -1,5 +1,13 @@
 # Changes
 
+## 0.0.7
+
+* Add syntax for style
+
+## 0.0.6
+
+* Release with sbt-release-early
+
 ## 0.0.5
 
 * Add merge method
