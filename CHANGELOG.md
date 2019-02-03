@@ -3,6 +3,7 @@
 ## 0.0.7
 
 * Add syntax for style
+* Rename the org name and split the packages
 
 ## 0.0.6
 

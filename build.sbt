@@ -1,3 +1,5 @@
+import sbt._
+
 val reactJS = "16.5.1"
 val scalaJsReact = "1.3.1"
 
@@ -16,12 +18,13 @@ inThisBuild(List(
     releaseEarlyWith := SonatypePublisher
 ))
 
-val scalajsReactCommon =
-  project.in(file("."))
+val common =
+  project.in(file("common"))
     .enablePlugins(ScalaJSBundlerPlugin)
+    .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name                             := "scalajs-react-common",
+      name                             := "common",
       npmDependencies in Compile      ++= Seq(
         "react"             -> reactJS,
         "react-dom"         -> reactJS
@@ -45,9 +48,23 @@ val scalajsReactCommon =
       testFrameworks                  += new TestFramework("utest.runner.Framework")
     )
 
+lazy val root = (project in file("."))
+  .enablePlugins(ScalaJSPlugin)
+  .settings(commonSettings: _*)
+  .settings(
+    name := "scalajs-react-common",
+    // No, SBT, we don't want any artifacts for root.
+    // No, not even an empty jar.
+    publish              := {},
+    publishLocal         := {},
+    publishArtifact      := false,
+    Keys.`package`       := file("")
+  )
+  .aggregate(common)
+
 lazy val commonSettings = Seq(
   scalaVersion            := "2.12.8",
-  organization            := "io.github.cquiroz",
+  organization            := "io.github.cquiroz.react",
   description             := "scala.js react common utilities",
   publishMavenStyle       := true,
   scalacOptions           := Seq(
