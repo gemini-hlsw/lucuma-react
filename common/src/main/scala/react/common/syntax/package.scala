@@ -100,5 +100,14 @@ package object syntax extends EnumValueSyntax with CallbackPairSyntax {
       case d: Short  => d.toDouble
       case d: Int    => d.toDouble
     }
+
+    // Some uglies for js union types
+    def toInt: Int = (d: Any) match {
+      case d: Float  => d.toInt
+      case d: Double => d.toInt
+      case d: Byte   => d.toInt
+      case d: Short  => d.toInt
+      case d: Int    => d
+    }
   }
 }

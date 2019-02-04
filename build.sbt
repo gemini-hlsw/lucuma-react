@@ -39,13 +39,22 @@ val common =
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test             := FastOptStage,
       libraryDependencies    ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % "test",
         "com.lihaoyi"                       %%% "utest"      % "0.6.6" % Test,
         "org.typelevel"                     %%% "cats-core"  % "1.5.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "test" / "test.webpack.config.js"),
       testFrameworks                  += new TestFramework("utest.runner.Framework")
+    )
+
+val cats =
+  project.in(file("cats"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings: _*)
+    .settings(
+      name                             := "cats",
+      libraryDependencies ++= Seq(
+        "org.typelevel" %%% "cats-core"  % "1.6.0"
+      )
     )
 
 lazy val root = (project in file("."))
@@ -60,13 +69,17 @@ lazy val root = (project in file("."))
     publishArtifact      := false,
     Keys.`package`       := file("")
   )
-  .aggregate(common)
+  .aggregate(common, cats)
 
 lazy val commonSettings = Seq(
   scalaVersion            := "2.12.8",
   organization            := "io.github.cquiroz.react",
   description             := "scala.js react common utilities",
   publishMavenStyle       := true,
+  libraryDependencies    ++= Seq(
+    "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
+    "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % "test",
+  ),
   scalacOptions           := Seq(
       "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
       "-encoding", "utf-8",                // Specify character encoding used by source files.
@@ -113,6 +126,8 @@ lazy val commonSettings = Seq(
       "-Ywarn-unused:privates",            // Warn if a private member is unused.
       "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
       "-P:scalajs:sjsDefinedByDefault",
+      "-Ycache-plugin-class-loader:last-modified",
+      "-Ycache-macro-class-loader:last-modified",
       "-Yrangepos"
     )
   )
