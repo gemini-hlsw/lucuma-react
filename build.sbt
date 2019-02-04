@@ -39,21 +39,32 @@ lazy val common =
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test             := FastOptStage,
       libraryDependencies    ++= Seq(
-        "com.lihaoyi"                       %%% "utest"      % "0.6.6" % Test,
-        "org.typelevel"                     %%% "cats-core"  % "1.6.0" % Test
+        "com.lihaoyi"   %%% "utest"      % "0.6.6" % Test,
+        "org.typelevel" %%% "cats-core"  % "1.6.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "test" / "test.webpack.config.js"),
       testFrameworks                  += new TestFramework("utest.runner.Framework")
-    ).dependsOn(cats % "compile->compile;test->test")
+    ).dependsOn(cats % "compile->compile;test->test", test)
 
 lazy val cats =
   project.in(file("cats"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name                             := "cats",
+      name                 := "cats",
       libraryDependencies ++= Seq(
         "org.typelevel" %%% "cats-core"  % "1.6.0"
+      )
+    )
+
+lazy val test =
+  project.in(file("test"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings: _*)
+    .settings(
+      name                 := "test",
+      libraryDependencies ++= Seq(
+        "com.lihaoyi" %%% "utest" % "0.6.6"
       )
     )
 
@@ -61,15 +72,15 @@ lazy val root = (project in file("."))
   .enablePlugins(ScalaJSPlugin)
   .settings(commonSettings: _*)
   .settings(
-    name := "scalajs-react-common",
+    name            := "scalajs-react-common",
     // No, SBT, we don't want any artifacts for root.
     // No, not even an empty jar.
-    publish              := {},
-    publishLocal         := {},
-    publishArtifact      := false,
-    Keys.`package`       := file("")
+    publish         := {},
+    publishLocal    := {},
+    publishArtifact := false,
+    Keys.`package`  := file("")
   )
-  .aggregate(common, cats)
+  .aggregate(common, cats, test)
 
 lazy val commonSettings = Seq(
   scalaVersion            := "2.12.8",
@@ -78,7 +89,7 @@ lazy val commonSettings = Seq(
   publishMavenStyle       := true,
   libraryDependencies    ++= Seq(
     "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
-    "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % "test",
+    "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % "test"
   ),
   scalacOptions           := Seq(
       "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
