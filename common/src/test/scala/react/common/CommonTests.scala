@@ -1,13 +1,15 @@
 package react.common
 
-import cats.implicits._
 import react.common.syntax._
+import cats.implicits._
+import react.common.implicits.jsObjEq
 import scala.scalajs.js
 import utest._
 
 object CommonTests extends TestSuite with TestUtils {
 
   val tests = Tests {
+    implicitly[cats.Eq[js.Object]]
     'merge - {
       val a: js.Object = js.Dynamic.literal(foo = 42, bar = "foobar")
       val b            = js.Object()

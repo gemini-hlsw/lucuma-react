@@ -18,7 +18,7 @@ inThisBuild(List(
     releaseEarlyWith := SonatypePublisher
 ))
 
-val common =
+lazy val common =
   project.in(file("common"))
     .enablePlugins(ScalaJSBundlerPlugin)
     .enablePlugins(ScalaJSPlugin)
@@ -40,13 +40,13 @@ val common =
       scalaJSStage in Test             := FastOptStage,
       libraryDependencies    ++= Seq(
         "com.lihaoyi"                       %%% "utest"      % "0.6.6" % Test,
-        "org.typelevel"                     %%% "cats-core"  % "1.5.0" % Test
+        "org.typelevel"                     %%% "cats-core"  % "1.6.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "test" / "test.webpack.config.js"),
       testFrameworks                  += new TestFramework("utest.runner.Framework")
-    )
+    ).dependsOn(cats % "compile->compile;test->test")
 
-val cats =
+lazy val cats =
   project.in(file("cats"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings: _*)
