@@ -1,3 +1,5 @@
+import sbt._
+
 val reactJS = "16.5.1"
 val scalaJsReact = "1.3.1"
 
@@ -16,12 +18,13 @@ inThisBuild(List(
     releaseEarlyWith := SonatypePublisher
 ))
 
-val scalajsReactCommon =
-  project.in(file("."))
+lazy val common =
+  project.in(file("common"))
     .enablePlugins(ScalaJSBundlerPlugin)
+    .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name                             := "scalajs-react-common",
+      name                             := "common",
       npmDependencies in Compile      ++= Seq(
         "react"             -> reactJS,
         "react-dom"         -> reactJS
@@ -36,20 +39,58 @@ val scalajsReactCommon =
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test             := FastOptStage,
       libraryDependencies    ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % "test",
-        "com.lihaoyi"                       %%% "utest"      % "0.6.6" % Test,
-        "org.typelevel"                     %%% "cats-core"  % "1.5.0" % Test
+        "com.lihaoyi"   %%% "utest"      % "0.6.6" % Test,
+        "org.typelevel" %%% "cats-core"  % "1.6.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "test" / "test.webpack.config.js"),
       testFrameworks                  += new TestFramework("utest.runner.Framework")
+    ).dependsOn(cats % "compile->compile;test->test", test)
+
+lazy val cats =
+  project.in(file("cats"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings: _*)
+    .settings(
+      name                 := "cats",
+      libraryDependencies ++= Seq(
+        "org.typelevel" %%% "cats-core"  % "1.6.0"
+      )
     )
+
+lazy val test =
+  project.in(file("test"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings: _*)
+    .settings(
+      name                 := "test",
+      libraryDependencies ++= Seq(
+        "com.lihaoyi" %%% "utest" % "0.6.6"
+      )
+    )
+
+lazy val root = (project in file("."))
+  .enablePlugins(ScalaJSPlugin)
+  .settings(commonSettings: _*)
+  .settings(
+    name            := "scalajs-react-common",
+    // No, SBT, we don't want any artifacts for root.
+    // No, not even an empty jar.
+    publish         := {},
+    publishLocal    := {},
+    publishArtifact := false,
+    Keys.`package`  := file("")
+  )
+  .aggregate(common, cats, test)
 
 lazy val commonSettings = Seq(
   scalaVersion            := "2.12.8",
-  organization            := "io.github.cquiroz",
+  organization            := "io.github.cquiroz.react",
   description             := "scala.js react common utilities",
   publishMavenStyle       := true,
+  libraryDependencies    ++= Seq(
+    "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
+    "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % "test"
+  ),
   scalacOptions           := Seq(
       "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
       "-encoding", "utf-8",                // Specify character encoding used by source files.
@@ -96,6 +137,8 @@ lazy val commonSettings = Seq(
       "-Ywarn-unused:privates",            // Warn if a private member is unused.
       "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
       "-P:scalajs:sjsDefinedByDefault",
+      "-Ycache-plugin-class-loader:last-modified",
+      "-Ycache-macro-class-loader:last-modified",
       "-Yrangepos"
     )
   )

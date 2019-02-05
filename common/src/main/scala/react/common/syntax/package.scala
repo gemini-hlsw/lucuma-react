@@ -63,6 +63,10 @@ package syntax {
 }
 
 package object syntax extends EnumValueSyntax with CallbackPairSyntax {
+  implicit class StyleOps(val s: Style) extends AnyVal {
+    def toJsObject: js.Object = Style.toJsObject(s)
+  }
+
   // Some useful conversions
   implicit class VdomToRaw(val node: VdomNode) extends AnyVal {
     def toRaw: React.Node = node.rawNode
@@ -95,6 +99,15 @@ package object syntax extends EnumValueSyntax with CallbackPairSyntax {
       case d: Byte   => d.toDouble
       case d: Short  => d.toDouble
       case d: Int    => d.toDouble
+    }
+
+    // Some uglies for js union types
+    def toInt: Int = (d: Any) match {
+      case d: Float  => d.toInt
+      case d: Double => d.toInt
+      case d: Byte   => d.toInt
+      case d: Short  => d.toInt
+      case d: Int    => d
     }
   }
 }
