@@ -75,10 +75,10 @@ lazy val root = (project in file("."))
     name            := "scalajs-react-common",
     // No, SBT, we don't want any artifacts for root.
     // No, not even an empty jar.
-    // publish         := {},
-    // publishLocal    := {},
-    // publishArtifact := false,
-    // Keys.`package`  := file("")
+    publish         := {},
+    publishLocal    := {},
+    publishArtifact := false,
+    Keys.`package`  := file("")
   )
   .aggregate(common, cats, test)
 
