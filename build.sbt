@@ -7,7 +7,7 @@ parallelExecution in (ThisBuild, Test) := false
 
 // sbt-release-early
 inThisBuild(List(
-    homepage                := Some(url("https://github.com/cquiroz/scalajs-react-virtualized")),
+    homepage                := Some(url("https://github.com/cquiroz/scalajs-react-common")),
     licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
     developers := List(Developer("cquiroz", "Carlos Quiroz", "carlos.m.quiroz@gmail.com", url("https://github.com/cquiroz"))),
     scmInfo := Some(ScmInfo(url("https://github.com/cquiroz/scalajs-react-common"), "scm:git:git@github.com:cquiroz/scalajs-react-common.git")),
@@ -75,10 +75,10 @@ lazy val root = (project in file("."))
     name            := "scalajs-react-common",
     // No, SBT, we don't want any artifacts for root.
     // No, not even an empty jar.
-    publish         := {},
-    publishLocal    := {},
-    publishArtifact := false,
-    Keys.`package`  := file("")
+    // publish         := {},
+    // publishLocal    := {},
+    // publishArtifact := false,
+    // Keys.`package`  := file("")
   )
   .aggregate(common, cats, test)
 
