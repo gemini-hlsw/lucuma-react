@@ -84,7 +84,7 @@ lazy val root = (project in file("."))
 
 lazy val commonSettings = Seq(
   scalaVersion            := "2.12.8",
-  organization            := "io.github.cquiroz.react",
+  organization            := "io.github.cquiroz",
   description             := "scala.js react common utilities",
   publishMavenStyle       := true,
   libraryDependencies    ++= Seq(
