@@ -20,11 +20,7 @@ script:
   - node --version
   - sbt test
 after_success:
-  - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then git status; sbt ++$TRAVIS_SCALA_VERSION cats/releaseEarly;
-    fi
-  - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then git status; sbt ++$TRAVIS_SCALA_VERSION test/releaseEarly;
-    fi
-  - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then git status; sbt ++$TRAVIS_SCALA_VERSION common/releaseEarly;
+  - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then git status; sbt ++$TRAVIS_SCALA_VERSION releaseEarly;
     fi
 env:
   global:
