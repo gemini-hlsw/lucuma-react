@@ -18,13 +18,38 @@ inThisBuild(List(
     releaseEarlyWith := SonatypePublisher
 ))
 
-lazy val common =
+lazy val common: Project =
   project.in(file("common"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings: _*)
+    .settings(
+      name := "common"
+    )
+
+lazy val cats: Project =
+  project.in(file("cats"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings: _*)
+    .settings(
+      name                 := "cats",
+      libraryDependencies ++= Seq(
+        "org.typelevel" %%% "cats-core"  % "1.6.0",
+        "org.typelevel" %%% "cats-testkit"  % "1.6.0" % Test,
+        "org.scalatest" %%% "scalatest" % "3.0.5" % Test,
+        "org.typelevel" %%% "discipline" % "0.10.0" % Test
+      )
+    ).dependsOn(common)
+
+lazy val test =
+  project.in(file("test"))
     .enablePlugins(ScalaJSBundlerPlugin)
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name                             := "common",
+      name                 := "test",
+      libraryDependencies ++= Seq(
+        "com.lihaoyi" %%% "utest" % "0.6.6"
+      ),
       npmDependencies in Compile      ++= Seq(
         "react"             -> reactJS,
         "react-dom"         -> reactJS
@@ -44,29 +69,7 @@ lazy val common =
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "test" / "test.webpack.config.js"),
       testFrameworks                  += new TestFramework("utest.runner.Framework")
-    ).dependsOn(cats % "compile->compile;test->test", test)
-
-lazy val cats =
-  project.in(file("cats"))
-    .enablePlugins(ScalaJSPlugin)
-    .settings(commonSettings: _*)
-    .settings(
-      name                 := "cats",
-      libraryDependencies ++= Seq(
-        "org.typelevel" %%% "cats-core"  % "1.6.0"
-      )
-    )
-
-lazy val test =
-  project.in(file("test"))
-    .enablePlugins(ScalaJSPlugin)
-    .settings(commonSettings: _*)
-    .settings(
-      name                 := "test",
-      libraryDependencies ++= Seq(
-        "com.lihaoyi" %%% "utest" % "0.6.6"
-      )
-    )
+    ).dependsOn(cats, common)
 
 lazy val root = (project in file("."))
   .enablePlugins(ScalaJSPlugin)
