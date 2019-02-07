@@ -3,15 +3,24 @@ package react
 package common
 
 import scala.scalajs.js
+import scala.scalajs.js.|
 import japgolly.scalajs.react.raw.JsNumber
 import cats.Eq
 import cats.Show
 import cats.syntax.eq._
+import cats.instances.string._
+import cats.instances.int._
+import cats.instances.byte._
+import cats.instances.short._
+import cats.instances.long._
+import cats.instances.float._
+import cats.instances.double._
+import cats.instances.map._
 
 package implicits {
 
   trait ReactCatsImplicits {
-    implicit def jsUndefOr[A: Eq]: Eq[js.UndefOr[A]] = Eq.instance { (a, b) =>
+    implicit def jsUndefOrEq[A: Eq]: Eq[js.UndefOr[A]] = Eq.instance { (a, b) =>
       (a.toOption, b.toOption) match {
         case (Some(a), Some(b)) => a === b
         case _                  => false
@@ -30,14 +39,14 @@ package implicits {
       aDict.keySet.map(key => s"$key=${aDict(key)}").mkString("{", ",", "}")
     }
 
-    implicit val eqJsNumber: Eq[JsNumber] = Eq.instance { (a, b) =>
+    implicit val jsNumberEq: Eq[JsNumber] = Eq.instance { (a, b) =>
       (a: Any, b: Any) match {
-        case (a: Double, b: Double) => a == b
-        case (a: Int, b: Int)       => a == b
-        case (a: Long, b: Long)     => a == b
-        case (a: Float, b: Float)   => a == b
-        case (a: Short, b: Short)   => a == b
-        case (a: Byte, b: Byte)     => a == b
+        case (a: Double, b: Double) => a === b
+        case (a: Int, b: Int)       => a === b
+        case (a: Long, b: Long)     => a === b
+        case (a: Float, b: Float)   => a === b
+        case (a: Short, b: Short)   => a === b
+        case (a: Byte, b: Byte)     => a === b
         case _                      => false
       }
     }
@@ -62,7 +71,17 @@ package implicits {
           a == b
       }
     }
+
+    implicit val styleMemberEq: Eq[String | Int] = Eq.instance { (a, b) =>
+      (a: Any, b: Any) match {
+        case (a: String, b: String) => a === b
+        case (a: Int, b: Int)       => a === b
+        case _                      => false
+      }
+    }
+    implicit val styleEq: Eq[Style] = Eq.by(_.styles)
   }
+
 }
 
 package object implicits extends ReactCatsImplicits
