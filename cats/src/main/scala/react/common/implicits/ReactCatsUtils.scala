@@ -3,9 +3,10 @@ package react
 package common
 
 import scala.scalajs.js
-import _root_.cats.Eq
-import _root_.cats.Show
-import _root_.cats.syntax.eq._
+import japgolly.scalajs.react.raw.JsNumber
+import cats.Eq
+import cats.Show
+import cats.syntax.eq._
 
 package implicits {
 
@@ -27,6 +28,18 @@ package implicits {
     implicit val jsShow: Show[js.Object] = Show.show { a =>
       val aDict = a.asInstanceOf[js.Dictionary[Any]]
       aDict.keySet.map(key => s"$key=${aDict(key)}").mkString("{", ",", "}")
+    }
+
+    implicit val eqJsNumber: Eq[JsNumber] = Eq.instance { (a, b) =>
+      (a: Any, b: Any) match {
+        case (a: Double, b: Double) => a == b
+        case (a: Int, b: Int)       => a == b
+        case (a: Long, b: Long)     => a == b
+        case (a: Float, b: Float)   => a == b
+        case (a: Short, b: Short)   => a == b
+        case (a: Byte, b: Byte)     => a == b
+        case _                      => false
+      }
     }
 
     implicit val jsAnyEq: Eq[js.Any] = Eq.instance { (a, b) =>

@@ -53,7 +53,10 @@ lazy val cats =
     .settings(
       name                 := "cats",
       libraryDependencies ++= Seq(
-        "org.typelevel" %%% "cats-core"  % "1.6.0"
+        "org.typelevel" %%% "cats-core"  % "1.6.0",
+        "org.typelevel" %%% "cats-testkit"  % "1.6.0" % Test,
+        "org.scalatest" %%% "scalatest" % "3.0.5" % Test,
+        "org.typelevel" %%% "discipline" % "0.10.0" % Test
       )
     )
 
