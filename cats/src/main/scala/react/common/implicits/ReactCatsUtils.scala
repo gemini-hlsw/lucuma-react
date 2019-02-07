@@ -80,6 +80,8 @@ package implicits {
       }
     }
     implicit val styleEq: Eq[Style] = Eq.by(_.styles)
+    implicit val styleShow: Show[Style] =
+      Show.show(_.styles.map { case (k, v) => s"$k=$v " }.mkString("Style(", ";", ")"))
   }
 
 }
