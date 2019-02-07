@@ -11,7 +11,6 @@ inThisBuild(List(
     licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
     developers := List(Developer("cquiroz", "Carlos Quiroz", "carlos.m.quiroz@gmail.com", url("https://github.com/cquiroz"))),
     scmInfo := Some(ScmInfo(url("https://github.com/cquiroz/scalajs-react-common"), "scm:git:git@github.com:cquiroz/scalajs-react-common.git")),
-    organization            := "io.github.cquiroz.scalajs-react",
 
     // These are the sbt-release-early settings to configure
     pgpPublicRing := file("./travis/local.pubring.asc"),
@@ -85,8 +84,9 @@ lazy val root = (project in file("."))
 
 lazy val commonSettings = Seq(
   scalaVersion            := "2.12.8",
-  organization            := "io.github.cquiroz.scalajs-react",
+  organization            := "io.github.cquiroz.react",
   description             := "scala.js react common utilities",
+  sonatypeProfileName     := "io.github.cquiroz",
   publishMavenStyle       := true,
   libraryDependencies    ++= Seq(
     "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
