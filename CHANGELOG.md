@@ -1,9 +1,10 @@
 # Changes
 
-## 0.0.7
+## 0.1.0
 
 * Add syntax for style
 * Rename the org name and split the packages
+* Add cats instances for some types
 
 ## 0.0.6
 
