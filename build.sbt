@@ -11,6 +11,19 @@ addCommandAlias(
   "restartWDS",
   "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer")
 
+// sbt-release-early
+inThisBuild(List(
+    homepage                := Some(url("https://github.com/cquiroz/scalajs-react-clipboard")),
+    licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
+    developers := List(Developer("cquiroz", "Carlos Quiroz", "carlos.m.quiroz@gmail.com", url("https://github.com/cquiroz"))),
+    scmInfo := Some(ScmInfo(url("https://github.com/cquiroz/scalajs-react-clipboard"), "scm:git:git@github.com:cquiroz/scalajs-react-clipboard")),
+
+    // These are the sbt-release-early settings to configure
+    pgpPublicRing := file("./travis/local.pubring.asc"),
+    pgpSecretRing := file("./travis/local.secring.asc"),
+    releaseEarlyWith := SonatypePublisher
+))
+
 val root =
   project
     .in(file("."))
@@ -29,8 +42,6 @@ val root =
 lazy val demo =
   project
     .in(file("demo"))
-    .enablePlugins(GitVersioning)
-    .enablePlugins(GitBranchPrompt)
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
@@ -70,7 +81,7 @@ lazy val demo =
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz" %%% "scalajs-react-virtualized" % "0.4.3"
+        "io.github.cquiroz.react" %%% "react-virtualized" % "0.5.0"
       ),
       // don't publish the demo
       publish := {},
@@ -83,12 +94,10 @@ lazy val demo =
 lazy val facade =
   project
     .in(file("facade"))
-    .enablePlugins(GitVersioning)
-    .enablePlugins(GitBranchPrompt)
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name := "scalajs-react-draggable",
+      name := "react-draggable",
       version in webpack := "4.28.2",
       version in startWebpackDevServer := "3.1.11",
       // Requires the DOM for tests
@@ -106,7 +115,7 @@ lazy val facade =
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "com.lihaoyi"                       %%% "utest"       % "0.6.6" % Test,
-        "org.typelevel"                     %%% "cats-core"   % "1.5.0" % Test
+        "org.typelevel"                     %%% "cats-core"   % "1.6.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
       testFrameworks += new TestFramework("utest.runner.Framework")
@@ -114,26 +123,11 @@ lazy val facade =
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.8",
-  organization := "io.github.cquiroz",
+  organization := "io.github.cquiroz.react",
+  sonatypeProfileName     := "io.github.cquiroz",
   description := "scala.js facade for react-draggable ",
-  homepage := Some(url("https://github.com/cquiroz/scalajs-react-semantic-ui")),
-  licenses := Seq(
-    "BSD 3-Clause License" -> url(
-      "https://opensource.org/licenses/BSD-3-Clause")),
-  useGpg := true,
   publishArtifact in Test := false,
   publishMavenStyle := true,
-  publishTo := {
-    val nexus = "https://oss.sonatype.org/"
-    if (isSnapshot.value)
-      Some("snapshots".at(nexus + "content/repositories/snapshots"))
-    else
-      Some("releases".at(nexus + "service/local/staging/deploy/maven2"))
-  },
-  pomExtra := pomData,
-  pomIncludeRepository := { _ =>
-    false
-  },
   scalacOptions := Seq(
     "-deprecation", // Emit warning and location for usages of deprecated APIs.
     "-encoding",
@@ -183,23 +177,4 @@ lazy val commonSettings = Seq(
     "-Yrangepos",
     "-P:scalajs:sjsDefinedByDefault"
   ),
-  // Settings to use git to define the version of the project
-  git.useGitDescribe := true,
-  git.formattedShaVersion := git.gitHeadCommit.value.map { sha =>
-    s"v$sha"
-  },
-  git.uncommittedSignifier in ThisBuild := Some("UNCOMMITTED"),
-  useGpg := true
 )
-
-lazy val pomData =
-  <developers>
-    <developer>
-      <id>cquiroz</id>
-      <name>Carlos Quiroz</name>
-      <url>https://github.com/cquiroz</url>
-      <roles>
-        <role>Project Lead</role>
-      </roles>
-    </developer>
-  </developers>
