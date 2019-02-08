@@ -7,3 +7,9 @@ react-virtualized
 node_modules/
 package-lock.json
 .bloop/
+local.*
+node_modules/
+package-lock.json
+yarn.lock
+facade/yarn.lock
+travis/secrets.tar

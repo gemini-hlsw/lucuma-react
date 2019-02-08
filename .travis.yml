@@ -3,20 +3,28 @@ scala:
   - 2.12.6
 jdk:
   - oraclejdk8
-# These directories are cached to S3 at the end of the build
 cache:
   directories:
-    - $HOME/.ivy2/cache
-    - $HOME/.sbt/boot/
+    - "$HOME/.ivy2/cache"
+    - "$HOME/.sbt/boot/"
 before_cache:
-  # Tricks to avoid unnecessary cache updates
   - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
   - find $HOME/.sbt -name "*.lock" -delete
 install:
-  - . $HOME/.nvm/nvm.sh
+  - ". $HOME/.nvm/nvm.sh"
   - nvm install stable
   - nvm use stable
   - npm install jsdom
 script:
   - node --version
   - sbt facade/test demo/fastOptJS::webpack demo/fastOptJS demo/fullOptJS demo/fullOptJS::webpack
+after_success:
+  - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then sbt ++$TRAVIS_SCALA_VERSION
+    releaseEarly; fi
+before_install:
+  - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then openssl aes-256-cbc -K $encrypted_882d84ca6c4f_key -iv $encrypted_882d84ca6c4f_iv -in travis/secrets.tar.enc -out travis/local.secrets.tar -d; tar xv -C travis -f travis/local.secrets.tar; fi
+env:
+  global:
+    - secure: jtc0MoQfGBD9tiSRSc6UwIbhgp6gDuuWw1MUWLFr1XKoKFUzGyv41rI/16F1F4V4fbsNYSHNigqk7ExRBHSF8HLv7t1BiCe367oHfQGRMvL4t7EmhV/XXodjbq67w+hK8ix2l+5S+kNTcVnFczgRU/rFk0SD2shY1YYrKvgliBzIALUy9LXbcrOc4GySpVoJwuuTsx5LyjiU8Vt6rqr/cW8aLoLaQBCIwPJRUCw2k8mKKLtgUrr9XetbVRMKbu/NxunAorMqGA6EegSNjznhqBsVeRZZ4xsR83mnAilJRjoEk7Jgy5xGAcKcLB3pf/MtvVu8Cb8rfmscR0cuKHqwBqsZKnaRW8/ZicPbOPY2PnQJmJXHltjyAGVSACopHd43+T7Hypka82v7hwd5jCWOuC+F4EBnQ2OyS6vNpQrgtneZrQSQ4FKSfr+xJm1c8PAW/LVUjEyG6e6HiB4h3Gdhwr+iS+QPZDP8hRQoER3kaH+3SdXKmTJp4UfuRRy7jnE/tCKRfVMEmqYGXNO1xVxIX1jAvkj1KrbWmaUDDX3PFFYs7OsnvKjkV0SAjSqfaQp0YerOWLZl1IVLRF5jAnDuo9IKTmx3mtZEJy3Zt1DyUvLAgPhhStWpPQScZaA90CEw+C9MtonCQH0xdiu+pc3h6DV0HkOfO0F1lZioUw+C2cI=
+    - secure: twProohzXhABgs0PHizXJrhb23mvJ9LzxbBro3VNqzbD0us+AGU4Q957rYNl7nmCgchfRDnH/4FLOSeVmy7Vg6IZ21FOomMU4MJrxtSfkeocqQkKT5zRtde39YjIL90SV9ebNrEOMnpKbDdtS0S2v756x7QTAKSeVAAtqZwz1amJut9NBN9brU/tXAngARSE0BeFycg/V3iQ5dwjz9GGNmiqdvns2iZeP+qEv3aClVMFOStf4z1Fb15T6iW2f+9uK29xOGjbuVP9Q/EfZ1FVNE48q0KIPMujbczECnsRTHqs1bbL9ALWl3uvlEItjOWz4vQm29+pPKc98bl63gUK/TvyDEia2PmY2CcmCWhUwTWx8vr6/5EFqYUx764DRMLDKo5VrA3fO4t5uNO70DtXL/j+ewtsriO5Htv4w3UNrUrQqdhRLuJroaN1maimEpieNQdTOZ9cJSz4LpnLHB1SaN8HqPsxGEPYPtal4F+Nckt5mLknOOfi3P2Ls4LnCxAvi6FZZ02ogufYcHJ3s0If0ebyczSjdushHYqbHcobEwjkDD3R/3YmyQHSdgE5/NJauSkDlkQItsQobI/hR4NhFuCMl2jNsad8ppAfHU6ICK5BxopPGH+bStyW8zUvL79JV+VtYaPq6yJi5S0uJaOKmUIMqIKXGJxJTeNnBOgMGYQ=
+    - secure: tSD4f0kuziXnAeLuYuWd61pdGyM80W4VxHSIpRZhCi0AClMmiqAiU9Gebtcd6ebAKdeoGYZnogJ/fpprkhtKIoO0xDALN1aM6DvnJbaR1Kw8RcRsTKpKDocpANoQfjgFeTiOdCgid81wheGJMURYfmGWhiyZqswyTIqAL7KwSq/cPbCwPAU5P07tcUBGwUn+EM9CVH76PIMUm7pvkxJt1Yt9Gqs8LdTG4D2w0vvVmXhjnru2JhZcwXtsX7ljkvvffSq7KG2afO81b0HvkRJoSZE9DR40m7lczVph6FARRte4ZqlwCk4vpbuCg5wfxgnla4mW2Gt+sZkBkikLbW7VyPT3QIrMs3BFNrumnrjyFuJ1c2g1IAaWUQX6JdMf34HxM8ZVpO/rKyspZwywzA4Lr29rdmYEtBGt8jC1Nh8iBqvPulE0iQXP1IudcJhN63ptQy0au5RET1C752x5qUVmHBFYyWJB6yskBF49lw2n0cs01QEK6QYN5yDhLzA76c1A5LTBXpyLnKVzfrxgnbES0bxHbEo4irkkqFhnqWM470FOHMkCopvRUw26x7wWczxPDyBVdmMeN98RdVRW/uvkuHobPHQdDbE1yq6eNoGW0rbvXYqQ9K3dRomllwbzlvJrWqcEbF4V/hilEEPKrIY3zR9CdCBPto98lQRiI1dOeNM=
