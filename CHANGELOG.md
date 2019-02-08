@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.0
+
+* Changed organizationid and name
+
 ## 0.2.3
 
 * Updated to react-draggable 3.1.1
