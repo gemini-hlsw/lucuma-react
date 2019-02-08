@@ -70,7 +70,7 @@ lazy val demo =
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz" %%% "scalajs-react-virtualized" % "0.4.3"
+        "io.github.cquiroz.react" %%% "react-virtualized" % "0.5.0"
       ),
       // don't publish the demo
       publish := {},
@@ -106,7 +106,7 @@ lazy val facade =
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "com.lihaoyi"                       %%% "utest"       % "0.6.6" % Test,
-        "org.typelevel"                     %%% "cats-core"   % "1.5.0" % Test
+        "org.typelevel"                     %%% "cats-core"   % "1.6.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
       testFrameworks += new TestFramework("utest.runner.Framework")
