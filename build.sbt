@@ -24,7 +24,7 @@ lazy val facade =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name                            := "scalajs-react-clipboard",
+      name                            := "react-clipboard",
       npmDependencies in Compile     ++= Seq(
         "react" -> reactJS,
         "react-dom" -> reactJS,
@@ -49,7 +49,7 @@ lazy val facade =
 
 lazy val commonSettings = Seq(
   scalaVersion            := "2.12.8",
-  organization            := "io.github.cquiroz",
+  organization            := "io.github.cquiroz.react",
   description             := "scala.js facade for react-copy-to-clipboard",
   homepage                := Some(url("https://github.com/cquiroz/scalajs-react-clipboard")),
   licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
