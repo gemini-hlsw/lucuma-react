@@ -9,8 +9,7 @@ import japgolly.scalajs.react.vdom.html_<^.{< => <<, _}
 class CopyToClipboardSpec
     extends FlatSpec
     with Matchers
-    with NonImplicitAssertions
-    with TestUtils {
+    with NonImplicitAssertions {
   "CopyToClipboard" should
     "support rendering" in {
     val table =
