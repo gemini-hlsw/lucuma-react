@@ -3,3 +3,11 @@
 target/
 .idea/
 react-virtualized
+local.*
+node_modules/
+package-lock.json
+yarn.lock
+facade/yarn.lock
+.bloop/
+.metals/
+travis/secrets.tar
