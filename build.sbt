@@ -31,7 +31,7 @@ lazy val facade =
         "copy-to-clipboard" -> copyToClipboard
       ),
       // Requires the DOM for tests
-      requiresDOM in Test             := true,
+      requireJsDomEnv in Test          := true,
       // Use yarn as it is faster than npm
       useYarn                         := true,
       version in webpack              := "4.20.2",
@@ -41,15 +41,15 @@ lazy val facade =
       scalaJSStage in Test            := FastOptStage,
       libraryDependencies            ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReact % "test",
+        "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReact % Test,
         "org.scalatest"                     %%% "scalatest" % "3.0.5" % Test,
-        "org.typelevel"                     %%% "cats-core" % "1.5.0" % Test
+        "org.typelevel"                     %%% "cats-core" % "1.6.0" % Test
       )
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion            := "2.12.6",
-  organization            := "io.github.cquiroz.react",
+  scalaVersion            := "2.12.8",
+  organization            := "io.github.cquiroz",
   description             := "scala.js facade for react-copy-to-clipboard",
   homepage                := Some(url("https://github.com/cquiroz/scalajs-react-clipboard")),
   licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
