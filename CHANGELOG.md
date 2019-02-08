@@ -1,5 +1,9 @@
 # Changes
 
+## 0.6.0
+
+* Change organizationid and name
+
 ## 0.5.2
 
 * Updated to react 16.5.1
