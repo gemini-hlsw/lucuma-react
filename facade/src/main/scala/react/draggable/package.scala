@@ -3,37 +3,24 @@ package react
 import scala.scalajs.js
 import scala.scalajs.js.|
 import japgolly.scalajs.react.raw.JsNumber
-import japgolly.scalajs.react.raw.React
-import japgolly.scalajs.react.vdom.VdomNode
 import org.scalajs.dom.html.{Element => HTMLElement}
 import org.scalajs.dom.MouseEvent
+import react.common.EnumValue
 
 package object draggable {
-  implicit class VdomToRaw(val node: VdomNode) extends AnyVal {
-    def toRaw: React.Node = node.rawNode
-  }
-
   type Bounds = DraggableBounds | String | FalseBounds.type
 }
 
 package draggable {
-  sealed trait Axis {
-    def value: String
-  }
+  sealed trait Axis
 
   object Axis {
-    case object Both extends Axis {
-      val value = "both"
-    }
-    case object X extends Axis {
-      val value = "x"
-    }
-    case object Y extends Axis {
-      val value = "y"
-    }
-    case object None extends Axis {
-      val value = "none"
-    }
+    implicit val enumValue: EnumValue[Axis] = EnumValue.toLowerCaseString
+
+    case object Both extends Axis
+    case object X extends Axis
+    case object Y extends Axis
+    case object None extends Axis
   }
 
   case class Grid(x: JsNumber, y: JsNumber) {
