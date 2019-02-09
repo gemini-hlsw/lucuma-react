@@ -12,6 +12,7 @@ import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 import org.scalajs.dom.html.{Element => HTMLElement}
 import org.scalajs.dom.MouseEvent
+import react.common.syntax._
 
 trait Draggable extends js.Object
 
@@ -37,7 +38,7 @@ object Draggable {
     var defaultPosition: js.UndefOr[ControlPosition]
     var disabled: js.UndefOr[Boolean]
     // var enableUserSelectHack: js.UndefOr[Boolean]
-    var grid: js.UndefOr[js.Array[JsNumber]]  
+    var grid: js.UndefOr[js.Array[JsNumber]]
     var handle: js.UndefOr[String]
     var offsetParent: js.UndefOr[HTMLElement]
     var onMouseDown: js.UndefOr[raw.RawOnMouseDown]
@@ -67,7 +68,7 @@ object Draggable {
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.allowAnyClick = allowAnyClick
-    p.axis = axis.map(_.value)
+    p.axis = axis.toJs
     p.bounds = bounds.map { x =>
       (x: Any) match {
         case FalseBounds => false

@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.1
+
+* Use react-common
+
 ## 0.3.0
 
 * Changed organizationid and name
