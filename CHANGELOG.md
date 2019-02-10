@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.2
+
+* Fixed deployment
+
 ## 0.3.1
 
 * Use react-common

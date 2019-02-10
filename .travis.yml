@@ -17,7 +17,7 @@ install:
   - npm install jsdom
 script:
   - node --version
-  - sbt facade/test demo/fastOptJS::webpack demo/fastOptJS demo/fullOptJS demo/fullOptJS::webpack
+  - sbt facade/test demo/fastOptJS::webpack demo/fastOptJS
 after_success:
   - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then sbt ++$TRAVIS_SCALA_VERSION
     releaseEarly; fi
