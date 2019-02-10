@@ -19,7 +19,7 @@ script:
   - node --version
   - sbt -J-Xmx3G facade/test
 after_success:
-  - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then sbt ++$TRAVIS_SCALA_VERSION releaseEarly;
+  - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then git state;sbt ++$TRAVIS_SCALA_VERSION releaseEarly;
     fi
 before_install:
   - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then openssl aes-256-cbc -K $encrypted_15d587b6e127_key
