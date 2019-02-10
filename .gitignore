@@ -13,3 +13,4 @@ package-lock.json
 yarn.lock
 facade/yarn.lock
 travis/secrets.tar
+docs/
