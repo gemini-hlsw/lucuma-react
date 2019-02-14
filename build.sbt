@@ -114,7 +114,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "core"                 % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra"                % scalaJsReact,
         "org.scala-js"                      %%% "scalajs-dom"          % scalaJSDom,
-        "io.github.cquiroz"                 %%% "scalajs-react-common"      % "0.0.6",
+        "io.github.cquiroz.react"           %%% "common"               % "0.1.0",
         "com.github.japgolly.scalajs-react" %%% "test"                 % scalaJsReact % Test,
         "com.lihaoyi"                       %%% "utest"                % "0.6.6" % Test,
         "org.typelevel"                     %%% "cats-core"            % "1.5.0" % Test
@@ -125,7 +125,8 @@ lazy val facade =
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.8",
-  organization := "io.github.cquiroz",
+  organization := "io.github.cquiroz.react",
+  sonatypeProfileName     := "io.github.cquiroz",
   description := "scala.js facade for react-grid-layout ",
   homepage := Some(url("https://github.com/cquiroz/sjs-rgl")),
   licenses := Seq(

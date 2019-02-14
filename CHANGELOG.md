@@ -1,5 +1,9 @@
 # Changes
 
+## 0.0.4
+
+* Use react common
+
 ## 0.0.3
 
 * Support ResponsiveReactGridLayout
