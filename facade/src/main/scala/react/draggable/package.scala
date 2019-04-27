@@ -3,7 +3,7 @@ package react
 import scala.scalajs.js
 import scala.scalajs.js.|
 import japgolly.scalajs.react.raw.JsNumber
-import org.scalajs.dom.html.{Element => HTMLElement}
+import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
 import react.common.EnumValue
 
@@ -53,14 +53,11 @@ package draggable {
 
   object DraggableBounds {
 
-    def apply(left: JsNumber,
-              right: JsNumber,
-              top: JsNumber,
-              bottom: JsNumber): DraggableBounds = {
+    def apply(left: JsNumber, right: JsNumber, top: JsNumber, bottom: JsNumber): DraggableBounds = {
       val p = (new js.Object).asInstanceOf[DraggableBounds]
-      p.left = left
-      p.right = right
-      p.top = top
+      p.left   = left
+      p.right  = right
+      p.top    = top
       p.bottom = bottom
       p
     }
@@ -75,6 +72,23 @@ package draggable {
     var deltaY: JsNumber  = js.native
     var lastX: JsNumber   = js.native
     var lastY: JsNumber   = js.native
+  }
+
+  @js.native
+  trait PositionOffsetControlPosition extends js.Object {
+    var x: js.UndefOr[String | JsNumber]
+    var y: js.UndefOr[String | JsNumber]
+  }
+
+  object PositionOffsetControlPosition {
+
+    def apply(x: js.UndefOr[String | JsNumber] = js.undefined,
+              y: js.UndefOr[String | JsNumber] = js.undefined): PositionOffsetControlPosition = {
+      val p = (new js.Object).asInstanceOf[PositionOffsetControlPosition]
+      p.x = x
+      p.y = y
+      p
+    }
   }
 
   case object FalseBounds

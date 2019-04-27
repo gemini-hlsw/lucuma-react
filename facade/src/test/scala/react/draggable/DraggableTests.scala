@@ -233,5 +233,19 @@ object DraggableTests extends TestSuite {
       draggable.props.position.toOption.map(_.x) ==> Some(1)
       draggable.props.position.toOption.map(_.y) ==> Some(2)
     }
+    'supportPositionOffset - {
+      Draggable(Draggable.props(), <.div("Abc")).props.positionOffset.toOption ==> None
+      val draggable =
+        Draggable(Draggable.props(positionOffset = PositionOffsetControlPosition("10%", "20%")),
+                  <.div("Abc"))
+      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+        val html =
+          """<div class="react-draggable">Abc</div>""".stripMargin
+            .replaceAll("[\n\r]", "")
+        assert(m.outerHtmlScrubbed() == html)
+      }
+      draggable.props.positionOffset.toOption.map(_.x) ==> Some("10%")
+      draggable.props.positionOffset.toOption.map(_.y) ==> Some("20%")
+    }
   }
 }
