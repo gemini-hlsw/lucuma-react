@@ -1,7 +1,7 @@
 val reactJS        = "16.5.1"
 val scalaJsReact   = "1.3.1"
 val reactDraggable = "3.1.1"
-val scalaJSDom     = "0.9.6"
+val scalaJSDom     = "0.9.7"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -98,8 +98,9 @@ lazy val facade =
     .settings(commonSettings: _*)
     .settings(
       name := "react-draggable",
-      version in webpack := "4.28.2",
-      version in startWebpackDevServer := "3.1.11",
+      version in webpack := "4.30.0",
+      version in startWebpackDevServer := "3.3.1",
+      version in webpackCliVersion := "3.3.1",
       // Requires the DOM for tests
       requireJsDomEnv in Test          := true,
       // Compile tests to JS using fast-optimisation
@@ -115,7 +116,7 @@ lazy val facade =
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
         "io.github.cquiroz.react"           %%% "common"      % "0.1.0",
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
-        "com.lihaoyi"                       %%% "utest"       % "0.6.6" % Test,
+        "com.lihaoyi"                       %%% "utest"       % "0.6.7" % Test,
         "org.typelevel"                     %%% "cats-core"   % "1.6.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),

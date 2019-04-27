@@ -1,5 +1,10 @@
 # Changes
 
+## 0.3.3
+
+* Fixed deployment
+* Updated to react-draggable 3.3.0
+
 ## 0.3.2
 
 * Fixed deployment
