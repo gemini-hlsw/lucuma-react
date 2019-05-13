@@ -1,7 +1,7 @@
 import sbt._
 
-val reactJS = "16.5.1"
-val scalaJsReact = "1.3.1"
+val reactJS = "16.7.0"
+val scalaJsReact = "1.4.2"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -35,8 +35,8 @@ lazy val cats: Project =
       libraryDependencies ++= Seq(
         "org.typelevel" %%% "cats-core"  % "1.6.0",
         "org.typelevel" %%% "cats-testkit"  % "1.6.0" % Test,
-        "org.scalatest" %%% "scalatest" % "3.0.5" % Test,
-        "org.typelevel" %%% "discipline" % "0.10.0" % Test
+        "org.scalatest" %%% "scalatest" % "3.0.7" % Test,
+        "org.typelevel" %%% "discipline" % "0.11.1" % Test
       )
     ).dependsOn(common)
 
@@ -58,13 +58,14 @@ lazy val test =
       requireJsDomEnv in Test          := true,
       // Use yarn as it is faster than npm
       useYarn                          := true,
-      version in webpack               := "4.28.2",
-      version in startWebpackDevServer := "3.1.14",
+      version in webpack               := "4.30.0",
+      version in webpackCliVersion     := "3.3.2",
+      version in startWebpackDevServer := "3.3.1",
       scalaJSUseMainModuleInitializer  := false,
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test             := FastOptStage,
       libraryDependencies    ++= Seq(
-        "com.lihaoyi"   %%% "utest"      % "0.6.6" % Test,
+        "com.lihaoyi"   %%% "utest"      % "0.6.7" % Test,
         "org.typelevel" %%% "cats-core"  % "1.6.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "test" / "test.webpack.config.js"),
@@ -90,6 +91,7 @@ lazy val commonSettings = Seq(
   organization            := "io.github.cquiroz.react",
   description             := "scala.js react common utilities",
   sonatypeProfileName     := "io.github.cquiroz",
+  publishArtifact in Test := false,
   publishMavenStyle       := true,
   libraryDependencies    ++= Seq(
     "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
