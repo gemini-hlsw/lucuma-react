@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.0
+
+* Updated to scalajs-react 1.4.2
+
 ## 0.3.3
 
 * Fixed deployment
