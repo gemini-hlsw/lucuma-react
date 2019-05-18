@@ -1,6 +1,6 @@
-val reactJS        = "16.5.1"
-val scalaJsReact   = "1.3.1"
-val reactDraggable = "3.1.1"
+val reactJS        = "16.7.0"
+val scalaJsReact   = "1.4.2"
+val reactDraggable = "3.3.0"
 val scalaJSDom     = "0.9.7"
 
 parallelExecution in (ThisBuild, Test) := false
@@ -45,8 +45,9 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack := "4.28.2",
-      version in startWebpackDevServer := "3.1.11",
+      version in webpack := "4.30.0",
+      version in startWebpackDevServer := "3.3.1",
+      version in webpackCliVersion := "3.3.1",
       webpackConfigFile in fastOptJS := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"),
       webpackConfigFile in fullOptJS := Some(
@@ -81,7 +82,7 @@ lazy val demo =
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz.react" %%% "react-virtualized" % "0.5.0"
+        "io.github.cquiroz.react" %%% "react-virtualized" % "0.6.0"
       ),
       // don't publish the demo
       publish := {},
@@ -114,7 +115,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "core"        % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"      % "0.1.0",
+        "io.github.cquiroz.react"           %%% "common"      % "0.2.0",
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "com.lihaoyi"                       %%% "utest"       % "0.6.7" % Test,
         "org.typelevel"                     %%% "cats-core"   % "1.6.0" % Test
