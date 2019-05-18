@@ -20,7 +20,8 @@ module.exports.devServer = ({ host, port } = {}) => ({
     historyApiFallback: true,
     contentBase: [__dirname, rootDir],
     hot: true,
-    historyApiFallback: true
+    historyApiFallback: true,
+    disableHostCheck: true
   },
   module: {
     noParse: function(content) {
