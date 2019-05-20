@@ -100,7 +100,8 @@ package gridlayout {
     moved:       js.UndefOr[Boolean] = js.undefined,
     static:      js.UndefOr[Boolean] = js.undefined,
     isDraggable: js.UndefOr[Boolean] = js.undefined,
-    isResizable: js.UndefOr[Boolean] = js.undefined
+    isResizable: js.UndefOr[Boolean] = js.undefined,
+    handle: js.UndefOr[String] = js.undefined
   ) {
     def toRaw: raw.LayoutItem =
       new raw.LayoutItem(w,
@@ -115,7 +116,8 @@ package gridlayout {
                          moved,
                          static,
                          isDraggable,
-                         isResizable)
+                         isResizable,
+                         handle)
   }
 
   object LayoutItem {
@@ -132,7 +134,8 @@ package gridlayout {
                      l.moved,
                      l.static,
                      l.isDraggable,
-                     l.isResizable)
+                     l.isResizable,
+                     l.handle)
 
     private[gridlayout] def fromRawO(l: raw.LayoutItem): Option[LayoutItem] =
       if (l != null) {
@@ -149,7 +152,8 @@ package gridlayout {
                          l.moved,
                          l.static,
                          l.isDraggable,
-                         l.isResizable))
+                         l.isResizable,
+                         l.handle))
       } else {
         None
       }

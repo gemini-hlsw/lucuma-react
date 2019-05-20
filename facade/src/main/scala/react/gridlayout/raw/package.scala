@@ -41,7 +41,8 @@ package raw {
     val moved:       js.UndefOr[Boolean] = js.undefined,
     val static:      js.UndefOr[Boolean] = js.undefined,
     val isDraggable: js.UndefOr[Boolean] = js.undefined,
-    val isResizable: js.UndefOr[Boolean] = js.undefined
+    val isResizable: js.UndefOr[Boolean] = js.undefined,
+    val handle: js.UndefOr[String] = js.undefined
   ) extends js.Object
 
 }

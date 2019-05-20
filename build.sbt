@@ -1,8 +1,8 @@
-val reactJS         = "16.5.1"
-val scalaJsReact    = "1.3.1"
+val reactJS         = "16.7.0"
+val scalaJsReact    = "1.4.2"
 val reactGridLayout = "0.16.6"
-val scalaJSDom      = "0.9.6"
-val reactVirtualized = "9.21.0"
+val scalaJSDom      = "0.9.7"
+val reactVirtualized = "9.21.1"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -47,8 +47,8 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack := "4.28.2",
-      version in startWebpackDevServer := "3.1.14",
+      version in webpack := "4.32.0",
+      version in startWebpackDevServer := "3.3.1",
       webpackConfigFile in fastOptJS := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"),
       webpackConfigFile in fullOptJS := Some(
@@ -72,7 +72,7 @@ lazy val demo =
         "style-loader"                  -> "0.21.0",
         "postcss-loader"                -> "2.1.5",
         "cssnano"                       -> "3.10.0",
-        "optimize-css-assets-webpack-plugin"                       -> "4.0.1",
+        "optimize-css-assets-webpack-plugin" -> "4.0.1",
         "webpack-merge"                 -> "4.1.0",
         "webpack-dev-server-status-bar" -> "1.0.0"
       ),
@@ -83,7 +83,7 @@ lazy val demo =
         "react-virtualized" -> reactVirtualized
       ),
       libraryDependencies +=
-        "io.github.cquiroz"                 %%% "scalajs-react-virtualized" % "0.4.5",
+        "io.github.cquiroz.react" %%% "react-virtualized" % "0.6.0",
       // don't publish the demo
       publish := {},
       publishLocal := {},
@@ -99,8 +99,8 @@ lazy val facade =
     .settings(commonSettings: _*)
     .settings(
       name := "sjs-rgl",
-      version in webpack := "4.28.2",
-      version in startWebpackDevServer := "3.1.14",
+      version in webpack := "4.32.0",
+      version in startWebpackDevServer := "3.3.1",
       // Requires the DOM for tests
       requireJsDomEnv in Test          := true,
       // Compile tests to JS using fast-optimisation
@@ -114,10 +114,10 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "core"                 % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra"                % scalaJsReact,
         "org.scala-js"                      %%% "scalajs-dom"          % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"               % "0.1.0",
+        "io.github.cquiroz.react"           %%% "common"               % "0.2.0",
         "com.github.japgolly.scalajs-react" %%% "test"                 % scalaJsReact % Test,
-        "com.lihaoyi"                       %%% "utest"                % "0.6.6" % Test,
-        "org.typelevel"                     %%% "cats-core"            % "1.5.0" % Test
+        "com.lihaoyi"                       %%% "utest"                % "0.6.7" % Test,
+        "org.typelevel"                     %%% "cats-core"            % "1.6.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
       testFrameworks += new TestFramework("utest.runner.Framework")
