@@ -1,5 +1,9 @@
 # Changes
 
+## 0.7.0
+
+* Update scalajs-react
+
 ## 0.6.1
 
 * Change organizationid and name
