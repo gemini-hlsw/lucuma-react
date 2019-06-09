@@ -48,7 +48,7 @@ lazy val test =
     .settings(
       name                 := "test",
       libraryDependencies ++= Seq(
-        "com.lihaoyi" %%% "utest" % "0.6.6"
+        "com.lihaoyi" %%% "utest" % "0.6.9"
       ),
       npmDependencies in Compile      ++= Seq(
         "react"             -> reactJS,
