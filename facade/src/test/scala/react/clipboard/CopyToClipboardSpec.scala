@@ -40,7 +40,7 @@ class CopyToClipboardSpec
     CopyToClipboard(
       CopyToClipboard.props("text",
                             options = Some(ClipboardOptions(true, "msg"))),
-      <<.div("Copy")).props.options.debug should be(true)
+      <<.div("Copy")).props.options.debug.getOrElse(false) should be(true)
     CopyToClipboard(
       CopyToClipboard.props("text",
                             options = Some(ClipboardOptions(true, "msg"))),
