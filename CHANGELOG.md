@@ -1,5 +1,10 @@
 # Changes
 
+## 0.8.0
+
+* Update copy-to-clipboard to 3.2.0
+* Update scalajs to 1.8.0
+
 ## 0.7.0
 
 * Update scalajs-react
