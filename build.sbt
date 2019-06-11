@@ -35,7 +35,7 @@ lazy val cats: Project =
       libraryDependencies ++= Seq(
         "org.typelevel" %%% "cats-core"  % "1.6.1",
         "org.typelevel" %%% "cats-testkit"  % "1.6.1" % Test,
-        "org.scalatest" %%% "scalatest" % "3.0.7" % Test,
+        "org.scalatest" %%% "scalatest" % "3.0.8" % Test,
         "org.typelevel" %%% "discipline" % "0.11.1" % Test
       )
     ).dependsOn(common)
