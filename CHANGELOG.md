@@ -1,5 +1,9 @@
 # Changes
 
+## 0.2.2
+
+* Restructure of style classes
+
 ## 0.2.1
 
 * scalajs update

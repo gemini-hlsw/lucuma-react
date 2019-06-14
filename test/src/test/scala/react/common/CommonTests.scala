@@ -2,6 +2,7 @@ package react.common
 
 import react.common.syntax._
 import react.common.implicits._
+import react.common.style._
 import cats.implicits._
 import scala.scalajs.js
 import utest._

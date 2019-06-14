@@ -8,7 +8,7 @@ import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary._
 import org.scalacheck.Gen
 import org.scalacheck.Cogen
-import react.common._
+import react.common.style._
 
 final class ImplicitsSpec extends CatsSuite {
   implicit val arbJsNumber: Arbitrary[JsNumber] = Arbitrary {
@@ -56,5 +56,16 @@ final class StyleSpec extends CatsSuite {
   }
   implicit val cogenStyle: Cogen[Style] = Cogen[List[(String, String | Int)]].contramap(_.styles.toList)
 
+  implicit val arbGStyle: Arbitrary[Css] = Arbitrary {
+    for {
+        cs <- Gen.listOf(Gen.alphaLowerStr)
+    } yield Css(cs)
+  }
+
+  implicit val gStyleCogen: Cogen[Css] =
+    Cogen[String].contramap(_.htmlClass)
+
   checkAll("Eq[Style]", EqTests[Style].eqv)
+  checkAll("Eq[Css]", EqTests[Css].eqv)
+  checkAll("Monoid[Css]", MonoidTests[Css].monoid)
 }
