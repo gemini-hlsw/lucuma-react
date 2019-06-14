@@ -5,17 +5,9 @@ package common
 import scala.scalajs.js
 import scala.scalajs.js.|
 import japgolly.scalajs.react.raw.JsNumber
-import cats.Eq
-import cats.Show
-import cats.syntax.eq._
-import cats.instances.string._
-import cats.instances.int._
-import cats.instances.byte._
-import cats.instances.short._
-import cats.instances.long._
-import cats.instances.float._
-import cats.instances.double._
-import cats.instances.map._
+import cats._
+import cats.implicits._
+import react.common.style._
 
 package implicits {
 
@@ -82,6 +74,13 @@ package implicits {
     implicit val styleEq: Eq[Style] = Eq.by(_.styles)
     implicit val styleShow: Show[Style] =
       Show.show(_.styles.map { case (k, v) => s"$k=$v " }.mkString("Style(", ";", ")"))
+
+    implicit val cssEq: Eq[Css] = Eq.by(_.htmlClass)
+    implicit val cssShow: Show[Css] =
+      Show.show(x => x: String)
+
+    implicit val cssMonoid: Monoid[Css] =
+      Monoid[List[String]].imap(Css.apply)(_.htmlClasses)
   }
 
 }

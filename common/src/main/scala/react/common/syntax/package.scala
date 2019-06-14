@@ -6,6 +6,7 @@ import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.raw.React
 import japgolly.scalajs.react.vdom.VdomNode
+import react.common.style._
 
 package syntax {
 
