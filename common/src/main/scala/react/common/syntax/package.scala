@@ -2,6 +2,7 @@ package react.common
 
 import scala.scalajs.js
 import scala.scalajs.js.|
+import scala.scalajs.js.JSConverters._
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.raw.React
@@ -49,7 +50,8 @@ package syntax {
     implicit def syntaxCallbackPair1[A](a: (js.UndefOr[A => Callback], js.UndefOr[Callback])): CallbackPairOps1[A] =
       new CallbackPairOps1(a._1, a._2)
 
-    implicit def syntaxCallbackPair2[A, B](a: (js.UndefOr[(A, B) => Callback], js.UndefOr[Callback])): CallbackPairOps2[A, B] =
+    implicit def syntaxCallbackPair2[A, B](
+        a: (js.UndefOr[(A, B) => Callback], js.UndefOr[Callback])): CallbackPairOps2[A, B] =
       new CallbackPairOps2(a._1, a._2)
   }
 
@@ -61,9 +63,28 @@ package syntax {
     def toJs: js.UndefOr[js.Function2[A, B, Unit]] = a.toJs.orElse(b.toJs2)
   }
 
+  trait StyleSyntax {
+    implicit def styePairU(a: (js.UndefOr[String], js.UndefOr[Css])): ClassnameCssOps =
+      new ClassnameCssOps(a)
+
+    implicit def styePair(a: (String, Css)): ClassnameCssOps =
+      new ClassnameCssOps((a._1: js.UndefOr[String], a._2: js.UndefOr[Css]))
+  }
+
+  final class ClassnameCssOps(cn: (js.UndefOr[String], js.UndefOr[Css])) {
+
+    def toJs: js.UndefOr[String] = (cn._1.toOption, cn._2.toOption) match {
+      case (cn @ Some(_), None) => cn.orUndefined
+      case (None, cz @ Some(_)) => cz.map(x => x: String).orUndefined
+      case (Some(cs), Some(cz)) => s"$cs ${cz: String}"
+      case _                    => ""
+    }
+
+  }
+
 }
 
-package object syntax extends EnumValueSyntax with CallbackPairSyntax {
+package object syntax extends EnumValueSyntax with CallbackPairSyntax with StyleSyntax {
   implicit class StyleOps(val s: Style) extends AnyVal {
     def toJsObject: js.Object = Style.toJsObject(s)
   }
@@ -78,8 +99,8 @@ package object syntax extends EnumValueSyntax with CallbackPairSyntax {
   }
 
   implicit class CallbackOps(val c: js.UndefOr[Callback]) extends AnyVal {
-    def toJs: js.UndefOr[js.Function0[Unit]]        = c.map(x => () => x.runNow())
-    def toJs1[A]: js.UndefOr[js.Function1[A, Unit]] = c.map(x => (_: A) => x.runNow())
+    def toJs: js.UndefOr[js.Function0[Unit]]              = c.map(x => () => x.runNow())
+    def toJs1[A]: js.UndefOr[js.Function1[A, Unit]]       = c.map(x => (_: A) => x.runNow())
     def toJs2[A, B]: js.UndefOr[js.Function2[A, B, Unit]] = c.map(x => (_: A, _: B) => x.runNow())
   }
 

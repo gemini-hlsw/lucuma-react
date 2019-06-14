@@ -35,5 +35,11 @@ object CommonTests extends TestSuite with TestUtils {
       val b: js.Object = Style(Map("height" -> 42, "background" -> "black")).toJsObject
       assert(a === b)
     }
+    'cssMix - {
+      val className = "header"
+      val clz       = Css("abc")
+      val clz2      = Css(List("c1", "c2"))
+      assert((className, clz |+| clz2).toJs === "header abc c1 c2")
+    }
   }
 }

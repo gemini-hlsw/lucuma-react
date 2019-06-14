@@ -12,7 +12,7 @@ package object style {
     ^.className := s.htmlClass
 
   implicit final def cssToTagString(s: Css): String =
-    s.htmlClass.mkString(" ")
+    s.htmlClass
 }
 
 package style {
