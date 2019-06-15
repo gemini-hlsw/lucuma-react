@@ -74,6 +74,11 @@ package implicits {
     implicit val styleEq: Eq[Style] = Eq.by(_.styles)
     implicit val styleShow: Show[Style] =
       Show.show(_.styles.map { case (k, v) => s"$k=$v " }.mkString("Style(", ";", ")"))
+    implicit val styleMonoid: Monoid[Style] = new Monoid[Style] {
+      override val empty: Style = Style(Map.empty)
+      override def combine(a: Style, b: Style): Style =
+        Style(a.styles ++ b.styles)
+    }
 
     implicit val cssEq: Eq[Css] = Eq.by(_.htmlClass)
     implicit val cssShow: Show[Css] =

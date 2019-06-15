@@ -1,4 +1,5 @@
 package react
+
 package common
 
 import scala.scalajs.js
@@ -6,16 +7,18 @@ import scala.scalajs.js.|
 import js.JSConverters._
 import japgolly.scalajs.react.vdom.html_<^._
 
-package object style {
-
-  implicit final def cssToTagMod(s: Css): TagMod =
-    ^.className := s.htmlClass
-
-  implicit final def cssToTagString(s: Css): String =
-    s.htmlClass
-}
+package object style extends StyleOps
 
 package style {
+
+  trait StyleOps {
+
+    implicit final def cssToTagMod(s: Css): TagMod =
+      ^.className := s.htmlClass
+
+    implicit final def cssToTagString(s: Css): String =
+      s.htmlClass
+  }
 
   /**
     * Simple class to represent styles

@@ -1,5 +1,11 @@
 # Changes
 
+## 0.2.4
+
+* Bug fixed an adding styles
+* Removed dangerous implicit conversion
+* Rearrange packages
+
 ## 0.2.3
 
 * Syntax for `Css` class

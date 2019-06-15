@@ -68,4 +68,5 @@ final class StyleSpec extends CatsSuite {
   checkAll("Eq[Style]", EqTests[Style].eqv)
   checkAll("Eq[Css]", EqTests[Css].eqv)
   checkAll("Monoid[Css]", MonoidTests[Css].monoid)
+  checkAll("Monoid[Style]", MonoidTests[Style].monoid)
 }

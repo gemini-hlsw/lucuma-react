@@ -67,8 +67,6 @@ package syntax {
     implicit def styePairU(a: (js.UndefOr[String], js.UndefOr[Css])): ClassnameCssOps =
       new ClassnameCssOps(a)
 
-    implicit def styePair(a: (String, Css)): ClassnameCssOps =
-      new ClassnameCssOps((a._1: js.UndefOr[String], a._2: js.UndefOr[Css]))
   }
 
   final class ClassnameCssOps(cn: (js.UndefOr[String], js.UndefOr[Css])) {
@@ -77,7 +75,7 @@ package syntax {
       case (cn @ Some(_), None) => cn.orUndefined
       case (None, cz @ Some(_)) => cz.map(x => x: String).orUndefined
       case (Some(cs), Some(cz)) => s"$cs ${cz: String}"
-      case _                    => ""
+      case _                    => js.undefined
     }
 
   }
