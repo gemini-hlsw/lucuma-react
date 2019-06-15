@@ -3,7 +3,7 @@ package react
 import scala.scalajs.js
 import scala.scalajs.js.|
 
-package object common {
+package object common extends style.StyleOps {
 
   def merge(a: js.Object, b: js.Object): js.Object = {
     val m = js.Dictionary.empty[js.Any]
@@ -21,10 +21,12 @@ package object common {
 
     m.asInstanceOf[js.Object]
   }
+
+  val Style = style.Style
+  val Css   = style.Css
 }
 
 package common {
-
   trait EnumValue[A] {
     def value(a: A): String
   }

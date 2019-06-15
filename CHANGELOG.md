@@ -4,6 +4,7 @@
 
 * Bug fixed an adding styles
 * Removed dangerous implicit conversion
+* Rearrange packages
 
 ## 0.2.3
 
