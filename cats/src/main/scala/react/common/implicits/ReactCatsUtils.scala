@@ -7,7 +7,6 @@ import scala.scalajs.js.|
 import japgolly.scalajs.react.raw.JsNumber
 import cats._
 import cats.implicits._
-import react.common.style._
 
 package implicits {
 

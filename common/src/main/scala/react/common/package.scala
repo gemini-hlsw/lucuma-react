@@ -24,6 +24,8 @@ package object common extends style.StyleOps {
 
   val Style = style.Style
   val Css   = style.Css
+  type Style = style.Style
+  type Css   = style.Css
 }
 
 package common {
