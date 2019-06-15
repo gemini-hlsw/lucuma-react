@@ -5,6 +5,8 @@ val scalaJsReact = "1.4.2"
 
 parallelExecution in (ThisBuild, Test) := false
 
+ThisBuild / turbo := true
+
 // sbt-release-early
 inThisBuild(List(
     homepage                := Some(url("https://github.com/cquiroz/scalajs-react-common")),

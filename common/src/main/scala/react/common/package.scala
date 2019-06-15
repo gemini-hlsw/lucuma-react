@@ -3,7 +3,7 @@ package react
 import scala.scalajs.js
 import scala.scalajs.js.|
 
-package object common extends style.StyleOps {
+package object common {
 
   def merge(a: js.Object, b: js.Object): js.Object = {
     val m = js.Dictionary.empty[js.Any]
