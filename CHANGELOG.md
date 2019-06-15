@@ -1,8 +1,13 @@
 # Changes
 
+## 0.2.3
+
+* Syntax for `Css` class
+
 ## 0.2.2
 
 * Restructure of style classes
+* Breaking change, the `Style` class has moved to `react.common.style`
 
 ## 0.2.1
 
