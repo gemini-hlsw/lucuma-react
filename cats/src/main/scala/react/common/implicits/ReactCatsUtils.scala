@@ -7,7 +7,7 @@ import scala.scalajs.js.|
 import japgolly.scalajs.react.raw.JsNumber
 import cats._
 import cats.implicits._
-import react.common.style._
+import react.common.syntax.AllSyntax
 
 package implicits {
 
@@ -82,7 +82,7 @@ package implicits {
 
     implicit val cssEq: Eq[Css] = Eq.by(_.htmlClass)
     implicit val cssShow: Show[Css] =
-      Show.show(x => x: String)
+      Show.show(_.htmlClass)
 
     implicit val cssMonoid: Monoid[Css] =
       Monoid[List[String]].imap(Css.apply)(_.htmlClasses)
@@ -90,4 +90,4 @@ package implicits {
 
 }
 
-package object implicits extends ReactCatsImplicits
+package object implicits extends ReactCatsImplicits with AllSyntax

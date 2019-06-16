@@ -8,7 +8,7 @@ import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary._
 import org.scalacheck.Gen
 import org.scalacheck.Cogen
-import react.common.style._
+import react.common._
 
 final class ImplicitsSpec extends CatsSuite {
   implicit val arbJsNumber: Arbitrary[JsNumber] = Arbitrary {
@@ -58,7 +58,7 @@ final class StyleSpec extends CatsSuite {
 
   implicit val arbGStyle: Arbitrary[Css] = Arbitrary {
     for {
-        cs <- Gen.listOf(Gen.alphaLowerStr)
+      cs <- Gen.listOf(Gen.alphaLowerStr)
     } yield Css(cs)
   }
 

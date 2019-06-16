@@ -7,17 +7,34 @@ import scala.scalajs.js.|
 import js.JSConverters._
 import japgolly.scalajs.react.vdom.html_<^._
 
-package object style extends StyleOps
-
 package style {
+  final class StyleOps(val s: Style) extends AnyVal {
+    def toJsObject: js.Object = Style.toJsObject(s)
+  }
 
-  trait StyleOps {
+  final class ClassnameCssOps(cn: (js.UndefOr[String], js.UndefOr[Css])) {
+
+    def toJs: js.UndefOr[String] = (cn._1.toOption, cn._2.toOption) match {
+      case (cn @ Some(_), None) => cn.orUndefined
+      case (None, cz @ Some(_)) => cz.map(_.htmlClass).orUndefined
+      case (Some(cs), Some(cz)) => s"$cs ${cz.htmlClass}"
+      case _                    => js.undefined
+    }
+
+  }
+
+  trait StyleSyntax {
+    implicit def styePairU(a: (js.UndefOr[String], js.UndefOr[Css])): ClassnameCssOps =
+      new ClassnameCssOps(a)
+
+    implicit def styeOps(s: Style): StyleOps =
+      new StyleOps(s)
 
     implicit final def cssToTagMod(s: Css): TagMod =
       ^.className := s.htmlClass
 
-    implicit final def cssToTagString(s: Css): String =
-      s.htmlClass
+    implicit final def listCssToTagMod(s: List[Css]): TagMod =
+      s.map(cssToTagMod).toTagMod
   }
 
   /**

@@ -2,12 +2,10 @@ package react.common
 
 import scala.scalajs.js
 import scala.scalajs.js.|
-import scala.scalajs.js.JSConverters._
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.raw.React
 import japgolly.scalajs.react.vdom.VdomNode
-import react.common.style._
 
 package syntax {
 
@@ -63,54 +61,30 @@ package syntax {
     def toJs: js.UndefOr[js.Function2[A, B, Unit]] = a.toJs.orElse(b.toJs2)
   }
 
-  trait StyleSyntax {
-    implicit def styePairU(a: (js.UndefOr[String], js.UndefOr[Css])): ClassnameCssOps =
-      new ClassnameCssOps(a)
-
-  }
-
-  final class ClassnameCssOps(cn: (js.UndefOr[String], js.UndefOr[Css])) {
-
-    def toJs: js.UndefOr[String] = (cn._1.toOption, cn._2.toOption) match {
-      case (cn @ Some(_), None) => cn.orUndefined
-      case (None, cz @ Some(_)) => cz.map(x => x: String).orUndefined
-      case (Some(cs), Some(cz)) => s"$cs ${cz: String}"
-      case _                    => js.undefined
-    }
-
-  }
-
-}
-
-package object syntax extends EnumValueSyntax with CallbackPairSyntax with StyleSyntax {
-  implicit class StyleOps(val s: Style) extends AnyVal {
-    def toJsObject: js.Object = Style.toJsObject(s)
-  }
-
-  // Some useful conversions
-  implicit class VdomToRaw(val node: VdomNode) extends AnyVal {
+  final class VdomOps(val node: VdomNode) extends AnyVal {
     def toRaw: React.Node = node.rawNode
   }
 
-  implicit class VdomNodeOps(val c: js.UndefOr[VdomNode]) extends AnyVal {
+  final class VdomUndefOps(val c: js.UndefOr[VdomNode]) extends AnyVal {
     def toJs: js.UndefOr[React.Node] = c.map(_.rawNode)
   }
 
-  implicit class CallbackOps(val c: js.UndefOr[Callback]) extends AnyVal {
+  // Some useful conversions
+  final class CallbackOps(val c: js.UndefOr[Callback]) extends AnyVal {
     def toJs: js.UndefOr[js.Function0[Unit]]              = c.map(x => () => x.runNow())
     def toJs1[A]: js.UndefOr[js.Function1[A, Unit]]       = c.map(x => (_: A) => x.runNow())
     def toJs2[A, B]: js.UndefOr[js.Function2[A, B, Unit]] = c.map(x => (_: A, _: B) => x.runNow())
   }
 
-  implicit class CallbackOps1[A](val c: js.UndefOr[A => Callback]) extends AnyVal {
+  final class CallbackOps1[A](val c: js.UndefOr[A => Callback]) extends AnyVal {
     def toJs: js.UndefOr[js.Function1[A, Unit]] = c.map(x => (a: A) => x(a).runNow())
   }
 
-  implicit class CallbackOps2[A, B](val c: js.UndefOr[(A, B) => Callback]) extends AnyVal {
+  final class CallbackOps2[A, B](val c: js.UndefOr[(A, B) => Callback]) extends AnyVal {
     def toJs: js.UndefOr[js.Function2[A, B, Unit]] = c.map(x => (a: A, b: B) => x(a, b).runNow())
   }
 
-  implicit class JsNumberOps(val d: JsNumber) extends AnyVal {
+  final class JsNumberOps(val d: JsNumber) extends AnyVal {
 
     // Some uglies for js union types
     def toDouble: Double = (d: Any) match {
@@ -130,4 +104,28 @@ package object syntax extends EnumValueSyntax with CallbackPairSyntax with Style
       case d: Int    => d
     }
   }
+
+  trait AllSyntax extends EnumValueSyntax with CallbackPairSyntax with style.StyleSyntax {
+    implicit def vdomOps(node: VdomNode): VdomOps =
+      new VdomOps(node)
+
+    implicit def vdomUndefOps(node: js.UndefOr[VdomNode]): VdomUndefOps =
+      new VdomUndefOps(node)
+
+    implicit def callbackOps(c: js.UndefOr[Callback]): CallbackOps =
+      new CallbackOps(c)
+
+    implicit def callbackOps1[A](c: js.UndefOr[A => Callback]): CallbackOps1[A] =
+      new CallbackOps1(c)
+
+    implicit def callbackOps2[A, B](c: js.UndefOr[(A, B) => Callback]): CallbackOps2[A, B] =
+      new CallbackOps2(c)
+
+    implicit def jsNumberOps(d: JsNumber): JsNumberOps =
+      new JsNumberOps(d)
+
+  }
+
 }
+
+package object syntax extends AllSyntax
