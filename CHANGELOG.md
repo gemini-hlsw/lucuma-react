@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.2
+
+* Updated scalajs-react-common
+
 ## 0.4.1
 
 * Updated to scalajs 0.2.8
