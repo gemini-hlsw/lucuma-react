@@ -7,9 +7,46 @@ import scala.scalajs.js.|
 import js.JSConverters._
 import japgolly.scalajs.react.vdom.html_<^._
 
+package object style {
+  implicit val IntStyleExtractor: StyleExtractor[Int] = new StyleExtractor[Int] {
+    override def extract(s: Style, key: String): Option[Int] =
+      s.styles.get(key).flatMap { x =>
+        (x: Any) match {
+          case x: Int => Some(x)
+          case _      => None
+        }
+      }
+  }
+
+  implicit val StringStyleExtractor: StyleExtractor[String] = new StyleExtractor[String] {
+    override def extract(s: Style, key: String): Option[String] =
+      s.styles.get(key).flatMap { x =>
+        (x: Any) match {
+          case x: String => Some(x)
+          case _         => None
+        }
+      }
+  }
+}
+
 package style {
+  sealed trait StyleExtractor[A] {
+    def extract(s: Style, key: String): Option[A]
+  }
+
   final class StyleOps(val s: Style) extends AnyVal {
     def toJsObject: js.Object = Style.toJsObject(s)
+
+    def extract[A](key: String)(implicit S: StyleExtractor[A]): Option[A] =
+      S.extract(s, key)
+
+    def remove(key: String): Style =
+      if (s.styles.contains(key)) {
+        Style(s.styles - key)
+      } else {
+        s
+      }
+
   }
 
   final class ClassnameCssOps(cn: (js.UndefOr[String], js.UndefOr[Css])) {
