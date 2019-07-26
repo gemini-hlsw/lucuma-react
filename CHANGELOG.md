@@ -1,5 +1,9 @@
 # Changes
 
+## 0.2.5
+
+* Style utility methods
+
 ## 0.2.4
 
 * Bug fixed an adding styles
