@@ -118,7 +118,7 @@ lazy val facade =
         "io.github.cquiroz.react"           %%% "common"      % "0.2.5",
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "com.lihaoyi"                       %%% "utest"       % "0.7.1" % Test,
-        "org.typelevel"                     %%% "cats-core"   % "1.6.1" % Test
+        "org.typelevel"                     %%% "cats-core"   % "2.0.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
       testFrameworks += new TestFramework("utest.runner.Framework")
