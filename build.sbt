@@ -7,6 +7,8 @@ parallelExecution in (ThisBuild, Test) := false
 
 ThisBuild / turbo := true
 
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
 // sbt-release-early
 inThisBuild(List(
     homepage                := Some(url("https://github.com/cquiroz/scalajs-react-common")),
@@ -35,10 +37,11 @@ lazy val cats: Project =
     .settings(
       name                 := "cats",
       libraryDependencies ++= Seq(
-        "org.typelevel" %%% "cats-core"  % "1.6.1",
-        "org.typelevel" %%% "cats-testkit"  % "1.6.1" % Test,
+        "org.typelevel" %%% "cats-core"  % "2.0.0",
+        "org.typelevel" %%% "cats-testkit"  % "2.0.0" % Test,
+        "org.typelevel" %%% "cats-testkit-scalatest" % "1.0.0-M2" % Test,
         "org.scalatest" %%% "scalatest" % "3.0.8" % Test,
-        "org.typelevel" %%% "discipline" % "0.11.1" % Test
+        "org.typelevel" %%% "discipline-core" % "1.0.0" % Test
       )
     ).dependsOn(common)
 
@@ -67,8 +70,8 @@ lazy val test =
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test             := FastOptStage,
       libraryDependencies    ++= Seq(
-        "com.lihaoyi"   %%% "utest"      % "0.6.7" % Test,
-        "org.typelevel" %%% "cats-core"  % "1.6.1" % Test
+        "com.lihaoyi"   %%% "utest"      % "0.7.1" % Test,
+        "org.typelevel" %%% "cats-core"  % "2.0.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "test" / "test.webpack.config.js"),
       testFrameworks                  += new TestFramework("utest.runner.Framework")
@@ -89,7 +92,7 @@ lazy val root = (project in file("."))
   .aggregate(common, cats, test)
 
 lazy val commonSettings = Seq(
-  scalaVersion            := "2.12.8",
+  scalaVersion            := "2.12.9",
   organization            := "io.github.cquiroz.react",
   description             := "scala.js react common utilities",
   sonatypeProfileName     := "io.github.cquiroz",
