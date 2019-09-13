@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.0
+
+* Updgrate to cats 2.0.0
+
 ## 0.2.5
 
 * Style utility methods

@@ -9,12 +9,11 @@ ThisBuild / turbo := true
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-// sbt-release-early
 inThisBuild(List(
-    homepage                := Some(url("https://github.com/cquiroz/scalajs-react-common")),
-    licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
+    homepage   := Some(url("https://github.com/cquiroz/scalajs-react-common")),
+    licenses   := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
     developers := List(Developer("cquiroz", "Carlos Quiroz", "carlos.m.quiroz@gmail.com", url("https://github.com/cquiroz"))),
-    scmInfo := Some(ScmInfo(url("https://github.com/cquiroz/scalajs-react-common"), "scm:git:git@github.com:cquiroz/scalajs-react-common.git"))
+    scmInfo    := Some(ScmInfo(url("https://github.com/cquiroz/scalajs-react-common"), "scm:git:git@github.com:cquiroz/scalajs-react-common.git"))
 ))
 
 lazy val common: Project =
@@ -32,11 +31,11 @@ lazy val cats: Project =
     .settings(
       name                 := "cats",
       libraryDependencies ++= Seq(
-        "org.typelevel" %%% "cats-core"  % "2.0.0",
-        "org.typelevel" %%% "cats-testkit"  % "2.0.0" % Test,
+        "org.typelevel" %%% "cats-core"              % "2.0.0",
+        "org.typelevel" %%% "cats-testkit"           % "2.0.0"    % Test,
         "org.typelevel" %%% "cats-testkit-scalatest" % "1.0.0-M2" % Test,
-        "org.scalatest" %%% "scalatest" % "3.0.8" % Test,
-        "org.typelevel" %%% "discipline-core" % "1.0.0" % Test
+        "org.scalatest" %%% "scalatest"              % "3.0.8"    % Test,
+        "org.typelevel" %%% "discipline-core"        % "1.0.0"    % Test
       )
     ).dependsOn(common)
 
@@ -65,8 +64,8 @@ lazy val test =
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test             := FastOptStage,
       libraryDependencies    ++= Seq(
-        "com.lihaoyi"   %%% "utest"      % "0.7.1" % Test,
-        "org.typelevel" %%% "cats-core"  % "2.0.0" % Test
+        "com.lihaoyi"   %%% "utest"     % "0.7.1" % Test,
+        "org.typelevel" %%% "cats-core" % "2.0.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "test" / "test.webpack.config.js"),
       testFrameworks                  += new TestFramework("utest.runner.Framework")
@@ -94,8 +93,8 @@ lazy val commonSettings = Seq(
   publishArtifact in Test := false,
   publishMavenStyle       := true,
   libraryDependencies    ++= Seq(
-    "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
-    "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % "test"
+    "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
+    "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % "test"
   ),
   scalacOptions           := Seq(
       "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
