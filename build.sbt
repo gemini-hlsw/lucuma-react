@@ -91,7 +91,6 @@ lazy val commonSettings = Seq(
   description             := "scala.js react common utilities",
   sonatypeProfileName     := "io.github.cquiroz",
   publishArtifact in Test := false,
-  publishMavenStyle       := true,
   libraryDependencies    ++= Seq(
     "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
     "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % "test"
