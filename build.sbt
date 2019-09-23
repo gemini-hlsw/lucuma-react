@@ -17,11 +17,6 @@ inThisBuild(List(
     licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
     developers := List(Developer("cquiroz", "Carlos Quiroz", "carlos.m.quiroz@gmail.com", url("https://github.com/cquiroz"))),
     scmInfo := Some(ScmInfo(url("https://github.com/cquiroz/scalajs-react-clipboard"), "scm:git:git@github.com:cquiroz/scalajs-react-clipboard")),
-
-    // These are the sbt-release-early settings to configure
-    pgpPublicRing := file("./travis/local.pubring.asc"),
-    pgpSecretRing := file("./travis/local.secring.asc"),
-    releaseEarlyWith := SonatypePublisher
 ))
 
 val root =
@@ -125,12 +120,11 @@ lazy val facade =
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.8",
+  scalaVersion := "2.12.10",
   organization := "io.github.cquiroz.react",
   sonatypeProfileName     := "io.github.cquiroz",
   description := "scala.js facade for react-draggable ",
   publishArtifact in Test := false,
-  publishMavenStyle := true,
   scalacOptions := Seq(
     "-deprecation", // Emit warning and location for usages of deprecated APIs.
     "-encoding",
