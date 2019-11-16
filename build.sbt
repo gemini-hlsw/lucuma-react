@@ -33,9 +33,7 @@ lazy val cats: Project =
       libraryDependencies ++= Seq(
         "org.typelevel" %%% "cats-core"              % "2.0.0",
         "org.typelevel" %%% "cats-testkit"           % "2.0.0"    % Test,
-        "org.typelevel" %%% "cats-testkit-scalatest" % "1.0.0-RC1" % Test,
-        "org.scalatest" %%% "scalatest"              % "3.0.8"    % Test,
-        "org.typelevel" %%% "discipline-core"        % "1.0.1"    % Test
+        "org.typelevel" %%% "cats-testkit-scalatest" % "1.0.0-RC1" % Test
       )
     ).dependsOn(common)
 
@@ -86,7 +84,7 @@ lazy val root = (project in file("."))
   .aggregate(common, cats, test)
 
 lazy val commonSettings = Seq(
-  scalaVersion            := "2.12.9",
+  scalaVersion            := "2.12.10",
   organization            := "io.github.cquiroz.react",
   description             := "scala.js react common utilities",
   sonatypeProfileName     := "io.github.cquiroz",
