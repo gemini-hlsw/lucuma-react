@@ -10,4 +10,4 @@ jobs:
       - uses: actions/checkout@v1
       - uses: olafurpg/setup-scala@v2
       - name: Run tests
-        run: csbt facade/test demo/fastOptJS::webpack demo/fastOptJS
+        run: csbt facade/test
