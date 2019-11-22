@@ -1,5 +1,7 @@
 package react
 
+import japgolly.scalajs.react.CtorType
+import japgolly.scalajs.react.vdom.html_<^.VdomElement
 import scala.scalajs.js
 import scala.scalajs.js.|
 
@@ -21,6 +23,12 @@ package object common {
 
     m.asInstanceOf[js.Object]
   }
+
+  implicit def props2Component(p: ReactProps): VdomElement = p.render
+
+  implicit def propsWithChildren2Component(p: ReactPropsWithChildren): RenderWithChildren = new RenderWithChildren(p)
+
+  implicit def propsWithEmptyChildren2Component(p: ReactPropsWithChildren): VdomElement = p.render(Seq.empty)
 
   val Style = style.Style
   val Css   = style.Css
@@ -89,6 +97,20 @@ package common {
         }
       }
 
+  }
+
+  trait ReactProps {
+    @inline def render: VdomElement
+  }
+
+  class RenderWithChildren(p: ReactPropsWithChildren) {
+
+    def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
+      p.render(first +: rest)
+  }
+
+  trait ReactPropsWithChildren {
+    @inline def render: Seq[CtorType.ChildArg] => VdomElement
   }
 
 }

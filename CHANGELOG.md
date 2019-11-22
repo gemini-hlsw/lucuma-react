@@ -1,8 +1,12 @@
 # Changes
 
+## 0.3.2
+
+* Added ReactProps traits
+
 ## 0.3.0
 
-* Updgrate to cats 2.0.0
+* Upgrade to cats 2.0.0
 
 ## 0.2.5
 
