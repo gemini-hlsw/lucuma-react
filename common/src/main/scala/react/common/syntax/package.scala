@@ -49,7 +49,8 @@ package syntax {
       new CallbackPairOps1(a._1, a._2)
 
     implicit def syntaxCallbackPair2[A, B](
-        a: (js.UndefOr[(A, B) => Callback], js.UndefOr[Callback])): CallbackPairOps2[A, B] =
+        a: (js.UndefOr[(A, B) => Callback], js.UndefOr[Callback])
+    ): CallbackPairOps2[A, B] =
       new CallbackPairOps2(a._1, a._2)
   }
 

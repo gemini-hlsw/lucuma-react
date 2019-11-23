@@ -12,6 +12,7 @@ object ReactProps {
 }
 
 class RenderWithChildren(p: ReactPropsWithChildren) {
+
   def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
     p.render(first +: rest)
 }
@@ -21,9 +22,7 @@ trait ReactPropsWithChildren {
 }
 
 object ReactPropsWithChildren {
-  implicit def propsWithChildren2Component
-    (p: ReactPropsWithChildren): RenderWithChildren = new RenderWithChildren(p)
+  implicit def propsWithChildren2Component(p: ReactPropsWithChildren): RenderWithChildren = new RenderWithChildren(p)
 
-  implicit def propsWithEmptyChildren2Component
-    (p: ReactPropsWithChildren): VdomElement = p.render(Seq.empty)
+  implicit def propsWithEmptyChildren2Component(p: ReactPropsWithChildren): VdomElement = p.render(Seq.empty)
 }

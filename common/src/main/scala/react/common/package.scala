@@ -29,6 +29,7 @@ package object common {
 }
 
 package common {
+
   trait EnumValue[A] {
     def value(a: A): String
   }
