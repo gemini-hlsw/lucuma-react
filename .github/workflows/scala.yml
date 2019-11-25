@@ -9,5 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: olafurpg/setup-scala@v2
+      - name: Checking your code to see if u r naughty or nice
+        uses: openlawteam/scalafmt-ci@v2
+        with:
+          args: "--exclude=third_party --list"
       - name: Run tests
         run: csbt facade/test
