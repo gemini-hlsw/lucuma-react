@@ -4,6 +4,8 @@ val scalaJsReact    = "1.4.2"
 
 parallelExecution in (ThisBuild, Test) := false
 
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
 inThisBuild(
   List(
     homepage := Some(url("https://github.com/cquiroz/scalajs-react-clipboard")),
@@ -69,9 +71,11 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReact % Test,
         "io.github.cquiroz.react"           %%% "common"    % "0.3.2",
-        "org.scalatest"                     %%% "scalatest" % "3.0.8" % Test,
+        "io.github.cquiroz.react"           %%% "test"      % "0.3.2" % Test,
+        "com.lihaoyi"                       %%% "utest"     % "0.7.1" % Test,
         "org.typelevel"                     %%% "cats-core" % "2.0.0" % Test
-      )
+      ),
+      testFrameworks += new TestFramework("utest.runner.Framework")
     )
 
 lazy val commonSettings = Seq(
