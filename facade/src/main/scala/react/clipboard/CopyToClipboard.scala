@@ -1,4 +1,5 @@
 package react
+
 package clipboard
 
 import japgolly.scalajs.react._
@@ -13,8 +14,10 @@ object CopyToClipboard {
   @JSImport("copy-to-clipboard", JSImport.Namespace)
   object JsCopy extends js.Function2[String, ClipboardOptions, Boolean] {
 
-    def apply(text: String,
-              options: ClipboardOptions = ClipboardOptions.Default): Boolean =
+    def apply(
+        text: String,
+        options: ClipboardOptions = ClipboardOptions.Default
+    ): Boolean =
       js.native
   }
 

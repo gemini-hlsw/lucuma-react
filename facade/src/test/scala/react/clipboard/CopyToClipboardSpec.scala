@@ -22,7 +22,8 @@ class CopyToClipboardSpec
   }
   it should "support text" in {
     CopyToClipboard(CopyToClipboard.props("text"), <<.div("Copy")).props.text should be(
-      "text")
+      "text"
+    )
   }
   it should "support onCopy callback" in {
     val textVar          = ReactTestVar("")
@@ -38,12 +39,18 @@ class CopyToClipboardSpec
   }
   it should "support options" in {
     CopyToClipboard(
-      CopyToClipboard.props("text",
-                            options = Some(ClipboardOptions(true, "msg"))),
-      <<.div("Copy")).props.options.debug.getOrElse(false) should be(true)
+      CopyToClipboard.props(
+        "text",
+        options = Some(ClipboardOptions(true, "msg"))
+      ),
+      <<.div("Copy")
+    ).props.options.debug.getOrElse(false) should be(true)
     CopyToClipboard(
-      CopyToClipboard.props("text",
-                            options = Some(ClipboardOptions(true, "msg"))),
-      <<.div("Copy")).props.options.message should be("msg")
+      CopyToClipboard.props(
+        "text",
+        options = Some(ClipboardOptions(true, "msg"))
+      ),
+      <<.div("Copy")
+    ).props.options.message should be("msg")
   }
 }
