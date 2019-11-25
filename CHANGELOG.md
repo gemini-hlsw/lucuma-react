@@ -1,5 +1,10 @@
 # Changes
 
+## 0.9.0
+
+* API change using a simpler builder with ReactProps
+* Update scalajs to 1.8.0
+
 ## 0.8.0
 
 * Update copy-to-clipboard to 3.2.0
