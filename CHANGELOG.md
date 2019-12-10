@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.3
+
+* Updated upstream libs
+
 ## 0.3.2
 
 * Added ReactProps traits
