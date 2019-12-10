@@ -6,7 +6,6 @@ import scala.scalajs.js
 import utest._
 
 object CommonTests extends TestSuite with TestUtils {
-
   val tests = Tests {
     'merge - {
       val a: js.Object = js.Dynamic.literal(foo = 42, bar = "foobar")

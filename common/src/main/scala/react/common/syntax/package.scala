@@ -8,7 +8,6 @@ import japgolly.scalajs.react.raw.React
 import japgolly.scalajs.react.vdom.VdomNode
 
 package syntax {
-
   trait EnumValueSyntax {
     implicit def syntaxEnumValue[A: EnumValue](a: A): EnumValueOps[A] =
       new EnumValueOps(a)
@@ -21,7 +20,6 @@ package syntax {
 
     implicit def syntaxEnumValueB[A: EnumValueB](a: js.UndefOr[A]): EnumValueUndefOpsB[A] =
       new EnumValueUndefOpsB(a)
-
   }
 
   final class EnumValueOps[A](a: A)(implicit ev: EnumValue[A]) {
@@ -29,7 +27,6 @@ package syntax {
   }
 
   final class EnumValueUndefOps[A](a: js.UndefOr[A])(implicit ev: EnumValue[A]) {
-
     def toJs: js.UndefOr[String] =
       a.map { ev.value }
   }
@@ -39,17 +36,18 @@ package syntax {
   }
 
   final class EnumValueUndefOpsB[A](a: js.UndefOr[A])(implicit ev: EnumValueB[A]) {
-
     def toJs: js.UndefOr[Boolean | String] =
       a.map { ev.value }
   }
 
   trait CallbackPairSyntax {
-    implicit def syntaxCallbackPair1[A](a: (js.UndefOr[A => Callback], js.UndefOr[Callback])): CallbackPairOps1[A] =
+    implicit def syntaxCallbackPair1[A](
+      a: (js.UndefOr[A => Callback], js.UndefOr[Callback])
+    ): CallbackPairOps1[A] =
       new CallbackPairOps1(a._1, a._2)
 
     implicit def syntaxCallbackPair2[A, B](
-        a: (js.UndefOr[(A, B) => Callback], js.UndefOr[Callback])
+      a: (js.UndefOr[(A, B) => Callback], js.UndefOr[Callback])
     ): CallbackPairOps2[A, B] =
       new CallbackPairOps2(a._1, a._2)
   }
@@ -86,7 +84,6 @@ package syntax {
   }
 
   final class JsNumberOps(val d: JsNumber) extends AnyVal {
-
     // Some uglies for js union types
     def toDouble: Double = (d: Any) match {
       case d: Float  => d.toDouble
@@ -124,9 +121,7 @@ package syntax {
 
     implicit def jsNumberOps(d: JsNumber): JsNumberOps =
       new JsNumberOps(d)
-
   }
-
 }
 
 package object syntax extends AllSyntax

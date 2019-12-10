@@ -5,7 +5,6 @@ import react.common.implicits._
 import utest._
 
 object StyleTests extends TestSuite with TestUtils {
-
   val tests = Tests {
     'style - {
       val a: Style = Style(Map("height" -> 42, "background" -> "black"))

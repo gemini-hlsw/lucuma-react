@@ -46,18 +46,15 @@ package style {
       } else {
         s
       }
-
   }
 
   final class ClassnameCssOps(cn: (js.UndefOr[String], js.UndefOr[Css])) {
-
     def toJs: js.UndefOr[String] = (cn._1.toOption, cn._2.toOption) match {
       case (cn @ Some(_), None) => cn.orUndefined
       case (None, cz @ Some(_)) => cz.map(_.htmlClass).orUndefined
       case (Some(cs), Some(cz)) => s"$cs ${cz.htmlClass}"
       case _                    => js.undefined
     }
-
   }
 
   trait StyleSyntax {
@@ -80,7 +77,6 @@ package style {
   final case class Style(styles: Map[String, String | Int])
 
   object Style {
-
     def toJsObject(style: Style): js.Object =
       style.styles.toJSDictionary.asInstanceOf[js.Object]
 

@@ -6,7 +6,6 @@ import scala.scalajs.js
 import scala.scalajs.js.|
 
 package object common {
-
   def merge(a: js.Object, b: js.Object): js.Object = {
     val m = js.Dictionary.empty[js.Any]
     val c = a.asInstanceOf[js.Dictionary[js.Any]]
@@ -26,9 +25,11 @@ package object common {
 
   implicit def props2Component(p: ReactProps): VdomElement = p.render
 
-  implicit def propsWithChildren2Component(p: ReactPropsWithChildren): RenderWithChildren = new RenderWithChildren(p)
+  implicit def propsWithChildren2Component(p: ReactPropsWithChildren): RenderWithChildren =
+    new RenderWithChildren(p)
 
-  implicit def propsWithEmptyChildren2Component(p: ReactPropsWithChildren): VdomElement = p.render(Seq.empty)
+  implicit def propsWithEmptyChildren2Component(p: ReactPropsWithChildren): VdomElement =
+    p.render(Seq.empty)
 
   val Style = style.Style
   val Css   = style.Css
@@ -37,7 +38,6 @@ package object common {
 }
 
 package common {
-
   trait EnumValue[A] {
     def value(a: A): String
   }
@@ -54,7 +54,6 @@ package common {
       new EnumValue[A] {
         def value(a: A): String = a.toString.toLowerCase
       }
-
   }
 
   trait EnumValueB[A] {
@@ -71,7 +70,6 @@ package common {
 
     def toLowerCaseStringT[A](trueValue: A): EnumValueB[A] =
       new EnumValueB[A] {
-
         def value(a: A): Boolean | String = a match {
           case b if b == trueValue => true
           case _                   => a.toString.toLowerCase
@@ -80,7 +78,6 @@ package common {
 
     def toLowerCaseStringF[A](falseValue: A): EnumValueB[A] =
       new EnumValueB[A] {
-
         def value(a: A): Boolean | String = a match {
           case b if b == falseValue => false
           case _                    => a.toString.toLowerCase
@@ -89,14 +86,12 @@ package common {
 
     def toLowerCaseStringTF[A](trueValue: A, falseValue: A): EnumValueB[A] =
       new EnumValueB[A] {
-
         def value(a: A): Boolean | String = a match {
           case b if b == trueValue  => true
           case b if b == falseValue => false
           case _                    => a.toString.toLowerCase
         }
       }
-
   }
 
   trait ReactProps {
@@ -104,7 +99,6 @@ package common {
   }
 
   class RenderWithChildren(p: ReactPropsWithChildren) {
-
     def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
       p.render(first +: rest)
   }
@@ -112,5 +106,4 @@ package common {
   trait ReactPropsWithChildren {
     @inline def render: Seq[CtorType.ChildArg] => VdomElement
   }
-
 }

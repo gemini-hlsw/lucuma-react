@@ -34,13 +34,11 @@ final class ImplicitsSpec extends CatsSuite {
         case b: Float  => Right(Right(Right(Left(b))))
         case b: Double => Right(Right(Right(Right(b))))
       }
-
     }
   checkAll("Eq[JsNumber]", EqTests[JsNumber].eqv)
 }
 
 final class StyleSpec extends CatsSuite {
-
   implicit val arbStyleMember: Arbitrary[String | Int] = Arbitrary {
     Gen.oneOf(Gen.posNum[Int], Gen.negNum[Int], Gen.alphaNumStr)
   }
@@ -54,7 +52,8 @@ final class StyleSpec extends CatsSuite {
   implicit val arbStyle: Arbitrary[Style] = Arbitrary {
     arbitrary[Map[String, String | Int]].map(Style.apply)
   }
-  implicit val cogenStyle: Cogen[Style] = Cogen[List[(String, String | Int)]].contramap(_.styles.toList)
+  implicit val cogenStyle: Cogen[Style] =
+    Cogen[List[(String, String | Int)]].contramap(_.styles.toList)
 
   implicit val arbGStyle: Arbitrary[Css] = Arbitrary {
     for {

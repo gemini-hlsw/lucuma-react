@@ -10,7 +10,6 @@ import cats.implicits._
 import react.common.syntax.AllSyntax
 
 package implicits {
-
   trait ReactCatsImplicits {
     implicit def jsUndefOrEq[A: Eq]: Eq[js.UndefOr[A]] = Eq.instance { (a, b) =>
       (a.toOption, b.toOption) match {
@@ -87,7 +86,6 @@ package implicits {
     implicit val cssMonoid: Monoid[Css] =
       Monoid[List[String]].imap(Css.apply)(_.htmlClasses)
   }
-
 }
 
 package object implicits extends ReactCatsImplicits with AllSyntax

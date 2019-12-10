@@ -5,7 +5,8 @@ package common
 import japgolly.scalajs.react.ReactDOMServer
 import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.raw.React
-import japgolly.scalajs.react.vdom.{TagOf, TopNode}
+import japgolly.scalajs.react.vdom.TagOf
+import japgolly.scalajs.react.vdom.TopNode
 import org.scalajs.dom.Element
 import utest._
 
