@@ -14,24 +14,21 @@ import scala.scalajs.js.annotation.JSImport
   * Optional copy-to-clipboard options.
   */
 final case class CopyToClipboard(
-    text: String,
-    onCopy: OnCopy = (_, _) => Callback.empty,
-    options: Option[ClipboardOptions] = None
+  text:    String,
+  onCopy:  OnCopy = (_, _) => Callback.empty,
+  options: Option[ClipboardOptions] = None
 ) extends ReactPropsWithChildren {
-
   @inline def render: Seq[CtorType.ChildArg] => VdomElement =
     CopyToClipboard.component(this)
 }
 
 object CopyToClipboard {
-
   @js.native
   @JSImport("copy-to-clipboard", JSImport.Namespace)
   object JsCopy extends js.Function2[String, ClipboardOptions, Boolean] {
-
     def apply(
-        text: String,
-        options: ClipboardOptions = ClipboardOptions.Default
+      text:    String,
+      options: ClipboardOptions = ClipboardOptions.Default
     ): Boolean =
       js.native
   }
@@ -47,5 +44,4 @@ object CopyToClipboard {
     .builder[CopyToClipboard]("CopyToClipboard")
     .render_PC((p, c) => <.div(^.onClick --> copy(p), c))
     .build
-
 }
