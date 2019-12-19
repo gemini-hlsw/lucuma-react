@@ -18,7 +18,6 @@ import react.common.syntax._
 trait Draggable extends js.Object
 
 object Draggable {
-
   @js.native
   @JSImport("react-draggable", JSImport.Default)
   object RawComponent extends js.Object
@@ -98,6 +97,9 @@ object Draggable {
 
   val component = JsComponent[Props, Children.Varargs, Null](RawComponent)
 
-  def apply(p: Props, children: VdomNode): UnmountedMapped[Id, Props, Null, RawMounted[Props, Null], Props, Null] =
+  def apply(
+    p:        Props,
+    children: VdomNode
+  ): UnmountedMapped[Id, Props, Null, RawMounted[Props, Null], Props, Null] =
     component.apply(p)(children)
 }

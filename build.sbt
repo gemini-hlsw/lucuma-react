@@ -7,17 +7,26 @@ parallelExecution in (ThisBuild, Test) := false
 
 cancelable in Global := true
 
-addCommandAlias(
-  "restartWDS",
-  "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer")
+addCommandAlias("restartWDS",
+                "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer")
 
 // sbt-release-early
-inThisBuild(List(
-    homepage                := Some(url("https://github.com/cquiroz/scalajs-react-clipboard")),
-    licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
-    developers := List(Developer("cquiroz", "Carlos Quiroz", "carlos.m.quiroz@gmail.com", url("https://github.com/cquiroz"))),
-    scmInfo := Some(ScmInfo(url("https://github.com/cquiroz/scalajs-react-clipboard"), "scm:git:git@github.com:cquiroz/scalajs-react-clipboard")),
-))
+inThisBuild(
+  List(
+    homepage := Some(url("https://github.com/cquiroz/scalajs-react-clipboard")),
+    licenses := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
+    developers := List(
+      Developer("cquiroz",
+                "Carlos Quiroz",
+                "carlos.m.quiroz@gmail.com",
+                url("https://github.com/cquiroz"))
+    ),
+    scmInfo := Some(
+      ScmInfo(url("https://github.com/cquiroz/scalajs-react-clipboard"),
+              "scm:git:git@github.com:cquiroz/scalajs-react-clipboard")
+    )
+  )
+)
 
 val root =
   project
@@ -44,9 +53,11 @@ lazy val demo =
       version in startWebpackDevServer := "3.3.1",
       version in webpackCliVersion := "3.3.1",
       webpackConfigFile in fastOptJS := Some(
-        baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"),
+        baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"
+      ),
       webpackConfigFile in fullOptJS := Some(
-        baseDirectory.value / "src" / "webpack" / "webpack-prod.config.js"),
+        baseDirectory.value / "src" / "webpack" / "webpack-prod.config.js"
+      ),
       webpackMonitoredDirectories += (resourceDirectory in Compile).value,
       webpackResources := (baseDirectory.value / "src" / "webpack") * "*.js",
       includeFilter in webpackMonitoredFiles := "*",
@@ -57,23 +68,23 @@ lazy val demo =
       emitSourceMaps := false,
       webpackDevServerPort := 9090,
       npmDevDependencies in Compile ++= Seq(
-        "css-loader"                         -> "1.0.0",
-        "less"                               -> "3.8.1",
-        "less-loader"                        -> "4.1.0",
-        "mini-css-extract-plugin"            -> "0.4.3",
-        "html-webpack-plugin"                -> "3.2.0",
-        "url-loader"                         -> "1.1.1",
-        "style-loader"                       -> "0.23.0",
-        "postcss-loader"                     -> "3.0.0",
-        "cssnano"                            -> "4.1.0",
+        "css-loader" -> "1.0.0",
+        "less" -> "3.8.1",
+        "less-loader" -> "4.1.0",
+        "mini-css-extract-plugin" -> "0.4.3",
+        "html-webpack-plugin" -> "3.2.0",
+        "url-loader" -> "1.1.1",
+        "style-loader" -> "0.23.0",
+        "postcss-loader" -> "3.0.0",
+        "cssnano" -> "4.1.0",
         "optimize-css-assets-webpack-plugin" -> "5.0.1",
-        "webpack-merge"                      -> "4.1.4",
-        "webpack-dev-server-status-bar"      -> "1.1.0",
-        "autoprefixer"                       -> "9.1.5"
+        "webpack-merge" -> "4.1.4",
+        "webpack-dev-server-status-bar" -> "1.1.0",
+        "autoprefixer" -> "9.1.5"
       ),
       npmDependencies in Compile ++= Seq(
-        "react"           -> reactJS,
-        "react-dom"       -> reactJS,
+        "react" -> reactJS,
+        "react-dom" -> reactJS,
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
@@ -98,31 +109,33 @@ lazy val facade =
       version in startWebpackDevServer := "3.3.1",
       version in webpackCliVersion := "3.3.1",
       // Requires the DOM for tests
-      requireJsDomEnv in Test          := true,
+      requireJsDomEnv in Test := true,
       // Compile tests to JS using fast-optimisation
       // scalaJSStage in Test            := FastOptStage,
       npmDependencies in Compile ++= Seq(
-        "react"           -> reactJS,
-        "react-dom"       -> reactJS,
+        "react" -> reactJS,
+        "react-dom" -> reactJS,
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core"        % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
-        "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"      % "0.3.1",
-        "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
-        "com.lihaoyi"                       %%% "utest"       % "0.7.1" % Test,
-        "org.typelevel"                     %%% "cats-core"   % "2.0.0" % Test
+        "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "extra" % scalaJsReact,
+        "org.scala-js" %%% "scalajs-dom" % scalaJSDom,
+        "io.github.cquiroz.react" %%% "common" % "0.3.1",
+        "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
+        "com.lihaoyi" %%% "utest" % "0.7.1" % Test,
+        "org.typelevel" %%% "cats-core" % "2.0.0" % Test
       ),
-      webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
+      webpackConfigFile in Test := Some(
+        baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
+      ),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.10",
   organization := "io.github.cquiroz.react",
-  sonatypeProfileName     := "io.github.cquiroz",
+  sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-draggable ",
   publishArtifact in Test := false,
   scalacOptions := Seq(
@@ -166,12 +179,12 @@ lazy val commonSettings = Seq(
     "-Ywarn-numeric-widen", // Warn when numerics are widened.
     "-Ywarn-unused:implicits", // Warn if an implicit parameter is unused.
     "-Ywarn-unused:imports", // Warn if an import selector is not referenced.
-    "-Ywarn-unused:locals",  // Warn if a local definition is unused.
+    "-Ywarn-unused:locals", // Warn if a local definition is unused.
     // "-Ywarn-unused:params",              // Warn if a value parameter is unused.
     "-Ywarn-unused:patvars", // Warn if a variable bound in a pattern is unused.
     "-Ywarn-unused:privates", // Warn if a private member is unused.
     "-Ywarn-value-discard", // Warn when non-Unit expression results are unused.
     "-Yrangepos",
     "-P:scalajs:sjsDefinedByDefault"
-  ),
+  )
 )
