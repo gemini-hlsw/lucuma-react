@@ -1,7 +1,7 @@
 val reactJS        = "16.7.0"
 val scalaJsReact   = "1.4.2"
 val reactDraggable = "4.0.3"
-val scalaJSDom     = "0.9.7"
+val scalaJSDom     = "0.9.8"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -121,10 +121,10 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra" % scalaJsReact,
         "org.scala-js" %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react" %%% "common" % "0.3.1",
+        "io.github.cquiroz.react" %%% "common" % "0.3.3",
         "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
-        "com.lihaoyi" %%% "utest" % "0.7.1" % Test,
-        "org.typelevel" %%% "cats-core" % "2.0.0" % Test
+        "com.lihaoyi" %%% "utest" % "0.7.2" % Test,
+        "org.typelevel" %%% "cats-core" % "2.1.0" % Test
       ),
       webpackConfigFile in Test := Some(
         baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
