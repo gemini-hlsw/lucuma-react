@@ -1,7 +1,11 @@
 package react
 
 import japgolly.scalajs.react.CtorType
-import japgolly.scalajs.react.vdom.html_<^.VdomElement
+import japgolly.scalajs.react.vdom.VdomElement
+import japgolly.scalajs.react.vdom.VdomNode
+import japgolly.scalajs.react.component.Generic
+import japgolly.scalajs.react.component.Js.RawMounted
+import japgolly.scalajs.react.component.Js.UnmountedWithRawType
 import scala.scalajs.js
 import scala.scalajs.js.|
 
@@ -30,6 +34,36 @@ package object common {
 
   implicit def propsWithEmptyChildren2Component(p: ReactPropsWithChildren): VdomElement =
     p.render(Seq.empty)
+
+  type RenderFn[P]            = Generic.Unmounted[P, Unit]
+  type Render[P <: js.Object] = UnmountedWithRawType[P, Null, RawMounted[P, Null]]
+  type RenderFnC[P]           = CtorType.ChildrenArgs => RenderFn[P]
+  type RenderC[P <: js.Object] =
+    CtorType.ChildrenArgs => Render[P]
+  type GenericFnComponentPC[P <: js.Object] =
+    GenericFnComponentC[P, CtorType.PropsAndChildren, Unit]
+  type GenericFnComponentP[P <: js.Object] = GenericFnComponent[P, CtorType.Props, Unit]
+  type GenericComponentPC[P <: js.Object]  = GenericComponentC[P, CtorType.PropsAndChildren, Unit]
+
+  implicit def gProps2FnUnmountedPA[P <: js.Object](
+    p: GenericFnComponentPC[P]
+  ): RenderFn[P] =
+    p.render
+
+  implicit def gProps2UnmountedPC[P <: js.Object](
+    p: GenericComponentPC[P]
+  ): Render[P] =
+    p.render
+
+  implicit def gProps2VdomPC[P <: js.Object](
+    p: GenericComponentPC[P]
+  ): VdomNode =
+    p.render
+
+  implicit def gFnProps2VdomP[P <: js.Object](
+    p: GenericFnComponentP[P]
+  ): Render[P] =
+    p.render
 
   val Style = style.Style
   val Css   = style.Css
@@ -106,4 +140,21 @@ package common {
   trait ReactPropsWithChildren {
     @inline def render: Seq[CtorType.ChildArg] => VdomElement
   }
+
+  trait GenericFnComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
+    @inline def render: Render[P]
+  }
+
+  trait GenericFnComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
+    val children: CtorType.ChildrenArgs = Seq.empty
+    @inline def renderWith: RenderFnC[P]
+    @inline def render: RenderFn[P] = renderWith(children)
+  }
+
+  trait GenericComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
+    val children: CtorType.ChildrenArgs = Seq.empty
+    @inline def renderWith: RenderC[P]
+    @inline def render: Render[P] = renderWith(children)
+  }
+
 }

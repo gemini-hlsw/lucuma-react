@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.4
+
+* Added generic component traits
+
 ## 0.3.3
 
 * Updated upstream libs
