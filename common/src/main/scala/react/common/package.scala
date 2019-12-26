@@ -65,6 +65,18 @@ package object common {
   ): Render[P] =
     p.render
 
+  implicit class GenericFnComponentPCOps[P <: js.Object](val c: GenericFnComponentPC[P])
+      extends AnyVal {
+    def apply(children: VdomNode*): GenericFnComponentPC[P] = c.withChildren(children)
+    def apply: GenericFnComponentPC[P] = c.withChildren(Seq.empty)
+  }
+
+  implicit class GenericComponentPCOps[P <: js.Object](val c: GenericComponentPC[P])
+      extends AnyVal {
+    def apply(children: VdomNode*): GenericComponentPC[P] = c.withChildren(children)
+    def apply: GenericComponentPC[P] = c.withChildren(Seq.empty)
+  }
+
   val Style = style.Style
   val Css   = style.Css
   type Style = style.Style
@@ -147,12 +159,14 @@ package common {
 
   trait GenericFnComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
     val children: CtorType.ChildrenArgs = Seq.empty
+    def withChildren(children: CtorType.ChildrenArgs): GenericFnComponentC[P, CT, U]
     @inline def renderWith: RenderFnC[P]
     @inline def render: RenderFn[P] = renderWith(children)
   }
 
   trait GenericComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
     val children: CtorType.ChildrenArgs = Seq.empty
+    def withChildren(children: CtorType.ChildrenArgs): GenericComponentC[P, CT, U]
     @inline def renderWith: RenderC[P]
     @inline def render: Render[P] = renderWith(children)
   }
