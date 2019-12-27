@@ -1,5 +1,9 @@
 # Changes
 
+## 0.9.1
+
+* Library updates
+
 ## 0.9.0
 
 * API change using a simpler builder with ReactProps
