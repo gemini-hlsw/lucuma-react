@@ -1,7 +1,7 @@
 val reactJS         = "16.7.0"
 val scalaJsReact    = "1.4.2"
 val reactGridLayout = "0.16.6"
-val scalaJSDom      = "0.9.7"
+val scalaJSDom      = "0.9.8"
 val reactVirtualized = "9.21.1"
 
 parallelExecution in (ThisBuild, Test) := false
@@ -83,7 +83,7 @@ lazy val demo =
         "react-virtualized" -> reactVirtualized
       ),
       libraryDependencies +=
-        "io.github.cquiroz.react" %%% "react-virtualized" % "0.6.0",
+        "io.github.cquiroz.react" %%% "react-virtualized" % "0.7.0",
       // don't publish the demo
       publish := {},
       publishLocal := {},
@@ -114,17 +114,17 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "core"                 % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra"                % scalaJsReact,
         "org.scala-js"                      %%% "scalajs-dom"          % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"               % "0.2.0",
+        "io.github.cquiroz.react"           %%% "common"               % "0.3.5",
         "com.github.japgolly.scalajs-react" %%% "test"                 % scalaJsReact % Test,
-        "com.lihaoyi"                       %%% "utest"                % "0.6.7" % Test,
-        "org.typelevel"                     %%% "cats-core"            % "1.6.0" % Test
+        "com.lihaoyi"                       %%% "utest"                % "0.7.2" % Test,
+        "org.typelevel"                     %%% "cats-core"            % "2.1.0" % Test
       ),
       webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.8",
+  scalaVersion := "2.12.10",
   organization := "io.github.cquiroz.react",
   sonatypeProfileName     := "io.github.cquiroz",
   description := "scala.js facade for react-grid-layout ",
