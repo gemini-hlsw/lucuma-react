@@ -1,5 +1,9 @@
 # Changes
 
+## 0.0.8
+
+* Change package name
+
 ## 0.0.7
 
 * Adopt case class based API
