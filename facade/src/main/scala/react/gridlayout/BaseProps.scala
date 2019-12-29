@@ -88,72 +88,84 @@ object BaseProps {
     p.containerPadding = containerPadding.map(x => js.Array(x._1, x._2))
     p.rowHeight        = rowHeight
     p.maxRows          = maxRows
-    p.onDragStart = (layout: raw.Layout,
-                     oldItem:     raw.LayoutItem,
-                     newItem:     raw.LayoutItem,
-                     placeholder: raw.LayoutItem,
-                     e:           MouseEvent,
-                     element:     HTMLElement) =>
+    p.onDragStart = (
+      layout:      raw.Layout,
+      oldItem:     raw.LayoutItem,
+      newItem:     raw.LayoutItem,
+      placeholder: raw.LayoutItem,
+      e:           MouseEvent,
+      element:     HTMLElement
+    ) =>
       onDragStart(Layout.fromRaw(layout),
                   LayoutItem.fromRaw(oldItem),
                   LayoutItem.fromRaw(newItem),
                   LayoutItem.fromRawO(placeholder),
                   e,
                   element).runNow()
-    p.onDrag = (layout: raw.Layout,
-                oldItem:     raw.LayoutItem,
-                newItem:     raw.LayoutItem,
-                placeholder: raw.LayoutItem,
-                e:           MouseEvent,
-                element:     HTMLElement) =>
+    p.onDrag = (
+      layout:      raw.Layout,
+      oldItem:     raw.LayoutItem,
+      newItem:     raw.LayoutItem,
+      placeholder: raw.LayoutItem,
+      e:           MouseEvent,
+      element:     HTMLElement
+    ) =>
       onDrag(Layout.fromRaw(layout),
              LayoutItem.fromRaw(oldItem),
              LayoutItem.fromRaw(newItem),
              LayoutItem.fromRawO(placeholder),
              e,
              element).runNow()
-    p.onDragStop = (layout: raw.Layout,
-                    oldItem:     raw.LayoutItem,
-                    newItem:     raw.LayoutItem,
-                    placeholder: raw.LayoutItem,
-                    e:           MouseEvent,
-                    element:     HTMLElement) =>
+    p.onDragStop = (
+      layout:      raw.Layout,
+      oldItem:     raw.LayoutItem,
+      newItem:     raw.LayoutItem,
+      placeholder: raw.LayoutItem,
+      e:           MouseEvent,
+      element:     HTMLElement
+    ) =>
       onDragStop(Layout.fromRaw(layout),
                  LayoutItem.fromRaw(oldItem),
                  LayoutItem.fromRaw(newItem),
                  LayoutItem.fromRawO(placeholder),
                  e,
                  element).runNow()
-    p.onResizeStart = (layout: raw.Layout,
-                       oldItem:     raw.LayoutItem,
-                       newItem:     raw.LayoutItem,
-                       placeholder: raw.LayoutItem,
-                       e:           MouseEvent,
-                       element:     HTMLElement) =>
+    p.onResizeStart = (
+      layout:      raw.Layout,
+      oldItem:     raw.LayoutItem,
+      newItem:     raw.LayoutItem,
+      placeholder: raw.LayoutItem,
+      e:           MouseEvent,
+      element:     HTMLElement
+    ) =>
       onResizeStart(Layout.fromRaw(layout),
                     LayoutItem.fromRaw(oldItem),
                     LayoutItem.fromRaw(newItem),
                     LayoutItem.fromRawO(placeholder),
                     e,
                     element).runNow()
-    p.onResize = (layout: raw.Layout,
-                  oldItem:     raw.LayoutItem,
-                  newItem:     raw.LayoutItem,
-                  placeholder: raw.LayoutItem,
-                  e:           MouseEvent,
-                  element:     HTMLElement) =>
+    p.onResize = (
+      layout:      raw.Layout,
+      oldItem:     raw.LayoutItem,
+      newItem:     raw.LayoutItem,
+      placeholder: raw.LayoutItem,
+      e:           MouseEvent,
+      element:     HTMLElement
+    ) =>
       onResize(Layout.fromRaw(layout),
                LayoutItem.fromRaw(oldItem),
                LayoutItem.fromRaw(newItem),
                LayoutItem.fromRawO(placeholder),
                e,
                element).runNow()
-    p.onResizeStop = (layout: raw.Layout,
-                      oldItem:     raw.LayoutItem,
-                      newItem:     raw.LayoutItem,
-                      placeholder: raw.LayoutItem,
-                      e:           MouseEvent,
-                      element:     HTMLElement) =>
+    p.onResizeStop = (
+      layout:      raw.Layout,
+      oldItem:     raw.LayoutItem,
+      newItem:     raw.LayoutItem,
+      placeholder: raw.LayoutItem,
+      e:           MouseEvent,
+      element:     HTMLElement
+    ) =>
       onResizeStop(Layout.fromRaw(layout),
                    LayoutItem.fromRaw(oldItem),
                    LayoutItem.fromRaw(newItem),

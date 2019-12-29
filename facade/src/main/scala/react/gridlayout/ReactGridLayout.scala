@@ -80,6 +80,7 @@ object ReactGridLayout {
 
   def apply(
     p:        Props,
-    children: VdomNode*): UnmountedMapped[Id, Props, Null, RawMounted[Props, Null], Props, Null] =
+    children: VdomNode*
+  ): UnmountedMapped[Id, Props, Null, RawMounted[Props, Null], Props, Null] =
     component.apply(p)(children: _*)
 }

@@ -79,9 +79,8 @@ package gridlayout {
       val bp = for {
         p <- js.Object.getOwnPropertyNames(l)
         v <- c.get(p)
-      } yield
-        BreakpointLayout(BreakpointName(p),
-                         BreakpointLayout.layoutsFromRaw(v.asInstanceOf[js.Object]))
+      } yield BreakpointLayout(BreakpointName(p),
+                               BreakpointLayout.layoutsFromRaw(v.asInstanceOf[js.Object]))
       Layouts(bp.toList)
     }
 
@@ -101,7 +100,7 @@ package gridlayout {
     static:      js.UndefOr[Boolean] = js.undefined,
     isDraggable: js.UndefOr[Boolean] = js.undefined,
     isResizable: js.UndefOr[Boolean] = js.undefined,
-    handle: js.UndefOr[String] = js.undefined
+    handle:      js.UndefOr[String] = js.undefined
   ) {
     def toRaw: raw.LayoutItem =
       new raw.LayoutItem(w,
@@ -153,7 +152,8 @@ package gridlayout {
                          l.static,
                          l.isDraggable,
                          l.isResizable,
-                         l.handle))
+                         l.handle)
+        )
       } else {
         None
       }

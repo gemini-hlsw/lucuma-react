@@ -98,10 +98,12 @@ object ResponsiveReactGridLayout {
     r.onLayoutChange = (currentLayout: raw.Layout, allLayouts: js.Object) => {
       onLayoutChange(Layout.fromRaw(currentLayout), Layouts.fromRaw(allLayouts)).runNow()
     }
-    r.onWidthChange = (containerWidth: JsNumber,
-                       margin:           js.Array[JsNumber],
-                       cols:             JsNumber,
-                       containerPadding: js.Array[JsNumber]) =>
+    r.onWidthChange = (
+      containerWidth:   JsNumber,
+      margin:           js.Array[JsNumber],
+      cols:             JsNumber,
+      containerPadding: js.Array[JsNumber]
+    ) =>
       onWidthChange(containerWidth,
                     (margin(0), margin(1)),
                     cols,
@@ -110,7 +112,8 @@ object ResponsiveReactGridLayout {
   }
 
   def build(
-    values: Map[BreakpointName, (JsNumber, JsNumber, Layout)]): (Breakpoints, Columns, Layouts) =
+    values: Map[BreakpointName, (JsNumber, JsNumber, Layout)]
+  ): (Breakpoints, Columns, Layouts) =
     (Breakpoints(values.collect {
       case (v, (w, _, _)) => Breakpoint(v, w)
     }.toList), Columns(values.collect {
@@ -123,6 +126,7 @@ object ResponsiveReactGridLayout {
 
   def apply(
     p:        Props,
-    children: VdomNode*): UnmountedMapped[Id, Props, Null, RawMounted[Props, Null], Props, Null] =
+    children: VdomNode*
+  ): UnmountedMapped[Id, Props, Null, RawMounted[Props, Null], Props, Null] =
     component.apply(p)(children: _*)
 }

@@ -32,7 +32,7 @@ object PackageTests extends TestSuite {
           (BreakpointName.lg, (1200, 12, Layout.Empty)),
           (BreakpointName.md, (996, 10, Layout.Empty)),
           (BreakpointName.sm, (768, 8, Layout.Empty)),
-          (BreakpointName.xs, (480, 6, Layout.Empty)),
+          (BreakpointName.xs, (480, 6, Layout.Empty))
         )
       val layout =
         ResponsiveReactGridLayout(ResponsiveReactGridLayout.props(200, layouts = layouts),
