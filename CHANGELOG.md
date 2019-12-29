@@ -1,5 +1,10 @@
 # Changes
 
+## 0.0.7
+
+* Adopt case class based API
+* Updated dependencies
+
 ## 0.0.6
 
 * Update to scalajs-react 1.4.2

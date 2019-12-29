@@ -5,14 +5,38 @@ package gridlayout
 import scala.scalajs.js
 import js.annotation.JSImport
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.component.Js.RawMounted
-import japgolly.scalajs.react.component.Js.UnmountedMapped
-import japgolly.scalajs.react.internal.Effect.Id
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
 
-trait ReactGridLayout extends js.Object
+final case class ReactGridLayout(
+  width:                 JsNumber,
+  className:             js.UndefOr[String] = js.undefined,
+  style:                 js.UndefOr[Style] = js.undefined,
+  autoSize:              js.UndefOr[Boolean] = js.undefined,
+  cols:                  js.UndefOr[Int] = js.undefined,
+  draggableCancel:       js.UndefOr[String] = js.undefined,
+  draggableHandle:       js.UndefOr[String] = js.undefined,
+  compactType:           js.UndefOr[CompactType] = js.undefined,
+  layout:                Layout = Layout.Empty,
+  margin:                js.UndefOr[Margin] = js.undefined,
+  containerPadding:      js.UndefOr[ContainerPadding] = js.undefined,
+  rowHeight:             js.UndefOr[Int] = js.undefined,
+  maxRows:               js.UndefOr[Int] = js.undefined,
+  onLayoutChange:        OnLayoutChange = _ => Callback.empty,
+  onDragStart:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onDrag:                ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onDragStop:            ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onResizeStart:         ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onResize:              ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onResizeStop:          ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  override val children: CtorType.ChildrenArgs = Seq.empty
+) extends GenericComponentPC[ReactGridLayout.ReactGridLayoutProps] {
+  @inline def renderWith =
+    ReactGridLayout.component(ReactGridLayout.props(this))
+  override def withChildren(children: CtorType.ChildrenArgs) =
+    copy(children = children)
+}
 
 object ReactGridLayout {
 
@@ -21,7 +45,7 @@ object ReactGridLayout {
   private object RawComponent extends js.Object
 
   @js.native
-  trait Props extends BaseProps {
+  trait ReactGridLayoutProps extends BaseProps {
     // layout is an array of object with the format:
     // {x: Number, y: Number, w: Number, h: Number, i: String}
     var layout: js.UndefOr[raw.Layout]
@@ -29,7 +53,31 @@ object ReactGridLayout {
     var onLayoutChange: raw.RawLayoutChange
   }
 
-  def props(
+  def props(q: ReactGridLayout): ReactGridLayoutProps =
+    rawprops(
+      q.width,
+      q.className,
+      q.style,
+      q.autoSize,
+      q.cols,
+      q.draggableCancel,
+      q.draggableHandle,
+      q.compactType,
+      q.layout,
+      q.margin,
+      q.containerPadding,
+      q.rowHeight,
+      q.maxRows,
+      q.onLayoutChange,
+      q.onDragStart,
+      q.onDrag,
+      q.onDragStop,
+      q.onResizeStart,
+      q.onResize,
+      q.onResizeStop
+    )
+
+  def rawprops(
     width:            JsNumber,
     className:        js.UndefOr[String] = js.undefined,
     style:            js.UndefOr[Style] = js.undefined,
@@ -50,7 +98,7 @@ object ReactGridLayout {
     onResizeStart:    ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResize:         ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResizeStop:     ItemCallback = (_, _, _, _, _, _) => Callback.empty
-  ): Props = {
+  ): ReactGridLayoutProps = {
     val p = BaseProps.props(
       width,
       className,
@@ -71,16 +119,13 @@ object ReactGridLayout {
       onResize,
       onResizeStop
     )
-    val r = p.asInstanceOf[Props]
+    val r = p.asInstanceOf[ReactGridLayoutProps]
     r.onLayoutChange = (x: raw.Layout) => onLayoutChange(Layout.fromRaw(x)).runNow()
     r
   }
 
-  val component = JsComponent[Props, Children.Varargs, Null](RawComponent)
+  val component = JsComponent[ReactGridLayoutProps, Children.Varargs, Null](RawComponent)
 
-  def apply(
-    p:        Props,
-    children: VdomNode*
-  ): UnmountedMapped[Id, Props, Null, RawMounted[Props, Null], Props, Null] =
-    component.apply(p)(children: _*)
+  def apply(width: JsNumber, content: VdomNode*): ReactGridLayout =
+    new ReactGridLayout(width = width, children = content)
 }

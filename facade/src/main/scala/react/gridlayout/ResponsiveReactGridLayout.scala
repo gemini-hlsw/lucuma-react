@@ -5,14 +5,41 @@ package gridlayout
 import scala.scalajs.js
 import js.annotation.JSImport
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.component.Js.RawMounted
-import japgolly.scalajs.react.component.Js.UnmountedMapped
-import japgolly.scalajs.react.internal.Effect.Id
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common.Style
+import react.common._
 
-trait ResponsiveReactGridLayout extends js.Object
+final case class ResponsiveReactGridLayout(
+  width:                 JsNumber,
+  layouts:               Map[BreakpointName, (JsNumber, JsNumber, Layout)],
+  className:             js.UndefOr[String] = js.undefined,
+  style:                 js.UndefOr[Style] = js.undefined,
+  autoSize:              js.UndefOr[Boolean] = js.undefined,
+  cols:                  js.UndefOr[Int] = js.undefined,
+  draggableCancel:       js.UndefOr[String] = js.undefined,
+  draggableHandle:       js.UndefOr[String] = js.undefined,
+  compactType:           js.UndefOr[CompactType] = js.undefined,
+  margin:                js.UndefOr[Margin] = js.undefined,
+  containerPadding:      js.UndefOr[ContainerPadding] = js.undefined,
+  rowHeight:             js.UndefOr[Int] = js.undefined,
+  maxRows:               js.UndefOr[Int] = js.undefined,
+  onLayoutChange:        OnLayoutsChange = (_, _) => Callback.empty,
+  onDragStart:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onDrag:                ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onDragStop:            ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onResizeStart:         ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onResize:              ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onResizeStop:          ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onBreakpointChange:    OnBreakpointChange = (_, _) => Callback.empty,
+  onWidthChange:         OnWidthChange = (_, _, _, _) => Callback.empty,
+  override val children: CtorType.ChildrenArgs = Seq.empty
+) extends GenericComponentPC[ResponsiveReactGridLayout.ResponsiveReactGridLayoutProps] {
+  @inline def renderWith =
+    ResponsiveReactGridLayout.component(ResponsiveReactGridLayout.props(this))
+  override def withChildren(children: CtorType.ChildrenArgs) =
+    copy(children = children)
+}
 
 object ResponsiveReactGridLayout {
 
@@ -21,7 +48,7 @@ object ResponsiveReactGridLayout {
   object RawComponent extends js.Object
 
   @js.native
-  trait Props extends BaseProps {
+  trait ResponsiveReactGridLayoutProps extends BaseProps {
     // {name: pxVal}, e.g. {lg: 1200, md: 996, sm: 768, xs: 480}
     // Breakpoint names are arbitrary but must match in the cols and layouts objects.
     var breakpoints: js.Object = js.native
@@ -44,7 +71,33 @@ object ResponsiveReactGridLayout {
 
   }
 
-  def props(
+  def props(q: ResponsiveReactGridLayout): ResponsiveReactGridLayoutProps =
+    rawprops(
+      q.width,
+      q.layouts,
+      q.className,
+      q.style,
+      q.autoSize,
+      q.cols,
+      q.draggableCancel,
+      q.draggableHandle,
+      q.compactType,
+      q.margin,
+      q.containerPadding,
+      q.rowHeight,
+      q.maxRows,
+      q.onLayoutChange,
+      q.onDragStart,
+      q.onDrag,
+      q.onDragStop,
+      q.onResizeStart,
+      q.onResize,
+      q.onResizeStop,
+      q.onBreakpointChange,
+      q.onWidthChange
+    )
+
+  def rawprops(
     width:              JsNumber,
     layouts:            Map[BreakpointName, (JsNumber, JsNumber, Layout)],
     className:          js.UndefOr[String] = js.undefined,
@@ -67,7 +120,7 @@ object ResponsiveReactGridLayout {
     onResizeStop:       ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onBreakpointChange: OnBreakpointChange = (_, _) => Callback.empty,
     onWidthChange:      OnWidthChange = (_, _, _, _) => Callback.empty
-  ): Props = {
+  ): ResponsiveReactGridLayoutProps = {
     val p = BaseProps.props(
       width,
       className,
@@ -88,7 +141,7 @@ object ResponsiveReactGridLayout {
       onResize,
       onResizeStop
     )
-    val r                                           = p.asInstanceOf[Props]
+    val r                                           = p.asInstanceOf[ResponsiveReactGridLayoutProps]
     val (br: Breakpoints, cl: Columns, ly: Layouts) = build(layouts)
     r.breakpoints = br.toRaw
     r.columns     = cl.toRaw
@@ -122,11 +175,12 @@ object ResponsiveReactGridLayout {
       case (v, (_, _, l)) => BreakpointLayout(v, l)
     }.toList))
 
-  val component = JsComponent[Props, Children.Varargs, Null](RawComponent)
+  val component = JsComponent[ResponsiveReactGridLayoutProps, Children.Varargs, Null](RawComponent)
 
   def apply(
-    p:        Props,
-    children: VdomNode*
-  ): UnmountedMapped[Id, Props, Null, RawMounted[Props, Null], Props, Null] =
-    component.apply(p)(children: _*)
+    width:   JsNumber,
+    layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)],
+    content: VdomNode*
+  ): ResponsiveReactGridLayout =
+    new ResponsiveReactGridLayout(width = width, layouts = layouts, children = content)
 }

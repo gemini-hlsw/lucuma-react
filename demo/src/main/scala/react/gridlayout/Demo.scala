@@ -41,16 +41,14 @@ object RGLDemo {
             children = s =>
               <.div(
                 ResponsiveReactGridLayout(
-                  ResponsiveReactGridLayout
-                    .props(
-                      s.width,
-                      margin           = (10: JsNumber, 10: JsNumber),
-                      containerPadding = (10: JsNumber, 10: JsNumber),
-                      className        = "layout",
-                      draggableHandle  = ".item",
-                      rowHeight        = 30,
-                      layouts          = layouts
-                    ),
+                  s.width,
+                  margin           = (10: JsNumber, 10: JsNumber),
+                  containerPadding = (10: JsNumber, 10: JsNumber),
+                  className        = "layout",
+                  draggableHandle  = ".item",
+                  rowHeight        = 30,
+                  layouts          = layouts
+                )(
                   <.div(^.key := "a", "a"),
                   <.div(^.key := "c", "c"),
                   <.div(^.key := "b", "b")

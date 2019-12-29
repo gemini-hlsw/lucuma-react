@@ -18,7 +18,7 @@ object PackageTests extends TestSuite {
       assert(item.y.toDouble == 3.0)
     }
     'render - {
-      val layout = ReactGridLayout(ReactGridLayout.props(200), <.div("Abc"))
+      val layout = ReactGridLayout(200, <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(layout) { m =>
         val html =
           """<div class="react-grid-layout" style="height: 170px;"></div>""".stripMargin
@@ -35,13 +35,12 @@ object PackageTests extends TestSuite {
           (BreakpointName.xs, (480, 6, Layout.Empty))
         )
       val layout =
-        ResponsiveReactGridLayout(ResponsiveReactGridLayout.props(200, layouts = layouts),
+        ResponsiveReactGridLayout(200, layouts = layouts,
                                   <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(layout) { m =>
         val html =
           """<div class="react-grid-layout" style="height: 170px;"></div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        println(m.outerHtmlScrubbed)
         assert(m.outerHtmlScrubbed() == html)
       }
     }
