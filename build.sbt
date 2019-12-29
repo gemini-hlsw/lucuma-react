@@ -105,7 +105,7 @@ lazy val facade =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name := "sjs-rgl",
+      name := "react-grid-layout",
       version in webpack := "4.32.0",
       version in startWebpackDevServer := "3.3.1",
       // Requires the DOM for tests
