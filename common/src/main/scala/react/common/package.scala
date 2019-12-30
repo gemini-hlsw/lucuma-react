@@ -3,6 +3,7 @@ package react
 import japgolly.scalajs.react.CtorType
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode
+// import japgolly.scalajs.react.vdom.
 import japgolly.scalajs.react.component.Generic
 import japgolly.scalajs.react.component.Js.RawMounted
 import japgolly.scalajs.react.component.Js.UnmountedWithRawType
@@ -44,10 +45,16 @@ package object common {
     GenericFnComponentC[P, CtorType.PropsAndChildren, Unit]
   type GenericFnComponentP[P <: js.Object] = GenericFnComponent[P, CtorType.Props, Unit]
   type GenericComponentPC[P <: js.Object]  = GenericComponentC[P, CtorType.PropsAndChildren, Unit]
+  type GenericComponentP[P <: js.Object]   = GenericComponentC[P, CtorType.Props, Unit]
 
   implicit def gProps2FnUnmountedPA[P <: js.Object](
     p: GenericFnComponentPC[P]
   ): RenderFn[P] =
+    p.render
+
+  implicit def gFnProps2VdomP[P <: js.Object](
+    p: GenericFnComponentP[P]
+  ): Render[P] =
     p.render
 
   implicit def gProps2UnmountedPC[P <: js.Object](
@@ -55,14 +62,29 @@ package object common {
   ): Render[P] =
     p.render
 
-  implicit def gProps2VdomPC[P <: js.Object](
+  implicit def gProps2VdomP[P <: js.Object](
+    p: GenericComponentP[P]
+  ): Render[P] =
+    p.render
+
+  implicit def gFnProps2VdomNodePC[P <: js.Object](
+    p: GenericFnComponentPC[P]
+  ): VdomNode =
+    p.render
+
+  implicit def gFnProps2VdomNodeP[P <: js.Object](
+    p: GenericFnComponentP[P]
+  ): VdomNode =
+    p.render
+
+  implicit def gProps2VdomNodePC[P <: js.Object](
     p: GenericComponentPC[P]
   ): VdomNode =
     p.render
 
-  implicit def gFnProps2VdomP[P <: js.Object](
-    p: GenericFnComponentP[P]
-  ): Render[P] =
+  implicit def gProps2VdomNodeP[P <: js.Object](
+    p: GenericComponentP[P]
+  ): VdomNode =
     p.render
 
   implicit class GenericFnComponentPCOps[P <: js.Object](val c: GenericFnComponentPC[P])

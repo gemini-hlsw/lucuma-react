@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.6
+
+* Minor adjustments
+
 ## 0.3.5
 
 * Added generic component traits
