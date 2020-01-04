@@ -1,6 +1,6 @@
 val reactJS         = "16.7.0"
 val scalaJsReact    = "1.4.2"
-val reactGridLayout = "0.16.6"
+val reactGridLayout = "0.17.1"
 val scalaJSDom      = "0.9.8"
 val reactVirtualized = "9.21.1"
 
@@ -121,7 +121,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "core"                 % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra"                % scalaJsReact,
         "org.scala-js"                      %%% "scalajs-dom"          % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"               % "0.3.5",
+        "io.github.cquiroz.react"           %%% "common"               % "0.3.6",
         "com.github.japgolly.scalajs-react" %%% "test"                 % scalaJsReact % Test,
         "com.lihaoyi"                       %%% "utest"                % "0.7.2" % Test,
         "org.typelevel"                     %%% "cats-core"            % "2.1.0" % Test
@@ -133,7 +133,7 @@ lazy val facade =
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.10",
   organization := "io.github.cquiroz.react",
-  sonatypeProfileName     := "io.github.cquiroz",
+  sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-grid-layout ",
   publishArtifact in Test := false,
   scalacOptions := Seq(

@@ -1,5 +1,9 @@
 # Changes
 
+## 0.1.0
+
+* Updated to react-grid-layout 0.17.1
+
 ## 0.0.8
 
 * Change package name

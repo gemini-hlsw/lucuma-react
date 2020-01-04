@@ -13,6 +13,9 @@ package object raw {
   type RawItemCallback =
     js.Function6[Layout, LayoutItem, LayoutItem, LayoutItem, MouseEvent, HTMLElement, Unit]
 
+  type DropCallback =
+    js.Function4[JsNumber, JsNumber, JsNumber, JsNumber, Unit]
+
   type BreakpointChangeCallback =
     js.Function2[Breakpoint, JsNumber, Unit]
 
@@ -28,6 +31,12 @@ package object raw {
 }
 
 package raw {
+  class DroppingItem(
+    var i: String,
+    var w: JsNumber,
+    var h: JsNumber
+  ) extends js.Object
+
   class LayoutItem(
     val w:           JsNumber,
     val h:           JsNumber,

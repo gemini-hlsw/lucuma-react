@@ -23,6 +23,13 @@ final case class ReactGridLayout(
   containerPadding:      js.UndefOr[ContainerPadding] = js.undefined,
   rowHeight:             js.UndefOr[Int] = js.undefined,
   maxRows:               js.UndefOr[Int] = js.undefined,
+  isDraggable:           js.UndefOr[Boolean] = js.undefined,
+  isResizable:           js.UndefOr[Boolean] = js.undefined,
+  isDroppable:           js.UndefOr[Boolean] = js.undefined,
+  preventCollision:      js.UndefOr[Boolean] = js.undefined,
+  useCSSTransforms:      js.UndefOr[Boolean] = js.undefined,
+  transformScale:        js.UndefOr[JsNumber] = js.undefined,
+  droppingItem:          js.UndefOr[DroppingItem] = js.undefined,
   onLayoutChange:        OnLayoutChange = _ => Callback.empty,
   onDragStart:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onDrag:                ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -30,6 +37,7 @@ final case class ReactGridLayout(
   onResizeStart:         ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onResize:              ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onResizeStop:          ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onDrop:                DropCallback = (_, _, _, _) => Callback.empty,
   override val children: CtorType.ChildrenArgs = Seq.empty
 ) extends GenericComponentPC[ReactGridLayout.ReactGridLayoutProps] {
   @inline def renderWith =
@@ -68,13 +76,21 @@ object ReactGridLayout {
       q.containerPadding,
       q.rowHeight,
       q.maxRows,
+      q.isDraggable,
+      q.isResizable,
+      q.isDroppable,
+      q.preventCollision,
+      q.useCSSTransforms,
+      q.transformScale,
+      q.droppingItem,
       q.onLayoutChange,
       q.onDragStart,
       q.onDrag,
       q.onDragStop,
       q.onResizeStart,
       q.onResize,
-      q.onResizeStop
+      q.onResizeStop,
+      q.onDrop
     )
 
   def rawprops(
@@ -91,13 +107,21 @@ object ReactGridLayout {
     containerPadding: js.UndefOr[ContainerPadding] = js.undefined,
     rowHeight:        js.UndefOr[Int] = js.undefined,
     maxRows:          js.UndefOr[Int] = js.undefined,
+    isDraggable:      js.UndefOr[Boolean] = js.undefined,
+    isResizable:      js.UndefOr[Boolean] = js.undefined,
+    isDroppable:      js.UndefOr[Boolean] = js.undefined,
+    preventCollision: js.UndefOr[Boolean] = js.undefined,
+    useCSSTransforms: js.UndefOr[Boolean] = js.undefined,
+    transformScale:   js.UndefOr[JsNumber] = js.undefined,
+    droppingItem:     js.UndefOr[DroppingItem] = js.undefined,
     onLayoutChange:   OnLayoutChange = _ => Callback.empty,
     onDragStart:      ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onDrag:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onDragStop:       ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResizeStart:    ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResize:         ItemCallback = (_, _, _, _, _, _) => Callback.empty,
-    onResizeStop:     ItemCallback = (_, _, _, _, _, _) => Callback.empty
+    onResizeStop:     ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+    onDrop:           DropCallback = (_, _, _, _) => Callback.empty
   ): ReactGridLayoutProps = {
     val p = BaseProps.props(
       width,
@@ -112,12 +136,20 @@ object ReactGridLayout {
       containerPadding,
       rowHeight,
       maxRows,
+      isDraggable,
+      isResizable,
+      isDroppable,
+      preventCollision,
+      useCSSTransforms,
+      transformScale,
+      droppingItem,
       onDragStart,
       onDrag,
       onDragStop,
       onResizeStart,
       onResize,
-      onResizeStop
+      onResizeStop,
+      onDrop
     )
     val r = p.asInstanceOf[ReactGridLayoutProps]
     r.onLayoutChange = (x: raw.Layout) => onLayoutChange(Layout.fromRaw(x)).runNow()

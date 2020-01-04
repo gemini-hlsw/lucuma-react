@@ -19,6 +19,8 @@ package object gridlayout {
   type OnWidthChange      = (JsNumber, Margin, JsNumber, ContainerPadding) => Callback
   type ItemCallback =
     (Layout, LayoutItem, LayoutItem, Option[LayoutItem], MouseEvent, HTMLElement) => Callback
+  type DropCallback =
+    (JsNumber, JsNumber, JsNumber, JsNumber) => Callback
 }
 
 package gridlayout {
@@ -51,6 +53,20 @@ package gridlayout {
     def toRaw: js.Object = {
       val p = js.Dynamic.literal()
       cols.foreach { case Column(name, v) => p.updateDynamic(name.name)(v.asInstanceOf[js.Any]) }
+      p
+    }
+  }
+
+  final case class DroppingItem(
+    i: String,
+    w: JsNumber,
+    h: JsNumber
+  ) {
+    def toRaw: raw.DroppingItem = {
+      val p = (new js.Object).asInstanceOf[raw.DroppingItem]
+      p.i = i
+      p.w = w
+      p.h = h
       p
     }
   }

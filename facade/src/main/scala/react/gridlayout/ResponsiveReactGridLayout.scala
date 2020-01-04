@@ -24,6 +24,13 @@ final case class ResponsiveReactGridLayout(
   containerPadding:      js.UndefOr[ContainerPadding] = js.undefined,
   rowHeight:             js.UndefOr[Int] = js.undefined,
   maxRows:               js.UndefOr[Int] = js.undefined,
+  isDraggable:           js.UndefOr[Boolean] = js.undefined,
+  isResizable:           js.UndefOr[Boolean] = js.undefined,
+  isDroppable:           js.UndefOr[Boolean] = js.undefined,
+  preventCollision:      js.UndefOr[Boolean] = js.undefined,
+  useCSSTransforms:      js.UndefOr[Boolean] = js.undefined,
+  transformScale:        js.UndefOr[JsNumber] = js.undefined,
+  droppingItem:          js.UndefOr[DroppingItem] = js.undefined,
   onLayoutChange:        OnLayoutsChange = (_, _) => Callback.empty,
   onDragStart:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onDrag:                ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -31,6 +38,7 @@ final case class ResponsiveReactGridLayout(
   onResizeStart:         ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onResize:              ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onResizeStop:          ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+  onDrop:                DropCallback = (_, _, _, _) => Callback.empty,
   onBreakpointChange:    OnBreakpointChange = (_, _) => Callback.empty,
   onWidthChange:         OnWidthChange = (_, _, _, _) => Callback.empty,
   override val children: CtorType.ChildrenArgs = Seq.empty
@@ -86,6 +94,13 @@ object ResponsiveReactGridLayout {
       q.containerPadding,
       q.rowHeight,
       q.maxRows,
+      q.isDraggable,
+      q.isResizable,
+      q.isDroppable,
+      q.preventCollision,
+      q.useCSSTransforms,
+      q.transformScale,
+      q.droppingItem,
       q.onLayoutChange,
       q.onDragStart,
       q.onDrag,
@@ -93,6 +108,7 @@ object ResponsiveReactGridLayout {
       q.onResizeStart,
       q.onResize,
       q.onResizeStop,
+      q.onDrop,
       q.onBreakpointChange,
       q.onWidthChange
     )
@@ -111,6 +127,13 @@ object ResponsiveReactGridLayout {
     containerPadding:   js.UndefOr[ContainerPadding] = js.undefined,
     rowHeight:          js.UndefOr[Int] = js.undefined,
     maxRows:            js.UndefOr[Int] = js.undefined,
+    isDraggable:        js.UndefOr[Boolean] = js.undefined,
+    isResizable:        js.UndefOr[Boolean] = js.undefined,
+    isDroppable:        js.UndefOr[Boolean] = js.undefined,
+    preventCollision:   js.UndefOr[Boolean] = js.undefined,
+    useCSSTransforms:   js.UndefOr[Boolean] = js.undefined,
+    transformScale:     js.UndefOr[JsNumber] = js.undefined,
+    droppingItem:       js.UndefOr[DroppingItem] = js.undefined,
     onLayoutChange:     OnLayoutsChange = (_, _) => Callback.empty,
     onDragStart:        ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onDrag:             ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -118,6 +141,7 @@ object ResponsiveReactGridLayout {
     onResizeStart:      ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResize:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResizeStop:       ItemCallback = (_, _, _, _, _, _) => Callback.empty,
+    onDrop:             DropCallback = (_, _, _, _) => Callback.empty,
     onBreakpointChange: OnBreakpointChange = (_, _) => Callback.empty,
     onWidthChange:      OnWidthChange = (_, _, _, _) => Callback.empty
   ): ResponsiveReactGridLayoutProps = {
@@ -134,12 +158,20 @@ object ResponsiveReactGridLayout {
       containerPadding,
       rowHeight,
       maxRows,
+      isDraggable,
+      isResizable,
+      isDroppable,
+      preventCollision,
+      useCSSTransforms,
+      transformScale,
+      droppingItem,
       onDragStart,
       onDrag,
       onDragStop,
       onResizeStart,
       onResize,
-      onResizeStop
+      onResizeStop,
+      onDrop
     )
     val r                                           = p.asInstanceOf[ResponsiveReactGridLayoutProps]
     val (br: Breakpoints, cl: Columns, ly: Layouts) = build(layouts)
