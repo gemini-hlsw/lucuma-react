@@ -2,6 +2,7 @@
 
 ## 0.3.7
 
+* Moved syntax methods
 * Method to get props from components
 
 ## 0.3.6

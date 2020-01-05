@@ -8,8 +8,9 @@ import japgolly.scalajs.react.component.Js.RawMounted
 import japgolly.scalajs.react.component.Js.UnmountedWithRawType
 import scala.scalajs.js
 import scala.scalajs.js.|
+import react.common.syntax.AllSyntax
 
-package object common {
+package object common extends AllSyntax {
   def merge(a: js.Object, b: js.Object): js.Object = {
     val m = js.Dictionary.empty[js.Any]
     val c = a.asInstanceOf[js.Dictionary[js.Any]]
@@ -135,12 +136,12 @@ package common {
   }
 
   trait GenericFnComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
-    def props: P
+    def cprops: P
     @inline def render: Render[P]
   }
 
   trait GenericFnComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
-    def props: P
+    def cprops: P
     val children: CtorType.ChildrenArgs = Seq.empty
     def withChildren(children: CtorType.ChildrenArgs): GenericFnComponentC[P, CT, U]
     @inline def renderWith: RenderFnC[P]
@@ -148,7 +149,7 @@ package common {
   }
 
   trait GenericComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
-    def props: P
+    def cprops: P
     val children: CtorType.ChildrenArgs = Seq.empty
     def withChildren(children: CtorType.ChildrenArgs): GenericComponentC[P, CT, U]
     @inline def renderWith: RenderC[P]
