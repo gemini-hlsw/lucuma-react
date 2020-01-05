@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.7
+
+* Method to get props from components
+
 ## 0.3.6
 
 * Minor adjustments

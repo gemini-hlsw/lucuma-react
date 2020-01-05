@@ -121,6 +121,47 @@ package syntax {
 
     implicit def jsNumberOps(d: JsNumber): JsNumberOps =
       new JsNumberOps(d)
+
+    implicit def gProps2FnUnmountedPA[P <: js.Object](
+      p: GenericFnComponentPC[P]
+    ): RenderFn[P] =
+      p.render
+
+    implicit def gFnProps2VdomP[P <: js.Object](
+      p: GenericFnComponentP[P]
+    ): Render[P] =
+      p.render
+
+    implicit def gProps2UnmountedPC[P <: js.Object](
+      p: GenericComponentPC[P]
+    ): Render[P] =
+      p.render
+
+    implicit def gProps2VdomP[P <: js.Object](
+      p: GenericComponentP[P]
+    ): Render[P] =
+      p.render
+
+    implicit def gFnProps2VdomNodePC[P <: js.Object](
+      p: GenericFnComponentPC[P]
+    ): VdomNode =
+      p.render
+
+    implicit def gFnProps2VdomNodeP[P <: js.Object](
+      p: GenericFnComponentP[P]
+    ): VdomNode =
+      p.render
+
+    implicit def gProps2VdomNodePC[P <: js.Object](
+      p: GenericComponentPC[P]
+    ): VdomNode =
+      p.render
+
+    implicit def gProps2VdomNodeP[P <: js.Object](
+      p: GenericComponentP[P]
+    ): VdomNode =
+      p.render
+
   }
 }
 
