@@ -1,5 +1,9 @@
 # Changes
 
+## 0.1.1
+
+* Updated react-common
+
 ## 0.1.0
 
 * Updated to react-grid-layout 0.17.1

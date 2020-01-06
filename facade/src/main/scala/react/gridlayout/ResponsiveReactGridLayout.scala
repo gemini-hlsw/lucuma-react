@@ -43,6 +43,7 @@ final case class ResponsiveReactGridLayout(
   onWidthChange:         OnWidthChange = (_, _, _, _) => Callback.empty,
   override val children: CtorType.ChildrenArgs = Seq.empty
 ) extends GenericComponentPC[ResponsiveReactGridLayout.ResponsiveReactGridLayoutProps] {
+  override def cprops    = ResponsiveReactGridLayout.props(this)
   @inline def renderWith =
     ResponsiveReactGridLayout.component(ResponsiveReactGridLayout.props(this))
   override def withChildren(children: CtorType.ChildrenArgs) =

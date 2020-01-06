@@ -40,6 +40,7 @@ final case class ReactGridLayout(
   onDrop:                DropCallback = (_, _, _, _) => Callback.empty,
   override val children: CtorType.ChildrenArgs = Seq.empty
 ) extends GenericComponentPC[ReactGridLayout.ReactGridLayoutProps] {
+  override def cprops    = ReactGridLayout.props(this)
   @inline def renderWith =
     ReactGridLayout.component(ReactGridLayout.props(this))
   override def withChildren(children: CtorType.ChildrenArgs) =

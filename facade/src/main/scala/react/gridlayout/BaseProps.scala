@@ -8,7 +8,6 @@ import japgolly.scalajs.react.raw.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
 import react.common._
-import react.common.syntax._
 
 @js.native
 trait BaseProps extends js.Object {
