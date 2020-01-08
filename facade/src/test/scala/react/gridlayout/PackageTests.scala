@@ -9,7 +9,7 @@ import utest._
 object PackageTests extends TestSuite {
 
   val tests = Tests {
-    'layouItem - {
+    test("layouItem") {
       val item = LayoutItem(0, 1, 2, 3, "")
       assert(item != null)
       assert(item.w.toDouble == 0.0)
@@ -17,7 +17,7 @@ object PackageTests extends TestSuite {
       assert(item.x.toDouble == 2.0)
       assert(item.y.toDouble == 3.0)
     }
-    'render - {
+    test("render") {
       val layout = ReactGridLayout(200, <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(layout) { m =>
         val html =
@@ -26,7 +26,7 @@ object PackageTests extends TestSuite {
         assert(m.outerHtmlScrubbed() == html)
       }
     }
-    'responsive - {
+    test("responsive") {
       val layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)] =
         Map(
           (BreakpointName.lg, (1200, 12, Layout.Empty)),

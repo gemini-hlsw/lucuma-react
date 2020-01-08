@@ -183,7 +183,7 @@ package gridlayout {
     val Empty: Layout = Layout(Nil)
 
     private[gridlayout] def fromRaw(l: raw.Layout): Layout =
-      Layout(List(l.map(LayoutItem.fromRaw): _*))
+      Layout(List(l.map(LayoutItem.fromRaw).toSeq: _*))
   }
 
   sealed trait CompactType extends Product with Serializable

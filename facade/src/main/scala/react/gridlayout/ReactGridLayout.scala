@@ -4,7 +4,10 @@ package gridlayout
 
 import scala.scalajs.js
 import js.annotation.JSImport
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.Callback
+import japgolly.scalajs.react.CtorType
+import japgolly.scalajs.react.JsComponent
+import japgolly.scalajs.react.Children
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
@@ -153,6 +156,7 @@ object ReactGridLayout {
       onDrop
     )
     val r = p.asInstanceOf[ReactGridLayoutProps]
+    r.layout         = layout.toRaw
     r.onLayoutChange = (x: raw.Layout) => onLayoutChange(Layout.fromRaw(x)).runNow()
     r
   }
