@@ -1,5 +1,10 @@
 # Changes
 
+## 0.4.0
+
+* Update to scala 2.13
+* Update to scalajs-react 1.5.0
+
 ## 0.3.7
 
 * Moved syntax methods
