@@ -85,6 +85,9 @@ package implicits {
 
     implicit val cssMonoid: Monoid[Css] =
       Monoid[List[String]].imap(Css.apply)(_.htmlClasses)
+
+    implicit val sizeEq: Eq[Size] = Eq.by(x => (x.width, x.height))
+
   }
 }
 

@@ -3,6 +3,7 @@ package react
 import japgolly.scalajs.react.CtorType
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode
+import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.component.Generic
 import japgolly.scalajs.react.component.Js.RawMounted
 import japgolly.scalajs.react.component.Js.UnmountedWithRawType
@@ -154,6 +155,21 @@ package common {
     def withChildren(children: CtorType.ChildrenArgs): GenericComponentC[P, CT, U]
     @inline def renderWith: RenderC[P]
     @inline def render: Render[P] = renderWith(children)
+  }
+
+  @js.native
+  trait Size extends js.Object {
+    var height: JsNumber
+    var width: JsNumber
+  }
+
+  object Size {
+    def apply(height: JsNumber, width: JsNumber): Size = {
+      val p = (new js.Object).asInstanceOf[Size]
+      p.height = height
+      p.width  = width
+      p
+    }
   }
 
 }

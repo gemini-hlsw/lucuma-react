@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.1
+
+* Add Size class
+
 ## 0.4.0
 
 * Update to scala 2.13
