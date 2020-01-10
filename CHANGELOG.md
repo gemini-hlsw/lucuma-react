@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.2
+
+* Add Component without children
+
 ## 0.4.1
 
 * Add Size class
