@@ -45,8 +45,8 @@ package object common extends AllSyntax {
   type GenericFnComponentPC[P <: js.Object] =
     GenericFnComponentC[P, CtorType.PropsAndChildren, Unit]
   type GenericFnComponentP[P <: js.Object] = GenericFnComponent[P, CtorType.Props, Unit]
-  type GenericComponentPC[P <: js.Object]  = GenericComponentC[P, CtorType.PropsAndChildren, Unit]
-  type GenericComponentP[P <: js.Object]   = GenericComponentC[P, CtorType.Props, Unit]
+  type GenericComponentPC[P <: js.Object]  = GenericJsComponentC[P, CtorType.PropsAndChildren, Unit]
+  type GenericComponentP[P <: js.Object]   = GenericJsComponentP[P, CtorType.Props, Unit]
 
   implicit class GenericFnComponentPCOps[P <: js.Object](val c: GenericFnComponentPC[P])
       extends AnyVal {
@@ -149,12 +149,17 @@ package common {
     @inline def render: RenderFn[P] = renderWith(children)
   }
 
-  trait GenericComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
+  trait GenericJsComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
     def cprops: P
     val children: CtorType.ChildrenArgs = Seq.empty
-    def withChildren(children: CtorType.ChildrenArgs): GenericComponentC[P, CT, U]
+    def withChildren(children: CtorType.ChildrenArgs): GenericJsComponentC[P, CT, U]
     @inline def renderWith: RenderC[P]
     @inline def render: Render[P] = renderWith(children)
+  }
+
+  trait GenericJsComponentP[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
+    def cprops: P
+    @inline def render: Render[P]
   }
 
   @js.native
