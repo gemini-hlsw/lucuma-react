@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.0
+
+* Updated scalajs-react 1.6.0
+
 ## 0.2.1
 
 * Update scalajs-react common
