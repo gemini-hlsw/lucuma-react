@@ -1,5 +1,10 @@
 # Changes
 
+## 0.5.0
+
+* Update scalajs-react to 1.6.0
+* Publish for 2.12 and 2.13
+
 ## 0.4.2
 
 * Add Component without children

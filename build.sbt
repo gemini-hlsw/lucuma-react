@@ -1,7 +1,7 @@
 import sbt._
 
 val reactJS      = "16.7.0"
-val scalaJsReact = "1.5.0"
+val scalaJsReact = "1.6.0"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -108,6 +108,7 @@ lazy val commonSettings = Seq(
   description := "scala.js react common utilities",
   sonatypeProfileName := "io.github.cquiroz",
   publishArtifact in Test := false,
+  crossScalaVersions := List("2.13.1", "2.12.10"),
   libraryDependencies ++= Seq(
     "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
     "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % "test"
