@@ -1,5 +1,9 @@
 # Changes
 
+## 0.10.0
+
+* Update scalajs-react
+
 ## 0.9.1
 
 * Library updates
