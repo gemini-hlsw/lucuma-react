@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.1
+
+* Update scalajs to 0.6.32
+
 ## 0.5.0
 
 * Update scalajs-react to 1.6.0
