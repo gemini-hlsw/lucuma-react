@@ -88,7 +88,7 @@ lazy val demo =
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz.react" %%% "react-virtualized" % "0.7.0"
+        "io.github.cquiroz.react" %%% "react-virtualized" % "0.7.1"
       ),
       // don't publish the demo
       publish := {},
