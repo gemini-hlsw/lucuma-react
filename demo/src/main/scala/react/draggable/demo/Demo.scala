@@ -9,6 +9,7 @@ import org.scalajs.dom
 import org.scalajs.dom.MouseEvent
 import react.virtualized._
 import react.draggable._
+import react.common.Size
 import Data.DataRow
 
 object TableDemo {
@@ -62,7 +63,7 @@ object TableDemo {
     .renderPS { ($, props, state) =>
       def resizeRow(k: String, dx: JsNumber): Callback =
         $.modState { s =>
-          val percentDelta = dx.toDouble / props.s.width
+          val percentDelta = dx.toDouble / props.s.width.toDouble
           k match {
             case "index" =>
               s.copy(
@@ -94,14 +95,14 @@ object TableDemo {
       }
       val columns = List(
         Column(
-          Column.props((props.s.width * state.widths.index).toInt,
+          Column.props((props.s.width.toDouble * state.widths.index).toInt,
                        "index",
                        label          = "Index",
                        disableSort    = false,
                        headerRenderer = headerRenderer(resizeRow))
         ),
         Column(
-          Column.props((props.s.width * state.widths.name).toInt,
+          Column.props((props.s.width.toDouble * state.widths.name).toInt,
                        "name",
                        label          = "Full Name",
                        disableSort    = false,
@@ -109,7 +110,7 @@ object TableDemo {
         ),
         Column(
           Column.props(
-            (props.s.width * state.widths.random).toInt,
+            (props.s.width.toDouble * state.widths.random).toInt,
             "random",
             disableSort = true,
             className   = "exampleColumn",
@@ -131,7 +132,7 @@ object TableDemo {
           rowCount         = 1000,
           rowHeight        = if (props.useDynamicRowHeight) rowheight(state.data) _ else 40,
           onRowClick       = x => Callback.log(x),
-          width            = props.s.width.toInt,
+          width            = props.s.width,
           rowGetter        = datum(state.data),
           headerClassName  = "headerColumn",
           sort             = sort _,
