@@ -1,5 +1,9 @@
 # Changes
 
+## 0.7.0
+
+* Updated react-common and scalajs-react
+
 ## 0.6.0
 
 * Updated react-draggable to version 4.0.3
