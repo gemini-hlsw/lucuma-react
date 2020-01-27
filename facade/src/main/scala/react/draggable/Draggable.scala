@@ -5,7 +5,9 @@ package draggable
 import scala.scalajs.js
 import scala.scalajs.js.|
 import js.annotation.JSImport
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.Callback
+import japgolly.scalajs.react.Children
+import japgolly.scalajs.react.JsComponent
 import japgolly.scalajs.react.component.Js.RawMounted
 import japgolly.scalajs.react.component.Js.UnmountedMapped
 import japgolly.scalajs.react.internal.Effect.Id
