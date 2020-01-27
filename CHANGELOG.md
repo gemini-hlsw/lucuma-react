@@ -1,5 +1,9 @@
 # Changes
 
+## 0.7.1
+
+* Cross build to 2.13.1
+
 ## 0.7.0
 
 * Updated react-common and scalajs-react
