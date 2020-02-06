@@ -72,7 +72,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
         "io.github.cquiroz.react" %%% "common" % "0.5.1",
         "io.github.cquiroz.react" %%% "test" % "0.5.1" % Test,
-        "com.lihaoyi" %%% "utest" % "0.7.3" % Test,
+        "com.lihaoyi" %%% "utest" % "0.7.4" % Test,
         "org.typelevel" %%% "cats-core" % "2.1.0" % Test
       ),
       testFrameworks += new TestFramework("utest.runner.Framework")
