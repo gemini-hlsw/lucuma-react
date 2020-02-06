@@ -61,7 +61,7 @@ lazy val test =
     .settings(
       name := "test",
       libraryDependencies ++= Seq(
-        "com.lihaoyi" %%% "utest" % "0.7.3"
+        "com.lihaoyi" %%% "utest" % "0.7.4"
       ),
       npmDependencies in Compile ++= Seq(
         "react" -> reactJS,
@@ -78,7 +78,7 @@ lazy val test =
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
-        "com.lihaoyi" %%% "utest" % "0.7.3" % Test,
+        "com.lihaoyi" %%% "utest" % "0.7.4" % Test,
         "org.typelevel" %%% "cats-core" % "2.1.0" % Test
       ),
       webpackConfigFile in Test := Some(
