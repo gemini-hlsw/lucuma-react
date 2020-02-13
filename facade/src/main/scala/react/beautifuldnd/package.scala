@@ -18,6 +18,12 @@ package object beautifuldnd {
 
   type DropReason = "DROP" | "CANCEL"
 
+  type DroppableMode = "standard" | "virtual"
+
+  type Direction = "horizontal" | "vertical"
+
+  type DraggableChildrenFn = js.Function3[Draggable.ProvidedJS, Draggable.StateSnapshotJS, Draggable.RubricJS, Raw.React.Node | Null]
+
   implicit class OrNullOps[A](a: A | Null) {
     def toOption: Option[A] = 
       if( a == null)

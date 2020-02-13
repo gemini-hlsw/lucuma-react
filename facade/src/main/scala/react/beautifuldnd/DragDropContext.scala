@@ -45,14 +45,14 @@ object DragDropContext {
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.onDragEnd = (dr, rp) => onDragEnd(dr, rp).runNow()
-    onBeforeCapture.foreach(e => p.onBeforeCapture = (bc => e(bc).runNow()) : OnBeforeCaptureResponder)
-    onBeforeDragStart.foreach(e => p.onBeforeDragStart = (ds => e(ds).runNow()) : OnBeforeDragStartResponder)
-    onDragStart.foreach(e => p.onDragStart = ((ds, rp) => e(ds, rp).runNow()) : OnDragStartResponder)
-    onDragUpdate.foreach(e => p.onDragUpdate = ((du, rp) => e(du, rp).runNow()) : OnDragUpdateResponder)
-    p.liftInstruction.foreach(li => p.liftInstruction = li)
-    p.nonce.foreach(n => p.nonce = n)
+    onBeforeCapture.foreach(event => p.onBeforeCapture = (bc => event(bc).runNow()) : OnBeforeCaptureResponder)
+    onBeforeDragStart.foreach(event => p.onBeforeDragStart = (ds => event(ds).runNow()) : OnBeforeDragStartResponder)
+    onDragStart.foreach(event => p.onDragStart = ((ds, rp) => event(ds, rp).runNow()) : OnDragStartResponder)
+    onDragUpdate.foreach(event => p.onDragUpdate = ((du, rp) => event(du, rp).runNow()) : OnDragUpdateResponder)
+    p.liftInstruction.foreach(value => p.liftInstruction = value)
+    p.nonce.foreach(value => p.nonce = value)
     p.sensors = sensors
-    p.enableDefaultSensors.foreach(eds => p.enableDefaultSensors = eds)
+    p.enableDefaultSensors.foreach(value => p.enableDefaultSensors = value)
     p
   }
 

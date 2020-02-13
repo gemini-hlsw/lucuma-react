@@ -5,6 +5,8 @@ Facade to use [`react-beautiful-dnd`](https://github.com/atlassian/react-beautif
 ## Usage
 
 ```scala
+  import japgolly.scalajs.react._
+  import japgolly.scalajs.react.vdom.html_<^._
   import react.beautifuldnd._
 
   case class Item(id: String, content: String)
@@ -44,5 +46,7 @@ Facade to use [`react-beautiful-dnd`](https://github.com/atlassian/react-beautif
 ```
 
 - Run `sbt restartWDS` and navigate to `localhost:8080` for a demo.
+
+- Requires Scala 2.13.
 
 - `SensorAPI` not yet typed.
