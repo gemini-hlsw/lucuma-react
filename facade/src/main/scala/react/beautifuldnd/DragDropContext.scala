@@ -49,10 +49,10 @@ object DragDropContext {
     onBeforeDragStart.foreach(event => p.onBeforeDragStart = (ds => event(ds).runNow()) : OnBeforeDragStartResponder)
     onDragStart.foreach(event => p.onDragStart = ((ds, rp) => event(ds, rp).runNow()) : OnDragStartResponder)
     onDragUpdate.foreach(event => p.onDragUpdate = ((du, rp) => event(du, rp).runNow()) : OnDragUpdateResponder)
-    p.liftInstruction.foreach(value => p.liftInstruction = value)
-    p.nonce.foreach(value => p.nonce = value)
+    p.liftInstruction = liftInstruction
+    p.nonce = nonce
     p.sensors = sensors
-    p.enableDefaultSensors.foreach(value => p.enableDefaultSensors = value)
+    p.enableDefaultSensors = enableDefaultSensors
     p
   }
 

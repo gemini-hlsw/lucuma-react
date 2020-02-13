@@ -67,14 +67,14 @@ object Droppable {
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.droppableId = droppableId
-    p.tpe.foreach(value => p.tpe = value)
-    p.mode.foreach(value => p.mode = value)
-    p.isDropDisabled.foreach(value => p.isDropDisabled = value)
-    p.isCombineEnabled.foreach(value => p.isCombineEnabled = value)
-    p.direction.foreach(value => p.direction = value)
-    p.ignoreContainerClipping.foreach(value => p.ignoreContainerClipping = value)
-    p.renderClone.foreach(value => p.renderClone = value)
-    p.getContainerForClone.foreach(value => p.getContainerForClone = value)
+    p.tpe = tpe
+    p.mode = mode
+    p.isDropDisabled = isDropDisabled
+    p.isCombineEnabled = isCombineEnabled
+    p.direction = direction
+    p.ignoreContainerClipping = ignoreContainerClipping
+    p.renderClone = renderClone
+    p.getContainerForClone = getContainerForClone
     p.children = (p, ss) => children(Provided(p), ss).rawNode
     p
   }
