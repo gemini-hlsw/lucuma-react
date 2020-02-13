@@ -8,13 +8,16 @@ import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.scalajs.js.annotation.JSImport
 
-case class DraggableProvided(innerRef: TagMod, draggableProps: TagMod, dragHandleProps: TagMod)
+case class DraggableProvided(innerRef: TagMod, draggableProps: TagMod, draggableStyle: TagMod, dragHandleProps: TagMod)
 
 object DraggableProvided {
   def apply(provided: Draggable.DraggableProvidedJS): DraggableProvided =
     DraggableProvided(
       TagMod.fn(_.addRefFn(provided.innerRef)),
       TagMod.fn(_.addAttrsObject(provided.draggableProps)),
+      provided.draggableProps.style.toOption.whenDefined( draggableStyle =>
+        TagMod.fn(_.addStylesObject(draggableStyle))
+      ),
       provided.dragHandleProps.toOption.whenDefined( dragHandleProps =>
         TagMod.fn(_.addAttrsObject(dragHandleProps))
       )
@@ -26,7 +29,12 @@ object Draggable {
   @JSImport("react-beautiful-dnd", "Draggable")
   object RawComponent extends js.Object
 
-  type DraggableProps = js.Object
+  // type DraggableProps = js.Object
+
+  @js.native
+  trait DraggableProps extends js.Object {
+    val style: js.Object | Null
+  }
 
   type DragHandleProps = js.Object | Null
 
@@ -40,10 +48,10 @@ object Draggable {
 
   @js.native
   trait DraggableStateSnapshot extends js.Object {
-
+    val isDragging: Boolean
   }
 
-    @js.native
+  @js.native
   trait DraggableRubric extends js.Object {
 
   }

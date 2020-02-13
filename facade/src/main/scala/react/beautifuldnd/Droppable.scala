@@ -36,7 +36,7 @@ object Droppable {
 
   @js.native
   trait DroppableStateSnapshotJS extends js.Object {
-
+    val isDraggingOver: Boolean
   }
   
   @js.native
