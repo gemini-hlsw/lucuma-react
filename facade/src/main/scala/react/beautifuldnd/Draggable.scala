@@ -2,11 +2,24 @@ package react.beautifuldnd
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.{raw => Raw}
-import japgolly.scalajs.react.vdom._
+import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.html
 import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.scalajs.js.annotation.JSImport
+
+case class DraggableProvided(innerRef: TagMod, draggableProps: TagMod, dragHandleProps: TagMod)
+
+object DraggableProvided {
+  def apply(provided: Draggable.DraggableProvidedJS): DraggableProvided =
+    DraggableProvided(
+      TagMod.fn(_.addRefFn(provided.innerRef)),
+      TagMod.fn(_.addAttrsObject(provided.draggableProps)),
+      provided.dragHandleProps.toOption.whenDefined( dragHandleProps =>
+        TagMod.fn(_.addAttrsObject(dragHandleProps))
+      )
+    )
+}
 
 object Draggable {
   @js.native
@@ -18,7 +31,7 @@ object Draggable {
   type DragHandleProps = js.Object | Null
 
   @js.native
-  trait DraggableProvided extends js.Object {
+  protected[beautifuldnd] trait DraggableProvidedJS extends js.Object {
     // val innerRef: js.UndefOr[HTMLElement]
     val innerRef: Raw.React.RefFn[html.Element]
     val draggableProps: DraggableProps
@@ -40,7 +53,7 @@ object Draggable {
   trait Props extends js.Object {
     var draggableId: DraggableId
     var index: Int
-    var children: js.Function3[DraggableProvided, DraggableStateSnapshot, DraggableRubric, Raw.React.Node]
+    var children: js.Function3[DraggableProvidedJS, DraggableStateSnapshot, DraggableRubric, Raw.React.Node]
   }
 
   def props(
@@ -51,7 +64,7 @@ object Draggable {
     val p = (new js.Object).asInstanceOf[Props]
     p.draggableId = draggableId
     p.index = index
-    p.children = (p, ss, r) => children(p, ss, r).rawNode
+    p.children = (p, ss, r) => children(DraggableProvided(p), ss, r).rawNode
     p
   }
 

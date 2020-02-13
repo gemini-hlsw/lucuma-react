@@ -3,10 +3,7 @@ package react.beautifuldnd.demo
 import cats._
 import cats.implicits._
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.{raw => Raw}
-import japgolly.scalajs.react.vdom.Builder
 import japgolly.scalajs.react.vdom.html_<^._
-import japgolly.scalajs.react.internal.JsUtil
 import org.scalajs.dom.document
 import react.beautifuldnd._
 
@@ -20,29 +17,6 @@ object BeautifulDnDDemo {
   implicit object CallbackMonoid extends Monoid[Callback] {
     def empty: Callback = Callback.empty
     def combine(x: Callback, y: Callback): Callback = x *> y
-  }
-
-  /*def callbackFnRef[A <: TopNode](refFn: Raw.React.RefFn[A])(implicit ev: Null <:< A): TagOf.RefArg[A] =
-    TagOf.RefArg.set(
-      new Ref.Set[A] {
-        val set: CallbackKleisli[Option[A], Unit] = 
-          CallbackKleisli((oi: Option[A]) => Callback{
-            println(s"SETTING REF TO $oi")
-            refFn(oi.orUndefined.orNull[A])
-          })
-
-        def contramap[B](f: B => A): Ref.Set[B] = ???
-
-        def narrow[B <: A]: Ref.Set[B] = ???
-      }
-    )*/
-
-  implicit class BuilderOps(b: Builder) {
-    def addAttrsObject(o: js.Object): Unit =
-      for ((k, v) <- JsUtil.objectIterator(o)) b.addAttr(k, v)
-
-    def addRefFn[A](refFn: Raw.React.RefFn[A]): Unit =
-      b.addAttr("ref", refFn)
   }
 
   class Backend($: BackendScope[Props, State]) {
@@ -60,26 +34,16 @@ object BeautifulDnDDemo {
       }
     }
     
-
     def render(p: Props, s: State): VdomElement =
       <.div(
         <.div(^.height := "600px", ^.width := "1000px")(
           DragDropContext(onDragEnd = onDragEnd)(
             Droppable("droppableList"){ case (provided, snapshot) =>
-              <.div(
-                TagMod.fn(_.addRefFn(provided.innerRef)),
-                TagMod.fn(_.addAttrsObject(provided.droppableProps))
-              )(
+              <.div(provided.innerRef, provided.droppableProps)(
                   <.b("Good to go:"),
                   s.list.zipWithIndex.toTagMod{ case (item, index) =>
                     Draggable(item, index) { case (provided, snapshot, rubric) =>
-                      <.div(
-                        TagMod.fn(_.addRefFn(provided.innerRef)),
-                        TagMod.fn(_.addAttrsObject(provided.draggableProps)),
-                        Option(provided.dragHandleProps.asInstanceOf[js.Object]).whenDefined( dragHandleProps =>
-                          TagMod.fn(_.addAttrsObject(dragHandleProps))
-                        )
-                      )(
+                      <.div(provided.innerRef, provided.draggableProps, provided.dragHandleProps)(
                         item
                       )
                     }

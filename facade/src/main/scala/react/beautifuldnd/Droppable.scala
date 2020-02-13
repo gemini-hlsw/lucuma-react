@@ -2,10 +2,21 @@ package react.beautifuldnd
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.{raw => Raw}
-import japgolly.scalajs.react.vdom._
+import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.html
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
+
+case class DroppableProvided(innerRef: TagMod, droppableProps: TagMod, placeholder: TagMod)
+
+object DroppableProvided {
+  def apply(provided: Droppable.DroppableProvidedJS): DroppableProvided =
+    DroppableProvided(
+      TagMod.fn(_.addRefFn(provided.innerRef)),
+      TagMod.fn(_.addAttrsObject(provided.droppableProps)),
+      provided.placeholder.toOption.whenDefined(identity)
+    )
+}
 
 object Droppable {
   @js.native
@@ -17,31 +28,30 @@ object Droppable {
   type DroppableProps = js.Object
 
   @js.native
-  trait DroppableProvided extends js.Object {
-    // val innerRef: js.UndefOr[HTMLElement]
+  protected[beautifuldnd] trait DroppableProvidedJS extends js.Object {
     val innerRef: Raw.React.RefFn[html.Element]
     val droppableProps: DroppableProps
     val placeholder: js.UndefOr[Raw.React.Node]
   }
 
   @js.native
-  trait DroppableStateSnapshot extends js.Object {
+  trait DroppableStateSnapshotJS extends js.Object {
 
   }
   
   @js.native
   trait Props extends js.Object {
     var droppableId: DroppableId
-    var children: js.Function2[DroppableProvided, DroppableStateSnapshot, Raw.React.Node]
+    var children: js.Function2[DroppableProvidedJS, DroppableStateSnapshotJS, Raw.React.Node]
   }
 
   def props(
     droppableId: DroppableId,
-    children: (DroppableProvided, DroppableStateSnapshot) => VdomNode
+    children: (DroppableProvided, DroppableStateSnapshotJS) => VdomNode
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.droppableId = droppableId
-    p.children = (p, ss) => children(p, ss).rawNode
+    p.children = (p, ss) => children(DroppableProvided(p), ss).rawNode
     p
   }
 
@@ -49,7 +59,7 @@ object Droppable {
 
   def apply(
     droppableId: DroppableId
-  )(children: (DroppableProvided, DroppableStateSnapshot) => VdomNode) = {
+  )(children: (DroppableProvided, DroppableStateSnapshotJS) => VdomNode) = {
     component(props(droppableId, children))
   }
 }
