@@ -44,3 +44,9 @@ trait DragUpdate extends DragStart {
 trait DropResult extends DragUpdate {
   val reason: DropReason
 }
+
+@js.native
+trait BeforeCapture extends js.Object {
+  val draggableId: DraggableId
+  val mode: MovementMode
+}

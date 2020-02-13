@@ -8,9 +8,15 @@ import org.scalajs.dom.document
 import react.beautifuldnd._
 
 object BeautifulDnDDemo {
+  private val Grid = 8
+
+  protected case class Item(id: String, content: String)
+
+  private def getItems(n: Int): List[Item] = 
+    (0 until n).map(i => Item(s"item-$i", s"item $i")).toList
 
   final case class Props()
-  final case class State(list: List[String] = List("one", "two", "three", "four"))
+  final case class State(list: List[Item] = getItems(10))
 
   implicit object CallbackMonoid extends Monoid[Callback] {
     def empty: Callback = Callback.empty
@@ -31,8 +37,6 @@ object BeautifulDnDDemo {
         $.modState(s => State(reorder(result.source.index, destination.index)(s.list)))
       }
     }
-    
-    private val Grid = 8
 
     def getListStyle(isDraggingOver: Boolean): TagMod = TagMod (
       (^.background := "lightgrey").unless(isDraggingOver),
@@ -68,14 +72,14 @@ object BeautifulDnDDemo {
               )(
                 <.b("Good to go:"),
                 s.list.zipWithIndex.toTagMod{ case (item, index) =>
-                  Draggable(item, index) { case (provided, snapshot, rubric) =>
+                  Draggable(item.id, index) { case (provided, snapshot, rubric) =>
                     <.div(
                       provided.innerRef,                       
                       provided.draggableProps, 
                       provided.dragHandleProps,
                       getItemStyle(snapshot.isDragging, provided.draggableStyle)
                     )(
-                      item
+                      item.content
                     )
                   }
                 },

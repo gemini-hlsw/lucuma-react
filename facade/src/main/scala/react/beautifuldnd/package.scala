@@ -33,4 +33,8 @@ package object beautifuldnd {
     def addRefFn[A](refFn: Raw.React.RefFn[A]): Unit =
       b.addAttr("ref", refFn)
   }
+
+  type SensorAPI = js.Object
+
+  type Sensor = SensorAPI => Unit
 }
