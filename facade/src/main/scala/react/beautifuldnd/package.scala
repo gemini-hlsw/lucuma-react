@@ -13,4 +13,12 @@ package object beautifuldnd {
   type MovementMode = "FLUID" | "SNAP"
 
   type DropReason = "DROP" | "CANCEL"
+
+  implicit class OrNullOps[A](a: A | Null) {
+    def toOption: Option[A] = 
+      if( a == null)
+        None
+      else
+        Some(a.asInstanceOf[A])
+  }
 }

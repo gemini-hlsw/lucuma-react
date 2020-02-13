@@ -37,16 +37,19 @@ object Droppable {
 
   def props(
     droppableId: DroppableId,
+    children: (DroppableProvided, DroppableStateSnapshot) => VdomNode
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.droppableId = droppableId
+    p.children = (p, ss) => children(p, ss).rawNode
     p
   }
 
-  private val component = JsComponent.force[Props, Children.None, Null](RawComponent)
+  val component = JsComponent.force[Props, Children.None, Null](RawComponent)
 
-  def apply(p: Props)(children: (DroppableProvided, DroppableStateSnapshot) => VdomNode) = {
-    p.children = (p, ss) => children(p, ss).rawNode
-    component(p)
+  def apply(
+    droppableId: DroppableId
+  )(children: (DroppableProvided, DroppableStateSnapshot) => VdomNode) = {
+    component(props(droppableId, children))
   }
 }

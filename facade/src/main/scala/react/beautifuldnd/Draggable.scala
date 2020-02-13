@@ -45,18 +45,22 @@ object Draggable {
 
   def props(
     draggableId: DraggableId,
-    index: Int
+    index: Int,
+    children: (DraggableProvided, DraggableStateSnapshot, DraggableRubric) => VdomNode
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.draggableId = draggableId
     p.index = index
+    p.children = (p, ss, r) => children(p, ss, r).rawNode
     p
   }
 
-  private val component = JsComponent[Props, Children.None, Null](RawComponent)
+  val component = JsComponent[Props, Children.None, Null](RawComponent)
 
-  def apply(p: Props)(children: (DraggableProvided, DraggableStateSnapshot, DraggableRubric) => VdomNode) = {
-    p.children = (p, ss, r) => children(p, ss, r).rawNode
-    component.withKey(p.draggableId)(p)
+  def apply(
+    draggableId: DraggableId,
+    index: Int    
+  )(children: (DraggableProvided, DraggableStateSnapshot, DraggableRubric) => VdomNode) = {
+    component.withKey(draggableId)(props(draggableId, index, children))
   }
 }

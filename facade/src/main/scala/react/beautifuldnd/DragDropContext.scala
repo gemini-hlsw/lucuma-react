@@ -1,12 +1,8 @@
 package react.beautifuldnd
 
 import japgolly.scalajs.react._
-// import japgolly.scalajs.react.component.Js.RawMounted
-// import japgolly.scalajs.react.component.Js.UnmountedMapped
-// import japgolly.scalajs.react.vdom.VdomElement
-// import japgolly.scalajs.react.internal.Effect.Id
+import japgolly.scalajs.react.vdom.VdomNode
 import scala.scalajs.js
-// import scala.scalajs.js.|
 import scala.scalajs.js.annotation.JSImport
 
 // https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/drag-drop-context.md
@@ -31,16 +27,9 @@ object DragDropContext {
     p
   }
 
-  // object Props {
-    // implicit class PropsOps(p: Props) {
-      // @inline def render: VdomElement = component.apply(p)()
-    // }
-  // }  
+  val component = JsComponent[Props, Children.Varargs, Null](RawComponent)
 
-  /*private*/ val component = JsComponent[Props, Children.Varargs, Null](RawComponent)
-
-  // def apply(p: Props) = component(p) _
-
-  // def apply(p: Props): Seq[CtorType.ChildArg] => UnmountedMapped[Id, Props, Null, RawMounted[Props, Null], Props, Null] =
-    // component.apply(p) _
+  def apply(
+    onDragEnd: (DropResult, ResponderProvided) => Callback
+  )(children: VdomNode*) = component(props(onDragEnd))(children:_*)
 }
