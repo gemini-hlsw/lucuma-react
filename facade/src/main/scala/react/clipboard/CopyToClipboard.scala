@@ -36,7 +36,9 @@ object CopyToClipboard {
   private def copy(p: CopyToClipboard): Callback =
     CallbackTo[Boolean](
       JsCopy(p.text, p.options.getOrElse(ClipboardOptions.Default))
-    ) >>= { r => p.onCopy(p.text, r) }
+    ) >>= { r =>
+      p.onCopy(p.text, r)
+    }
 
   private val component = ScalaComponent
     .builder[CopyToClipboard]("CopyToClipboard")
