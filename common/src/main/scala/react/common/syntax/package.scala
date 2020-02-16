@@ -28,7 +28,7 @@ package syntax {
 
   final class EnumValueUndefOps[A](a: js.UndefOr[A])(implicit ev: EnumValue[A]) {
     def toJs: js.UndefOr[String] =
-      a.map { ev.value }
+      a.map(ev.value)
   }
 
   final class EnumValueOpsB[A](a: A)(implicit ev: EnumValueB[A]) {
@@ -37,7 +37,7 @@ package syntax {
 
   final class EnumValueUndefOpsB[A](a: js.UndefOr[A])(implicit ev: EnumValueB[A]) {
     def toJs: js.UndefOr[Boolean | String] =
-      a.map { ev.value }
+      a.map(ev.value)
   }
 
   trait CallbackPairSyntax {

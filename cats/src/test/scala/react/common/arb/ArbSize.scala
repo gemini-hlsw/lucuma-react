@@ -15,9 +15,7 @@ trait ArbSize {
   }
 
   implicit val cogenSize: Cogen[Size] =
-    Cogen[(JsNumber, JsNumber)].contramap { x =>
-      (x.width, x.height)
-    }
+    Cogen[(JsNumber, JsNumber)].contramap(x => (x.width, x.height))
 }
 
 object ArbSize extends ArbSize
