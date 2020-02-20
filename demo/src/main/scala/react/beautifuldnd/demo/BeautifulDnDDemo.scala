@@ -7,6 +7,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.document
 import react.beautifuldnd._
 
+// Adaptation of https://codesandbox.io/s/k260nyxq9v
 object BeautifulDnDDemo {
   private val Grid = 8
 
