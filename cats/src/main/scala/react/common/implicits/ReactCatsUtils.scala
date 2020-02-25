@@ -7,7 +7,6 @@ import scala.scalajs.js.|
 import japgolly.scalajs.react.raw.JsNumber
 import cats._
 import cats.implicits._
-import react.common.syntax.AllSyntax
 
 package implicits {
   trait ReactCatsImplicits {
@@ -91,4 +90,4 @@ package implicits {
   }
 }
 
-package object implicits extends ReactCatsImplicits with AllSyntax
+package object implicits extends ReactCatsImplicits
