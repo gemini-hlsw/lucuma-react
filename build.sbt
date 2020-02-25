@@ -12,6 +12,8 @@ addCommandAlias("restartWDS",
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
+Global / resolvers += Resolver.sonatypeRepo("public")
+
 // sbt-release-early
 inThisBuild(
   List(
@@ -122,9 +124,9 @@ lazy val facade =
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra" % scalaJsReact,
-        "org.scala-js" %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react" %%% "common" % "0.5.1",
         "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
+        "org.scala-js" %%% "scalajs-dom" % scalaJSDom,
+        "io.github.cquiroz.react" %%% "common" % "0.5.2",
         "com.lihaoyi" %%% "utest" % "0.7.4" % Test,
         "org.typelevel" %%% "cats-core" % "2.1.1" % Test
       ),
@@ -141,12 +143,14 @@ lazy val commonSettings = Seq(
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-draggable ",
   publishArtifact in Test := false,
-  scalacOptions ~= (_.filterNot(Set(
-    // By necessity facades will have unused params
-    "-Wdead-code",
-    "-Wunused:params",
-    "-Ywarn-dead-code",
-    "-Ywarn-unused:params"
-  ))),
+  scalacOptions ~= (_.filterNot(
+    Set(
+      // By necessity facades will have unused params
+      "-Wdead-code",
+      "-Wunused:params",
+      "-Ywarn-dead-code",
+      "-Ywarn-unused:params"
+    )
+  )),
   scalacOptions += "-P:scalajs:sjsDefinedByDefault"
 )
