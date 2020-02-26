@@ -1,3 +1,4 @@
+project/metals.sbt
 *.class
 *.log
 target/

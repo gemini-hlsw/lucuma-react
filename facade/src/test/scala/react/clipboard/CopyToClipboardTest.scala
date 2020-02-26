@@ -8,7 +8,7 @@ import utest._
 
 object CopyToClipboardTest extends TestSuite with TestUtils {
   val tests = Tests {
-    'render - {
+    test("render") {
       val table =
         CopyToClipboard(text = "text")(<<.div("Copy"))
       val html =

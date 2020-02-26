@@ -12,4 +12,4 @@ jobs:
       - name: Checking your code format
         run: csbt scalafmtCheckAll
       - name: Run tests
-        run: csbt facade/test
+        run: csbt +facade/test
