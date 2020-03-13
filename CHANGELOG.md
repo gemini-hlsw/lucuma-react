@@ -1,5 +1,9 @@
 # Changes
 
+## 0.6.1
+
+* Add methods when/unless to Style
+
 ## 0.6.0
 
 * Allow passthrough attributes to JS components

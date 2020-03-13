@@ -46,6 +46,21 @@ package style {
       } else {
         s
       }
+
+    def when(pred: Boolean): js.UndefOr[Style] =
+      if (pred) {
+        s
+      } else {
+        js.undefined
+      }
+
+    def unless(pred: Boolean): js.UndefOr[Style] =
+      if (pred) {
+        js.undefined
+      } else {
+        s
+      }
+
   }
 
   final class ClassnameCssOps(cn: (js.UndefOr[String], js.UndefOr[Css])) {
