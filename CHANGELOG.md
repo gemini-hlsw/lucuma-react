@@ -1,5 +1,9 @@
 # Changes
 
+## 0.6.0
+
+* Allow passthrough attributes to JS components
+
 ## 0.5.1
 
 * Update scalajs to 0.6.32
