@@ -22,5 +22,13 @@ object StyleTests extends TestSuite with TestUtils {
       val a: Style = Style(Map("height" -> 42, "background" -> "black"))
       assert(a.remove("height").extract[String]("height").isEmpty)
     }
+    test("when") {
+      assert(Style(Map("height" -> 42, "background" -> "black")).when(true).nonEmpty)
+      assert(Style(Map("height" -> 42, "background" -> "black")).when(false).isEmpty)
+    }
+    test("unless") {
+      assert(Style(Map("height" -> 42, "background" -> "black")).unless(true).isEmpty)
+      assert(Style(Map("height" -> 42, "background" -> "black")).unless(false).nonEmpty)
+    }
   }
 }
