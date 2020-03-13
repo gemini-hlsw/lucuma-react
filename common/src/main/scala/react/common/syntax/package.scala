@@ -129,17 +129,17 @@ package syntax {
       p.render
 
     implicit def gProps2FnUnmountedPA[P <: js.Object](
-      p: GenericFnComponentPC[P]
+      p: GenericFnComponentPC[P, _]
     ): RenderFn[P] =
       p.render
 
     implicit def gFnProps2VdomP[P <: js.Object](
-      p: GenericFnComponentPA[P]
+      p: GenericFnComponentPA[P, _]
     ): RenderFn[P] =
       p.render
 
     implicit def gProps2FnUnmountedPA[P <: js.Object](
-      p: GenericFnComponentPAC[P]
+      p: GenericFnComponentPAC[P, _]
     ): RenderFn[P] =
       p.render
 
@@ -149,17 +149,17 @@ package syntax {
       p.render
 
     implicit def gProps2UnmountedPC[P <: js.Object](
-      p: GenericComponentPC[P]
+      p: GenericComponentPC[P, _]
     ): Render[P] =
       p.render
 
     implicit def gProps2VdomPA[P <: js.Object](
-      p: GenericComponentPA[P]
+      p: GenericComponentPA[P, _]
     ): Render[P] =
       p.render
 
     implicit def gProps2UnmountedPAC[P <: js.Object](
-      p: GenericComponentPAC[P]
+      p: GenericComponentPAC[P, _]
     ): Render[P] =
       p.render
     // End Render(Fn) conversions
@@ -171,7 +171,7 @@ package syntax {
       p.render
 
     implicit def gFnProps2VdomNodePC[P <: js.Object](
-      p: GenericFnComponentPC[P]
+      p: GenericFnComponentPC[P, _]
     ): VdomNode =
       p.render
 
@@ -181,17 +181,17 @@ package syntax {
       p.render
 
     implicit def gProps2VdomNodePC[P <: js.Object](
-      p: GenericComponentPC[P]
+      p: GenericComponentPC[P, _]
     ): VdomNode =
       p.render
 
     implicit def gProps2VdomNodePA[P <: js.Object](
-      p: GenericComponentPA[P]
+      p: GenericComponentPA[P, _]
     ): VdomNode =
       p.render
 
     implicit def gProps2VdomNodePAC[P <: js.Object](
-      p: GenericComponentPAC[P]
+      p: GenericComponentPAC[P, _]
     ): VdomNode =
       p.render
     // End VdomNode conversions
