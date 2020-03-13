@@ -3,15 +3,15 @@ package react
 import japgolly.scalajs.react.CtorType
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode
-import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.component.Generic
 import japgolly.scalajs.react.component.Js.RawMounted
 import japgolly.scalajs.react.component.Js.UnmountedWithRawType
+import japgolly.scalajs.react.vdom.TagMod
 import scala.scalajs.js
-import scala.scalajs.js.|
 import react.common.syntax.AllSyntax
 
 package object common extends AllSyntax {
+
   def merge(a: js.Object, b: js.Object): js.Object = {
     val m = js.Dictionary.empty[js.Any]
     val c = a.asInstanceOf[js.Dictionary[js.Any]]
@@ -29,6 +29,12 @@ package object common extends AllSyntax {
     m.asInstanceOf[js.Object]
   }
 
+  val Style = style.Style
+  val Css   = style.Css
+  type Style = style.Style
+  type Css   = style.Css
+
+  // Begin Scala Components
   implicit def props2Component(p: ReactProps): VdomElement = p.render
 
   implicit def propsWithChildren2Component(p: ReactPropsWithChildren): RenderWithChildren =
@@ -36,145 +42,55 @@ package object common extends AllSyntax {
 
   implicit def propsWithEmptyChildren2Component(p: ReactPropsWithChildren): VdomElement =
     p.render(Seq.empty)
+  // End Scala Components
 
-  type RenderFn[P]            = Generic.Unmounted[P, Unit]
-  type Render[P <: js.Object] = UnmountedWithRawType[P, Null, RawMounted[P, Null]]
-  type RenderFnC[P]           = CtorType.ChildrenArgs => RenderFn[P]
-  type RenderC[P <: js.Object] =
-    CtorType.ChildrenArgs => Render[P]
+  // Begin JS Components
+  type RenderFn[P]             = Generic.Unmounted[P, Unit]
+  type Render[P <: js.Object]  = UnmountedWithRawType[P, Null, RawMounted[P, Null]]
+  type RenderFnC[P]            = CtorType.ChildrenArgs => RenderFn[P]
+  type RenderC[P <: js.Object] = CtorType.ChildrenArgs => Render[P]
+
+  type GenericFnComponentP[P <: js.Object] = GenericFnComponent[P, CtorType.Props, Unit]
   type GenericFnComponentPC[P <: js.Object] =
     GenericFnComponentC[P, CtorType.PropsAndChildren, Unit]
-  type GenericFnComponentP[P <: js.Object] = GenericFnComponent[P, CtorType.Props, Unit]
-  type GenericComponentPC[P <: js.Object]  = GenericJsComponentC[P, CtorType.PropsAndChildren, Unit]
-  type GenericComponentP[P <: js.Object]   = GenericJsComponentP[P, CtorType.Props, Unit]
+  type GenericFnComponentPA[P <: js.Object] = GenericFnComponentA[P, CtorType.Props, Unit]
+  type GenericFnComponentPAC[P <: js.Object] =
+    GenericFnComponentAC[P, CtorType.PropsAndChildren, Unit]
+
+  type GenericComponentP[P <: js.Object]  = GenericJsComponent[P, CtorType.Props, Unit]
+  type GenericComponentPC[P <: js.Object] = GenericJsComponentC[P, CtorType.PropsAndChildren, Unit]
+  type GenericComponentPA[P <: js.Object] = GenericJsComponentA[P, CtorType.Props, Unit]
+  type GenericComponentPAC[P <: js.Object] =
+    GenericJsComponentAC[P, CtorType.PropsAndChildren, Unit]
 
   implicit class GenericFnComponentPCOps[P <: js.Object](val c: GenericFnComponentPC[P])
       extends AnyVal {
     def apply(children: VdomNode*): GenericFnComponentPC[P] = c.withChildren(children)
-    def apply: GenericFnComponentPC[P] = c.withChildren(Seq.empty)
+  }
+
+  implicit class GenericFnComponentPAOps[P <: js.Object](val c: GenericFnComponentPA[P])
+      extends AnyVal {
+    def apply(modifiers: TagMod*): GenericFnComponentPA[P] = c.addModifiers(modifiers)
+  }
+
+  implicit class GenericFnComponentPACOps[P <: js.Object](val c: GenericFnComponentPAC[P])
+      extends AnyVal {
+    def apply(modifiers: TagMod*): GenericFnComponentPAC[P] = c.addModifiers(modifiers)
   }
 
   implicit class GenericComponentPCOps[P <: js.Object](val c: GenericComponentPC[P])
       extends AnyVal {
     def apply(children: VdomNode*): GenericComponentPC[P] = c.withChildren(children)
-    def apply: GenericComponentPC[P] = c.withChildren(Seq.empty)
   }
 
-  val Style = style.Style
-  val Css   = style.Css
-  type Style = style.Style
-  type Css   = style.Css
-}
-
-package common {
-  trait EnumValue[A] {
-    def value(a: A): String
+  implicit class GenericComponentPAOps[P <: js.Object](val c: GenericComponentPA[P])
+      extends AnyVal {
+    def apply(modifiers: TagMod*): GenericComponentPA[P] = c.addModifiers(modifiers)
   }
 
-  object EnumValue {
-    @inline final def apply[A](implicit ev: EnumValue[A]): EnumValue[A] = ev
-
-    def instance[A](f: A => String): EnumValue[A] =
-      new EnumValue[A] {
-        def value(a: A): String = f(a)
-      }
-
-    def toLowerCaseString[A]: EnumValue[A] =
-      new EnumValue[A] {
-        def value(a: A): String = a.toString.toLowerCase
-      }
+  implicit class GenericComponentPACOps[P <: js.Object](val c: GenericComponentPAC[P])
+      extends AnyVal {
+    def apply(modifiers: TagMod*): GenericComponentPAC[P] = c.addModifiers(modifiers)
   }
-
-  trait EnumValueB[A] {
-    def value(a: A): Boolean | String
-  }
-
-  object EnumValueB {
-    @inline final def apply[A](implicit ev: EnumValueB[A]): EnumValueB[A] = ev
-
-    def instance[A](f: A => Boolean | String): EnumValueB[A] =
-      new EnumValueB[A] {
-        def value(a: A): Boolean | String = f(a)
-      }
-
-    def toLowerCaseStringT[A](trueValue: A): EnumValueB[A] =
-      new EnumValueB[A] {
-        def value(a: A): Boolean | String = a match {
-          case b if b == trueValue => true
-          case _                   => a.toString.toLowerCase
-        }
-      }
-
-    def toLowerCaseStringF[A](falseValue: A): EnumValueB[A] =
-      new EnumValueB[A] {
-        def value(a: A): Boolean | String = a match {
-          case b if b == falseValue => false
-          case _                    => a.toString.toLowerCase
-        }
-      }
-
-    def toLowerCaseStringTF[A](trueValue: A, falseValue: A): EnumValueB[A] =
-      new EnumValueB[A] {
-        def value(a: A): Boolean | String = a match {
-          case b if b == trueValue  => true
-          case b if b == falseValue => false
-          case _                    => a.toString.toLowerCase
-        }
-      }
-  }
-
-  trait ReactProps {
-    @inline def render: VdomElement
-  }
-
-  class RenderWithChildren(p: ReactPropsWithChildren) {
-    def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
-      p.render(first +: rest)
-  }
-
-  trait ReactPropsWithChildren {
-    @inline def render: Seq[CtorType.ChildArg] => VdomElement
-  }
-
-  trait GenericFnComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
-    def cprops: P
-    @inline def render: Render[P]
-  }
-
-  trait GenericFnComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
-    def cprops: P
-    val children: CtorType.ChildrenArgs = Seq.empty
-    def withChildren(children: CtorType.ChildrenArgs): GenericFnComponentC[P, CT, U]
-    @inline def renderWith: RenderFnC[P]
-    @inline def render: RenderFn[P] = renderWith(children)
-  }
-
-  trait GenericJsComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
-    def cprops: P
-    val children: CtorType.ChildrenArgs = Seq.empty
-    def withChildren(children: CtorType.ChildrenArgs): GenericJsComponentC[P, CT, U]
-    @inline def renderWith: RenderC[P]
-    @inline def render: Render[P] = renderWith(children)
-  }
-
-  trait GenericJsComponentP[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
-    def cprops: P
-    @inline def render: Render[P]
-  }
-
-  @js.native
-  trait Size extends js.Object {
-    var height: JsNumber
-    var width: JsNumber
-  }
-
-  object Size {
-    def apply(height: JsNumber, width: JsNumber): Size = {
-      val p = (new js.Object).asInstanceOf[Size]
-      p.height = height
-      p.width  = width
-      p
-    }
-  }
-
+  // End JS Components
 }

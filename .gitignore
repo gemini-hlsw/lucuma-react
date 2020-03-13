@@ -3,6 +3,7 @@
 target/
 .idea/
 react-virtualized
+metals.sbt
 .metals/
 .bloop/
 local.*
