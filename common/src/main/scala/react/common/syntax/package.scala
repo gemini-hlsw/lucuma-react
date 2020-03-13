@@ -122,13 +122,29 @@ package syntax {
     implicit def jsNumberOps(d: JsNumber): JsNumberOps =
       new JsNumberOps(d)
 
+    // Start Render(Fn) conversions
+    implicit def gFnProps2VdomP[P <: js.Object](
+      p: GenericFnComponentP[P]
+    ): Render[P] =
+      p.render
+
     implicit def gProps2FnUnmountedPA[P <: js.Object](
       p: GenericFnComponentPC[P]
     ): RenderFn[P] =
       p.render
 
     implicit def gFnProps2VdomP[P <: js.Object](
-      p: GenericFnComponentP[P]
+      p: GenericFnComponentPA[P]
+    ): RenderFn[P] =
+      p.render
+
+    implicit def gProps2FnUnmountedPA[P <: js.Object](
+      p: GenericFnComponentPAC[P]
+    ): RenderFn[P] =
+      p.render
+
+    implicit def gProps2VdomP[P <: js.Object](
+      p: GenericComponentP[P]
     ): Render[P] =
       p.render
 
@@ -137,23 +153,25 @@ package syntax {
     ): Render[P] =
       p.render
 
-    implicit def gProps2VdomP[P <: js.Object](
-      p: GenericComponentP[P]
+    implicit def gProps2VdomPA[P <: js.Object](
+      p: GenericComponentPA[P]
     ): Render[P] =
       p.render
 
-    implicit def gFnProps2VdomNodePC[P <: js.Object](
-      p: GenericFnComponentPC[P]
-    ): VdomNode =
+    implicit def gProps2UnmountedPAC[P <: js.Object](
+      p: GenericComponentPAC[P]
+    ): Render[P] =
       p.render
+    // End Render(Fn) conversions
 
+    // Start VdomNode conversions
     implicit def gFnProps2VdomNodeP[P <: js.Object](
       p: GenericFnComponentP[P]
     ): VdomNode =
       p.render
 
-    implicit def gProps2VdomNodePC[P <: js.Object](
-      p: GenericComponentPC[P]
+    implicit def gFnProps2VdomNodePC[P <: js.Object](
+      p: GenericFnComponentPC[P]
     ): VdomNode =
       p.render
 
@@ -162,6 +180,21 @@ package syntax {
     ): VdomNode =
       p.render
 
+    implicit def gProps2VdomNodePC[P <: js.Object](
+      p: GenericComponentPC[P]
+    ): VdomNode =
+      p.render
+
+    implicit def gProps2VdomNodePA[P <: js.Object](
+      p: GenericComponentPA[P]
+    ): VdomNode =
+      p.render
+
+    implicit def gProps2VdomNodePAC[P <: js.Object](
+      p: GenericComponentPAC[P]
+    ): VdomNode =
+      p.render
+    // End VdomNode conversions
   }
 }
 
