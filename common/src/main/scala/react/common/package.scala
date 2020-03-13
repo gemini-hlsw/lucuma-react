@@ -29,6 +29,16 @@ package object common extends AllSyntax {
     m.asInstanceOf[js.Object]
   }
 
+  def filterProps[P <: js.Object](p: P, name: String, names: String*): P = {
+    val o = js.Dictionary.empty[js.Any]
+    val c = p.asInstanceOf[js.Dictionary[js.Any]]
+    for {
+      k <- js.Object.getOwnPropertyNames(p) if name != k && !names.contains(k)
+      v <- c.get(k)
+    } yield o(k) = v
+    o.asInstanceOf[P]
+  }
+
   val Style = style.Style
   val Css   = style.Css
   type Style = style.Style
@@ -51,46 +61,47 @@ package object common extends AllSyntax {
   type RenderC[P <: js.Object] = CtorType.ChildrenArgs => Render[P]
 
   type GenericFnComponentP[P <: js.Object] = GenericFnComponent[P, CtorType.Props, Unit]
-  type GenericFnComponentPC[P <: js.Object] =
-    GenericFnComponentC[P, CtorType.PropsAndChildren, Unit]
-  type GenericFnComponentPA[P <: js.Object] = GenericFnComponentA[P, CtorType.Props, Unit]
-  type GenericFnComponentPAC[P <: js.Object] =
-    GenericFnComponentAC[P, CtorType.PropsAndChildren, Unit]
+  type GenericFnComponentPC[P <: js.Object, A] =
+    GenericFnComponentC[P, CtorType.PropsAndChildren, Unit, A]
+  type GenericFnComponentPA[P <: js.Object, A] = GenericFnComponentA[P, CtorType.Props, Unit, A]
+  type GenericFnComponentPAC[P <: js.Object, A] =
+    GenericFnComponentAC[P, CtorType.PropsAndChildren, Unit, A]
 
-  type GenericComponentP[P <: js.Object]  = GenericJsComponent[P, CtorType.Props, Unit]
-  type GenericComponentPC[P <: js.Object] = GenericJsComponentC[P, CtorType.PropsAndChildren, Unit]
-  type GenericComponentPA[P <: js.Object] = GenericJsComponentA[P, CtorType.Props, Unit]
-  type GenericComponentPAC[P <: js.Object] =
-    GenericJsComponentAC[P, CtorType.PropsAndChildren, Unit]
+  type GenericComponentP[P <: js.Object] = GenericJsComponent[P, CtorType.Props, Unit]
+  type GenericComponentPC[P <: js.Object, A] =
+    GenericJsComponentC[P, CtorType.PropsAndChildren, Unit, A]
+  type GenericComponentPA[P <: js.Object, A] = GenericJsComponentA[P, CtorType.Props, Unit, A]
+  type GenericComponentPAC[P <: js.Object, A] =
+    GenericJsComponentAC[P, CtorType.PropsAndChildren, Unit, A]
 
-  implicit class GenericFnComponentPCOps[P <: js.Object](val c: GenericFnComponentPC[P])
+  implicit class GenericFnComponentPCOps[P <: js.Object, A](val c: GenericFnComponentPC[P, A])
       extends AnyVal {
-    def apply(children: VdomNode*): GenericFnComponentPC[P] = c.withChildren(children)
+    def apply(children: VdomNode*): A = c.withChildren(children)
   }
 
-  implicit class GenericFnComponentPAOps[P <: js.Object](val c: GenericFnComponentPA[P])
+  implicit class GenericFnComponentPAOps[P <: js.Object, A](val c: GenericFnComponentPA[P, A])
       extends AnyVal {
-    def apply(modifiers: TagMod*): GenericFnComponentPA[P] = c.addModifiers(modifiers)
+    def apply(modifiers: TagMod*): A = c.addModifiers(modifiers)
   }
 
-  implicit class GenericFnComponentPACOps[P <: js.Object](val c: GenericFnComponentPAC[P])
+  implicit class GenericFnComponentPACOps[P <: js.Object, A](val c: GenericFnComponentPAC[P, A])
       extends AnyVal {
-    def apply(modifiers: TagMod*): GenericFnComponentPAC[P] = c.addModifiers(modifiers)
+    def apply(modifiers: TagMod*): A = c.addModifiers(modifiers)
   }
 
-  implicit class GenericComponentPCOps[P <: js.Object](val c: GenericComponentPC[P])
+  implicit class GenericComponentPCOps[P <: js.Object, A](val c: GenericComponentPC[P, A])
       extends AnyVal {
-    def apply(children: VdomNode*): GenericComponentPC[P] = c.withChildren(children)
+    def apply(children: VdomNode*): A = c.withChildren(children)
   }
 
-  implicit class GenericComponentPAOps[P <: js.Object](val c: GenericComponentPA[P])
+  implicit class GenericComponentPAOps[P <: js.Object, A](val c: GenericComponentPA[P, A])
       extends AnyVal {
-    def apply(modifiers: TagMod*): GenericComponentPA[P] = c.addModifiers(modifiers)
+    def apply(modifiers: TagMod*): A = c.addModifiers(modifiers)
   }
 
-  implicit class GenericComponentPACOps[P <: js.Object](val c: GenericComponentPAC[P])
+  implicit class GenericComponentPACOps[P <: js.Object, A](val c: GenericComponentPAC[P, A])
       extends AnyVal {
-    def apply(modifiers: TagMod*): GenericComponentPAC[P] = c.addModifiers(modifiers)
+    def apply(modifiers: TagMod*): A = c.addModifiers(modifiers)
   }
   // End JS Components
 }

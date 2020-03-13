@@ -20,16 +20,14 @@ class AttrsBuilder(p: js.Object) extends Builder.ToJs {
 }
 
 trait GenericFnComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
-  /* protected */
-  def cprops: P
+  protected def cprops: P
   @inline def render: Render[P]
 }
 
-trait GenericFnComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
-  /* protected */
-  def cprops: P
+trait GenericFnComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A] {
+  protected def cprops: P
   val children: CtorType.ChildrenArgs
-  def withChildren(children: CtorType.ChildrenArgs): GenericFnComponentC[P, CT, U]
+  def withChildren(children: CtorType.ChildrenArgs): A
 
   @inline def renderWith: RenderFnC[P]
   @inline def render: RenderFn[P] = renderWith(children)
@@ -58,17 +56,18 @@ trait PassthroughAC[P <: js.Object] extends Passthrough[P] {
   }
 }
 
-trait GenericFnComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] extends PassthroughA[P] {
+trait GenericFnComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    extends PassthroughA[P] {
   protected val component: JsFn.Component[P, CT]
-  def addModifiers(modifiers: Seq[TagMod]): GenericFnComponentA[P, CT, U]
+  def addModifiers(modifiers: Seq[TagMod]): A
 
   @inline def render: RenderFn[P] = component.applyGeneric(rawProps)()
 }
 
-trait GenericFnComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U]
+trait GenericFnComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
     extends PassthroughAC[P] {
   protected val component: JsFn.Component[P, CT]
-  def addModifiers(modifiers: Seq[TagMod]): GenericFnComponentAC[P, CT, U]
+  def addModifiers(modifiers: Seq[TagMod]): A
 
   @inline def render: RenderFn[P] = {
     val (props, children) = rawModifiers
@@ -83,28 +82,29 @@ trait GenericJsComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
   @inline def render: Render[P]
 }
 
-trait GenericJsComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
+trait GenericJsComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A] {
   /* protected */
   def cprops: P
   val children: CtorType.ChildrenArgs
-  def withChildren(children: CtorType.ChildrenArgs): GenericJsComponentC[P, CT, U]
+  def withChildren(children: CtorType.ChildrenArgs): A
 
   def rawProps: P = cprops
   @inline def renderWith: RenderC[P]
   @inline def render: Render[P] = renderWith(children)
 }
 
-trait GenericJsComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] extends PassthroughA[P] {
+trait GenericJsComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    extends PassthroughA[P] {
   protected val component: Js.ComponentWithRawType[P, Null, Js.RawMounted[P, Null], CT]
-  def addModifiers(modifiers: Seq[TagMod]): GenericJsComponentA[P, CT, U]
+  def addModifiers(modifiers: Seq[TagMod]): A
 
   @inline def render: Render[P] = component.applyGeneric(rawProps)()
 }
 
-trait GenericJsComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U]
+trait GenericJsComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
     extends PassthroughAC[P] {
   protected val component: Js.ComponentWithRawType[P, Null, Js.RawMounted[P, Null], CT]
-  def addModifiers(modifiers: Seq[TagMod]): GenericJsComponentAC[P, CT, U]
+  def addModifiers(modifiers: Seq[TagMod]): A
 
   @inline def render: Render[P] = {
     val (props, children) = rawModifiers
