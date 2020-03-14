@@ -23,12 +23,16 @@ object StyleTests extends TestSuite with TestUtils {
       assert(a.remove("height").extract[String]("height").isEmpty)
     }
     test("when") {
-      assert(Style(Map("height" -> 42, "background" -> "black")).when(true).nonEmpty)
-      assert(Style(Map("height" -> 42, "background" -> "black")).when(false).isEmpty)
+      assert(Style(Map("height" -> 42, "background" -> "black")).when_(true).nonEmpty)
+      assert(Style(Map("height" -> 42, "background" -> "black")).when_(false).isEmpty)
+      assert(Css("selector").when_(true).nonEmpty)
+      assert(Css("selector").when_(false).isEmpty)
     }
     test("unless") {
-      assert(Style(Map("height" -> 42, "background" -> "black")).unless(true).isEmpty)
-      assert(Style(Map("height" -> 42, "background" -> "black")).unless(false).nonEmpty)
+      assert(Style(Map("height" -> 42, "background" -> "black")).unless_(true).isEmpty)
+      assert(Style(Map("height" -> 42, "background" -> "black")).unless_(false).nonEmpty)
+      assert(Css("selector").unless_(true).isEmpty)
+      assert(Css("selector").unless_(false).nonEmpty)
     }
   }
 }
