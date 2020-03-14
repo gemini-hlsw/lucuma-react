@@ -1,5 +1,10 @@
 # Changes
 
+## 0.6.2
+
+* Protected cprops.
+* Specific types in withChildren and addModifiers.
+
 ## 0.6.1
 
 * Add methods when/unless to Style

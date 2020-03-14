@@ -76,15 +76,13 @@ trait GenericFnComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
 }
 
 trait GenericJsComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
-  /* protected */
-  def cprops: P
+  protected def cprops: P
   def rawProps: P = cprops
   @inline def render: Render[P]
 }
 
 trait GenericJsComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A] {
-  /* protected */
-  def cprops: P
+  protected def cprops: P
   val children: CtorType.ChildrenArgs
   def withChildren(children: CtorType.ChildrenArgs): A
 
