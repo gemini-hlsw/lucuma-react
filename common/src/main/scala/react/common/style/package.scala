@@ -47,14 +47,14 @@ package style {
         s
       }
 
-    def when(pred: Boolean): js.UndefOr[Style] =
+    def when_(pred: => Boolean): js.UndefOr[Style] =
       if (pred) {
         s
       } else {
         js.undefined
       }
 
-    def unless(pred: Boolean): js.UndefOr[Style] =
+    def unless_(pred: => Boolean): js.UndefOr[Style] =
       if (pred) {
         js.undefined
       } else {
@@ -107,6 +107,20 @@ package style {
     */
   final case class Css(htmlClasses: List[String]) {
     val htmlClass: String = htmlClasses.mkString(" ")
+
+    def when_(pred: => Boolean): js.UndefOr[Css] =
+      if (pred) {
+        this
+      } else {
+        js.undefined
+      }
+
+    def unless_(pred: => Boolean): js.UndefOr[Css] =
+      if (pred) {
+        js.undefined
+      } else {
+        this
+      }
   }
 
   object Css {
