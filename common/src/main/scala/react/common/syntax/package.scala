@@ -175,6 +175,11 @@ package syntax {
     ): VdomNode =
       p.render
 
+    implicit def gFnProps2VdomNodePAC[P <: js.Object](
+      p: GenericFnComponentPAC[P, _]
+    ): VdomNode =
+      p.render
+
     implicit def gProps2VdomNodeP[P <: js.Object](
       p: GenericComponentP[P]
     ): VdomNode =
