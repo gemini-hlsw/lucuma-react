@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.0
+
+* Updated react-common
+
 ## 0.3.1
 
 * Updated react-common and scalajs
