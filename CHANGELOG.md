@@ -1,5 +1,13 @@
 # Changes
 
+## 0.6.5
+
+* Add missing implicit conversion.
+
+## 0.6.4
+
+* Add missing implicit conversions.
+
 ## 0.6.3
 
 * Rename when/unless methods and add them to `Css`
