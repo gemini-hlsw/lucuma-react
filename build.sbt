@@ -92,7 +92,7 @@ lazy val demo =
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz.react" %%% "react-virtualized" % "0.7.2"
+        "io.github.cquiroz.react" %%% "react-virtualized" % "0.7.3"
       ),
       // don't publish the demo
       publish := {},
@@ -126,7 +126,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra" % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
         "org.scala-js" %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react" %%% "common" % "0.5.2",
+        "io.github.cquiroz.react" %%% "common" % "0.6.5",
         "com.lihaoyi" %%% "utest" % "0.7.4" % Test,
         "org.typelevel" %%% "cats-core" % "2.1.1" % Test
       ),
@@ -138,7 +138,7 @@ lazy val facade =
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.10",
-  crossScalaVersions := Seq("2.12.10", "2.13.1"),
+  crossScalaVersions := Seq("2.12.11", "2.13.1"),
   organization := "io.github.cquiroz.react",
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-draggable ",

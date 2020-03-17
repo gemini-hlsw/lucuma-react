@@ -14,3 +14,4 @@ yarn.lock
 facade/yarn.lock
 travis/secrets.tar
 docs/
+project/metals.sbt
