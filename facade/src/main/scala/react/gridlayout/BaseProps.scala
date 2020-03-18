@@ -22,6 +22,7 @@ trait BaseProps extends js.Object {
   var draggableCancel: js.UndefOr[String]
   // A selector for the draggable handler
   var draggableHandle: js.UndefOr[String]
+  var verticalCompact: js.UndefOr[Boolean]
   // Choose vertical or hotizontal compaction
   var compactType: js.UndefOr[String]
   // Margin between items [x, y] in px
@@ -78,6 +79,7 @@ object BaseProps {
     cols:             js.UndefOr[Int] = js.undefined,
     draggableCancel:  js.UndefOr[String] = js.undefined,
     draggableHandle:  js.UndefOr[String] = js.undefined,
+    verticalCompact:  js.UndefOr[Boolean] = js.undefined,
     compactType:      js.UndefOr[CompactType] = js.undefined,
     margin:           js.UndefOr[Margin] = js.undefined,
     containerPadding: js.UndefOr[ContainerPadding] = js.undefined,
@@ -106,6 +108,7 @@ object BaseProps {
     p.cols             = cols
     p.draggableCancel  = draggableCancel
     p.draggableHandle  = draggableHandle
+    p.verticalCompact  = verticalCompact
     p.compactType      = compactType.toJs
     p.margin           = margin.map(x => js.Array(x._1, x._2))
     p.containerPadding = containerPadding.map(x => js.Array(x._1, x._2))

@@ -38,7 +38,7 @@ object PackageTests extends TestSuite {
         ResponsiveReactGridLayout(200, layouts = layouts, <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(layout) { m =>
         val html =
-          """<div class="react-grid-layout" style="height: 170px;"></div>""".stripMargin
+          """<div class="react-grid-layout" style="height: 150px;"></div>""".stripMargin
             .replaceAll("[\n\r]", "")
         assert(m.outerHtmlScrubbed() == html)
       }
