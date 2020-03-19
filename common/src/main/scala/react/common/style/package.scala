@@ -34,35 +34,6 @@ package style {
     def extract(s: Style, key: String): Option[A]
   }
 
-  final class StyleOps(val s: Style) extends AnyVal {
-    def toJsObject: js.Object = Style.toJsObject(s)
-
-    def extract[A](key: String)(implicit S: StyleExtractor[A]): Option[A] =
-      S.extract(s, key)
-
-    def remove(key: String): Style =
-      if (s.styles.contains(key)) {
-        Style(s.styles - key)
-      } else {
-        s
-      }
-
-    def when_(pred: => Boolean): js.UndefOr[Style] =
-      if (pred) {
-        s
-      } else {
-        js.undefined
-      }
-
-    def unless_(pred: => Boolean): js.UndefOr[Style] =
-      if (pred) {
-        js.undefined
-      } else {
-        s
-      }
-
-  }
-
   final class ClassnameCssOps(cn: (js.UndefOr[String], js.UndefOr[Css])) {
     def toJs: js.UndefOr[String] = (cn._1.toOption, cn._2.toOption) match {
       case (cn @ Some(_), None) => cn.orUndefined
@@ -76,9 +47,6 @@ package style {
     implicit def styePairU(a: (js.UndefOr[String], js.UndefOr[Css])): ClassnameCssOps =
       new ClassnameCssOps(a)
 
-    implicit def styeOps(s: Style): StyleOps =
-      new StyleOps(s)
-
     implicit final def cssToTagMod(s: Css): TagMod =
       ^.className := s.htmlClass
 
@@ -89,7 +57,38 @@ package style {
   /**
     * Simple class to represent styles
     */
-  final case class Style(styles: Map[String, String | Int])
+  final case class Style(styles: Map[String, String | Int]) {
+    def isEmpty: Boolean = styles.isEmpty
+
+    def nonEmpty: Boolean = styles.nonEmpty
+
+    def toJsObject: js.Object = Style.toJsObject(this)
+
+    def extract[A](key: String)(implicit S: StyleExtractor[A]): Option[A] =
+      S.extract(this, key)
+
+    def remove(key: String): Style =
+      if (this.styles.contains(key)) {
+        Style(this.styles - key)
+      } else {
+        this
+      }
+
+    def when_(pred: => Boolean): Style =
+      if (pred) {
+        this
+      } else {
+        Style.Empty
+      }
+
+    def unless_(pred: => Boolean): Style =
+      if (pred) {
+        Style.Empty
+      } else {
+        this
+      }
+
+  }
 
   object Style {
     def toJsObject(style: Style): js.Object =
@@ -100,24 +99,30 @@ package style {
       val map   = (for ((prop, value) <- xDict) yield prop -> value).toMap
       Style(map)
     }
+
+    val Empty: Style = Style(Map.empty)
   }
 
   /**
     * Simple class to represent css class
     */
   final case class Css(htmlClasses: List[String]) {
+    def isEmpty: Boolean = htmlClasses.isEmpty
+
+    def nonEmpty: Boolean = htmlClasses.nonEmpty
+
     val htmlClass: String = htmlClasses.mkString(" ")
 
-    def when_(pred: => Boolean): js.UndefOr[Css] =
+    def when_(pred: => Boolean): Css =
       if (pred) {
         this
       } else {
-        js.undefined
+        Css.Empty
       }
 
-    def unless_(pred: => Boolean): js.UndefOr[Css] =
+    def unless_(pred: => Boolean): Css =
       if (pred) {
-        js.undefined
+        Css.Empty
       } else {
         this
       }
@@ -126,6 +131,6 @@ package style {
   object Css {
     def apply(htmlClass: String): Css = Css(List(htmlClass))
 
-    val Zero: Css = Css(Nil)
+    val Empty: Css = Css(Nil)
   }
 }

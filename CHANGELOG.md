@@ -1,5 +1,9 @@
 # Changes
 
+## 0.7.0
+
+* API changes to css and styles
+
 ## 0.6.5
 
 * Add missing implicit conversion.
