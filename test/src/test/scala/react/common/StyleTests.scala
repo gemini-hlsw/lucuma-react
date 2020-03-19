@@ -33,6 +33,8 @@ object StyleTests extends TestSuite with TestUtils {
       assert(Style(Map("height" -> 42, "background" -> "black")).unless_(false).nonEmpty)
       assert(Css("selector").unless_(true).isEmpty)
       assert(Css("selector").unless_(false).nonEmpty)
+      // With combinations
+      assert((Css("selector").unless_(false) |+| Css("selector").when_(true)).nonEmpty)
     }
   }
 }
