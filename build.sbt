@@ -137,7 +137,7 @@ lazy val facade =
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.10",
+  scalaVersion := "2.12.11",
   crossScalaVersions := Seq("2.12.11", "2.13.1"),
   organization := "io.github.cquiroz.react",
   sonatypeProfileName := "io.github.cquiroz",
