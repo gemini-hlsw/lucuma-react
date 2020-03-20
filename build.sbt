@@ -81,8 +81,8 @@ lazy val facade =
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.10",
-  crossScalaVersions := List("2.13.1", "2.12.10"),
+  scalaVersion := "2.12.11",
+  crossScalaVersions := List("2.13.1", "2.12.11"),
   organization := "io.github.cquiroz.react",
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-copy-to-clipboard",
