@@ -16,10 +16,10 @@ import typings.highcharts.mod.SeriesOptionsType
 
 @JSExportTopLevel("DemoMain")
 object DemoMain {
-  type Data = Double | scala.scalajs.js.Tuple2[Double | String,Double | Null] | Null | SeriesAreasplineDataOptions
+  type Data[T] = Double | scala.scalajs.js.Tuple2[Double | String,Double | Null] | Null | T
 
-  implicit def doubleTuple2Data(t: (Double, Double)): Data =
-    js.Tuple2(t._1, t._2).asInstanceOf[Data]
+  implicit def doubleTuple2Data[T](t: (Double, Double)): Data[T] =
+    js.Tuple2(t._1, t._2).asInstanceOf[Data[T]]
 
   @JSExport
   def main(): Unit = {
@@ -34,7 +34,7 @@ object DemoMain {
       series = List[SeriesOptionsType](
         SeriesAreasplineOptions(
           areaspline,
-          data = List[Data](
+          data = List[Data[SeriesAreasplineDataOptions]](
             (1584655000000.0, 10.0),
             (1584655060000.0, 17.0),
             (1584655120000.0, 20.0),
