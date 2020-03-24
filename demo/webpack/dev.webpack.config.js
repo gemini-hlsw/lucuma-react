@@ -44,7 +44,7 @@ const Web = Merge(
       new Webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
         filename: "index.html",
-        title: "Demo for Semanti UI",
+        title: "Demo for Highcharts",
         chunks: ["demo"]
       })
     ]

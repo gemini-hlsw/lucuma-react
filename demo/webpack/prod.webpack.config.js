@@ -47,7 +47,7 @@ const Web = Merge(
         }
       }),
       new HtmlWebpackPlugin({
-        title: "Demo for Semantic UI",
+        title: "Demo for Highcharts",
         filename: "index.html",
         chunks: ["demo"]
       }),

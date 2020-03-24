@@ -51,6 +51,8 @@ import typings.highcharts.mod.Tooltip
 import typings.highcharts.mod.Point
 import typings.highcharts.mod.XAxisPlotBandsLabelOptions
 
+// Reproducing https://jsfiddle.net/rpiaggio/xdz4pLg9/105/
+
 @JSExportTopLevel("DemoMain")
 object DemoMain {
   type Data[T] = Double | scala.scalajs.js.Tuple2[Double | String,Double | Null] | Null | T
