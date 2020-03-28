@@ -204,6 +204,46 @@ package syntax {
       p: GenericComponentPAC[P, _]
     ): VdomNode =
       p.render
+
+    implicit def ugFnProps2VdomNodeP[P <: js.Object](
+      p: GenericFnComponentP[P]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
+
+    implicit def ugFnProps2VdomNodePC[P <: js.Object](
+      p: GenericFnComponentPC[P, _]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
+
+    implicit def ugProps2VdomNodePA[P <: js.Object](
+      p: GenericFnComponentPA[P, _]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
+
+    implicit def ugFnProps2VdomNodePAC[P <: js.Object](
+      p: GenericFnComponentPAC[P, _]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
+
+    implicit def ugProps2VdomNodeP[P <: js.Object](
+      p: GenericComponentP[P]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
+
+    implicit def ugProps2VdomNodePC[P <: js.Object](
+      p: GenericComponentPC[P, _]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
+
+    implicit def ugProps2VdomNodePA[P <: js.Object](
+      p: GenericComponentPA[P, _]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
+
+    implicit def ugProps2VdomNodePAC[P <: js.Object](
+      p: GenericComponentPAC[P, _]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
     // End VdomNode conversions
   }
 }
