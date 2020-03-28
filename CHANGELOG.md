@@ -1,5 +1,9 @@
 # Changes
 
+## 0.7.1
+
+* Automatic conversions of components to js.UndefOr[Vdom]
+
 ## 0.7.0
 
 * API changes to css and styles
