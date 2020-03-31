@@ -7,6 +7,7 @@ import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.gridlayout._
+import react.sizeme._
 
 object RGLDemo {
 
@@ -34,21 +35,24 @@ object RGLDemo {
       //   <.div(^.key := "b", "b"))
       <.div(
         ^.width := "100%",
-        <.div(
-          ResponsiveReactGridLayout(
-            500,
-            margin           = (10: JsNumber, 10: JsNumber),
-            containerPadding = (10: JsNumber, 10: JsNumber),
-            className        = "layout",
-            draggableHandle  = ".item",
-            rowHeight        = 30,
-            layouts          = layouts
-          )(
-            <.div(^.key := "a", "a"),
-            <.div(^.key := "c", "c"),
-            <.div(^.key := "b", "b")
+        SizeMe() { s =>
+          println(s.width)
+          <.div(
+            ResponsiveReactGridLayout(
+              s.width,
+              margin           = (10: JsNumber, 10: JsNumber),
+              containerPadding = (10: JsNumber, 10: JsNumber),
+              className        = "layout",
+              draggableHandle  = ".item",
+              rowHeight        = 30,
+              layouts          = layouts
+            )(
+              <.div(^.key := "a", "a"),
+              <.div(^.key := "c", "c"),
+              <.div(^.key := "b", "b")
+            )
           )
-        )
+        }
       )
     }
     .build

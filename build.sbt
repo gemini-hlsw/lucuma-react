@@ -7,13 +7,12 @@ parallelExecution in (ThisBuild, Test) := false
 
 cancelable in Global := true
 
-Global / onChangedBuildSource := IgnoreSourceChanges
+Global / onChangedBuildSource := ReloadOnSourceChanges
 
 resolvers in Global += Resolver.sonatypeRepo("public")
 
-addCommandAlias(
-  "restartWDS",
-  "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer")
+addCommandAlias("restartWDS",
+                "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer")
 
 inThisBuild(
   List(
@@ -60,9 +59,11 @@ lazy val demo =
       version in webpack := "4.32.0",
       version in startWebpackDevServer := "3.3.1",
       webpackConfigFile in fastOptJS := Some(
-        baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"),
+        baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"
+      ),
       webpackConfigFile in fullOptJS := Some(
-        baseDirectory.value / "src" / "webpack" / "webpack-prod.config.js"),
+        baseDirectory.value / "src" / "webpack" / "webpack-prod.config.js"
+      ),
       webpackMonitoredDirectories += (resourceDirectory in Compile).value,
       webpackResources := (baseDirectory.value / "src" / "webpack") * "*.js",
       includeFilter in webpackMonitoredFiles := "*",
@@ -73,24 +74,26 @@ lazy val demo =
       emitSourceMaps := false,
       webpackDevServerPort := 6060,
       npmDevDependencies in Compile ++= Seq(
-        "css-loader"                    -> "0.28.11",
-        "less"                          -> "2.3.1",
-        "less-loader"                   -> "4.1.0",
-        "mini-css-extract-plugin"       -> "0.4.0",
-        "html-webpack-plugin"           -> "3.2.0",
-        "url-loader"                    -> "1.0.1",
-        "style-loader"                  -> "0.21.0",
-        "postcss-loader"                -> "2.1.5",
-        "cssnano"                       -> "3.10.0",
+        "css-loader" -> "0.28.11",
+        "less" -> "2.3.1",
+        "less-loader" -> "4.1.0",
+        "mini-css-extract-plugin" -> "0.4.0",
+        "html-webpack-plugin" -> "3.2.0",
+        "url-loader" -> "1.0.1",
+        "style-loader" -> "0.21.0",
+        "postcss-loader" -> "2.1.5",
+        "cssnano" -> "3.10.0",
         "optimize-css-assets-webpack-plugin" -> "4.0.1",
-        "webpack-merge"                 -> "4.1.0",
+        "webpack-merge" -> "4.1.0",
         "webpack-dev-server-status-bar" -> "1.0.0"
       ),
       npmDependencies in Compile ++= Seq(
-        "react"           -> reactJS,
-        "react-dom"       -> reactJS,
-        "react-grid-layout" -> reactGridLayout,
+        "react" -> reactJS,
+        "react-dom" -> reactJS,
+        "react-grid-layout" -> reactGridLayout
       ),
+      libraryDependencies +=
+        "io.github.cquiroz.react" %%% "react-sizeme" % "0.3.3",
       // don't publish the demo
       publish := {},
       publishLocal := {},
@@ -109,24 +112,26 @@ lazy val facade =
       version in webpack := "4.32.0",
       version in startWebpackDevServer := "3.3.1",
       // Requires the DOM for tests
-      requireJsDomEnv in Test          := true,
+      requireJsDomEnv in Test := true,
       // Compile tests to JS using fast-optimisation
       // scalaJSStage in Test            := FastOptStage,
       npmDependencies in Compile ++= Seq(
-        "react"             -> reactJS,
-        "react-dom"         -> reactJS,
+        "react" -> reactJS,
+        "react-dom" -> reactJS,
         "react-grid-layout" -> reactGridLayout
       ),
       libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core"                 % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "extra"                % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "test"                 % scalaJsReact % Test,
-        "org.scala-js"                      %%% "scalajs-dom"          % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"               % "0.7.1",
-        "com.lihaoyi"                       %%% "utest"                % "0.7.4" % Test,
-        "org.typelevel"                     %%% "cats-core"            % "2.1.1" % Test
+        "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "extra" % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
+        "org.scala-js" %%% "scalajs-dom" % scalaJSDom,
+        "io.github.cquiroz.react" %%% "common" % "0.7.1",
+        "com.lihaoyi" %%% "utest" % "0.7.4" % Test,
+        "org.typelevel" %%% "cats-core" % "2.1.1" % Test
       ),
-      webpackConfigFile in Test       := Some(baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"),
+      webpackConfigFile in Test := Some(
+        baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
+      ),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
 
@@ -136,9 +141,11 @@ lazy val commonSettings = Seq(
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-grid-layout ",
   publishArtifact in Test := false,
-  scalacOptions ~= (_.filterNot(Set(
-    // By necessity facades will have unused params
-    "-Wdead-code"
-  ))),
+  scalacOptions ~= (_.filterNot(
+    Set(
+      // By necessity facades will have unused params
+      "-Wdead-code"
+    )
+  )),
   scalacOptions += "-P:scalajs:sjsDefinedByDefault"
 )
