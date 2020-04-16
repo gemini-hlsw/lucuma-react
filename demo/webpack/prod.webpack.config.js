@@ -47,7 +47,7 @@ const Web = Merge(
         }
       }),
       new HtmlWebpackPlugin({
-        title: "Demo for Highcharts",
+        title: "Demo for Hotkeys",
         filename: "index.html",
         chunks: ["demo"]
       }),

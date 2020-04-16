@@ -1,14 +1,12 @@
 name := "scalajs-react-hotkeys"
 
-version in ThisBuild := "0.0.1"
-
 scalaVersion in ThisBuild := "2.13.1"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactHotkeys = "2.0.0"
 val scalaJsReact = "1.6.0"
-val reactJS = "16.7.0"
+val reactJS      = "16.7.0"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -142,10 +140,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % "test",
         "io.github.cquiroz.react" %%% "common" % "0.7.1",
-        // "io.github.cquiroz.react"           %%% "test"       % "0.5.1" % Test,
-        // "io.github.cquiroz.react"           %%% "cats"       % "0.2.5",
         "com.lihaoyi" %%% "utest" % "0.7.1" % Test
-        // "org.typelevel"                     %%% "cats-core"  % "1.6.1" % Test
       ),
       npmDependencies in Compile ++= Seq(
         "react" -> reactJS,
@@ -160,8 +155,8 @@ lazy val facade =
 
 lazy val commonSettings = Seq(
   scalaVersion := scalaVersion.value,
-  organization := "io.github.rpiaggio.react",
-  sonatypeProfileName := "io.github.rpiaggio",
+  organization := "com.rpiaggio",
+  sonatypeProfileName := "com.rpiaggio",
   description := "react-hotkeys in scalajs-react",
   homepage := Some(url("https://github.com/rpiaggio/scalajs-react-hotkeys")),
   licenses := Seq(
