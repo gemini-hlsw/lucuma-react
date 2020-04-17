@@ -33,21 +33,19 @@ object DemoMain {
         "DONT" -> "shift+1"
       )
 
-    def undo(e: ReactKeyboardEvent) = {
-      e.preventDefault()
-      println("UNDO!")
-    }
+    def undo(e: ReactKeyboardEvent) =
+      e.preventDefaultCB *> Callback.log("UNDO!")
 
-    def right() = println("RIGHT!")
+    val right = Callback.log("RIGHT!")
 
     val handlers =
       Handlers(
         "UNDO" -> undo,
-        "UP" -> (() => println("UP!")),
-        "DOWN" -> (() => println("DOWN!")),
-        "LEFT" -> (() => println("LEFT!")),
-        "RIGHT" -> right _,
-        "DONT" -> (() => dom.window.alert("DON'T!"))
+        "UP" -> Callback.log("UP!"),
+        "DOWN" -> Callback.log("DOWN!"),
+        "LEFT" -> Callback.log("LEFT!"),
+        "RIGHT" -> right,
+        "DONT" -> Callback(dom.window.alert("DON'T!"))
       )
 
     def renderSection(i: Int) = React.Fragment(
@@ -63,7 +61,7 @@ object DemoMain {
         .builder[Unit]("Hotkeys demo")
         .render(_ =>
           GlobalHotKeys(keyMap   = KeyMap("HELP" -> "shift+?"),
-                        handlers = Handlers("HELP" -> (() => dom.window.alert("HELP!"))))(
+                        handlers = Handlers("HELP" -> Callback(dom.window.alert("HELP!"))))(
             HotKeys(keyMap    = keyMap,
                     handlers  = handlers,
                     component = <.span,

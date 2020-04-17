@@ -56,13 +56,24 @@ package hotkeys {
         .literal(name = name, sequences = sequences.toJSArray, action = action)
         .asInstanceOf[KeySequence]
   }
+
+  object KeyMap {
+    def apply(keyMap: (String, KeySpec)*): KeyMap =
+      Map(keyMap: _*)
+  }
+
+  object Handlers {
+    def apply(handlers: (String, Handler)*): Handlers =
+      Map(handlers: _*)
+  }
 }
 
 package object hotkeys {
-  type KeySeq  = String | KeyEvent
-  type KeySpec = KeySeq | js.Array[String] | KeySequence
-
-  type Handler = js.Function1[ReactKeyboardEvent, Unit]
+  type KeySeq   = String | KeyEvent
+  type KeySpec  = KeySeq | js.Array[String] | KeySequence
+  type KeyMap   = Map[String, KeySpec]
+  type Handler  = ReactKeyboardEvent => Callback
+  type Handlers = Map[String, Handler]
 
   implicit def seqToKeySpec(seq: Seq[String]): KeySpec =
     seq.toJSArray
@@ -71,6 +82,21 @@ package object hotkeys {
     def on[I <: KeyInstance](instance: I): KeyEvent = KeyEvent(s, instance)
   }
 
-  implicit def unitFunctionToHandler(f: () => Unit): Handler =
-    _ => f()
+  implicit def callbackToHandler(cb: Callback): Handler =
+    _ => cb
+
+  implicit class HandlersOps(h: Handlers) {
+    def toJs: js.Object =
+      h.view
+        .mapValues[js.Function1[ReactKeyboardEvent, Unit]](f => e => f(e).runNow())
+        .toMap
+        .toJSDictionary
+        .asInstanceOf[js.Object]
+  }
+
+  implicit class KeyMapOps(km: KeyMap) {
+    def toJs: js.Object =
+      km.toJSDictionary
+        .asInstanceOf[js.Object]
+  }
 }
