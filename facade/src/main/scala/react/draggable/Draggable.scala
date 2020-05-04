@@ -52,27 +52,27 @@ object Draggable {
   }
 
   def props(
-    allowAnyClick:            js.UndefOr[Boolean]                       = js.undefined,
-    axis:                     js.UndefOr[Axis]                          = js.undefined,
-    bounds:                   js.UndefOr[Bounds]                        = js.undefined,
-    cancel:                   js.UndefOr[String]                        = js.undefined,
-    defaultClassName:         js.UndefOr[String]                        = js.undefined,
-    defaultClassNameDragging: js.UndefOr[String]                        = js.undefined,
-    defaultClassNameDragged:  js.UndefOr[String]                        = js.undefined,
-    defaultPosition:          js.UndefOr[ControlPosition]               = js.undefined,
-    disabled:                 js.UndefOr[Boolean]                       = js.undefined,
-    grid:                     js.UndefOr[Grid]                          = js.undefined,
-    handle:                   js.UndefOr[String]                        = js.undefined,
-    onMouseDown:              js.UndefOr[OnMouseDown]                   = js.undefined,
-    onStart:                  js.UndefOr[DraggableEventHandler]         = js.undefined,
-    onDrag:                   js.UndefOr[DraggableEventHandler]         = js.undefined,
-    onStop:                   js.UndefOr[DraggableEventHandler]         = js.undefined,
-    position:                 js.UndefOr[ControlPosition]               = js.undefined,
+    allowAnyClick:            js.UndefOr[Boolean] = js.undefined,
+    axis:                     js.UndefOr[Axis] = js.undefined,
+    bounds:                   js.UndefOr[Bounds] = js.undefined,
+    cancel:                   js.UndefOr[String] = js.undefined,
+    defaultClassName:         js.UndefOr[String] = js.undefined,
+    defaultClassNameDragging: js.UndefOr[String] = js.undefined,
+    defaultClassNameDragged:  js.UndefOr[String] = js.undefined,
+    defaultPosition:          js.UndefOr[ControlPosition] = js.undefined,
+    disabled:                 js.UndefOr[Boolean] = js.undefined,
+    grid:                     js.UndefOr[Grid] = js.undefined,
+    handle:                   js.UndefOr[String] = js.undefined,
+    onMouseDown:              js.UndefOr[OnMouseDown] = js.undefined,
+    onStart:                  js.UndefOr[DraggableEventHandler] = js.undefined,
+    onDrag:                   js.UndefOr[DraggableEventHandler] = js.undefined,
+    onStop:                   js.UndefOr[DraggableEventHandler] = js.undefined,
+    position:                 js.UndefOr[ControlPosition] = js.undefined,
     positionOffset:           js.UndefOr[PositionOffsetControlPosition] = js.undefined
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.allowAnyClick = allowAnyClick
-    p.axis          = axis.toJs
+    p.axis = axis.toJs
     p.bounds = bounds.map { x =>
       (x: Any) match {
         case FalseBounds => false
@@ -80,20 +80,20 @@ object Draggable {
         case b           => b.asInstanceOf[DraggableBounds]
       }
     }
-    p.cancel                   = cancel
-    p.defaultClassName         = defaultClassName
+    p.cancel = cancel
+    p.defaultClassName = defaultClassName
     p.defaultClassNameDragging = defaultClassNameDragging
-    p.defaultClassNameDragged  = defaultClassNameDragged
-    p.defaultPosition          = defaultPosition
-    p.disabled                 = disabled
-    p.grid                     = grid.map(_.value)
-    p.handle                   = handle
-    p.onMouseDown              = onMouseDown.map(cb => (m: MouseEvent) => cb(m).runNow())
-    p.onStart                  = onStart.map(cb => (m: MouseEvent, d: DraggableData) => cb(m, d).runNow())
-    p.onDrag                   = onDrag.map(cb => (m: MouseEvent, d: DraggableData) => cb(m, d).runNow())
-    p.onStop                   = onStop.map(cb => (m: MouseEvent, d: DraggableData) => cb(m, d).runNow())
-    p.position                 = position
-    p.positionOffset           = positionOffset
+    p.defaultClassNameDragged = defaultClassNameDragged
+    p.defaultPosition = defaultPosition
+    p.disabled = disabled
+    p.grid = grid.map(_.value)
+    p.handle = handle
+    p.onMouseDown = onMouseDown.map(cb => (m: MouseEvent) => cb(m).runNow())
+    p.onStart = onStart.map(cb => (m: MouseEvent, d: DraggableData) => cb(m, d).runNow())
+    p.onDrag = onDrag.map(cb => (m: MouseEvent, d: DraggableData) => cb(m, d).runNow())
+    p.onStop = onStop.map(cb => (m: MouseEvent, d: DraggableData) => cb(m, d).runNow())
+    p.position = position
+    p.positionOffset = positionOffset
     p
   }
 

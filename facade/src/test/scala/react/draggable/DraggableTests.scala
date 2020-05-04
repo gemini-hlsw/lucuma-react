@@ -193,15 +193,18 @@ object DraggableTests extends TestSuite {
     }
     "supportOnStart" - {
       Draggable(Draggable.props(onStart = (m: MouseEvent, d: DraggableData) => Callback.empty),
-                <.div("Abc"))
+                <.div("Abc")
+      )
     }
     "supportOnDrag" - {
       Draggable(Draggable.props(onDrag = (m: MouseEvent, d: DraggableData) => Callback.empty),
-                <.div("Abc"))
+                <.div("Abc")
+      )
     }
     "supportOnStop" - {
       Draggable(Draggable.props(onStop = (m: MouseEvent, d: DraggableData) => Callback.empty),
-                <.div("Abc"))
+                <.div("Abc")
+      )
     }
     "supportPosition" - {
       Draggable(Draggable.props(), <.div("Abc")).props.position.toOption ==> Some(null)
@@ -220,7 +223,8 @@ object DraggableTests extends TestSuite {
       Draggable(Draggable.props(), <.div("Abc")).props.positionOffset.toOption ==> None
       val draggable =
         Draggable(Draggable.props(positionOffset = PositionOffsetControlPosition("10%", "20%")),
-                  <.div("Abc"))
+                  <.div("Abc")
+        )
       ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
         val html =
           """<div class="react-draggable">Abc</div>""".stripMargin

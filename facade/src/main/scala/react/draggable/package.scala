@@ -18,8 +18,8 @@ package draggable {
     implicit val enumValue: EnumValue[Axis] = EnumValue.toLowerCaseString
 
     case object Both extends Axis
-    case object X extends Axis
-    case object Y extends Axis
+    case object X    extends Axis
+    case object Y    extends Axis
     case object None extends Axis
   }
 
@@ -56,16 +56,16 @@ package draggable {
   object DraggableBounds {
     def apply(left: JsNumber, right: JsNumber, top: JsNumber, bottom: JsNumber): DraggableBounds = {
       val p = (new js.Object).asInstanceOf[DraggableBounds]
-      p.left   = left
-      p.right  = right
-      p.top    = top
+      p.left = left
+      p.right = right
+      p.top = top
       p.bottom = bottom
       p
     }
   }
 
   @js.native
-  trait DraggableData extends js.Object {
+  trait DraggableData                 extends js.Object {
     var node: HTMLElement = js.native
     var x: JsNumber       = js.native
     var y: JsNumber       = js.native

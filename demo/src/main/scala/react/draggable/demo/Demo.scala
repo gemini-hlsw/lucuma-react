@@ -16,9 +16,9 @@ object TableDemo {
   def datum(data:     List[DataRow])(i: Int) = data(i % data.length)
   def rowheight(data: List[DataRow])(i: Int) = datum(data)(i).size
 
-  final case class Widths(index:              Double, name:        Double, random:        Double)
-  final case class Props(useDynamicRowHeight: Boolean, sortBy:     String, s:             Size)
-  final case class State(sortDirection:       SortDirection, data: List[DataRow], widths: Widths)
+  final case class Widths(index: Double, name: Double, random: Double)
+  final case class Props(useDynamicRowHeight: Boolean, sortBy: String, s: Size)
+  final case class State(sortDirection: SortDirection, data: List[DataRow], widths: Widths)
 
   def headerRenderer(rs: (String, JsNumber) => Callback)(
     columnData:          DataRow,
@@ -35,26 +35,28 @@ object TableDemo {
       ),
       Draggable(
         Draggable.props(
-          axis                     = Axis.X,
-          defaultClassName         = "DragHandle",
+          axis = Axis.X,
+          defaultClassName = "DragHandle",
           defaultClassNameDragging = "DragHandleActive",
-          onDrag                   = (ev: MouseEvent, d: DraggableData) => rs(dataKey, d.deltaX),
-          position                 = ControlPosition(0)
+          onDrag = (ev: MouseEvent, d: DraggableData) => rs(dataKey, d.deltaX),
+          position = ControlPosition(0)
         ),
         <.span(^.cls := "DragHandleIcon", "⋮")
       )
     )
 
-  def rowClassName(i: Int): String = i match {
-    case x if x < 0      => "headerRow"
-    case x if x % 2 == 0 => "evenRow"
-    case _               => "oddRow"
-  }
+  def rowClassName(i: Int): String =
+    i match {
+      case x if x < 0 => "headerRow"
+      case x if x % 2 == 0 => "evenRow"
+      case _ => "oddRow"
+    }
 
   implicit class JsNumberOps(val d: JsNumber) extends AnyVal {
-    def toDouble = (d: Any) match {
-      case d: Double => d
-    }
+    def toDouble =
+      (d: Any) match {
+        case d: Double => d
+      }
   }
 
   val component = ScalaComponent
@@ -65,23 +67,26 @@ object TableDemo {
         $.modState { s =>
           val percentDelta = dx.toDouble / props.s.width.toDouble
           k match {
-            case "index" =>
+            case "index"  =>
               s.copy(
                 widths = s.widths.copy(s.widths.index + percentDelta,
                                        s.widths.name - percentDelta,
-                                       s.widths.random - percentDelta)
+                                       s.widths.random - percentDelta
+                )
               )
-            case "name" =>
+            case "name"   =>
               s.copy(
                 widths = s.widths.copy(s.widths.index + percentDelta,
                                        s.widths.name + percentDelta,
-                                       s.widths.random - percentDelta)
+                                       s.widths.random - percentDelta
+                )
               )
             case "randow" =>
               s.copy(
                 widths = s.widths.copy(s.widths.index + percentDelta,
                                        s.widths.name + percentDelta,
-                                       s.widths.random + percentDelta)
+                                       s.widths.random + percentDelta
+                )
               )
           }
         }
@@ -89,33 +94,36 @@ object TableDemo {
       def sort(index: String, sortDirection: SortDirection): Callback = {
         val sorted = state.data.sortBy(_.index)
         $.setState(
-          state.copy(data          = if (sortDirection == SortDirection.ASC) sorted else sorted.reverse,
-                     sortDirection = sortDirection)
+          state.copy(data = if (sortDirection == SortDirection.ASC) sorted else sorted.reverse,
+                     sortDirection = sortDirection
+          )
         )
       }
       val columns = List(
         Column(
           Column.props((props.s.width.toDouble * state.widths.index).toInt,
                        "index",
-                       label          = "Index",
-                       disableSort    = false,
-                       headerRenderer = headerRenderer(resizeRow))
+                       label = "Index",
+                       disableSort = false,
+                       headerRenderer = headerRenderer(resizeRow)
+          )
         ),
         Column(
           Column.props((props.s.width.toDouble * state.widths.name).toInt,
                        "name",
-                       label          = "Full Name",
-                       disableSort    = false,
-                       headerRenderer = headerRenderer(resizeRow))
+                       label = "Full Name",
+                       disableSort = false,
+                       headerRenderer = headerRenderer(resizeRow)
+          )
         ),
         Column(
           Column.props(
             (props.s.width.toDouble * state.widths.random).toInt,
             "random",
             disableSort = true,
-            className   = "exampleColumn",
-            label       = "The description label is so long it will be truncated",
-            flexGrow    = 1,
+            className = "exampleColumn",
+            label = "The description label is so long it will be truncated",
+            flexGrow = 1,
             cellRenderer =
               (cellData: DataRow, _: js.Any, _: String, _: js.Any, _: Int) => cellData.toString,
             headerRenderer = headerRenderer(resizeRow)
@@ -124,21 +132,21 @@ object TableDemo {
       )
       val t = Table(
         Table.props(
-          disableHeader    = false,
-          noRowsRenderer   = () => <.div(^.cls := "noRows", "No rows"),
+          disableHeader = false,
+          noRowsRenderer = () => <.div(^.cls := "noRows", "No rows"),
           overscanRowCount = 10,
-          rowClassName     = rowClassName _,
-          height           = 270,
-          rowCount         = 1000,
-          rowHeight        = if (props.useDynamicRowHeight) rowheight(state.data) _ else 40,
-          onRowClick       = x => Callback.log(x),
-          width            = props.s.width,
-          rowGetter        = datum(state.data),
-          headerClassName  = "headerColumn",
-          sort             = sort _,
-          sortBy           = props.sortBy,
-          sortDirection    = state.sortDirection,
-          headerHeight     = 30
+          rowClassName = rowClassName _,
+          height = 270,
+          rowCount = 1000,
+          rowHeight = if (props.useDynamicRowHeight) rowheight(state.data) _ else 40,
+          onRowClick = x => Callback.log(x),
+          width = props.s.width,
+          rowGetter = datum(state.data),
+          headerClassName = "headerColumn",
+          sort = sort _,
+          sortBy = props.sortBy,
+          sortDirection = state.sortDirection,
+          headerHeight = 30
         ),
         columns: _*
       )
@@ -166,7 +174,7 @@ object Demo {
       dom.document.body.appendChild(elem)
       elem
     }
-    val tableF = (s: Size) => TableDemo(TableDemo.Props(true, "index", s)).vdomElement
+    val tableF    = (s: Size) => TableDemo(TableDemo.Props(true, "index", s)).vdomElement
 
     AutoSizer(AutoSizer.props(tableF, disableHeight = true)).renderIntoDOM(container)
     ()

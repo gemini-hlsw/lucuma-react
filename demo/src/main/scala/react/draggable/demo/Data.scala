@@ -22,12 +22,12 @@ object Data {
       size:       Int
     ): DataRow = {
       val p = (new js.Object).asInstanceOf[DataRow]
-      p.color      = color
-      p.index      = index
-      p.name       = name
-      p.random     = random
+      p.color = color
+      p.index = index
+      p.name = name
+      p.random = random
       p.randomLong = randomLong
-      p.size       = size
+      p.size = size
       p
     }
   }
@@ -39,10 +39,11 @@ object Data {
       val randoms = (0 to nextInt(10)).foldLeft("")((ac, _) => ac + rnd)
       DataRow(BadgeColors(i % BadgeColors.length),
               i,
-              Names(i % Names.length),
+              Names(i       % Names.length),
               rnd,
               randoms,
-              RowHeights(i % RowHeights.length))
+              RowHeights(i  % RowHeights.length)
+      )
     }).toList
 
   val BadgeColors = List(
@@ -62,7 +63,7 @@ object Data {
     "#cddc39",
     "#795548"
   )
-  val Names = List(
+  val Names       = List(
     "Peter Brimer",
     "Tera Gaona",
     "Kandy Liston",
@@ -164,7 +165,7 @@ object Data {
     "Nelly Moudy",
     "Felix Sailer"
   )
-  val RowHeights = List(50, 75, 100)
+  val RowHeights  = List(50, 75, 100)
 
   val LoremIpsum = List(
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
