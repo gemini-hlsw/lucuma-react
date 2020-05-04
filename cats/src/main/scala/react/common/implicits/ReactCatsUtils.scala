@@ -10,12 +10,13 @@ import cats.implicits._
 
 package implicits {
   trait ReactCatsImplicits {
-    implicit def jsUndefOrEq[A: Eq]: Eq[js.UndefOr[A]] = Eq.instance { (a, b) =>
-      (a.toOption, b.toOption) match {
-        case (Some(a), Some(b)) => a === b
-        case _                  => false
+    implicit def jsUndefOrEq[A: Eq]: Eq[js.UndefOr[A]] =
+      Eq.instance { (a, b) =>
+        (a.toOption, b.toOption) match {
+          case (Some(a), Some(b)) => a === b
+          case _                  => false
+        }
       }
-    }
 
     implicit val jsObjEq: Eq[js.Object] = Eq.instance { (a, b) =>
       val aDict = a.asInstanceOf[js.Dictionary[js.Any]]
@@ -69,16 +70,16 @@ package implicits {
         case _                      => false
       }
     }
-    implicit val styleEq: Eq[Style] = Eq.by(_.styles)
-    implicit val styleShow: Show[Style] =
+    implicit val styleEq: Eq[Style]              = Eq.by(_.styles)
+    implicit val styleShow: Show[Style]          =
       Show.show(_.styles.map { case (k, v) => s"$k=$v " }.mkString("Style(", ";", ")"))
-    implicit val styleMonoid: Monoid[Style] = new Monoid[Style] {
+    implicit val styleMonoid: Monoid[Style]      = new Monoid[Style] {
       override val empty: Style = Style(Map.empty)
       override def combine(a: Style, b: Style): Style =
         Style(a.styles ++ b.styles)
     }
 
-    implicit val cssEq: Eq[Css] = Eq.by(_.htmlClass)
+    implicit val cssEq: Eq[Css]     = Eq.by(_.htmlClass)
     implicit val cssShow: Show[Css] =
       Show.show(_.htmlClass)
 

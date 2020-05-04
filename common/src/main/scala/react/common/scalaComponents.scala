@@ -3,7 +3,7 @@ package react.common
 import japgolly.scalajs.react.CtorType
 import japgolly.scalajs.react.vdom.VdomElement
 
-trait ReactProps {
+trait ReactProps             {
   @inline def render: VdomElement
 }
 

@@ -13,7 +13,7 @@ object Size {
   def apply(height: JsNumber, width: JsNumber): Size = {
     val p = (new js.Object).asInstanceOf[Size]
     p.height = height
-    p.width  = width
+    p.width = width
     p
   }
 }

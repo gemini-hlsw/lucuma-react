@@ -35,12 +35,13 @@ package style {
   }
 
   final class ClassnameCssOps(cn: (js.UndefOr[String], js.UndefOr[Css])) {
-    def toJs: js.UndefOr[String] = (cn._1.toOption, cn._2.toOption) match {
-      case (cn @ Some(_), None) => cn.orUndefined
-      case (None, cz @ Some(_)) => cz.map(_.htmlClass).orUndefined
-      case (Some(cs), Some(cz)) => s"$cs ${cz.htmlClass}"
-      case _                    => js.undefined
-    }
+    def toJs: js.UndefOr[String] =
+      (cn._1.toOption, cn._2.toOption) match {
+        case (cn @ Some(_), None) => cn.orUndefined
+        case (None, cz @ Some(_)) => cz.map(_.htmlClass).orUndefined
+        case (Some(cs), Some(cz)) => s"$cs ${cz.htmlClass}"
+        case _                    => js.undefined
+      }
   }
 
   trait StyleSyntax {
@@ -68,25 +69,22 @@ package style {
       S.extract(this, key)
 
     def remove(key: String): Style =
-      if (this.styles.contains(key)) {
+      if (this.styles.contains(key))
         Style(this.styles - key)
-      } else {
+      else
         this
-      }
 
     def when_(pred: => Boolean): Style =
-      if (pred) {
+      if (pred)
         this
-      } else {
+      else
         Style.Empty
-      }
 
     def unless_(pred: => Boolean): Style =
-      if (pred) {
+      if (pred)
         Style.Empty
-      } else {
+      else
         this
-      }
 
   }
 
@@ -114,21 +112,19 @@ package style {
     val htmlClass: String = htmlClasses.mkString(" ")
 
     def when_(pred: => Boolean): Css =
-      if (pred) {
+      if (pred)
         this
-      } else {
+      else
         Css.Empty
-      }
 
     def unless_(pred: => Boolean): Css =
-      if (pred) {
+      if (pred)
         Css.Empty
-      } else {
+      else
         this
-      }
   }
 
-  object Css {
+  object Css   {
     def apply(htmlClass: String): Css = Css(List(htmlClass))
 
     val Empty: Css = Css(Nil)

@@ -11,17 +11,17 @@ trait ArbStyle {
   implicit val arbStyleMember: Arbitrary[String | Int] = Arbitrary {
     Gen.oneOf(Gen.posNum[Int], Gen.negNum[Int], Gen.alphaNumStr)
   }
-  implicit val cogenStyleMember: Cogen[String | Int] =
+  implicit val cogenStyleMember: Cogen[String | Int]   =
     Cogen[Either[String, Int]].contramap { x =>
       (x: Any) match {
         case a: String => Left(a)
         case a: Int    => Right(a)
       }
     }
-  implicit val arbStyle: Arbitrary[Style] = Arbitrary {
+  implicit val arbStyle: Arbitrary[Style]              = Arbitrary {
     arbitrary[Map[String, String | Int]].map(Style.apply)
   }
-  implicit val cogenStyle: Cogen[Style] =
+  implicit val cogenStyle: Cogen[Style]                =
     Cogen[List[(String, String | Int)]].contramap(_.styles.toList)
 
   implicit val arbGStyle: Arbitrary[Css] = Arbitrary {
