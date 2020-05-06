@@ -1,7 +1,5 @@
 name := "scalajs-react-beautiful-dnd"
 
-version in ThisBuild := "0.0.2-SNAPSHOT"
-
 scalaVersion in ThisBuild := "2.13.2"
 
 Global / onChangedBuildSource := IgnoreSourceChanges
@@ -120,15 +118,11 @@ lazy val facade =
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core"   % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "test"   % scalaJsReact % "test",
-        "io.github.cquiroz.react"           %%% "common" % "0.5.1",
-        "io.github.cquiroz.react"           %%% "test"   % "0.5.1"      % Test
+        "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact
       ),
       webpackConfigFile in Test := Some(
         baseDirectory.value / "test.webpack.config.js"
-      ),
-      testFrameworks += new TestFramework("utest.runner.Framework")
+      )
     )
 
 lazy val commonSettings = Seq(
