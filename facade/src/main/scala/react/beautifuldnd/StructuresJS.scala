@@ -10,7 +10,7 @@ trait ResponderProvided extends js.Object {
 }
 
 @js.native
-trait Combine extends js.Object {
+trait Combine           extends js.Object {
   val draggableId: DraggableId
   val droppableId: DroppableId
 }
@@ -23,30 +23,30 @@ trait DraggableLocation extends js.Object {
 }
 
 @js.native
-trait DraggableRubric extends js.Object {
+trait DraggableRubric   extends js.Object {
   val draggableId: DraggableId
   @JSName("type") val tpe: TypeId
   val source: DraggableLocation
 }
 
 @js.native
-trait DragStart extends DraggableRubric {
+trait DragStart         extends DraggableRubric {
   val mode: MovementMode
 }
 
 @js.native
-trait DragUpdate extends DragStart {
+trait DragUpdate        extends DragStart {
   val destination: DraggableLocation | Null
   val combine: Combine | Null
 }
 
 @js.native
-trait DropResult extends DragUpdate {
+trait DropResult        extends DragUpdate {
   val reason: DropReason
 }
 
 @js.native
-trait BeforeCapture extends js.Object {
+trait BeforeCapture     extends js.Object {
   val draggableId: DraggableId
   val mode: MovementMode
 }

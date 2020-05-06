@@ -13,12 +13,12 @@ object DragDropContext {
   @JSImport("react-beautiful-dnd", "DragDropContext")
   object RawComponent extends js.Object
 
-  type OnDragEndResponder = js.Function2[DropResult, ResponderProvided, Unit]
-  type OnBeforeCaptureResponder = js.Function1[BeforeCapture, Unit]
+  type OnDragEndResponder         = js.Function2[DropResult, ResponderProvided, Unit]
+  type OnBeforeCaptureResponder   = js.Function1[BeforeCapture, Unit]
   type OnBeforeDragStartResponder = js.Function1[DragStart, Unit]
-  type OnDragStartResponder = js.Function2[DragStart, ResponderProvided, Unit]
-  type OnDragUpdateResponder = js.Function2[DragUpdate, ResponderProvided, Unit]
-  
+  type OnDragStartResponder       = js.Function2[DragStart, ResponderProvided, Unit]
+  type OnDragUpdateResponder      = js.Function2[DragUpdate, ResponderProvided, Unit]
+
   @js.native
   trait Props extends js.Object {
     var onDragEnd: OnDragEndResponder
@@ -33,22 +33,30 @@ object DragDropContext {
   }
 
   def props(
-    onDragEnd: (DropResult, ResponderProvided) => Callback,
-    onBeforeCapture: js.UndefOr[BeforeCapture => Callback] = js.undefined,
-    onBeforeDragStart: js.UndefOr[DragStart => Callback] = js.undefined,
-    onDragStart: js.UndefOr[(DragStart, ResponderProvided) => Callback] = js.undefined,
-    onDragUpdate: js.UndefOr[(DragUpdate, ResponderProvided) => Callback] = js.undefined,
-    liftInstruction: js.UndefOr[String] = js.undefined,
-    nonce: js.UndefOr[String] = js.undefined,
-    sensors: js.Array[Sensor] = js.Array(),
+    onDragEnd:            (DropResult, ResponderProvided) => Callback,
+    onBeforeCapture:      js.UndefOr[BeforeCapture => Callback] = js.undefined,
+    onBeforeDragStart:    js.UndefOr[DragStart => Callback] = js.undefined,
+    onDragStart:          js.UndefOr[(DragStart, ResponderProvided) => Callback] = js.undefined,
+    onDragUpdate:         js.UndefOr[(DragUpdate, ResponderProvided) => Callback] = js.undefined,
+    liftInstruction:      js.UndefOr[String] = js.undefined,
+    nonce:                js.UndefOr[String] = js.undefined,
+    sensors:              js.Array[Sensor] = js.Array(),
     enableDefaultSensors: js.UndefOr[Boolean] = js.undefined
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.onDragEnd = (dr, rp) => onDragEnd(dr, rp).runNow()
-    onBeforeCapture.foreach(event => p.onBeforeCapture = (bc => event(bc).runNow()) : OnBeforeCaptureResponder)
-    onBeforeDragStart.foreach(event => p.onBeforeDragStart = (ds => event(ds).runNow()) : OnBeforeDragStartResponder)
-    onDragStart.foreach(event => p.onDragStart = ((ds, rp) => event(ds, rp).runNow()) : OnDragStartResponder)
-    onDragUpdate.foreach(event => p.onDragUpdate = ((du, rp) => event(du, rp).runNow()) : OnDragUpdateResponder)
+    onBeforeCapture.foreach(event =>
+      p.onBeforeCapture = (bc => event(bc).runNow()): OnBeforeCaptureResponder
+    )
+    onBeforeDragStart.foreach(event =>
+      p.onBeforeDragStart = (ds => event(ds).runNow()): OnBeforeDragStartResponder
+    )
+    onDragStart.foreach(event =>
+      p.onDragStart = ((ds, rp) => event(ds, rp).runNow()): OnDragStartResponder
+    )
+    onDragUpdate.foreach(event =>
+      p.onDragUpdate = ((du, rp) => event(du, rp).runNow()): OnDragUpdateResponder
+    )
     p.liftInstruction = liftInstruction
     p.nonce = nonce
     p.sensors = sensors
@@ -59,25 +67,27 @@ object DragDropContext {
   val component = JsComponent[Props, Children.Varargs, Null](RawComponent)
 
   def apply(
-    onDragEnd: (DropResult, ResponderProvided) => Callback,
-    onBeforeCapture: js.UndefOr[BeforeCapture => Callback] = js.undefined,
-    onBeforeDragStart: js.UndefOr[DragStart => Callback] = js.undefined,
-    onDragStart: js.UndefOr[(DragStart, ResponderProvided) => Callback] = js.undefined,
-    onDragUpdate: js.UndefOr[(DragUpdate, ResponderProvided) => Callback] = js.undefined,
-    liftInstruction: js.UndefOr[String] = js.undefined,
-    nonce: js.UndefOr[String] = js.undefined,
-    sensors: js.Array[Sensor] = js.Array(),
-    enableDefaultSensors: js.UndefOr[Boolean] = js.undefined    
-  )(children: VdomNode*) = 
-    component(props(
-      onDragEnd,
-      onBeforeCapture,
-      onBeforeDragStart,
-      onDragStart,
-      onDragUpdate,
-      liftInstruction,
-      nonce,
-      sensors,
-      enableDefaultSensors
-    ))(children : _*)
+    onDragEnd:            (DropResult, ResponderProvided) => Callback,
+    onBeforeCapture:      js.UndefOr[BeforeCapture => Callback] = js.undefined,
+    onBeforeDragStart:    js.UndefOr[DragStart => Callback] = js.undefined,
+    onDragStart:          js.UndefOr[(DragStart, ResponderProvided) => Callback] = js.undefined,
+    onDragUpdate:         js.UndefOr[(DragUpdate, ResponderProvided) => Callback] = js.undefined,
+    liftInstruction:      js.UndefOr[String] = js.undefined,
+    nonce:                js.UndefOr[String] = js.undefined,
+    sensors:              js.Array[Sensor] = js.Array(),
+    enableDefaultSensors: js.UndefOr[Boolean] = js.undefined
+  )(children:             VdomNode*) =
+    component(
+      props(
+        onDragEnd,
+        onBeforeCapture,
+        onBeforeDragStart,
+        onDragStart,
+        onDragUpdate,
+        liftInstruction,
+        nonce,
+        sensors,
+        enableDefaultSensors
+      )
+    )(children: _*)
 }

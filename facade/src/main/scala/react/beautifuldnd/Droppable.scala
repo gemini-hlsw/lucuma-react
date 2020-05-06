@@ -1,15 +1,15 @@
 package react.beautifuldnd
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.{raw => Raw}
+import japgolly.scalajs.react.{ raw => Raw }
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.html
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSImport, JSName}
+import scala.scalajs.js.annotation.{ JSImport, JSName }
 
 case class Provided(innerRef: TagMod, droppableProps: TagMod, placeholder: TagMod)
 
-object Provided {
+object Provided  {
   def apply(provided: Droppable.ProvidedJS): Provided =
     Provided(
       TagMod.fn(_.addRefFn(provided.innerRef)),
@@ -38,7 +38,7 @@ object Droppable {
   trait StateSnapshotJS extends js.Object {
     val isDraggingOver: Boolean
   }
-  
+
   @js.native
   trait Props extends js.Object {
     var droppableId: DroppableId
@@ -54,16 +54,16 @@ object Droppable {
   }
 
   def props(
-    droppableId: DroppableId,
-    tpe: js.UndefOr[TypeId] = js.undefined,
-    mode: js.UndefOr[DroppableMode] = js.undefined,
-    isDropDisabled: js.UndefOr[Boolean] = js.undefined,
-    isCombineEnabled: js.UndefOr[Boolean] = js.undefined,
-    direction: js.UndefOr[Direction] = js.undefined,
+    droppableId:             DroppableId,
+    tpe:                     js.UndefOr[TypeId] = js.undefined,
+    mode:                    js.UndefOr[DroppableMode] = js.undefined,
+    isDropDisabled:          js.UndefOr[Boolean] = js.undefined,
+    isCombineEnabled:        js.UndefOr[Boolean] = js.undefined,
+    direction:               js.UndefOr[Direction] = js.undefined,
     ignoreContainerClipping: js.UndefOr[Boolean] = js.undefined,
-    renderClone: js.UndefOr[DraggableChildrenFn] = js.undefined,
-    getContainerForClone: js.UndefOr[Unit => html.Element] = js.undefined,
-    children: (Provided, StateSnapshotJS) => VdomNode
+    renderClone:             js.UndefOr[DraggableChildrenFn] = js.undefined,
+    getContainerForClone:    js.UndefOr[Unit => html.Element] = js.undefined,
+    children:                (Provided, StateSnapshotJS) => VdomNode
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.droppableId = droppableId
@@ -82,26 +82,27 @@ object Droppable {
   val component = JsComponent.force[Props, Children.None, Null](RawComponent)
 
   def apply(
-    droppableId: DroppableId,
-    tpe: js.UndefOr[TypeId] = js.undefined,
-    mode: js.UndefOr[DroppableMode] = js.undefined,
-    isDropDisabled: js.UndefOr[Boolean] = js.undefined,
-    isCombineEnabled: js.UndefOr[Boolean] = js.undefined,
-    direction: js.UndefOr[Direction] = js.undefined,
+    droppableId:             DroppableId,
+    tpe:                     js.UndefOr[TypeId] = js.undefined,
+    mode:                    js.UndefOr[DroppableMode] = js.undefined,
+    isDropDisabled:          js.UndefOr[Boolean] = js.undefined,
+    isCombineEnabled:        js.UndefOr[Boolean] = js.undefined,
+    direction:               js.UndefOr[Direction] = js.undefined,
     ignoreContainerClipping: js.UndefOr[Boolean] = js.undefined,
-    renderClone: js.UndefOr[DraggableChildrenFn] = js.undefined,
-    getContainerForClone: js.UndefOr[Unit => html.Element] = js.undefined    
-  )(children: (Provided, StateSnapshotJS) => VdomNode) = {
-    component(props(
-      droppableId,
-      tpe,
-      mode,
-      isDropDisabled,
-      isCombineEnabled,
-      direction,
-      ignoreContainerClipping,
-      renderClone,
-      getContainerForClone,
-      children))
-  }
+    renderClone:             js.UndefOr[DraggableChildrenFn] = js.undefined,
+    getContainerForClone:    js.UndefOr[Unit => html.Element] = js.undefined
+  )(children:                (Provided, StateSnapshotJS) => VdomNode) =
+    component(
+      props(droppableId,
+            tpe,
+            mode,
+            isDropDisabled,
+            isCombineEnabled,
+            direction,
+            ignoreContainerClipping,
+            renderClone,
+            getContainerForClone,
+            children
+      )
+    )
 }

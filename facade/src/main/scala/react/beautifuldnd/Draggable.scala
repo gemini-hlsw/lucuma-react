@@ -1,7 +1,7 @@
 package react.beautifuldnd
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.{raw => Raw}
+import japgolly.scalajs.react.{ raw => Raw }
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.html
 import scala.scalajs.js
@@ -28,17 +28,22 @@ object Draggable {
     val dragHandleProps: DragHandleProps
   }
 
-  case class Provided(innerRef: TagMod, draggableProps: TagMod, draggableStyle: TagMod, dragHandleProps: TagMod)
+  case class Provided(
+    innerRef:        TagMod,
+    draggableProps:  TagMod,
+    draggableStyle:  TagMod,
+    dragHandleProps: TagMod
+  )
 
   object Provided {
     def apply(provided: Draggable.ProvidedJS): Provided =
       Provided(
         TagMod.fn(_.addRefFn(provided.innerRef)),
         TagMod.fn(_.addAttrsObject(provided.draggableProps)),
-        provided.draggableProps.style.toOption.whenDefined( draggableStyle =>
+        provided.draggableProps.style.toOption.whenDefined(draggableStyle =>
           TagMod.fn(_.addStylesObject(draggableStyle))
         ),
-        provided.dragHandleProps.toOption.whenDefined( dragHandleProps =>
+        provided.dragHandleProps.toOption.whenDefined(dragHandleProps =>
           TagMod.fn(_.addAttrsObject(dragHandleProps))
         )
       )
@@ -50,9 +55,7 @@ object Draggable {
   }
 
   @js.native
-  trait RubricJS extends js.Object {
-
-  }
+  trait RubricJS extends js.Object {}
 
   @js.native
   trait Props extends js.Object {
@@ -61,16 +64,16 @@ object Draggable {
     var children: DraggableChildrenFn
     var isDragDisabled: js.UndefOr[Boolean]
     var disableInteractiveElementBlocking: js.UndefOr[Boolean]
-    var shouldRespectForcePress: js.UndefOr[Boolean]    
+    var shouldRespectForcePress: js.UndefOr[Boolean]
   }
 
   def props(
-    draggableId: DraggableId,
-    index: Int,
-    children: (Provided, StateSnapshotJS, RubricJS) => VdomNode,
-    isDragDisabled: js.UndefOr[Boolean] = js.undefined,
+    draggableId:                       DraggableId,
+    index:                             Int,
+    children:                          (Provided, StateSnapshotJS, RubricJS) => VdomNode,
+    isDragDisabled:                    js.UndefOr[Boolean] = js.undefined,
     disableInteractiveElementBlocking: js.UndefOr[Boolean] = js.undefined,
-    shouldRespectForcePress: js.UndefOr[Boolean] = js.undefined    
+    shouldRespectForcePress:           js.UndefOr[Boolean] = js.undefined
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     p.draggableId = draggableId
@@ -85,19 +88,20 @@ object Draggable {
   val component = JsComponent[Props, Children.None, Null](RawComponent)
 
   def apply(
-    draggableId: DraggableId,
-    index: Int,
-    isDragDisabled: js.UndefOr[Boolean] = js.undefined,
+    draggableId:                       DraggableId,
+    index:                             Int,
+    isDragDisabled:                    js.UndefOr[Boolean] = js.undefined,
     disableInteractiveElementBlocking: js.UndefOr[Boolean] = js.undefined,
-    shouldRespectForcePress: js.UndefOr[Boolean] = js.undefined
-  )(children: (Provided, StateSnapshotJS, RubricJS) => VdomNode) = {
-    component.withKey(draggableId)(props(
-      draggableId,
-      index,
-      children,
-      isDragDisabled,
-      disableInteractiveElementBlocking,
-      shouldRespectForcePress
-    ))
-  }
+    shouldRespectForcePress:           js.UndefOr[Boolean] = js.undefined
+  )(children:                          (Provided, StateSnapshotJS, RubricJS) => VdomNode) =
+    component.withKey(draggableId)(
+      props(
+        draggableId,
+        index,
+        children,
+        isDragDisabled,
+        disableInteractiveElementBlocking,
+        shouldRespectForcePress
+      )
+    )
 }
