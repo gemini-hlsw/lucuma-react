@@ -49,6 +49,23 @@ inThisBuild(
   )
 )
 
+lazy val commonSettings = Seq(
+  scalaVersion := scalaVersion.value,
+  organization := "io.github.rpiaggio.react",
+  sonatypeProfileName := "io.github.rpiaggio",
+  description := "scala.js facade for react-beautiful-dnd",
+  homepage := Some(
+    url("https://github.com/rpiaggio/scalajs-react-beautiful-dnd")
+  ),
+  licenses := Seq(
+    "BSD 3-Clause License" -> url(
+      "https://opensource.org/licenses/BSD-3-Clause"
+    )
+  ),
+  publishArtifact in Test := false,
+  publishMavenStyle := true
+)
+
 val root =
   project
     .in(file("."))
@@ -62,6 +79,30 @@ val root =
       publishLocal := {},
       publishArtifact := false,
       Keys.`package` := file("")
+    )
+
+lazy val facade =
+  project
+    .in(file("facade"))
+    .enablePlugins(ScalaJSBundlerPlugin)
+    .settings(commonSettings: _*)
+    .settings(
+      name := "facade",
+      moduleName := "scalajs-react-beautiful-dnd",
+      npmDependencies in Compile ++= Seq(
+        "react"               -> reactJS,
+        "react-dom"           -> reactJS,
+        "react-beautiful-dnd" -> resactBeautiulDnD
+      ),
+      // Use yarn as it is faster than npm
+      useYarn := true,
+      version in webpack := "4.30.0",
+      version in webpackCliVersion := "3.3.2",
+      version in startWebpackDevServer := "3.3.1",
+      scalaJSUseMainModuleInitializer := false,
+      libraryDependencies ++= Seq(
+        "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact
+      )
     )
 
 lazy val demo =
@@ -86,58 +127,10 @@ lazy val demo =
       publish := {},
       publishLocal := {},
       publishArtifact := false,
-      Keys.`package` := file("")
-    )
-    .dependsOn(facade)
-
-lazy val facade =
-  project
-    .in(file("facade"))
-    .enablePlugins(ScalaJSBundlerPlugin)
-    .settings(commonSettings: _*)
-    .settings(
-      name := "facade",
-      moduleName := "scalajs-react-beautiful-dnd",
-      npmDependencies in Compile ++= Seq(
-        "react"               -> reactJS,
-        "react-dom"           -> reactJS,
-        "react-beautiful-dnd" -> resactBeautiulDnD
-      ),
+      Keys.`package` := file(""),
       npmDevDependencies in Compile ++= Seq(
         "css-loader"   -> "1.0.0",
         "style-loader" -> "0.23.0"
-      ),
-      // Requires the DOM for tests
-      requireJsDomEnv in Test := true,
-      // Use yarn as it is faster than npm
-      useYarn := true,
-      version in webpack := "4.30.0",
-      version in webpackCliVersion := "3.3.2",
-      version in startWebpackDevServer := "3.3.1",
-      scalaJSUseMainModuleInitializer := false,
-      // Compile tests to JS using fast-optimisation
-      scalaJSStage in Test := FastOptStage,
-      libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact
-      ),
-      webpackConfigFile in Test := Some(
-        baseDirectory.value / "test.webpack.config.js"
       )
     )
-
-lazy val commonSettings = Seq(
-  scalaVersion := scalaVersion.value,
-  organization := "io.github.rpiaggio.react",
-  sonatypeProfileName := "io.github.rpiaggio",
-  description := "scala.js facade for react-beautiful-dnd",
-  homepage := Some(
-    url("https://github.com/rpiaggio/scalajs-react-beautiful-dnd")
-  ),
-  licenses := Seq(
-    "BSD 3-Clause License" -> url(
-      "https://opensource.org/licenses/BSD-3-Clause"
-    )
-  ),
-  publishArtifact in Test := false,
-  publishMavenStyle := true
-)
+    .dependsOn(facade)
