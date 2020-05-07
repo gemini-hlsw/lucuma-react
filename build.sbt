@@ -69,7 +69,14 @@ lazy val commonSettings = Seq(
     )
   ),
   publishArtifact in Test := false,
-  publishMavenStyle := true
+  publishMavenStyle := true,
+  scalacOptions ~= (_.filterNot(
+    Set(
+      // By necessity facades will have unused params
+      "-Wdead-code",
+      "-Wunused:params"
+    )
+  ))
 )
 
 val root =

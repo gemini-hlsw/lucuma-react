@@ -13,6 +13,12 @@ object Tree {
   @JSImport("@atlaskit/tree", JSImport.Default)
   object RawComponent extends js.Object
 
+  @js.native
+  @JSImport("@atlaskit/tree", "moveItemOnTree")
+  object moveItemOnTree extends js.Object {
+    def apply[A](tree: Data[A], source: Position, destination: Position): Data[A] = js.native
+  }
+
   type ItemId      = String
   type Path        = js.Array[ItemId]
   type OnExpand    = js.Function2[ItemId, Path, Unit]
@@ -133,10 +139,10 @@ object Tree {
     def apply[A](
       tree:             Data[A],
       renderItem:       RenderItemParams[A] => VdomNode,
-      onExpand:         js.UndefOr[(ItemId, Path) => Unit] = js.undefined,
-      onCollapse:       js.UndefOr[(ItemId, Path) => Unit] = js.undefined,
-      onDragStart:      js.UndefOr[ItemId => Unit] = js.undefined,
-      onDragEnd:        js.UndefOr[(Position, Option[Position]) => Unit] = js.undefined,
+      onExpand:         js.UndefOr[(ItemId, Path) => Callback] = js.undefined,
+      onCollapse:       js.UndefOr[(ItemId, Path) => Callback] = js.undefined,
+      onDragStart:      js.UndefOr[ItemId => Callback] = js.undefined,
+      onDragEnd:        js.UndefOr[(Position, Option[Position]) => Callback] = js.undefined,
       offsetPerLevel:   js.UndefOr[Int] = js.undefined,
       isDragEnabled:    js.UndefOr[Boolean] = js.undefined,
       isNestingEnabled: js.UndefOr[Boolean] = js.undefined
@@ -144,15 +150,21 @@ object Tree {
       val p = (new js.Object).asInstanceOf[Props[A]]
       p.tree = tree
       p.renderItem = (params: RenderItemParamsJS[A]) => renderItem(RenderItemParams(params)).rawNode
-      onExpand.foreach(v => p.onExpand = v: OnExpand)
-      onCollapse.foreach(v => p.onCollapse = v: OnCollapse)
-      onDragStart.foreach(v => p.onDragStart = v: OnDragStart)
+      onExpand.foreach(v =>
+        p.onExpand = ((itemId: ItemId, path: Path) => v(itemId, path).runNow()): OnExpand
+      )
+      onCollapse.foreach(v =>
+        p.onCollapse = ((itemId: ItemId, path: Path) => v(itemId, path).runNow()): OnCollapse
+      )
+      onDragStart.foreach(v =>
+        p.onDragStart = ((itemId: ItemId) => v(itemId).runNow()): OnDragStart
+      )
       onDragEnd.foreach(v =>
         p.onDragEnd = (
           (
             source:      Position,
             destination: js.UndefOr[Position]
-          ) => v(source, destination.toOption)
+          ) => v(source, destination.toOption).runNow()
         ): OnDragEnd
       )
       offsetPerLevel.foreach(v => p.offsetPerLevel = v)
@@ -167,10 +179,10 @@ object Tree {
   def apply[A](
     tree:             Data[A],
     renderItem:       RenderItemParams[A] => VdomNode,
-    onExpand:         js.UndefOr[(ItemId, Path) => Unit] = js.undefined,
-    onCollapse:       js.UndefOr[(ItemId, Path) => Unit] = js.undefined,
-    onDragStart:      js.UndefOr[ItemId => Unit] = js.undefined,
-    onDragEnd:        js.UndefOr[(Position, Option[Position]) => Unit] = js.undefined,
+    onExpand:         js.UndefOr[(ItemId, Path) => Callback] = js.undefined,
+    onCollapse:       js.UndefOr[(ItemId, Path) => Callback] = js.undefined,
+    onDragStart:      js.UndefOr[ItemId => Callback] = js.undefined,
+    onDragEnd:        js.UndefOr[(Position, Option[Position]) => Callback] = js.undefined,
     offsetPerLevel:   js.UndefOr[Int] = js.undefined,
     isDragEnabled:    js.UndefOr[Boolean] = js.undefined,
     isNestingEnabled: js.UndefOr[Boolean] = js.undefined
