@@ -52,31 +52,32 @@ object Droppable {
     var getContainerForClone: js.UndefOr[Unit => html.Element]
     var children: js.Function2[ProvidedJS, StateSnapshotJS, Raw.React.Node]
   }
-
-  def props(
-    droppableId:             DroppableId,
-    tpe:                     js.UndefOr[TypeId] = js.undefined,
-    mode:                    js.UndefOr[DroppableMode] = js.undefined,
-    isDropDisabled:          js.UndefOr[Boolean] = js.undefined,
-    isCombineEnabled:        js.UndefOr[Boolean] = js.undefined,
-    direction:               js.UndefOr[Direction] = js.undefined,
-    ignoreContainerClipping: js.UndefOr[Boolean] = js.undefined,
-    renderClone:             js.UndefOr[DraggableChildrenFn] = js.undefined,
-    getContainerForClone:    js.UndefOr[Unit => html.Element] = js.undefined,
-    children:                (Provided, StateSnapshotJS) => VdomNode
-  ): Props = {
-    val p = (new js.Object).asInstanceOf[Props]
-    p.droppableId = droppableId
-    p.tpe = tpe
-    p.mode = mode
-    p.isDropDisabled = isDropDisabled
-    p.isCombineEnabled = isCombineEnabled
-    p.direction = direction
-    p.ignoreContainerClipping = ignoreContainerClipping
-    p.renderClone = renderClone
-    p.getContainerForClone = getContainerForClone
-    p.children = (p, ss) => children(Provided(p), ss).rawNode
-    p
+  object Props {
+    def apply(
+      droppableId:             DroppableId,
+      tpe:                     js.UndefOr[TypeId] = js.undefined,
+      mode:                    js.UndefOr[DroppableMode] = js.undefined,
+      isDropDisabled:          js.UndefOr[Boolean] = js.undefined,
+      isCombineEnabled:        js.UndefOr[Boolean] = js.undefined,
+      direction:               js.UndefOr[Direction] = js.undefined,
+      ignoreContainerClipping: js.UndefOr[Boolean] = js.undefined,
+      renderClone:             js.UndefOr[DraggableChildrenFn] = js.undefined,
+      getContainerForClone:    js.UndefOr[Unit => html.Element] = js.undefined,
+      children:                (Provided, StateSnapshotJS) => VdomNode
+    ): Props = {
+      val p = (new js.Object).asInstanceOf[Props]
+      p.droppableId = droppableId
+      p.tpe = tpe
+      p.mode = mode
+      p.isDropDisabled = isDropDisabled
+      p.isCombineEnabled = isCombineEnabled
+      p.direction = direction
+      p.ignoreContainerClipping = ignoreContainerClipping
+      p.renderClone = renderClone
+      p.getContainerForClone = getContainerForClone
+      p.children = (p, ss) => children(Provided(p), ss).rawNode
+      p
+    }
   }
 
   val component = JsComponent.force[Props, Children.None, Null](RawComponent)
@@ -93,7 +94,7 @@ object Droppable {
     getContainerForClone:    js.UndefOr[Unit => html.Element] = js.undefined
   )(children:                (Provided, StateSnapshotJS) => VdomNode) =
     component(
-      props(droppableId,
+      Props(droppableId,
             tpe,
             mode,
             isDropDisabled,

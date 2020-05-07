@@ -45,7 +45,7 @@ Facade to use [`react-beautiful-dnd`](https://github.com/atlassian/react-beautif
   )   
 ```
 
-- Run `sbt restartWDS` and navigate to `localhost:8080` for a demo.
+- Run `sbt restartDemoWDS`/`sbt restartTreeDemoWDS` and navigate to `localhost:8080` for a demo.
 
 - Requires Scala 2.13.
 

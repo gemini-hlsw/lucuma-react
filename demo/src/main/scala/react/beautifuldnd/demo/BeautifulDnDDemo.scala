@@ -93,7 +93,7 @@ object BeautifulDnDDemo {
   }
 
   val component = ScalaComponent
-    .builder[Props]("BeautifulDnDDemo ")
+    .builder[Props]("BeautifulDnDDemo")
     .initialState(State())
     .backend(new Backend(_))
     .renderBackend
@@ -102,7 +102,7 @@ object BeautifulDnDDemo {
   def apply(p: Props) = component(p)
 }
 
-object AgGridDemo       {
+object MainDemo         {
   val component = ScalaComponent
     .builder[Unit]("Demo")
     .stateless

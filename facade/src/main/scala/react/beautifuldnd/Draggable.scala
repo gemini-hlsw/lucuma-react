@@ -22,7 +22,7 @@ object Draggable {
   type DragHandleProps = js.Object | Null
 
   @js.native
-  protected[beautifuldnd] trait ProvidedJS extends js.Object {
+  protected[react] trait ProvidedJS extends js.Object {
     val innerRef: Raw.React.RefFn[html.Element]
     val draggableProps: DraggableProps
     val dragHandleProps: DragHandleProps
@@ -66,23 +66,24 @@ object Draggable {
     var disableInteractiveElementBlocking: js.UndefOr[Boolean]
     var shouldRespectForcePress: js.UndefOr[Boolean]
   }
-
-  def props(
-    draggableId:                       DraggableId,
-    index:                             Int,
-    children:                          (Provided, StateSnapshotJS, RubricJS) => VdomNode,
-    isDragDisabled:                    js.UndefOr[Boolean] = js.undefined,
-    disableInteractiveElementBlocking: js.UndefOr[Boolean] = js.undefined,
-    shouldRespectForcePress:           js.UndefOr[Boolean] = js.undefined
-  ): Props = {
-    val p = (new js.Object).asInstanceOf[Props]
-    p.draggableId = draggableId
-    p.index = index
-    p.children = (p, ss, r) => children(Provided(p), ss, r).rawNode
-    p.isDragDisabled = isDragDisabled
-    p.disableInteractiveElementBlocking = disableInteractiveElementBlocking
-    p.shouldRespectForcePress = shouldRespectForcePress
-    p
+  object Props {
+    def apply(
+      draggableId:                       DraggableId,
+      index:                             Int,
+      children:                          (Provided, StateSnapshotJS, RubricJS) => VdomNode,
+      isDragDisabled:                    js.UndefOr[Boolean] = js.undefined,
+      disableInteractiveElementBlocking: js.UndefOr[Boolean] = js.undefined,
+      shouldRespectForcePress:           js.UndefOr[Boolean] = js.undefined
+    ): Props = {
+      val p = (new js.Object).asInstanceOf[Props]
+      p.draggableId = draggableId
+      p.index = index
+      p.children = (p, ss, r) => children(Provided(p), ss, r).rawNode
+      p.isDragDisabled = isDragDisabled
+      p.disableInteractiveElementBlocking = disableInteractiveElementBlocking
+      p.shouldRespectForcePress = shouldRespectForcePress
+      p
+    }
   }
 
   val component = JsComponent[Props, Children.None, Null](RawComponent)
@@ -95,7 +96,7 @@ object Draggable {
     shouldRespectForcePress:           js.UndefOr[Boolean] = js.undefined
   )(children:                          (Provided, StateSnapshotJS, RubricJS) => VdomNode) =
     component.withKey(draggableId)(
-      props(
+      Props(
         draggableId,
         index,
         children,
