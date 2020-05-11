@@ -1,5 +1,10 @@
 # Changes
 
+## 0.8.0
+
+* Upgrade to scala.js 1.0
+* Upgrade to scalajs-react 1.7.0
+
 ## 0.7.1
 
 * Automatic conversions of components to js.UndefOr[Vdom]
