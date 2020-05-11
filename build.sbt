@@ -1,5 +1,5 @@
-val reactJS         = "16.7.0"
-val scalaJsReact    = "1.6.0"
+val reactJS         = "16.13.1"
+val scalaJsReact    = "1.7.0"
 val reactGridLayout = "0.18.3"
 val scalaJSDom      = "1.0.0"
 
@@ -71,7 +71,6 @@ lazy val demo =
       webpackBundlingMode in fastOptJS := BundlingMode.LibraryOnly(),
       webpackBundlingMode in fullOptJS := BundlingMode.Application,
       test := {},
-      emitSourceMaps := false,
       webpackDevServerPort := 6060,
       npmDevDependencies in Compile ++= Seq(
         "css-loader" -> "0.28.11",
@@ -93,7 +92,7 @@ lazy val demo =
         "react-grid-layout" -> reactGridLayout
       ),
       libraryDependencies +=
-        "io.github.cquiroz.react" %%% "react-sizeme" % "0.3.4",
+        "io.github.cquiroz.react" %%% "react-sizeme" % "0.4.0",
       // don't publish the demo
       publish := {},
       publishLocal := {},
@@ -125,7 +124,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra" % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
         "org.scala-js" %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react" %%% "common" % "0.7.1",
+        "io.github.cquiroz.react" %%% "common" % "0.8.1",
         "com.lihaoyi" %%% "utest" % "0.7.4" % Test,
         "org.typelevel" %%% "cats-core" % "2.1.1" % Test
       ),
@@ -136,7 +135,7 @@ lazy val facade =
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.13.1",
+  scalaVersion := "2.13.2",
   organization := "io.github.cquiroz.react",
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-grid-layout ",
@@ -146,6 +145,5 @@ lazy val commonSettings = Seq(
       // By necessity facades will have unused params
       "-Wdead-code"
     )
-  )),
-  scalacOptions += "-P:scalajs:sjsDefinedByDefault"
+  ))
 )
