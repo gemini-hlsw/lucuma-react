@@ -1,5 +1,9 @@
 # Changes
 
+## 0.8.1
+
+* Update react version to 16.13.1
+
 ## 0.8.0
 
 * Upgrade to scala.js 1.0
