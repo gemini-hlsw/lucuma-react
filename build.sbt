@@ -93,7 +93,7 @@ lazy val demo =
         "react-grid-layout" -> reactGridLayout
       ),
       libraryDependencies +=
-        "io.github.cquiroz.react" %%% "react-sizeme" % "0.3.3",
+        "io.github.cquiroz.react" %%% "react-sizeme" % "0.3.4",
       // don't publish the demo
       publish := {},
       publishLocal := {},
