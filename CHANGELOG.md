@@ -1,5 +1,10 @@
 # Changes
 
+## 1.0.0
+
+* Update scalajs to 1.0
+* Update scalajs-react to 1.7.0
+
 ## 0.10.6
 
 * Update react-common

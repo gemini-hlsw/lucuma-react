@@ -1,6 +1,6 @@
-val reactJS         = "16.7.0"
+val reactJS         = "16.13.1"
 val copyToClipboard = "3.2.0"
-val scalaJsReact    = "1.6.0"
+val scalaJsReact    = "1.7.0"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -56,8 +56,8 @@ lazy val facade =
     .settings(
       name := "react-clipboard",
       npmDependencies in Compile ++= Seq(
-        "react" -> reactJS,
-        "react-dom" -> reactJS,
+        "react"             -> reactJS,
+        "react-dom"         -> reactJS,
         "copy-to-clipboard" -> copyToClipboard
       ),
       // Requires the DOM for tests
@@ -70,22 +70,20 @@ lazy val facade =
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
-        "io.github.cquiroz.react" %%% "common" % "0.7.1",
-        "io.github.cquiroz.react" %%% "test" % "0.7.1" % Test,
-        "com.lihaoyi" %%% "utest" % "0.7.4" % Test,
-        "org.typelevel" %%% "cats-core" % "2.1.1" % Test
+        "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReact % Test,
+        "io.github.cquiroz.react"           %%% "common"    % "0.8.1",
+        "io.github.cquiroz.react"           %%% "test"      % "0.8.1"      % Test,
+        "com.lihaoyi"                       %%% "utest"     % "0.7.4"      % Test,
+        "org.typelevel"                     %%% "cats-core" % "2.1.1"      % Test
       ),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.11",
-  crossScalaVersions := List("2.13.1", "2.12.11"),
+  scalaVersion := "2.13.2",
   organization := "io.github.cquiroz.react",
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-copy-to-clipboard",
-  homepage := Some(url("https://github.com/cquiroz/scalajs-react-clipboard")),
-  scalacOptions += "-P:scalajs:sjsDefinedByDefault"
+  homepage := Some(url("https://github.com/cquiroz/scalajs-react-clipboard"))
 )
