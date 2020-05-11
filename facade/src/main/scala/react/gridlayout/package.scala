@@ -17,9 +17,9 @@ package object gridlayout {
   type OnLayoutsChange    = (Layout, Layouts) => Callback
   type OnBreakpointChange = (BreakpointName, JsNumber) => Callback
   type OnWidthChange      = (JsNumber, Margin, JsNumber, ContainerPadding) => Callback
-  type ItemCallback =
+  type ItemCallback       =
     (Layout, LayoutItem, LayoutItem, Option[LayoutItem], MouseEvent, HTMLElement) => Callback
-  type DropCallback =
+  type DropCallback       =
     (JsNumber, JsNumber, JsNumber, JsNumber) => Callback
 }
 
@@ -28,7 +28,7 @@ package gridlayout {
     val name: String
   }
 
-  object BreakpointName {
+  object BreakpointName   {
     private final case class BreakpointNameI(name: String) extends BreakpointName
     def apply(name: String): BreakpointName = new BreakpointNameI(name)
 
@@ -48,7 +48,7 @@ package gridlayout {
     }
   }
 
-  final case class Column(col:   BreakpointName, pos: JsNumber)
+  final case class Column(col: BreakpointName, pos: JsNumber)
   final case class Columns(cols: List[Column]) {
     def toRaw: js.Object = {
       val p = js.Dynamic.literal()
@@ -61,7 +61,7 @@ package gridlayout {
     i: String,
     w: JsNumber,
     h: JsNumber
-  ) {
+  )                       {
     def toRaw: raw.DroppingItem = {
       val p = (new js.Object).asInstanceOf[raw.DroppingItem]
       p.i = i
@@ -89,14 +89,15 @@ package gridlayout {
     }
   }
 
-  object Layouts {
+  object Layouts          {
     private[gridlayout] def fromRaw(l: js.Object): Layouts = {
-      val c = l.asInstanceOf[js.Dictionary[js.Any]]
+      val c  = l.asInstanceOf[js.Dictionary[js.Any]]
       val bp = for {
         p <- js.Object.getOwnPropertyNames(l)
         v <- c.get(p)
       } yield BreakpointLayout(BreakpointName(p),
-                               BreakpointLayout.layoutsFromRaw(v.asInstanceOf[js.Object]))
+                               BreakpointLayout.layoutsFromRaw(v.asInstanceOf[js.Object])
+      )
       Layouts(bp.toList)
     }
 
@@ -117,7 +118,7 @@ package gridlayout {
     isDraggable: js.UndefOr[Boolean] = js.undefined,
     isResizable: js.UndefOr[Boolean] = js.undefined,
     handle:      js.UndefOr[String] = js.undefined
-  ) {
+  )                       {
     def toRaw: raw.LayoutItem =
       new raw.LayoutItem(w,
                          h,
@@ -132,10 +133,11 @@ package gridlayout {
                          static,
                          isDraggable,
                          isResizable,
-                         handle)
+                         handle
+      )
   }
 
-  object LayoutItem {
+  object LayoutItem       {
     private[gridlayout] def fromRaw(l: raw.LayoutItem): LayoutItem =
       new LayoutItem(l.w,
                      l.h,
@@ -150,10 +152,11 @@ package gridlayout {
                      l.static,
                      l.isDraggable,
                      l.isResizable,
-                     l.handle)
+                     l.handle
+      )
 
     private[gridlayout] def fromRawO(l: raw.LayoutItem): Option[LayoutItem] =
-      if (l != null) {
+      if (l != null)
         Some(
           new LayoutItem(l.w,
                          l.h,
@@ -168,18 +171,18 @@ package gridlayout {
                          l.static,
                          l.isDraggable,
                          l.isResizable,
-                         l.handle)
+                         l.handle
+          )
         )
-      } else {
+      else
         None
-      }
   }
 
   final case class Layout(l: List[LayoutItem]) {
     private[gridlayout] def toRaw: raw.Layout = l.toArray.map(_.toRaw).toJSArray
   }
 
-  object Layout {
+  object Layout           {
     val Empty: Layout = Layout(Nil)
 
     private[gridlayout] def fromRaw(l: raw.Layout): Layout =
@@ -187,9 +190,9 @@ package gridlayout {
   }
 
   sealed trait CompactType extends Product with Serializable
-  object CompactType {
+  object CompactType      {
     implicit val enum: EnumValue[CompactType] = EnumValue.toLowerCaseString
-    case object Vertical extends CompactType
+    case object Vertical   extends CompactType
     case object Horizontal extends CompactType
   }
 

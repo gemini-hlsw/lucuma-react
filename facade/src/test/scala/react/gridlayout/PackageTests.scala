@@ -34,7 +34,7 @@ object PackageTests extends TestSuite {
           (BreakpointName.sm, (768, 8, Layout.Empty)),
           (BreakpointName.xs, (480, 6, Layout.Empty))
         )
-      val layout =
+      val layout                                                     =
         ResponsiveReactGridLayout(200, layouts = layouts, <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(layout) { m =>
         val html =

@@ -101,26 +101,26 @@ object BaseProps {
     onDrop:           DropCallback = (_, _, _, _) => Callback.empty
   ): BaseProps = {
     val p = (new js.Object).asInstanceOf[BaseProps]
-    p.className        = className
-    p.width            = width
-    p.style            = style.map(Style.toJsObject)
-    p.autoSize         = autoSize
-    p.cols             = cols
-    p.draggableCancel  = draggableCancel
-    p.draggableHandle  = draggableHandle
-    p.verticalCompact  = verticalCompact
-    p.compactType      = compactType.toJs
-    p.margin           = margin.map(x => js.Array(x._1, x._2))
+    p.className = className
+    p.width = width
+    p.style = style.map(Style.toJsObject)
+    p.autoSize = autoSize
+    p.cols = cols
+    p.draggableCancel = draggableCancel
+    p.draggableHandle = draggableHandle
+    p.verticalCompact = verticalCompact
+    p.compactType = compactType.toJs
+    p.margin = margin.map(x => js.Array(x._1, x._2))
     p.containerPadding = containerPadding.map(x => js.Array(x._1, x._2))
-    p.rowHeight        = rowHeight
-    p.maxRows          = maxRows
-    p.isDraggable      = isDraggable
-    p.isResizable      = isResizable
-    p.isDroppable      = isDroppable
+    p.rowHeight = rowHeight
+    p.maxRows = maxRows
+    p.isDraggable = isDraggable
+    p.isResizable = isResizable
+    p.isDroppable = isDroppable
     p.preventCollision = preventCollision
     p.useCSSTransforms = useCSSTransforms
-    p.transformScale   = transformScale
-    p.droppingItem     = droppingItem.map(_.toRaw)
+    p.transformScale = transformScale
+    p.droppingItem = droppingItem.map(_.toRaw)
     p.onDragStart = (
       layout:      raw.Layout,
       oldItem:     raw.LayoutItem,
@@ -134,7 +134,8 @@ object BaseProps {
                   LayoutItem.fromRaw(newItem),
                   LayoutItem.fromRawO(placeholder),
                   e,
-                  element).runNow()
+                  element
+      ).runNow()
     p.onDrag = (
       layout:      raw.Layout,
       oldItem:     raw.LayoutItem,
@@ -148,7 +149,8 @@ object BaseProps {
              LayoutItem.fromRaw(newItem),
              LayoutItem.fromRawO(placeholder),
              e,
-             element).runNow()
+             element
+      ).runNow()
     p.onDragStop = (
       layout:      raw.Layout,
       oldItem:     raw.LayoutItem,
@@ -162,7 +164,8 @@ object BaseProps {
                  LayoutItem.fromRaw(newItem),
                  LayoutItem.fromRawO(placeholder),
                  e,
-                 element).runNow()
+                 element
+      ).runNow()
     p.onResizeStart = (
       layout:      raw.Layout,
       oldItem:     raw.LayoutItem,
@@ -176,7 +179,8 @@ object BaseProps {
                     LayoutItem.fromRaw(newItem),
                     LayoutItem.fromRawO(placeholder),
                     e,
-                    element).runNow()
+                    element
+      ).runNow()
     p.onResize = (
       layout:      raw.Layout,
       oldItem:     raw.LayoutItem,
@@ -190,7 +194,8 @@ object BaseProps {
                LayoutItem.fromRaw(newItem),
                LayoutItem.fromRawO(placeholder),
                e,
-               element).runNow()
+               element
+      ).runNow()
     p.onResizeStop = (
       layout:      raw.Layout,
       oldItem:     raw.LayoutItem,
@@ -204,7 +209,8 @@ object BaseProps {
                    LayoutItem.fromRaw(newItem),
                    LayoutItem.fromRawO(placeholder),
                    e,
-                   element).runNow()
+                   element
+      ).runNow()
     p.onDrop = (
       x: JsNumber,
       y: JsNumber,
