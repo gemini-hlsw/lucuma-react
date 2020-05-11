@@ -2,11 +2,11 @@ package react.common
 
 import scala.scalajs.js.|
 
-trait EnumValue[A]  {
+trait EnumValue[A] {
   def value(a: A): String
 }
 
-object EnumValue    {
+object EnumValue {
   @inline final def apply[A](implicit ev: EnumValue[A]): EnumValue[A] = ev
 
   def instance[A](f: A => String): EnumValue[A] =
@@ -24,7 +24,7 @@ trait EnumValueB[A] {
   def value(a: A): Boolean | String
 }
 
-object EnumValueB   {
+object EnumValueB {
   @inline final def apply[A](implicit ev: EnumValueB[A]): EnumValueB[A] = ev
 
   def instance[A](f: A => Boolean | String): EnumValueB[A] =

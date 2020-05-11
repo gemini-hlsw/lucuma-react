@@ -95,7 +95,7 @@ package syntax {
       }
 
     // Some uglies for js union types
-    def toInt: Int       =
+    def toInt: Int =
       (d: Any) match {
         case d: Float  => d.toInt
         case d: Double => d.toInt
@@ -126,7 +126,7 @@ package syntax {
 
     // Start Render(Fn) conversions
     implicit def gFnProps2VdomP[P <: js.Object](
-      p:                        GenericFnComponentP[P]
+      p: GenericFnComponentP[P]
     ): Render[P] =
       p.render
 

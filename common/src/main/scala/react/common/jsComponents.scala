@@ -19,7 +19,7 @@ class AttrsBuilder(p: js.Object) extends Builder.ToJs {
   }
 }
 
-trait GenericFnComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U]     {
+trait GenericFnComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
   protected def cprops: P
   @inline def render: Render[P]
 }
@@ -33,7 +33,7 @@ trait GenericFnComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A] {
   @inline def render: RenderFn[P] = renderWith(children)
 }
 
-trait Passthrough[P <: js.Object]                                             {
+trait Passthrough[P <: js.Object] {
   protected def cprops: P
   val modifiers: Seq[TagMod]
 }
@@ -57,7 +57,7 @@ trait PassthroughAC[P <: js.Object] extends Passthrough[P] {
 }
 
 trait GenericFnComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
-    extends PassthroughA[P]                                                   {
+    extends PassthroughA[P] {
   protected val component: JsFn.Component[P, CT]
   def addModifiers(modifiers: Seq[TagMod]): A
 
@@ -65,7 +65,7 @@ trait GenericFnComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
 }
 
 trait GenericFnComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
-    extends PassthroughAC[P]                                                  {
+    extends PassthroughAC[P] {
   protected val component: JsFn.Component[P, CT]
   def addModifiers(modifiers: Seq[TagMod]): A
 
@@ -75,7 +75,7 @@ trait GenericFnComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
   }
 }
 
-trait GenericJsComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U]     {
+trait GenericJsComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
   protected def cprops: P
   def rawProps: P = cprops
   @inline def render: Render[P]
@@ -92,7 +92,7 @@ trait GenericJsComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A] {
 }
 
 trait GenericJsComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
-    extends PassthroughA[P]                                                   {
+    extends PassthroughA[P] {
   protected val component: Js.ComponentWithRawType[P, Null, Js.RawMounted[P, Null], CT]
   def addModifiers(modifiers: Seq[TagMod]): A
 
@@ -100,7 +100,7 @@ trait GenericJsComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
 }
 
 trait GenericJsComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
-    extends PassthroughAC[P]                                                  {
+    extends PassthroughAC[P] {
   protected val component: Js.ComponentWithRawType[P, Null, Js.RawMounted[P, Null], CT]
   def addModifiers(modifiers: Seq[TagMod]): A
 

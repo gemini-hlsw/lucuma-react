@@ -58,7 +58,7 @@ package implicits {
           (aDict.keySet == bDict.keySet) &&
           aDict.keySet.forall(key => aDict(key) === bDict(key))
 
-        case _ =>
+        case _                                =>
           a == b
       }
     }

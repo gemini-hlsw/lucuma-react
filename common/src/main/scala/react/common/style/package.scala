@@ -7,7 +7,7 @@ import scala.scalajs.js.|
 import js.JSConverters._
 import japgolly.scalajs.react.vdom.html_<^._
 
-package object style {
+package object style             {
   implicit val IntStyleExtractor: StyleExtractor[Int] = new StyleExtractor[Int] {
     override def extract(s: Style, key: String): Option[Int] =
       s.styles.get(key).flatMap { x =>
@@ -124,7 +124,7 @@ package style {
         this
   }
 
-  object Css   {
+  object Css {
     def apply(htmlClass: String): Css = Css(List(htmlClass))
 
     val Empty: Css = Css(Nil)
