@@ -22,7 +22,7 @@ final case class CopyToClipboard(
     CopyToClipboard.component(this)
 }
 
-object CopyToClipboard             {
+object CopyToClipboard {
   @js.native
   @JSImport("copy-to-clipboard", JSImport.Namespace)
   object JsCopy extends js.Function2[String, ClipboardOptions, Boolean] {
