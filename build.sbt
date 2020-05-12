@@ -4,11 +4,11 @@ scalaVersion in ThisBuild := "2.13.2"
 
 Global / onChangedBuildSource := IgnoreSourceChanges
 
-val reactJS           = "16.8.6"
-val resactBeautiulDnD = "13.0.0"
-val atlasKitTree      = "7.1.2"
-val scalaJsReact      = "1.6.0"
-val cats              = "2.1.1" // Only used in demo
+val reactJS          = "16.13.1"
+val reactBeautiulDnD = "13.0.0"
+val atlasKitTree     = "7.1.2"
+val scalaJsReact     = "1.7.0"
+val cats             = "2.1.1" // Only used in demo
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -105,7 +105,7 @@ lazy val facade =
       npmDependencies in Compile ++= Seq(
         "react"               -> reactJS,
         "react-dom"           -> reactJS,
-        "react-beautiful-dnd" -> resactBeautiulDnD
+        "react-beautiful-dnd" -> reactBeautiulDnD
       ),
       // Use yarn as it is faster than npm
       useYarn := true,
