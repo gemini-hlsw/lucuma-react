@@ -1,5 +1,5 @@
-val reactJS        = "16.7.0"
-val scalaJsReact   = "1.6.0"
+val reactJS        = "16.13.1"
+val scalaJsReact   = "1.7.0"
 val reactDraggable = "4.0.3"
 val scalaJSDom     = "1.0.0"
 
@@ -8,7 +8,8 @@ parallelExecution in (ThisBuild, Test) := false
 cancelable in Global := true
 
 addCommandAlias("restartWDS",
-                "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer")
+                "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer"
+)
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -23,11 +24,13 @@ inThisBuild(
       Developer("cquiroz",
                 "Carlos Quiroz",
                 "carlos.m.quiroz@gmail.com",
-                url("https://github.com/cquiroz"))
+                url("https://github.com/cquiroz")
+      )
     ),
     scmInfo := Some(
       ScmInfo(url("https://github.com/cquiroz/scalajs-react-clipboard"),
-              "scm:git:git@github.com:cquiroz/scalajs-react-clipboard")
+              "scm:git:git@github.com:cquiroz/scalajs-react-clipboard"
+      )
     )
   )
 )
@@ -69,30 +72,29 @@ lazy val demo =
       webpackBundlingMode in fastOptJS := BundlingMode.LibraryOnly(),
       webpackBundlingMode in fullOptJS := BundlingMode.Application,
       test := {},
-      emitSourceMaps := false,
       webpackDevServerPort := 9090,
       npmDevDependencies in Compile ++= Seq(
-        "css-loader" -> "1.0.0",
-        "less" -> "3.8.1",
-        "less-loader" -> "4.1.0",
-        "mini-css-extract-plugin" -> "0.4.3",
-        "html-webpack-plugin" -> "3.2.0",
-        "url-loader" -> "1.1.1",
-        "style-loader" -> "0.23.0",
-        "postcss-loader" -> "3.0.0",
-        "cssnano" -> "4.1.0",
+        "css-loader"                         -> "1.0.0",
+        "less"                               -> "3.8.1",
+        "less-loader"                        -> "4.1.0",
+        "mini-css-extract-plugin"            -> "0.4.3",
+        "html-webpack-plugin"                -> "3.2.0",
+        "url-loader"                         -> "1.1.1",
+        "style-loader"                       -> "0.23.0",
+        "postcss-loader"                     -> "3.0.0",
+        "cssnano"                            -> "4.1.0",
         "optimize-css-assets-webpack-plugin" -> "5.0.1",
-        "webpack-merge" -> "4.1.4",
-        "webpack-dev-server-status-bar" -> "1.1.0",
-        "autoprefixer" -> "9.1.5"
+        "webpack-merge"                      -> "4.1.4",
+        "webpack-dev-server-status-bar"      -> "1.1.0",
+        "autoprefixer"                       -> "9.1.5"
       ),
       npmDependencies in Compile ++= Seq(
-        "react" -> reactJS,
-        "react-dom" -> reactJS,
+        "react"           -> reactJS,
+        "react-dom"       -> reactJS,
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz.react" %%% "react-virtualized" % "0.7.5"
+        "io.github.cquiroz.react" %%% "react-virtualized" % "0.8.0"
       ),
       // don't publish the demo
       publish := {},
@@ -117,18 +119,18 @@ lazy val facade =
       // Compile tests to JS using fast-optimisation
       // scalaJSStage in Test            := FastOptStage,
       npmDependencies in Compile ++= Seq(
-        "react" -> reactJS,
-        "react-dom" -> reactJS,
+        "react"           -> reactJS,
+        "react-dom"       -> reactJS,
         "react-draggable" -> reactDraggable
       ),
       libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "extra" % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
-        "org.scala-js" %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react" %%% "common" % "0.7.1",
-        "com.lihaoyi" %%% "utest" % "0.7.4" % Test,
-        "org.typelevel" %%% "cats-core" % "2.1.1" % Test
+        "com.github.japgolly.scalajs-react" %%% "core"        % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
+        "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
+        "io.github.cquiroz.react"           %%% "common"      % "0.8.1",
+        "com.lihaoyi"                       %%% "utest"       % "0.7.4"      % Test,
+        "org.typelevel"                     %%% "cats-core"   % "2.1.1"      % Test
       ),
       webpackConfigFile in Test := Some(
         baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
@@ -137,8 +139,7 @@ lazy val facade =
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.11",
-  crossScalaVersions := Seq("2.12.11", "2.13.1"),
+  scalaVersion := "2.13.2",
   organization := "io.github.cquiroz.react",
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-draggable ",
@@ -151,6 +152,5 @@ lazy val commonSettings = Seq(
       "-Ywarn-dead-code",
       "-Ywarn-unused:params"
     )
-  )),
-  scalacOptions += "-P:scalajs:sjsDefinedByDefault"
+  ))
 )
