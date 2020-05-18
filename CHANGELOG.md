@@ -1,5 +1,9 @@
 # Changes
 
+## 0.8.2
+
+* Update to scalajs 1.1.0
+
 ## 0.8.1
 
 * Update react version to 16.13.1
