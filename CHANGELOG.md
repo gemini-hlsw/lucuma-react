@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.2
+
+* Update scala.js to 1.1.0
+
 ## 0.5.0
 
 * Update scala.js to 1.0
