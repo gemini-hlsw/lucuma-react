@@ -11,3 +11,4 @@ node_modules/
 package-lock.json
 yarn.lock
 travis/secrets.tar
+.hydra/
