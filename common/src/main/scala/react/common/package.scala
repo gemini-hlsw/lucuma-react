@@ -45,13 +45,10 @@ package object common extends AllSyntax {
   type Css   = style.Css
 
   // Begin Scala Components
-  implicit def props2Component(p: ReactProps): VdomElement = p.render
-
-  implicit def propsWithChildren2Component(p: ReactPropsWithChildren): RenderWithChildren =
-    new RenderWithChildren(p)
-
-  implicit def propsWithEmptyChildren2Component(p: ReactPropsWithChildren): VdomElement =
-    p.render(Seq.empty)
+  @inline implicit def props2Component[Props, CT[-p, +u] <: CtorType[p, u]](
+    p: ReactRender[Props, CT]
+  ): VdomElement =
+    p.toVdomElement
   // End Scala Components
 
   // Begin JS Components
