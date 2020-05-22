@@ -12,7 +12,8 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 resolvers in Global += Resolver.sonatypeRepo("public")
 
 addCommandAlias("restartWDS",
-                "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer")
+                "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer"
+)
 
 inThisBuild(
   List(
@@ -22,7 +23,8 @@ inThisBuild(
       Developer("cquiroz",
                 "Carlos Quiroz",
                 "carlos.m.quiroz@gmail.com",
-                url("https://github.com/cquiroz"))
+                url("https://github.com/cquiroz")
+      )
     ),
     scmInfo := Some(
       ScmInfo(
@@ -50,7 +52,7 @@ val root =
       Keys.`package` := file("")
     )
 
-lazy val demo =
+lazy val demo           =
   project
     .in(file("demo"))
     .enablePlugins(ScalaJSBundlerPlugin)
@@ -73,22 +75,22 @@ lazy val demo =
       test := {},
       webpackDevServerPort := 6060,
       npmDevDependencies in Compile ++= Seq(
-        "css-loader" -> "0.28.11",
-        "less" -> "2.3.1",
-        "less-loader" -> "4.1.0",
-        "mini-css-extract-plugin" -> "0.4.0",
-        "html-webpack-plugin" -> "3.2.0",
-        "url-loader" -> "1.0.1",
-        "style-loader" -> "0.21.0",
-        "postcss-loader" -> "2.1.5",
-        "cssnano" -> "3.10.0",
+        "css-loader"                         -> "0.28.11",
+        "less"                               -> "2.3.1",
+        "less-loader"                        -> "4.1.0",
+        "mini-css-extract-plugin"            -> "0.4.0",
+        "html-webpack-plugin"                -> "3.2.0",
+        "url-loader"                         -> "1.0.1",
+        "style-loader"                       -> "0.21.0",
+        "postcss-loader"                     -> "2.1.5",
+        "cssnano"                            -> "3.10.0",
         "optimize-css-assets-webpack-plugin" -> "4.0.1",
-        "webpack-merge" -> "4.1.0",
-        "webpack-dev-server-status-bar" -> "1.0.0"
+        "webpack-merge"                      -> "4.1.0",
+        "webpack-dev-server-status-bar"      -> "1.0.0"
       ),
       npmDependencies in Compile ++= Seq(
-        "react" -> reactJS,
-        "react-dom" -> reactJS,
+        "react"             -> reactJS,
+        "react-dom"         -> reactJS,
         "react-grid-layout" -> reactGridLayout
       ),
       libraryDependencies +=
@@ -101,7 +103,7 @@ lazy val demo =
     )
     .dependsOn(facade)
 
-lazy val facade =
+lazy val facade         =
   project
     .in(file("facade"))
     .enablePlugins(ScalaJSBundlerPlugin)
@@ -115,18 +117,18 @@ lazy val facade =
       // Compile tests to JS using fast-optimisation
       // scalaJSStage in Test            := FastOptStage,
       npmDependencies in Compile ++= Seq(
-        "react" -> reactJS,
-        "react-dom" -> reactJS,
+        "react"             -> reactJS,
+        "react-dom"         -> reactJS,
         "react-grid-layout" -> reactGridLayout
       ),
       libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "extra" % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
-        "org.scala-js" %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react" %%% "common" % "0.8.2",
-        "com.lihaoyi" %%% "utest" % "0.7.4" % Test,
-        "org.typelevel" %%% "cats-core" % "2.1.1" % Test
+        "com.github.japgolly.scalajs-react" %%% "core"        % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
+        "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
+        "io.github.cquiroz.react"           %%% "common"      % "0.9.0",
+        "com.lihaoyi"                       %%% "utest"       % "0.7.4"      % Test,
+        "org.typelevel"                     %%% "cats-core"   % "2.1.1"      % Test
       ),
       webpackConfigFile in Test := Some(
         baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
