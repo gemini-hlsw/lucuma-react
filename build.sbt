@@ -199,3 +199,5 @@ lazy val treeDemo =
       scalaJSLinkerConfig in (Compile, fullOptJS) ~= { _.withSourceMap(false) }
     )
     .dependsOn(treeFacade)
+
+sonatypeProfileName := "com.rpiaggio"
