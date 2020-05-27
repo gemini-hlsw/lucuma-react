@@ -3,7 +3,6 @@ package react.beautifuldnd
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.VdomNode
 import scala.scalajs.js
-import scala.scalajs.js.UndefOr._
 import scala.scalajs.js.annotation.JSImport
 
 // https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/drag-drop-context.md
