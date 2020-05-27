@@ -9,6 +9,7 @@ import japgolly.scalajs.react.component.Js.UnmountedWithRawType
 import japgolly.scalajs.react.vdom.TagMod
 import scala.scalajs.js
 import react.common.syntax.AllSyntax
+import japgolly.scalajs.react.component.Scala
 
 package object common extends AllSyntax {
 
@@ -48,7 +49,19 @@ package object common extends AllSyntax {
   @inline implicit def props2Component[Props, CT[-p, +u] <: CtorType[p, u]](
     p: ReactRender[Props, CT]
   ): VdomElement =
-    p.toVdomElement
+    p.toUnmounted
+
+  implicit class PropsWithChildren2Component[Props, CT[-p, +u] <: CtorType[p, u]](
+    p:  ReactRender[Props, CT]
+  )(implicit
+    ev: CT[Props, Scala.Unmounted[Props, _, _]] <:< CtorType.PropsAndChildren[
+      Props,
+      Scala.Unmounted[Props, _, _]
+    ]
+  ) {
+    @inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
+      p(first, rest: _*)
+  }
   // End Scala Components
 
   // Begin JS Components
