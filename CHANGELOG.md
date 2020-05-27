@@ -1,5 +1,9 @@
 # Changes
 
+## 0.9.1
+
+* Fixes and refactor to new `ReactProps(WithChildren)`.
+
 ## 0.9.0
 
 * Rework of `ReactProps(WithChildren)`. (BREAKING CHANGE)
