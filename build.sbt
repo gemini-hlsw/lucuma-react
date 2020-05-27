@@ -24,6 +24,9 @@ addCommandAlias(
 
 inThisBuild(
   List(
+    scalaVersion := scalaVersion.value,
+    organization := "com.rpiaggio",
+    sonatypeProfileName := "com.rpiaggio",
     homepage := Some(
       url("https://github.com/rpiaggio/scalajs-react-beautiful-dnd")
     ),
@@ -56,18 +59,7 @@ inThisBuild(
 )
 
 lazy val commonSettings = Seq(
-  scalaVersion := scalaVersion.value,
-  organization := "io.github.rpiaggio.react",
-  sonatypeProfileName := "io.github.rpiaggio",
   description := "scala.js facade for react-beautiful-dnd",
-  homepage := Some(
-    url("https://github.com/rpiaggio/scalajs-react-beautiful-dnd")
-  ),
-  licenses := Seq(
-    "BSD 3-Clause License" -> url(
-      "https://opensource.org/licenses/BSD-3-Clause"
-    )
-  ),
   publishArtifact in Test := false,
   publishMavenStyle := true,
   scalacOptions ~= (_.filterNot(
@@ -199,5 +191,3 @@ lazy val treeDemo =
       scalaJSLinkerConfig in (Compile, fullOptJS) ~= { _.withSourceMap(false) }
     )
     .dependsOn(treeFacade)
-
-sonatypeProfileName := "com.rpiaggio"
