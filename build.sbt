@@ -2,7 +2,7 @@ name := "scalajs-react-beautiful-dnd"
 
 scalaVersion in ThisBuild := "2.13.2"
 
-Global / onChangedBuildSource := IgnoreSourceChanges
+Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactJS          = "16.13.1"
 val reactBeautiulDnD = "13.0.0"
@@ -75,7 +75,7 @@ val root =
   project
     .in(file("."))
     .settings(commonSettings: _*)
-    .aggregate(facade, demo)
+    .aggregate(facade, demo, treeFacade, treeDemo)
     .settings(
       name := "root",
       // No, SBT, we don't want any artifacts for root.
