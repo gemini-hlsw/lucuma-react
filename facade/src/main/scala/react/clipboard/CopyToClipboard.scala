@@ -17,12 +17,14 @@ final case class CopyToClipboard(
   text:    String,
   onCopy:  OnCopy = (_, _) => Callback.empty,
   options: Option[ClipboardOptions] = None
-) extends ReactPropsWithChildren {
+) extends ReactPropsWithChildren[CopyToClipboard](CopyToClipboard.component) {
   @inline def render: Seq[CtorType.ChildArg] => VdomElement =
     CopyToClipboard.component(this)
 }
 
 object CopyToClipboard {
+  type Props = CopyToClipboard
+
   @js.native
   @JSImport("copy-to-clipboard", JSImport.Namespace)
   object JsCopy extends js.Function2[String, ClipboardOptions, Boolean] {
@@ -38,8 +40,8 @@ object CopyToClipboard {
       JsCopy(p.text, p.options.getOrElse(ClipboardOptions.Default))
     ) >>= { r => p.onCopy(p.text, r) }
 
-  private val component = ScalaComponent
-    .builder[CopyToClipboard]("CopyToClipboard")
+  val component = ScalaComponent
+    .builder[Props]("CopyToClipboard")
     .render_PC((p, c) => <.div(^.onClick --> copy(p), c))
     .build
 }
