@@ -75,8 +75,8 @@ object Tree {
   case class RenderItemParams[A](
     item:       Item[A],
     depth:      Int,
-    onExpand:   ItemId => Unit,
-    onCollapse: ItemId => Unit,
+    onExpand:   ItemId => Callback,
+    onCollapse: ItemId => Callback,
     provided:   Draggable.Provided,
     snapshot:   Draggable.StateSnapshotJS
   )
@@ -86,8 +86,8 @@ object Tree {
       RenderItemParams(
         params.item,
         params.depth,
-        params.onExpand,
-        params.onCollapse,
+        id => Callback(params.onExpand(id)),
+        id => Callback(params.onCollapse(id)),
         Draggable.Provided(params.provided),
         params.snapshot
       )
