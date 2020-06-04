@@ -15,12 +15,28 @@ package object beautifuldnd {
   type Announce = String => Unit
 
   type MovementMode = "FLUID" | "SNAP"
+  object MovementMode {
+    val Fluid = "FLUID"
+    val Snap  = "SNAP"
+  }
 
   type DropReason = "DROP" | "CANCEL"
+  object DropReason {
+    val Drop   = "DROP"
+    val Cancel = "CANCEL"
+  }
 
   type DroppableMode = "standard" | "virtual"
+  object DroppableMode {
+    val Standard = "standard"
+    val Virtual  = "virtual"
+  }
 
   type Direction = "horizontal" | "vertical"
+  object Direction {
+    val Horizontal = "horizontal"
+    val Vertical   = "vertical"
+  }
 
   type DraggableChildrenFn = js.Function3[
     Draggable.ProvidedJS,

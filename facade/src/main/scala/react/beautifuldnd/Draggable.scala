@@ -49,11 +49,6 @@ object Draggable {
       )
   }
 
-  object Mode {
-    val Fluid = "FLUID"
-    val Snap  = "SNAP"
-  }
-
   @js.native // Actually, from css-box-model
   trait Position extends js.Object {
     val x: Int
@@ -77,7 +72,7 @@ object Draggable {
     val draggingOver: js.UndefOr[DroppableId]
     val combineWith: js.UndefOr[DraggableId]
     val combineTargetFor: js.UndefOr[DraggableId]
-    val mode: js.UndefOr[String]
+    val mode: js.UndefOr[MovementMode]
   }
 
   @js.native
