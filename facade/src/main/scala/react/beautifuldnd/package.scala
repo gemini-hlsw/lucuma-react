@@ -24,8 +24,8 @@ package object beautifuldnd {
 
   type DraggableChildrenFn = js.Function3[
     Draggable.ProvidedJS,
-    Draggable.StateSnapshotJS,
-    Draggable.RubricJS,
+    Draggable.StateSnapshot,
+    Draggable.Rubric,
     Raw.React.Node | Null
   ]
 

@@ -78,7 +78,7 @@ object Tree {
     onExpand:   ItemId => Callback,
     onCollapse: ItemId => Callback,
     provided:   Draggable.Provided,
-    snapshot:   Draggable.StateSnapshotJS
+    snapshot:   Draggable.StateSnapshot
   )
 
   object RenderItemParams {
@@ -114,7 +114,7 @@ object Tree {
 
     /** Couple of state variables */
     /** More info: https://github.com/atlassian/react-beautiful-dnd#2-snapshot-draggablestatesnapshot */
-    val snapshot: Draggable.StateSnapshotJS
+    val snapshot: Draggable.StateSnapshot
   }
 
   @js.native

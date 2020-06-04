@@ -49,13 +49,39 @@ object Draggable {
       )
   }
 
-  @js.native
-  trait StateSnapshotJS extends js.Object {
-    val isDragging: Boolean
+  object Mode {
+    val Fluid = "FLUID"
+    val Snap  = "SNAP"
+  }
+
+  @js.native // Actually, from css-box-model
+  trait Position extends js.Object {
+    val x: Int
+    val y: Int
   }
 
   @js.native
-  trait RubricJS extends js.Object {}
+  trait DropAnimation extends js.Object {
+    val duration: Int
+    val curve: String
+    val moveTo: Position
+    val opacity: js.UndefOr[Int]
+    val scale: js.UndefOr[Int]
+  }
+
+  @js.native
+  trait StateSnapshot extends js.Object {
+    val isDragging: Boolean
+    val isDropAnimating: Boolean
+    val dropAnimation: js.UndefOr[DropAnimation]
+    val draggingOver: js.UndefOr[DroppableId]
+    val combineWith: js.UndefOr[DraggableId]
+    val combineTargetFor: js.UndefOr[DraggableId]
+    val mode: js.UndefOr[String]
+  }
+
+  @js.native
+  trait Rubric extends js.Object {}
 
   @js.native
   trait Props extends js.Object {
@@ -70,7 +96,7 @@ object Draggable {
     def apply(
       draggableId:                       DraggableId,
       index:                             Int,
-      children:                          (Provided, StateSnapshotJS, RubricJS) => VdomNode,
+      children:                          (Provided, StateSnapshot, Rubric) => VdomNode,
       isDragDisabled:                    js.UndefOr[Boolean] = js.undefined,
       disableInteractiveElementBlocking: js.UndefOr[Boolean] = js.undefined,
       shouldRespectForcePress:           js.UndefOr[Boolean] = js.undefined
@@ -94,7 +120,7 @@ object Draggable {
     isDragDisabled:                    js.UndefOr[Boolean] = js.undefined,
     disableInteractiveElementBlocking: js.UndefOr[Boolean] = js.undefined,
     shouldRespectForcePress:           js.UndefOr[Boolean] = js.undefined
-  )(children:                          (Provided, StateSnapshotJS, RubricJS) => VdomNode) =
+  )(children:                          (Provided, StateSnapshot, Rubric) => VdomNode) =
     component.withKey(draggableId)(
       Props(
         draggableId,

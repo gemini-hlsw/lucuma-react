@@ -9,7 +9,7 @@ import scala.scalajs.js.annotation.{ JSImport, JSName }
 
 case class Provided(innerRef: TagMod, droppableProps: TagMod, placeholder: TagMod)
 
-object Provided  {
+object Provided {
   def apply(provided: Droppable.ProvidedJS): Provided =
     Provided(
       TagMod.fn(_.addRefFn(provided.innerRef)),
@@ -35,7 +35,7 @@ object Droppable {
   }
 
   @js.native
-  trait StateSnapshotJS extends js.Object {
+  trait StateSnapshot extends js.Object {
     val isDraggingOver: Boolean
   }
 
@@ -50,7 +50,7 @@ object Droppable {
     var ignoreContainerClipping: js.UndefOr[Boolean]
     var renderClone: js.UndefOr[DraggableChildrenFn]
     var getContainerForClone: js.UndefOr[Unit => html.Element]
-    var children: js.Function2[ProvidedJS, StateSnapshotJS, Raw.React.Node]
+    var children: js.Function2[ProvidedJS, StateSnapshot, Raw.React.Node]
   }
   object Props {
     def apply(
@@ -63,7 +63,7 @@ object Droppable {
       ignoreContainerClipping: js.UndefOr[Boolean] = js.undefined,
       renderClone:             js.UndefOr[DraggableChildrenFn] = js.undefined,
       getContainerForClone:    js.UndefOr[Unit => html.Element] = js.undefined,
-      children:                (Provided, StateSnapshotJS) => VdomNode
+      children:                (Provided, StateSnapshot) => VdomNode
     ): Props = {
       val p = (new js.Object).asInstanceOf[Props]
       p.droppableId = droppableId
@@ -92,7 +92,7 @@ object Droppable {
     ignoreContainerClipping: js.UndefOr[Boolean] = js.undefined,
     renderClone:             js.UndefOr[DraggableChildrenFn] = js.undefined,
     getContainerForClone:    js.UndefOr[Unit => html.Element] = js.undefined
-  )(children:                (Provided, StateSnapshotJS) => VdomNode) =
+  )(children:                (Provided, StateSnapshot) => VdomNode) =
     component(
       Props(droppableId,
             tpe,
