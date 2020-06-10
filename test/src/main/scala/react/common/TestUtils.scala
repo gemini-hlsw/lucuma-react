@@ -8,16 +8,15 @@ import japgolly.scalajs.react.raw.React
 import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.TopNode
 import org.scalajs.dom.Element
-import utest._
 
-trait TestUtils { self: TestSuite =>
+trait TestUtils extends munit.Assertions {
 
   def assertRender(e: VdomElement, expected: String): Unit =
     assertRender(e.rawElement, expected)
 
   def assertRender(e: React.Element, expected: String): Unit = {
     val rendered: String = ReactDOMServer.raw.renderToStaticMarkup(e)
-    rendered ==> expected.trim.replaceAll("\n", "")
+    assertEquals(rendered, expected.trim.replaceAll("\n", ""))
   }
 
   def assertRender(e: React.Node, expected: String): Unit =
@@ -36,7 +35,7 @@ trait TestUtils { self: TestSuite =>
     }
 
   def assertOuterHTML(node: Element, expect: String): Unit =
-    scrubReactHtml(node.outerHTML) ==> expect
+    assertEquals(scrubReactHtml(node.outerHTML), expect)
 
   private val reactRubbish =
     """\s+data-react\S*?\s*?=\s*?".*?"|<!--(?:.|[\r\n])*?-->""".r

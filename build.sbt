@@ -17,7 +17,8 @@ inThisBuild(
       Developer("cquiroz",
                 "Carlos Quiroz",
                 "carlos.m.quiroz@gmail.com",
-                url("https://github.com/cquiroz"))
+                url("https://github.com/cquiroz")
+      )
     ),
     scmInfo := Some(
       ScmInfo(
@@ -60,31 +61,27 @@ lazy val test =
     .settings(commonSettings: _*)
     .settings(
       name := "test",
-      libraryDependencies ++= Seq(
-        "com.lihaoyi" %%% "utest" % "0.7.5"
-      ),
       npmDependencies in Compile ++= Seq(
-        "react" -> reactJS,
+        "react"     -> reactJS,
         "react-dom" -> reactJS
       ),
       // Requires the DOM for tests
       requireJsDomEnv in Test := true,
       // Use yarn as it is faster than npm
       useYarn := true,
-      version in webpack := "4.30.0",
-      version in webpackCliVersion := "3.3.2",
-      version in startWebpackDevServer := "3.3.1",
+      version in webpack := "4.43.0",
+      version in webpackCliVersion := "3.3.11",
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
-        "com.lihaoyi" %%% "utest" % "0.7.5" % Test,
         "org.typelevel" %%% "cats-core" % "2.2.0" % Test
       ),
+      webpackExtraArgs in Test := Seq("--verbose", "--progress", "true"),
       webpackConfigFile in Test := Some(
         baseDirectory.value / "src" / "test" / "test.webpack.config.js"
       ),
-      testFrameworks += new TestFramework("utest.runner.Framework")
+      testFrameworks := Seq(new TestFramework("munit.Framework"))
     )
     .dependsOn(cats, common)
 
