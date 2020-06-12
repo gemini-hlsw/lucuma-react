@@ -39,7 +39,7 @@ object Draggable {
     def apply(provided: Draggable.ProvidedJS): Provided =
       Provided(
         TagMod.fn(_.addRefFn(provided.innerRef)),
-        TagMod.fn(_.addAttrsObject(provided.draggableProps)),
+        TagMod.fn(_.addAttrsObject(provided.draggableProps, except = Set("style"))),
         provided.draggableProps.style.toOption.whenDefined(draggableStyle =>
           TagMod.fn(_.addStylesObject(draggableStyle))
         ),

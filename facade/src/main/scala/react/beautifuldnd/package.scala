@@ -54,8 +54,8 @@ package object beautifuldnd {
   }
 
   implicit class BuilderOps(b: Builder) {
-    def addAttrsObject(o:  js.Object): Unit          =
-      for ((k, v) <- JsUtil.objectIterator(o)) b.addAttr(k, v)
+    def addAttrsObject(o:  js.Object, except: Set[String] = Set.empty): Unit =
+      for ((k, v) <- JsUtil.objectIterator(o) if !except.contains(k)) b.addAttr(k, v)
 
     def addRefFn[A](refFn: Raw.React.RefFn[A]): Unit =
       b.addAttr("ref", refFn)
