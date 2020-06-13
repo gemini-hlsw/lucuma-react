@@ -3,10 +3,14 @@ enablePlugins(ScalablyTypedConverterGenSourcePlugin)
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
+inThisBuild(Seq(
+  homepage := Some(url("https://github.com/gemini-hlsw/gpp-svgdotjs")),
+  Global / onChangedBuildSource := ReloadOnSourceChanges
+) ++ gspPublishSettings)
+
 lazy val root = project
   .in(file("."))
   .settings(name := "gpp-svgdotjs")
-  .settings(gspPublishSettings: _*)
   .settings(
     // shade into another package
     stOutputPackage := "gpp.svgdotjs",
