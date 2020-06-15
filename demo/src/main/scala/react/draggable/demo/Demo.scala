@@ -65,4 +65,3 @@ object HomeComponent {
 
   def apply() = component()
 }
-
