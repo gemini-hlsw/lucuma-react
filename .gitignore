@@ -1,0 +1,17 @@
+*.class
+*.log
+target/
+.idea/
+react-virtualized
+.metals/
+node_modules/
+package-lock.json
+.bloop/
+local.*
+node_modules/
+package-lock.json
+yarn.lock
+facade/yarn.lock
+travis/secrets.tar
+docs/
+project/metals.sbt
