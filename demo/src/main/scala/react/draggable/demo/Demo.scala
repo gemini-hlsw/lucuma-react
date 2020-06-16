@@ -46,16 +46,11 @@ object HomeComponent {
           ^.width := 100.pct,
           ^.background := "red",
           SizeMe(renderOnUndefined = false) { s =>
-            println("Render")
-            println("h")
-            println(s.height)
-            println("w")
-            println(s.width)
-            println(s.width.toDouble)
             Resizable(
               axis = Axis.X,
               width = 500,
               height = 1000,
+              onResize = (_: ReactEvent, d: ResizeCallbackData) => Callback.log(d),
               resizeHandles = List(ResizeHandleAxis.East)
             )(<.div(^.background := "blue", ^.height := "100vh")("Tree"))
           }

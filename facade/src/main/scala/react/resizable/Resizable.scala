@@ -45,7 +45,7 @@ object Resizable {
   @JSImport("react-resizable", "ResizableBox")
   object RawComponent extends js.Object
 
-  type RawOnResize = (ReactEvent, ResizeCallbackData) => Unit
+  type RawOnResize = js.Function2[ReactEvent, ResizeCallbackData, Unit]
   type OnResize    = (ReactEvent, ResizeCallbackData) => Callback
   type Handle      = React.Element |(String => React.Element)
 
@@ -175,12 +175,14 @@ object Resizable {
     minConstraints.foreach(x => p.minConstraints = js.Array(x._1, x._2))
     maxConstraints.foreach(x => p.maxConstraints = js.Array(x._1, x._2))
     onResizeStop.foreach(cb =>
-      p.onResizeStop = (e: ReactEvent, d: ResizeCallbackData) => cb(e, d).runNow()
+      p.onResizeStop = ((e: ReactEvent, d: ResizeCallbackData) => cb(e, d).runNow()): RawOnResize
     )
     onResizeStart.foreach(cb =>
-      p.onResizeStart = (e: ReactEvent, d: ResizeCallbackData) => cb(e, d).runNow()
+      p.onResizeStart = ((e: ReactEvent, d: ResizeCallbackData) => cb(e, d).runNow()): RawOnResize
     )
-    onResize.foreach(cb => p.onResize = (e: ReactEvent, d: ResizeCallbackData) => cb(e, d).runNow())
+    onResize.foreach(cb =>
+      p.onResize = ((e: ReactEvent, d: ResizeCallbackData) => cb(e, d).runNow()): RawOnResize
+    )
     resizeHandles.foreach(v => p.resizeHandles = v.map(_.toJs).toJSArray)
     transformScale.foreach(v => p.transformScale = v)
     p.width = width
@@ -189,5 +191,4 @@ object Resizable {
 
   val component = JsComponent[Props, Children.Varargs, Null](RawComponent)
 
-  // def apply(modifiers: TagMod*): Resizable = Resizable(modifiers = modifiers)
 }
