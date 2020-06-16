@@ -15,6 +15,7 @@ import japgolly.scalajs.react.vdom.VdomElement
 import react.common._
 import react.draggable.Draggable.{ Props => DraggableProps }
 import react.draggable.Axis
+import japgolly.scalajs.react.vdom.VdomNode
 
 final case class Resizable(
   axis:                   js.UndefOr[Axis] = js.undefined,
@@ -47,7 +48,8 @@ object Resizable {
 
   type RawOnResize = js.Function2[ReactEvent, ResizeCallbackData, Unit]
   type OnResize    = (ReactEvent, ResizeCallbackData) => Callback
-  type Handle      = React.Element |(String => React.Element)
+  type HandleFn    = js.Function1[String, React.Node]
+  type Handle      = React.Node | HandleFn
 
   @js.native
   trait Props extends js.Object {
@@ -164,10 +166,15 @@ object Resizable {
     handle.foreach(v =>
       (v: Any) match {
         case v: VdomElement =>
-          p.handle = v.rawElement
+          p.handle = v.rawNode
+        // import japgolly.scalajs.react.vdom.html_<^._
+        // p.handle = <.div("**")
         case v              =>
-          val f = v.asInstanceOf[ResizeHandleAxis => VdomElement]
-          p.handle = (s: String) => f(ResizeHandleAxis.fromString(s)).rawElement
+          val f = v.asInstanceOf[ResizeHandleAxis => VdomNode]
+          p.handle = ((s: String) => {
+            println(f(ResizeHandleAxis.fromString(s)).rawNode);
+            f(ResizeHandleAxis.fromString(s)).rawNode
+          }): HandleFn
       }
     )
     handleSize.foreach(x => p.handleSize = js.Array(x._1, x._2))
