@@ -1,5 +1,5 @@
 val reactJS         = "16.13.1"
-val scalaJsReact    = "1.7.0"
+val scalaJsReact    = "1.7.1"
 val reactGridLayout = "0.18.3"
 val scalaJSDom      = "1.0.0"
 
