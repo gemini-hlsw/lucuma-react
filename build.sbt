@@ -134,9 +134,9 @@ lazy val facade =
         "com.lihaoyi"                       %%% "utest"       % "0.7.4"      % Test,
         "org.typelevel"                     %%% "cats-core"   % "2.1.1"      % Test
       ),
-      webpackConfigFile in Test := Some(
-        baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
-      ),
+      // webpackConfigFile in Test := Some(
+      //   baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
+      // ),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
 

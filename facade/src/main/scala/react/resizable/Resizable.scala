@@ -11,7 +11,7 @@ import japgolly.scalajs.react.ReactEvent
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.raw.React
 import japgolly.scalajs.react.vdom.TagMod
-import japgolly.scalajs.react.vdom.VdomElement
+// import japgolly.scalajs.react.vdom.VdomElement
 import react.common._
 import react.draggable.Draggable.{ Props => DraggableProps }
 import react.draggable.Axis
@@ -20,10 +20,12 @@ import japgolly.scalajs.react.vdom.VdomNode
 final case class Resizable(
   axis:                   js.UndefOr[Axis] = js.undefined,
   className:              js.UndefOr[String] = js.undefined,
+  content:                VdomNode,
   clazz:                  js.UndefOr[Css] = js.undefined,
   draggableOpts:          js.UndefOr[DraggableProps] = js.undefined,
   height:                 JsNumber,
-  handle:                 js.UndefOr[VdomElement |(ResizeHandleAxis => VdomElement)] = js.undefined,
+  handle:                 js.UndefOr[Resizable.RawReactElement] = js.undefined,
+  handleFn:               js.UndefOr[ResizeHandleAxis => Resizable.RawReactElement] = js.undefined,
   handleSize:             js.UndefOr[JsNumberTuple] = js.undefined,
   lockAspectRatio:        js.UndefOr[Boolean] = js.undefined,
   minConstraints:         js.UndefOr[JsNumberTuple] = js.undefined,
@@ -43,13 +45,15 @@ final case class Resizable(
 
 object Resizable {
   @js.native
-  @JSImport("react-resizable", "ResizableBox")
+  @JSImport("react-resizable", "Resizable")
   object RawComponent extends js.Object
+
+  type RawReactElement = React.Element
 
   type RawOnResize = js.Function2[ReactEvent, ResizeCallbackData, Unit]
   type OnResize    = (ReactEvent, ResizeCallbackData) => Callback
-  type HandleFn    = js.Function1[String, React.Node]
-  type Handle      = React.Node | HandleFn
+  type HandleFn    = js.Function1[String, RawReactElement]
+  type Handle      = RawReactElement | HandleFn
 
   @js.native
   trait Props extends js.Object {
@@ -62,6 +66,10 @@ object Resizable {
      * */
     var axis: js.UndefOr[String]                       = js.native
     var className: js.UndefOr[String]                  = js.native
+    /*
+     * Require that one and only one child be present.
+     * */
+    var children: js.UndefOr[React.Node]               = js.native
     /*
      * Require that one and only one child be present.
      * */
@@ -124,11 +132,13 @@ object Resizable {
   def props(q: Resizable): Props =
     rawprops(
       q.axis,
+      q.content,
       q.className,
       q.clazz,
       q.draggableOpts,
       q.height,
       q.handle,
+      q.handleFn,
       q.handleSize,
       q.lockAspectRatio,
       q.minConstraints,
@@ -142,11 +152,13 @@ object Resizable {
     )
   def rawprops(
     axis:            js.UndefOr[Axis] = js.undefined,
+    content:         VdomNode,
     className:       js.UndefOr[String] = js.undefined,
     clazz:           js.UndefOr[Css] = js.undefined,
     draggableOpts:   js.UndefOr[DraggableProps] = js.undefined,
     height:          JsNumber,
-    handle:          js.UndefOr[VdomElement |(ResizeHandleAxis => VdomElement)],
+    handle:          js.UndefOr[RawReactElement] = js.undefined,
+    handleFn:        js.UndefOr[ResizeHandleAxis => RawReactElement] = js.undefined,
     handleSize:      js.UndefOr[JsNumberTuple] = js.undefined,
     lockAspectRatio: js.UndefOr[Boolean] = js.undefined,
     minConstraints:  js.UndefOr[JsNumberTuple] = js.undefined,
@@ -161,22 +173,11 @@ object Resizable {
     val p = (new js.Object).asInstanceOf[Props]
     axis.foreach(v => p.axis = v.toJs)
     (className, clazz).toJs.foreach(v => p.className = v)
+    p.children = content.rawNode
     draggableOpts.foreach(v => p.draggableOpts = v)
     p.height = height
-    handle.foreach(v =>
-      (v: Any) match {
-        case v: VdomElement =>
-          p.handle = v.rawNode
-        // import japgolly.scalajs.react.vdom.html_<^._
-        // p.handle = <.div("**")
-        case v              =>
-          val f = v.asInstanceOf[ResizeHandleAxis => VdomNode]
-          p.handle = ((s: String) => {
-            println(f(ResizeHandleAxis.fromString(s)).rawNode);
-            f(ResizeHandleAxis.fromString(s)).rawNode
-          }): HandleFn
-      }
-    )
+    handle.foreach(v => p.handle = v)
+    handleFn.foreach(v => p.handle = ((s: String) => v(ResizeHandleAxis.fromString(s))): HandleFn)
     handleSize.foreach(x => p.handleSize = js.Array(x._1, x._2))
     lockAspectRatio.foreach(v => p.lockAspectRatio = v)
     minConstraints.foreach(x => p.minConstraints = js.Array(x._1, x._2))
