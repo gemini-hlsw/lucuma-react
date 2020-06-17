@@ -11,11 +11,10 @@ import japgolly.scalajs.react.ReactEvent
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.raw.React
 import japgolly.scalajs.react.vdom.TagMod
-// import japgolly.scalajs.react.vdom.VdomElement
+import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
 import react.draggable.Draggable.{ Props => DraggableProps }
 import react.draggable.Axis
-import japgolly.scalajs.react.vdom.VdomNode
 
 final case class Resizable(
   axis:                   js.UndefOr[Axis] = js.undefined,
@@ -24,6 +23,7 @@ final case class Resizable(
   clazz:                  js.UndefOr[Css] = js.undefined,
   draggableOpts:          js.UndefOr[DraggableProps] = js.undefined,
   height:                 JsNumber,
+  // TODO This needs some work
   handle:                 js.UndefOr[Resizable.RawReactElement] = js.undefined,
   handleFn:               js.UndefOr[ResizeHandleAxis => Resizable.RawReactElement] = js.undefined,
   handleSize:             js.UndefOr[JsNumberTuple] = js.undefined,
