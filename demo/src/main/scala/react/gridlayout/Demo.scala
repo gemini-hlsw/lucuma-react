@@ -40,8 +40,8 @@ object RGLDemo {
           <.div(
             ResponsiveReactGridLayout(
               s.width,
-              margin = (10: JsNumber, 10: JsNumber),
-              containerPadding = (10: JsNumber, 10: JsNumber),
+              margin = (10, 10),
+              containerPadding = (10, 10),
               className = "layout",
               draggableHandle = ".item",
               rowHeight = 30,

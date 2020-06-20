@@ -198,9 +198,9 @@ object ResponsiveReactGridLayout {
       containerPadding: js.Array[JsNumber]
     ) =>
       onWidthChange(containerWidth,
-                    (margin(0), margin(1)),
+                    (margin(0).toInt, margin(1).toInt),
                     cols,
-                    (containerPadding(0), containerPadding(1))
+                    (containerPadding(0).toInt, containerPadding(1).toInt)
       ).runNow()
     r
   }

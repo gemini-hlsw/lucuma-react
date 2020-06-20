@@ -9,8 +9,8 @@ import org.scalajs.dom.MouseEvent
 import react.common.EnumValue
 
 package object gridlayout {
-  type Margin           = (JsNumber, JsNumber)
-  type ContainerPadding = (JsNumber, JsNumber)
+  type Margin           = (Int, Int)
+  type ContainerPadding = (Int, Int)
 
   // Callbacks
   type OnLayoutChange     = Layout => Callback
