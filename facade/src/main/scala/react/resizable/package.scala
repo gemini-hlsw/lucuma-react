@@ -4,8 +4,7 @@ import scala.scalajs.js
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import react.common.EnumValue
 
-package object resizable {
-}
+package object resizable {}
 
 package resizable {
 
