@@ -48,7 +48,7 @@ final case class ReactGridLayout(
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 
-object ReactGridLayout                                                                 {
+object ReactGridLayout {
 
   @js.native
   @JSImport("react-grid-layout", JSImport.Default)
@@ -162,7 +162,7 @@ object ReactGridLayout                                                          
     r
   }
 
-  val component           = JsComponent[ReactGridLayoutProps, Children.Varargs, Null](RawComponent)
+  val component = JsComponent[ReactGridLayoutProps, Children.Varargs, Null](RawComponent)
 
   def apply(width: JsNumber, content: TagMod*): ReactGridLayout =
     new ReactGridLayout(width = width, modifiers = content)

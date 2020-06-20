@@ -48,7 +48,7 @@ final case class ResponsiveReactGridLayout(
 ) extends GenericComponentPAC[
       ResponsiveReactGridLayout.ResponsiveReactGridLayoutProps,
       ResponsiveReactGridLayout
-    ]                            {
+    ] {
   override def cprops              = ResponsiveReactGridLayout.props(this)
   override protected val component = ResponsiveReactGridLayout.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
@@ -151,7 +151,7 @@ object ResponsiveReactGridLayout {
     onDrop:             DropCallback = (_, _, _, _) => Callback.empty,
     onBreakpointChange: OnBreakpointChange = (_, _) => Callback.empty,
     onWidthChange:      OnWidthChange = (_, _, _, _) => Callback.empty
-  ): ResponsiveReactGridLayoutProps  = {
+  ): ResponsiveReactGridLayoutProps = {
     val p                                           = BaseProps.props(
       width,
       className,
@@ -219,7 +219,7 @@ object ResponsiveReactGridLayout {
      }.toList)
     )
 
-  val component                      = JsComponent[ResponsiveReactGridLayoutProps, Children.Varargs, Null](RawComponent)
+  val component = JsComponent[ResponsiveReactGridLayoutProps, Children.Varargs, Null](RawComponent)
 
   def apply(
     width:   JsNumber,

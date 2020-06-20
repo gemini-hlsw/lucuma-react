@@ -57,7 +57,7 @@ object RGLDemo {
     }
     .build
 
-  def apply()   = component()
+  def apply() = component()
 
 }
 
