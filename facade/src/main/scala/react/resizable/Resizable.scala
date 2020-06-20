@@ -26,10 +26,10 @@ final case class Resizable(
   // TODO This needs some work
   handle:                 js.UndefOr[Resizable.RawReactElement] = js.undefined,
   handleFn:               js.UndefOr[ResizeHandleAxis => Resizable.RawReactElement] = js.undefined,
-  handleSize:             js.UndefOr[JsNumberTuple] = js.undefined,
+  handleSize:             js.UndefOr[(Int, Int)] = js.undefined,
   lockAspectRatio:        js.UndefOr[Boolean] = js.undefined,
-  minConstraints:         js.UndefOr[JsNumberTuple] = js.undefined,
-  maxConstraints:         js.UndefOr[JsNumberTuple] = js.undefined,
+  minConstraints:         js.UndefOr[(Int, Int)] = js.undefined,
+  maxConstraints:         js.UndefOr[(Int, Int)] = js.undefined,
   onResizeStop:           js.UndefOr[Resizable.OnResize] = js.undefined,
   onResizeStart:          js.UndefOr[Resizable.OnResize] = js.undefined,
   onResize:               js.UndefOr[Resizable.OnResize] = js.undefined,
@@ -159,10 +159,10 @@ object Resizable {
     height:          JsNumber,
     handle:          js.UndefOr[RawReactElement] = js.undefined,
     handleFn:        js.UndefOr[ResizeHandleAxis => RawReactElement] = js.undefined,
-    handleSize:      js.UndefOr[JsNumberTuple] = js.undefined,
+    handleSize:      js.UndefOr[(Int, Int)] = js.undefined,
     lockAspectRatio: js.UndefOr[Boolean] = js.undefined,
-    minConstraints:  js.UndefOr[JsNumberTuple] = js.undefined,
-    maxConstraints:  js.UndefOr[JsNumberTuple] = js.undefined,
+    minConstraints:  js.UndefOr[(Int, Int)] = js.undefined,
+    maxConstraints:  js.UndefOr[(Int, Int)] = js.undefined,
     onResizeStop:    js.UndefOr[OnResize] = js.undefined,
     onResizeStart:   js.UndefOr[OnResize] = js.undefined,
     onResize:        js.UndefOr[OnResize] = js.undefined,
@@ -178,10 +178,10 @@ object Resizable {
     p.height = height
     handle.foreach(v => p.handle = v)
     handleFn.foreach(v => p.handle = ((s: String) => v(ResizeHandleAxis.fromString(s))): HandleFn)
-    handleSize.foreach(x => p.handleSize = js.Array(x._1, x._2))
+    handleSize.foreach(x => p.handleSize = js.Array(x._1: JsNumber, x._2: JsNumber))
     lockAspectRatio.foreach(v => p.lockAspectRatio = v)
-    minConstraints.foreach(x => p.minConstraints = js.Array(x._1, x._2))
-    maxConstraints.foreach(x => p.maxConstraints = js.Array(x._1, x._2))
+    minConstraints.foreach(x => p.minConstraints = js.Array(x._1: JsNumber, x._2: JsNumber))
+    maxConstraints.foreach(x => p.maxConstraints = js.Array(x._1: JsNumber, x._2: JsNumber))
     onResizeStop.foreach(cb =>
       p.onResizeStop = ((e: ReactEvent, d: ResizeCallbackData) => cb(e, d).runNow()): RawOnResize
     )

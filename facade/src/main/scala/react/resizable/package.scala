@@ -1,12 +1,10 @@
 package react
 
 import scala.scalajs.js
-import japgolly.scalajs.react.raw.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import react.common.EnumValue
 
 package object resizable {
-  type JsNumberTuple = (JsNumber, JsNumber)
 }
 
 package resizable {
@@ -50,8 +48,8 @@ package resizable {
 
   @js.native
   trait ResizeSize extends js.Object {
-    var width: JsNumber
-    var height: JsNumber
+    var width: Int
+    var height: Int
   }
 
   @js.native
