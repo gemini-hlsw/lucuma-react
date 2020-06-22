@@ -1,5 +1,10 @@
 # Changes
 
+## 0.9.2
+
+* Upgrade to react-common 0.9.2
+* Upgrade to scalajs-react 1.7.2
+
 ## 0.9.1
 
 * Update react-draggable to 4.4.3
