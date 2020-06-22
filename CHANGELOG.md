@@ -1,5 +1,9 @@
 # Changes
 
+## 0.9.2
+
+* Update scalajs-react
+
 ## 0.9.1
 
 * Fixes and refactor to new `ReactProps(WithChildren)`.
