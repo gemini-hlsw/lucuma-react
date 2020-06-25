@@ -24,29 +24,29 @@ sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u]] {
 }
 
 sealed trait CtorWithProps[Props, CT[-p, +u] <: CtorType[p, u]] extends ReactRender[Props, CT] {
-  protected type CopyType[-P, +U] = ctor.This[P, U]
-  protected type CopyTypePU       =
-    CopyType[Props, Scala.Unmounted[Props, _, _]]
+  protected type CloneType[-P, +U] = ctor.This[P, U]
+  protected type CloneTypePU       =
+    CloneType[Props, Scala.Unmounted[Props, _, _]]
 
-  protected def copy(
-    newCtor: CopyTypePU
-  ): CtorWithProps[Props, CopyType] =
-    new CtorWithProps[Props, CopyType] {
+  protected def clone(
+    newCtor: CloneTypePU
+  ): CtorWithProps[Props, CloneType] =
+    new CtorWithProps[Props, CloneType] {
       override lazy val ctor                    = newCtor
       override protected[common] lazy val props = CtorWithProps.this.props
     }
 
   def withKey(key: Key) =
-    copy(ctor.withKey(key))
+    clone(ctor.withKey(key))
 
   final def withKey(k: Long) =
-    copy(ctor.withKey(k))
+    clone(ctor.withKey(k))
 
   def addMod(f: CtorType.ModFn) =
-    copy(ctor.addMod(f))
+    clone(ctor.addMod(f))
 
   final def withRawProp(name: String, value: js.Any) =
-    copy(ctor.withRawProp(name, value))
+    clone(ctor.withRawProp(name, value))
 }
 
 sealed trait ReactComponentProps[Props, CT[-p, +u] <: CtorType[p, u]]
