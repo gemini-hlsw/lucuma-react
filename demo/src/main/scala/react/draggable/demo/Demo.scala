@@ -20,30 +20,31 @@ object TableDemo {
   final case class Props(useDynamicRowHeight: Boolean, sortBy: String, s: Size)
   final case class State(sortDirection: SortDirection, data: List[DataRow], widths: Widths)
 
-  def headerRenderer(rs: (String, JsNumber) => Callback)(
-    columnData:          DataRow,
-    dataKey:             String,
-    disableSort:         Option[Boolean],
-    label:               VdomNode,
-    sortByParam:         Option[String],
-    sortDirection:       SortDirection
-  ): VdomNode =
-    React.Fragment.withKey(dataKey)(
-      <.div(
-        ^.cls := "ReactVirtualized__Table__headerTruncatedText",
-        label
-      ),
-      Draggable(
-        Draggable.props(
-          axis = Axis.X,
-          defaultClassName = "DragHandle",
-          defaultClassNameDragging = "DragHandleActive",
-          onDrag = (ev: MouseEvent, d: DraggableData) => rs(dataKey, d.deltaX),
-          position = ControlPosition(0)
+  def headerRenderer(rs: (String, JsNumber) => Callback) =
+    (
+      _:       DataRow,
+      dataKey: String,
+      _:       Option[Boolean],
+      label:   VdomNode,
+      _:       Option[String],
+      _:       SortDirection
+    ) =>
+      React.Fragment.withKey(dataKey)(
+        <.div(
+          ^.cls := "ReactVirtualized__Table__headerTruncatedText",
+          label
         ),
-        <.span(^.cls := "DragHandleIcon", "⋮")
+        Draggable(
+          Draggable.props(
+            axis = Axis.X,
+            defaultClassName = "DragHandle",
+            defaultClassNameDragging = "DragHandleActive",
+            onDrag = (_: MouseEvent, d: DraggableData) => rs(dataKey, d.deltaX),
+            position = ControlPosition(0)
+          ),
+          <.span(^.cls := "DragHandleIcon", "⋮")
+        )
       )
-    )
 
   def rowClassName(i: Int): String =
     i match {
@@ -91,7 +92,7 @@ object TableDemo {
           }
         }
 
-      def sort(index: String, sortDirection: SortDirection): Callback = {
+      val sort: (String, SortDirection) => Callback = (_: String, sortDirection: SortDirection) => {
         val sorted = state.data.sortBy(_.index)
         $.setState(
           state.copy(data = if (sortDirection == SortDirection.ASC) sorted else sorted.reverse,
@@ -99,6 +100,7 @@ object TableDemo {
           )
         )
       }
+
       val columns = List(
         Column(
           Column.props((props.s.width.toDouble * state.widths.index).toInt,
@@ -130,7 +132,7 @@ object TableDemo {
           )
         )
       )
-      val t = Table(
+      val t       = Table(
         Table.props(
           disableHeader = false,
           noRowsRenderer = () => <.div(^.cls := "noRows", "No rows"),
@@ -143,7 +145,7 @@ object TableDemo {
           width = props.s.width,
           rowGetter = datum(state.data),
           headerClassName = "headerColumn",
-          sort = sort _,
+          sort = sort,
           sortBy = props.sortBy,
           sortDirection = state.sortDirection,
           headerHeight = 30
