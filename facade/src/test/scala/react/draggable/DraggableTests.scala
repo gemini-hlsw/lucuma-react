@@ -189,20 +189,20 @@ object DraggableTests extends TestSuite {
       Draggable(Draggable.props(), <.div("Abc")).props.offsetParent.toOption ==> Some(null)
     }
     "supportOnMouseDown" - {
-      Draggable(Draggable.props(onMouseDown = (m: MouseEvent) => Callback.empty), <.div("Abc"))
+      Draggable(Draggable.props(onMouseDown = (_: MouseEvent) => Callback.empty), <.div("Abc"))
     }
     "supportOnStart" - {
-      Draggable(Draggable.props(onStart = (m: MouseEvent, d: DraggableData) => Callback.empty),
+      Draggable(Draggable.props(onStart = (_: MouseEvent, _: DraggableData) => Callback.empty),
                 <.div("Abc")
       )
     }
     "supportOnDrag" - {
-      Draggable(Draggable.props(onDrag = (m: MouseEvent, d: DraggableData) => Callback.empty),
+      Draggable(Draggable.props(onDrag = (_: MouseEvent, _: DraggableData) => Callback.empty),
                 <.div("Abc")
       )
     }
     "supportOnStop" - {
-      Draggable(Draggable.props(onStop = (m: MouseEvent, d: DraggableData) => Callback.empty),
+      Draggable(Draggable.props(onStop = (_: MouseEvent, _: DraggableData) => Callback.empty),
                 <.div("Abc")
       )
     }
