@@ -2,6 +2,7 @@
 
 ## 1.1.1
 
+* Update copy-to-clipboard library
 * Update react-common
 * Update scalajs-react to 1.7.3
 
