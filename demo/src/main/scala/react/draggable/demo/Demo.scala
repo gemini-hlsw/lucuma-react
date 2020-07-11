@@ -13,14 +13,8 @@ import react.common._
 
 @JSExportTopLevel("Demo")
 object Demo {
-  // @JSImport("react-resizable/styles.css", JSImport.Default)
-  // @js.native
-  // object ReactVirtualizedStyles extends js.Object
-  //
   @JSExport
   def main(): Unit = {
-    // needed to load the styles
-    // ReactVirtualizedStyles
     val container = Option(dom.document.getElementById("root")).getOrElse {
       val elem = dom.document.createElement("div")
       elem.id = "root"
@@ -43,15 +37,8 @@ object HomeComponent {
       .initialState(State(500))
       .render { $ =>
         val width    = $.state.w
-        // <.div(react-resizable-handle
-        //   ^.height := 100.pct,
-        // ^.width := 100.pct,
-        // ^.background := "red",
-        // SizeMe(renderOnUndefined = false) { s =>
-        //   Resizable(
         val toResize =
           <.div(
-            // ^.key := "body",
             ^.width := width.toDouble.px,
             ^.position := "absolute",
             ^.left := 0.px,
@@ -61,17 +48,14 @@ object HomeComponent {
             ^.justifyContent := "flex-end",
             ^.height := "100vh",
             ^.display := "flex"
-          ) //("Tree")
+          )
         <.div(
           Resizable(
-            // axis = Axis.X,
             content = toResize,
             width = width,
             height = 500,
             onResize = (_: ReactEvent, d: ResizeCallbackData) =>
               Callback.log(s"${d.size.width}") *> $.modState(_.copy(w = d.size.width)),
-            // handle = (_: ResizeHandleAxis) => ResizeHandle(500): VdomElement,
-            // handle = ResizeHandle(500).asInstanceOf[Resizable.RawReactElement], //: VdomElement,
             resizeHandles = List(ResizeHandleAxis.East)
           )(
           )
@@ -91,22 +75,14 @@ object ResizeHandle {
     ScalaComponent
       .builder[Props]
       .stateless
-      .render_P { p =>
+      .render_P { _ =>
         <.div(
-          // ^.left := (p.left.toDouble - 20).px,
-          // ^.top := 0.px,
           ^.key := "handle",
           ^.height := 20.px,
           ^.width := 20.px,
           ^.display := "flex",
           ^.justifyContent := "center",
           ^.cursor := "ew-resize",
-          // ^.position := "absolute",
-          // ^.zIndex := "5",
-          // ^.cls := "react-resizable-handle",
-          // ^.onClick --> Callback.log("click"),
-          // ^.onDragStart --> Callback.log("drag"),
-          // GPPStyles.ResizeHandle,
           "||"
         )
       }

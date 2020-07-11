@@ -1,5 +1,5 @@
 val reactJS        = "16.13.1"
-val scalaJsReact   = "1.7.2"
+val scalaJsReact   = "1.7.3"
 val reactResizable = "1.10.1"
 val scalaJSDom     = "1.0.0"
 
@@ -129,8 +129,8 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"      % "0.9.2",
-        "io.github.cquiroz.react"           %%% "react-draggable"   % "0.9.2",
+        "io.github.cquiroz.react"           %%% "common"      % "0.9.4",
+        "io.github.cquiroz.react"           %%% "react-draggable"   % "0.9.3",
         "com.lihaoyi"                       %%% "utest"       % "0.7.4"      % Test,
         "org.typelevel"                     %%% "cats-core"   % "2.1.1"      % Test
       ),
@@ -141,7 +141,7 @@ lazy val facade =
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.13.2",
+  scalaVersion := "2.13.3",
   organization := "io.github.cquiroz.react",
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-resizable ",
