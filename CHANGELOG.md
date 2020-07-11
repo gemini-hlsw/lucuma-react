@@ -1,5 +1,11 @@
 # Changes
 
+## 0.9.3
+
+* Upgrade to react-common 0.9.4
+* Upgrade to scalajs-react 1.7.3
+* Updated to scala 2.13.3
+
 ## 0.9.2
 
 * Upgrade to react-common 0.9.2
