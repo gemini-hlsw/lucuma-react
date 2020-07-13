@@ -158,6 +158,7 @@ lazy val facade =
           "-Wunused:imports"
         )
       )),
+      Compile / packageDoc / publishArtifact := false, // Some Scalablytyped generated Scaladocs are malformed.
       webpackConfigFile in Test := Some(
         baseDirectory.value / "test.webpack.config.js"
       ),
