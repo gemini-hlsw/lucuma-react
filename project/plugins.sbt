@@ -1,10 +1,11 @@
-val scalaJSVersion =
-  Option(System.getenv("SCALAJS_VERSION")).getOrElse("0.6.32")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.1.1")
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % scalaJSVersion)
+addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.18.0")
 
-addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler-sjs06" % "0.17.0")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.0")
 
-resolvers += Resolver.bintrayRepo("oyvindberg", "ScalablyTyped")
+addSbtPlugin("edu.gemini" % "sbt-gsp" % "0.2.3")
 
-addSbtPlugin("org.scalablytyped" % "sbt-scalablytyped" % "202002201029")
+resolvers += Resolver.bintrayRepo("oyvindberg", "converter")
+
+addSbtPlugin("org.scalablytyped.converter" % "sbt-converter" % "1.0.0-beta18")
