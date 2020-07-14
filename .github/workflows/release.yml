@@ -12,7 +12,7 @@ jobs:
       - uses: olafurpg/setup-gpg@v2
       - name: Show status
         run: git status
-      - name: Show verion
+      - name: Show version
         run: csbt "show version"
       - name: Publish
         run: csbt ci-release
