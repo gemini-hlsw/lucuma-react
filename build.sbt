@@ -13,11 +13,6 @@ addCommandAlias(
   "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer"
 )
 
-addCommandAlias(
-  "release",
-  "; show version; ci-release"
-)
-
 inThisBuild(
   List(
     scalaVersion := "2.13.3",
