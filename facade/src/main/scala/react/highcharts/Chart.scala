@@ -24,9 +24,7 @@ trait WrapProceed extends js.ThisFunction0[Chart_, Unit]
 
 @js.native
 @JSImport("highcharts", JSImport.Default)
-private object Highcharts
-// extends TypeofHighcharts
-    extends TypeofHighchartsAddEvent {
+object Highcharts extends TypeofHighchartsAddEvent {
   @JSName("wrap")
   def wrapThis(
       obj: js.Any,
