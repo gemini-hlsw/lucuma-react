@@ -1,7 +1,5 @@
 name := "scalajs-react-highcharts"
 
-scalaVersion in ThisBuild := "2.13.3"
-
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val highcharts = "8.1.2"
@@ -17,6 +15,9 @@ addCommandAlias(
 
 inThisBuild(
   List(
+    scalaVersion := "2.13.3",
+    organization := "com.rpiaggio",
+    sonatypeProfileName := "com.rpiaggio",
     homepage := Some(
       url("https://github.com/rpiaggio/scalajs-react-highcharts")
     ),
