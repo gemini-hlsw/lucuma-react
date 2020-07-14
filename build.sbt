@@ -159,7 +159,9 @@ lazy val facade =
           "-Wunused:imports"
         )
       )),
-      Compile / packageDoc / publishArtifact := false, // Some Scalablytyped generated Scaladocs are malformed.
+      // Some Scalablytyped generated Scaladocs are malformed.
+      // Workaround: https://github.com/xerial/sbt-sonatype/issues/30#issuecomment-342532067
+      Compile / doc / sources := Seq(),
       webpackConfigFile in Test := Some(
         baseDirectory.value / "test.webpack.config.js"
       ),
