@@ -1,7 +1,10 @@
 package react.highcharts
 
 import scala.scalajs.js
+import scala.scalajs.js.|
 import scala.scalajs.js.annotation.JSImport
+import scala.scalajs.js.annotation.JSName
+
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 
@@ -9,17 +12,12 @@ import org.scalajs.dom.html
 import gpp.highcharts.anon.TypeofHighcharts
 import gpp.highcharts.mod.HTMLDOMElement
 import gpp.highcharts.mod.Options
-import scala.scalajs.js.annotation.JSName
 import gpp.highcharts.mod.Chart_
 import gpp.highcharts.anon.TypeofHighchartsAddEvent
-
-// import highcharts.seriesLabelMod.Highcharts
+import react.common.ReactProps
+import gpp.highcharts.mod.PointOptionsObject
 
 @js.native
-/*trait WrapProceed extends js.Object {
-  // ThisFunction? What This?
-  def apply(chart: Chart_, array: js.Array[js.Any]): Unit = js.native
-}*/
 trait WrapProceed extends js.ThisFunction0[Chart_, Unit]
 
 @js.native
@@ -33,15 +31,19 @@ object Highcharts extends TypeofHighchartsAddEvent {
   ): Unit = js.native
 }
 
-final case class Props(highcharts: TypeofHighchartsAddEvent, options: Options)
-
-/*@js.native
-@JSImport("highcharts/modules/series-label", JSImport.Default)
-private object SeriesLabelMod extends js.Object {
-  def apply(hc: TypeofHighcharts): Unit = js.native
-}*/
+final case class Chart(
+    options: Options,
+    highcharts: TypeofHighchartsAddEvent = Highcharts
+) extends ReactProps[Chart](Chart.component)
 
 object Chart {
+  type Props = Chart
+
+  type Data =
+    Double | scala.scalajs.js.Tuple2[
+      Double | String,
+      Double | Null
+    ] | Null | PointOptionsObject
 
   class Backend($ : BackendScope[Props, Unit]) {
     private val containerRef = Ref[html.Element]
@@ -49,7 +51,7 @@ object Chart {
     def render(props: Props) =
       <.div.withRef(containerRef)
 
-    def init(props: Props): Callback =
+    def refresh(props: Props): Callback =
       containerRef.foreach { element =>
         props.highcharts.chart(
           element.asInstanceOf[HTMLDOMElement],
@@ -59,15 +61,15 @@ object Chart {
       }
   }
 
-  private val component =
+  // We are purposefully not updating the chart on each rerender.
+  // To update the chart either:
+  //  A) Call the refresh method via a Ref; or
+  //  B) Remount with a different key.
+  val component =
     ScalaComponent
-      .builder[Props]("Chart")
+      .builder[Props]
       .renderBackend[Backend]
-      .componentDidMount($ => $.backend.init($.props))
+      .componentDidMount($ => $.backend.refresh($.props))
+      // .componentDidUpdate($ => $.backend.init($.currentProps))
       .build
-
-  def apply(options: Options) = component(Props(Highcharts, options))
-
-  def apply(highcharts: TypeofHighchartsAddEvent, options: Options) =
-    component(Props(highcharts, options))
 }

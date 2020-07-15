@@ -2,11 +2,11 @@ package react.highcharts.demo
 
 import org.scalajs.dom
 import scala.scalajs.js
-import js.|
 import js.annotation._
 import js.JSConverters._
 import react.highcharts.Highcharts
 import react.highcharts.Chart
+import react.highcharts.implicits._
 import gpp.highcharts.mod.Options
 import gpp.highcharts.mod.SeriesAreasplineOptions
 import gpp.highcharts.highchartsStrings.areaspline
@@ -43,22 +43,11 @@ import gpp.highcharts.mod.TooltipPositionerCallbackFunction
 import gpp.highcharts.mod.PositionObject
 import gpp.highcharts.mod.Point
 import gpp.highcharts.mod.XAxisPlotBandsLabelOptions
-import gpp.highcharts.mod.PointOptionsObject
 
 // Reproducing https://jsfiddle.net/rpiaggio/xdz4pLg9/105/
 
 @JSExportTopLevel("DemoMain")
 object DemoMain {
-  type Data =
-    Double | scala.scalajs.js.Tuple2[
-      Double | String,
-      Double | Null
-    ] | Null | PointOptionsObject
-
-  implicit def doubleTupleList2Data[T](
-      list: List[(Double, Double)]
-  ): js.Array[Data] =
-    list.map(t => js.Tuple2(t._1, t._2).asInstanceOf[Data]).toJSArray
 
   @JSExport
   def main(): Unit = {
@@ -237,7 +226,7 @@ object DemoMain {
         ).map(_.asInstanceOf[SeriesOptionsType]).toJSArray
       )
 
-    Chart(Highcharts, options).renderIntoDOM(container)
+    Chart(options).renderIntoDOM(container)
 
     ()
   }
