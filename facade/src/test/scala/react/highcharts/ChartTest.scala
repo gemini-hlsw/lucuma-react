@@ -18,7 +18,7 @@ object MainTest extends TestSuite {
   val tests = Tests {
     test("render") {
       val chart = Chart(Highcharts.defaultOptions)
-      ReactTestUtils.withRenderedIntoDocument(chart) { m =>
+      ReactTestUtils.withRenderedIntoDocument(chart.toUnmounted) { m =>
         val html = m.outerHtmlScrubbed()
         val normalizedHTML =
           html.replaceAll(" id=\"highcharts-\\w{7}-\\d-?\"", "")
