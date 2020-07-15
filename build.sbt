@@ -130,6 +130,9 @@ lazy val facade =
       requireJsDomEnv in Test := true,
       // Use yarn as it is faster than npm
       useYarn := true,
+      yarnExtraArgs := {
+        if (insideCI.value) List("--frozen-lockfile") else List.empty
+      },
       version in webpack := "4.32.0",
       version in installJsdom := "15.2.1",
       scalaJSUseMainModuleInitializer := false,
