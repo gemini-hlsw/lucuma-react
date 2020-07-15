@@ -25,4 +25,4 @@ jobs:
           key: ${{ runner.os }}-sbt-${{ hashFiles('build.sbt') }}-${{ hashFiles('project/*.scala') }}
           restore-keys: ${{ runner.os }}-sbt-          
       - name: Run tests
-        run: csbt scalafmtCheckAll compile test facade/fullOptJS::webpack
+        run: csbt scalafmtCheckAll facade/compile facade/test facade/fullOptJS::webpack
