@@ -6,7 +6,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactHotkeys = "2.0.0"
 val scalaJsReact = "1.7.3"
-val reactJS      = "16.7.0"
+val reactJS      = "16.13.1"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -85,7 +85,8 @@ lazy val demo =
       webpackBundlingMode in fastOptJS := BundlingMode.LibraryOnly(),
       webpackBundlingMode in fullOptJS := BundlingMode.Application,
       test := {},
-      emitSourceMaps := false,
+      scalaJSLinkerConfig in (Compile, fastOptJS) ~= { _.withSourceMap(false) },
+      scalaJSLinkerConfig in (Compile, fullOptJS) ~= { _.withSourceMap(false) },
       // NPM libs for development, mostly to let webpack do its magic
       npmDevDependencies in Compile ++= Seq(
         "postcss-loader" -> "3.0.0",
@@ -139,7 +140,7 @@ lazy val facade =
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % "test",
-        "io.github.cquiroz.react" %%% "common" % "0.7.1",
+        "io.github.cquiroz.react" %%% "common" % "0.9.4",
         "com.lihaoyi" %%% "utest" % "0.7.4" % Test
       ),
       npmDependencies in Compile ++= Seq(
@@ -213,7 +214,6 @@ lazy val commonSettings = Seq(
     "-Ywarn-unused:privates", // Warn if a private member is unused.
     "-Ywarn-value-discard", // Warn when non-Unit expression results are unused.
     //      "-Ywarn-dead-code",
-    "-P:scalajs:sjsDefinedByDefault",
     "-Yrangepos"
   )
 )
