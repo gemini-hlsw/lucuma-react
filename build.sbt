@@ -1,6 +1,6 @@
 val reactJS         = "16.13.1"
 val scalaJsReact    = "1.7.3"
-val reactGridLayout = "0.18.3"
+val reactGridLayout = "1.0.0"
 val scalaJSDom      = "1.0.0"
 
 parallelExecution in (ThisBuild, Test) := false

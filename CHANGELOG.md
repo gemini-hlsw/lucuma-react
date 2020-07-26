@@ -1,5 +1,9 @@
 # Changes
 
+## 0.7.0
+
+* Upgrade react-grid-layout to 1.0
+
 ## 0.6.2
 
 * Upgrade to react-common 0.9.3

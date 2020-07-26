@@ -28,6 +28,7 @@ final case class ReactGridLayout(
   maxRows:                js.UndefOr[Int] = js.undefined,
   isDraggable:            js.UndefOr[Boolean] = js.undefined,
   isResizable:            js.UndefOr[Boolean] = js.undefined,
+  isBounded:              js.UndefOr[Boolean] = js.undefined,
   isDroppable:            js.UndefOr[Boolean] = js.undefined,
   preventCollision:       js.UndefOr[Boolean] = js.undefined,
   useCSSTransforms:       js.UndefOr[Boolean] = js.undefined,
@@ -40,7 +41,7 @@ final case class ReactGridLayout(
   onResizeStart:          ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onResize:               ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onResizeStop:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
-  onDrop:                 DropCallback = (_, _, _, _) => Callback.empty,
+  onDrop:                 DropCallback = (_, _, _) => Callback.empty,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[ReactGridLayout.ReactGridLayoutProps, ReactGridLayout] {
   override def cprops              = ReactGridLayout.props(this)
@@ -81,6 +82,7 @@ object ReactGridLayout {
       q.maxRows,
       q.isDraggable,
       q.isResizable,
+      q.isBounded,
       q.isDroppable,
       q.preventCollision,
       q.useCSSTransforms,
@@ -113,6 +115,7 @@ object ReactGridLayout {
     maxRows:          js.UndefOr[Int] = js.undefined,
     isDraggable:      js.UndefOr[Boolean] = js.undefined,
     isResizable:      js.UndefOr[Boolean] = js.undefined,
+    isBounded:        js.UndefOr[Boolean] = js.undefined,
     isDroppable:      js.UndefOr[Boolean] = js.undefined,
     preventCollision: js.UndefOr[Boolean] = js.undefined,
     useCSSTransforms: js.UndefOr[Boolean] = js.undefined,
@@ -125,7 +128,7 @@ object ReactGridLayout {
     onResizeStart:    ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResize:         ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResizeStop:     ItemCallback = (_, _, _, _, _, _) => Callback.empty,
-    onDrop:           DropCallback = (_, _, _, _) => Callback.empty
+    onDrop:           DropCallback = (_, _, _) => Callback.empty
   ): ReactGridLayoutProps = {
     val p = BaseProps.props(
       width,
@@ -143,6 +146,7 @@ object ReactGridLayout {
       maxRows,
       isDraggable,
       isResizable,
+      isBounded,
       isDroppable,
       preventCollision,
       useCSSTransforms,

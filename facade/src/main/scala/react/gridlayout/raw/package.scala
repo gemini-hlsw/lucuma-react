@@ -4,6 +4,7 @@ import scala.scalajs.js
 import japgolly.scalajs.react.raw.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
+import org.scalajs.dom.raw.Event
 
 package object raw {
 
@@ -14,7 +15,7 @@ package object raw {
     js.Function6[Layout, LayoutItem, LayoutItem, LayoutItem, MouseEvent, HTMLElement, Unit]
 
   type DropCallback =
-    js.Function4[JsNumber, JsNumber, JsNumber, JsNumber, Unit]
+    js.Function3[Layout, LayoutItem, Event, Unit]
 
   type BreakpointChangeCallback =
     js.Function2[Breakpoint, JsNumber, Unit]
