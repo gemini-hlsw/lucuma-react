@@ -6,6 +6,7 @@ import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.raw.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
+import org.scalajs.dom.raw.Event
 import react.common.EnumValue
 
 package object gridlayout {
@@ -20,7 +21,7 @@ package object gridlayout {
   type ItemCallback       =
     (Layout, LayoutItem, LayoutItem, Option[LayoutItem], MouseEvent, HTMLElement) => Callback
   type DropCallback       =
-    (JsNumber, JsNumber, JsNumber, JsNumber) => Callback
+    (Layout, LayoutItem, Event) => Callback
 }
 
 package gridlayout {

@@ -7,6 +7,7 @@ import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.raw.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
+import org.scalajs.dom.raw.Event
 import react.common._
 
 @js.native
@@ -34,6 +35,7 @@ trait BaseProps extends js.Object {
   var maxRows: js.UndefOr[Int]
   var isDraggable: js.UndefOr[Boolean]
   var isResizable: js.UndefOr[Boolean]
+  var isBounded: js.UndefOr[Boolean]
   // If true, droppable elements (with `draggable={true}` attribute)
   // can be dropped on the grid. It triggers "onDrop" callback
   // with position and event object as parameters.
@@ -87,6 +89,7 @@ object BaseProps {
     maxRows:          js.UndefOr[Int] = js.undefined,
     isDraggable:      js.UndefOr[Boolean] = js.undefined,
     isResizable:      js.UndefOr[Boolean] = js.undefined,
+    isBounded:        js.UndefOr[Boolean] = js.undefined,
     isDroppable:      js.UndefOr[Boolean] = js.undefined,
     preventCollision: js.UndefOr[Boolean] = js.undefined,
     useCSSTransforms: js.UndefOr[Boolean] = js.undefined,
@@ -98,7 +101,7 @@ object BaseProps {
     onResizeStart:    ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResize:         ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResizeStop:     ItemCallback = (_, _, _, _, _, _) => Callback.empty,
-    onDrop:           DropCallback = (_, _, _, _) => Callback.empty
+    onDrop:           DropCallback = (_, _, _) => Callback.empty
   ): BaseProps = {
     val p = (new js.Object).asInstanceOf[BaseProps]
     p.className = className
@@ -116,6 +119,7 @@ object BaseProps {
     p.maxRows = maxRows
     p.isDraggable = isDraggable
     p.isResizable = isResizable
+    p.isBounded = isBounded
     p.isDroppable = isDroppable
     p.preventCollision = preventCollision
     p.useCSSTransforms = useCSSTransforms
@@ -212,11 +216,10 @@ object BaseProps {
                    element
       ).runNow()
     p.onDrop = (
-      x: JsNumber,
-      y: JsNumber,
-      w: JsNumber,
-      h: JsNumber
-    ) => onDrop(x, y, w, h).runNow()
+      layout: raw.Layout,
+      item:   raw.LayoutItem,
+      event:  Event
+    ) => onDrop(Layout.fromRaw(layout), LayoutItem.fromRaw(item), event).runNow()
     p
   }
 }
