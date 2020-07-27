@@ -7,19 +7,19 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.HtmlTagOf
 
 final case class HotKeysConfiguration(
-  logLevel:                               js.UndefOr[LogLevel]                      = js.undefined,
-  defaultKeyEvent:                        js.UndefOr[KeyInstance]                   = js.undefined,
-  defaultComponent:                       js.UndefOr[HtmlTagOf[_]]                  = js.undefined,
-  defaultTabIndex:                        js.UndefOr[Int]                           = js.undefined,
-  ignoreTags:                             js.UndefOr[Seq[HtmlTagOf[_]]]             = js.undefined,
+  logLevel:                               js.UndefOr[LogLevel] = js.undefined,
+  defaultKeyEvent:                        js.UndefOr[KeyInstance] = js.undefined,
+  defaultComponent:                       js.UndefOr[HtmlTagOf[_]] = js.undefined,
+  defaultTabIndex:                        js.UndefOr[Int] = js.undefined,
+  ignoreTags:                             js.UndefOr[Seq[HtmlTagOf[_]]] = js.undefined,
   ignoreEventsCondition:                  js.UndefOr[ReactKeyboardEvent => Boolean] = js.undefined,
-  ignoreKeymapAndHandlerChangesByDefault: js.UndefOr[Boolean]                       = js.undefined,
-  ignoreRepeatedEventsWhenKeyHeldDown:    js.UndefOr[Boolean]                       = js.undefined,
-  simulateMissingKeyPressEvents:          js.UndefOr[Boolean]                       = js.undefined,
-  stopEventPropagationAfterHandling:      js.UndefOr[Boolean]                       = js.undefined,
-  stopEventPropagationAfterIgnoring:      js.UndefOr[Boolean]                       = js.undefined,
-  allowCombinationSubmatches:             js.UndefOr[Boolean]                       = js.undefined,
-  customKeyCodes:                         js.UndefOr[Map[String, String]]           = js.undefined
+  ignoreKeymapAndHandlerChangesByDefault: js.UndefOr[Boolean] = js.undefined,
+  ignoreRepeatedEventsWhenKeyHeldDown:    js.UndefOr[Boolean] = js.undefined,
+  simulateMissingKeyPressEvents:          js.UndefOr[Boolean] = js.undefined,
+  stopEventPropagationAfterHandling:      js.UndefOr[Boolean] = js.undefined,
+  stopEventPropagationAfterIgnoring:      js.UndefOr[Boolean] = js.undefined,
+  allowCombinationSubmatches:             js.UndefOr[Boolean] = js.undefined,
+  customKeyCodes:                         js.UndefOr[Map[String, String]] = js.undefined
 ) {
   def apply(): Unit = HotKeysConfigure(this)
 }
@@ -47,11 +47,11 @@ object HotKeysConfigure {
     q: HotKeysConfiguration
   ): HotKeysConfigureParams = {
     val p = (new js.Object).asInstanceOf[HotKeysConfigureParams]
-    q.logLevel.foreach(v => p.logLevel                 = v.name)
-    q.defaultKeyEvent.foreach(v => p.defaultKeyEvent   = v.action)
+    q.logLevel.foreach(v => p.logLevel = v.name)
+    q.defaultKeyEvent.foreach(v => p.defaultKeyEvent = v.action)
     q.defaultComponent.foreach(v => p.defaultComponent = v.name)
-    q.defaultTabIndex.foreach(v => p.defaultTabIndex   = v)
-    q.ignoreTags.foreach(v => p.ignoreTags             = v.map(_.name).toJSArray)
+    q.defaultTabIndex.foreach(v => p.defaultTabIndex = v)
+    q.ignoreTags.foreach(v => p.ignoreTags = v.map(_.name).toJSArray)
     q.ignoreEventsCondition.foreach(v =>
       p.ignoreEventsCondition = v: js.Function1[ReactKeyboardEvent, Boolean]
     )
@@ -59,11 +59,11 @@ object HotKeysConfigure {
       p.ignoreKeymapAndHandlerChangesByDefault = v
     )
     q.ignoreRepeatedEventsWhenKeyHeldDown.foreach(v => p.ignoreRepeatedEventsWhenKeyHeldDown = v)
-    q.simulateMissingKeyPressEvents.foreach(v => p.simulateMissingKeyPressEvents             = v)
-    q.stopEventPropagationAfterHandling.foreach(v => p.stopEventPropagationAfterHandling     = v)
-    q.stopEventPropagationAfterIgnoring.foreach(v => p.stopEventPropagationAfterIgnoring     = v)
-    q.allowCombinationSubmatches.foreach(v => p.allowCombinationSubmatches                   = v)
-    q.customKeyCodes.foreach(v => p.customKeyCodes                                           = v.toJSDictionary.asInstanceOf[js.Object])
+    q.simulateMissingKeyPressEvents.foreach(v => p.simulateMissingKeyPressEvents = v)
+    q.stopEventPropagationAfterHandling.foreach(v => p.stopEventPropagationAfterHandling = v)
+    q.stopEventPropagationAfterIgnoring.foreach(v => p.stopEventPropagationAfterIgnoring = v)
+    q.allowCombinationSubmatches.foreach(v => p.allowCombinationSubmatches = v)
+    q.customKeyCodes.foreach(v => p.customKeyCodes = v.toJSDictionary.asInstanceOf[js.Object])
     p
   }
 

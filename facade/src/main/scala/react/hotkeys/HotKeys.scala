@@ -10,14 +10,14 @@ import japgolly.scalajs.react.Ref
 import japgolly.scalajs.react.{ raw => Raw }
 
 final case class HotKeys(
-  keyMap:                js.UndefOr[KeyMap]        = js.undefined,
-  handlers:              js.UndefOr[Handlers]      = js.undefined,
-  component:             js.UndefOr[HtmlTagOf[_]]  = js.undefined,
-  tabIndex:              js.UndefOr[Int]           = js.undefined,
-  allowChanges:          js.UndefOr[Boolean]       = js.undefined,
+  keyMap:                js.UndefOr[KeyMap] = js.undefined,
+  handlers:              js.UndefOr[Handlers] = js.undefined,
+  component:             js.UndefOr[HtmlTagOf[_]] = js.undefined,
+  tabIndex:              js.UndefOr[Int] = js.undefined,
+  allowChanges:          js.UndefOr[Boolean] = js.undefined,
   innerRef:              js.UndefOr[Ref.Handle[_]] = js.undefined,
-  root:                  js.UndefOr[Boolean]       = js.undefined,
-  override val children: CtorType.ChildrenArgs     = Seq.empty
+  root:                  js.UndefOr[Boolean] = js.undefined,
+  override val children: CtorType.ChildrenArgs = Seq.empty
 ) extends GenericComponentPC[HotKeys.HotKeysProps, HotKeys] {
   override protected def cprops = HotKeys.props(this)
   def withChildren(children: CtorType.ChildrenArgs) =
@@ -42,12 +42,12 @@ object HotKeys {
     q: HotKeys
   ): HotKeysProps = {
     val p = (new js.Object).asInstanceOf[HotKeysProps]
-    q.keyMap.foreach(v => p.keyMap             = v.toJs)
-    q.handlers.foreach(v => p.handlers         = v.toJs)
-    q.component.foreach(v => p.component       = v.name)
-    q.tabIndex.foreach(v => p.tabIndex         = v)
+    q.keyMap.foreach(v => p.keyMap = v.toJs)
+    q.handlers.foreach(v => p.handlers = v.toJs)
+    q.component.foreach(v => p.component = v.name)
+    q.tabIndex.foreach(v => p.tabIndex = v)
     q.allowChanges.foreach(v => p.allowChanges = v)
-    q.innerRef.foreach(v => p.innerRef         = v.raw)
+    q.innerRef.foreach(v => p.innerRef = v.raw)
     p.innerRef = q.innerRef.map((_.raw))
     q.root.foreach(v => p.root = v)
     p

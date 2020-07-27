@@ -11,7 +11,7 @@ import react.common._
 final case class IgnoreKeys(
   only:                  js.UndefOr[String | js.Array[String]] = js.undefined,
   except:                js.UndefOr[String | js.Array[String]] = js.undefined,
-  override val children: CtorType.ChildrenArgs                 = Seq.empty
+  override val children: CtorType.ChildrenArgs = Seq.empty
 ) extends GenericComponentPC[IgnoreKeys.IgnoreKeysProps, IgnoreKeys] {
   override protected def cprops = IgnoreKeys.props(this)
   def withChildren(children: CtorType.ChildrenArgs) =
@@ -31,7 +31,7 @@ object IgnoreKeys {
     q: IgnoreKeys
   ): IgnoreKeysProps = {
     val p = (new js.Object).asInstanceOf[IgnoreKeysProps]
-    q.only.foreach(v => p.only     = v)
+    q.only.foreach(v => p.only = v)
     q.except.foreach(v => p.except = v)
     p
   }

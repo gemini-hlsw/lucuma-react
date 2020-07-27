@@ -10,9 +10,9 @@ import japgolly.scalajs.react.Ref
 import japgolly.scalajs.react.{ raw => Raw }
 
 final case class GlobalHotKeys(
-  keyMap:                js.UndefOr[KeyMap]    = js.undefined,
-  handlers:              js.UndefOr[Handlers]  = js.undefined,
-  allowChanges:          js.UndefOr[Boolean]   = js.undefined,
+  keyMap:                js.UndefOr[KeyMap] = js.undefined,
+  handlers:              js.UndefOr[Handlers] = js.undefined,
+  allowChanges:          js.UndefOr[Boolean] = js.undefined,
   override val children: CtorType.ChildrenArgs = Seq.empty
 ) extends GenericComponentPC[GlobalHotKeys.GlobalHotKeysProps, GlobalHotKeys] {
   override protected def cprops = GlobalHotKeys.props(this)
@@ -34,8 +34,8 @@ object GlobalHotKeys {
     q: GlobalHotKeys
   ): GlobalHotKeysProps = {
     val p = (new js.Object).asInstanceOf[GlobalHotKeysProps]
-    q.keyMap.foreach(v => p.keyMap             = v.toJs)
-    q.handlers.foreach(v => p.handlers         = v.toJs)
+    q.keyMap.foreach(v => p.keyMap = v.toJs)
+    q.handlers.foreach(v => p.handlers = v.toJs)
     q.allowChanges.foreach(v => p.allowChanges = v)
     p
   }

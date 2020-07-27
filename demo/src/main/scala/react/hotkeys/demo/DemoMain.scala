@@ -18,8 +18,8 @@ object DemoMain {
   @JSExport
   def main(): Unit = {
     HotKeysConfiguration(
-      logLevel                            = LogLevel.Info,
-      ignoreTags                          = List.empty[HtmlTagOf[_]],
+      logLevel = LogLevel.Info,
+      ignoreTags = List.empty[HtmlTagOf[_]],
       ignoreRepeatedEventsWhenKeyHeldDown = false
     ).apply()
 
@@ -48,11 +48,16 @@ object DemoMain {
         "DONT" -> Callback(dom.window.alert("DON'T!"))
       )
 
-    def renderSection(i: Int) = React.Fragment(
-      <.input(^.tabIndex := i + 1),
-      <.div(^.tabIndex := i + 2, ^.width := "100px", ^.height := "100px", ^.background := "black"),
-      <.button(^.tabIndex := i + 3, "HELLO")
-    )
+    def renderSection(i: Int) =
+      React.Fragment(
+        <.input(^.tabIndex := i + 1),
+        <.div(^.tabIndex := i + 2,
+              ^.width := "100px",
+              ^.height := "100px",
+              ^.background := "black"
+        ),
+        <.button(^.tabIndex := i + 3, "HELLO")
+      )
 
     val ref = Ref[html.Element]
 
@@ -60,13 +65,15 @@ object DemoMain {
       ScalaComponent
         .builder[Unit]("Hotkeys demo")
         .render(_ =>
-          GlobalHotKeys(keyMap   = KeyMap("HELP" -> "shift+?"),
-                        handlers = Handlers("HELP" -> Callback(dom.window.alert("HELP!"))))(
-            HotKeys(keyMap    = keyMap,
-                    handlers  = handlers,
+          GlobalHotKeys(keyMap = KeyMap("HELP" -> "shift+?"),
+                        handlers = Handlers("HELP" -> Callback(dom.window.alert("HELP!")))
+          )(
+            HotKeys(keyMap = keyMap,
+                    handlers = handlers,
                     component = <.span,
-                    tabIndex  = 1,
-                    innerRef  = ref)(
+                    tabIndex = 1,
+                    innerRef = ref
+            )(
               // IgnoreKeys(only = "shift+1")(
               "WITH HOTKEYS:",
               renderSection(0)
