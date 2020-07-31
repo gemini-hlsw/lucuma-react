@@ -1,5 +1,11 @@
 # Changes
 
+## 0.7.1
+
+* Upgrade to react-common 0.9.6
+* Upgrade to scalajs-react 1.7.4
+* Upgrade scala to 2.13.3
+
 ## 0.7.0
 
 * Upgrade react-grid-layout to 1.0

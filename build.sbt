@@ -94,7 +94,7 @@ lazy val demo           =
         "react-grid-layout" -> reactGridLayout
       ),
       libraryDependencies +=
-        "io.github.cquiroz.react" %%% "react-sizeme" % "0.4.4",
+        "io.github.cquiroz.react" %%% "react-sizeme" % "0.4.6",
       // don't publish the demo
       publish := {},
       publishLocal := {},
@@ -126,7 +126,7 @@ lazy val facade         =
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"      % "0.9.4",
+        "io.github.cquiroz.react"           %%% "common"      % "0.9.6",
         "com.lihaoyi"                       %%% "utest"       % "0.7.4"      % Test,
         "org.typelevel"                     %%% "cats-core"   % "2.1.1"      % Test
       ),
@@ -137,7 +137,7 @@ lazy val facade         =
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.13.2",
+  scalaVersion := "2.13.3",
   organization := "io.github.cquiroz.react",
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-grid-layout ",
