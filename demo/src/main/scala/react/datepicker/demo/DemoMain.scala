@@ -12,10 +12,6 @@ import java.time.ZoneOffset
 
 @JSExportTopLevel("DemoMain")
 object DemoMain {
-  var dateValue: Option[LocalDate] = Some(
-    LocalDate.from(Instant.now.atZone(ZoneOffset.UTC))
-  )
-
   implicit class LocalDateOps(val localDate: LocalDate) extends AnyVal {
     def toJsDate: js.Date =
       new js.Date(
@@ -30,7 +26,7 @@ object DemoMain {
     def fromJsDate(jsDate: js.Date): LocalDate =
       LocalDate.of(
         jsDate.getFullYear().toInt,
-        jsDate.getMonth().toInt + 1,
+        jsDate.getMonth().toInt,
         jsDate.getDate().toInt
       )
   }
@@ -43,6 +39,30 @@ object DemoMain {
       )
   }
 
+  case class State(date: Option[LocalDate])
+  object State {
+    def now(): State =
+      State(
+        Some(
+          LocalDate.from(Instant.now.atZone(ZoneOffset.UTC))
+        )
+      )
+  }
+
+  val component =
+    ScalaComponent
+      .builder[Unit]
+      .initialState(State.now())
+      .render($ =>
+        ReactDatepicker(onChange =
+          (newValue, _) =>
+            $.setState(State(newValue.toOpt.map(LocalDateBuilder.fromJsDate)))
+        )
+          .selected($.state.date.map(_.toJsDate).orNull)
+          .dateFormat("yyyy-MM-dd")
+      )
+      .build
+
   @JSExport
   def main(): Unit = {
 
@@ -53,19 +73,7 @@ object DemoMain {
       elem
     }
 
-    val datepicker =
-      ReactDatepicker(onChange =
-        (newValue, _) =>
-          Callback {
-            val newDateValue = newValue.toOpt.map(LocalDateBuilder.fromJsDate)
-            println(newDateValue)
-            DemoMain.dateValue = newDateValue
-          }
-      )
-        .selected(dateValue.map(_.toJsDate).orNull)
-        .dateFormat("yyyy-MM-dd")
-
-    datepicker.renderIntoDOM(container)
+    component().renderIntoDOM(container)
 
     ()
   }
