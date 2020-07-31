@@ -1,5 +1,5 @@
 val reactJS        = "16.13.1"
-val scalaJsReact   = "1.7.3"
+val scalaJsReact   = "1.7.4"
 val reactResizable = "1.10.1"
 val scalaJSDom     = "1.0.0"
 
@@ -129,8 +129,8 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"      % "0.9.4",
-        "io.github.cquiroz.react"           %%% "react-draggable"   % "0.9.3",
+        "io.github.cquiroz.react"           %%% "common"      % "0.9.6",
+        "io.github.cquiroz.react"           %%% "react-draggable"   % "0.9.4",
         "com.lihaoyi"                       %%% "utest"       % "0.7.4"      % Test,
         "org.typelevel"                     %%% "cats-core"   % "2.1.1"      % Test
       ),
