@@ -143,17 +143,9 @@ lazy val facade =
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test := FastOptStage,
-      // libraryDependencies ++= Seq(
-      //   "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
-      //   "io.github.cquiroz.react" %%% "common" % "0.9.4",
-      //   "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
-      //   "com.lihaoyi" %%% "utest" % "0.7.4" % Test
-      // ),
       npmDependencies in Compile ++= Seq(
         "react" -> reactJS,
         "react-dom" -> reactJS,
-        // "@types/react" -> "16.9.42",
-        // "@types/react-dom" -> "16.9.8",
         "react-datepicker" -> reactDatePicker,
         "@types/react-datepicker" -> reactDatePickerTypes
       ),
