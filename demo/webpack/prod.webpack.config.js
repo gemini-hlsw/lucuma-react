@@ -7,6 +7,7 @@ const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+const isDev = false;
 const ci = process.env.CI; // When on CI don't add hashes
 
 const Web = Merge(
@@ -15,8 +16,8 @@ const Web = Merge(
   parts.resolveSemanticUI,
   parts.resourceModules,
   parts.extractCSS({
-    devMode: false,
-    use: ["css-loader", parts.autoprefix(), "less-loader"], // Order is very important: css, post-css, less
+    devMode: isDev,
+    use: ["css-loader", parts.autoprefix(), parts.lessLoader(isDev), parts.sassLoader(isDev)], // Order is very important: css, post-css, less, sass
     ci: ci
   }),
   parts.minifyJavaScript(),
@@ -47,7 +48,7 @@ const Web = Merge(
         }
       }),
       new HtmlWebpackPlugin({
-        title: "Demo for Highcharts",
+        title: "Demo for react-datepicker",
         filename: "index.html",
         chunks: ["demo"]
       }),

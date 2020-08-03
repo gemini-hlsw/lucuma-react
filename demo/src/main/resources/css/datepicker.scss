@@ -1,4 +1,4 @@
-@import "~react-datepicker/dist/react-datepicker.min.css";
+@use "~react-datepicker/src/stylesheets/datepicker.scss";
 
 .react-datepicker {
   font-family: "Comic Sans MS", cursive, sans-serif;

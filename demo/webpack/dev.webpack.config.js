@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const parts = require("./webpack.parts");
 const ScalaJSConfig = require("./scalajs.webpack.config");
 
+const isDev = true;
 const isDevServer = process.argv.some(s => s.match(/webpack-dev-server\.js$/));
 
 const Web = Merge(
@@ -13,8 +14,8 @@ const Web = Merge(
   parts.resolveSemanticUI,
   parts.resourceModules,
   parts.extractCSS({
-    devMode: true,
-    use: ["css-loader", parts.lessLoader()]
+    devMode: isDev,
+    use: ["css-loader", parts.lessLoader(isDev), parts.sassLoader(isDev)]
   }),
   parts.extraAssets,
   parts.fontAssets,
@@ -44,7 +45,7 @@ const Web = Merge(
       new Webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
         filename: "index.html",
-        title: "Demo for Highcharts",
+        title: "Demo for react-datepicker",
         chunks: ["demo"]
       })
     ]

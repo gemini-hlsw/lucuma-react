@@ -69,7 +69,7 @@ lazy val demo =
     .in(file("demo"))
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(
-      version in webpack := "4.32.0",
+      version in webpack := "4.36.0",
       version in startWebpackDevServer := "3.3.1",
       webpackConfigFile in fastOptJS := Some(
         baseDirectory.value / "webpack" / "dev.webpack.config.js"
@@ -97,6 +97,8 @@ lazy val demo =
         "style-loader" -> "0.23.1",
         "less" -> "3.9.0",
         "less-loader" -> "4.1.0",
+        "sass" -> "1.26.10",
+        "sass-loader" -> "9.0.2",
         "webpack-merge" -> "4.2.1",
         "mini-css-extract-plugin" -> "0.5.0",
         "webpack-dev-server-status-bar" -> "1.1.0",
@@ -136,7 +138,7 @@ lazy val facade =
       yarnExtraArgs := {
         if (insideCI.value) List("--frozen-lockfile") else List.empty
       },
-      version in webpack := "4.32.0",
+      version in webpack := "4.36.0",
       version in installJsdom := "15.2.1",
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
