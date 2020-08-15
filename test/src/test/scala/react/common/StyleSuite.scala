@@ -3,7 +3,7 @@ package react.common
 import cats.syntax.all._
 import react.common.implicits._
 
-object StyleTests extends munit.FunSuite with TestUtils {
+class StyleSuite extends munit.FunSuite with TestUtils {
   test("style") {
     val a: Style = Style(Map("height" -> 42, "background" -> "black"))
     val b: Style = Style(Map("height" -> 42, "background" -> "black"))

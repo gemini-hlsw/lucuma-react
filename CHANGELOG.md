@@ -1,5 +1,9 @@
 # Changes
 
+## 0.10.0
+
+* Port tests to munit
+
 ## 0.9.8
 
 * Update cats to 2.2.0
@@ -73,7 +77,7 @@
 
 ## 0.6.0
 
-* Allow passthrough attributes to JS components
+* Allow pass through attributes to JS components
 
 ## 0.5.1
 

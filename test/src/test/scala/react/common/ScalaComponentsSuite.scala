@@ -5,7 +5,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.Ref
 import japgolly.scalajs.react.ScalaComponent
 
-object ScalaComponentTests extends munit.FunSuite {
+class ScalaComponentSuite extends munit.FunSuite {
 
   case class Props() extends ReactProps[Props](propsComponent)
 

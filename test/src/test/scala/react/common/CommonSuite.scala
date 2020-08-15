@@ -4,7 +4,7 @@ import react.common.implicits._
 import cats.syntax.all._
 import scala.scalajs.js
 
-object CommonTests extends munit.FunSuite with TestUtils {
+class CommonSuite extends munit.FunSuite with TestUtils {
   test("merge") {
     val a: js.Object = js.Dynamic.literal(foo = 42, bar = "foobar")
     val b            = js.Object()
