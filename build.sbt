@@ -1,7 +1,7 @@
 import sbt._
 
 val reactJS      = "16.13.1"
-val scalaJsReact = "1.7.4"
+val scalaJsReact = "1.7.5"
 
 parallelExecution in (ThisBuild, Test) := false
 
