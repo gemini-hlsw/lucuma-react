@@ -1,7 +1,7 @@
 val reactJS        = "16.13.1"
-val scalaJsReact   = "1.7.4"
+val scalaJsReact   = "1.7.5"
 val reactResizable = "1.10.1"
-val scalaJSDom     = "1.0.0"
+val scalaJSDom     = "1.1.0"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -95,7 +95,7 @@ lazy val demo =
         "react-resizable" -> reactResizable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz.react" %%% "react-sizeme" % "0.4.4"
+        "io.github.cquiroz.react" %%% "react-sizeme" % "0.4.7"
       ),
       // don't publish the demo
       publish := {},
@@ -125,14 +125,14 @@ lazy val facade =
         "react-resizable" -> reactResizable
       ),
       libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core"        % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
-        "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
-        "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"      % "0.9.6",
-        "io.github.cquiroz.react"           %%% "react-draggable"   % "0.9.4",
-        "com.lihaoyi"                       %%% "utest"       % "0.7.4"      % Test,
-        "org.typelevel"                     %%% "cats-core"   % "2.1.1"      % Test
+        "com.github.japgolly.scalajs-react" %%% "core"            % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "extra"           % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "test"            % scalaJsReact % Test,
+        "org.scala-js"                      %%% "scalajs-dom"     % scalaJSDom,
+        "io.github.cquiroz.react"           %%% "common"          % "0.9.7",
+        "io.github.cquiroz.react"           %%% "react-draggable" % "0.9.5",
+        "com.lihaoyi"                       %%% "utest"           % "0.7.4"      % Test,
+        "org.typelevel"                     %%% "cats-core"       % "2.1.1"      % Test
       ),
       // webpackConfigFile in Test := Some(
       //   baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
