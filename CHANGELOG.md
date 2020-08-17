@@ -1,5 +1,10 @@
 # Changes
 
+## 1.2.0
+
+* Update react-common to 0.9.7
+* Update scalajs-react to 1.7.5
+
 ## 1.1.1
 
 * Update copy-to-clipboard library
