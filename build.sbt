@@ -1,6 +1,6 @@
 val reactJS        = "16.13.1"
 val scalaJsReact   = "1.7.5"
-val reactResizable = "1.10.1"
+val reactResizable = "2.0.0"
 val scalaJSDom     = "1.1.0"
 
 parallelExecution in (ThisBuild, Test) := false
@@ -56,7 +56,7 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack := "4.30.0",
+      version in webpack := "4.44.1",
       version in startWebpackDevServer := "3.3.1",
       version in webpackCliVersion := "3.3.1",
       webpackConfigFile in fastOptJS := Some(
@@ -78,9 +78,9 @@ lazy val demo =
         "css-loader"                         -> "1.0.0",
         "less"                               -> "3.8.1",
         "less-loader"                        -> "4.1.0",
-        "mini-css-extract-plugin"            -> "0.4.3",
+        "mini-css-extract-plugin"            -> "0.11.0",
         "html-webpack-plugin"                -> "3.2.0",
-        "url-loader"                         -> "1.1.1",
+        "url-loader"                         -> "4.1.0",
         "style-loader"                       -> "0.23.0",
         "postcss-loader"                     -> "3.0.0",
         "cssnano"                            -> "4.1.0",
