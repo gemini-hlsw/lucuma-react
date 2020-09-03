@@ -6,7 +6,7 @@ import scala.scalajs.js
 import scala.scalajs.js.|
 import japgolly.scalajs.react.raw.JsNumber
 import cats._
-import cats.implicits._
+import cats.syntax.all._
 
 package implicits {
   trait ReactCatsImplicits {
