@@ -1,6 +1,6 @@
 package react.common
 
-import cats.implicits._
+import cats.syntax.all._
 import react.common.implicits._
 import utest._
 

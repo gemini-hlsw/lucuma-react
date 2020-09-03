@@ -1,7 +1,7 @@
 package react.common
 
 import react.common.implicits._
-import cats.implicits._
+import cats.syntax.all._
 import scala.scalajs.js
 import utest._
 
