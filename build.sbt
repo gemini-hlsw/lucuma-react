@@ -75,7 +75,7 @@ lazy val facade =
         "io.github.cquiroz.react"           %%% "common"    % "0.9.7",
         "io.github.cquiroz.react"           %%% "test"      % "0.9.7"      % Test,
         "com.lihaoyi"                       %%% "utest"     % "0.7.5"      % Test,
-        "org.typelevel"                     %%% "cats-core" % "2.1.1"      % Test
+        "org.typelevel"                     %%% "cats-core" % "2.2.0"      % Test
       ),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
