@@ -1,5 +1,10 @@
 # Changes
 
+## 1.2.1
+
+* Update react-common to 0.9.8
+* Update cats to 2.2.0
+
 ## 1.2.0
 
 * Update react-common to 0.9.7
