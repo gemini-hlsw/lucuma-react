@@ -1,5 +1,10 @@
 # Changes
 
+## 0.7.3
+
+* Upgrade to react-common 0.9.8
+* Upgrade to cats 2.2.0
+
 ## 0.7.2
 
 * Upgrade to react-common 0.9.7
