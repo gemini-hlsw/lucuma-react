@@ -1,5 +1,13 @@
 # Changes
 
+## 0.2.1
+
+* Upgrade to react-common 0.9.8
+
+## 0.2.0
+
+* Update react-resizable to 2.0
+
 ## 0.1.4
 
 * Upgrade to react-common 0.9.7
