@@ -17,7 +17,8 @@ inThisBuild(
       Developer("cquiroz",
                 "Carlos Quiroz",
                 "carlos.m.quiroz@gmail.com",
-                url("https://github.com/cquiroz"))
+                url("https://github.com/cquiroz")
+      )
     ),
     scmInfo := Some(
       ScmInfo(
@@ -45,10 +46,13 @@ lazy val cats: Project =
     .settings(
       name := "cats",
       libraryDependencies ++= Seq(
-        "org.typelevel" %%% "cats-core" % "2.2.0",
-        "org.typelevel" %%% "cats-testkit" % "2.2.0" % Test,
-        "org.typelevel" %%% "cats-testkit-scalatest" % "2.0.0" % Test
-      )
+        "org.typelevel" %%% "cats-core"        % "2.2.0",
+        "org.typelevel" %%% "cats-testkit"     % "2.2.0"  % Test,
+        "org.scalameta" %%% "munit"            % "0.7.12" % Test,
+        "org.typelevel" %%% "discipline-munit" % "0.2.4"  % Test
+      ),
+      scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule)),
+      testFrameworks += new TestFramework("munit.Framework")
     )
     .dependsOn(common)
 
@@ -60,31 +64,28 @@ lazy val test =
     .settings(commonSettings: _*)
     .settings(
       name := "test",
-      libraryDependencies ++= Seq(
-        "com.lihaoyi" %%% "utest" % "0.7.5"
-      ),
       npmDependencies in Compile ++= Seq(
-        "react" -> reactJS,
+        "react"     -> reactJS,
         "react-dom" -> reactJS
       ),
       // Requires the DOM for tests
       requireJsDomEnv in Test := true,
       // Use yarn as it is faster than npm
       useYarn := true,
-      version in webpack := "4.30.0",
-      version in webpackCliVersion := "3.3.2",
-      version in startWebpackDevServer := "3.3.1",
-      scalaJSUseMainModuleInitializer := false,
+      version in webpack := "4.44.1",
+      version in webpackCliVersion := "3.3.11",
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
-        "com.lihaoyi" %%% "utest" % "0.7.5" % Test,
+        "org.scalameta" %%% "munit"     % "0.7.12",
         "org.typelevel" %%% "cats-core" % "2.2.0" % Test
       ),
+      webpackExtraArgs in Test := Seq("--verbose", "--progress", "true"),
       webpackConfigFile in Test := Some(
-        baseDirectory.value / "src" / "test" / "test.webpack.config.js"
+        baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
       ),
-      testFrameworks += new TestFramework("utest.runner.Framework")
+      scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+      testFrameworks += new TestFramework("munit.Framework")
     )
     .dependsOn(cats, common)
 
