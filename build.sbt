@@ -3,7 +3,7 @@ name := "scalajs-react-highcharts"
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val highcharts = "8.1.2"
-val scalaJsReact = "1.7.3"
+val scalaJsReact = "1.7.5"
 val reactJS = "16.13.1"
 
 parallelExecution in (ThisBuild, Test) := false
