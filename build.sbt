@@ -5,7 +5,7 @@ scalaVersion in ThisBuild := "2.13.1"
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactHotkeys = "2.0.0"
-val scalaJsReact = "1.7.4"
+val scalaJsReact = "1.7.5"
 val reactJS      = "16.13.1"
 
 parallelExecution in (ThisBuild, Test) := false
