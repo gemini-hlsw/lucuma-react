@@ -36,7 +36,7 @@ import gpp.highcharts.mod.SeriesClickEventObject
 import gpp.highcharts.mod.TooltipShapeValue
 import react.highcharts.WrapProceed
 import gpp.highcharts.mod.Chart_
-import gpp.highcharts.seriesLabelMod.{default => SeriesLabelMod}
+import gpp.highcharts.seriesLabelMod.{ default => SeriesLabelMod }
 import react.highcharts.mods.seriesLabel.SeriesLabelSeries
 import react.highcharts.mods.seriesLabel.SeriesLabelPoint
 import gpp.highcharts.mod.TooltipPositionerCallbackFunction
@@ -66,27 +66,26 @@ object DemoMain {
 
         proceed.apply(chart)
 
-        val plotTop = chart.plotTop
+        val plotTop  = chart.plotTop
         val plotLeft = chart.plotLeft
-        val height =
+        val height   =
           chart.yAxis(0).asInstanceOf[js.Dynamic].height.asInstanceOf[Double]
-        val series = chart.series.asInstanceOf[js.Array[SeriesLabelSeries]]
+        val series   = chart.series.asInstanceOf[js.Array[SeriesLabelSeries]]
 
-        series.foreach {
-          s =>
-            val left = s.data(0).asInstanceOf[SeriesLabelPoint].plotX
-            val right =
-              s.data(s.data.length - 1).asInstanceOf[SeriesLabelPoint].plotX
-            val center = (right - left) / 2
-            val labelHeight = s.labelBySeries
-              .map(_.attr("height").asInstanceOf[Double] / 2)
-              .getOrElse(0.0)
+        series.foreach { s =>
+          val left        = s.data(0).asInstanceOf[SeriesLabelPoint].plotX
+          val right       =
+            s.data(s.data.length - 1).asInstanceOf[SeriesLabelPoint].plotX
+          val center      = (right - left) / 2
+          val labelHeight = s.labelBySeries
+            .map(_.attr("height").asInstanceOf[Double] / 2)
+            .getOrElse(0.0)
 
-            s.labelBySeries.foreach(
-              _.attr("x", (plotLeft + left + center - labelHeight).toString)
-                .attr("y", (height + plotTop - 20).toString)
-                .attr("rotation", "-90")
-            )
+          s.labelBySeries.foreach(
+            _.attr("x", (plotLeft + left + center - labelHeight).toString)
+              .attr("y", (height + plotTop - 20).toString)
+              .attr("rotation", "-90")
+          )
         }
       }
     )
@@ -99,17 +98,17 @@ object DemoMain {
     }
 
     val tooltipPositioner
-        : TooltipPositionerCallbackFunction = // https://www.highcharts.com/forum/viewtopic.php?t=41971
+      : TooltipPositionerCallbackFunction = // https://www.highcharts.com/forum/viewtopic.php?t=41971
       (tooltip, _, labelHeight, _) =>
         Option(tooltip.chart.hoverPoint.asInstanceOf[Point]).map { point =>
           val s = point.series
 
-          val left = s.data(0).asInstanceOf[SeriesLabelPoint].plotX
-          val right =
+          val left   = s.data(0).asInstanceOf[SeriesLabelPoint].plotX
+          val right  =
             s.data(s.data.length - 1).asInstanceOf[SeriesLabelPoint].plotX
           val center = (right - left) / 2
           // Assumes even X spacing (and odd number of points)
-          val y = s
+          val y      = s
             .data((s.data.length / 2).toInt)
             .asInstanceOf[SeriesLabelPoint]
             .plotY - labelHeight
@@ -193,9 +192,7 @@ object DemoMain {
               .setCursor(CursorValue.pointer)
               .setEvents(
                 SeriesEventsOptionsObject()
-                  .setClick((s: Series, _: SeriesClickEventObject) =>
-                    dom.window.alert(s.name)
-                  )
+                  .setClick((s: Series, _: SeriesClickEventObject) => dom.window.alert(s.name))
               )
           )
       )

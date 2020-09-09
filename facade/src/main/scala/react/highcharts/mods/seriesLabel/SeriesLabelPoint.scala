@@ -13,8 +13,8 @@ import gpp.highcharts.mod.PositionObject
 @js.native
 trait SeriesLabelPoint extends Point {
   val chartCenterY: js.UndefOr[Double] = js.native
-  val chartX: js.UndefOr[Double] = js.native
-  val chartY: js.UndefOr[Double] = js.native
-  val plotX: Double = js.native // I can't find where this is actually defined
-  val plotY: Double = js.native // I can't find where this is actually defined
+  val chartX: js.UndefOr[Double]       = js.native
+  val chartY: js.UndefOr[Double]       = js.native
+  val plotX: Double                    = js.native // I can't find where this is actually defined
+  val plotY: Double                    = js.native // I can't find where this is actually defined
 }

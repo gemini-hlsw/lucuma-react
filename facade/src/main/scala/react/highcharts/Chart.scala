@@ -25,15 +25,15 @@ trait WrapProceed extends js.ThisFunction0[Chart_, Unit]
 object Highcharts extends TypeofHighchartsAddEvent {
   @JSName("wrap")
   def wrapThis(
-      obj: js.Any,
-      method: String,
-      func: js.ThisFunction1[Chart_, WrapProceed, Unit]
+    obj:    js.Any,
+    method: String,
+    func:   js.ThisFunction1[Chart_, WrapProceed, Unit]
   ): Unit = js.native
 }
 
 final case class Chart(
-    options: Options,
-    highcharts: TypeofHighchartsAddEvent = Highcharts
+  options:    Options,
+  highcharts: TypeofHighchartsAddEvent = Highcharts
 ) extends ReactProps[Chart](Chart.component)
 
 object Chart {
