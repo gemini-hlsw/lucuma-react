@@ -26,9 +26,7 @@ object DemoMain {
       .builder[Unit]
       .initialState(State.now())
       .render($ =>
-        Datepicker(onChange =
-          (newValue, _) => $.setState(State(newValue.toLocalDateOpt))
-        )
+        Datepicker(onChange = (newValue, _) => $.setState(State(newValue.toLocalDateOpt)))
           .selected($.state.date.map(_.toJsDate).orNull)
           .dateFormat("yyyy-MM-dd")
       )

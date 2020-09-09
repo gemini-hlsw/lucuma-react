@@ -5,7 +5,7 @@ import js.|
 import java.time.LocalDate
 
 package object datepicker {
-  val Datepicker = gpp.reactDatepicker.components.ReactDatepicker
+  val Datepicker = lucuma.reactDatepicker.components.ReactDatepicker
 
   implicit class LocalDateOps(val localDate: LocalDate) extends AnyVal {
     def toJsDate: js.Date =
@@ -26,14 +26,38 @@ package object datepicker {
       )
   }
 
-  implicit class JSUndefOrNullOps[A](val undefOrNull: js.UndefOr[A | Null])
+  implicit class JSUndefOrNullOrTuple2Ops[A](val value: js.UndefOr[A | Null | js.Tuple2[A, A]])
       extends AnyVal {
+    def toEitherOpt: Option[Either[(A, A), A]] =
+      value.toOption
+        .flatMap(valueOrNull => Option(valueOrNull.asInstanceOf[A | js.Tuple2[A, A]]))
+        .map { valueOrTuple =>
+          if (js.Array.isArray(valueOrTuple))
+            Left(valueOrTuple.asInstanceOf[js.Tuple2[A, A]])
+          else
+            Right(valueOrTuple.asInstanceOf[A])
+        }
+
     def toOpt: Option[A] =
-      undefOrNull.toOption.flatMap((valueOrNull: A | Null) =>
-        Option(valueOrNull.asInstanceOf[A])
-      )
+      toEitherOpt.flatMap(_.toOption)
+
+    def toTupleOpt: Option[(A, A)] =
+      toEitherOpt.flatMap(_.left.toOption)
+
+    def toLocalDateEitherOpt(implicit
+      ev: A <:< js.Date
+    ): Option[Either[(LocalDate, LocalDate), LocalDate]] =
+      toEitherOpt.map {
+        case Left((d1, d2)) =>
+          Left((LocalDateBuilder.fromJsDate(ev(d1)), LocalDateBuilder.fromJsDate(ev(d2))))
+        case Right(d)       =>
+          Right(LocalDateBuilder.fromJsDate(ev(d)))
+      }
 
     def toLocalDateOpt(implicit ev: A <:< js.Date): Option[LocalDate] =
-      undefOrNull.toOpt.map(ev).map(LocalDateBuilder.fromJsDate)
+      toLocalDateEitherOpt.flatMap(_.toOption)
+
+    def toLocalDateTupleOpt(implicit ev: A <:< js.Date): Option[(LocalDate, LocalDate)] =
+      toLocalDateEitherOpt.flatMap(_.left.toOption)
   }
 }
