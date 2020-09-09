@@ -1,7 +1,7 @@
 package react.beautifuldnd.demo
 
 import cats._
-import cats.implicits._
+import cats.syntax.all._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.document
@@ -62,30 +62,27 @@ object BeautifulDnDDemo {
       <.div(
         <.div(^.height := "600px", ^.width := "1000px")(
           DragDropContext(onDragEnd = onDragEnd)(
-            Droppable("droppableList") {
-              case (provided, snapshot) =>
-                <.div(
-                  provided.innerRef,
-                  provided.droppableProps,
-                  getListStyle(snapshot.isDraggingOver)
-                )(
-                  <.b("Good to go:"),
-                  s.list.zipWithIndex.toTagMod {
-                    case (item, index) =>
-                      Draggable(item.id, index) {
-                        case (provided, snapshot, _) =>
-                          <.div(
-                            provided.innerRef,
-                            provided.draggableProps,
-                            provided.dragHandleProps,
-                            getItemStyle(snapshot.isDragging, provided.draggableStyle)
-                          )(
-                            item.content
-                          )
-                      }
-                  },
-                  provided.placeholder
-                )
+            Droppable("droppableList") { case (provided, snapshot) =>
+              <.div(
+                provided.innerRef,
+                provided.droppableProps,
+                getListStyle(snapshot.isDraggingOver)
+              )(
+                <.b("Good to go:"),
+                s.list.zipWithIndex.toTagMod { case (item, index) =>
+                  Draggable(item.id, index) { case (provided, snapshot, _) =>
+                    <.div(
+                      provided.innerRef,
+                      provided.draggableProps,
+                      provided.dragHandleProps,
+                      getItemStyle(snapshot.isDragging, provided.draggableStyle)
+                    )(
+                      item.content
+                    )
+                  }
+                },
+                provided.placeholder
+              )
             }
           )
         )
@@ -102,7 +99,7 @@ object BeautifulDnDDemo {
   def apply(p: Props) = component(p)
 }
 
-object MainDemo         {
+object MainDemo {
   val component = ScalaComponent
     .builder[Unit]("Demo")
     .stateless
