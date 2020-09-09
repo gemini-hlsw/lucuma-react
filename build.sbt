@@ -64,24 +64,28 @@ lazy val facade =
       requireJsDomEnv in Test := true,
       // Use yarn as it is faster than npm
       useYarn := true,
-      version in webpack := "4.20.2",
-      version in startWebpackDevServer := "3.1.8",
+      webpack / version := "4.44.1",
+      webpackCliVersion / version := "3.3.11",
+      startWebpackDevServer / version := "3.11.0",
+      webpackConfigFile in Test := Some(
+        baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
+      ),
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReact % Test,
-        "io.github.cquiroz.react"           %%% "common"    % "0.9.8",
-        "io.github.cquiroz.react"           %%% "test"      % "0.9.8"      % Test,
-        "com.lihaoyi"                       %%% "utest"     % "0.7.5"      % Test,
+        "io.github.cquiroz.react"           %%% "common"    % "0.10.0",
+        "io.github.cquiroz.react"           %%% "test"      % "0.10.0"     % Test,
+        "org.scalameta"                     %%% "munit"     % "0.7.12" % Test,
         "org.typelevel"                     %%% "cats-core" % "2.2.0"      % Test
       ),
-      testFrameworks += new TestFramework("utest.runner.Framework")
+      testFrameworks += new TestFramework("munit.Framework")
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.13.2",
+  scalaVersion := "2.13.3",
   organization := "io.github.cquiroz.react",
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-copy-to-clipboard",

@@ -1,5 +1,11 @@
 # Changes
 
+## 1.3.0
+
+* Update react-common to 0.10.0
+* Update to scala.js 1.2.0
+* Convert tests to munit
+
 ## 1.2.2
 
 * Update react-common to 0.9.8
