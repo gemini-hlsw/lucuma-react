@@ -2,10 +2,10 @@ name := "scalajs-react-datepicker"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-val reactDatePicker = "3.1.3"
-val reactDatePickerTypes = "3.1.0"
-val scalaJsReact = "1.7.3"
-val reactJS = "16.13.1"
+val reactDatePicker      = "3.1.3"
+val reactDatePickerTypes = "3.1.1"
+val scalaJsReact         = "1.7.3"
+val reactJS              = "16.13.1"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -69,7 +69,7 @@ lazy val demo =
     .in(file("demo"))
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(
-      version in webpack := "4.36.0",
+      version in webpack := "4.44.1",
       version in startWebpackDevServer := "3.3.1",
       webpackConfigFile in fastOptJS := Some(
         baseDirectory.value / "webpack" / "dev.webpack.config.js"
@@ -89,28 +89,28 @@ lazy val demo =
       scalaJSLinkerConfig in (Compile, fullOptJS) ~= { _.withSourceMap(false) },
       // NPM libs for development, mostly to let webpack do its magic
       npmDevDependencies in Compile ++= Seq(
-        "postcss-loader" -> "3.0.0",
-        "autoprefixer" -> "9.4.4",
-        "url-loader" -> "1.1.1",
-        "file-loader" -> "3.0.1",
-        "css-loader" -> "2.1.0",
-        "style-loader" -> "0.23.1",
-        "less" -> "3.9.0",
-        "less-loader" -> "4.1.0",
-        "sass" -> "1.26.10",
-        "sass-loader" -> "9.0.2",
-        "webpack-merge" -> "4.2.1",
-        "mini-css-extract-plugin" -> "0.5.0",
-        "webpack-dev-server-status-bar" -> "1.1.0",
-        "cssnano" -> "4.1.8",
-        "uglifyjs-webpack-plugin" -> "2.1.1",
-        "html-webpack-plugin" -> "3.2.0",
+        "postcss-loader"                     -> "3.0.0",
+        "autoprefixer"                       -> "9.4.4",
+        "url-loader"                         -> "1.1.1",
+        "file-loader"                        -> "3.0.1",
+        "css-loader"                         -> "2.1.0",
+        "style-loader"                       -> "0.23.1",
+        "less"                               -> "3.9.0",
+        "less-loader"                        -> "4.1.0",
+        "sass"                               -> "1.26.10",
+        "sass-loader"                        -> "9.0.2",
+        "webpack-merge"                      -> "4.2.1",
+        "mini-css-extract-plugin"            -> "0.5.0",
+        "webpack-dev-server-status-bar"      -> "1.1.0",
+        "cssnano"                            -> "4.1.8",
+        "uglifyjs-webpack-plugin"            -> "2.1.1",
+        "html-webpack-plugin"                -> "3.2.0",
         "optimize-css-assets-webpack-plugin" -> "5.0.1",
-        "favicons-webpack-plugin" -> "0.0.9"
+        "favicons-webpack-plugin"            -> "0.0.9"
       ),
       npmDependencies in Compile ++= Seq(
-        "react" -> reactJS,
-        "react-dom" -> reactJS,
+        "react"            -> reactJS,
+        "react-dom"        -> reactJS,
         "react-datepicker" -> reactDatePicker
       ),
       libraryDependencies ++= Seq(
@@ -136,21 +136,21 @@ lazy val facade =
       // Use yarn as it is faster than npm
       useYarn := true,
       yarnExtraArgs := {
-        if (insideCI.value) List("--frozen-lockfile") else List.empty
+        if (insideCI.value) List("--pure-lockfile") else List.empty
       },
-      version in webpack := "4.36.0",
-      version in installJsdom := "15.2.1",
+      version in webpack := "4.44.1",
+      version in installJsdom := "16.4.0",
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test := FastOptStage,
       npmDependencies in Compile ++= Seq(
-        "react" -> reactJS,
-        "react-dom" -> reactJS,
-        "react-datepicker" -> reactDatePicker,
+        "react"                   -> reactJS,
+        "react-dom"               -> reactJS,
+        "react-datepicker"        -> reactDatePicker,
         "@types/react-datepicker" -> reactDatePickerTypes
       ),
       stUseScalaJsDom := true,
-      stOutputPackage := "gpp",
+      stOutputPackage := "lucuma",
       stFlavour := Flavour.Japgolly,
       Compile / stMinimize := Selection.AllExcept("@types/react-datepicker"),
       // stEnableScalaJsDefined := Selection.All,
@@ -165,9 +165,5 @@ lazy val facade =
       )),
       // Some Scalablytyped generated Scaladocs are malformed.
       // Workaround: https://github.com/xerial/sbt-sonatype/issues/30#issuecomment-342532067
-      Compile / doc / sources := Seq(),
-      webpackConfigFile in Test := Some(
-        baseDirectory.value / "test.webpack.config.js"
-      ),
-      testFrameworks += new TestFramework("utest.runner.Framework")
+      Compile / doc / sources := Seq()
     )
