@@ -9,20 +9,20 @@ package hotkeys {
   sealed abstract class LogLevel(val name: String)
   object LogLevel {
     final case object Verbose extends LogLevel("verbose")
-    final case object Debug extends LogLevel("debug")
-    final case object Info extends LogLevel("info")
-    final case object Warn extends LogLevel("warn")
-    final case object Error extends LogLevel("error")
-    final case object None extends LogLevel("none")
+    final case object Debug   extends LogLevel("debug")
+    final case object Info    extends LogLevel("info")
+    final case object Warn    extends LogLevel("warn")
+    final case object Error   extends LogLevel("error")
+    final case object None    extends LogLevel("none")
   }
 
   sealed abstract class KeyInstance(val action: String)
   final case object KeyPress extends KeyInstance("keypress")
-  final case object KeyDown extends KeyInstance("keydown")
-  final case object KeyUp extends KeyInstance("keyup")
+  final case object KeyDown  extends KeyInstance("keydown")
+  final case object KeyUp    extends KeyInstance("keyup")
 
   @js.native
-  trait KeyEvent extends js.Object {
+  trait KeyEvent    extends js.Object {
     val sequence: js.UndefOr[String] = js.native
     val action: js.UndefOr[String]   = js.native
   }
@@ -31,7 +31,7 @@ package hotkeys {
       js.Dynamic.literal(sequence = sequence, action = instance.action).asInstanceOf[KeyEvent]
   }
   @js.native
-  trait KeySequence extends KeyEvent {
+  trait KeySequence extends KeyEvent  {
     val name: js.UndefOr[String]                = js.native
     val sequences: js.UndefOr[js.Array[KeySeq]] = js.native
   }
@@ -62,7 +62,7 @@ package hotkeys {
       Map(keyMap: _*)
   }
 
-  object Handlers {
+  object Handlers      {
     def apply(handlers: (String, Handler)*): Handlers =
       Map(handlers: _*)
   }

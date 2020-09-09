@@ -25,12 +25,12 @@ object DemoMain {
 
     val keyMap =
       KeyMap(
-        "UNDO" -> List("meta+z", "ctrl+z"),
-        "UP" -> "up",
-        "DOWN" -> "down".on(KeyUp),
-        "LEFT" -> KeySequence("Move Left", "left"),
+        "UNDO"  -> List("meta+z", "ctrl+z"),
+        "UP"    -> "up",
+        "DOWN"  -> "down".on(KeyUp),
+        "LEFT"  -> KeySequence("Move Left", "left"),
         "RIGHT" -> KeySequence("Move Right", List[KeySeq]("right", "shift+right".on(KeyUp))),
-        "DONT" -> "shift+1"
+        "DONT"  -> "shift+1"
       )
 
     def undo(e: ReactKeyboardEvent) =
@@ -40,12 +40,12 @@ object DemoMain {
 
     val handlers =
       Handlers(
-        "UNDO" -> undo,
-        "UP" -> Callback.log("UP!"),
-        "DOWN" -> Callback.log("DOWN!"),
-        "LEFT" -> Callback.log("LEFT!"),
+        "UNDO"  -> undo,
+        "UP"    -> Callback.log("UP!"),
+        "DOWN"  -> Callback.log("DOWN!"),
+        "LEFT"  -> Callback.log("LEFT!"),
         "RIGHT" -> right,
-        "DONT" -> Callback(dom.window.alert("DON'T!"))
+        "DONT"  -> Callback(dom.window.alert("DON'T!"))
       )
 
     def renderSection(i: Int) =
