@@ -1,6 +1,6 @@
 name := "scalajs-react-beautiful-dnd"
 
-scalaVersion in ThisBuild := "2.13.2"
+scalaVersion in ThisBuild := "2.13.3"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
