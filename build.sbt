@@ -2,9 +2,9 @@ name := "scalajs-react-highcharts"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-val highcharts = "8.1.2"
+val highcharts   = "8.1.2"
 val scalaJsReact = "1.7.3"
-val reactJS = "16.13.1"
+val reactJS      = "16.13.1"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -15,7 +15,6 @@ addCommandAlias(
 
 inThisBuild(
   List(
-    scalaVersion := "2.13.3",
     organization := "com.rpiaggio",
     sonatypeProfileName := "com.rpiaggio",
     homepage := Some(
@@ -88,27 +87,27 @@ lazy val demo =
       scalaJSLinkerConfig in (Compile, fullOptJS) ~= { _.withSourceMap(false) },
       // NPM libs for development, mostly to let webpack do its magic
       npmDevDependencies in Compile ++= Seq(
-        "postcss-loader" -> "3.0.0",
-        "autoprefixer" -> "9.4.4",
-        "url-loader" -> "1.1.1",
-        "file-loader" -> "3.0.1",
-        "css-loader" -> "2.1.0",
-        "style-loader" -> "0.23.1",
-        "less" -> "3.9.0",
-        "less-loader" -> "4.1.0",
-        "webpack-merge" -> "4.2.1",
-        "mini-css-extract-plugin" -> "0.5.0",
-        "webpack-dev-server-status-bar" -> "1.1.0",
-        "cssnano" -> "4.1.8",
-        "uglifyjs-webpack-plugin" -> "2.1.1",
-        "html-webpack-plugin" -> "3.2.0",
+        "postcss-loader"                     -> "3.0.0",
+        "autoprefixer"                       -> "9.4.4",
+        "url-loader"                         -> "1.1.1",
+        "file-loader"                        -> "3.0.1",
+        "css-loader"                         -> "2.1.0",
+        "style-loader"                       -> "0.23.1",
+        "less"                               -> "3.9.0",
+        "less-loader"                        -> "4.1.0",
+        "webpack-merge"                      -> "4.2.1",
+        "mini-css-extract-plugin"            -> "0.5.0",
+        "webpack-dev-server-status-bar"      -> "1.1.0",
+        "cssnano"                            -> "4.1.8",
+        "uglifyjs-webpack-plugin"            -> "2.1.1",
+        "html-webpack-plugin"                -> "3.2.0",
         "optimize-css-assets-webpack-plugin" -> "5.0.1",
-        "favicons-webpack-plugin" -> "0.0.9",
-        "why-did-you-update" -> "1.0.6"
+        "favicons-webpack-plugin"            -> "0.0.9",
+        "why-did-you-update"                 -> "1.0.6"
       ),
       npmDependencies in Compile ++= Seq(
-        "react" -> reactJS,
-        "react-dom" -> reactJS,
+        "react"      -> reactJS,
+        "react-dom"  -> reactJS,
         "highcharts" -> highcharts
       ),
       // don't publish the demo
@@ -139,14 +138,14 @@ lazy val facade =
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
-        "io.github.cquiroz.react" %%% "common" % "0.9.8",
-        "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
-        "com.lihaoyi" %%% "utest" % "0.7.4" % Test
+        "com.github.japgolly.scalajs-react" %%% "core"   % scalaJsReact,
+        "io.github.cquiroz.react"           %%% "common" % "0.9.8",
+        "com.github.japgolly.scalajs-react" %%% "test"   % scalaJsReact % Test,
+        "com.lihaoyi"                       %%% "utest"  % "0.7.4"      % Test
       ),
       npmDependencies in Compile ++= Seq(
-        "react" -> reactJS,
-        "react-dom" -> reactJS,
+        "react"      -> reactJS,
+        "react-dom"  -> reactJS,
         "highcharts" -> highcharts
       ),
       stIgnore ++= List("react", "react-dom"),

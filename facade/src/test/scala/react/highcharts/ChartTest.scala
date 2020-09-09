@@ -8,7 +8,7 @@ import scala.scalajs.js.annotation.JSImport
 
 import gpp.highcharts.mod.Options
 import gpp.highcharts.mod.charts
-import gpp.highcharts.mod.{^ => HighCharts, _}
+import gpp.highcharts.mod.{ ^ => HighCharts, _ }
 
 import org.scalajs.dom.document
 import scala.scalajs.js.annotation.JSGlobal
@@ -19,7 +19,7 @@ object MainTest extends TestSuite {
     test("render") {
       val chart = Chart(Highcharts.defaultOptions)
       ReactTestUtils.withRenderedIntoDocument(chart.toUnmounted) { m =>
-        val html = m.outerHtmlScrubbed()
+        val html           = m.outerHtmlScrubbed()
         val normalizedHTML =
           html.replaceAll(" id=\"highcharts-\\w{7}-\\d-?\"", "")
         assert(
