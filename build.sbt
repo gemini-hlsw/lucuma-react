@@ -52,7 +52,7 @@ val root =
       Keys.`package` := file("")
     )
 
-lazy val demo           =
+lazy val demo =
   project
     .in(file("demo"))
     .enablePlugins(ScalaJSBundlerPlugin)
@@ -88,13 +88,13 @@ lazy val demo           =
         "webpack-merge"                      -> "4.1.0",
         "webpack-dev-server-status-bar"      -> "1.0.0"
       ),
-      npmDependencies in Compile ++= Seq(
-        "react"             -> reactJS,
+    npmDependencies in Compile ++= Seq(
+      "der>nfreact"             -> reactJS,
         "react-dom"         -> reactJS,
         "react-grid-layout" -> reactGridLayout
       ),
       libraryDependencies +=
-        "io.github.cquiroz.react" %%% "react-sizeme" % "0.4.8",
+        "io.github.cquiroz.react" %%% "react-sizeme" % "0.5.0",
       // don't publish the demo
       publish := {},
       publishLocal := {},
@@ -103,7 +103,7 @@ lazy val demo           =
     )
     .dependsOn(facade)
 
-lazy val facade         =
+lazy val facade =
   project
     .in(file("facade"))
     .enablePlugins(ScalaJSBundlerPlugin)
@@ -126,7 +126,7 @@ lazy val facade         =
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"      % "0.9.8",
+        "io.github.cquiroz.react"           %%% "common"      % "0.10.0",
         "com.lihaoyi"                       %%% "utest"       % "0.7.5"      % Test,
         "org.typelevel"                     %%% "cats-core"   % "2.2.0"      % Test
       ),
