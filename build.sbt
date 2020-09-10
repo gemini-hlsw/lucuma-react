@@ -139,7 +139,7 @@ lazy val facade =
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"   % scalaJsReact,
-        "io.github.cquiroz.react"           %%% "common" % "0.9.8",
+        "io.github.cquiroz.react"           %%% "common" % "0.10.0",
         "com.github.japgolly.scalajs-react" %%% "test"   % scalaJsReact % Test,
         "com.lihaoyi"                       %%% "utest"  % "0.7.4"      % Test
       ),
