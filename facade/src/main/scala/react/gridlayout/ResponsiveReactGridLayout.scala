@@ -212,14 +212,14 @@ object ResponsiveReactGridLayout {
   def build(
     values: Map[BreakpointName, (JsNumber, JsNumber, Layout)]
   ): (Breakpoints, Columns, Layouts) =
-    (Breakpoints(values.collect {
-       case (v, (w, _, _)) => Breakpoint(v, w)
+    (Breakpoints(values.collect { case (v, (w, _, _)) =>
+       Breakpoint(v, w)
      }.toList),
-     Columns(values.collect {
-       case (v, (_, c, _)) => Column(v, c)
+     Columns(values.collect { case (v, (_, c, _)) =>
+       Column(v, c)
      }.toList),
-     Layouts(values.collect {
-       case (v, (_, _, l)) => BreakpointLayout(v, l)
+     Layouts(values.collect { case (v, (_, _, l)) =>
+       BreakpointLayout(v, l)
      }.toList)
     )
 

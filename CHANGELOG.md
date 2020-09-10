@@ -1,5 +1,10 @@
 # Changes
 
+## 0.8.0
+
+* Upgrade scala.js to 0.10.0
+* Upgrade to react-common 0.10.0
+ 
 ## 0.7.4
 
 * Upgrade to react-common 0.9.8
