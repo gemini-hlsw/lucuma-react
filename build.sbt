@@ -1,6 +1,6 @@
 val reactJS        = "16.13.1"
 val scalaJsReact   = "1.7.5"
-val reactResizable = "2.0.0"
+val reactResizable = "1.11.0"
 val scalaJSDom     = "1.1.0"
 
 parallelExecution in (ThisBuild, Test) := false
@@ -95,7 +95,7 @@ lazy val demo =
         "react-resizable" -> reactResizable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz.react" %%% "react-sizeme" % "0.4.8"
+        "io.github.cquiroz.react" %%% "react-sizeme" % "0.5.0"
       ),
       // don't publish the demo
       publish := {},
@@ -129,8 +129,8 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra"           % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"            % scalaJsReact % Test,
         "org.scala-js"                      %%% "scalajs-dom"     % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"          % "0.9.8",
-        "io.github.cquiroz.react"           %%% "react-draggable" % "0.9.6",
+        "io.github.cquiroz.react"           %%% "common"          % "0.10.0",
+        "io.github.cquiroz.react"           %%% "react-draggable" % "0.10.0",
         "com.lihaoyi"                       %%% "utest"           % "0.7.5"      % Test,
         "org.typelevel"                     %%% "cats-core"       % "2.2.0"      % Test
       ),
