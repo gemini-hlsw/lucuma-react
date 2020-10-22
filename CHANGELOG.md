@@ -1,8 +1,12 @@
 # Changes
 
+## 0.11.0
+
+* Updated to scala.js 1.2.0
+
 ## 0.10.0
 
-* Updated to scala.js 1.3.0
+* Updated to scala.js 1.2.0
 * Port tests to munit
 
 ## 0.9.8
