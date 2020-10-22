@@ -1,5 +1,9 @@
 # Changes
 
+## 0.9.0
+
+* Upgrade to scala.js 1.3.0
+
 ## 0.8.1
 
 * Upgrade react-grid-layout to 1.1.1

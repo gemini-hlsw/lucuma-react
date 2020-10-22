@@ -89,7 +89,7 @@ lazy val demo =
         "webpack-dev-server-status-bar"      -> "1.0.0"
       ),
     npmDependencies in Compile ++= Seq(
-      "der>nfreact"             -> reactJS,
+        "react"             -> reactJS,
         "react-dom"         -> reactJS,
         "react-grid-layout" -> reactGridLayout
       ),
@@ -110,7 +110,7 @@ lazy val facade =
     .settings(commonSettings: _*)
     .settings(
       name := "react-grid-layout",
-      version in webpack := "4.32.0",
+      version in webpack := "4.44.1",
       version in startWebpackDevServer := "3.3.1",
       // Requires the DOM for tests
       requireJsDomEnv in Test := true,
@@ -126,7 +126,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"      % "0.10.0",
+        "io.github.cquiroz.react"           %%% "common"      % "0.11.0",
         "com.lihaoyi"                       %%% "utest"       % "0.7.5"      % Test,
         "org.typelevel"                     %%% "cats-core"   % "2.2.0"      % Test
       ),
