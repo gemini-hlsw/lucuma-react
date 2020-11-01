@@ -48,7 +48,7 @@ lazy val cats: Project =
       libraryDependencies ++= Seq(
         "org.typelevel" %%% "cats-core"        % "2.2.0",
         "org.typelevel" %%% "cats-testkit"     % "2.2.0"  % Test,
-        "org.scalameta" %%% "munit"            % "0.7.14" % Test,
+        "org.scalameta" %%% "munit"            % "0.7.15" % Test,
         "org.typelevel" %%% "discipline-munit" % "0.3.0"  % Test
       ),
       scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule)),
@@ -77,7 +77,7 @@ lazy val test =
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
-        "org.scalameta" %%% "munit"     % "0.7.14",
+        "org.scalameta" %%% "munit"     % "0.7.15",
         "org.typelevel" %%% "cats-core" % "2.2.0" % Test
       ),
       webpackExtraArgs in Test := Seq("--verbose", "--progress", "true"),
