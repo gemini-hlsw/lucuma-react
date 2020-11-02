@@ -7,7 +7,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 val reactJS          = "16.13.1"
 val reactBeautiulDnD = "13.0.0"
 val atlasKitTree     = "8.1.1"
-val scalaJsReact     = "1.7.5"
+val scalaJsReact     = "1.7.6"
 val cats             = "2.2.0" // Only used in demo
 
 parallelExecution in (ThisBuild, Test) := false
