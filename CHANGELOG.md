@@ -1,5 +1,9 @@
 # Changes
 
+## 0.11.1
+
+* Update scalajs-react to 1.7.6
+
 ## 0.11.0
 
 * Updated to scala.js 1.2.0
