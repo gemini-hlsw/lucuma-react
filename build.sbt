@@ -1,5 +1,5 @@
 val reactJS        = "16.13.1"
-val scalaJsReact   = "1.7.5"
+val scalaJsReact   = "1.7.6"
 val reactResizable = "1.11.0"
 val scalaJSDom     = "1.1.0"
 
