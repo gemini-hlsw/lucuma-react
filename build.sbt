@@ -46,8 +46,8 @@ lazy val cats: Project =
     .settings(
       name := "cats",
       libraryDependencies ++= Seq(
-        "org.typelevel" %%% "cats-core"        % "2.2.0",
-        "org.typelevel" %%% "cats-testkit"     % "2.2.0"  % Test,
+        "org.typelevel" %%% "cats-core"        % "2.3.0",
+        "org.typelevel" %%% "cats-testkit"     % "2.3.0"  % Test,
         "org.scalameta" %%% "munit"            % "0.7.19" % Test,
         "org.typelevel" %%% "discipline-munit" % "1.0.3"  % Test
       ),
@@ -78,7 +78,7 @@ lazy val test =
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
         "org.scalameta" %%% "munit"     % "0.7.19",
-        "org.typelevel" %%% "cats-core" % "2.2.0" % Test
+        "org.typelevel" %%% "cats-core" % "2.3.0" % Test
       ),
       webpackExtraArgs in Test := Seq("--verbose", "--progress", "true"),
       webpackConfigFile in Test := Some(
