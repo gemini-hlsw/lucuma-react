@@ -1,5 +1,10 @@
 # Changes
 
+## 0.11.2
+
+* Update scalajs-react to 1.7.7
+* Update cats to 2.3.0
+
 ## 0.11.1
 
 * Update scalajs-react to 1.7.6
