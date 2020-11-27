@@ -95,7 +95,7 @@ lazy val demo =
         "react-resizable" -> reactResizable
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz.react" %%% "react-sizeme" % "0.6.1"
+        "io.github.cquiroz.react" %%% "react-sizeme" % "0.6.2"
       ),
       // don't publish the demo
       publish := {},
