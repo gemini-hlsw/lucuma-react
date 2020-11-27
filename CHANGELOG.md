@@ -1,5 +1,11 @@
 # Changes
 
+## 0.9.2
+
+* Upgrade to scala.js-react 1.7.7
+* Upgrade to react-common 0.11.2
+* Upgrade do cats 2.3.0
+
 ## 0.9.1
 
 * Upgrade to scala.js-react 1.7.6
