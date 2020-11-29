@@ -6,7 +6,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 inThisBuild(Seq(
   homepage := Some(url("https://github.com/gemini-hlsw/gpp-svgdotjs")),
   Global / onChangedBuildSource := ReloadOnSourceChanges
-) ++ gspPublishSettings)
+) ++ lucumaPublishSettings)
 
 lazy val root = project
   .in(file("."))
@@ -29,11 +29,13 @@ lazy val root = project
         // By necessity facades will have unused params
         "-Wdead-code",
         "-Wunused:params",
-        "-Wunused:imports"
+        "-Wunused:imports",
+        "-Wunused:explicits"
       )
     )),
     sources in (Compile, doc) := Seq(),
     // focus only on these libraries
     stMinimize := Selection.AllExcept("@svgdotjs/svg.js")
   )
+  .settings(lucumaScalaJsSettings: _*)
   .enablePlugins(ScalablyTypedConverterGenSourcePlugin)
