@@ -32,3 +32,4 @@ project/metals.sbt
 .bsp/
 project/project/
 gnupg-*
+yarn.lock
