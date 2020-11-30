@@ -35,7 +35,9 @@ lazy val root = project
     )),
     sources in (Compile, doc) := Seq(),
     // focus only on these libraries
-    stMinimize := Selection.AllExcept("@svgdotjs/svg.js")
+    stMinimize := Selection.AllExcept("@svgdotjs/svg.js"),
+    // stMinimize := Selection.All,
+    // stMinimizeKeep ++= List("svgdotjsSvgJs.mod.Element")
   )
   .settings(lucumaScalaJsSettings: _*)
   .enablePlugins(ScalablyTypedConverterGenSourcePlugin)
