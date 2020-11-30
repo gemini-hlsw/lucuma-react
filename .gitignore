@@ -31,3 +31,4 @@ project/metals.sbt
 .hydra/
 .bsp/
 project/project/
+gnupg-*
