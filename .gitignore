@@ -29,3 +29,5 @@ project/metals.sbt
 
 # Hydra
 .hydra/
+.bsp/
+project/project/
