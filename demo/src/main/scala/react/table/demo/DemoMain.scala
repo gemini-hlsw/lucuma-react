@@ -67,7 +67,7 @@ object DemoMain {
         <.tr(propsToAttrs(rd.getRowProps()), cells)
       }
 
-      <.table(<.thead(headerRows), <.tbody(propsToAttrs(bodyProps), rows))
+      <.table(<.thead(<.tr(headerRows)), <.tbody(propsToAttrs(bodyProps), rows))
     }
 
   @JSExport
