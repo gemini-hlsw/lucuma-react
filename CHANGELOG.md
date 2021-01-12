@@ -1,5 +1,9 @@
 # Changes
 
+## 1.4.3
+
+* Update scala.js to 1.4.0
+
 ## 1.4.2
 
 * Update scalajs-react to 1.7.7
