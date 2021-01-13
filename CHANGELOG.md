@@ -1,5 +1,9 @@
 # Changes
 
+## 0.9.3
+
+* Upgrade to scala.js 1.4.0
+
 ## 0.9.2
 
 * Upgrade to scala.js-react 1.7.7
