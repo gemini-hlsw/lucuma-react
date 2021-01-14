@@ -18,7 +18,7 @@ object RGLDemo {
         List(
           LayoutItem(x = 0, y = 0, w = 6, h = 2, i = "a", static = true),
           LayoutItem(x = 1, y = 0, w = 3, h = 2, i = "b", minW = 2, maxW = 4),
-          LayoutItem(x = 4, y = 0, w = 1, h = 2, i = "c", handle = ".item")
+          LayoutItem(x = 4, y = 0, w = 1, h = 2, i = "c")
         )
       )
       val layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)] =
