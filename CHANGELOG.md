@@ -1,5 +1,9 @@
 # Changes
 
+## 0.10.0
+
+* Fixes a mismatch with the js api
+
 ## 0.9.3
 
 * Upgrade to scala.js 1.4.0
