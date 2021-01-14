@@ -105,20 +105,20 @@ package gridlayout {
   }
 
   final case class LayoutItem(
-    w:           JsNumber,
-    h:           JsNumber,
-    x:           JsNumber,
-    y:           JsNumber,
-    i:           js.UndefOr[String] = js.undefined,
-    minW:        js.UndefOr[JsNumber] = js.undefined,
-    minH:        js.UndefOr[JsNumber] = js.undefined,
-    maxW:        js.UndefOr[JsNumber] = js.undefined,
-    maxH:        js.UndefOr[JsNumber] = js.undefined,
-    moved:       js.UndefOr[Boolean] = js.undefined,
-    static:      js.UndefOr[Boolean] = js.undefined,
-    isDraggable: js.UndefOr[Boolean] = js.undefined,
-    isResizable: js.UndefOr[Boolean] = js.undefined,
-    handle:      js.UndefOr[String] = js.undefined
+    w:             JsNumber,
+    h:             JsNumber,
+    x:             JsNumber,
+    y:             JsNumber,
+    i:             js.UndefOr[String] = js.undefined,
+    minW:          js.UndefOr[JsNumber] = js.undefined,
+    minH:          js.UndefOr[JsNumber] = js.undefined,
+    maxW:          js.UndefOr[JsNumber] = js.undefined,
+    maxH:          js.UndefOr[JsNumber] = js.undefined,
+    static:        js.UndefOr[Boolean] = js.undefined,
+    isDraggable:   js.UndefOr[Boolean] = js.undefined,
+    isResizable:   js.UndefOr[Boolean] = js.undefined,
+    resizeHandles: js.UndefOr[List[String]] = js.undefined,
+    isBounded:     js.UndefOr[Boolean] = js.undefined
   ) {
     def toRaw: raw.LayoutItem =
       new raw.LayoutItem(w,
@@ -130,11 +130,11 @@ package gridlayout {
                          minH,
                          maxW,
                          maxH,
-                         moved,
                          static,
                          isDraggable,
                          isResizable,
-                         handle
+                         resizeHandles.map(_.toJSArray),
+                         isBounded
       )
   }
 
@@ -149,11 +149,11 @@ package gridlayout {
                      l.minH,
                      l.maxW,
                      l.maxH,
-                     l.moved,
                      l.static,
                      l.isDraggable,
                      l.isResizable,
-                     l.handle
+                     l.resizeHandles.map(_.toList),
+                     l.isBounded
       )
 
     private[gridlayout] def fromRawO(l: raw.LayoutItem): Option[LayoutItem] =
@@ -168,11 +168,11 @@ package gridlayout {
                          l.minH,
                          l.maxW,
                          l.maxH,
-                         l.moved,
                          l.static,
                          l.isDraggable,
                          l.isResizable,
-                         l.handle
+                         l.resizeHandles.map(_.toList),
+                         l.isBounded
           )
         )
       else
