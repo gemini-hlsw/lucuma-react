@@ -4,10 +4,6 @@ import scala.scalajs.js
 import js.annotation.JSImport
 import japgolly.scalajs.react._
 import react.common._
-import japgolly.scalajs.react.vdom.VdomElement
-import japgolly.scalajs.react.vdom.HtmlTagOf
-import japgolly.scalajs.react.Ref
-import japgolly.scalajs.react.{ raw => Raw }
 
 final case class GlobalHotKeys(
   keyMap:                js.UndefOr[KeyMap] = js.undefined,

@@ -2,15 +2,11 @@ package react.hotkeys.demo
 
 import org.scalajs.dom
 import scalajs.js
-import js.|
 import js.annotation._
-import js.JSConverters._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.hotkeys.HotKeys
-import scala.scalajs.js.JSON
 import react.hotkeys._
-import org.scalajs.dom.raw.Element
 import org.scalajs.dom.html
 
 @JSExportTopLevel("DemoMain")

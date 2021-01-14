@@ -4,7 +4,6 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 import japgolly.scalajs.react._
 import react.common._
-import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.HtmlTagOf
 import japgolly.scalajs.react.Ref
 import japgolly.scalajs.react.{ raw => Raw }
