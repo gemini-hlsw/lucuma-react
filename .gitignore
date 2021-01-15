@@ -19,6 +19,7 @@ calibrations/
 .bloop/
 .vscode/
 metals.sbt
+.bsp/
 
 # hydra
 .hydra/
@@ -67,6 +68,7 @@ ensime.sbt
 archive
 smartgcal
 .jvmopts
+
 # Node modules
 node_modules/
 package-lock.json
