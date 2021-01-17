@@ -8,21 +8,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: coursier/cache-action@v5
       - name: Set up JDK
-        uses: olafurpg/setup-scala@v7
+        uses: olafurpg/setup-scala@v10
         with:
-          java-version: adoptjdk@14
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.cache/coursier/v1
-          key: ${{ runner.os }}-coursier-${{ hashFiles('build.sbt') }}-${{ hashFiles('project/*.scala') }}
-          restore-keys: ${{ runner.os }}-coursier-
-      - name: Cache .sbt
-        uses: actions/cache@v1
-        with:
-          path: ~/.sbt
-          key: ${{ runner.os }}-sbt-${{ hashFiles('build.sbt') }}-${{ hashFiles('project/*.scala') }}
-          restore-keys: ${{ runner.os }}-sbt-          
-      - name: Run tests
+          java-version: adopt@1.11
+      - name: Run compile
         run: csbt scalafmtCheckAll facade/compile facade/test facade/fullOptJS::webpack

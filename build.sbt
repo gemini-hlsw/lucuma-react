@@ -2,9 +2,12 @@ name := "scalajs-react-highcharts"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-val highcharts   = "8.1.2"
-val scalaJsReact = "1.7.3"
-val reactJS      = "16.13.1"
+scalaVersion in ThisBuild := "2.13.4"
+
+val highcharts         = "8.1.2"
+val scalaJsReact       = "1.7.7"
+val reactJS            = "16.13.1"
+val scalaJsReactCommon = "0.11.3"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -121,6 +124,7 @@ lazy val demo =
 lazy val facade =
   project
     .in(file("facade"))
+    .settings(commonSettings: _*)
     .enablePlugins(ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
     .settings(
       name := "facade",
@@ -130,7 +134,7 @@ lazy val facade =
       // Use yarn as it is faster than npm
       useYarn := true,
       yarnExtraArgs := {
-        if (insideCI.value) List("--frozen-lockfile") else List.empty
+        if (insideCI.value) List("--pure-lockfile") else List.empty
       },
       version in webpack := "4.32.0",
       version in installJsdom := "15.2.1",
@@ -139,7 +143,7 @@ lazy val facade =
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"   % scalaJsReact,
-        "io.github.cquiroz.react"           %%% "common" % "0.10.0",
+        "io.github.cquiroz.react"           %%% "common" % scalaJsReactCommon,
         "com.github.japgolly.scalajs-react" %%% "test"   % scalaJsReact % Test,
         "com.lihaoyi"                       %%% "utest"  % "0.7.4"      % Test
       ),
@@ -170,3 +174,15 @@ lazy val facade =
       ),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
+
+lazy val commonSettings = Seq(
+  scalaVersion := scalaVersion.value,
+  scalacOptions ~= (_.filterNot(
+    Set(
+      // By necessity facades will have unused params
+      "-Wdead-code",
+      "-Wunused:params",
+      "-Wunused:explicits"
+    )
+  ))
+)
