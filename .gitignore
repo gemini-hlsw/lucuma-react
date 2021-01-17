@@ -11,6 +11,7 @@ lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
+.bsp/
 
 # Scala-IDE specific
 .scala_dependencies
@@ -19,7 +20,7 @@ project/plugins/project/
 .vscode/
 .bloop/
 .metals/
-project/metals.sbt
+metals.sbt
 
 # Mac OS
 .DS_Store
