@@ -20,9 +20,9 @@ addCommandAlias(
 
 inThisBuild(
   List(
-    scalaVersion := "2.13.3",
-    organization := "com.toddburnside",
-    sonatypeProfileName := "com.toddburnside",
+    scalaVersion := "2.13.4",
+    organization := "io.github.toddburnside",
+    sonatypeProfileName := "io.github.toddburnside",
     homepage := Some(
       url("https://github.com/toddburnside/scalajs-react-table")
     ),
@@ -32,6 +32,12 @@ inThisBuild(
       )
     ),
     developers := List(
+      Developer(
+        "toddburnside ",
+        "Todd Burnside",
+        "toddburnside@gmail.com",
+        url("https://github.com/toddburnside")
+      ),
       Developer(
         "rpiaggio",
         "Raúl Piaggio",
@@ -43,12 +49,6 @@ inThisBuild(
         "Carlos Quiroz",
         "carlos.m.quiroz@gmail.com",
         url("https://github.com/cquiroz")
-      ),
-      Developer(
-        "toddburnside ",
-        "Todd Burnside",
-        "tburnside@gemini.edu",
-        url("https://github.com/toddburnside")
       )
     ),
     scmInfo := Some(
