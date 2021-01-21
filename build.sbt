@@ -33,9 +33,9 @@ inThisBuild(
     ),
     developers := List(
       Developer(
-        "toddburnside ",
+        "toddburnside",
         "Todd Burnside",
-        "toddburnside@gmail.com",
+        "toddjburnside@gmail.com",
         url("https://github.com/toddburnside")
       ),
       Developer(
