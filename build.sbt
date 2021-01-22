@@ -166,6 +166,7 @@ lazy val facade =
       stUseScalaJsDom := true,
       stOutputPackage := "reactST",
       stFlavour := Flavour.Japgolly,
+      stReactEnableTreeShaking := Selection.All,
       Compile / stMinimize := Selection.AllExcept("react-table"),
       scalacOptions ~= (_.filterNot(
         Set(

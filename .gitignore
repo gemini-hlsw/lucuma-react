@@ -18,6 +18,7 @@ project/plugins/project/
 .idea/
 .vscode/
 .bloop/
+.bsp/
 .metals/
 metals.sbt
 
@@ -29,3 +30,6 @@ metals.sbt
 
 # Hydra
 .hydra/
+
+# js
+**/yarn.lock
