@@ -1,74 +1,65 @@
 package react.table.demo
 
+import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
 
-import org.scalajs.dom
-import scala.scalajs.js
-import js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-
+import org.scalajs.dom
+import react.common.Css
+import reactST.reactTable.TableMaker
 import reactST.reactTable.mod._
+
+import js.annotation._
 
 @JSExportTopLevel("DemoMain")
 object DemoMain {
 
   def logit(message: String, obj: Any) = dom.console.log(message, obj.asInstanceOf[js.Any])
-  trait RowData extends js.Object {
-    val make: String
-    val model: String
-    val year: Int
-  }
 
-  object RowData {
-    def apply(make: String, model: String, year: Int): RowData =
-      js.Dynamic.literal("make" -> make, "model" -> model, "year" -> year).asInstanceOf[RowData]
-  }
+  case class Details(year: Int, pickups: Int, color: String)
+  case class Guitar(id: Int, make: String, model: String, details: Details)
 
-  val rowData =
-    js.Array(RowData("Fender", "Stratocaster", 2019),
-             RowData("Gibson", "Les Paul", 1958),
-             RowData("Fender", "Telecaster", 1971)
+  val guitars =
+    js.Array(
+      Guitar(1, "Fender", "Stratocaster", Details(2019, 3, "Sunburst")),
+      Guitar(2, "Gibson", "Les Paul", Details(1958, 2, "Gold top")),
+      Guitar(3, "Fender", "Telecaster", Details(1971, 2, "Ivory")),
+      Guitar(4, "Godin", "LG", Details(2008, 2, "Burgundy"))
     )
 
-  def column(accessor: String): Column[RowData] =
-    js.Dynamic
-      .literal("Header" -> accessor, "accessor" -> accessor)
-      .asInstanceOf[ColumnWithLooseAccessor[RowData]]
+  val idRenderer = ScalaComponent
+    .builder[Guitar]
+    .render_P(props => <.span(s"g-${props.id}"))
+    .build
+    .cmapCtorProps[(CellProps[Guitar, _]) with js.Object](_.cell.row.original)
+    .toJsComponent
+    .raw
 
-  val columns: js.Array[Column[RowData]] = js.Array(column("make"), column("model"), column("year"))
+  val tableMaker = TableMaker[Guitar].withSort
+  import tableMaker.syntax._
 
-  def propsToAttrs(obj: js.Object): TagMod =
-    js.Object.getOwnPropertyNames(obj).toTagMod { k =>
-      val value = js.Object.getOwnPropertyDescriptor(obj, k).value.toString()
-      println(s"Key: $k, Value: $value")
-      logit("Value:", value)
-      VdomAttr(k) := value
-    }
+  val columns = tableMaker.columnArray(
+    tableMaker
+      .componentColumn("id", idRenderer)
+      .setSortByFn[Int](_.id)
+      .setHeader("Id")
+      .setAccessorFn(_.id),
+    tableMaker.accessorColumn("make", _.make).setHeader("Make"),
+    tableMaker.accessorColumn("model", _.model).setHeader("Model"),
+    tableMaker.columnGroup(
+      "Details",
+      tableMaker.accessorColumn("year", _.details.year).setHeader("Year"),
+      tableMaker.accessorColumn("pickups", _.details.pickups).setHeader("Pickups"),
+      tableMaker.accessorColumn("color", _.details.color).setHeader("Color")
+    )
+  )
 
-  val component =
-    ScalaFnComponent[Unit] { _ =>
-      val options       = UseTableOptions[RowData](columns, rowData)
-      val tableInstance = useTable(options)
-      val bodyProps     = tableInstance.getTableBodyProps()
-
-      logit("Table instance: ", tableInstance)
-      logit("Rows:", tableInstance.rows)
-      logit("Body props:", bodyProps)
-
-      val headerRows = tableInstance.headers.toTagMod { col =>
-        <.th(propsToAttrs(col.getHeaderProps()), col.render("Header"))
-      }
-      val rows       = tableInstance.rows.toTagMod { rd =>
-        tableInstance.prepareRow(rd)
-        val cells = rd.cells.toTagMod { cell =>
-          <.td(propsToAttrs(cell.getCellProps()), cell.render("Cell"))
-        }
-        <.tr(propsToAttrs(rd.getRowProps()), cells)
-      }
-
-      <.table(<.thead(<.tr(headerRows)), <.tbody(propsToAttrs(bodyProps), rows))
-    }
+  val state   = tableMaker.emptyState.setSortByVarargs(SortingRule("model"))
+  val options = tableMaker.emptyOptions
+    .setRowIdFn(_.id.toString)
+    .setInitialStateFull(state)
+    .setColumns(columns)
 
   @JSExport
   def main(): Unit = {
@@ -80,7 +71,20 @@ object DemoMain {
       elem
     }
 
-    component().renderIntoDOM(container)
+    val guitarFooter = <.tfoot(<.tr(<.th(^.colSpan := 6, s"Guitar Count: ${guitars.length}")))
+
+    <.div(
+      <.h1("Demo for scalajs-react-table"),
+      tableMaker
+        .makeTable(options = options,
+                   data = guitars,
+                   tableClass = Css("guitars"),
+                   headerCellFn = Some(TableMaker.sortableHeaderCellFn()),
+                   footer = guitarFooter
+        ),
+      "Click header to sort. Shift-Click for multi-sort."
+    )
+      .renderIntoDOM(container)
 
     ()
   }
