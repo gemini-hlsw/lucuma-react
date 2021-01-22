@@ -12,7 +12,7 @@ jobs:
           fetch-depth: 0
       - uses: olafurpg/setup-scala@v10
       - uses: olafurpg/setup-gpg@v3
-      - run: csbt -Xmx4G -Xms4G ci-release
+      - run: sbt -J-Xmx4G -J-Xms4G ci-release
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
