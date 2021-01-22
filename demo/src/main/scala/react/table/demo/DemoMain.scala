@@ -42,9 +42,9 @@ object DemoMain {
   val columns = tableMaker.columnArray(
     tableMaker
       .componentColumn("id", idRenderer)
-      .sortBy_[Int](_.id)
+      .setSortByFn[Int](_.id)
       .setHeader("Id")
-      .setAccessorFn_(_.id),
+      .setAccessorFn(_.id),
     tableMaker.accessorColumn("make", _.make).setHeader("Make"),
     tableMaker.accessorColumn("model", _.model).setHeader("Model"),
     tableMaker.columnGroup(
@@ -57,8 +57,8 @@ object DemoMain {
 
   val state   = tableMaker.emptyState.setSortByVarargs(SortingRule("model"))
   val options = tableMaker.emptyOptions
-    .setRowId_(_.id.toString)
-    .setInitialState_(state)
+    .setRowIdFn(_.id.toString)
+    .setInitialStateFull(state)
     .setColumns(columns)
 
   @JSExport

@@ -46,7 +46,7 @@ trait TableMaker[
    * @param accessor Accessor function to get the column value from the row value.
    */
   def accessorColumn[V](id: String, accessor: D => V): ColumnOptsD =
-    emptyColumn.setId(id).setAccessorFn_(accessor)
+    emptyColumn.setId(id).setAccessorFn(accessor)
 
   // return type of a scalajs-react component function.
   type ComponentFnResult =
@@ -212,8 +212,10 @@ trait TableMaker[
 
       /**
        * Sets the initial state of the table.
+       *
+       * The provided setInitialState method takes a Partial[TableState[D]]
        */
-      def setInitialState_(s: TableState[D]): TableOptsD =
+      def setInitialStateFull(s: TableState[D]): TableOptsD =
         table.setInitialState(s.asInstanceOf[Partial[TableState[D]]])
 
       /**
@@ -221,7 +223,7 @@ trait TableMaker[
        *
        * @param f A function from the row type to the row id.
        */
-      def setRowId_(f: D => String): TableOptsD =
+      def setRowIdFn(f: D => String): TableOptsD =
         table.setGetRowId((data, _, _) => f(data))
     }
 
@@ -232,7 +234,7 @@ trait TableMaker[
        *
        * @param f A function from the row type to the column type.
        */
-      def setAccessorFn_[V](f: D => V): ColumnOptsD =
+      def setAccessorFn[V](f: D => V): ColumnOptsD =
         col.setAccessorFunction3(TableMaker.accessorFn(f))
 
       /**
@@ -250,7 +252,7 @@ trait TableMaker[
        *   of UseSortByColumnOptions[D] and that worked. Unfortunately, requires
        *   asInstanceOfs.
        */
-      def sortBy_[V](
+      def setSortByFn[V](
         f:                 D => V
       )(implicit ordering: Ordering[V], evidence: ColumnOptsD <:< UseSortByColumnOptions[D]) = {
         val sbfn: SortByFn[D] = (d1, d2, _, _) =>
