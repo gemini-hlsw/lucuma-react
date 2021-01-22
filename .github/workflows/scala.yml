@@ -16,3 +16,5 @@ jobs:
         run: node --version
       - name: Checking your code format
         run: csbt scalafmtCheckAll
+      - name: Run tests
+        run: csbt test
