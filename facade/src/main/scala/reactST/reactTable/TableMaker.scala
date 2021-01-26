@@ -1,7 +1,6 @@
 package reactST.reactTable
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.component.Generic.ComponentWithRoot
 import japgolly.scalajs.react.internal.JsUtil
 import japgolly.scalajs.react.raw.React.ComponentClassP
 import japgolly.scalajs.react.vdom.html_<^._
@@ -9,11 +8,14 @@ import react.common.Css
 import reactST.reactTable.anon.Data
 import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
 import reactST.reactTable.mod._
+import reactST.reactWindow.WindowHelper
+import reactST.reactWindow.mod.ListChildComponentProps
 import reactST.std.Partial
 
 import scalajs.js
 import scalajs.js.|
 import scalajs.js.JSConverters._
+import reactST.reactTable.TableMaker.LayoutMarker
 
 // format: off
 trait TableMaker[
@@ -126,7 +128,7 @@ trait TableMaker[
    *
    * @param options The table options to use for the table.
    * @param data The table data.
-   * @param headerCellFn A function to use for creating the <th> elements. Simple ones are provided by TableUtils.
+   * @param headerCellFn A function to use for creating the <th> elements. Simple ones are provided by the TableMaker object.
    * @param tableClass An optional CSS class to apply to the table element
    * @param footer An optional <tfoot> element. (see note below)
    *
@@ -179,8 +181,99 @@ trait TableMaker[
     component(options)
   }
 
+  /**
+   * Create a table element based on the configured plugins.
+   * The plugins MUST include withBlockLayout.
+   *
+   * @param options The table options to use for the table.
+   * @param data The table data.
+   * @param rowIdFn Function to extract the row id from a data element.
+   * @param rowHeight The height of each row.
+   * @param bodyHeight The height of the table body (virtualized portion).
+   * @param headerCellFn See note. A function to use for creating the header elements. Simple ones are provided by the TableMaker object.
+   * @param tableClass An optional CSS class to apply to the table element
+   *
+   * Notes:
+   * Virtualized tables are not built from html table elements such as
+   * <table>, <tr>, etc. The virtualization requires they be made from
+   * <div> elements and styled as a table. This method adds a class to
+   * each div that corresponds to it's role, such as "table", "thead",
+   * "tr", etc.
+   * This means that headerCellFn must also return a <div> instead
+   * of a <td>, and should probably also have a class of "td". The basic
+   * header functions in TableMaker take a boolean flag to handle this.
+   */
+  def makeVirtualizedTable(
+    options:           TableOptsD,
+    data:              js.Array[D],
+    rowIdFn:           D => String,
+    rowHeight:         Double,
+    bodyHeight:        Double,
+    headerCellFn:      Option[ColumnInstanceD => TagMod],
+    tableClass:        Css = Css("")
+  )(implicit evidence: TableOptsD <:< LayoutMarker) = {
+
+    val component = ScalaFnComponent[TableOptsD] { opts =>
+      val tableInstance = use(opts.setData(data))
+      val bodyProps     = tableInstance.getTableBodyProps()
+
+      val rowComponent = ScalaComponent
+        .builder[ListChildComponentProps]
+        .render_P { props =>
+          val row   = props.data.asInstanceOf[js.Array[Row[D]]](props.index.toInt)
+          tableInstance.prepareRow(row)
+          val cells = row.cells.toTagMod { cell =>
+            <.div(^.className := "td",
+                  TableMaker.props2Attrs(cell.getCellProps()),
+                  cell.render("Cell")
+            )
+          }
+          <.div(^.className := "tr",
+                ^.style := props.style,
+                TableMaker.props2Attrs(row.getRowProps()),
+                cells
+          )
+        }
+        .build
+        .toJsComponent
+        .raw
+
+      val header = headerCellFn.fold(TagMod.empty) { f =>
+        <.div(
+          ^.className := "thead",
+          tableInstance.headerGroups.toTagMod { g =>
+            <.div(^.className := "tr",
+                  TableMaker.props2Attrs(g.getHeaderGroupProps()),
+                  headersFromGroup(g).toTagMod(f(_))
+            )
+          }
+        )
+      }
+
+      val itemKeyFn: (Double, js.Any) => reactST.react.mod.Key =
+        (index, d) => rowIdFn(d.asInstanceOf[js.Array[Row[D]]](index.toInt).original)
+
+      val rows = WindowHelper
+        .fixedSizeList(rowComponent = rowComponent,
+                       height = bodyHeight,
+                       itemCount = data.length,
+                       itemSize = rowHeight,
+                       width = tableInstance.totalColumnsWidth
+        )
+        .itemData(tableInstance.rows)
+        .itemKey(itemKeyFn)
+
+      <.div(^.className := "table",
+            tableClass,
+            header,
+            <.div(^.className := "tbody", TableMaker.props2Attrs(bodyProps), rows)
+      )
+    }
+    component(options.setRowIdFn(rowIdFn))
+  }
+
   /*
-   * When adding new plugs, see https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-table
+   * When adding new plugins, see https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-table
    * for help determining what the necessary type changes are.
    *
    * Heads Up! It doesn't seem to be documented, but the order of plugins seems
@@ -201,6 +294,27 @@ trait TableMaker[
     ColumnInstanceD with UseSortByColumnProps[D], 
     State with UseSortByState[D]] {
     val plugins = self.plugins :+ useSortBy.asInstanceOf[PluginHook[D]]
+  }
+  // format: on
+
+  /**
+   * Adds support for headers and cells to be rendered as inline-block divs
+   * (or other non-table elements) with explicit width. This becomes useful if and when you need
+   * to virtualize rows and cells for performance.
+   *
+   * NOTE: Although no additional options are needed for this plugin to work, the core column
+   * options width, minWidth and maxWidth are used to calculate column and cell widths and must
+   * be set.
+   */
+  // format: off
+  def withBlockLayout = new TableMaker[
+    D, 
+    TableOptsD with LayoutMarker, // A marker trait to limit calls to makeVirtualizedTable.
+    TableInstanceD, 
+    ColumnOptsD, 
+    ColumnInstanceD, 
+    State] {
+    val plugins = self.plugins :+ useBlockLayout.asInstanceOf[PluginHook[D]]
   }
   // format: on
 
@@ -293,9 +407,13 @@ object TableMaker {
    * headerCellFn parameter. This is a a basic header.
    *
    * @param cellClass An optional CSS class to apply the the <th>.
+   * @param useDiv True to use a <div> instead of a <th>. Needed for tables withBlockLayout.
    */
-  def basicHeaderCellFn(cellClass: Css = Css("")): ColumnInstance[_] => TagMod =
-    col => <.th(props2Attrs(col.getHeaderProps()), cellClass, col.render("Header"))
+  def basicHeaderCellFn(
+    cellClass: Css = Css(""),
+    useDiv:    Boolean = false
+  ): ColumnInstance[_] => TagMod =
+    col => headerCell(useDiv)(props2Attrs(col.getHeaderProps()), cellClass, col.render("Header"))
 
   /**
    * A function to use in TableMaker.makeTable for the headerCellFn
@@ -304,10 +422,12 @@ object TableMaker {
    * of UseSortByColumnPros.
    *
    * @param cellClass An optional CSS class to apply to the <th>.
+   * @param useDiv True to use a <div> instead of a <th>. Needed for tables withBlockLayout.
    * @return
    */
   def sortableHeaderCellFn(
-    cellClass: Css = Css("")
+    cellClass: Css = Css(""),
+    useDiv:    Boolean = false
   ): ColumnInstance[_] with UseSortByColumnProps[_] => TagMod =
     col => {
       def sortIndicator(col: UseSortByColumnProps[_]): TagMod =
@@ -316,14 +436,38 @@ object TableMaker {
           val ascDesc = if (col.isSortedDesc.getOrElse(false)) "\u2191" else "\u2193"
           <.span(s" $index$ascDesc")
         } else TagMod.empty
-      <.th(props2Attrs(col.getHeaderProps()),
-           props2Attrs(col.getSortByToggleProps()),
-           cellClass,
-           col.render("Header"),
-           <.span(sortIndicator(col))
+
+      val headerProps = col.getHeaderProps()
+      val toggleProps = col.getSortByToggleProps()
+
+      // If both props have a "styles", only the last one gets used. Apparently, scalajs.react doesn't
+      // merge them. So, we have to combine them manually.
+      val styles = if (headerProps.hasOwnProperty("style") && toggleProps.hasOwnProperty("style")) {
+        val headerStyles =
+          js.Object.entries(
+            js.Object.getOwnPropertyDescriptor(headerProps, "style").value.asInstanceOf[js.Object]
+          )
+        val toggleStyles =
+          js.Object.entries(
+            js.Object.getOwnPropertyDescriptor(toggleProps, "style").value.asInstanceOf[js.Object]
+          )
+        ^.style := js.Object.fromEntries(headerStyles ++ toggleStyles)
+      } else TagMod.empty
+
+      headerCell(useDiv)(
+        props2Attrs(headerProps),
+        props2Attrs(toggleProps),
+        styles,
+        cellClass,
+        col.render("Header"),
+        <.span(sortIndicator(col))
       )
     }
 
   def accessorFn[D, V](f: D => V): js.Function3[D, Double, Data[D], js.Any] =
     (data, _, _) => f(data).asInstanceOf[js.Any]
+
+  private def headerCell(useDiv: Boolean) = if (useDiv) <.div(^.className := "th") else <.th()
+
+  trait LayoutMarker
 }

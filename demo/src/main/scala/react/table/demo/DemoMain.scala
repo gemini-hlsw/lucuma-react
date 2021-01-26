@@ -36,30 +36,88 @@ object DemoMain {
     .toJsComponent
     .raw
 
-  val tableMaker = TableMaker[Guitar].withSort
-  import tableMaker.syntax._
+  val sortedTable = {
+    val tableMaker = TableMaker[Guitar].withSort
+    import tableMaker.syntax._
 
-  val columns = tableMaker.columnArray(
-    tableMaker
-      .componentColumn("id", idRenderer)
-      .setSortByFn[Int](_.id)
-      .setHeader("Id")
-      .setAccessorFn(_.id),
-    tableMaker.accessorColumn("make", _.make).setHeader("Make"),
-    tableMaker.accessorColumn("model", _.model).setHeader("Model"),
-    tableMaker.columnGroup(
-      "Details",
-      tableMaker.accessorColumn("year", _.details.year).setHeader("Year"),
-      tableMaker.accessorColumn("pickups", _.details.pickups).setHeader("Pickups"),
-      tableMaker.accessorColumn("color", _.details.color).setHeader("Color")
+    val columns = tableMaker.columnArray(
+      tableMaker
+        .componentColumn("id", idRenderer)
+        .setSortByFn[Int](_.id)
+        .setHeader("Id")
+        .setAccessorFn(_.id),
+      tableMaker.accessorColumn("make", _.make).setHeader("Make"),
+      tableMaker.accessorColumn("model", _.model).setHeader("Model"),
+      tableMaker.columnGroup(
+        "Details",
+        tableMaker.accessorColumn("year", _.details.year).setHeader("Year"),
+        tableMaker.accessorColumn("pickups", _.details.pickups).setHeader("Pickups"),
+        tableMaker.accessorColumn("color", _.details.color).setHeader("Color")
+      )
     )
-  )
 
-  val state   = tableMaker.emptyState.setSortByVarargs(SortingRule("model"))
-  val options = tableMaker.emptyOptions
-    .setRowIdFn(_.id.toString)
-    .setInitialStateFull(state)
-    .setColumns(columns)
+    val state   = tableMaker.emptyState.setSortByVarargs(SortingRule("model"))
+    val options = tableMaker.emptyOptions
+      .setRowIdFn(_.id.toString)
+      .setInitialStateFull(state)
+      .setColumns(columns)
+
+    val guitarFooter = <.tfoot(<.tr(<.th(^.colSpan := 6, s"Guitar Count: ${guitars.length}")))
+
+    tableMaker
+      .makeTable(options = options,
+                 data = guitars,
+                 tableClass = Css("guitars"),
+                 headerCellFn = Some(TableMaker.sortableHeaderCellFn()),
+                 footer = guitarFooter
+      )
+  }
+
+  val virtualizedTable = {
+    val tm = TableMaker[RandomData.Person].withBlockLayout
+
+    val cols = tm.columnArray(
+      tm.accessorColumn("first", _.first).setHeader("First").setWidth(100),
+      tm.accessorColumn("last", _.last).setHeader("Last").setWidth(100),
+      tm.accessorColumn("age", _.age).setHeader("Age").setWidth(50)
+    )
+
+    val options =
+      tm.emptyOptions.setColumns(cols)
+
+    tm.makeVirtualizedTable(
+      options = options,
+      data = RandomData.randomPeople(1000),
+      rowIdFn = _.id.toString,
+      rowHeight = 36.2,
+      bodyHeight = 200,
+      tableClass = Css("virtualized"),
+      headerCellFn = Some(TableMaker.basicHeaderCellFn(useDiv = true))
+    )
+  }
+
+  val sortedVirtualizedTable = {
+    val tm = TableMaker[RandomData.Person].withSort.withBlockLayout
+
+    val cols = tm.columnArray(
+      tm.accessorColumn("first", _.first).setHeader("First").setWidth(100),
+      tm.accessorColumn("last", _.last).setHeader("Last").setWidth(100),
+      tm.accessorColumn("age", _.age).setHeader("Age").setWidth(75)
+    )
+
+    val options =
+      tm.emptyOptions.setColumns(cols)
+
+    tm.makeVirtualizedTable(
+      options = options,
+      data = RandomData.randomPeople(1000),
+      rowIdFn = _.id.toString,
+      rowHeight = 36.2,
+      bodyHeight = 200,
+      tableClass = Css("virtualized"),
+      headerCellFn = Some(TableMaker.sortableHeaderCellFn(useDiv = true))
+    )
+  }
 
   @JSExport
   def main(): Unit = {
@@ -71,18 +129,15 @@ object DemoMain {
       elem
     }
 
-    val guitarFooter = <.tfoot(<.tr(<.th(^.colSpan := 6, s"Guitar Count: ${guitars.length}")))
-
     <.div(
       <.h1("Demo for scalajs-react-table"),
-      tableMaker
-        .makeTable(options = options,
-                   data = guitars,
-                   tableClass = Css("guitars"),
-                   headerCellFn = Some(TableMaker.sortableHeaderCellFn()),
-                   footer = guitarFooter
-        ),
-      "Click header to sort. Shift-Click for multi-sort."
+      <.h2("Sortable table"),
+      sortedTable,
+      "Click header to sort. Shift-Click for multi-sort.",
+      <.h2("Virtualized Table"),
+      virtualizedTable,
+      <.h2("Sortable Virtualized Table"),
+      sortedVirtualizedTable
     )
       .renderIntoDOM(container)
 
