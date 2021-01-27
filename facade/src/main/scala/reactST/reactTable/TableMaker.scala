@@ -194,7 +194,7 @@ trait TableMaker[
   }
 
   /**
-   * Create a table element based on the configured plugins.
+   * Create a virtualized table based on the configured plugins.
    * The plugins MUST include withBlockLayout.
    *
    * @param options The table options to use for the table.
@@ -454,19 +454,8 @@ object TableMaker {
       val headerProps = col.getHeaderProps()
       val toggleProps = col.getSortByToggleProps()
 
-      // If both props have a "styles", only the last one gets used. Apparently, scalajs.react doesn't
-      // merge them. So, we have to combine them manually.
-      val styles = if (headerProps.hasOwnProperty("style") && toggleProps.hasOwnProperty("style")) {
-        val headerStyles =
-          js.Object.entries(
-            js.Object.getOwnPropertyDescriptor(headerProps, "style").value.asInstanceOf[js.Object]
-          )
-        val toggleStyles =
-          js.Object.entries(
-            js.Object.getOwnPropertyDescriptor(toggleProps, "style").value.asInstanceOf[js.Object]
-          )
-        ^.style := js.Object.fromEntries(headerStyles ++ toggleStyles)
-      } else TagMod.empty
+      // if, for example, the table also has block layout, both properties objs will have styles.
+      val styles = combineStyles(headerProps, toggleProps)
 
       headerCell(useDiv)(
         props2Attrs(headerProps),
@@ -482,6 +471,40 @@ object TableMaker {
     (data, _, _) => f(data).asInstanceOf[js.Any]
 
   private def headerCell(useDiv: Boolean) = if (useDiv) <.div(^.className := "th") else <.th()
+
+  /**
+   * Merge the styles from properties objects returned by react-table.
+   * If we just use the properties objects directly, and more than one have "style",
+   * only the last one gets used. Apparently, scalajs-react doesn't merge them. So, we have to combine them manually.
+   * In the case of identical style keys, the last one wins. This is probably why scalajs-react doesn't merge.
+   *
+   * Styles are only combined if more than one propertyObjs have styles. Otherwise, the props2Attrs
+   * method works fine and combining is a waste of time. If one or fewer propertyObjs have styles,
+   * TagMod.empty is returned. See sortableHeaderCellFn for example usage.
+   *
+   * @param propertyObs A varargs of "properties objects" from react-table.
+   * @return A TagMod.
+   */
+  def combineStyles(propertyObs: js.Object*): TagMod = {
+    def style(props: js.Object): js.Dynamic =
+      if (props.hasOwnProperty("style"))
+        js.Object.getOwnPropertyDescriptor(props, "style").value.asInstanceOf[js.Dynamic]
+      else js.Dynamic.literal()
+
+    val hasMultiple = propertyObs.map(p => p.hasOwnProperty("style")).count(identity) > 1
+    if (hasMultiple) {
+      ^.style := mergeJSObjects(propertyObs.map(style(_)): _*)
+    } else TagMod.empty
+  }
+
+  // taken from https://stackoverflow.com/questions/36561209/is-it-possible-to-combine-two-js-dynamic-objects
+  private def mergeJSObjects(objs: js.Dynamic*): js.Object = {
+    val result = js.Dictionary.empty[Any]
+    for (source <- objs)
+      for ((key, value) <- source.asInstanceOf[js.Dictionary[Any]])
+        result(key) = value
+    result.asInstanceOf[js.Object]
+  }
 
   trait LayoutMarker
 }
