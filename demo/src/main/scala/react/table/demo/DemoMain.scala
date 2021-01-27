@@ -57,10 +57,9 @@ object DemoMain {
     )
 
     val state   = tableMaker.emptyState.setSortByVarargs(SortingRule("model"))
-    val options = tableMaker.emptyOptions
-      .setRowIdFn(_.id.toString)
+    val options = tableMaker
+      .optionsWithId(rowIdFn = _.id.toString, columns = columns)
       .setInitialStateFull(state)
-      .setColumns(columns)
 
     val guitarFooter = <.tfoot(<.tr(<.th(^.colSpan := 6, s"Guitar Count: ${guitars.length}")))
 
@@ -82,8 +81,7 @@ object DemoMain {
       tm.accessorColumn("age", _.age).setHeader("Age").setWidth(50)
     )
 
-    val options =
-      tm.emptyOptions.setColumns(cols)
+    val options = tm.options(cols)
 
     tm.makeVirtualizedTable(
       options = options,
@@ -105,8 +103,7 @@ object DemoMain {
       tm.accessorColumn("age", _.age).setHeader("Age").setWidth(75)
     )
 
-    val options =
-      tm.emptyOptions.setColumns(cols)
+    val options = tm.options(cols)
 
     tm.makeVirtualizedTable(
       options = options,

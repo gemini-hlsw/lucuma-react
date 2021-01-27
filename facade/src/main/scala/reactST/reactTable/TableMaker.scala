@@ -36,6 +36,18 @@ trait TableMaker[
   def emptyOptions: TableOptsD = js.Dynamic.literal().asInstanceOf[TableOptsD]
 
   /**
+   * Create a TableOptsD with columns set.
+   * Unless you are using makeVirtualizedTable(), you probably want to use optionsWithId()
+   */
+  def options(columns: js.Array[Column[D]]): TableOptsD = emptyOptions.setColumns(columns)
+
+  /**
+   * Create a TableOptsD with a row id function and columns set.
+   */
+  def optionsWithId(rowIdFn: D => String, columns: js.Array[Column[D]]): TableOptsD =
+    emptyOptions.setRowIdFn(rowIdFn).setColumns(columns)
+
+  /**
    * Create an empty instance of ColumnOptsD.
    * The other column creating methods are usually a better starting place.
    */
@@ -187,7 +199,7 @@ trait TableMaker[
    *
    * @param options The table options to use for the table.
    * @param data The table data.
-   * @param rowIdFn Function to extract the row id from a data element.
+   * @param rowIdFn Function to extract the row id from a data element. See note.
    * @param rowHeight The height of each row.
    * @param bodyHeight The height of the table body (virtualized portion).
    * @param headerCellFn See note. A function to use for creating the header elements. Simple ones are provided by the TableMaker object.
@@ -202,6 +214,8 @@ trait TableMaker[
    * This means that headerCellFn must also return a <div> instead
    * of a <td>, and should probably also have a class of "td". The basic
    * header functions in TableMaker take a boolean flag to handle this.
+   * The rowIdfn is applied to both the the table options and the react-window
+   * virtualization. So, you don't need to apply it to the options beforehand.
    */
   def makeVirtualizedTable(
     options:           TableOptsD,
