@@ -49,7 +49,7 @@ lazy val cats: Project =
         "org.typelevel" %%% "cats-core"        % "2.3.1",
         "org.typelevel" %%% "cats-testkit"     % "2.3.1"  % Test,
         "org.scalameta" %%% "munit"            % "0.7.21" % Test,
-        "org.typelevel" %%% "discipline-munit" % "1.0.4"  % Test
+        "org.typelevel" %%% "discipline-munit" % "1.0.5"  % Test
       ),
       scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule)),
       testFrameworks += new TestFramework("munit.Framework")
