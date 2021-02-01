@@ -1,0 +1,20 @@
+name: Scala CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Scala
+        uses: olafurpg/setup-scala@v10
+        with:
+          java-version: adopt@1.11
+      - name: version
+        run: node --version
+      - name: Checking your code format
+        run: csbt scalafmtCheckAll
+      - name: Run tests
+        run: csbt -J-Xmx4G -J-Xms4G test
