@@ -17,4 +17,4 @@ jobs:
       - name: Checking your code format
         run: csbt scalafmtCheckAll
       - name: Run tests
-        run: csbt test
+        run: csbt -J-Xmx4G -J-Xms4G test
