@@ -469,15 +469,12 @@ object TableMaker {
    * @return A TagMod.
    */
   def combineStyles(propertyObs: js.Object*): TagMod = {
-    def style(props: js.Object): js.Dynamic =
-      if (props.hasOwnProperty("style"))
-        js.Object.getOwnPropertyDescriptor(props, "style").value.asInstanceOf[js.Dynamic]
-      else js.Dynamic.literal()
-
-    val hasMultiple = propertyObs.map(p => p.hasOwnProperty("style")).count(identity) > 1
-    if (hasMultiple) {
-      ^.style := mergeJSObjects(propertyObs.map(style(_)): _*)
-    } else TagMod.empty
+    val styles = propertyObs.collect {
+      case o if o.hasOwnProperty("style") =>
+        js.Object.getOwnPropertyDescriptor(o, "style").value.asInstanceOf[js.Dynamic]
+    }
+    if (styles.length < 2) TagMod.empty
+    else ^.style := mergeJSObjects(styles: _*)
   }
 
   // taken from https://stackoverflow.com/questions/36561209/is-it-possible-to-combine-two-js-dynamic-objects
