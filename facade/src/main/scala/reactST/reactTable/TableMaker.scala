@@ -5,11 +5,10 @@ import japgolly.scalajs.react.internal.JsUtil
 import japgolly.scalajs.react.raw.React.ComponentClassP
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.Css
+import react.virtuoso.Virtuoso
 import reactST.reactTable.anon.Data
 import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
 import reactST.reactTable.mod._
-import reactST.reactWindow.WindowHelper
-import reactST.reactWindow.mod.ListChildComponentProps
 import reactST.std.Partial
 
 import scalajs.js
@@ -36,15 +35,9 @@ trait TableMaker[
   def emptyOptions: TableOptsD = js.Dynamic.literal().asInstanceOf[TableOptsD]
 
   /**
-   * Create a TableOptsD with columns set.
-   * Unless you are using makeVirtualizedTable(), you probably want to use optionsWithId()
-   */
-  def options(columns: js.Array[Column[D]]): TableOptsD = emptyOptions.setColumns(columns)
-
-  /**
    * Create a TableOptsD with a row id function and columns set.
    */
-  def optionsWithId(rowIdFn: D => String, columns: js.Array[Column[D]]): TableOptsD =
+  def options(rowIdFn: D => String, columns: js.Array[Column[D]]): TableOptsD =
     emptyOptions.setRowIdFn(rowIdFn).setColumns(columns)
 
   /**
@@ -142,6 +135,7 @@ trait TableMaker[
    * @param data The table data.
    * @param headerCellFn A function to use for creating the <th> elements. Simple ones are provided by the TableMaker object.
    * @param tableClass An optional CSS class to apply to the table element
+   * @param rowClassFn An option function that takes the index and the rowData and creates a class for the row. Relying on index does not work well for sortable tables since it is the unsorted index.
    * @param footer An optional <tfoot> element. (see note below)
    *
    * Notes:
@@ -163,6 +157,7 @@ trait TableMaker[
     data:         js.Array[D],
     headerCellFn: Option[ColumnInstanceD => TagMod],
     tableClass:   Css = Css(""),
+    rowClassFn:   (Int, D) => Css = (_, _) => Css(""),
     footer:       TagMod = TagMod.empty
   ) = {
     val component = ScalaFnComponent[TableOptsD] { opts =>
@@ -182,10 +177,11 @@ trait TableMaker[
 
       val rows = tableInstance.rows.toTagMod { rd =>
         tableInstance.prepareRow(rd)
-        val cells = rd.cells.toTagMod { cell =>
+        val rowClass = rowClassFn(rd.index.toInt, rd.original)
+        val cells    = rd.cells.toTagMod { cell =>
           <.td(TableMaker.props2Attrs(cell.getCellProps()), cell.render("Cell"))
         }
-        <.tr(TableMaker.props2Attrs(rd.getRowProps()), cells)
+        <.tr(rowClass, TableMaker.props2Attrs(rd.getRowProps()), cells)
       }
 
       <.table(tableClass, header, <.tbody(TableMaker.props2Attrs(bodyProps), rows), footer)
@@ -199,58 +195,55 @@ trait TableMaker[
    *
    * @param options The table options to use for the table.
    * @param data The table data.
-   * @param rowIdFn Function to extract the row id from a data element. See note.
-   * @param rowHeight The height of each row.
-   * @param bodyHeight The height of the table body (virtualized portion).
+   * @param bodyHeight The optional height of the table body (virtualized portion) in px. See note.
    * @param headerCellFn See note. A function to use for creating the header elements. Simple ones are provided by the TableMaker object.
    * @param tableClass An optional CSS class to apply to the table element
+   * @param rowClassFn An option function that takes the index and the rowData and creates a class for the row. Relying on index does not work well for sortable tables since it is the unsorted index.
    *
    * Notes:
    * Virtualized tables are not built from html table elements such as
    * <table>, <tr>, etc. The virtualization requires they be made from
    * <div> elements and styled as a table. This method adds a class to
    * each div that corresponds to it's role, such as "table", "thead",
-   * "tr", etc.
+   * "tr", etc. The "tr" div is currently wrapped inside an additional
+   * div that handles the virtualization.
    * This means that headerCellFn must also return a <div> instead
    * of a <td>, and should probably also have a class of "td". The basic
    * header functions in TableMaker take a boolean flag to handle this.
-   * The rowIdfn is applied to both the the table options and the react-window
-   * virtualization. So, you don't need to apply it to the options beforehand.
+   *
+   * The body height must be set to a value either through the bodyHeight
+   * parameter or via CSS or the body will collapse to nothing. In CSS, you
+   * MUST NOT use relative values like "100%" or it won't work.
    */
   def makeVirtualizedTable(
     options:           TableOptsD,
     data:              js.Array[D],
-    rowIdFn:           D => String,
-    rowHeight:         Double,
-    bodyHeight:        Double,
+    bodyHeight:        Option[Double] = None,
     headerCellFn:      Option[ColumnInstanceD => TagMod],
-    tableClass:        Css = Css("")
+    tableClass:        Css = Css(""),
+    rowClassFn:        (Int, D) => Css = (_, _) => Css("")
   )(implicit evidence: TableOptsD <:< LayoutMarker) = {
 
     val component = ScalaFnComponent[TableOptsD] { opts =>
       val tableInstance = use(opts.setData(data))
       val bodyProps     = tableInstance.getTableBodyProps()
 
-      val rowComponent = ScalaComponent
-        .builder[ListChildComponentProps]
-        .render_P { props =>
-          val row   = props.data.asInstanceOf[js.Array[Row[D]]](props.index.toInt)
-          tableInstance.prepareRow(row)
-          val cells = row.cells.toTagMod { cell =>
-            <.div(^.className := "td",
-                  TableMaker.props2Attrs(cell.getCellProps()),
-                  cell.render("Cell")
-            )
-          }
-          <.div(^.className := "tr",
-                ^.style := props.style,
-                TableMaker.props2Attrs(row.getRowProps()),
-                cells
+      val rowComp = (_: Int, row: Row[D]) => {
+        tableInstance.prepareRow(row)
+        val cells = row.cells.toTagMod { cell =>
+          <.div(^.className := "td",
+                TableMaker.props2Attrs(cell.getCellProps()),
+                cell.render("Cell")
           )
         }
-        .build
-        .toJsComponent
-        .raw
+
+        val rowClass = rowClassFn(row.index.toInt, row.original)
+        // This div is being wrapped inside the div that handles virtualization.
+        // This means the the `getRowProps` are nested an extra layer in. This does
+        // not seem to cause any issues with react-table, but could possibly be an
+        // issue with some plugins.
+        <.div(^.className := "tr", rowClass, TableMaker.props2Attrs(row.getRowProps()), cells)
+      }
 
       val header = headerCellFn.fold(TagMod.empty) { f =>
         <.div(
@@ -264,26 +257,16 @@ trait TableMaker[
         )
       }
 
-      val itemKeyFn: (Double, js.Any) => reactST.react.mod.Key =
-        (index, d) => rowIdFn(d.asInstanceOf[js.Array[Row[D]]](index.toInt).original)
-
-      val rows = WindowHelper
-        .fixedSizeList(rowComponent = rowComponent,
-                       height = bodyHeight,
-                       itemCount = data.length,
-                       itemSize = rowHeight,
-                       width = tableInstance.totalColumnsWidth
-        )
-        .itemData(tableInstance.rows)
-        .itemKey(itemKeyFn)
+      val height = bodyHeight.fold(TagMod.empty)(h => ^.height := s"${h}px")
+      val rows   = Virtuoso[Row[D]](data = tableInstance.rows, itemContent = rowComp)
 
       <.div(^.className := "table",
             tableClass,
             header,
-            <.div(^.className := "tbody", TableMaker.props2Attrs(bodyProps), rows)
+            <.div(^.className := "tbody", height, TableMaker.props2Attrs(bodyProps), rows)
       )
     }
-    component(options.setRowIdFn(rowIdFn))
+    component(options)
   }
 
   /*

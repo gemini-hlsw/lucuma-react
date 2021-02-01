@@ -2,14 +2,14 @@ name := "scalajs-react-table"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-val reactTable         = "7.6.2"
-val reactTableTypes    = "7.0.26"
-val scalaJsReact       = "1.7.7"
-val reactJS            = "16.13.1"
-val reactTypes         = "16.9.56"
-val reactDomTypes      = "16.9.10"
-val uTest              = "0.7.4"
-val scalajsReactWindow = "0.0.1"
+val reactTable           = "7.6.2"
+val reactTableTypes      = "7.0.26"
+val scalaJsReact         = "1.7.7"
+val reactJS              = "16.13.1"
+val reactTypes           = "16.9.56"
+val reactDomTypes        = "16.9.10"
+val uTest                = "0.7.4"
+val scalajsReactVirtuoso = "0.0.1"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -150,10 +150,10 @@ lazy val facade =
       // Compile tests to JS using fast-optimisation
       scalaJSStage in Test := FastOptStage,
       libraryDependencies ++= Seq(
-        "com.github.japgolly.scalajs-react" %%% "core"                 % scalaJsReact,
-        "io.github.toddburnside"            %%% "scalajs-react-window" % scalajsReactWindow,
-        "com.github.japgolly.scalajs-react" %%% "test"                 % scalaJsReact % Test,
-        "com.lihaoyi"                       %%% "utest"                % uTest        % Test
+        "com.github.japgolly.scalajs-react" %%% "core"                   % scalaJsReact,
+        "io.github.toddburnside"            %%% "scalajs-react-virtuoso" % scalajsReactVirtuoso,
+        "com.github.japgolly.scalajs-react" %%% "test"                   % scalaJsReact % Test,
+        "com.lihaoyi"                       %%% "utest"                  % uTest        % Test
       ),
       npmDependencies in Compile ++= Seq(
         "react"              -> reactJS,
