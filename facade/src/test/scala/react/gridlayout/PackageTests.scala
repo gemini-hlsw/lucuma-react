@@ -1,6 +1,5 @@
 package react.gridlayout
 
-import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.syntax._
@@ -27,14 +26,14 @@ object PackageTests extends TestSuite {
       }
     }
     test("responsive") {
-      val layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)] =
+      val layouts: Map[BreakpointName, (Int, Int, Layout)] =
         Map(
           (BreakpointName.lg, (1200, 12, Layout.Empty)),
           (BreakpointName.md, (996, 10, Layout.Empty)),
           (BreakpointName.sm, (768, 8, Layout.Empty)),
           (BreakpointName.xs, (480, 6, Layout.Empty))
         )
-      val layout                                                     =
+      val layout                                           =
         ResponsiveReactGridLayout(200, layouts = layouts, <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(layout) { m =>
         val html =

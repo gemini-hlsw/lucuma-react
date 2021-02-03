@@ -3,7 +3,6 @@ package react
 import scala.scalajs.js
 import js.JSConverters._
 import japgolly.scalajs.react.Callback
-import japgolly.scalajs.react.raw.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.raw.Event
@@ -16,8 +15,8 @@ package object gridlayout {
   // Callbacks
   type OnLayoutChange     = Layout => Callback
   type OnLayoutsChange    = (Layout, Layouts) => Callback
-  type OnBreakpointChange = (BreakpointName, JsNumber) => Callback
-  type OnWidthChange      = (JsNumber, Margin, JsNumber, ContainerPadding) => Callback
+  type OnBreakpointChange = (BreakpointName, Int) => Callback
+  type OnWidthChange      = (Int, Margin, Int, ContainerPadding) => Callback
   type ItemCallback       =
     (Layout, LayoutItem, LayoutItem, Option[LayoutItem], MouseEvent, HTMLElement) => Callback
   type DropCallback       =
@@ -44,7 +43,7 @@ package gridlayout {
     val predefined: List[BreakpointName] = List(xxl, xl, lg, md, sm, xs, xxs)
   }
 
-  final case class Breakpoint(name: BreakpointName, pos: JsNumber)
+  final case class Breakpoint(name: BreakpointName, pos: Int)
   final case class Breakpoints(bps: List[Breakpoint]) {
     def toRaw: js.Object = {
       val p = js.Dynamic.literal()
@@ -53,7 +52,7 @@ package gridlayout {
     }
   }
 
-  final case class Column(col: BreakpointName, pos: JsNumber)
+  final case class Column(col: BreakpointName, pos: Int)
   final case class Columns(cols: List[Column]) {
     def toRaw: js.Object = {
       val p = js.Dynamic.literal()
@@ -64,8 +63,8 @@ package gridlayout {
 
   final case class DroppingItem(
     i: String,
-    w: JsNumber,
-    h: JsNumber
+    w: Int,
+    h: Int
   ) {
     def toRaw: raw.DroppingItem = {
       val p = (new js.Object).asInstanceOf[raw.DroppingItem]
@@ -109,15 +108,15 @@ package gridlayout {
   }
 
   final case class LayoutItem(
-    w:             JsNumber,
-    h:             JsNumber,
-    x:             JsNumber,
-    y:             JsNumber,
+    w:             Int,
+    h:             Int,
+    x:             Int,
+    y:             Int,
     i:             js.UndefOr[String] = js.undefined,
-    minW:          js.UndefOr[JsNumber] = js.undefined,
-    minH:          js.UndefOr[JsNumber] = js.undefined,
-    maxW:          js.UndefOr[JsNumber] = js.undefined,
-    maxH:          js.UndefOr[JsNumber] = js.undefined,
+    minW:          js.UndefOr[Int] = js.undefined,
+    minH:          js.UndefOr[Int] = js.undefined,
+    maxW:          js.UndefOr[Int] = js.undefined,
+    maxH:          js.UndefOr[Int] = js.undefined,
     static:        js.UndefOr[Boolean] = js.undefined,
     isDraggable:   js.UndefOr[Boolean] = js.undefined,
     isResizable:   js.UndefOr[Boolean] = js.undefined,

@@ -3,25 +3,25 @@ package react.gridlayout.demo
 import scala.scalajs.js
 import scala.scalajs.js.annotation._
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.gridlayout._
 import react.sizeme._
+import react.common._
 
 object RGLDemo {
 
   val component = ScalaComponent
     .builder[Unit]("RGLDemo")
     .render { _ =>
-      val layout                                                     = Layout(
+      val layout                                           = Layout(
         List(
           LayoutItem(x = 0, y = 0, w = 6, h = 2, i = "a", static = true),
           LayoutItem(x = 1, y = 0, w = 3, h = 2, i = "b", minW = 2, maxW = 4),
           LayoutItem(x = 4, y = 0, w = 1, h = 2, i = "c")
         )
       )
-      val layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)] =
+      val layouts: Map[BreakpointName, (Int, Int, Layout)] =
         Map(
           (BreakpointName.lg, (1200, 12, layout)),
           (BreakpointName.md, (996, 10, layout)),
@@ -39,7 +39,7 @@ object RGLDemo {
           println(s.width)
           <.div(
             ResponsiveReactGridLayout(
-              s.width,
+              s.width.toInt,
               margin = (10, 10),
               containerPadding = (10, 10),
               className = "layout",

@@ -7,14 +7,13 @@ import js.annotation.JSImport
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.Children
 import japgolly.scalajs.react.JsComponent
-import japgolly.scalajs.react.raw.JsNumber
 import react.common.Style
 import react.common._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class ResponsiveReactGridLayout(
-  width:                  JsNumber,
-  layouts:                Map[BreakpointName, (JsNumber, JsNumber, Layout)],
+  width:                  Int,
+  layouts:                Map[BreakpointName, (Int, Int, Layout)],
   className:              js.UndefOr[String] = js.undefined,
   style:                  js.UndefOr[Style] = js.undefined,
   autoSize:               js.UndefOr[Boolean] = js.undefined,
@@ -33,7 +32,7 @@ final case class ResponsiveReactGridLayout(
   isDroppable:            js.UndefOr[Boolean] = js.undefined,
   preventCollision:       js.UndefOr[Boolean] = js.undefined,
   useCSSTransforms:       js.UndefOr[Boolean] = js.undefined,
-  transformScale:         js.UndefOr[JsNumber] = js.undefined,
+  transformScale:         js.UndefOr[Int] = js.undefined,
   droppingItem:           js.UndefOr[DroppingItem] = js.undefined,
   onLayoutChange:         OnLayoutsChange = (_, _) => Callback.empty,
   onDragStart:            ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -122,8 +121,8 @@ object ResponsiveReactGridLayout {
     )
 
   def rawprops(
-    width:              JsNumber,
-    layouts:            Map[BreakpointName, (JsNumber, JsNumber, Layout)],
+    width:              Int,
+    layouts:            Map[BreakpointName, (Int, Int, Layout)],
     className:          js.UndefOr[String] = js.undefined,
     style:              js.UndefOr[Style] = js.undefined,
     autoSize:           js.UndefOr[Boolean] = js.undefined,
@@ -142,7 +141,7 @@ object ResponsiveReactGridLayout {
     isDroppable:        js.UndefOr[Boolean] = js.undefined,
     preventCollision:   js.UndefOr[Boolean] = js.undefined,
     useCSSTransforms:   js.UndefOr[Boolean] = js.undefined,
-    transformScale:     js.UndefOr[JsNumber] = js.undefined,
+    transformScale:     js.UndefOr[Int] = js.undefined,
     droppingItem:       js.UndefOr[DroppingItem] = js.undefined,
     onLayoutChange:     OnLayoutsChange = (_, _) => Callback.empty,
     onDragStart:        ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -190,16 +189,16 @@ object ResponsiveReactGridLayout {
     r.breakpoints = br.toRaw
     r.columns = cl.toRaw
     r.layouts = ly.toRaw
-    r.onBreakpointChange = (newBreakpoint: raw.Breakpoint, newCol: JsNumber) =>
+    r.onBreakpointChange = (newBreakpoint: raw.Breakpoint, newCol: Int) =>
       onBreakpointChange(BreakpointName(newBreakpoint), newCol).runNow()
     r.onLayoutChange = (currentLayout: raw.Layout, allLayouts: js.Object) => {
       onLayoutChange(Layout.fromRaw(currentLayout), Layouts.fromRaw(allLayouts)).runNow()
     }
     r.onWidthChange = (
-      containerWidth:   JsNumber,
-      margin:           js.Array[JsNumber],
-      cols:             JsNumber,
-      containerPadding: js.Array[JsNumber]
+      containerWidth:   Int,
+      margin:           js.Array[Int],
+      cols:             Int,
+      containerPadding: js.Array[Int]
     ) =>
       onWidthChange(containerWidth,
                     (margin(0).toInt, margin(1).toInt),
@@ -210,7 +209,7 @@ object ResponsiveReactGridLayout {
   }
 
   def build(
-    values: Map[BreakpointName, (JsNumber, JsNumber, Layout)]
+    values: Map[BreakpointName, (Int, Int, Layout)]
   ): (Breakpoints, Columns, Layouts) =
     (Breakpoints(values.collect { case (v, (w, _, _)) =>
        Breakpoint(v, w)
@@ -226,8 +225,8 @@ object ResponsiveReactGridLayout {
   val component = JsComponent[ResponsiveReactGridLayoutProps, Children.Varargs, Null](RawComponent)
 
   def apply(
-    width:   JsNumber,
-    layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)],
+    width:   Int,
+    layouts: Map[BreakpointName, (Int, Int, Layout)],
     content: TagMod*
   ): ResponsiveReactGridLayout =
     new ResponsiveReactGridLayout(width = width, layouts = layouts, modifiers = content)
