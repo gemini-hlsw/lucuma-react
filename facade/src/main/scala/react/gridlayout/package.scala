@@ -33,11 +33,15 @@ package gridlayout {
     private final case class BreakpointNameI(name: String) extends BreakpointName
     def apply(name: String): BreakpointName = new BreakpointNameI(name)
 
-    val lg: BreakpointName = apply("lg")
-    val md: BreakpointName = apply("md")
-    val sm: BreakpointName = apply("sm")
-    val xs: BreakpointName = apply("xs")
-    val xx: BreakpointName = apply("xx")
+    val xxl: BreakpointName = apply("xxl")
+    val xl: BreakpointName  = apply("xl")
+    val lg: BreakpointName  = apply("lg")
+    val md: BreakpointName  = apply("md")
+    val sm: BreakpointName  = apply("sm")
+    val xs: BreakpointName  = apply("xs")
+    val xxs: BreakpointName = apply("xxs")
+
+    val predefined: List[BreakpointName] = List(xxl, xl, lg, md, sm, xs, xxs)
   }
 
   final case class Breakpoint(name: BreakpointName, pos: JsNumber)
