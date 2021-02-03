@@ -1,5 +1,9 @@
 # Changes
 
+## 0.10.1
+
+* Adds more breakpoint names
+
 ## 0.10.0
 
 * Fixes a mismatch with the js api
