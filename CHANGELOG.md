@@ -1,5 +1,9 @@
 # Changes
 
+## 0.11.0
+
+* JsNumber is hard to work with, switch to plain Int
+
 ## 0.10.1
 
 * Adds more breakpoint names

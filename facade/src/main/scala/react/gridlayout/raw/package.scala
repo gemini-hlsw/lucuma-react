@@ -1,7 +1,6 @@
 package react.gridlayout
 
 import scala.scalajs.js
-import japgolly.scalajs.react.raw.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.raw.Event
@@ -18,13 +17,13 @@ package object raw {
     js.Function3[Layout, LayoutItem, Event, Unit]
 
   type BreakpointChangeCallback =
-    js.Function2[Breakpoint, JsNumber, Unit]
+    js.Function2[Breakpoint, Int, Unit]
 
   type LayoutChangeCallback =
     js.Function2[Layout, js.Object, Unit]
 
   type WidthChangeCallback =
-    js.Function4[JsNumber, js.Array[JsNumber], JsNumber, js.Array[JsNumber], Unit]
+    js.Function4[Int, js.Array[Int], Int, js.Array[Int], Unit]
 
   type Layout = js.Array[LayoutItem]
 
@@ -34,20 +33,20 @@ package object raw {
 package raw {
   class DroppingItem(
     var i: String,
-    var w: JsNumber,
-    var h: JsNumber
+    var w: Int,
+    var h: Int
   ) extends js.Object
 
   class LayoutItem(
-    val w:             JsNumber,
-    val h:             JsNumber,
-    val x:             JsNumber,
-    val y:             JsNumber,
+    val w:             Int,
+    val h:             Int,
+    val x:             Int,
+    val y:             Int,
     val i:             js.UndefOr[String] = js.undefined,
-    val minW:          js.UndefOr[JsNumber] = js.undefined,
-    val minH:          js.UndefOr[JsNumber] = js.undefined,
-    val maxW:          js.UndefOr[JsNumber] = js.undefined,
-    val maxH:          js.UndefOr[JsNumber] = js.undefined,
+    val minW:          js.UndefOr[Int] = js.undefined,
+    val minH:          js.UndefOr[Int] = js.undefined,
+    val maxW:          js.UndefOr[Int] = js.undefined,
+    val maxH:          js.UndefOr[Int] = js.undefined,
     val static:        js.UndefOr[Boolean] = js.undefined,
     val isDraggable:   js.UndefOr[Boolean] = js.undefined,
     val isResizable:   js.UndefOr[Boolean] = js.undefined,
