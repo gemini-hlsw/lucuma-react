@@ -37,6 +37,9 @@ object Droppable {
   @js.native
   trait StateSnapshot extends js.Object {
     val isDraggingOver: Boolean
+    val draggingOverWith: js.UndefOr[DraggableId]
+    val draggingFromThisWith: js.UndefOr[DraggableId]
+    val isUsingPlaceholder: Boolean
   }
 
   @js.native
