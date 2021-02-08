@@ -58,11 +58,19 @@ object BeautifulDnDDemo {
         draggableStyle
       )
 
+    val renderClone: Draggable.Render = (provided, snapshot, _) => {
+      <.div(provided.innerRef,
+            provided.draggableProps,
+            provided.dragHandleProps,
+            getItemStyle(snapshot.isDragging, provided.draggableStyle)
+      )("THIS IS A CLONE")
+    }
+
     def render(s: State): VdomElement =
       <.div(
         <.div(^.height := "600px", ^.width := "1000px")(
           DragDropContext(onDragEnd = onDragEnd)(
-            Droppable("droppableList") { case (provided, snapshot) =>
+            Droppable("droppableList", renderClone = renderClone) { case (provided, snapshot) =>
               <.div(
                 provided.innerRef,
                 provided.droppableProps,

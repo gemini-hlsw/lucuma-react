@@ -38,13 +38,6 @@ package object beautifuldnd {
     val Vertical   = "vertical"
   }
 
-  type DraggableChildrenFn = js.Function3[
-    Draggable.ProvidedJS,
-    Draggable.StateSnapshot,
-    Draggable.Rubric,
-    Raw.React.Node | Null
-  ]
-
   implicit class OrNullOps[A](a: A | Null) {
     def toOption: Option[A] =
       if (a == null)

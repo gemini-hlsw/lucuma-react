@@ -7,6 +7,7 @@ import org.scalajs.dom.html
 import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.scalajs.js.annotation.JSImport
+import scala.scalajs.js.annotation.JSName
 
 // https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/draggable.md
 object Draggable {
@@ -49,6 +50,16 @@ object Draggable {
       )
   }
 
+  type Render =
+    (Draggable.Provided, Draggable.StateSnapshot, Draggable.Rubric) => VdomNode
+
+  protected[react] type RenderJS = js.Function3[
+    Draggable.ProvidedJS,
+    Draggable.StateSnapshot,
+    Draggable.Rubric,
+    Raw.React.Node | Null
+  ]
+
   @js.native // Actually, from css-box-model
   trait Position extends js.Object {
     val x: Int
@@ -76,13 +87,23 @@ object Draggable {
   }
 
   @js.native
-  trait Rubric extends js.Object {}
+  trait Location extends js.Object {
+    val droppableId: DroppableId
+    val index: Int
+  }
+
+  @js.native
+  trait Rubric extends js.Object {
+    val draggableId: DraggableId
+    @JSName("type") val tpe: TypeId
+    val source: DraggableLocation
+  }
 
   @js.native
   trait Props extends js.Object {
     var draggableId: DraggableId
     var index: Int
-    var children: DraggableChildrenFn
+    var children: RenderJS
     var isDragDisabled: js.UndefOr[Boolean]
     var disableInteractiveElementBlocking: js.UndefOr[Boolean]
     var shouldRespectForcePress: js.UndefOr[Boolean]
@@ -91,7 +112,7 @@ object Draggable {
     def apply(
       draggableId:                       DraggableId,
       index:                             Int,
-      children:                          (Provided, StateSnapshot, Rubric) => VdomNode,
+      children:                          Render,
       isDragDisabled:                    js.UndefOr[Boolean] = js.undefined,
       disableInteractiveElementBlocking: js.UndefOr[Boolean] = js.undefined,
       shouldRespectForcePress:           js.UndefOr[Boolean] = js.undefined
@@ -100,9 +121,9 @@ object Draggable {
       p.draggableId = draggableId
       p.index = index
       p.children = (p, ss, r) => children(Provided(p), ss, r).rawNode
-      p.isDragDisabled = isDragDisabled
-      p.disableInteractiveElementBlocking = disableInteractiveElementBlocking
-      p.shouldRespectForcePress = shouldRespectForcePress
+      isDragDisabled.foreach(p.isDragDisabled = _)
+      disableInteractiveElementBlocking.foreach(p.disableInteractiveElementBlocking = _)
+      shouldRespectForcePress.foreach(p.shouldRespectForcePress = _)
       p
     }
   }

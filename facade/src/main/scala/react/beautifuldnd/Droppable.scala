@@ -51,7 +51,7 @@ object Droppable {
     var isCombineEnabled: js.UndefOr[Boolean]
     var direction: js.UndefOr[Direction]
     var ignoreContainerClipping: js.UndefOr[Boolean]
-    var renderClone: js.UndefOr[DraggableChildrenFn]
+    var renderClone: js.UndefOr[Draggable.RenderJS]
     var getContainerForClone: js.UndefOr[Unit => html.Element]
     var children: js.Function2[ProvidedJS, StateSnapshot, Raw.React.Node]
   }
@@ -64,20 +64,28 @@ object Droppable {
       isCombineEnabled:        js.UndefOr[Boolean] = js.undefined,
       direction:               js.UndefOr[Direction] = js.undefined,
       ignoreContainerClipping: js.UndefOr[Boolean] = js.undefined,
-      renderClone:             js.UndefOr[DraggableChildrenFn] = js.undefined,
+      renderClone:             js.UndefOr[Draggable.Render] = js.undefined,
       getContainerForClone:    js.UndefOr[Unit => html.Element] = js.undefined,
       children:                (Provided, StateSnapshot) => VdomNode
     ): Props = {
       val p = (new js.Object).asInstanceOf[Props]
       p.droppableId = droppableId
-      p.tpe = tpe
-      p.mode = mode
-      p.isDropDisabled = isDropDisabled
-      p.isCombineEnabled = isCombineEnabled
-      p.direction = direction
-      p.ignoreContainerClipping = ignoreContainerClipping
-      p.renderClone = renderClone
-      p.getContainerForClone = getContainerForClone
+      tpe.foreach(p.tpe = _)
+      mode.foreach(p.mode = _)
+      isDropDisabled.foreach(p.isDropDisabled = _)
+      isCombineEnabled.foreach(p.isCombineEnabled = _)
+      direction.foreach(p.direction = _)
+      ignoreContainerClipping.foreach(p.ignoreContainerClipping = _)
+      renderClone.foreach(f =>
+        p.renderClone = (
+          (
+            p,
+            ss,
+            r
+          ) => f(Draggable.Provided(p), ss, r).rawNode
+        ): Draggable.RenderJS
+      )
+      getContainerForClone.foreach(p.getContainerForClone = _)
       p.children = (p, ss) => children(Provided(p), ss).rawNode
       p
     }
@@ -93,7 +101,7 @@ object Droppable {
     isCombineEnabled:        js.UndefOr[Boolean] = js.undefined,
     direction:               js.UndefOr[Direction] = js.undefined,
     ignoreContainerClipping: js.UndefOr[Boolean] = js.undefined,
-    renderClone:             js.UndefOr[DraggableChildrenFn] = js.undefined,
+    renderClone:             js.UndefOr[Draggable.Render] = js.undefined,
     getContainerForClone:    js.UndefOr[Unit => html.Element] = js.undefined
   )(children:                (Provided, StateSnapshot) => VdomNode) =
     component(
