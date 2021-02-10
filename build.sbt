@@ -8,7 +8,7 @@ val reactJS          = "16.13.1"
 val reactBeautiulDnD = "13.0.0"
 val atlasKitTree     = "8.2.0"
 val scalaJsReact     = "1.7.7"
-val cats             = "2.3.1" // Only used in demo
+val cats             = "2.4.0" // Only used in demo
 
 parallelExecution in (ThisBuild, Test) := false
 
