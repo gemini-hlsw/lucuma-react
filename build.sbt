@@ -6,7 +6,7 @@ val reactVirtuoso      = "1.4.0"
 val scalaJsReact       = "1.7.7"
 val reactJS            = "16.13.1"
 val scalaJsReactCommon = "0.11.3"
-val munit              = "0.7.20"
+val munit              = "0.7.21"
 
 parallelExecution in (ThisBuild, Test) := false
 
