@@ -8,7 +8,7 @@ val scalaJsReact         = "1.7.7"
 val reactJS              = "16.13.1"
 val reactTypes           = "16.9.56"
 val reactDomTypes        = "16.9.10"
-val uTest                = "0.7.4"
+val uTest                = "0.7.7"
 val scalajsReactVirtuoso = "0.0.1"
 
 parallelExecution in (ThisBuild, Test) := false
