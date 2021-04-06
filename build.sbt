@@ -3,10 +3,6 @@ val scalaJsReact   = "1.7.7"
 val reactResizable = "1.11.0"
 val scalaJSDom     = "1.1.0"
 
-parallelExecution in (ThisBuild, Test) := false
-
-cancelable in Global := true
-
 addCommandAlias("restartWDS",
                 "; ~demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer"
 )
@@ -56,25 +52,25 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack := "4.44.1",
-      version in startWebpackDevServer := "3.3.1",
-      version in webpackCliVersion := "3.3.1",
-      webpackConfigFile in fastOptJS := Some(
+      webpack / version := "4.44.1",
+      startWebpackDevServer / version := "3.3.1",
+      webpackCliVersion / version := "3.3.1",
+      fastOptJS / webpackConfigFile := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"
       ),
-      webpackConfigFile in fullOptJS := Some(
+      fullOptJS / webpackConfigFile := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-prod.config.js"
       ),
-      webpackMonitoredDirectories += (resourceDirectory in Compile).value,
+      webpackMonitoredDirectories += (Compile / resourceDirectory).value,
       webpackResources := (baseDirectory.value / "src" / "webpack") * "*.js",
-      includeFilter in webpackMonitoredFiles := "*",
+      webpackMonitoredFiles / includeFilter := "*",
       useYarn := true,
-      webpackBundlingMode in fastOptJS := BundlingMode.LibraryOnly(),
-      webpackBundlingMode in fullOptJS := BundlingMode.Application,
-      scalaJSLinkerConfig in (Compile, fastOptJS) ~= { _.withSourceMap(false) },
+      fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
+      fullOptJS / webpackBundlingMode := BundlingMode.Application,
+      Compile / fastOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
       test := {},
       webpackDevServerPort := 9090,
-      npmDevDependencies in Compile ++= Seq(
+      Compile / npmDevDependencies ++= Seq(
         "css-loader"                         -> "1.0.0",
         "less"                               -> "3.8.1",
         "less-loader"                        -> "4.1.0",
@@ -89,7 +85,7 @@ lazy val demo =
         "webpack-dev-server-status-bar"      -> "1.1.0",
         "autoprefixer"                       -> "9.1.5"
       ),
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"           -> reactJS,
         "react-dom"       -> reactJS,
         "react-resizable" -> reactResizable
@@ -112,14 +108,14 @@ lazy val facade =
     .settings(commonSettings: _*)
     .settings(
       name := "react-resizable",
-      version in webpack := "4.30.0",
-      version in startWebpackDevServer := "3.3.1",
-      version in webpackCliVersion := "3.3.1",
+      webpack / version := "4.30.0",
+      startWebpackDevServer / version := "3.3.1",
+      webpackCliVersion / version := "3.3.1",
       // Requires the DOM for tests
-      requireJsDomEnv in Test := true,
+      Test / requireJsDomEnv := true,
       // Compile tests to JS using fast-optimisation
       // scalaJSStage in Test            := FastOptStage,
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"           -> reactJS,
         "react-dom"       -> reactJS,
         "react-resizable" -> reactResizable
@@ -145,7 +141,7 @@ lazy val commonSettings = Seq(
   organization := "io.github.cquiroz.react",
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-resizable ",
-  publishArtifact in Test := false,
+  Test / publishArtifact := false,
   scalacOptions ~= (_.filterNot(
     Set(
       // By necessity facades will have unused params
