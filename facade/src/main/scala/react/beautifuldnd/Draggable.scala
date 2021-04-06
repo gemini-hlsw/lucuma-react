@@ -50,8 +50,7 @@ object Draggable {
       )
   }
 
-  type Render =
-    (Draggable.Provided, Draggable.StateSnapshot, Draggable.Rubric) => VdomNode
+  type Render = (Provided, StateSnapshot, Rubric) => VdomNode
 
   protected[react] type RenderJS = js.Function3[
     Draggable.ProvidedJS,
@@ -136,7 +135,7 @@ object Draggable {
     isDragDisabled:                    js.UndefOr[Boolean] = js.undefined,
     disableInteractiveElementBlocking: js.UndefOr[Boolean] = js.undefined,
     shouldRespectForcePress:           js.UndefOr[Boolean] = js.undefined
-  )(children:                          (Provided, StateSnapshot, Rubric) => VdomNode) =
+  )(children:                          Render) =
     component.withKey(draggableId)(
       Props(
         draggableId,
