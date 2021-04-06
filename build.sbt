@@ -1,30 +1,27 @@
 name := "scalajs-react-beautiful-dnd"
 
-scalaVersion in ThisBuild := "2.13.5"
-
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactJS          = "16.13.1"
-val reactBeautiulDnD = "13.0.0"
+val reactBeautiulDnD = "13.1.0"
 val atlasKitTree     = "8.2.0"
 val scalaJsReact     = "1.7.7"
 val cats             = "2.5.0" // Only used in demo
 
-parallelExecution in (ThisBuild, Test) := false
-
 addCommandAlias(
   "restartDemoWDS",
-  "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer"
+  "; demo/fastOptJS/stopWebpackDevServer; demo/fastOptJS/startWebpackDevServer"
 )
 
 addCommandAlias(
   "restartTreeDemoWDS",
-  "; treeDemo/fastOptJS::stopWebpackDevServer; treeDemo/fastOptJS::startWebpackDevServer"
+  "; treeDemo/fastOptJS/stopWebpackDevServer; treeDemo/fastOptJS/startWebpackDevServer"
 )
 
 inThisBuild(
   List(
-    scalaVersion := scalaVersion.value,
+    scalaVersion := "2.13.5",
+    Test / parallelExecution := false,
     organization := "com.rpiaggio",
     sonatypeProfileName := "com.rpiaggio",
     homepage := Some(
@@ -60,7 +57,7 @@ inThisBuild(
 
 lazy val commonSettings = Seq(
   description := "scala.js facade for react-beautiful-dnd",
-  publishArtifact in Test := false,
+  Test / publishArtifact := false,
   publishMavenStyle := true,
   scalacOptions ~= (_.filterNot(
     Set(
@@ -96,16 +93,15 @@ lazy val facade =
     .settings(
       name := "facade",
       moduleName := "scalajs-react-beautiful-dnd",
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"               -> reactJS,
         "react-dom"           -> reactJS,
         "react-beautiful-dnd" -> reactBeautiulDnD
       ),
       // Use yarn as it is faster than npm
       useYarn := true,
-      version in webpack := "4.30.0",
-      version in webpackCliVersion := "3.3.2",
-      version in startWebpackDevServer := "3.3.1",
+      webpack / version := "4.30.0",
+      startWebpackDevServer / version := "3.3.1",
       scalaJSUseMainModuleInitializer := false,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact
@@ -121,12 +117,11 @@ lazy val demo =
       scalaJSUseMainModuleInitializer := true,
       webpackBundlingMode := BundlingMode.LibraryOnly(),
       webpackDevServerExtraArgs := Seq("--inline"),
-      webpackConfigFile in fastOptJS := Some(
+      fastOptJS / webpackConfigFile := Some(
         baseDirectory.value / "dev.webpack.config.js"
       ),
-      version in webpack := "4.30.0",
-      version in webpackCliVersion := "3.3.2",
-      version in startWebpackDevServer := "3.3.1",
+      webpack / version := "4.30.0",
+      startWebpackDevServer / version := "3.3.1",
       libraryDependencies ++= Seq(
         "org.typelevel" %%% "cats-core" % cats
       ),
@@ -135,7 +130,7 @@ lazy val demo =
       publishLocal := {},
       publishArtifact := false,
       Keys.`package` := file(""),
-      npmDevDependencies in Compile ++= Seq(
+      Compile / npmDevDependencies ++= Seq(
         "css-loader"   -> "1.0.0",
         "style-loader" -> "0.23.0"
       )
@@ -150,14 +145,13 @@ lazy val treeFacade =
     .settings(
       name := "tree-facade",
       moduleName := "scalajs-react-atlaskit-tree",
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "@atlaskit/tree" -> atlasKitTree
       ),
       // Use yarn as it is faster than npm
       useYarn := true,
-      version in webpack := "4.30.0",
-      version in webpackCliVersion := "3.3.2",
-      version in startWebpackDevServer := "3.3.1",
+      webpack / version := "4.30.0",
+      startWebpackDevServer / version := "3.3.1",
       scalaJSUseMainModuleInitializer := false
     )
     .dependsOn(facade)
@@ -171,12 +165,11 @@ lazy val treeDemo =
       scalaJSUseMainModuleInitializer := true,
       webpackBundlingMode := BundlingMode.LibraryOnly(),
       webpackDevServerExtraArgs := Seq("--inline"),
-      webpackConfigFile in fastOptJS := Some(
+      fastOptJS / webpackConfigFile := Some(
         baseDirectory.value / "dev.webpack.config.js"
       ),
-      version in webpack := "4.30.0",
-      version in webpackCliVersion := "3.3.2",
-      version in startWebpackDevServer := "3.3.1",
+      webpack / version := "4.30.0",
+      startWebpackDevServer / version := "3.3.1",
       libraryDependencies ++= Seq(
         "org.typelevel" %%% "cats-core" % cats
       ),
@@ -185,11 +178,11 @@ lazy val treeDemo =
       publishLocal := {},
       publishArtifact := false,
       Keys.`package` := file(""),
-      npmDevDependencies in Compile ++= Seq(
+      Compile / npmDevDependencies ++= Seq(
         "css-loader"   -> "1.0.0",
         "style-loader" -> "0.23.0"
       ),
-      scalaJSLinkerConfig in (Compile, fastOptJS) ~= { _.withSourceMap(false) },
-      scalaJSLinkerConfig in (Compile, fullOptJS) ~= { _.withSourceMap(false) }
+      Compile / fastOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
+      Compile / fullOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) }
     )
     .dependsOn(treeFacade)
