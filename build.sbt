@@ -3,13 +3,10 @@ val scalaJsReact    = "1.7.7"
 val reactGridLayout = "1.0.0"
 val scalaJSDom      = "1.1.0"
 
-parallelExecution in (ThisBuild, Test) := false
-
-cancelable in Global := true
-
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-resolvers in Global += Resolver.sonatypeRepo("public")
+Global / resolvers += Resolver.sonatypeRepo("public")
+Global / resolvers += Resolver.sonatypeRepo("releases")
 
 addCommandAlias("restartWDS",
                 "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer"
@@ -35,8 +32,6 @@ inThisBuild(
   )
 )
 
-resolvers in Global += Resolver.sonatypeRepo("releases")
-
 val root =
   project
     .in(file("."))
@@ -58,23 +53,22 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack := "4.32.0",
-      version in startWebpackDevServer := "3.3.1",
-      webpackConfigFile in fastOptJS := Some(
+      webpack / version := "4.32.0",
+      startWebpackDevServer / version := "3.3.1",
+      fastOptJS / webpackConfigFile := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"
       ),
-      webpackConfigFile in fullOptJS := Some(
+      fullOptJS / webpackConfigFile := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-prod.config.js"
       ),
-      webpackMonitoredDirectories += (resourceDirectory in Compile).value,
+      webpackMonitoredDirectories += (Compile / resourceDirectory).value,
       webpackResources := (baseDirectory.value / "src" / "webpack") * "*.js",
-      includeFilter in webpackMonitoredFiles := "*",
       useYarn := true,
-      webpackBundlingMode in fastOptJS := BundlingMode.LibraryOnly(),
-      webpackBundlingMode in fullOptJS := BundlingMode.Application,
+      fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
+      fullOptJS / webpackBundlingMode := BundlingMode.Application,
       test := {},
       webpackDevServerPort := 6060,
-      npmDevDependencies in Compile ++= Seq(
+      Compile / npmDevDependencies ++= Seq(
         "css-loader"                         -> "0.28.11",
         "less"                               -> "2.3.1",
         "less-loader"                        -> "4.1.0",
@@ -88,7 +82,7 @@ lazy val demo =
         "webpack-merge"                      -> "4.1.0",
         "webpack-dev-server-status-bar"      -> "1.0.0"
       ),
-    npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"             -> reactJS,
         "react-dom"         -> reactJS,
         "react-grid-layout" -> reactGridLayout
@@ -110,13 +104,13 @@ lazy val facade =
     .settings(commonSettings: _*)
     .settings(
       name := "react-grid-layout",
-      version in webpack := "4.44.1",
-      version in startWebpackDevServer := "3.3.1",
+      webpack / version := "4.44.1",
+      startWebpackDevServer / version := "3.3.1",
       // Requires the DOM for tests
-      requireJsDomEnv in Test := true,
+      Test / requireJsDomEnv := true,
       // Compile tests to JS using fast-optimisation
       // scalaJSStage in Test            := FastOptStage,
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"             -> reactJS,
         "react-dom"         -> reactJS,
         "react-grid-layout" -> reactGridLayout
@@ -130,7 +124,7 @@ lazy val facade =
         "com.lihaoyi"                       %%% "utest"       % "0.7.8"      % Test,
         "org.typelevel"                     %%% "cats-core"   % "2.5.0"      % Test
       ),
-      webpackConfigFile in Test := Some(
+      Test / webpackConfigFile := Some(
         baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
       ),
       testFrameworks += new TestFramework("utest.runner.Framework")
@@ -141,7 +135,7 @@ lazy val commonSettings = Seq(
   organization := "io.github.cquiroz.react",
   sonatypeProfileName := "io.github.cquiroz",
   description := "scala.js facade for react-grid-layout ",
-  publishArtifact in Test := false,
+  Test / publishArtifact := false,
   scalacOptions ~= (_.filterNot(
     Set(
       // By necessity facades will have unused params
