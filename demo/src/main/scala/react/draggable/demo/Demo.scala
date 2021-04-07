@@ -57,6 +57,7 @@ object TableDemo {
     def toDouble =
       (d: Any) match {
         case d: Double => d
+        case _         => 0.0
       }
   }
 
