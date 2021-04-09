@@ -3,10 +3,6 @@ import sbt._
 val reactJS      = "16.13.1"
 val scalaJsReact = "1.7.7"
 
-parallelExecution in (ThisBuild, Test) := false
-
-ThisBuild / turbo := true
-
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 inThisBuild(
@@ -64,24 +60,24 @@ lazy val test =
     .settings(commonSettings: _*)
     .settings(
       name := "test",
-      npmDependencies in Compile ++= Seq(
+      Test / npmDependencies ++= Seq(
         "react"     -> reactJS,
         "react-dom" -> reactJS
       ),
       // Requires the DOM for tests
-      requireJsDomEnv in Test := true,
+      Test / requireJsDomEnv := true,
       // Use yarn as it is faster than npm
       useYarn := true,
-      version in webpack := "4.44.1",
-      version in webpackCliVersion := "3.3.11",
+      webpack / version := "4.44.1",
+      webpackCliVersion / version := "3.3.11",
       // Compile tests to JS using fast-optimisation
-      scalaJSStage in Test := FastOptStage,
+      Test / scalaJSStage := FastOptStage,
       libraryDependencies ++= Seq(
         "org.scalameta" %%% "munit"     % "0.7.23",
         "org.typelevel" %%% "cats-core" % "2.5.0" % Test
       ),
-      webpackExtraArgs in Test := Seq("--verbose", "--progress", "true"),
-      webpackConfigFile in Test := Some(
+      Test / webpackExtraArgs := Seq("--verbose", "--progress", "true"),
+      Test / webpackConfigFile := Some(
         baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
       ),
       scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
@@ -108,7 +104,7 @@ lazy val commonSettings = Seq(
   organization := "io.github.cquiroz.react",
   description := "scala.js react common utilities",
   sonatypeProfileName := "io.github.cquiroz",
-  publishArtifact in Test := false,
+  Test / publishArtifact := false,
   libraryDependencies ++= Seq(
     "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
     "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % "test"
