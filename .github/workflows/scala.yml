@@ -10,20 +10,10 @@ jobs:
       - name: Show yarn version
         run: yarn --version
       - uses: actions/checkout@v2
-      - uses: coursier/cache-action@v3
+      - uses: coursier/cache-action@v6
       - name: Set up JDK
-        uses: olafurpg/setup-scala@v7
+        uses: olafurpg/setup-scala@v10
         with:
-          java-version: adoptjdk@14
-      - name: Cache SBT ivy cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.ivy2/cache
-          key: ${{ runner.os }}-sbt-ivy-cache-${{ hashFiles('**/project/**') }}-${{ hashFiles('**/build.sbt') }}
-      - name: Cache SBT
-        uses: actions/cache@v1
-        with:
-          path: ~/.sbt
-          key: ${{ runner.os }}-sbt-${{ hashFiles('**/project/**') }}-${{ hashFiles('**/build.sbt') }}          
+          java-version: adopt@1.11 
       - name: Run compile
-        run: csbt scalafmtCheckAll facade/compile facade/test facade/fullOptJS::webpack
+        run: sbt scalafmtCheckAll facade/compile facade/test facade/fullOptJS::webpack
