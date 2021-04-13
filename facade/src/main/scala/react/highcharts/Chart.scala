@@ -13,7 +13,7 @@ import gpp.highcharts.anon.TypeofHighcharts
 import gpp.highcharts.mod.HTMLDOMElement
 import gpp.highcharts.mod.Options
 import gpp.highcharts.mod.Chart_
-import gpp.highcharts.anon.TypeofHighchartsAddEvent
+import gpp.highcharts.anon.TypeofHighchartsAST
 import react.common.ReactProps
 import gpp.highcharts.mod.PointOptionsObject
 
@@ -22,7 +22,7 @@ trait WrapProceed extends js.ThisFunction0[Chart_, Unit]
 
 @js.native
 @JSImport("highcharts", JSImport.Default)
-object Highcharts extends TypeofHighchartsAddEvent {
+object Highcharts extends TypeofHighchartsAST {
   @JSName("wrap")
   def wrapThis(
     obj:    js.Any,
@@ -33,7 +33,7 @@ object Highcharts extends TypeofHighchartsAddEvent {
 
 final case class Chart(
   options:    Options,
-  highcharts: TypeofHighchartsAddEvent = Highcharts
+  highcharts: TypeofHighchartsAST = Highcharts
 ) extends ReactProps[Chart](Chart.component)
 
 object Chart {
