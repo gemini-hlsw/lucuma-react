@@ -2,22 +2,20 @@ name := "scalajs-react-highcharts"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-scalaVersion in ThisBuild := "2.13.4"
-
-val highcharts         = "8.1.2"
+val highcharts         = "9.0.1"
 val scalaJsReact       = "1.7.7"
 val reactJS            = "16.13.1"
 val scalaJsReactCommon = "0.11.3"
 
-parallelExecution in (ThisBuild, Test) := false
-
 addCommandAlias(
   "restartWDS",
-  "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer"
+  "; demo/fastOptJS/stopWebpackDevServer; demo/fastOptJS/startWebpackDevServer"
 )
 
 inThisBuild(
   List(
+    scalaVersion := "2.13.5",
+    Test / parallelExecution := false,
     organization := "com.rpiaggio",
     sonatypeProfileName := "com.rpiaggio",
     homepage := Some(
@@ -70,26 +68,25 @@ lazy val demo =
     .in(file("demo"))
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(
-      version in webpack := "4.32.0",
-      version in startWebpackDevServer := "3.3.1",
-      webpackConfigFile in fastOptJS := Some(
+      webpack / version := "4.32.0",
+      startWebpackDevServer / version := "3.3.1",
+      fastOptJS / webpackConfigFile := Some(
         baseDirectory.value / "webpack" / "dev.webpack.config.js"
       ),
-      webpackConfigFile in fullOptJS := Some(
+      fullOptJS / webpackConfigFile := Some(
         baseDirectory.value / "webpack" / "prod.webpack.config.js"
       ),
-      webpackMonitoredDirectories += (resourceDirectory in Compile).value,
+      webpackMonitoredDirectories += (Compile / resourceDirectory).value,
       webpackResources := (baseDirectory.value / "webpack") * "*.js",
-      includeFilter in webpackMonitoredFiles := "*",
-      webpackExtraArgs := Seq("--progress"),
+      webpackMonitoredFiles / includeFilter := "*",
       useYarn := true,
-      webpackBundlingMode in fastOptJS := BundlingMode.LibraryOnly(),
-      webpackBundlingMode in fullOptJS := BundlingMode.Application,
+      fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
+      fullOptJS / webpackBundlingMode := BundlingMode.Application,
       test := {},
-      scalaJSLinkerConfig in (Compile, fastOptJS) ~= { _.withSourceMap(false) },
-      scalaJSLinkerConfig in (Compile, fullOptJS) ~= { _.withSourceMap(false) },
+      Compile / fastOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
+      Compile / fullOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
       // NPM libs for development, mostly to let webpack do its magic
-      npmDevDependencies in Compile ++= Seq(
+      Compile / npmDevDependencies ++= Seq(
         "postcss-loader"                     -> "3.0.0",
         "autoprefixer"                       -> "9.4.4",
         "url-loader"                         -> "1.1.1",
@@ -108,7 +105,7 @@ lazy val demo =
         "favicons-webpack-plugin"            -> "0.0.9",
         "why-did-you-update"                 -> "1.0.6"
       ),
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"      -> reactJS,
         "react-dom"  -> reactJS,
         "highcharts" -> highcharts
@@ -130,24 +127,24 @@ lazy val facade =
       name := "facade",
       moduleName := "scalajs-react-highcharts",
       // Requires the DOM for tests
-      requireJsDomEnv in Test := true,
+      Test / requireJsDomEnv := true,
       // Use yarn as it is faster than npm
       useYarn := true,
       yarnExtraArgs := {
         if (insideCI.value) List("--pure-lockfile") else List.empty
       },
-      version in webpack := "4.32.0",
-      version in installJsdom := "15.2.1",
+      webpack / version := "4.32.0",
+      installJsdom / version := "15.2.1",
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
-      scalaJSStage in Test := FastOptStage,
+      Test / scalaJSStage := FastOptStage,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"   % scalaJsReact,
         "io.github.cquiroz.react"           %%% "common" % scalaJsReactCommon,
         "com.github.japgolly.scalajs-react" %%% "test"   % scalaJsReact % Test,
         "com.lihaoyi"                       %%% "utest"  % "0.7.8"      % Test
       ),
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"      -> reactJS,
         "react-dom"  -> reactJS,
         "highcharts" -> highcharts
@@ -155,7 +152,7 @@ lazy val facade =
       stIgnore ++= List("react", "react-dom"),
       stUseScalaJsDom := true,
       stOutputPackage := "gpp",
-      Compile / stMinimize := Selection.AllExcept("highcharts"),
+      (Compile / stMinimize).withRank(KeyRanks.Invisible) := Selection.AllExcept("highcharts"),
       // stEnableScalaJsDefined := Selection.All,
       scalacOptions ~= (_.filterNot(
         Set(
@@ -169,7 +166,7 @@ lazy val facade =
       // Some Scalablytyped generated Scaladocs are malformed.
       // Workaround: https://github.com/xerial/sbt-sonatype/issues/30#issuecomment-342532067
       Compile / doc / sources := Seq(),
-      webpackConfigFile in Test := Some(
+      Test / webpackConfigFile := Some(
         baseDirectory.value / "test.webpack.config.js"
       ),
       testFrameworks += new TestFramework("utest.runner.Framework")
