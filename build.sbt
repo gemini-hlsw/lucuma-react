@@ -1,14 +1,12 @@
 name := "scalajs-react-hotkeys"
 
-scalaVersion in ThisBuild := "2.13.5"
+ThisBuild / scalaVersion := "2.13.5"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactHotkeys = "2.0.0"
 val scalaJsReact = "1.7.7"
 val reactJS      = "16.13.1"
-
-parallelExecution in (ThisBuild, Test) := false
 
 addCommandAlias(
   "restartWDS",
@@ -17,10 +15,11 @@ addCommandAlias(
 
 inThisBuild(
   List(
-    homepage := Some(
+    Test / parallelExecution := false,
+    homepage.withRank(KeyRanks.Invisible) := Some(
       url("https://github.com/rpiaggio/scalajs-react-hotkeys")
     ),
-    licenses := Seq(
+    licenses.withRank(KeyRanks.Invisible) := Seq(
       "BSD 3-Clause License" -> url(
         "https://opensource.org/licenses/BSD-3-Clause"
       )
@@ -69,26 +68,25 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack := "4.32.0",
-      version in startWebpackDevServer := "3.3.1",
-      webpackConfigFile in fastOptJS := Some(
+      webpack / version := "4.32.0",
+      startWebpackDevServer / version := "3.3.1",
+      fastOptJS / webpackConfigFile := Some(
         baseDirectory.value / "webpack" / "dev.webpack.config.js"
       ),
-      webpackConfigFile in fullOptJS := Some(
+      fullOptJS / webpackConfigFile := Some(
         baseDirectory.value / "webpack" / "prod.webpack.config.js"
       ),
-      webpackMonitoredDirectories += (resourceDirectory in Compile).value,
+      webpackMonitoredDirectories += (Compile / resourceDirectory).value,
       webpackResources := (baseDirectory.value / "webpack") * "*.js",
-      includeFilter in webpackMonitoredFiles := "*",
-      webpackExtraArgs := Seq("--progress"),
+      webpackMonitoredFiles / includeFilter := "*",
       useYarn := true,
-      webpackBundlingMode in fastOptJS := BundlingMode.LibraryOnly(),
-      webpackBundlingMode in fullOptJS := BundlingMode.Application,
+      fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
+      fullOptJS / webpackBundlingMode := BundlingMode.Application,
       test := {},
-      scalaJSLinkerConfig in (Compile, fastOptJS) ~= { _.withSourceMap(false) },
-      scalaJSLinkerConfig in (Compile, fullOptJS) ~= { _.withSourceMap(false) },
+      Compile / fastOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
+      Compile / fullOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
       // NPM libs for development, mostly to let webpack do its magic
-      npmDevDependencies in Compile ++= Seq(
+      Compile / npmDevDependencies ++= Seq(
         "postcss-loader"                     -> "3.0.0",
         "autoprefixer"                       -> "9.4.4",
         "url-loader"                         -> "1.1.1",
@@ -107,7 +105,7 @@ lazy val demo =
         "favicons-webpack-plugin"            -> "0.0.9",
         "why-did-you-update"                 -> "1.0.6"
       ),
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"         -> reactJS,
         "react-dom"     -> reactJS,
         "react-hotkeys" -> reactHotkeys
@@ -129,26 +127,26 @@ lazy val facade =
       name := "facade",
       moduleName := "scalajs-react-hotkeys",
       // Requires the DOM for tests
-      requireJsDomEnv in Test := true,
+      Test / requireJsDomEnv := true,
       // Use yarn as it is faster than npm
       useYarn := true,
-      version in webpack := "4.32.0",
-      version in installJsdom := "15.2.1",
+      webpack / version := "4.32.0",
+      installJsdom / version := "15.2.1",
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
-      scalaJSStage in Test := FastOptStage,
+      Test / scalaJSStage := FastOptStage,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"   % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"   % scalaJsReact % "test",
         "io.github.cquiroz.react"           %%% "common" % "0.11.3",
         "com.lihaoyi"                       %%% "utest"  % "0.7.8"      % Test
       ),
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"         -> reactJS,
         "react-dom"     -> reactJS,
         "react-hotkeys" -> reactHotkeys
       ),
-      webpackConfigFile in Test := Some(
+      Test / webpackConfigFile := Some(
         baseDirectory.value / "test.webpack.config.js"
       ),
       testFrameworks += new TestFramework("utest.runner.Framework")
@@ -165,7 +163,7 @@ lazy val commonSettings = Seq(
       "https://opensource.org/licenses/BSD-3-Clause"
     )
   ),
-  publishArtifact in Test := false,
+  Test / publishArtifact := false,
   publishMavenStyle := true,
   scalacOptions ~= (_.filterNot(
     Set(
