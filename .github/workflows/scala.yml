@@ -26,4 +26,4 @@ jobs:
           path: ~/.sbt
           key: ${{ runner.os }}-sbt-${{ hashFiles('**/project/**') }}-${{ hashFiles('**/build.sbt') }}          
       - name: Run compile
-        run: csbt scalafmtCheckAll facade/compile facade/test facade/fullOptJS::webpack
+        run: sbt scalafmtCheckAll facade/compile facade/test facade/fullOptJS::webpack
