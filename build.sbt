@@ -2,20 +2,18 @@ name := "scalajs-react-table"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-val reactTable           = "7.6.2"
-val reactTableTypes      = "7.0.26"
+val reactTable           = "7.6.3"
+val reactTableTypes      = "7.0.29"
 val scalaJsReact         = "1.7.7"
 val reactJS              = "16.13.1"
-val reactTypes           = "16.9.56"
-val reactDomTypes        = "16.9.10"
-val uTest                = "0.7.7"
-val scalajsReactVirtuoso = "0.0.1"
-
-parallelExecution in (ThisBuild, Test) := false
+val reactTypes           = "16.14.0"
+val reactDomTypes        = "16.9.11"
+val munit                = "0.7.23"
+val scalajsReactVirtuoso = "0.0.2"
 
 addCommandAlias(
   "restartWDS",
-  "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer"
+  "; demo / Compile / fastOptJS / stopWebpackDevServer; demo / Compile /fastOptJS / startWebpackDevServer"
 )
 
 inThisBuild(
@@ -79,26 +77,26 @@ lazy val demo =
     .in(file("demo"))
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(
-      version in webpack := "4.32.0",
-      version in startWebpackDevServer := "3.3.1",
-      webpackConfigFile in fastOptJS := Some(
+      webpack / version := "4.32.0",
+      startWebpackDevServer / version := "3.3.1",
+      fastOptJS / webpackConfigFile := Some(
         baseDirectory.value / "webpack" / "dev.webpack.config.js"
       ),
-      webpackConfigFile in fullOptJS := Some(
+      fullOptJS / webpackConfigFile := Some(
         baseDirectory.value / "webpack" / "prod.webpack.config.js"
       ),
-      webpackMonitoredDirectories += (resourceDirectory in Compile).value,
+      webpackMonitoredDirectories += (Compile / resourceDirectory).value,
       webpackResources := (baseDirectory.value / "webpack") * "*.js",
-      includeFilter in webpackMonitoredFiles := "*",
+      webpackMonitoredFiles / includeFilter := "*",
       webpackExtraArgs := Seq("--progress"),
       useYarn := true,
-      webpackBundlingMode in fastOptJS := BundlingMode.LibraryOnly(),
-      webpackBundlingMode in fullOptJS := BundlingMode.Application,
+      fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
+      fullOptJS / webpackBundlingMode := BundlingMode.Application,
       test := {},
-      scalaJSLinkerConfig in (Compile, fastOptJS) ~= { _.withSourceMap(false) },
-      scalaJSLinkerConfig in (Compile, fullOptJS) ~= { _.withSourceMap(false) },
+      Compile / fastOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
+      Compile / fullOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
       // NPM libs for development, mostly to let webpack do its magic
-      npmDevDependencies in Compile ++= Seq(
+      Compile / npmDevDependencies ++= Seq(
         "postcss-loader"                     -> "3.0.0",
         "autoprefixer"                       -> "9.4.4",
         "url-loader"                         -> "1.1.1",
@@ -117,7 +115,7 @@ lazy val demo =
         "favicons-webpack-plugin"            -> "0.0.9",
         "why-did-you-update"                 -> "1.0.6"
       ),
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"       -> reactJS,
         "react-dom"   -> reactJS,
         "react-table" -> reactTable
@@ -138,24 +136,24 @@ lazy val facade =
       name := "facade",
       moduleName := "scalajs-react-table",
       // Requires the DOM for tests
-      requireJsDomEnv in Test := true,
+      Test / requireJsDomEnv := true,
       // Use yarn as it is faster than npm
       useYarn := true,
       yarnExtraArgs := {
         if (insideCI.value) List("--frozen-lockfile") else List.empty
       },
-      version in webpack := "4.44.1",
-      version in installJsdom := "16.4.0",
+      webpack / version := "4.44.1",
+      installJsdom / version := "16.4.0",
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
-      scalaJSStage in Test := FastOptStage,
+      Test / scalaJSStage := FastOptStage,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"                   % scalaJsReact,
         "io.github.toddburnside"            %%% "scalajs-react-virtuoso" % scalajsReactVirtuoso,
         "com.github.japgolly.scalajs-react" %%% "test"                   % scalaJsReact % Test,
-        "com.lihaoyi"                       %%% "utest"                  % uTest        % Test
+        "org.scalameta"                     %%% "munit"                  % munit        % Test
       ),
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"              -> reactJS,
         "react-dom"          -> reactJS,
         "@types/react"       -> reactTypes,
@@ -176,14 +174,15 @@ lazy val facade =
           "-Wunused:explicits",
           "-Wunused:imports",
           "-Wvalue-discard",
-          "-Xlint:missing-interpolator"
+          "-Xlint:missing-interpolator",
+          "-Xlint:nullary-unit"
         )
       )),
       // Some Scalablytyped generated Scaladocs are malformed.
       // Workaround: https://github.com/xerial/sbt-sonatype/issues/30#issuecomment-342532067
       Compile / doc / sources := Seq(),
-      webpackConfigFile in Test := Some(
+      Test / webpackConfigFile := Some(
         baseDirectory.value / "test.webpack.config.js"
       ),
-      testFrameworks += new TestFramework("utest.runner.Framework")
+      testFrameworks += new TestFramework("munitFramework")
     )

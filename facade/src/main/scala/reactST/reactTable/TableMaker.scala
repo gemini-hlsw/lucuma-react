@@ -8,7 +8,7 @@ import react.common.Css
 import react.virtuoso.Virtuoso
 import reactST.reactTable.anon.Data
 import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
-import reactST.reactTable.mod._
+import reactST.reactTable.mod.{ ^ => _, _ }
 import reactST.std.Partial
 
 import scalajs.js
@@ -83,7 +83,7 @@ trait TableMaker[
     val col = emptyColumn.setId(id).asInstanceOf[ColBasedOnValue]
 
     // This should be an implicit call, but I can't get the types to line up
-    val c = new ColumnInterfaceBasedOnValueOps[ColBasedOnValue, D, V](col)
+    val c = new ColumnInterfaceBasedOnValueMutableBuilder[ColBasedOnValue, D, V](col)
     c.setCellComponentClass(
       component.asInstanceOf[ComponentClassP[(CellProps[D, V]) with js.Object]]
     )
@@ -126,7 +126,7 @@ trait TableMaker[
    * @param options The table options.
    */
   def use(options: TableOptsD): TableInstanceD =
-    useTable(options, plugins: _*).asInstanceOf[TableInstanceD]
+    Hooks.useTable(options, plugins: _*).asInstanceOf[TableInstanceD]
 
   /**
    * Create a table element based on the configured plugins.
@@ -273,6 +273,9 @@ trait TableMaker[
    * When adding new plugins, see https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-table
    * for help determining what the necessary type changes are.
    *
+   * Hooks need to have facades created in Hooks.scala, as the facades created by
+   * ScalablyTyped won't work as hooks.
+   *
    * Heads Up! It doesn't seem to be documented, but the order of plugins seems
    * to matter. If you put useSortBy before useFilters you will get a runtime error.
    * We may want to add some means of ordering the plugs when we submit them to
@@ -290,7 +293,7 @@ trait TableMaker[
     ColumnOptsD with UseSortByColumnOptions[D], 
     ColumnInstanceD with UseSortByColumnProps[D], 
     State with UseSortByState[D]] {
-    val plugins = self.plugins :+ useSortBy.asInstanceOf[PluginHook[D]]
+    val plugins = self.plugins :+ Hooks.useSortBy.asInstanceOf[PluginHook[D]]
   }
   // format: on
 
@@ -311,7 +314,7 @@ trait TableMaker[
     ColumnOptsD, 
     ColumnInstanceD, 
     State] {
-    val plugins = self.plugins :+ useBlockLayout.asInstanceOf[PluginHook[D]]
+    val plugins = self.plugins :+ Hooks.useBlockLayout.asInstanceOf[PluginHook[D]]
   }
   // format: on
 
