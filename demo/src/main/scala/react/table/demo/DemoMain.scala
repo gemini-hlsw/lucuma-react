@@ -8,7 +8,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.common.Css
 import reactST.reactTable.TableMaker
-import reactST.reactTable.mod._
+import reactST.reactTable.mod.{ ^ => _, _ }
 
 import js.annotation._
 
