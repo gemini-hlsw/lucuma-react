@@ -6,7 +6,7 @@ val reactJS          = "16.13.1"
 val reactBeautiulDnD = "13.1.0"
 val atlasKitTree     = "8.2.0"
 val scalaJsReact     = "1.7.7"
-val cats             = "2.5.0" // Only used in demo
+val cats             = "2.6.0" // Only used in demo
 
 addCommandAlias(
   "restartDemoWDS",
