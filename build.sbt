@@ -2,8 +2,6 @@ val reactJS         = "16.13.1"
 val copyToClipboard = "3.3.1"
 val scalaJsReact    = "1.7.7"
 
-parallelExecution in (ThisBuild, Test) := false
-
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 Global / resolvers += Resolver.sonatypeRepo("public")
@@ -55,24 +53,24 @@ lazy val facade =
     .settings(commonSettings: _*)
     .settings(
       name := "react-clipboard",
-      npmDependencies in Compile ++= Seq(
+      Compile / npmDependencies ++= Seq(
         "react"             -> reactJS,
         "react-dom"         -> reactJS,
         "copy-to-clipboard" -> copyToClipboard
       ),
       // Requires the DOM for tests
-      requireJsDomEnv in Test := true,
+      Test / requireJsDomEnv := true,
       // Use yarn as it is faster than npm
       useYarn := true,
       webpack / version := "4.44.1",
       webpackCliVersion / version := "3.3.11",
       startWebpackDevServer / version := "3.11.0",
-      webpackConfigFile in Test := Some(
+      Test / webpackConfigFile := Some(
         baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
       ),
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
-      scalaJSStage in Test := FastOptStage,
+      Test / scalaJSStage := FastOptStage,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReact % Test,

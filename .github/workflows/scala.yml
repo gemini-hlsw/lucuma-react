@@ -10,6 +10,6 @@ jobs:
       - uses: actions/checkout@v1
       - uses: olafurpg/setup-scala@v10
       - name: Checking your code format
-        run: csbt scalafmtCheckAll
+        run: sbt scalafmtCheckAll
       - name: Run tests
-        run: csbt +facade/test
+        run: sbt +facade/test
