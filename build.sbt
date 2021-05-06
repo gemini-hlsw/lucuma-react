@@ -2,11 +2,10 @@ name := "scalajs-react-datepicker"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-val reactDatePicker      = "3.7.0"
+val reactDatePicker      = "3.8.0"
 val reactDatePickerTypes = "3.1.8"
 val scalaJsReact         = "1.7.7"
 val reactJS              = "16.13.1"
-val typescript           = "4.2.4"
 
 addCommandAlias(
   "restartWDS",
@@ -147,9 +146,6 @@ lazy val facade =
         "react-dom"               -> reactJS,
         "react-datepicker"        -> reactDatePicker,
         "@types/react-datepicker" -> reactDatePickerTypes
-      ),
-      Compile / npmDevDependencies ++= Seq(
-        "typescript" -> typescript
       ),
       stUseScalaJsDom := true,
       stOutputPackage := "lucuma",
