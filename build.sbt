@@ -112,7 +112,7 @@ lazy val demo =
         "react-datepicker" -> reactDatePicker
       ),
       libraryDependencies ++= Seq(
-        "io.github.cquiroz" %%% "scala-java-time" % "2.0.0"
+        "io.github.cquiroz" %%% "scala-java-time" % "2.2.2"
       ),
       // don't publish the demo
       publish := {},
