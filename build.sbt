@@ -9,7 +9,7 @@ val reactJS              = "16.13.1"
 
 addCommandAlias(
   "restartWDS",
-  "; demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer"
+  "; demo/fastOptJS/stopWebpackDevServer; demo/fastOptJS/startWebpackDevServer"
 )
 
 inThisBuild(
