@@ -6,7 +6,7 @@ import japgolly.scalajs.react.Callback
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.raw.Event
-import react.common.EnumValue
+import react.common._
 
 package object gridlayout {
   type Margin           = (Int, Int)
@@ -120,7 +120,7 @@ package gridlayout {
     static:        js.UndefOr[Boolean] = js.undefined,
     isDraggable:   js.UndefOr[Boolean] = js.undefined,
     isResizable:   js.UndefOr[Boolean] = js.undefined,
-    resizeHandles: js.UndefOr[List[String]] = js.undefined,
+    resizeHandles: js.UndefOr[List[ResizeHandle]] = js.undefined,
     isBounded:     js.UndefOr[Boolean] = js.undefined
   ) {
     def toRaw: raw.LayoutItem =
@@ -136,7 +136,7 @@ package gridlayout {
                          static,
                          isDraggable,
                          isResizable,
-                         resizeHandles.map(_.toJSArray),
+                         resizeHandles.map(_.toJSArray.map(_.toJs)),
                          isBounded
       )
   }
@@ -155,7 +155,9 @@ package gridlayout {
                      l.static,
                      l.isDraggable,
                      l.isResizable,
-                     l.resizeHandles.map(_.toList),
+                     l.resizeHandles.map(_.toList.map(ResizeHandle.fromRaw).collect {
+                       case Some(x) => x
+                     }),
                      l.isBounded
       )
 
@@ -174,7 +176,9 @@ package gridlayout {
                          l.static,
                          l.isDraggable,
                          l.isResizable,
-                         l.resizeHandles.map(_.toList),
+                         l.resizeHandles.map(_.toList.map(ResizeHandle.fromRaw).collect {
+                           case Some(x) => x
+                         }),
                          l.isBounded
           )
         )
@@ -198,6 +202,32 @@ package gridlayout {
     implicit val enum: EnumValue[CompactType] = EnumValue.toLowerCaseString
     case object Vertical   extends CompactType
     case object Horizontal extends CompactType
+  }
+
+  sealed trait ResizeHandle extends Product with Serializable
+  object ResizeHandle {
+    implicit val enum: EnumValue[ResizeHandle] = EnumValue.toLowerCaseString
+
+    def fromRaw(s: String): Option[ResizeHandle] = s match {
+      case "s"  => Some(S)
+      case "w"  => Some(W)
+      case "e"  => Some(E)
+      case "n"  => Some(N)
+      case "sw" => Some(SW)
+      case "nw" => Some(NW)
+      case "se" => Some(SE)
+      case "ne" => Some(NE)
+      case _    => None
+    }
+
+    case object S  extends ResizeHandle
+    case object W  extends ResizeHandle
+    case object E  extends ResizeHandle
+    case object N  extends ResizeHandle
+    case object SW extends ResizeHandle
+    case object NW extends ResizeHandle
+    case object SE extends ResizeHandle
+    case object NE extends ResizeHandle
   }
 
 }

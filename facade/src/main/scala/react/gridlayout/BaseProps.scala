@@ -3,6 +3,7 @@ package react
 package gridlayout
 
 import scala.scalajs.js
+import scala.scalajs.js.JSConverters._
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.raw.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
@@ -55,6 +56,17 @@ trait BaseProps extends js.Object {
 // we should set scale coefficient to avoid render artefacts while dragging.
   var transformScale: js.UndefOr[JsNumber]
   var droppingItem: js.UndefOr[raw.DroppingItem]
+  // Defines which resize handles should be rendered (default: 'se')
+  // Allows for any combination of:
+  // 's' - South handle (bottom-center)
+  // 'w' - West handle (left-center)
+  // 'e' - East handle (right-center)
+  // 'n' - North handle (top-center)
+  // 'sw' - Southwest handle (bottom-left)
+  // 'nw' - Northwest handle (top-left)
+  // 'se' - Southeast handle (bottom-right)
+  // 'ne' - Northeast handle (top-right)
+  var resizeHandles: js.UndefOr[js.Array[String]]
 
   // Calls when drag starts. Callback is of the signature (layout, oldItem, newItem, placeholder, e, ?node).
   // All callbacks below have the same signature. 'start' and 'stop' callbacks omit the 'placeholder'.
@@ -95,6 +107,7 @@ object BaseProps {
     useCSSTransforms: js.UndefOr[Boolean] = js.undefined,
     transformScale:   js.UndefOr[JsNumber] = js.undefined,
     droppingItem:     js.UndefOr[DroppingItem] = js.undefined,
+    resizeHandles:    js.UndefOr[List[ResizeHandle]] = js.undefined,
     onDragStart:      ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onDrag:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onDragStop:       ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -125,6 +138,7 @@ object BaseProps {
     p.useCSSTransforms = useCSSTransforms
     p.transformScale = transformScale
     p.droppingItem = droppingItem.map(_.toRaw)
+    p.resizeHandles = resizeHandles.map(_.toJSArray.map(_.toJs))
     p.onDragStart = (
       layout:      raw.Layout,
       oldItem:     raw.LayoutItem,

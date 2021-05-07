@@ -6,14 +6,15 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.gridlayout._
-import react.sizeme._
 import react.common._
+import react.resizeDetector.ResizeDetector
 
 object RGLDemo {
 
   val component = ScalaComponent
     .builder[Unit]("RGLDemo")
     .render { _ =>
+      println("Render")
       val layout                                           = Layout(
         List(
           LayoutItem(x = 0, y = 0, w = 6, h = 2, i = "a", static = true),
@@ -35,11 +36,11 @@ object RGLDemo {
       //   <.div(^.key := "b", "b"))
       <.div(
         ^.width := "100%",
-        SizeMe() { s =>
-          println(s.width)
+        ResizeDetector() { s =>
           <.div(
             ResponsiveReactGridLayout(
-              s.width.toInt,
+              s.width.getOrElse(1),
+              onLayoutChange = (_, b) => Callback.log(pprint.apply(b).toString),
               margin = (10, 10),
               containerPadding = (10, 10),
               className = "layout",

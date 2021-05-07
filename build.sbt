@@ -1,6 +1,8 @@
+import org.scalajs.linker.interface.ModuleSplitStyle
+
 val reactJS         = "16.13.1"
 val scalaJsReact    = "1.7.7"
-val reactGridLayout = "1.0.0"
+val reactGridLayout = "1.1.0"
 val scalaJSDom      = "1.1.0"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
@@ -50,45 +52,17 @@ val root =
 lazy val demo =
   project
     .in(file("demo"))
-    .enablePlugins(ScalaJSBundlerPlugin)
+    .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings: _*)
     .settings(
-      webpack / version := "4.32.0",
-      startWebpackDevServer / version := "3.3.1",
-      fastOptJS / webpackConfigFile := Some(
-        baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"
-      ),
-      fullOptJS / webpackConfigFile := Some(
-        baseDirectory.value / "src" / "webpack" / "webpack-prod.config.js"
-      ),
-      webpackMonitoredDirectories += (Compile / resourceDirectory).value,
-      webpackResources := (baseDirectory.value / "src" / "webpack") * "*.js",
-      useYarn := true,
-      fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
-      fullOptJS / webpackBundlingMode := BundlingMode.Application,
       test := {},
-      webpackDevServerPort := 6060,
-      Compile / npmDevDependencies ++= Seq(
-        "css-loader"                         -> "0.28.11",
-        "less"                               -> "2.3.1",
-        "less-loader"                        -> "4.1.0",
-        "mini-css-extract-plugin"            -> "0.4.0",
-        "html-webpack-plugin"                -> "3.2.0",
-        "url-loader"                         -> "1.0.1",
-        "style-loader"                       -> "0.21.0",
-        "postcss-loader"                     -> "2.1.5",
-        "cssnano"                            -> "3.10.0",
-        "optimize-css-assets-webpack-plugin" -> "4.0.1",
-        "webpack-merge"                      -> "4.1.0",
-        "webpack-dev-server-status-bar"      -> "1.0.0"
-      ),
-      Compile / npmDependencies ++= Seq(
-        "react"             -> reactJS,
-        "react-dom"         -> reactJS,
-        "react-grid-layout" -> reactGridLayout
-      ),
-      libraryDependencies +=
-        "io.github.cquiroz.react" %%% "react-sizeme" % "0.6.4",
+      Compile / fastLinkJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
+      Compile / fullLinkJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
+      scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) },
+      Compile / fastLinkJS / scalaJSLinkerConfig ~= (_.withModuleSplitStyle(ModuleSplitStyle.SmallestModules)),
+      Compile / fullLinkJS / scalaJSLinkerConfig ~= (_.withModuleSplitStyle(ModuleSplitStyle.FewestModules)),
+      publish / skip := true,
+      libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.6.5",
       // don't publish the demo
       publish := {},
       publishLocal := {},
