@@ -14,6 +14,7 @@ object RGLDemo {
   val component = ScalaComponent
     .builder[Unit]("RGLDemo")
     .render { _ =>
+      println("Render")
       val layout                                           = Layout(
         List(
           LayoutItem(x = 0, y = 0, w = 6, h = 2, i = "a", static = true),
@@ -39,6 +40,7 @@ object RGLDemo {
           <.div(
             ResponsiveReactGridLayout(
               s.width.getOrElse(1),
+              onLayoutChange = (_, b) => Callback.log(pprint.apply(b).toString),
               margin = (10, 10),
               containerPadding = (10, 10),
               className = "layout",

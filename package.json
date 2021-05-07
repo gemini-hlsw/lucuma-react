@@ -5,13 +5,11 @@
     "jsdom": "^9.9.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-grid-layout": "1.1.0",
+    "react-grid-layout": "1.2.4",
     "react-resize-detector": "^6.7.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react-refresh": "^1.1.0",
-    "less": "3.9.0",
-    "less-watch-compiler": "1.14.6",
     "vite": "^2.1.0"
   },
   "scripts": {
