@@ -36,9 +36,11 @@ export default ({ command, mode }) => {
       },
     },
     build: {
-      // minify: 'esbuild',
+      minify: 'esbuild',
+      // minify: false,
       terserOptions: {
-        sourceMap: false
+        // sourceMap: false,
+        toplevel: true
       },
       outDir: path.resolve(__dirname, "../docs"),
     },

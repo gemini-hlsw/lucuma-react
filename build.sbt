@@ -94,9 +94,9 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
+        "org.typelevel"                     %%% "cats-core"   % "2.6.0",
         "io.github.cquiroz.react"           %%% "common"      % "0.11.3",
         "com.lihaoyi"                       %%% "utest"       % "0.7.9"      % Test,
-        "org.typelevel"                     %%% "cats-core"   % "2.6.0"      % Test
       ),
       Test / webpackConfigFile := Some(
         baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"

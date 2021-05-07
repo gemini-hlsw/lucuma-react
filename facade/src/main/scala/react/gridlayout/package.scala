@@ -1,5 +1,7 @@
 package react
 
+import cats._
+import cats.syntax.all._
 import scala.scalajs.js
 import js.JSConverters._
 import japgolly.scalajs.react.Callback
@@ -29,6 +31,8 @@ package gridlayout {
   }
 
   object BreakpointName {
+    implicit val eqBreakpointName: Eq[BreakpointName] = Eq.by(_.name)
+
     private final case class BreakpointNameI(name: String) extends BreakpointName
     def apply(name: String): BreakpointName = new BreakpointNameI(name)
 
@@ -44,6 +48,11 @@ package gridlayout {
   }
 
   final case class Breakpoint(name: BreakpointName, pos: Int)
+
+  object Breakpoint {
+    implicit val eqBreakpoint: Eq[Breakpoint] = Eq.by(x => (x.name, x.pos))
+  }
+
   final case class Breakpoints(bps: List[Breakpoint]) {
     def toRaw: js.Object = {
       val p = js.Dynamic.literal()
@@ -52,13 +61,25 @@ package gridlayout {
     }
   }
 
+  object Breakpoints {
+    implicit val eqBreakpoints: Eq[Breakpoints] = Eq.by(_.bps)
+  }
+
   final case class Column(col: BreakpointName, pos: Int)
+  object Column {
+    implicit val eqColumn: Eq[Column] = Eq.by(x => (x.col, x.pos))
+  }
+
   final case class Columns(cols: List[Column]) {
     def toRaw: js.Object = {
       val p = js.Dynamic.literal()
       cols.foreach { case Column(name, v) => p.updateDynamic(name.name)(v.asInstanceOf[js.Any]) }
       p
     }
+  }
+
+  object Columns {
+    implicit val eqColumns: Eq[Columns] = Eq.by(_.cols)
   }
 
   final case class DroppingItem(
@@ -78,6 +99,7 @@ package gridlayout {
   final case class BreakpointLayout(name: BreakpointName, layout: Layout)
 
   object BreakpointLayout {
+    implicit val eqBreakpointLayout: Eq[BreakpointLayout] = Eq.by(x => (x.name, x.layout))
     private[gridlayout] def layoutsFromRaw(l: js.Object): Layout = {
       val c                   = l.asInstanceOf[js.Array[raw.LayoutItem]]
       val i: List[LayoutItem] = c.map(LayoutItem.fromRaw).toList
@@ -142,6 +164,26 @@ package gridlayout {
   }
 
   object LayoutItem {
+    implicit def eqUndef[A: Eq]: Eq[js.UndefOr[A]] = Eq.by(_.toOption)
+    implicit val eqLayoutItem: Eq[LayoutItem]      = Eq.by(x =>
+      (x.w,
+       x.h,
+       x.x,
+       x.y,
+       x.y,
+       x.i,
+       x.minW,
+       x.minH,
+       x.maxW,
+       x.maxH,
+       x.static,
+       x.isDraggable,
+       x.isResizable,
+       x.resizeHandles,
+       x.isBounded
+      )
+    )
+
     private[gridlayout] def fromRaw(l: raw.LayoutItem): LayoutItem =
       new LayoutItem(l.w,
                      l.h,
@@ -191,7 +233,8 @@ package gridlayout {
   }
 
   object Layout {
-    val Empty: Layout = Layout(Nil)
+    implicit val eqLayout: Eq[Layout] = Eq.by(_.l)
+    val Empty: Layout                 = Layout(Nil)
 
     private[gridlayout] def fromRaw(l: raw.Layout): Layout =
       Layout(List(l.map(LayoutItem.fromRaw).toSeq: _*))
@@ -206,7 +249,8 @@ package gridlayout {
 
   sealed trait ResizeHandle extends Product with Serializable
   object ResizeHandle {
-    implicit val enum: EnumValue[ResizeHandle] = EnumValue.toLowerCaseString
+    implicit val eqResizeHandle: Eq[ResizeHandle] = Eq.by(enum.value)
+    implicit val enum: EnumValue[ResizeHandle]    = EnumValue.toLowerCaseString
 
     def fromRaw(s: String): Option[ResizeHandle] = s match {
       case "s"  => Some(S)

@@ -29,11 +29,6 @@ object RGLDemo {
           (BreakpointName.sm, (768, 8, layout)),
           (BreakpointName.xs, (480, 6, layout))
         )
-      // ReactGridLayout(
-      //   ReactGridLayout.props(1200, className = "layout", rowHeight = 30, cols = 12, layout = layout),
-      //   <.div(^.key := "a", "a"),
-      //   <.div(^.key := "c", "c"),
-      //   <.div(^.key := "b", "b"))
       <.div(
         ^.width := "100%",
         ResizeDetector() { s =>
