@@ -6,8 +6,8 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.gridlayout._
-import react.sizeme._
 import react.common._
+import react.resizeDetector.ResizeDetector
 
 object RGLDemo {
 
@@ -35,11 +35,10 @@ object RGLDemo {
       //   <.div(^.key := "b", "b"))
       <.div(
         ^.width := "100%",
-        SizeMe() { s =>
-          println(s.width)
+        ResizeDetector() { s =>
           <.div(
             ResponsiveReactGridLayout(
-              s.width.toInt,
+              s.width.getOrElse(1),
               margin = (10, 10),
               containerPadding = (10, 10),
               className = "layout",
