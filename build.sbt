@@ -8,7 +8,7 @@ val scalaJsReact         = "1.7.7"
 val reactJS              = "16.13.1"
 val reactTypes           = "16.14.0"
 val reactDomTypes        = "16.9.11"
-val munit                = "0.7.23"
+val munit                = "0.7.25"
 val scalajsReactVirtuoso = "0.0.2"
 
 addCommandAlias(
