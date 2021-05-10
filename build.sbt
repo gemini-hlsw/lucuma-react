@@ -2,8 +2,8 @@ name := "scalajs-react-table"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-val reactTable           = "7.6.3"
-val reactTableTypes      = "7.0.29"
+val reactTable           = "7.7.0"
+val reactTableTypes      = "7.7.0"
 val scalaJsReact         = "1.7.7"
 val reactJS              = "16.13.1"
 val reactTypes           = "16.14.0"
@@ -88,7 +88,6 @@ lazy val demo =
       webpackMonitoredDirectories += (Compile / resourceDirectory).value,
       webpackResources := (baseDirectory.value / "webpack") * "*.js",
       webpackMonitoredFiles / includeFilter := "*",
-      webpackExtraArgs := Seq("--progress"),
       useYarn := true,
       fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
       fullOptJS / webpackBundlingMode := BundlingMode.Application,
@@ -165,7 +164,7 @@ lazy val facade =
       stOutputPackage := "reactST",
       stFlavour := Flavour.Japgolly,
       stReactEnableTreeShaking := Selection.All,
-      Compile / stMinimize := Selection.AllExcept("react-table"),
+      (Compile / stMinimize).withRank(KeyRanks.Invisible) := Selection.AllExcept("react-table"),
       scalacOptions ~= (_.filterNot(
         Set(
           // By necessity facades will have unused params
