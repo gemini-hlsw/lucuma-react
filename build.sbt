@@ -2,7 +2,7 @@ name := "scalajs-react-virtuoso"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-val reactVirtuoso      = "1.8.1"
+val reactVirtuoso      = "1.8.6"
 val scalaJsReact       = "1.7.7"
 val reactJS            = "16.13.1"
 val scalaJsReactCommon = "0.11.3"
