@@ -23,6 +23,7 @@ object HTMLTableBuilder {
   /**
    * Create a table component based on the configured plugins.
    *
+   * @param tableMaker The TableMaker providing the useTable hook.
    * @param options The table options to use for the table.
    * @param headerCellFn A function to use for creating the <th> elements. Simple ones are provided by the TableMaker object.
    * @param tableClass An optional CSS class to apply to the table element
@@ -89,6 +90,7 @@ object HTMLTableBuilder {
    * Create a virtualized table based on the configured plugins.
    * The plugins MUST include withBlockLayout.
    *
+   * @param tableMaker The TableMaker providing the useTable hook.
    * @param options The table options to use for the table.
    * @param bodyHeight The optional height of the table body (virtualized portion) in px. See note.
    * @param headerCellFn See note. A function to use for creating the header elements. Simple ones are provided by the TableMaker object.
