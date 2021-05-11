@@ -20,8 +20,8 @@ import scalajs.js.JSConverters._
 case class TableMaker[D, 
   TableOptsD <: UseTableOptions[D], 
   TableInstanceD <: TableInstance[D], 
-  ColumnOptsD <: ColumnWithLooseAccessor[D], 
-  ColumnInstanceD <: ColumnInstance[D], 
+  ColumnOptsD <: ColumnOptions[D], 
+  ColumnObjectD <: ColumnObject[D], 
   State <: TableState[D] // format: on
 ](plugins: List[PluginHook[D]]) {
   import syntax._
@@ -34,6 +34,8 @@ case class TableMaker[D,
   /**
    * Create a TableOptsD with a row id function and columns set.
    */
+  // TODO When scalajs-react supports hooks, we can probably expose a List[Column[D]]
+  // in the API and useMemo.
   def options(rowIdFn: D => String, columns: js.Array[Column[D]]): TableOptsD =
     emptyOptions.setRowIdFn(rowIdFn).setColumns(columns)
 
@@ -52,9 +54,6 @@ case class TableMaker[D,
   def accessorColumn[V](id: String, accessor: D => V): ColumnOptsD =
     emptyColumn.setId(id).setAccessorFn(accessor)
 
-  // return type of a scalajs-react component function.
-  type ComponentFnResult = raw.ChildrenArray[raw.Empty | String | raw.JsNumber | raw.React.Element]
-
   /**
    * Create a column with a scalajs-react component in it.
    *
@@ -71,7 +70,7 @@ case class TableMaker[D,
    */
   def componentColumn[V](
     id:        String,
-    component: js.Function1[CellProps[D, V], ComponentFnResult]
+    component: js.Function1[CellProps[D, V], raw.React.Node]
   ): ColumnOptsD = {
     type ColBasedOnValue = ColumnOptsD with ColumnInterfaceBasedOnValue[D, V]
     val col = emptyColumn.setId(id).asInstanceOf[ColBasedOnValue]
@@ -89,10 +88,10 @@ case class TableMaker[D,
    * @param header The header for the column group. Seems to be required.
    * @param cols The columns to include in the group.
    */
-  def columnGroup(header: Renderer[HeaderProps[D]], cols: ColumnOptsD*): ColumnGroup[D] =
+  def columnGroup(header: Renderer[HeaderProps[D]], cols: ColumnOptsD*): ColumnGroupOptions[D] =
     js.Dynamic
       .literal()
-      .asInstanceOf[ColumnGroup[D]]
+      .asInstanceOf[ColumnGroupOptions[D]]
       .setHeader(header)
       .setColumns(cols.toJSArray.asInstanceOf[js.Array[Column[D]]])
 
@@ -139,11 +138,11 @@ case class TableMaker[D,
   def withPlugin[
     NewTableOptsD <: UseTableOptions[D],
     NewTableInstanceD <: TableInstance[D], 
-    NewColumnOptsD <: ColumnWithLooseAccessor[D], 
-    NewColumnInstanceD <: ColumnInstance[D],
+    NewColumnOptsD <: ColumnOptions[D], 
+    NewColumnObjectD <: ColumnObject[D],
     NewState <: TableState[D]
   ](plugin: Hooks.Hook) =
-    TableMaker[D, NewTableOptsD, NewTableInstanceD, NewColumnOptsD, NewColumnInstanceD, NewState](plugins :+ plugin)
+    TableMaker[D, NewTableOptsD, NewTableInstanceD, NewColumnOptsD, NewColumnObjectD, NewState](plugins :+ plugin)
 
   /**
    * Add sort capabilities to the table via the useSortBy plugin hook.
@@ -152,7 +151,7 @@ case class TableMaker[D,
     TableOptsD with UseSortByOptions[D],
     TableInstanceD with UseSortByInstanceProps[D],
     ColumnOptsD with UseSortByColumnOptions[D],
-    ColumnInstanceD with UseSortByColumnProps[D],
+    ColumnObjectD with UseSortByColumnProps[D],
     State with UseSortByState[D]
   ](Hooks.useSortBy)
 
@@ -169,7 +168,7 @@ case class TableMaker[D,
     TableOptsD with TableMaker.LayoutMarker, // A marker trait to limit calls to makeVirtualizedTable.
     TableInstanceD,
     ColumnOptsD,
-    ColumnInstanceD,
+    ColumnObjectD,
     State
   ](Hooks.useBlockLayout)
   // format: on
@@ -178,14 +177,14 @@ case class TableMaker[D,
   // classes, the compiler seems to somehow loose type information along
   // the way. Putting the syntax here allows resolution to work correctly.
   object syntax {
-    implicit class TableOptionOps(val table: TableOptsD) {
+    implicit class TableOptionOps[Self <: TableOptsD](val table: Self) {
 
       /**
        * Sets the initial state of the table.
        *
        * The provided setInitialState method takes a Partial[TableState[D]]
        */
-      def setInitialStateFull(s: TableState[D]): TableOptsD =
+      def setInitialStateFull(s: TableState[D]): Self =
         table.setInitialState(s.asInstanceOf[Partial[TableState[D]]])
 
       /**
@@ -193,18 +192,18 @@ case class TableMaker[D,
        *
        * @param f A function from the row type to the row id.
        */
-      def setRowIdFn(f: D => String): TableOptsD =
+      def setRowIdFn(f: D => String): Self =
         table.setGetRowId((data, _, _) => f(data))
     }
 
-    implicit class ColumnOptionOps(val col: ColumnOptsD) {
+    implicit class ColumnOptionOps[Self <: ColumnOptsD](val col: Self) {
 
       /**
        * Sets the accessorFunction for the column.
        *
        * @param f A function from the row type to the column type.
        */
-      def setAccessorFn[V](f: D => V): ColumnOptsD =
+      def setAccessorFn[V](f: D => V): Self =
         col.setAccessorFunction3(TableMaker.accessorFn(f))
 
       /**
@@ -227,10 +226,10 @@ case class TableMaker[D,
       )(implicit
         ordering: Ordering[V],
         ev:       ColumnOptsD <:< UseSortByColumnOptions[D]
-      ): ColumnOptsD = {
+      ): Self = {
         val sbfn: SortByFn[D] = (d1, d2, _, _) =>
           ordering.compare(f(d1.original), f(d2.original)).toDouble
-        ev(col).setSortType(sbfn).asInstanceOf[ColumnOptsD]
+        ev(col).setSortType(sbfn).asInstanceOf[Self]
       }
     }
   }
@@ -242,8 +241,8 @@ object TableMaker {
     D,
     UseTableOptions[D],
     TableInstance[D],
-    ColumnWithLooseAccessor[D],
-    ColumnInstance[D],
+    ColumnOptions[D],
+    ColumnObject[D],
     TableState[D]
   ] = TableMaker(List.empty)
   // format: on
@@ -259,8 +258,8 @@ object TableMaker {
   def accessorFn[D, V](f: D => V): js.Function3[D, Double, Data[D], js.Any] =
     (data, _, _) => f(data).asInstanceOf[js.Any]
 
-  def headersFromGroup[D, ColumnInstanceD <: ColumnInstance[D]](headerGroup: HeaderGroup[D]) =
-    headerGroup.headers.asInstanceOf[js.Array[ColumnInstanceD]]
+  def headersFromGroup[D, ColumnD <: Column[D]](headerGroup: HeaderGroup[D]) =
+    headerGroup.headers.asInstanceOf[js.Array[ColumnD]]
 
   trait LayoutMarker
 }

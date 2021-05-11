@@ -9,12 +9,14 @@ import react.virtuoso.Virtuoso
 import reactST.reactTable.anon.Data
 import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
 import reactST.reactTable.mod.{ ^ => _, _ }
+import reactST.reactTable.syntax._
 import reactST.std.Partial
 
 import scalajs.js
 import scalajs.js.|
 import scalajs.js.JSConverters._
 import TableMaker.LayoutMarker
+import reactTableStrings._
 
 object HTMLTableBuilder {
 
@@ -45,13 +47,13 @@ object HTMLTableBuilder {
   def buildComponent[D,
     TableOptsD <: UseTableOptions[D], 
     TableInstanceD <: TableInstance[D], 
-    ColumnOptsD <: ColumnWithLooseAccessor[D], 
-    ColumnInstanceD <: ColumnInstance[D], 
+    ColumnOptsD <: ColumnOptions[D], 
+    ColumnObjectD <: ColumnObject[D], 
     State <: TableState[D] // format: on
   ](
-    tableMaker:   TableMaker[D, TableOptsD, TableInstanceD, ColumnOptsD, ColumnInstanceD, State],
+    tableMaker:   TableMaker[D, TableOptsD, TableInstanceD, ColumnOptsD, ColumnObjectD, State],
     options:      TableOptsD,
-    headerCellFn: Option[ColumnInstanceD => TagMod],
+    headerCellFn: Option[ColumnObjectD => TagMod],
     tableClass:   Css = Css(""),
     rowClassFn:   (Int, D) => Css = (_: Int, _: D) => Css(""),
     footer:       TagMod = TagMod.empty
@@ -75,7 +77,7 @@ object HTMLTableBuilder {
         tableInstance.prepareRow(rd)
         val rowClass = rowClassFn(rd.index.toInt, rd.original)
         val cells    = rd.cells.toTagMod { cell =>
-          <.td(TableMaker.props2Attrs(cell.getCellProps()), cell.render("Cell"))
+          <.td(TableMaker.props2Attrs(cell.getCellProps()), cell.renderCell)
         }
         <.tr(rowClass, TableMaker.props2Attrs(rd.getRowProps()), cells)
       }
@@ -110,16 +112,16 @@ object HTMLTableBuilder {
    */
   // format: off
   def makeVirtualizedTable[D,
-  TableOptsD <: UseTableOptions[D], 
+    TableOptsD <: UseTableOptions[D], 
     TableInstanceD <: TableInstance[D], 
-    ColumnOptsD <: ColumnWithLooseAccessor[D], 
-    ColumnInstanceD <: ColumnInstance[D], 
+    ColumnOptsD <: ColumnOptions[D], 
+    ColumnObjectD <: ColumnObject[D], 
     State <: TableState[D] // format: on
   ](
-    tableMaker:        TableMaker[D, TableOptsD, TableInstanceD, ColumnOptsD, ColumnInstanceD, State],
+    tableMaker:        TableMaker[D, TableOptsD, TableInstanceD, ColumnOptsD, ColumnObjectD, State],
     options:           TableOptsD,
     bodyHeight:        Option[Double] = None,
-    headerCellFn:      Option[ColumnInstanceD => TagMod],
+    headerCellFn:      Option[ColumnObjectD => TagMod],
     tableClass:        Css = Css(""),
     rowClassFn:        (Int, D) => Css = (_: Int, _: D) => Css("")
   )(implicit evidence: TableOptsD <:< LayoutMarker) =
@@ -130,10 +132,7 @@ object HTMLTableBuilder {
       val rowComp = (_: Int, row: Row[D]) => {
         tableInstance.prepareRow(row)
         val cells = row.cells.toTagMod { cell =>
-          <.div(^.className := "td",
-                TableMaker.props2Attrs(cell.getCellProps()),
-                cell.render("Cell")
-          )
+          <.div(^.className := "td", TableMaker.props2Attrs(cell.getCellProps()), cell.renderCell)
         }
 
         val rowClass = rowClassFn(row.index.toInt, row.original)
@@ -174,14 +173,11 @@ object HTMLTableBuilder {
    * @param useDiv True to use a <div> instead of a <th>. Needed for tables withBlockLayout.
    */
   def basicHeaderCellFn(
-    cellClass: Css = Css(""),
+    cellClass: Css = Css.Empty,
     useDiv:    Boolean = false
-  ): ColumnInstance[_] => TagMod =
+  ): ColumnObject[_] => TagMod =
     col =>
-      headerCell(useDiv)(TableMaker.props2Attrs(col.getHeaderProps()),
-                         cellClass,
-                         col.render("Header")
-      )
+      headerCell(useDiv)(TableMaker.props2Attrs(col.getHeaderProps()), cellClass, col.renderHeader)
 
   /**
    * A function to use in TableMaker.makeTable for the headerCellFn
@@ -194,9 +190,9 @@ object HTMLTableBuilder {
    * @return
    */
   def sortableHeaderCellFn(
-    cellClass: Css = Css(""),
+    cellClass: Css = Css.Empty,
     useDiv:    Boolean = false
-  ): ColumnInstance[_] with UseSortByColumnProps[_] => TagMod =
+  ): ColumnObject[_] with UseSortByColumnProps[_] => TagMod =
     col => {
       def sortIndicator(col: UseSortByColumnProps[_]): TagMod =
         if (col.isSorted) {
@@ -216,10 +212,30 @@ object HTMLTableBuilder {
         TableMaker.props2Attrs(toggleProps),
         styles,
         cellClass,
-        col.render("Header"),
+        col.renderHeader,
         <.span(sortIndicator(col))
       )
     }
+
+  /**
+   * A function to use in TableMaker.makeTable for the
+   * footerCellFn parameter. This is a a basic footer.
+   *
+   * @param cellClass An optional CSS class to apply the the <th>.
+   * @param useDiv True to use a <div> instead of a <th>. Needed for tables withBlockLayout.
+   */
+  def basicFooterCellFn(
+    cellClass: Css = Css.Empty,
+    useDiv:    Boolean = false
+  ): ColumnObject[_] => TagMod = { col =>
+    col.Footer.map(_ =>
+      headerCell(useDiv)(
+        TableMaker.props2Attrs(col.getFooterProps()),
+        cellClass,
+        col.renderFooter
+      )
+    )
+  }
 
   private def headerCell(useDiv: Boolean) = if (useDiv) <.div(^.className := "th") else <.th()
 
