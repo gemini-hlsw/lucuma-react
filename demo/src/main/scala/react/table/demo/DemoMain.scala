@@ -34,7 +34,21 @@ object DemoMain {
 
   val randomData = RandomData.randomPeople(1000)
 
-  val sortedTable = {
+  // TABLE 1
+  val SortedTableDef = TableMaker[Guitar].withSort
+  import SortedTableDef.syntax._
+
+  val SortedTable =
+    HTMLTableBuilder.buildComponent(
+      SortedTableDef,
+      tableClass = Css("guitars"),
+      headerCellFn = Some(HTMLTableBuilder.sortableHeaderCellFn()),
+      footer = <.tfoot(<.tr(<.th(^.colSpan := 6, s"Guitar Count: ${guitars.length}")))
+    )
+
+  import ColumnInterfaceBasedOnValue._
+
+  val sortedTableColumns = {
     val idRenderer = ScalaComponent
       .builder[Guitar]
       .render_P(props => <.span(s"g-${props.id}"))
@@ -43,104 +57,78 @@ object DemoMain {
       .toJsComponent
       .raw
 
-    val tableMaker = TableMaker[Guitar].withSort
-    import tableMaker.syntax._
-
-    val columns = tableMaker.columnArray(
-      tableMaker
-        .componentColumn("id", idRenderer)
+    List(
+      SortedTableDef
+        .Column("id", _.id)
+        .setCell(idRenderer)
         .setSortByFn[Int](_.id)
-        .setHeader("Id")
-        .setAccessorFn(_.id),
-      tableMaker.accessorColumn("make", _.make).setHeader("Make"),
-      tableMaker.accessorColumn("model", _.model).setHeader("Model"),
-      tableMaker.columnGroup(
-        "Details",
-        tableMaker.accessorColumn("year", _.details.year).setHeader("Year"),
-        tableMaker.accessorColumn("pickups", _.details.pickups).setHeader("Pickups"),
-        tableMaker.accessorColumn("color", _.details.color).setHeader("Color")
-      )
-    )
-
-    val state   = tableMaker.emptyState.setSortByVarargs(SortingRule("model"))
-    val options = tableMaker
-      .options(rowIdFn = _.id.toString, columns = columns)
-      .setInitialStateFull(state)
-
-    val guitarFooter = <.tfoot(<.tr(<.th(^.colSpan := 6, s"Guitar Count: ${guitars.length}")))
-
-    HTMLTableBuilder.buildComponent(
-      tableMaker,
-      options = options,
-      tableClass = Css("guitars"),
-      headerCellFn = Some(HTMLTableBuilder.sortableHeaderCellFn()),
-      footer = guitarFooter
-    )
+        .setHeader("Id"),
+      SortedTableDef.Column("make", _.make).setHeader("Make"),
+      SortedTableDef.Column("model", _.model).setHeader("Model"),
+      SortedTableDef
+        .ColumnGroup(
+          SortedTableDef.Column("year", _.details.year).setHeader("Year"),
+          SortedTableDef.Column("pickups", _.details.pickups).setHeader("Pickups"),
+          SortedTableDef.Column("color", _.details.color).setHeader("Color")
+        )
+        .setHeader("Details")
+    ).toJSArray
   }
 
-  val virtualizedTable = {
-    val tm = TableMaker[RandomData.Person].withBlockLayout
+  val sortedTableState = SortedTableDef.State().setSortByVarargs(SortingRule("model"))
 
-    val cols = tm.columnArray(
-      tm.accessorColumn("first", _.first).setHeader("First").setWidth(100),
-      tm.accessorColumn("last", _.last).setHeader("Last").setWidth(100),
-      tm.accessorColumn("age", _.age).setHeader("Age").setWidth(50)
-    )
+  // TABLE 2
+  val VirtualizedTableDef = TableMaker[RandomData.Person].withBlockLayout
 
-    val options = tm.options(rowIdFn = _.id.toString, columns = cols)
-
+  val VirtualizedTable =
     HTMLTableBuilder.buildComponentVirtualized(
-      tm,
-      options = options,
+      VirtualizedTableDef,
       tableClass = Css("virtualized"),
       rowClassFn = rowClassEvenOdd,
       headerCellFn = Some(HTMLTableBuilder.basicHeaderCellFn(useDiv = true))
     )
-  }
 
-  val sortedVirtualizedTable = {
-    val tm = TableMaker[RandomData.Person].withSort.withBlockLayout
+  val virtualizedTableColumns = List(
+    VirtualizedTableDef.Column("first", _.first).setHeader("First").setWidth(100),
+    VirtualizedTableDef.Column("last", _.last).setHeader("Last").setWidth(100),
+    VirtualizedTableDef.Column("age", _.age).setHeader("Age").setWidth(50)
+  ).toJSArray
 
-    val cols = tm.columnArray(
-      tm.accessorColumn("first", _.first).setHeader("First").setWidth(100),
-      tm.accessorColumn("last", _.last).setHeader("Last").setWidth(100),
-      tm.accessorColumn("age", _.age).setHeader("Age").setWidth(75)
-    )
+  // TABLE 3
+  val SortedVirtualizedTableDef = TableMaker[RandomData.Person].withSort.withBlockLayout
 
-    val options = tm.options(rowIdFn = _.id.toString, columns = cols)
-
+  val SortedVirtualizedTable =
     HTMLTableBuilder.buildComponentVirtualized(
-      tm,
-      options = options,
+      SortedVirtualizedTableDef,
       tableClass = Css("virtualized"),
       headerCellFn = Some(HTMLTableBuilder.sortableHeaderCellFn(useDiv = true))
     )
-  }
 
-  val sortedVariableVirtualizedTable = {
-    def rowClassFn: (Int, RandomData.Person) => Css = (_, p) =>
-      if (p.id % 2 == 0) Css("") else Css("big")
+  val sortedVirtualizedTableColumns = List(
+    SortedVirtualizedTableDef.Column("first", _.first).setHeader("First").setWidth(100),
+    SortedVirtualizedTableDef.Column("last", _.last).setHeader("Last").setWidth(100),
+    SortedVirtualizedTableDef.Column("age", _.age).setHeader("Age").setWidth(75)
+  ).toJSArray
 
-    val tm                                          = TableMaker[RandomData.Person].withSort.withBlockLayout
+  // Table 4
+  val SortedVariableVirtualizedTableDef = TableMaker[RandomData.Person].withSort.withBlockLayout
 
-    val cols = tm.columnArray(
-      tm.accessorColumn("id", _.id).setHeader("Id").setWidth(50),
-      tm.accessorColumn("first", _.first).setHeader("First").setWidth(100),
-      tm.accessorColumn("last", _.last).setHeader("Last").setWidth(100),
-      tm.accessorColumn("age", _.age).setHeader("Age").setWidth(75)
-    )
-
-    val options = tm.options(rowIdFn = _.id.toString, columns = cols)
-
+  val SortedVariableVirtualizedTable =
     HTMLTableBuilder.buildComponentVirtualized(
-      tm,
-      options = options,
+      SortedVariableVirtualizedTableDef,
       tableClass = Css("virtualized"),
       bodyHeight = Some(300), // make this one a different height
       headerCellFn = Some(HTMLTableBuilder.sortableHeaderCellFn(useDiv = true)),
-      rowClassFn = rowClassFn
+      rowClassFn = (_: Int, p: RandomData.Person) => if (p.id % 2 == 0) Css("") else Css("big")
     )
-  }
+
+  val sortedVariableVirtualizedTableColumns = List(
+    SortedVariableVirtualizedTableDef.Column("id", _.id).setHeader("Id").setWidth(50),
+    SortedVariableVirtualizedTableDef.Column("first", _.first).setHeader("First").setWidth(100),
+    SortedVariableVirtualizedTableDef.Column("last", _.last).setHeader("Last").setWidth(100),
+    SortedVariableVirtualizedTableDef.Column("age", _.age).setHeader("Age").setWidth(75)
+  ).toJSArray
+
   @JSExport
   def main(): Unit = {
 
@@ -154,15 +142,23 @@ object DemoMain {
     <.div(
       <.h1("Demo for scalajs-react-table"),
       <.h2("Sortable table"),
-      sortedTable(guitars),
+      SortedTable(
+        SortedTableDef
+          .Options(sortedTableColumns, guitars)
+          .setInitialStateFull(sortedTableState)
+      ),
       "Click header to sort. Shift-Click for multi-sort.",
       <.h2("Virtualized Table"),
-      virtualizedTable(randomData),
+      VirtualizedTable(VirtualizedTableDef.Options(virtualizedTableColumns, randomData)),
       <.h2("Sortable Virtualized Table"),
-      sortedVirtualizedTable(randomData),
+      SortedVirtualizedTable(
+        SortedVirtualizedTableDef.Options(sortedVirtualizedTableColumns, randomData)
+      ),
       <.h2("Sortable Variable Row Height Virtualized Table"),
       <.h3("Rows with odd id's are taller via CSS."),
-      sortedVariableVirtualizedTable(randomData)
+      SortedVariableVirtualizedTable(
+        SortedVariableVirtualizedTableDef.Options(sortedVariableVirtualizedTableColumns, randomData)
+      )
     )
       .renderIntoDOM(container)
 

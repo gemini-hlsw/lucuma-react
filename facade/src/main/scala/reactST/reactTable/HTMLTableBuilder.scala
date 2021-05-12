@@ -25,7 +25,6 @@ object HTMLTableBuilder {
    * Create a table component based on the configured plugins of a `TableMaker`.
    *
    * @param tableMaker The TableMaker providing the useTable hook.
-   * @param options The table options to use for the table.
    * @param headerCellFn A function to use for creating the <th> elements. Simple ones are provided by the TableMaker object.
    * @param tableClass An optional CSS class to apply to the table element
    * @param rowClassFn An option function that takes the index and the rowData and creates a class for the row. Relying on index does not work well for sortable tables since it is the unsorted index.
@@ -51,14 +50,13 @@ object HTMLTableBuilder {
     State <: TableState[D] // format: on
   ](
     tableMaker:   TableMaker[D, TableOptsD, TableInstanceD, ColumnOptsD, ColumnObjectD, State],
-    options:      TableOptsD,
     headerCellFn: Option[ColumnObjectD => TagMod],
     tableClass:   Css = Css(""),
     rowClassFn:   (Int, D) => Css = (_: Int, _: D) => Css(""),
     footer:       TagMod = TagMod.empty
   ) =
-    ScalaFnComponent[js.Array[D]] { data =>
-      val tableInstance = tableMaker.use(options.setData(data.toJSArray))
+    ScalaFnComponent[TableOptsD] { options =>
+      val tableInstance = tableMaker.use(options)
       val bodyProps     = tableInstance.getTableBodyProps()
 
       val header = headerCellFn.fold(TagMod.empty) { f =>
@@ -119,14 +117,13 @@ object HTMLTableBuilder {
     State <: TableState[D] // format: on
   ](
     tableMaker:        TableMaker[D, TableOptsD, TableInstanceD, ColumnOptsD, ColumnObjectD, State],
-    options:           TableOptsD,
     bodyHeight:        Option[Double] = None,
     headerCellFn:      Option[ColumnObjectD => TagMod],
     tableClass:        Css = Css(""),
     rowClassFn:        (Int, D) => Css = (_: Int, _: D) => Css("")
   )(implicit evidence: TableOptsD <:< LayoutMarker) =
-    ScalaFnComponent[js.Array[D]] { data =>
-      val tableInstance = tableMaker.use(options.setData(data.toJSArray))
+    ScalaFnComponent[TableOptsD] { options =>
+      val tableInstance = tableMaker.use(options)
       val bodyProps     = tableInstance.getTableBodyProps()
 
       val rowComp = (_: Int, row: Row[D]) => {

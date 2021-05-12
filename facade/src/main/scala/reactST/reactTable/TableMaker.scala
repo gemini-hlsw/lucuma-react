@@ -22,65 +22,53 @@ case class TableMaker[D,
   TableInstanceD <: TableInstance[D], 
   ColumnOptsD <: ColumnOptions[D], 
   ColumnObjectD <: ColumnObject[D], 
-  State <: TableState[D] // format: on
+  TableStateD <: TableState[D] // format: on
 ](plugins: List[PluginHook[D]]) {
   import syntax._
 
-  /**
-   * Create an empty instance of TableOptsD.
-   */
-  def emptyOptions: TableOptsD = js.Dynamic.literal().asInstanceOf[TableOptsD]
+  private def emptyOptions: TableOptsD = js.Dynamic.literal().asInstanceOf[TableOptsD]
 
   /**
-   * Create a TableOptsD with a row id function and columns set.
+   * Create a TableOptsD. columns and data are required. Other options can be `set*`.
    */
-  // TODO When scalajs-react supports hooks, we can probably expose a List[Column[D]]
-  // in the API and useMemo.
-  def options(rowIdFn: D => String, columns: js.Array[Column[D]]): TableOptsD =
-    emptyOptions.setRowIdFn(rowIdFn).setColumns(columns)
+  // TODO When scalajs-react supports hooks, we can probably expose Lists in the API and useMemo.
+  def Options[C <: UseTableColumnOptions[D]](
+    columns: js.Array[C],
+    data:    js.Array[D]
+  ): TableOptsD =
+    emptyOptions
+      .setColumns(columns.asInstanceOf[js.Array[Column[D]]])
+      .setData(data)
 
   /**
    * Create an empty instance of ColumnOptsD.
-   * The other column creating methods are usually a better starting place.
+   * As per react-table's doc: Warning: Only omit accessor if you really know what you're doing.
    */
   def emptyColumn: ColumnOptsD = js.Dynamic.literal().asInstanceOf[ColumnOptsD]
 
   /**
-   * Create a ColumnOptsD setup up for a simple column with an accessor function.
-   *
-   * @param id The unique id for the column.
-   * @param accessor Accessor function to get the column value from the row value.
+   * Create a ColumnOptsD setup up for a simple column with an accessor string.
    */
-  def accessorColumn[V](id: String, accessor: D => V): ColumnOptsD =
+  def Column(accessor: String): ColumnOptsD =
+    emptyColumn.setAccessor(accessor)
+
+  /**
+   * Create a ColumnOptsD setup up for a simple column with an accessor function.
+   */
+  def Column[V](id: String, accessor: D => V): ColumnOptsD =
     emptyColumn.setId(id).setAccessorFn(accessor)
 
   /**
-   * Create a column with a scalajs-react component in it.
-   *
-   * @param id The unique id for the column.
-   * @param component The scalajs-component (see notes below)
-   *
-   * Notes:
-   * The component is a ScalaJsComponent on which
-   *   ".cmapCtorProps[(CellProps[RowData, A]) with js.Object].jsComponent.raw"
-   *   has been called.
-   * Strangely enough, for a sortable column you still need to provide an accessor,
-   *   even if you provide a sorting function or the column will not be sortable. Seems
-   *   like a possible bug in react-table.
+   * Create a ColumnOptsD setup up for a simple column with an accessor function.
    */
-  def componentColumn[V](
-    id:        String,
-    component: js.Function1[CellProps[D, V], raw.React.Node]
-  ): ColumnOptsD = {
-    type ColBasedOnValue = ColumnOptsD with ColumnInterfaceBasedOnValue[D, V]
-    val col = emptyColumn.setId(id).asInstanceOf[ColBasedOnValue]
+  def Column[V](id: String, accessor: (D, Int) => V): ColumnOptsD =
+    emptyColumn.setId(id).setAccessorFn(accessor)
 
-    // This should be an implicit call, but I can't get the types to line up
-    val c = new ColumnInterfaceBasedOnValueMutableBuilder[ColBasedOnValue, D, V](col)
-    c.setCellComponentClass(
-      component.asInstanceOf[ComponentClassP[(CellProps[D, V]) with js.Object]]
-    )
-  }
+  /**
+   * Create a ColumnOptsD setup up for a simple column with an accessor function.
+   */
+  def Column[V](id: String, accessor: (D, Int, Data[D]) => V): ColumnOptsD =
+    emptyColumn.setId(id).setAccessorFn(accessor)
 
   /**
    * Create a column group with the specified columns in it.
@@ -88,25 +76,16 @@ case class TableMaker[D,
    * @param header The header for the column group. Seems to be required.
    * @param cols The columns to include in the group.
    */
-  def columnGroup(header: Renderer[HeaderProps[D]], cols: ColumnOptsD*): ColumnGroupOptions[D] =
+  def ColumnGroup(cols: (ColumnGroup[D] | ColumnOptsD)*): ColumnGroupOptions[D] =
     js.Dynamic
       .literal()
       .asInstanceOf[ColumnGroupOptions[D]]
-      .setHeader(header)
       .setColumns(cols.toJSArray.asInstanceOf[js.Array[Column[D]]])
 
   /**
-   * Create an array of columns and column groups from the varargs parameters.
-   *
-   * @param cols A varargs parameter of columns or column groups.
+   * Create an empty instance of type TableStateD
    */
-  def columnArray(cols: (ColumnGroup[D] | ColumnOptsD)*): js.Array[Column[D]] =
-    cols.toJSArray.asInstanceOf[js.Array[Column[D]]]
-
-  /**
-   * Create an empty instance of type State
-   */
-  def emptyState: State = js.Dynamic.literal().asInstanceOf[State]
+  def State(): TableStateD = js.Dynamic.literal().asInstanceOf[TableStateD]
 
   /**
    * Create a TableInstanceD instancy by calling useTable with the
@@ -152,7 +131,7 @@ case class TableMaker[D,
     TableInstanceD with UseSortByInstanceProps[D],
     ColumnOptsD with UseSortByColumnOptions[D],
     ColumnObjectD with UseSortByColumnProps[D],
-    State with UseSortByState[D]
+    TableStateD with UseSortByState[D]
   ](Hooks.useSortBy)
 
   /**
@@ -169,7 +148,7 @@ case class TableMaker[D,
     TableInstanceD,
     ColumnOptsD,
     ColumnObjectD,
-    State
+    TableStateD
   ](Hooks.useBlockLayout)
   // format: on
 
@@ -193,7 +172,25 @@ case class TableMaker[D,
        * @param f A function from the row type to the row id.
        */
       def setRowIdFn(f: D => String): Self =
-        table.setGetRowId((data, _, _) => f(data))
+        table.setGetRowId((originalRow, _, _) => f(originalRow))
+
+      /**
+       * Sets the row id for the rows of the table based on a function.
+       *
+       * @param f A function from the row type and index to the row id.
+       */
+      def setRowIdFn(f: (D, Int) => String): Self =
+        table.setGetRowId((originalRow, relativeIndex, _) => f(originalRow, relativeIndex.toInt))
+
+      /**
+       * Sets the row id for the rows of the table based on a function.
+       *
+       * @param f A function from the row type, index and parent to the row id.
+       */
+      def setRowIdFn(f: (D, Int, js.UndefOr[Row[D]]) => String): Self =
+        table.setGetRowId((originalRow, relativeIndex, parent) =>
+          f(originalRow, relativeIndex.toInt, parent)
+        )
     }
 
     implicit class ColumnOptionOps[Self <: ColumnOptsD](val col: Self) {
@@ -204,7 +201,15 @@ case class TableMaker[D,
        * @param f A function from the row type to the column type.
        */
       def setAccessorFn[V](f: D => V): Self =
-        col.setAccessorFunction3(TableMaker.accessorFn(f))
+        col.setAccessorFunction3((data, _, _) => f(data).asInstanceOf[js.Any])
+
+      def setAccessorFn[V](f: (D, Int) => V): Self =
+        col.setAccessorFunction3((data, index, _) => f(data, index.toInt).asInstanceOf[js.Any])
+
+      def setAccessorFn[V](f: (D, Int, Data[D]) => V): Self =
+        col.setAccessorFunction3((data, index, sub) =>
+          f(data, index.toInt, sub).asInstanceOf[js.Any]
+        )
 
       /**
        * Sets the sorting for the column based on a function.
@@ -246,9 +251,6 @@ object TableMaker {
     TableState[D]
   ] = TableMaker(List.empty)
   // format: on
-
-  def accessorFn[D, V](f: D => V): js.Function3[D, Double, Data[D], js.Any] =
-    (data, _, _) => f(data).asInstanceOf[js.Any]
 
   def headersFromGroup[D, ColumnD <: Column[D]](headerGroup: HeaderGroup[D]) =
     headerGroup.headers.asInstanceOf[js.Array[ColumnD]]
