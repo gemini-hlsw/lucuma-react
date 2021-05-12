@@ -10,6 +10,7 @@ import reactST.reactTable.anon.Data
 import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
 import reactST.reactTable.mod.{ ^ => _, _ }
 import reactST.reactTable.syntax._
+import reactST.reactTable.util._
 import reactST.std.Partial
 
 import scalajs.js
@@ -21,7 +22,7 @@ import reactTableStrings._
 object HTMLTableBuilder {
 
   /**
-   * Create a table component based on the configured plugins.
+   * Create a table component based on the configured plugins of a `TableMaker`.
    *
    * @param tableMaker The TableMaker providing the useTable hook.
    * @param options The table options to use for the table.
@@ -36,13 +37,10 @@ object HTMLTableBuilder {
    *   documentation for details.
    * The headerCellFn is expected to return a <th> element. The function
    *   should make use of the column instance "props" methods.
-   * The typescript definitions don't seem to include the react-table
-   *   support for footers. So, they aren't available here, either.
-   *   So, table footers are fully "Build It Yourself". This actually
-   *   has some advantages, because it is often useful for table footers
-   *   to span multiple columns and react-table does not support that.
-   *   At some point, something similar for an "extra" header row might
-   *   be useful since header groups have some issues.
+   * Table footers are fully "Build It Yourself" since it is often useful
+   *   for table footers to span multiple columns and react-table does
+   *   not support that. At some point, something similar for an "extra"
+   *   header row might be useful since header groups have some issues.
    */
   // format: off
   def buildComponent[D,
@@ -67,7 +65,7 @@ object HTMLTableBuilder {
         <.thead(
           tableInstance.headerGroups.toTagMod { g =>
             <.tr(
-              TableMaker.props2Attrs(g.getHeaderGroupProps()),
+              props2Attrs(g.getHeaderGroupProps()),
               TableMaker.headersFromGroup(g).toTagMod(f(_))
             )
           }
@@ -78,19 +76,19 @@ object HTMLTableBuilder {
         tableInstance.prepareRow(rd)
         val rowClass = rowClassFn(rd.index.toInt, rd.original)
         val cells    = rd.cells.toTagMod { cell =>
-          <.td(TableMaker.props2Attrs(cell.getCellProps()), cell.renderCell)
+          <.td(props2Attrs(cell.getCellProps()), cell.renderCell)
         }
-        <.tr(rowClass, TableMaker.props2Attrs(rd.getRowProps()), cells)
+        <.tr(rowClass, props2Attrs(rd.getRowProps()), cells)
       }
 
-      <.table(tableClass, header, <.tbody(TableMaker.props2Attrs(bodyProps), rows), footer)
+      <.table(tableClass, header, <.tbody(props2Attrs(bodyProps), rows), footer)
     }
 
   /**
-   * Create a virtualized table based on the configured plugins.
+   * Create a virtualized table based on the configured plugins of a `TableMaker`.
    * The plugins MUST include withBlockLayout.
    *
-   * @param tableMaker The TableMaker providing the useTable hook.
+   * @param tableMaker The TableMaker providing the useTable hook, configured with withBlockLayout.
    * @param options The table options to use for the table.
    * @param bodyHeight The optional height of the table body (virtualized portion) in px. See note.
    * @param headerCellFn See note. A function to use for creating the header elements. Simple ones are provided by the TableMaker object.
@@ -113,7 +111,7 @@ object HTMLTableBuilder {
    * MUST NOT use relative values like "100%" or it won't work.
    */
   // format: off
-  def makeVirtualizedTable[D,
+  def buildComponentVirtualized[D,
     TableOptsD <: UseTableOptions[D], 
     TableInstanceD <: TableInstance[D], 
     ColumnOptsD <: ColumnOptions[D], 
@@ -134,7 +132,7 @@ object HTMLTableBuilder {
       val rowComp = (_: Int, row: Row[D]) => {
         tableInstance.prepareRow(row)
         val cells = row.cells.toTagMod { cell =>
-          <.div(^.className := "td", TableMaker.props2Attrs(cell.getCellProps()), cell.renderCell)
+          <.div(^.className := "td", props2Attrs(cell.getCellProps()), cell.renderCell)
         }
 
         val rowClass = rowClassFn(row.index.toInt, row.original)
@@ -142,7 +140,7 @@ object HTMLTableBuilder {
         // This means the the `getRowProps` are nested an extra layer in. This does
         // not seem to cause any issues with react-table, but could possibly be an
         // issue with some plugins.
-        <.div(^.className := "tr", rowClass, TableMaker.props2Attrs(row.getRowProps()), cells)
+        <.div(^.className := "tr", rowClass, props2Attrs(row.getRowProps()), cells)
       }
 
       val header = headerCellFn.fold(TagMod.empty) { f =>
@@ -150,7 +148,7 @@ object HTMLTableBuilder {
           ^.className := "thead",
           tableInstance.headerGroups.toTagMod { g =>
             <.div(^.className := "tr",
-                  TableMaker.props2Attrs(g.getHeaderGroupProps()),
+                  props2Attrs(g.getHeaderGroupProps()),
                   TableMaker.headersFromGroup(g).toTagMod(f(_))
             )
           }
@@ -163,12 +161,12 @@ object HTMLTableBuilder {
       <.div(^.className := "table",
             tableClass,
             header,
-            <.div(^.className := "tbody", height, TableMaker.props2Attrs(bodyProps), rows)
+            <.div(^.className := "tbody", height, props2Attrs(bodyProps), rows)
       )
     }
 
   /**
-   * A function to use in TableMaker.makeTable for the
+   * A function to use in the builder methods for the
    * headerCellFn parameter. This is a a basic header.
    *
    * @param cellClass An optional CSS class to apply the the <th>.
@@ -178,11 +176,10 @@ object HTMLTableBuilder {
     cellClass: Css = Css.Empty,
     useDiv:    Boolean = false
   ): ColumnObject[_] => TagMod =
-    col =>
-      headerCell(useDiv)(TableMaker.props2Attrs(col.getHeaderProps()), cellClass, col.renderHeader)
+    col => headerCell(useDiv)(props2Attrs(col.getHeaderProps()), cellClass, col.renderHeader)
 
   /**
-   * A function to use in TableMaker.makeTable for the headerCellFn
+   * A function to use in the builder methods for the headerCellFn
    * parameter. This header will make the maker sortable by clicking
    * on the header. Will only compile if the column instance is a subtype
    * of UseSortByColumnPros.
@@ -206,13 +203,9 @@ object HTMLTableBuilder {
       val headerProps = col.getHeaderProps()
       val toggleProps = col.getSortByToggleProps()
 
-      // if, for example, the table also has block layout, both properties objs will have styles.
-      val styles = combineStyles(headerProps, toggleProps)
-
       headerCell(useDiv)(
-        TableMaker.props2Attrs(headerProps),
-        TableMaker.props2Attrs(toggleProps),
-        styles,
+        props2Attrs(headerProps),
+        props2Attrs(toggleProps),
         cellClass,
         col.renderHeader,
         <.span(sortIndicator(col))
@@ -220,7 +213,7 @@ object HTMLTableBuilder {
     }
 
   /**
-   * A function to use in TableMaker.makeTable for the
+   * A function to use in the builder methods for the
    * footerCellFn parameter. This is a a basic footer.
    *
    * @param cellClass An optional CSS class to apply the the <th>.
@@ -232,7 +225,7 @@ object HTMLTableBuilder {
   ): ColumnObject[_] => TagMod = { col =>
     col.Footer.map(_ =>
       headerCell(useDiv)(
-        TableMaker.props2Attrs(col.getFooterProps()),
+        props2Attrs(col.getFooterProps()),
         cellClass,
         col.renderFooter
       )
@@ -240,35 +233,4 @@ object HTMLTableBuilder {
   }
 
   private def headerCell(useDiv: Boolean) = if (useDiv) <.div(^.className := "th") else <.th()
-
-  /**
-   * Merge the styles from properties objects returned by react-table.
-   * If we just use the properties objects directly, and more than one have "style",
-   * only the last one gets used. Apparently, scalajs-react doesn't merge them. So, we have to combine them manually.
-   * In the case of identical style keys, the last one wins. This is probably why scalajs-react doesn't merge.
-   *
-   * Styles are only combined if more than one propertyObjs have styles. Otherwise, the props2Attrs
-   * method works fine and combining is a waste of time. If one or fewer propertyObjs have styles,
-   * TagMod.empty is returned. See sortableHeaderCellFn for example usage.
-   *
-   * @param propertyObs A varargs of "properties objects" from react-table.
-   * @return A TagMod.
-   */
-  def combineStyles(propertyObs: js.Object*): TagMod = {
-    val styles = propertyObs.collect {
-      case o if o.hasOwnProperty("style") =>
-        js.Object.getOwnPropertyDescriptor(o, "style").value.asInstanceOf[js.Dynamic]
-    }
-    if (styles.length < 2) TagMod.empty
-    else ^.style := mergeJSObjects(styles: _*)
-  }
-
-  // taken from https://stackoverflow.com/questions/36561209/is-it-possible-to-combine-two-js-dynamic-objects
-  private def mergeJSObjects(objs: js.Dynamic*): js.Object = {
-    val result = js.Dictionary.empty[Any]
-    for (source <- objs)
-      for ((key, value) <- source.asInstanceOf[js.Dictionary[Any]])
-        result(key) = value
-    result.asInstanceOf[js.Object]
-  }
 }

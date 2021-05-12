@@ -89,7 +89,7 @@ object DemoMain {
 
     val options = tm.options(rowIdFn = _.id.toString, columns = cols)
 
-    HTMLTableBuilder.makeVirtualizedTable(
+    HTMLTableBuilder.buildComponentVirtualized(
       tm,
       options = options,
       tableClass = Css("virtualized"),
@@ -109,7 +109,7 @@ object DemoMain {
 
     val options = tm.options(rowIdFn = _.id.toString, columns = cols)
 
-    HTMLTableBuilder.makeVirtualizedTable(
+    HTMLTableBuilder.buildComponentVirtualized(
       tm,
       options = options,
       tableClass = Css("virtualized"),
@@ -132,7 +132,7 @@ object DemoMain {
 
     val options = tm.options(rowIdFn = _.id.toString, columns = cols)
 
-    HTMLTableBuilder.makeVirtualizedTable(
+    HTMLTableBuilder.buildComponentVirtualized(
       tm,
       options = options,
       tableClass = Css("virtualized"),

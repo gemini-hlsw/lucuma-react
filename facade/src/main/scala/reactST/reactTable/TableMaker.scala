@@ -247,14 +247,6 @@ object TableMaker {
   ] = TableMaker(List.empty)
   // format: on
 
-  /**
-   * Helper method for taking an object return by a react-table
-   * and turning it into a TagMod of attributes.
-   */
-  def props2Attrs(obj: js.Object): TagMod = TagMod.fn { b =>
-    for ((k, v) <- JsUtil.objectIterator(obj)) b.addAttr(k, v)
-  }
-
   def accessorFn[D, V](f: D => V): js.Function3[D, Double, Data[D], js.Any] =
     (data, _, _) => f(data).asInstanceOf[js.Any]
 
