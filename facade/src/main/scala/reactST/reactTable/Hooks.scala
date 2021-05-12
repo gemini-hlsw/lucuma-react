@@ -16,21 +16,16 @@ object Hooks {
     ): TableInstance[D] = js.native
   }
 
+  trait Hook extends js.Object
+  object Hook {
+    implicit def asPluginHook[D](hook: Hook): PluginHook[D] = hook.asInstanceOf[PluginHook[D]]
+  }
+
   @JSImport("react-table", "useSortBy")
   @js.native
-  object useSortBy extends js.Object {
-
-    def apply[D /* <: js.Object */ ](hooks: Hooks[D]): Unit = js.native
-
-    val pluginName: /* "useSortBy" */ String = js.native
-  }
+  object useSortBy extends Hook
 
   @JSImport("react-table", "useBlockLayout")
   @js.native
-  object useBlockLayout extends js.Object {
-
-    def apply[D /* <: js.Object */ ](hooks: Hooks[D]): Unit = js.native
-
-    val pluginName: /* "useBlockLayout" */ String = js.native
-  }
+  object useBlockLayout extends Hook
 }

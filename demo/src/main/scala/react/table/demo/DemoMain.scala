@@ -8,9 +8,11 @@ import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.common.Css
 import reactST.reactTable.TableMaker
+import reactST.reactTable.HTMLTableBuilder
 import reactST.reactTable.mod.{ ^ => _, _ }
 
 import js.annotation._
+import scalajs.js.JSConverters._
 
 @JSExportTopLevel("DemoMain")
 object DemoMain {
@@ -22,15 +24,17 @@ object DemoMain {
 
   def rowClassEvenOdd[D]: (Int, D) => Css = (i, _) => if (i % 2 == 0) Css("even") else Css("odd")
 
-  val sortedTable = {
-    val guitars =
-      js.Array(
-        Guitar(1, "Fender", "Stratocaster", Details(2019, 3, "Sunburst")),
-        Guitar(2, "Gibson", "Les Paul", Details(1958, 2, "Gold top")),
-        Guitar(3, "Fender", "Telecaster", Details(1971, 2, "Ivory")),
-        Guitar(4, "Godin", "LG", Details(2008, 2, "Burgundy"))
-      )
+  val guitars =
+    List(
+      Guitar(1, "Fender", "Stratocaster", Details(2019, 3, "Sunburst")),
+      Guitar(2, "Gibson", "Les Paul", Details(1958, 2, "Gold top")),
+      Guitar(3, "Fender", "Telecaster", Details(1971, 2, "Ivory")),
+      Guitar(4, "Godin", "LG", Details(2008, 2, "Burgundy"))
+    ).toJSArray
 
+  val randomData = RandomData.randomPeople(1000)
+
+  val sortedTable = {
     val idRenderer = ScalaComponent
       .builder[Guitar]
       .render_P(props => <.span(s"g-${props.id}"))
@@ -65,14 +69,13 @@ object DemoMain {
 
     val guitarFooter = <.tfoot(<.tr(<.th(^.colSpan := 6, s"Guitar Count: ${guitars.length}")))
 
-    tableMaker
-      .makeTable(
-        options = options,
-        data = guitars,
-        tableClass = Css("guitars"),
-        headerCellFn = Some(TableMaker.sortableHeaderCellFn()),
-        footer = guitarFooter
-      )
+    HTMLTableBuilder.buildComponent(
+      tableMaker,
+      options = options,
+      tableClass = Css("guitars"),
+      headerCellFn = Some(HTMLTableBuilder.sortableHeaderCellFn()),
+      footer = guitarFooter
+    )
   }
 
   val virtualizedTable = {
@@ -86,12 +89,12 @@ object DemoMain {
 
     val options = tm.options(rowIdFn = _.id.toString, columns = cols)
 
-    tm.makeVirtualizedTable(
+    HTMLTableBuilder.buildComponentVirtualized(
+      tm,
       options = options,
-      data = RandomData.randomPeople(1000),
       tableClass = Css("virtualized"),
       rowClassFn = rowClassEvenOdd,
-      headerCellFn = Some(TableMaker.basicHeaderCellFn(useDiv = true))
+      headerCellFn = Some(HTMLTableBuilder.basicHeaderCellFn(useDiv = true))
     )
   }
 
@@ -106,20 +109,19 @@ object DemoMain {
 
     val options = tm.options(rowIdFn = _.id.toString, columns = cols)
 
-    tm.makeVirtualizedTable(
+    HTMLTableBuilder.buildComponentVirtualized(
+      tm,
       options = options,
-      data = RandomData.randomPeople(1000),
       tableClass = Css("virtualized"),
-      headerCellFn = Some(TableMaker.sortableHeaderCellFn(useDiv = true))
+      headerCellFn = Some(HTMLTableBuilder.sortableHeaderCellFn(useDiv = true))
     )
   }
 
   val sortedVariableVirtualizedTable = {
     def rowClassFn: (Int, RandomData.Person) => Css = (_, p) =>
       if (p.id % 2 == 0) Css("") else Css("big")
-    val data                                        = RandomData.randomPeople(1000)
 
-    val tm = TableMaker[RandomData.Person].withSort.withBlockLayout
+    val tm                                          = TableMaker[RandomData.Person].withSort.withBlockLayout
 
     val cols = tm.columnArray(
       tm.accessorColumn("id", _.id).setHeader("Id").setWidth(50),
@@ -130,12 +132,12 @@ object DemoMain {
 
     val options = tm.options(rowIdFn = _.id.toString, columns = cols)
 
-    tm.makeVirtualizedTable(
+    HTMLTableBuilder.buildComponentVirtualized(
+      tm,
       options = options,
-      data = data,
       tableClass = Css("virtualized"),
       bodyHeight = Some(300), // make this one a different height
-      headerCellFn = Some(TableMaker.sortableHeaderCellFn(useDiv = true)),
+      headerCellFn = Some(HTMLTableBuilder.sortableHeaderCellFn(useDiv = true)),
       rowClassFn = rowClassFn
     )
   }
@@ -152,15 +154,15 @@ object DemoMain {
     <.div(
       <.h1("Demo for scalajs-react-table"),
       <.h2("Sortable table"),
-      sortedTable,
+      sortedTable(guitars),
       "Click header to sort. Shift-Click for multi-sort.",
       <.h2("Virtualized Table"),
-      virtualizedTable,
+      virtualizedTable(randomData),
       <.h2("Sortable Virtualized Table"),
-      sortedVirtualizedTable,
+      sortedVirtualizedTable(randomData),
       <.h2("Sortable Variable Row Height Virtualized Table"),
       <.h3("Rows with odd id's are taller via CSS."),
-      sortedVariableVirtualizedTable
+      sortedVariableVirtualizedTable(randomData)
     )
       .renderIntoDOM(container)
 
