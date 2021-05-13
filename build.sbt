@@ -76,8 +76,8 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReact % Test,
         "io.github.cquiroz.react"           %%% "common"    % "0.11.3",
         "io.github.cquiroz.react"           %%% "test"      % "0.11.3"     % Test,
-        "org.scalameta"                     %%% "munit"     % "0.7.25" % Test,
-        "org.typelevel"                     %%% "cats-core" % "2.6.1"      % Test
+        "org.scalameta"                     %%% "munit"     % "0.7.26" % Test,
+        "org.typelevel"                     %%% "cats-core" % "2.6.0"      % Test
       ),
       testFrameworks += new TestFramework("munit.Framework")
     )
