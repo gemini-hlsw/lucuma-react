@@ -62,7 +62,7 @@ lazy val demo =
       Compile / fastLinkJS / scalaJSLinkerConfig ~= (_.withModuleSplitStyle(ModuleSplitStyle.SmallestModules)),
       Compile / fullLinkJS / scalaJSLinkerConfig ~= (_.withModuleSplitStyle(ModuleSplitStyle.FewestModules)),
       publish / skip := true,
-      libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.6.5",
+      libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.6.6",
       // don't publish the demo
       publish := {},
       publishLocal := {},
