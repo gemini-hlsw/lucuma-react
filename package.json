@@ -5,7 +5,7 @@
     "jsdom": "^9.9.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-grid-layout": "1.2.4",
+    "react-grid-layout": "1.2.5",
     "react-resize-detector": "^6.7.1"
   },
   "devDependencies": {

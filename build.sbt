@@ -2,7 +2,7 @@ import org.scalajs.linker.interface.ModuleSplitStyle
 
 val reactJS         = "16.13.1"
 val scalaJsReact    = "1.7.7"
-val reactGridLayout = "1.1.0"
+val reactGridLayout = "1.2.5"
 val scalaJSDom      = "1.1.0"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
