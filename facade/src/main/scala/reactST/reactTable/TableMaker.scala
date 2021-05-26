@@ -24,6 +24,12 @@ case class TableMaker[D,
   ColumnObjectD <: ColumnObject[D], 
   TableStateD <: TableState[D] // format: on
 ](plugins: List[PluginHook[D]]) {
+  type OptionsType       = TableOptsD
+  type InstanceType      = TableInstanceD
+  type ColumnOptionsType = ColumnOptsD
+  type ColumnType        = ColumnObjectD
+  type StateType         = TableStateD
+
   import syntax._
 
   private def emptyOptions: TableOptsD = js.Dynamic.literal().asInstanceOf[TableOptsD]
@@ -88,17 +94,25 @@ case class TableMaker[D,
   def State(): TableStateD = js.Dynamic.literal().asInstanceOf[TableStateD]
 
   /**
-   * Create a TableInstanceD instancy by calling useTable with the
+   * Create a TableInstanceD instance by calling useTable with the
    * provided options and the plugins that have been configured by
    * the with* methods.
-   *
-   * This is used internally by makeTable, but may be useful for
-   * creating custom tables.
    *
    * @param options The table options.
    */
   def use(options: TableOptsD): TableInstanceD =
     Hooks.useTable(options, plugins: _*).asInstanceOf[TableInstanceD]
+
+  /*
+   * Convience method to create a TableInstanceD instance by calling
+   * useTable with the provided columns and data and the plugins that
+   * have been configured by the with* methods.
+   *
+   * @param columns The table columns.
+   * @param data The table data.
+   */
+  def use(columns: js.Array[_ <: UseTableColumnOptions[D]], data: js.Array[D]): TableInstanceD =
+    use(Options(columns, data))
 
   /*
    * When adding new plugins, see https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-table
