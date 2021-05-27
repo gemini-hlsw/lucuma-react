@@ -164,6 +164,7 @@ lazy val facade =
       stOutputPackage := "reactST",
       stFlavour := Flavour.Japgolly,
       stReactEnableTreeShaking := Selection.All,
+      stTypescriptVersion := "4.2.4",
       (Compile / stMinimize).withRank(KeyRanks.Invisible) := Selection.AllExcept("react-table"),
       scalacOptions ~= (_.filterNot(
         Set(
