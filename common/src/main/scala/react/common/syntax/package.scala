@@ -92,6 +92,7 @@ package syntax {
         case d: Byte   => d.toDouble
         case d: Short  => d.toDouble
         case d: Int    => d.toDouble
+        case _         => sys.error("Unsupported type")
       }
 
     // Some uglies for js union types
@@ -102,6 +103,7 @@ package syntax {
         case d: Byte   => d.toInt
         case d: Short  => d.toInt
         case d: Int    => d
+        case _         => sys.error("Unsupported type")
       }
   }
 

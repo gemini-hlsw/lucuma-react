@@ -29,6 +29,7 @@ trait ArbJsNumber {
         case b: Int    => Right(Right(Left(b)))
         case b: Float  => Right(Right(Right(Left(b))))
         case b: Double => Right(Right(Right(Right(b))))
+        case _         => sys.error("Unsupported type")
       }
     }
 }

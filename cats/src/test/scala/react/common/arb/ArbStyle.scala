@@ -16,6 +16,7 @@ trait ArbStyle {
       (x: Any) match {
         case a: String => Left(a)
         case a: Int    => Right(a)
+        case _         => sys.error("Unsupported type")
       }
     }
   implicit val arbStyle: Arbitrary[Style]              = Arbitrary {
