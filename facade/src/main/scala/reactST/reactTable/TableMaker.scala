@@ -22,8 +22,9 @@ case class TableMaker[D,
   TableInstanceD <: TableInstance[D], 
   ColumnOptsD <: ColumnOptions[D], 
   ColumnObjectD <: ColumnObject[D], 
-  TableStateD <: TableState[D] // format: on
-](plugins: List[PluginHook[D]]) {
+  TableStateD <: TableState[D],
+  Layout // format: on
+](plugins: Set[Plugin]) {
   type OptionsType       = TableOptsD
   type InstanceType      = TableInstanceD
   type ColumnOptionsType = ColumnOptsD
@@ -101,7 +102,9 @@ case class TableMaker[D,
    * @param options The table options.
    */
   def use(options: TableOptsD): TableInstanceD =
-    Hooks.useTable(options, plugins: _*).asInstanceOf[TableInstanceD]
+    Hooks
+      .useTable(options, plugins.map(_.hook: PluginHook[D]).toList: _*)
+      .asInstanceOf[TableInstanceD]
 
   /*
    * Convience method to create a TableInstanceD instance by calling
@@ -128,42 +131,25 @@ case class TableMaker[D,
    */
 
   // format: off
-  def withPlugin[
+  protected[reactST] def withFeaturePlugin[
     NewTableOptsD <: UseTableOptions[D],
     NewTableInstanceD <: TableInstance[D], 
     NewColumnOptsD <: ColumnOptions[D], 
     NewColumnObjectD <: ColumnObject[D],
     NewState <: TableState[D]
-  ](plugin: Hooks.Hook) =
-    TableMaker[D, NewTableOptsD, NewTableInstanceD, NewColumnOptsD, NewColumnObjectD, NewState](plugins :+ plugin)
+  ](plugin: Plugin) =
+    TableMaker[D, NewTableOptsD, NewTableInstanceD, NewColumnOptsD, NewColumnObjectD, NewState, Layout](plugins + plugin)
 
   /**
    * Add sort capabilities to the table via the useSortBy plugin hook.
    */
-  def withSort = withPlugin[
+  def withSort = withFeaturePlugin[
     TableOptsD with UseSortByOptions[D],
     TableInstanceD with UseSortByInstanceProps[D],
     ColumnOptsD with UseSortByColumnOptions[D],
     ColumnObjectD with UseSortByColumnProps[D],
     TableStateD with UseSortByState[D]
-  ](Hooks.useSortBy)
-
-  /**
-   * Adds support for headers and cells to be rendered as inline-block divs
-   * (or other non-table elements) with explicit width. This becomes useful if and when you need
-   * to virtualize rows and cells for performance.
-   *
-   * NOTE: Although no additional options are needed for this plugin to work, the core column
-   * options width, minWidth and maxWidth are used to calculate column and cell widths and must
-   * be set.
-   */
-  def withBlockLayout = withPlugin[
-    TableOptsD with TableMaker.LayoutMarker, // A marker trait to limit calls to makeVirtualizedTable.
-    TableInstanceD,
-    ColumnOptsD,
-    ColumnObjectD,
-    TableStateD
-  ](Hooks.useBlockLayout)
+  ](Plugin.SortBy)
   // format: on
 
   // When trying to use a more traditional "syntax" package and implicit
@@ -262,12 +248,104 @@ object TableMaker {
     TableInstance[D],
     ColumnOptions[D],
     ColumnObject[D],
-    TableState[D]
-  ] = TableMaker(List.empty)
+    TableState[D],
+    Layout.Table
+  ] = TableMaker(Set.empty)
   // format: on
 
   def headersFromGroup[D, ColumnD <: Column[D]](headerGroup: HeaderGroup[D]) =
     headerGroup.headers.asInstanceOf[js.Array[ColumnD]]
 
-  trait LayoutMarker
+  // format: off
+  implicit class TableLayoutTableMakerOps[D,
+      TableOptsD <: UseTableOptions[D],
+      TableInstanceD <: TableInstance[D],
+      ColumnOptsD <: ColumnOptions[D],
+      ColumnObjectD <: ColumnObject[D],
+      TableStateD <: TableState[D]]
+      (val tableMaker: TableMaker[D, 
+          TableOptsD, 
+          TableInstanceD,
+          ColumnOptsD,
+          ColumnObjectD,
+          TableStateD,
+          Layout.Table]
+      ) extends AnyVal {
+
+    private def withLayoutPlugin[
+      NewTableOptsD <: UseTableOptions[D],
+      NewTableInstanceD <: TableInstance[D],
+      NewColumnOptsD <: ColumnOptions[D],
+      NewColumnObjectD <: ColumnObject[D],
+      NewState <: TableState[D]
+    ](plugin: Plugin) =
+    TableMaker[D,
+               NewTableOptsD,
+               NewTableInstanceD,
+               NewColumnOptsD,
+               NewColumnObjectD,
+               NewState,
+               Layout.NonTable
+    ](tableMaker.plugins + plugin)
+
+    /**
+     * Adds support for headers and cells to be rendered as inline-block divs
+     * (or other non-table elements) with explicit width. This becomes useful if and when you need
+     * to virtualize rows and cells for performance.
+     *
+     * NOTE: Although no additional options are needed for this plugin to work, the core column
+     * options width, minWidth and maxWidth are used to calculate column and cell widths and must
+     * be set.
+     */
+    def withBlockLayout = withLayoutPlugin[
+      TableOptsD,
+      TableInstanceD,
+      ColumnOptsD,
+      ColumnObjectD,
+      TableStateD
+    ](Plugin.BlockLayout)
+
+    /**
+     * Adds support for headers and cells to be rendered as divs (or other non-table elements) 
+     * with the immediate parent (table) controlling the layout using CSS Grid. This hook becomes 
+     * useful when implementing both virtualized and resizable tables that must also be able to 
+     * stretch to fill all available space. Uses a minimal amount of html to give greater control 
+     * of styling. Works with useResizeColumns.
+     */
+    def withGridLayout = withLayoutPlugin[
+      TableOptsD,
+      TableInstanceD,
+      ColumnOptsD,
+      ColumnObjectD,
+      TableStateD
+    ](Plugin.GridLayout)
+  }
+
+  implicit class NonTableLayoutTableMakerOps[D,
+      TableOptsD <: UseTableOptions[D],
+      TableInstanceD <: TableInstance[D],
+      ColumnOptsD <: ColumnOptions[D],
+      ColumnObjectD <: ColumnObject[D],
+      TableStateD <: TableState[D]]
+      (val tableMaker: TableMaker[D, 
+          TableOptsD, 
+          TableInstanceD,
+          ColumnOptsD,
+          ColumnObjectD,
+          TableStateD,
+          Layout.NonTable]
+      ) extends AnyVal {
+      /**
+       * Add column resize capabilities to the table via the useResizeColumns plugin hook.
+       */
+      def withResizeColumns = tableMaker.withFeaturePlugin[
+        TableOptsD with UseResizeColumnsOptions[D],
+        TableInstanceD,
+        ColumnOptsD with UseResizeColumnsColumnOptions[D],
+        ColumnObjectD with UseResizeColumnsColumnProps[D],
+        TableStateD with UseResizeColumnsState[D]
+      ](Plugin.ResizeColumns)        
+    }  
+  // format: on
+
 }

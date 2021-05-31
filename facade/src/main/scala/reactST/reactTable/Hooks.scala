@@ -16,7 +16,7 @@ object Hooks {
     ): TableInstance[D] = js.native
   }
 
-  trait Hook extends js.Object
+  sealed trait Hook extends js.Object
   object Hook {
     implicit def asPluginHook[D](hook: Hook): PluginHook[D] = hook.asInstanceOf[PluginHook[D]]
   }
@@ -28,4 +28,12 @@ object Hooks {
   @JSImport("react-table", "useBlockLayout")
   @js.native
   object useBlockLayout extends Hook
+
+  @JSImport("react-table", "useResizeColumns")
+  @js.native
+  object useResizeColumns extends Hook
+
+  @JSImport("react-table", "useGridLayout")
+  @js.native
+  object useGridLayout extends Hook
 }
