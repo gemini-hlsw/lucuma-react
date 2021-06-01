@@ -103,7 +103,7 @@ case class TableMaker[D,
    */
   def use(options: TableOptsD): TableInstanceD =
     Hooks
-      .useTable(options, plugins.map(_.hook: PluginHook[D]).toList: _*)
+      .useTable(options, plugins.toList.sorted.map(_.hook: PluginHook[D]): _*)
       .asInstanceOf[TableInstanceD]
 
   /*
