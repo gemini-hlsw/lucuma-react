@@ -142,7 +142,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "core"   % scalaJsReact,
         "io.github.cquiroz.react"           %%% "common" % scalaJsReactCommon,
         "com.github.japgolly.scalajs-react" %%% "test"   % scalaJsReact % Test,
-        "com.lihaoyi"                       %%% "utest"  % "0.7.10"      % Test
+        "com.lihaoyi"                       %%% "utest"  % "0.7.10"     % Test
       ),
       Compile / npmDependencies ++= Seq(
         "react"      -> reactJS,
@@ -153,6 +153,7 @@ lazy val facade =
       stUseScalaJsDom := true,
       stOutputPackage := "gpp",
       (Compile / stMinimize).withRank(KeyRanks.Invisible) := Selection.AllExcept("highcharts"),
+      stTypescriptVersion := "4.2.4",
       // stEnableScalaJsDefined := Selection.All,
       scalacOptions ~= (_.filterNot(
         Set(
