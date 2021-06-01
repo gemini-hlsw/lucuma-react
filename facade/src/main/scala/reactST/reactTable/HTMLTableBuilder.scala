@@ -16,7 +16,6 @@ import reactST.std.Partial
 import scalajs.js
 import scalajs.js.|
 import scalajs.js.JSConverters._
-import TableMaker.LayoutMarker
 import reactTableStrings._
 
 object HTMLTableBuilder {
@@ -49,7 +48,7 @@ object HTMLTableBuilder {
     ColumnObjectD <: ColumnObject[D], 
     State <: TableState[D] // format: on
   ](
-    tableMaker:   TableMaker[D, TableOptsD, TableInstanceD, ColumnOptsD, ColumnObjectD, State],
+    tableMaker:   TableMaker[D, TableOptsD, TableInstanceD, ColumnOptsD, ColumnObjectD, State, _],
     headerCellFn: Option[ColumnObjectD => TagMod],
     tableClass:   Css = Css(""),
     rowClassFn:   (Int, D) => Css = (_: Int, _: D) => Css(""),
@@ -116,12 +115,20 @@ object HTMLTableBuilder {
     ColumnObjectD <: ColumnObject[D], 
     State <: TableState[D] // format: on
   ](
-    tableMaker:        TableMaker[D, TableOptsD, TableInstanceD, ColumnOptsD, ColumnObjectD, State],
-    bodyHeight:        Option[Double] = None,
-    headerCellFn:      Option[ColumnObjectD => TagMod],
-    tableClass:        Css = Css(""),
-    rowClassFn:        (Int, D) => Css = (_: Int, _: D) => Css("")
-  )(implicit evidence: TableOptsD <:< LayoutMarker) =
+    tableMaker:   TableMaker[
+      D,
+      TableOptsD,
+      TableInstanceD,
+      ColumnOptsD,
+      ColumnObjectD,
+      State,
+      Layout.NonTable
+    ],
+    bodyHeight:   Option[Double] = None,
+    headerCellFn: Option[ColumnObjectD => TagMod],
+    tableClass:   Css = Css(""),
+    rowClassFn:   (Int, D) => Css = (_: Int, _: D) => Css("")
+  ) =
     ScalaFnComponent[TableOptsD] { options =>
       val tableInstance = tableMaker.use(options)
       val bodyProps     = tableInstance.getTableBodyProps()
