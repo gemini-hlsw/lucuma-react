@@ -11,10 +11,14 @@ import reactST.reactTable.anon.Data
 import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
 import reactST.reactTable.mod.{ ^ => _, _ }
 import reactST.std.Partial
+import reactST.reactTable.anon.`1`._
+import reactST.reactTable.anon.IdIdType._
 
 import scalajs.js
 import scalajs.js.|
 import scalajs.js.JSConverters._
+import reactST.reactTable.anon.IdIdType
+import org.scalablytyped.runtime.StObject
 
 // format: off
 case class TableMaker[D, 
@@ -51,30 +55,34 @@ case class TableMaker[D,
    * Create an empty instance of ColumnOptsD.
    * As per react-table's doc: Warning: Only omit accessor if you really know what you're doing.
    */
-  def emptyColumn: ColumnOptsD = js.Dynamic.literal().asInstanceOf[ColumnOptsD]
+  def emptyColumn[V]: ColumnValueOptions[D, V, ColumnOptsD] =
+    js.Dynamic.literal().asInstanceOf[ColumnValueOptions[D, V, ColumnOptsD]]
 
   /**
    * Create a ColumnOptsD setup up for a simple column with an accessor string.
    */
-  def Column(accessor: String): ColumnOptsD =
-    emptyColumn.setAccessor(accessor)
+  def Column[V](accessor: String): ColumnValueOptions[D, V, ColumnOptsD] =
+    emptyColumn[V].setAccessor(accessor)
 
   /**
    * Create a ColumnOptsD setup up for a simple column with an accessor function.
    */
-  def Column[V](id: String, accessor: D => V): ColumnOptsD =
-    emptyColumn.setId(id).setAccessorFn(accessor)
+  def Column[V](id: String, accessor: D => V): ColumnValueOptions[D, V, ColumnOptsD] =
+    emptyColumn[V].setId(id).setAccessorFn(accessor)
 
   /**
    * Create a ColumnOptsD setup up for a simple column with an accessor function.
    */
-  def Column[V](id: String, accessor: (D, Int) => V): ColumnOptsD =
-    emptyColumn.setId(id).setAccessorFn(accessor)
+  def Column[V](id: String, accessor: (D, Int) => V): ColumnValueOptions[D, V, ColumnOptsD] =
+    emptyColumn[V].setId(id).setAccessorFn(accessor)
 
   /**
    * Create a ColumnOptsD setup up for a simple column with an accessor function.
    */
-  def Column[V](id: String, accessor: (D, Int, Data[D]) => V): ColumnOptsD =
+  def Column[V](
+    id:       String,
+    accessor: (D, Int, Data[D]) => V
+  ): ColumnValueOptions[D, V, ColumnOptsD] =
     emptyColumn.setId(id).setAccessorFn(accessor)
 
   /**
@@ -211,6 +219,35 @@ case class TableMaker[D,
           f(data, index.toInt, sub).asInstanceOf[js.Any]
         )
 
+    }
+
+    implicit class ColumnValueOptionOps[V, Self <: ColumnInterfaceBasedOnValue[_, _]](
+      col: Self with (ColumnInterfaceBasedOnValue[D, V])
+    ) {
+      @scala.inline
+      def setCell(value: CellProps[D, V] => VdomNode): Self =
+        StObject.set(col,
+                     "Cell",
+                     value
+                       .andThen(_.rawNode): js.Function1[CellProps[D, V], raw.React.Node]
+        )
+
+      // Next 4 methods just copied from ColumnInterfaceBasedOnValueMutableBuilder, which lacks the function overload above.
+      @scala.inline
+      def setCell(value: Renderer[CellProps[D, V]]): Self =
+        StObject.set(col, "Cell", value.asInstanceOf[js.Any])
+
+      @scala.inline
+      def setCellComponentClass(value: ComponentClassP[(CellProps[D, V]) with js.Object]): Self =
+        StObject.set(col, "Cell", value.asInstanceOf[js.Any])
+
+      @scala.inline
+      def setCellUndefined: Self = StObject.set(col, "Cell", js.undefined)
+
+      @scala.inline
+      def setCellVdomElement(value: VdomElement): Self =
+        StObject.set(col, "Cell", value.rawElement.asInstanceOf[js.Any])
+
       /**
        * Sets the sorting for the column based on a function.
        *
@@ -226,14 +263,27 @@ case class TableMaker[D,
        *   of UseSortByColumnOptions[D] and that worked. Unfortunately, requires
        *   asInstanceOfs.
        */
-      def setSortByFn[V](
+      def setSortByFn(
         f:        D => V
       )(implicit
         ordering: Ordering[V],
-        ev:       ColumnOptsD <:< UseSortByColumnOptions[D]
+        ev:       Self <:< UseSortByColumnOptions[D]
       ): Self = {
         val sbfn: SortByFn[D] = (d1, d2, _, _) =>
           ordering.compare(f(d1.original), f(d2.original)).toDouble
+        ev(col).setSortType(sbfn).asInstanceOf[Self]
+      }
+
+      def setSortByOrdering(implicit
+        ordering: Ordering[V],
+        ev:       Self <:< UseSortByColumnOptions[D]
+      ): Self = {
+        val sbfn: SortByFn[D] = (d1, d2, col, _) =>
+          ordering
+            .compare(d1.values(col.asInstanceOf[String]).asInstanceOf[CellValue[V]],
+                     d2.values(col.asInstanceOf[String]).asInstanceOf[CellValue[V]]
+            )
+            .toDouble
         ev(col).setSortType(sbfn).asInstanceOf[Self]
       }
     }

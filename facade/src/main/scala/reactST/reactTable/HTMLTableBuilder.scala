@@ -111,7 +111,7 @@ object HTMLTableBuilder {
   def buildComponentVirtualized[D,
     TableOptsD <: UseTableOptions[D], 
     TableInstanceD <: TableInstance[D], 
-    ColumnOptsD <: ColumnOptions[D], 
+    ColumnOptsD <: ColumnOptions[D],
     ColumnObjectD <: ColumnObject[D], 
     State <: TableState[D] // format: on
   ](
