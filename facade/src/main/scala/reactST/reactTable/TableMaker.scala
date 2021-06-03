@@ -219,6 +219,31 @@ case class TableMaker[D,
           f(data, index.toInt, sub).asInstanceOf[js.Any]
         )
 
+      /**
+       * Sets the sorting for the column based on a function on the row.
+       *
+       * @param f A function from the row type to the target type.
+       * @param ordering An implicit ordering for the target type.
+       * @param evidence Evidence that this column is sortable. (See note)
+       *
+       * Note:
+       * This method is only valid for columns that are sortable via the
+       *   useSortBy plugin. The compiler was unable to resolve the types if
+       *   an implicit class requiring UseSortByColumnOptions[D] was used, so
+       *   I switched to requiring evidence that ColumnOptsD is a subtype
+       *   of UseSortByColumnOptions[D] and that worked. Unfortunately, requires
+       *   asInstanceOfs.
+       */
+      def setSortByRowFn[V](
+        f:        D => V
+      )(implicit
+        ordering: Ordering[V],
+        ev:       Self <:< UseSortByColumnOptions[D]
+      ): Self = {
+        val sbfn: SortByFn[D] = (d1, d2, _, _) =>
+          ordering.compare(f(d1.original), f(d2.original)).toDouble
+        ev(col).setSortType(sbfn).asInstanceOf[Self]
+      }
     }
 
     implicit class ColumnValueOptionOps[V, Self <: ColumnInterfaceBasedOnValue[_, _]](
@@ -249,43 +274,35 @@ case class TableMaker[D,
         StObject.set(col, "Cell", value.rawElement.asInstanceOf[js.Any])
 
       /**
-       * Sets the sorting for the column based on a function.
+       * Sets the sorting for the column based on a function on its value.
        *
-       * @param f A function from the row type to the column type.
-       * @param ordering An implicit ordering for the column type.
-       * @param evidence Evidence that this column is sortable. (See note)
-       *
-       * Note:
-       * This method is only valid for columns that are sortable via the
-       *   useSortBy plugin. The compiler was unable to resolve the types if
-       *   an implicit class requiring UseSortByColumnOptions[D] was used, so
-       *   I switched to requiring evidence that ColumnOptsD is a subtype
-       *   of UseSortByColumnOptions[D] and that worked. Unfortunately, requires
-       *   asInstanceOfs.
+       * @param f A function from the value type to the target type.
+       * @param ordering An implicit ordering for the target type.
+       * @param evidence Evidence that this column is sortable.
        */
-      def setSortByFn(
-        f:        D => V
-      )(implicit
-        ordering: Ordering[V],
-        ev:       Self <:< UseSortByColumnOptions[D]
-      ): Self = {
-        val sbfn: SortByFn[D] = (d1, d2, _, _) =>
-          ordering.compare(f(d1.original), f(d2.original)).toDouble
-        ev(col).setSortType(sbfn).asInstanceOf[Self]
-      }
-
-      def setSortByOrdering(implicit
-        ordering: Ordering[V],
-        ev:       Self <:< UseSortByColumnOptions[D]
+      def setSortByFn[U](f: V => U)(implicit
+        ordering:           Ordering[U],
+        ev:                 Self <:< UseSortByColumnOptions[D]
       ): Self = {
         val sbfn: SortByFn[D] = (d1, d2, col, _) =>
           ordering
-            .compare(d1.values(col.asInstanceOf[String]).asInstanceOf[CellValue[V]],
-                     d2.values(col.asInstanceOf[String]).asInstanceOf[CellValue[V]]
+            .compare(f(d1.values(col.asInstanceOf[String]).asInstanceOf[CellValue[V]]),
+                     f(d2.values(col.asInstanceOf[String]).asInstanceOf[CellValue[V]])
             )
             .toDouble
         ev(col).setSortType(sbfn).asInstanceOf[Self]
       }
+
+      /**
+       * Sets the sorting for the column based on its value.
+       *
+       * @param ordering An implicit ordering for the value type.
+       * @param evidence Evidence that this column is sortable.
+       */
+      def setSortByAuto(implicit
+        ordering: Ordering[V],
+        ev:       Self <:< UseSortByColumnOptions[D]
+      ): Self = setSortByFn(identity)
     }
   }
 }
