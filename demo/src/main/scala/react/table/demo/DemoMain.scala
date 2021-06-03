@@ -3,7 +3,6 @@ package react.table.demo
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
 
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.common.Css
@@ -48,20 +47,12 @@ object DemoMain {
 
   import ColumnInterfaceBasedOnValue._
 
-  val sortedTableColumns = {
-    val idRenderer = ScalaComponent
-      .builder[Guitar]
-      .render_P(props => <.span(s"g-${props.id}"))
-      .build
-      .cmapCtorProps[(CellProps[Guitar, _]) with js.Object](_.cell.row.original)
-      .toJsComponent
-      .raw
-
+  val sortedTableColumns =
     List(
       SortedTableDef
         .Column("id", _.id)
-        .setCell(idRenderer)
-        .setSortByFn[Int](_.id)
+        .setCell(cell => <.span(s"g-${cell.value}"))
+        .setSortByOrdering
         .setHeader("Id"),
       SortedTableDef.Column("make", _.make).setHeader("Make"),
       SortedTableDef.Column("model", _.model).setHeader("Model"),
@@ -73,7 +64,6 @@ object DemoMain {
         )
         .setHeader("Details")
     ).toJSArray
-  }
 
   val sortedTableState = SortedTableDef.State().setSortByVarargs(SortingRule("model"))
 
