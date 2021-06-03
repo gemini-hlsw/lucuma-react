@@ -52,7 +52,7 @@ object DemoMain {
       SortedTableDef
         .Column("id", _.id)
         .setCell(cell => <.span(s"g-${cell.value}"))
-        .setSortByOrdering
+        .setSortByAuto
         .setHeader("Id"),
       SortedTableDef.Column("make", _.make).setHeader("Make"),
       SortedTableDef.Column("model", _.model).setHeader("Model"),
