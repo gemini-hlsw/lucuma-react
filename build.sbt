@@ -18,7 +18,7 @@ addCommandAlias(
 
 inThisBuild(
   List(
-    scalaVersion := "2.13.5",
+    scalaVersion := "2.13.6",
     organization := "io.github.toddburnside",
     sonatypeProfileName := "io.github.toddburnside",
     homepage := Some(
