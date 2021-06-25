@@ -2,7 +2,7 @@ name := "scalajs-react-datepicker"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-val reactDatePicker      = "3.8.0"
+val reactDatePicker      = "4.1.1"
 val reactDatePickerTypes = "3.1.8"
 val scalaJsReact         = "1.7.7"
 val reactJS              = "16.13.1"
