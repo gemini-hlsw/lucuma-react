@@ -9,9 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Set up JDK 1.8
-        uses: olafurpg/setup-scala@v11
+        uses: olafurpg/setup-scala@v12
         with:
-          java-version: 1.8
+          java-version: adopt@1.11
       - name: Checking your code format
         run: sbt scalafmtCheckAll
       - name: Run tests

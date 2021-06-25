@@ -1,10 +1,10 @@
 val reactJS        = "16.13.1"
 val scalaJsReact   = "1.7.7"
-val reactResizable = "1.11.1"
+val reactResizable = "3.0.4"
 val scalaJSDom     = "1.1.0"
 
 addCommandAlias("restartWDS",
-                "; ~demo/fastOptJS::stopWebpackDevServer; demo/fastOptJS::startWebpackDevServer"
+                "; ~demo/fastOptJS/stopWebpackDevServer; demo/fastOptJS/startWebpackDevServer"
 )
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
@@ -53,8 +53,6 @@ lazy val demo =
     .settings(commonSettings: _*)
     .settings(
       webpack / version := "4.44.1",
-      startWebpackDevServer / version := "3.3.1",
-      webpackCliVersion / version := "3.3.1",
       fastOptJS / webpackConfigFile := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"
       ),
@@ -109,8 +107,6 @@ lazy val facade =
     .settings(
       name := "react-resizable",
       webpack / version := "4.30.0",
-      startWebpackDevServer / version := "3.3.1",
-      webpackCliVersion / version := "3.3.1",
       // Requires the DOM for tests
       Test / requireJsDomEnv := true,
       // Compile tests to JS using fast-optimisation
@@ -127,7 +123,7 @@ lazy val facade =
         "org.scala-js"                      %%% "scalajs-dom"     % scalaJSDom,
         "io.github.cquiroz.react"           %%% "common"          % "0.11.3",
         "io.github.cquiroz.react"           %%% "react-draggable" % "0.11.3",
-        "com.lihaoyi"                       %%% "utest"           % "0.7.10"      % Test,
+        "com.lihaoyi"                       %%% "utest"           % "0.7.10"     % Test,
         "org.typelevel"                     %%% "cats-core"       % "2.6.1"      % Test
       ),
       // webpackConfigFile in Test := Some(
