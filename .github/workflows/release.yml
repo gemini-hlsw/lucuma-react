@@ -13,7 +13,7 @@ jobs:
       - name: Publish
         run: |
           git status
-          csbt ci-release
+          sbt ci-release
           git status
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
