@@ -33,7 +33,7 @@ lazy val root = project
         "-Wunused:explicits"
       )
     )),
-    sources in (Compile, doc) := Seq(),
+    Compile / doc / sources := Seq(),
     // focus only on these libraries
     stMinimize := Selection.AllExcept("@svgdotjs/svg.js"),
     // stMinimize := Selection.All,

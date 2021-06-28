@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Set up JDK 1.8
-        uses: olafurpg/setup-scala@v10
+        uses: olafurpg/setup-scala@v12
         with:
           java-version: 1.8
       - name: Cache dependencies
@@ -25,4 +25,4 @@ jobs:
           key: ${{ runner.os }}-sbt-${{ hashFiles('build.sbt') }}-${{ hashFiles('project/*.scala') }}
           restore-keys: ${{ runner.os }}-sbt-
       - name: Run compile
-        run: csbt +compile +test
+        run: sbt +compile +test
