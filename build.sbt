@@ -8,7 +8,7 @@ val reactVirtuoso      = "1.9.2"
 val scalaJsReact       = "1.7.7"
 val reactJS            = "16.13.1"
 val scalaJsReactCommon = "0.11.3"
-val munit              = "0.7.26"
+val munit              = "0.7.27"
 
 addCommandAlias(
   "restartWDS",
