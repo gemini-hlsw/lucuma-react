@@ -2,7 +2,7 @@ package react.common
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.component.Scala
-import japgolly.scalajs.react.ReactExtensions._
+// import japgolly.scalajs.react.ReactExtensions._
 import scalajs.js
 
 sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u]] {
@@ -69,7 +69,7 @@ sealed trait ReactComponentProps[Props, CT[-p, +u] <: CtorType[p, u]]
   def withRef[S, B](ref: Ref.Handle[ScalaComponent.RawMounted[Props, S, B]]) =
     copyComponent(
       component
-        .asInstanceOf[Scala.Component[Props, S, B, CT]]
+        .asInstanceOf[ScalaComponent.Component[Props, S, B, CT]]
         .withRef(ref)
     )
 
