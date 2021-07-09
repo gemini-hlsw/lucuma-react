@@ -3,8 +3,8 @@ package react.common
 import scala.scalajs.js
 import scala.scalajs.js.|
 import japgolly.scalajs.react.Callback
-import japgolly.scalajs.react.raw.JsNumber
-import japgolly.scalajs.react.raw.React
+import japgolly.scalajs.react.facade.JsNumber
+import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.VdomNode
 
 package syntax {

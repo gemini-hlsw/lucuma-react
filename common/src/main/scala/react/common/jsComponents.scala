@@ -5,10 +5,10 @@ import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.component.Js
 import japgolly.scalajs.react.component.JsFn
 import japgolly.scalajs.react.vdom.TagMod
-import japgolly.scalajs.react.vdom.Builder
+import japgolly.scalajs.react.vdom.VdomBuilder
 import scala.scalajs.js
 
-class AttrsBuilder(p: js.Object) extends Builder.ToJs {
+class AttrsBuilder(p: js.Object) extends VdomBuilder.ToJs {
   props = p
 
   def toJs(attrs: Seq[TagMod]): Unit = {

@@ -2,6 +2,7 @@ package react.common
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.component.Scala
+import japgolly.scalajs.react.ReactExtensions._
 import scalajs.js
 
 sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u]] {

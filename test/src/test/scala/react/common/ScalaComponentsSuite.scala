@@ -64,7 +64,7 @@ class ScalaComponentSuite extends munit.FunSuite {
     val props    = u.props
     val children = u.propsChildren
     assert(key == None)
-    assert(ref == Some(r.raw.asInstanceOf[japgolly.scalajs.react.raw.React.RefHandle[Any]]))
+    assert(ref == Some(r.raw.asInstanceOf[japgolly.scalajs.react.facade.React.RefHandle[Any]]))
     assert(props == Props())
     assert(children.toList == List.empty)
     ReactTestUtils.withNewBodyElement { mountNode =>
@@ -84,7 +84,7 @@ class ScalaComponentSuite extends munit.FunSuite {
     val props    = u.props
     val children = u.propsChildren
     assert(key == Some("key"))
-    assert(ref == Some(r.raw.asInstanceOf[japgolly.scalajs.react.raw.React.RefHandle[Any]]))
+    assert(ref == Some(r.raw.asInstanceOf[japgolly.scalajs.react.facade.React.RefHandle[Any]]))
     assert(props == Props())
     assert(children.toList == List.empty)
     ReactTestUtils.withNewBodyElement { mountNode =>
@@ -150,7 +150,7 @@ class ScalaComponentSuite extends munit.FunSuite {
     val props    = u.props
     val children = u.propsChildren
     assert(key == None)
-    assert(ref == Some(r.raw.asInstanceOf[japgolly.scalajs.react.raw.React.RefHandle[Any]]))
+    assert(ref == Some(r.raw.asInstanceOf[japgolly.scalajs.react.facade.React.RefHandle[Any]]))
     assert(props == PropsWithChildren())
     assert(children.count == 1)
     ReactTestUtils.withNewBodyElement { mountNode =>
@@ -175,7 +175,7 @@ class ScalaComponentSuite extends munit.FunSuite {
     val props    = u.props
     val children = u.propsChildren
     assert(key == Some("key"))
-    assert(ref == Some(r.raw.asInstanceOf[japgolly.scalajs.react.raw.React.RefHandle[Any]]))
+    assert(ref == Some(r.raw.asInstanceOf[japgolly.scalajs.react.facade.React.RefHandle[Any]]))
     assert(props == PropsWithChildren())
     assert(children.count == 1)
     ReactTestUtils.withNewBodyElement { mountNode =>
