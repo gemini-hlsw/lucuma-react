@@ -1,7 +1,7 @@
 package react.common.implicits
 
 import cats.kernel.laws.discipline._
-import japgolly.scalajs.react.raw.JsNumber
+import japgolly.scalajs.react.facade.JsNumber
 import org.scalacheck.Arbitrary._
 import react.common._
 import react.common.arb._

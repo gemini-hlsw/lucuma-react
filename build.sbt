@@ -1,9 +1,10 @@
 import sbt._
 
-val reactJS      = "16.13.1"
-val scalaJsReact = "1.7.7"
+val reactJS      = "17.0.2"
+val scalaJsReact = "2.0.0-RC1"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
+Global / semanticdbEnabled := true
 
 inThisBuild(
   List(

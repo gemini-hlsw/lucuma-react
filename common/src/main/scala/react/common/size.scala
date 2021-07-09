@@ -1,7 +1,7 @@
 package react.common
 
 import scala.scalajs.js
-import japgolly.scalajs.react.raw.JsNumber
+import japgolly.scalajs.react.facade.JsNumber
 
 @js.native
 trait Size extends js.Object {

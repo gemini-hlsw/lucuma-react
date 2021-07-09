@@ -4,7 +4,7 @@ package common
 
 import scala.scalajs.js
 import scala.scalajs.js.|
-import japgolly.scalajs.react.raw.JsNumber
+import japgolly.scalajs.react.facade.JsNumber
 import cats._
 import cats.syntax.all._
 
