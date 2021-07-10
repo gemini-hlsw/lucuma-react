@@ -4,10 +4,12 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 Global / excludeLintKeys += webpackExtraArgs
 
+Global / semanticdbEnabled := true
+
 val reactVirtuoso      = "1.9.2"
-val scalaJsReact       = "1.7.7"
-val reactJS            = "16.13.1"
-val scalaJsReactCommon = "0.11.3"
+val scalaJsReact       = "2.0.0-RC1"
+val reactJS            = "17.0.2"
+val scalaJsReactCommon = "0.12.0"
 val munit              = "0.7.27"
 
 addCommandAlias(
