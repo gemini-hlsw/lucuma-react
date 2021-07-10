@@ -1,7 +1,7 @@
 package react.virtuoso
 
 import japgolly.scalajs.react.component.Js
-import japgolly.scalajs.react.raw.JsNumber
+import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom._
 import japgolly.scalajs.react.{ CtorType, _ }
 import react.common._
@@ -103,7 +103,7 @@ object Virtuoso {
     /**
      * Set the callback to specify the contents of the item.
      */
-    var itemContent: js.UndefOr[js.Function2[Double, D, raw.React.Node]] = js.native
+    var itemContent: js.UndefOr[js.Function2[Double, D, facade.React.Node]] = js.native
 
     /**
      * If specified, the component will use the function to generate the `key` property for each list item.
