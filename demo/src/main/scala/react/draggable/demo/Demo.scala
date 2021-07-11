@@ -4,11 +4,9 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import japgolly.scalajs.react.raw.JsNumber
+import japgolly.scalajs.react.facade.JsNumber
 import org.scalajs.dom
 import react.resizable._
-// import react.sizeme._
-// import react.draggable._
 import react.common._
 
 @JSExportTopLevel("Demo")

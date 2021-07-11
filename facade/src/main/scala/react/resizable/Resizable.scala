@@ -8,8 +8,8 @@ import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.Children
 import japgolly.scalajs.react.JsComponent
 import japgolly.scalajs.react.ReactEvent
-import japgolly.scalajs.react.raw.JsNumber
-import japgolly.scalajs.react.raw.React
+import japgolly.scalajs.react.facade.JsNumber
+import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
