@@ -5,7 +5,7 @@ package gridlayout
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import japgolly.scalajs.react.Callback
-import japgolly.scalajs.react.raw.JsNumber
+import japgolly.scalajs.react.facade.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.raw.Event

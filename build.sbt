@@ -1,7 +1,7 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-val reactJS         = "16.13.1"
-val scalaJsReact    = "1.7.7"
+val reactJS         = "17.0.2"
+val scalaJsReact    = "2.0.0-RC1"
 val reactGridLayout = "1.2.5"
 val scalaJSDom      = "1.1.0"
 
@@ -95,7 +95,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
         "org.typelevel"                     %%% "cats-core"   % "2.6.1",
-        "io.github.cquiroz.react"           %%% "common"      % "0.11.3",
+        "io.github.cquiroz.react"           %%% "common"      % "0.12.0",
         "com.lihaoyi"                       %%% "utest"       % "0.7.10"      % Test,
       ),
       Test / webpackConfigFile := Some(

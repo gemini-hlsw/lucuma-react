@@ -4,9 +4,10 @@
 package react.resizeDetector
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.Builder
 import japgolly.scalajs.react.vdom.html_<^._
-import japgolly.scalajs.react.{ raw => Raw }
+import japgolly.scalajs.react.facade.React
+import japgolly.scalajs.react.facade.JsNumber
+import japgolly.scalajs.react.vdom.VdomBuilder
 import org.scalajs.dom.html
 import react.common._
 
@@ -17,8 +18,8 @@ import scalajs.js.|
 
 object ResizeDetector {
 
-  implicit class BuilderOps(b: Builder) {
-    def addRefFn[A](refFn: Raw.React.RefFn[A]): Unit =
+  implicit class BuilderOps(b: VdomBuilder) {
+    def addRefFn[A](refFn: React.RefFn[A]): Unit =
       b.addAttr("ref", refFn)
   }
 
@@ -28,13 +29,13 @@ object ResizeDetector {
 
   @js.native
   protected trait DimensionsJS extends js.Object {
-    val height: js.UndefOr[Raw.JsNumber]
-    val width: js.UndefOr[Raw.JsNumber]
+    val height: js.UndefOr[JsNumber]
+    val width: js.UndefOr[JsNumber]
   }
 
   @js.native
   protected trait RenderPropsJS extends DimensionsJS {
-    val targetRef: Raw.React.RefFn[html.Element]
+    val targetRef: React.RefFn[html.Element]
   }
 
   trait Dimensions  {
@@ -57,7 +58,7 @@ object ResizeDetector {
 
   }
 
-  protected type RenderJS = js.Function1[RenderPropsJS, Raw.React.Node | Null]
+  protected type RenderJS = js.Function1[RenderPropsJS, React.Node | Null]
 
   type Render = RenderProps => VdomNode
 
