@@ -8,10 +8,7 @@ import js.annotation.JSImport
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.Children
 import japgolly.scalajs.react.JsComponent
-import japgolly.scalajs.react.component.Js.RawMounted
-import japgolly.scalajs.react.component.Js.UnmountedMapped
-import japgolly.scalajs.react.internal.Effect.Id
-import japgolly.scalajs.react.raw.JsNumber
+import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
@@ -102,6 +99,6 @@ object Draggable {
   def apply(
     p:        Props,
     children: VdomNode
-  ): UnmountedMapped[Id, Props, Null, RawMounted[Props, Null], Props, Null] =
+  ) =
     component.apply(p)(children)
 }

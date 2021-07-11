@@ -2,7 +2,7 @@ package react
 
 import scala.scalajs.js
 import scala.scalajs.js.|
-import japgolly.scalajs.react.raw.JsNumber
+import japgolly.scalajs.react.facade.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
 import react.common.EnumValue

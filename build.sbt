@@ -1,5 +1,5 @@
-val reactJS        = "16.13.1"
-val scalaJsReact   = "1.7.7"
+val reactJS        = "17.0.2"
+val scalaJsReact   = "2.0.0-RC1"
 val reactDraggable = "4.4.3"
 val scalaJSDom     = "1.1.0"
 
@@ -14,7 +14,7 @@ Global / resolvers += Resolver.sonatypeRepo("public")
 // sbt-release-early
 inThisBuild(
   List(
-    homepage := Some(url("https://github.com/cquiroz/scalajs-react-clipboard")),
+    homepage := Some(url("https://github.com/cquiroz/scalajs-react-draggable")),
     licenses := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
     developers := List(
       Developer("cquiroz",
@@ -24,8 +24,8 @@ inThisBuild(
       )
     ),
     scmInfo := Some(
-      ScmInfo(url("https://github.com/cquiroz/scalajs-react-clipboard"),
-              "scm:git:git@github.com:cquiroz/scalajs-react-clipboard"
+      ScmInfo(url("https://github.com/cquiroz/scalajs-react-draggable"),
+              "scm:git:git@github.com:cquiroz/scalajs-react-draggable"
       )
     )
   )
@@ -89,9 +89,6 @@ lazy val demo =
         "react-dom"       -> reactJS,
         "react-draggable" -> reactDraggable
       ),
-      libraryDependencies ++= Seq(
-        "io.github.cquiroz.react" %%% "react-virtualized" % "0.11.3"
-      ),
       // don't publish the demo
       publish := {},
       publishLocal := {},
@@ -124,7 +121,7 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"      % "0.11.3",
+        "io.github.cquiroz.react"           %%% "common"      % "0.12.0",
         "com.lihaoyi"                       %%% "utest"       % "0.7.10"      % Test,
         "org.typelevel"                     %%% "cats-core"   % "2.6.1"      % Test
       ),

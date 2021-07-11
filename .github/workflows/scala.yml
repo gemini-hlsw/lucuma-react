@@ -15,4 +15,4 @@ jobs:
       - name: Checking your code format
         run: sbt scalafmtCheckAll
       - name: Run tests
-        run: sbt +facade/test +demo/fastOptJS::webpack +demo/fastOptJS
+        run: sbt +facade/test 

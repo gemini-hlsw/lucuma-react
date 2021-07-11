@@ -36,3 +36,6 @@ const developmentConfig = merge(parts.devServer(), {
 });
 
 module.exports = merge(commonConfig, developmentConfig);
+module.exports.node = {
+  fs: "empty"
+};
