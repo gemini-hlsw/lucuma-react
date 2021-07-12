@@ -4,12 +4,12 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactTable           = "7.7.0"
 val reactTableTypes      = "7.7.0"
-val scalaJsReact         = "1.7.7"
-val reactJS              = "16.13.1"
-val reactTypes           = "16.14.0"
-val reactDomTypes        = "16.9.11"
+val scalaJsReact         = "2.0.0-RC1"
+val reactJS              = "17.0.2"
+val reactTypes           = "17.0.14"
+val reactDomTypes        = "17.0.9"
 val munit                = "0.7.27"
-val scalajsReactVirtuoso = "0.0.3"
+val scalajsReactVirtuoso = "0.1.0"
 
 addCommandAlias(
   "restartWDS",
@@ -148,6 +148,7 @@ lazy val facade =
       Test / scalaJSStage := FastOptStage,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"                   % scalaJsReact,
+        "com.github.japgolly.scalajs-react" %%% "util"                   % scalaJsReact,
         "io.github.toddburnside"            %%% "scalajs-react-virtuoso" % scalajsReactVirtuoso,
         "com.github.japgolly.scalajs-react" %%% "test"                   % scalaJsReact % Test,
         "org.scalameta"                     %%% "munit"                  % munit        % Test
@@ -162,7 +163,7 @@ lazy val facade =
       ),
       stUseScalaJsDom := true,
       stOutputPackage := "reactST",
-      stFlavour := Flavour.Japgolly,
+      stFlavour := Flavour.ScalajsReact,
       stReactEnableTreeShaking := Selection.All,
       stTypescriptVersion := "4.2.4",
       (Compile / stMinimize).withRank(KeyRanks.Invisible) := Selection.AllExcept("react-table"),
