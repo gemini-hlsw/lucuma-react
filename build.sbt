@@ -1,7 +1,7 @@
 import sbt._
 
 val reactJS      = "17.0.2"
-val scalaJsReact = "2.0.0-RC1"
+val scalaJsReact = "2.0.0-RC2"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 Global / semanticdbEnabled := true
