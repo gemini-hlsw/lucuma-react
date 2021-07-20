@@ -12,3 +12,4 @@ package-lock.json
 yarn.lock
 travis/secrets.tar
 .hydra/
+.bsp/
