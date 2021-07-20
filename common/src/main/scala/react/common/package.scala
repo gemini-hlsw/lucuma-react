@@ -8,9 +8,10 @@ import japgolly.scalajs.react.component.Js.RawMounted
 import japgolly.scalajs.react.component.Js.UnmountedWithRawType
 import japgolly.scalajs.react.component.Scala
 import japgolly.scalajs.react.vdom.TagMod
+import react.common.syntax.AllSyntax
 import scala.scalajs.js
 
-package object common {
+package object common extends AllSyntax {
 
   def merge(a: js.Object, b: js.Object): js.Object = {
     val m = js.Dictionary.empty[js.Any]
