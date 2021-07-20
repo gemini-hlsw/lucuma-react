@@ -12,7 +12,7 @@ import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
-import react.common.syntax._
+import react.common._
 
 trait Draggable extends js.Object
 
