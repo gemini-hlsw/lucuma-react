@@ -21,7 +21,7 @@ class AttrsBuilder(p: js.Object) extends VdomBuilder.ToJs {
 
 trait GenericFnComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
   protected def cprops: P
-  @inline def render: Render[P]
+  @inline def render: RenderFn[P]
 }
 
 trait GenericFnComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A] {

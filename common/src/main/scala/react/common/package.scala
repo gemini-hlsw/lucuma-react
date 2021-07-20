@@ -6,12 +6,11 @@ import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.component.Generic
 import japgolly.scalajs.react.component.Js.RawMounted
 import japgolly.scalajs.react.component.Js.UnmountedWithRawType
+import japgolly.scalajs.react.component.Scala
 import japgolly.scalajs.react.vdom.TagMod
 import scala.scalajs.js
-import react.common.syntax.AllSyntax
-import japgolly.scalajs.react.component.Scala
 
-package object common extends AllSyntax {
+package object common {
 
   def merge(a: js.Object, b: js.Object): js.Object = {
     val m = js.Dictionary.empty[js.Any]
@@ -113,5 +112,4 @@ package object common extends AllSyntax {
       extends AnyVal {
     def apply(modifiers: TagMod*): A = c.addModifiers(modifiers)
   }
-  // End JS Components
 }
