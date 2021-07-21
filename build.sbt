@@ -2,10 +2,10 @@ name := "scalajs-react-highcharts"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
+val reactJS            = "17.0.2"
+val scalaJsReact       = "2.0.0-RC2"
+val scalaJsReactCommon = "0.13.0"
 val highcharts         = "9.1.2"
-val scalaJsReact       = "1.7.7"
-val reactJS            = "16.13.1"
-val scalaJsReactCommon = "0.11.3"
 
 addCommandAlias(
   "restartWDS",
