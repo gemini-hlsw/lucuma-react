@@ -3,9 +3,8 @@
 
 package reactST.reactTable
 
-import japgolly.scalajs.react.internal.JsUtil
-import japgolly.scalajs.react.raw
-import japgolly.scalajs.react.raw.React.ComponentClassP
+import japgolly.scalajs.react.facade
+import japgolly.scalajs.react.facade.React.ComponentClassP
 import japgolly.scalajs.react.vdom._
 import reactST.reactTable.anon.Data
 import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
@@ -254,7 +253,7 @@ case class TableMaker[D,
         StObject.set(col,
                      "Cell",
                      value
-                       .andThen(_.rawNode): js.Function1[CellProps[D, V], raw.React.Node]
+                       .andThen(_.rawNode): js.Function1[CellProps[D, V], facade.React.Node]
         )
 
       // Next 4 methods just copied from ColumnInterfaceBasedOnValueMutableBuilder, which lacks the function overload above.

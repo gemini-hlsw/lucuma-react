@@ -1,8 +1,7 @@
 package reactST.reactTable
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.internal.JsUtil
-import japgolly.scalajs.react.raw.React.ComponentClassP
+import japgolly.scalajs.react.facade.React.ComponentClassP
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.Css
 import react.virtuoso.Virtuoso

@@ -1,6 +1,6 @@
 package reactST.reactTable.mod
 
-import japgolly.scalajs.react.raw.React.ComponentClassP
+import japgolly.scalajs.react.facade.React.ComponentClassP
 import japgolly.scalajs.react.vdom.VdomElement
 import org.scalablytyped.runtime.StObject
 import scala.scalajs.js

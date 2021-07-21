@@ -1,8 +1,8 @@
 package reactST.reactTable
 
-import japgolly.scalajs.react.internal.JsUtil
+import japgolly.scalajs.react.util.JsUtil
 import japgolly.scalajs.react.vdom.html_<^._
-import japgolly.scalajs.react.vdom.Builder
+import japgolly.scalajs.react.vdom.VdomBuilder
 import scalajs.js
 
 object util {
@@ -13,15 +13,10 @@ object util {
    */
   def props2Attrs(obj: js.Object): TagMod =
     TagMod(
-      TagMod.fn(_.addAttrsObject(obj, except = Set("style"))),
+      TagMod.fn(_.addAttrsObject(obj, _ != "style")),
       obj
         .asInstanceOf[js.Dictionary[js.Object]]
         .get("style")
         .fold(TagMod.empty)(styles => TagMod.fn(_.addStylesObject(styles)))
     )
-
-  implicit class BuilderOps(b: Builder) {
-    def addAttrsObject(o: js.Object, except: Set[String] = Set.empty): Unit =
-      for ((k, v) <- JsUtil.objectIterator(o) if !except.contains(k)) b.addAttr(k, v)
-  }
 }
