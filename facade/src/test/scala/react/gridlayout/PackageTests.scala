@@ -2,7 +2,6 @@ package react.gridlayout
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.common.syntax._
 import utest._
 
 object PackageTests extends TestSuite {
@@ -39,7 +38,6 @@ object PackageTests extends TestSuite {
         val html =
           """<div class="react-grid-layout" style="height: 170px;"></div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        println(m.outerHtmlScrubbed())
         assert(m.outerHtmlScrubbed() == html)
       }
     }
