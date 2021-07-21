@@ -2,10 +2,10 @@ name := "scalajs-react-datepicker"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
+val reactJS              = "17.0.2"
+val scalaJsReact         = "2.0.0-RC2"
 val reactDatePicker      = "4.1.1"
 val reactDatePickerTypes = "3.1.8"
-val scalaJsReact         = "1.7.7"
-val reactJS              = "16.13.1"
 
 addCommandAlias(
   "restartWDS",
