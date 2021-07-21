@@ -6,7 +6,7 @@ import japgolly.scalajs.react._
 import react.common._
 import japgolly.scalajs.react.vdom.HtmlTagOf
 import japgolly.scalajs.react.Ref
-import japgolly.scalajs.react.{ raw => Raw }
+import japgolly.scalajs.react.{ facade => Raw }
 
 final case class HotKeys(
   keyMap:                js.UndefOr[KeyMap] = js.undefined,

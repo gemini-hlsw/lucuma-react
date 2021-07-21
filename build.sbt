@@ -4,9 +4,9 @@ ThisBuild / scalaVersion := "2.13.6"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
+val reactJS      = "17.0.2"
+val scalaJsReact = "2.0.0-RC2"
 val reactHotkeys = "2.0.0"
-val scalaJsReact = "1.7.7"
-val reactJS      = "16.13.1"
 
 addCommandAlias(
   "restartWDS",
@@ -138,8 +138,8 @@ lazy val facade =
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"   % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"   % scalaJsReact % "test",
-        "io.github.cquiroz.react"           %%% "common" % "0.11.3",
-        "com.lihaoyi"                       %%% "utest"  % "0.7.10"      % Test
+        "io.github.cquiroz.react"           %%% "common" % "0.13.0",
+        "com.lihaoyi"                       %%% "utest"  % "0.7.10"     % Test
       ),
       Compile / npmDependencies ++= Seq(
         "react"         -> reactJS,
