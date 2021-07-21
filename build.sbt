@@ -4,7 +4,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactTable           = "7.7.0"
 val reactTableTypes      = "7.7.0"
-val scalaJsReact         = "2.0.0-RC1"
+val scalaJsReact         = "2.0.0-RC2"
 val reactJS              = "17.0.2"
 val reactTypes           = "17.0.14"
 val reactDomTypes        = "17.0.9"
