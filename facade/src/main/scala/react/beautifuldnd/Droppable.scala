@@ -1,7 +1,7 @@
 package react.beautifuldnd
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.{ raw => Raw }
+import japgolly.scalajs.react.{ facade => Raw }
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.html
 import scala.scalajs.js

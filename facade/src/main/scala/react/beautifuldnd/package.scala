@@ -2,9 +2,9 @@ package react
 
 import scala.scalajs.js
 import scala.scalajs.js.|
-import japgolly.scalajs.react.{ raw => Raw }
-import japgolly.scalajs.react.vdom.Builder
-import japgolly.scalajs.react.internal.JsUtil
+import japgolly.scalajs.react.{ facade => Raw }
+import japgolly.scalajs.react.vdom.VdomBuilder
+import japgolly.scalajs.react.util.JsUtil
 
 package object beautifuldnd {
   type Id          = String
@@ -44,14 +44,6 @@ package object beautifuldnd {
         None
       else
         Some(a.asInstanceOf[A])
-  }
-
-  implicit class BuilderOps(b: Builder) {
-    def addAttrsObject(o:  js.Object, except: Set[String] = Set.empty): Unit =
-      for ((k, v) <- JsUtil.objectIterator(o) if !except.contains(k)) b.addAttr(k, v)
-
-    def addRefFn[A](refFn: Raw.React.RefFn[A]): Unit =
-      b.addAttr("ref", refFn)
   }
 
   type SensorAPI = js.Object

@@ -5,7 +5,7 @@ import js.JSConverters._
 import scala.scalajs.js.annotation.JSImport
 import react.beautifuldnd.Draggable
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.{ raw => Raw }
+import japgolly.scalajs.react.{ facade => Raw }
 import japgolly.scalajs.react.vdom.VdomNode
 
 object Tree {
