@@ -149,7 +149,7 @@ lazy val facade =
       ),
       stUseScalaJsDom := true,
       stOutputPackage := "lucuma",
-      stFlavour := Flavour.Japgolly,
+      stFlavour := Flavour.ScalajsReact,
       stIgnore ++= List("react-dom"),
       (Compile / stMinimize).withRank(KeyRanks.Invisible) :=
         Selection.AllExcept("@types/react-datepicker"),
