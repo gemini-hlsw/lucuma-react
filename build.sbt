@@ -9,7 +9,7 @@ Global / semanticdbEnabled := true
 val reactVirtuoso      = "1.9.2"
 val scalaJsReact       = "2.0.0-RC2"
 val reactJS            = "17.0.2"
-val scalaJsReactCommon = "0.12.0"
+val scalaJsReactCommon = "0.13.0"
 val munit              = "0.7.27"
 
 addCommandAlias(
