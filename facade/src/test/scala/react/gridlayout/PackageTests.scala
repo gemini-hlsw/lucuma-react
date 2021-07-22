@@ -8,10 +8,10 @@ object PackageTests extends TestSuite {
 
   val tests = Tests {
     test("layouItem") {
-      val item = LayoutItem(0.1, 1, 2, 3, "")
+      val item = LayoutItem(0.1, 1.1, 2, 3, "")
       assert(item != null)
       assert(item.w.toDouble == 0.1)
-      assert(item.h.toDouble == 1.0)
+      assert(item.h.toDouble == 1.1)
       assert(item.x.toDouble == 2.0)
       assert(item.y.toDouble == 3.0)
     }
