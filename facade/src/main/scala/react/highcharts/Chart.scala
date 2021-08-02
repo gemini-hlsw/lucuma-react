@@ -21,7 +21,7 @@ import gpp.highcharts.mod.PointOptionsObject
 trait WrapProceed extends js.ThisFunction0[Chart_, Unit]
 
 @js.native
-@JSImport("highcharts", JSImport.Default)
+@JSImport("highcharts/es-modules/masters/highcharts.src.js", JSImport.Default)
 object Highcharts extends TypeofHighchartsAST {
   @JSName("wrap")
   def wrapThis(

@@ -36,13 +36,13 @@ import gpp.highcharts.mod.SeriesClickEventObject
 import gpp.highcharts.mod.TooltipShapeValue
 import react.highcharts.WrapProceed
 import gpp.highcharts.mod.Chart_
-import gpp.highcharts.seriesLabelMod.{ default => SeriesLabelMod }
 import react.highcharts.mods.seriesLabel.SeriesLabelSeries
 import react.highcharts.mods.seriesLabel.SeriesLabelPoint
 import gpp.highcharts.mod.TooltipPositionerCallbackFunction
 import gpp.highcharts.mod.PositionObject
 import gpp.highcharts.mod.Point
 import gpp.highcharts.mod.XAxisPlotBandsLabelOptions
+import react.highcharts.seriesLabel
 
 // Reproducing https://jsfiddle.net/rpiaggio/xdz4pLg9/105/
 
@@ -53,7 +53,7 @@ object DemoMain {
   def main(): Unit = {
 
     // Enable series-label Mod
-    SeriesLabelMod(Highcharts)
+    seriesLabel.enable
 
     // we need the prototype of the series mod Chart!
     Highcharts.wrapThis(
