@@ -33,6 +33,7 @@ object Highcharts extends TypeofHighchartsAST {
 
 final case class Chart(
   options:    Options,
+  onCreate:   Chart_ => Callback = _ => Callback.empty,
   highcharts: TypeofHighchartsAST = Highcharts
 ) extends ReactProps[Chart](Chart.component)
 
@@ -55,7 +56,8 @@ object Chart {
       containerRef.foreach { element =>
         props.highcharts.chart(
           element.asInstanceOf[HTMLDOMElement],
-          props.options
+          props.options,
+          props.onCreate.andThen(_.runNow())
         )
         ()
       }

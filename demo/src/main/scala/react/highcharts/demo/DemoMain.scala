@@ -43,6 +43,8 @@ import gpp.highcharts.mod.PositionObject
 import gpp.highcharts.mod.Point
 import gpp.highcharts.mod.XAxisPlotBandsLabelOptions
 import react.highcharts.seriesLabel
+import japgolly.scalajs.react.callback.Callback
+import gpp.highcharts.mod.PointOptionsObject
 
 // Reproducing https://jsfiddle.net/rpiaggio/xdz4pLg9/105/
 
@@ -223,7 +225,18 @@ object DemoMain {
         ).map(_.asInstanceOf[SeriesOptionsType]).toJSArray
       )
 
-    Chart(options).renderIntoDOM(container)
+    def onCreated(chart: Chart_) = Callback(
+      // dom.console.log(chart)
+      chart
+        .series(0)
+        .addPoint(
+          PointOptionsObject(accessibility = js.undefined)
+            .setX(1584655110000.0)
+            .setY(35.0)
+        )
+    )
+
+    Chart(options, onCreated _).renderIntoDOM(container)
 
     ()
   }
