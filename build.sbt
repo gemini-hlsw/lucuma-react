@@ -3,7 +3,7 @@ name := "scalajs-react-highcharts"
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactJS            = "17.0.2"
-val scalaJsReact       = "2.0.0-RC2"
+val scalaJsReact       = "2.0.0-RC3"
 val scalaJsReactCommon = "0.13.0"
 val highcharts         = "9.1.2"
 
