@@ -4,6 +4,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.virtuoso.Virtuoso
+import react.virtuoso.GroupedVirtuoso
 import react.virtuoso.raw.ListRange
 
 import scala.scalajs.js
@@ -27,9 +28,21 @@ object DemoMain {
 
     val data = (1 to 1000).toJSArray
 
+    val groups = List.fill(10)(100)
+
     val toRow = (index: Int, item: Int) => {
       val className = if (index % 2 == 0) "row even" else "row odd"
       <.div("index ", index, " item ", item, ^.className := className)
+    }
+
+    val groupHeader = (groupIndex: Int) =>
+      <.div(^.backgroundColor := "white")(
+        <.b(s"GROUP $groupIndex")
+      )
+
+    val toGroupedRow = (index: Int, groupIndex: Int, item: Int) => {
+      val className = if (index % 2 == 0) "row even" else "row odd"
+      <.div("index ", index, " item ", item, " group ", groupIndex, ^.className := className)
     }
 
     <.div(
@@ -46,7 +59,18 @@ object DemoMain {
       <.h2("Infinite List"),
       <.div("Starts with 100 elements and adds more as needed."),
       <.div("Information from callbacks is printed to the console."),
-      Infinite.component()
+      Infinite.component(),
+      <.h2("Grouped List"),
+      <.div("List of 1000 elements."),
+      GroupedVirtuoso[Int](
+        data = data,
+        itemContent = toGroupedRow,
+        groupContent = groupHeader,
+        groupCounts = groups
+      )(
+        ^.height := "400px",
+        ^.width := "300px"
+      )
     )
       .renderIntoDOM(container)
 
