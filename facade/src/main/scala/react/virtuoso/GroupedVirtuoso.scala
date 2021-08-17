@@ -10,8 +10,9 @@ import react.virtuoso.raw._
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 import scala.scalajs.js.|
+import scala.scalajs.js.JSConverters._
 
-final case class Virtuoso[D](
+final case class GroupedVirtuoso[D](
   totalCount:              js.UndefOr[Int] = js.undefined,
   data:                    js.UndefOr[js.Array[D]] = js.undefined,
   overscan:                js.UndefOr[Int | OverScan] = js.undefined,
@@ -19,7 +20,7 @@ final case class Virtuoso[D](
   initialTopMostItemIndex: js.UndefOr[Int] = js.undefined,
   initialScrollTop:        js.UndefOr[Int] = js.undefined,
   initialItemCount:        js.UndefOr[Int] = js.undefined,
-  itemContent:             js.UndefOr[(Int, D) => VdomNode] = js.undefined,
+  itemContent:             js.UndefOr[(Int, Int, D) => VdomNode] = js.undefined,
   computeItemKey:          js.UndefOr[Int => Key] = js.undefined,
   defaultItemHeight:       js.UndefOr[Double] = js.undefined,
   fixedItemHeight:         js.UndefOr[Double] = js.undefined,
@@ -34,23 +35,25 @@ final case class Virtuoso[D](
   totalListHeightChanged:  js.UndefOr[Double => Callback] = js.undefined,
   alignToBottom:           js.UndefOr[Boolean] = js.undefined,
   useWindowScroll:         js.UndefOr[Boolean] = js.undefined,
+  groupContent:            js.UndefOr[Int => VdomNode] = js.undefined,
+  groupCounts:             List[Int] = List(Int.MaxValue), // It would be cool if this was a NonEmptyList
   override val modifiers:  Seq[TagMod] = Seq.empty
-) extends GenericComponentPAC[Virtuoso.VirtuosoProps[D], Virtuoso[D]] {
-  override protected def cprops    = Virtuoso.props(this)
-  override protected val component = Virtuoso.component[D]
+) extends GenericComponentPAC[GroupedVirtuoso.GroupedVirtuosoProps[D], GroupedVirtuoso[D]] {
+  override protected def cprops    = GroupedVirtuoso.props(this)
+  override protected val component = GroupedVirtuoso.component[D]
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def apply(mods:                      TagMod*)     = addModifiers(mods)
 }
 
-object Virtuoso {
+object GroupedVirtuoso {
   type BoolToUnit = js.Function1[Boolean, Unit]
 
   @js.native
-  @JSImport("react-virtuoso", "Virtuoso")
+  @JSImport("react-virtuoso", "GroupedVirtuoso")
   object RawComponent extends js.Object
 
   @js.native
-  trait VirtuosoProps[D] extends js.Object {
+  trait GroupedVirtuosoProps[D] extends js.Object {
 
     /**
      * The total amount of items to be rendered.
@@ -103,7 +106,8 @@ object Virtuoso {
     /**
      * Set the callback to specify the contents of the item.
      */
-    var itemContent: js.UndefOr[js.Function2[Double, D, facade.React.Node]] = js.native
+    var itemContent: js.UndefOr[js.Function3[Double, Double, D, facade.React.Node]] =
+      js.native
 
     /**
      * If specified, the component will use the function to generate the `key` property for each list item.
@@ -228,10 +232,21 @@ object Virtuoso {
      */
     // Facade not currently implementd for this.
     // scrollerRef?: (ref: HTMLElement | null) => any
+
+    /*
+     * Specifies how each each group header gets rendered. The callback receives the zero-based index of the group.
+     */
+    var groupContent: js.UndefOr[js.Function1[Double, facade.React.Node]] = js.undefined
+
+    /*
+     * Specifies the amount of items in each group (and, actually, how many groups are there).
+     * For example, passing [20, 30] will display 2 groups with 20 and 30 items each.
+     */
+    var groupCounts: js.UndefOr[js.Array[Double]] = js.undefined
   }
 
-  def props[D](q: Virtuoso[D]): VirtuosoProps[D] = {
-    val p = (new js.Object).asInstanceOf[VirtuosoProps[D]]
+  def props[D](q: GroupedVirtuoso[D]): GroupedVirtuosoProps[D] = {
+    val p = (new js.Object).asInstanceOf[GroupedVirtuosoProps[D]]
     q.totalCount.foreach(v => p.totalCount = v)
     q.data.foreach(v => p.data = v)
     q.overscan.foreach(v => p.overscan = v)
@@ -239,7 +254,15 @@ object Virtuoso {
     q.initialTopMostItemIndex.foreach(v => p.initialTopMostItemIndex = v)
     q.initialScrollTop.foreach(v => p.initialScrollTop = v)
     q.initialItemCount.foreach(v => p.initialItemCount = v)
-    q.itemContent.foreach(v => p.itemContent = ((idx: Double, d: D) => v(idx.toInt, d).rawNode))
+    q.itemContent.foreach(v =>
+      p.itemContent = (
+        (
+          idx:      Double,
+          groupIdx: Double,
+          d:        D
+        ) => v(idx.toInt, groupIdx.toInt, d).rawNode
+      )
+    )
     q.computeItemKey.foreach(v => p.computeItemKey = (d: Double) => v(d.toInt))
     q.defaultItemHeight.foreach(v => p.defaultItemHeight = v)
     q.fixedItemHeight.foreach(v => p.fixedItemHeight = v)
@@ -254,8 +277,11 @@ object Virtuoso {
     q.totalListHeightChanged.toJs.foreach(v => p.totalListHeightChanged = v)
     q.alignToBottom.foreach(v => p.alignToBottom = v)
     q.useWindowScroll.foreach(v => p.useWindowScroll = v)
+    q.groupContent.foreach(v => p.groupContent = ((idx: Double) => v(idx.toInt).rawNode))
+    p.groupCounts = q.groupCounts.map(_.toDouble).toJSArray
     p
   }
 
-  private def component[D] = JsComponent[VirtuosoProps[D], Children.Varargs, Null](RawComponent)
+  private def component[D] =
+    JsComponent[GroupedVirtuosoProps[D], Children.Varargs, Null](RawComponent)
 }
