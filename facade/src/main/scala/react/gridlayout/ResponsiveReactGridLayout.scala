@@ -195,9 +195,8 @@ object ResponsiveReactGridLayout {
     r.layouts = ly.toRaw
     r.onBreakpointChange = (newBreakpoint: raw.Breakpoint, newCol: Int) =>
       onBreakpointChange(BreakpointName(newBreakpoint), newCol).runNow()
-    r.onLayoutChange = (currentLayout: raw.Layout, allLayouts: js.Object) => {
+    r.onLayoutChange = (currentLayout: raw.Layout, allLayouts: js.Object) =>
       onLayoutChange(Layout.fromRaw(currentLayout), Layouts.fromRaw(allLayouts)).runNow()
-    }
     r.onWidthChange = (
       containerWidth:   Int,
       margin:           js.Array[Int],
