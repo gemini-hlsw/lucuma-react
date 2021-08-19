@@ -8,9 +8,8 @@ import react.common._
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
-/** Text to be copied to clipboard
-  * Optional callback, will be called when text is copied
-  * Optional copy-to-clipboard options.
+/** Text to be copied to clipboard Optional callback, will be called when text is copied Optional
+  * copy-to-clipboard options.
   */
 final case class CopyToClipboard(
   text:    String,
