@@ -48,8 +48,8 @@ object DemoMain {
       React.Fragment(
         <.input(^.tabIndex := i + 1),
         <.div(^.tabIndex := i + 2,
-              ^.width := "100px",
-              ^.height := "100px",
+              ^.width      := "100px",
+              ^.height     := "100px",
               ^.background := "black"
         ),
         <.button(^.tabIndex := i + 3, "HELLO")

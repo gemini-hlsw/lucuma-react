@@ -15,7 +15,7 @@ addCommandAlias(
 
 inThisBuild(
   List(
-    Test / parallelExecution := false,
+    Test / parallelExecution              := false,
     homepage.withRank(KeyRanks.Invisible) := Some(
       url("https://github.com/rpiaggio/scalajs-react-hotkeys")
     ),
@@ -24,7 +24,7 @@ inThisBuild(
         "https://opensource.org/licenses/BSD-3-Clause"
       )
     ),
-    developers := List(
+    developers                            := List(
       Developer(
         "rpiaggio",
         "Raúl Piaggio",
@@ -38,7 +38,7 @@ inThisBuild(
         url("https://github.com/cquiroz")
       )
     ),
-    scmInfo := Some(
+    scmInfo                               := Some(
       ScmInfo(
         url("https://github.com/rpiaggio/scalajs-react-hotkeys"),
         "scm:git:git@github.com:rpiaggio/scalajs-react-hotkeys.git"
@@ -53,13 +53,13 @@ val root =
     .settings(commonSettings: _*)
     .aggregate(facade, demo)
     .settings(
-      name := "scalajs-react-hotkeys",
+      name            := "scalajs-react-hotkeys",
       // No, SBT, we don't want any artifacts for root.
       // No, not even an empty jar.
-      publish := {},
-      publishLocal := {},
+      publish         := {},
+      publishLocal    := {},
       publishArtifact := false,
-      Keys.`package` := file("")
+      Keys.`package`  := file("")
     )
 
 lazy val demo =
@@ -68,21 +68,21 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      webpack / version := "4.32.0",
-      startWebpackDevServer / version := "3.3.1",
-      fastOptJS / webpackConfigFile := Some(
+      webpack / version                     := "4.32.0",
+      startWebpackDevServer / version       := "3.3.1",
+      fastOptJS / webpackConfigFile         := Some(
         baseDirectory.value / "webpack" / "dev.webpack.config.js"
       ),
-      fullOptJS / webpackConfigFile := Some(
+      fullOptJS / webpackConfigFile         := Some(
         baseDirectory.value / "webpack" / "prod.webpack.config.js"
       ),
       webpackMonitoredDirectories += (Compile / resourceDirectory).value,
-      webpackResources := (baseDirectory.value / "webpack") * "*.js",
+      webpackResources                      := (baseDirectory.value / "webpack") * "*.js",
       webpackMonitoredFiles / includeFilter := "*",
-      useYarn := true,
-      fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
-      fullOptJS / webpackBundlingMode := BundlingMode.Application,
-      test := {},
+      useYarn                               := true,
+      fastOptJS / webpackBundlingMode       := BundlingMode.LibraryOnly(),
+      fullOptJS / webpackBundlingMode       := BundlingMode.Application,
+      test                                  := {},
       Compile / fastOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
       Compile / fullOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
       // NPM libs for development, mostly to let webpack do its magic
@@ -111,10 +111,10 @@ lazy val demo =
         "react-hotkeys" -> reactHotkeys
       ),
       // don't publish the demo
-      publish := {},
-      publishLocal := {},
-      publishArtifact := false,
-      Keys.`package` := file("")
+      publish                               := {},
+      publishLocal                          := {},
+      publishArtifact                       := false,
+      Keys.`package`                        := file("")
     )
     .dependsOn(facade)
 
@@ -124,17 +124,17 @@ lazy val facade =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name := "facade",
-      moduleName := "scalajs-react-hotkeys",
+      name                            := "facade",
+      moduleName                      := "scalajs-react-hotkeys",
       // Requires the DOM for tests
-      Test / requireJsDomEnv := true,
+      Test / requireJsDomEnv          := true,
       // Use yarn as it is faster than npm
-      useYarn := true,
-      webpack / version := "4.32.0",
-      installJsdom / version := "15.2.1",
+      useYarn                         := true,
+      webpack / version               := "4.32.0",
+      installJsdom / version          := "15.2.1",
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
-      Test / scalaJSStage := FastOptStage,
+      Test / scalaJSStage             := FastOptStage,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"   % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"   % scalaJsReact % "test",
@@ -146,25 +146,25 @@ lazy val facade =
         "react-dom"     -> reactJS,
         "react-hotkeys" -> reactHotkeys
       ),
-      Test / webpackConfigFile := Some(
+      Test / webpackConfigFile        := Some(
         baseDirectory.value / "test.webpack.config.js"
       ),
       testFrameworks += new TestFramework("utest.runner.Framework")
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := scalaVersion.value,
-  organization := "com.rpiaggio",
-  sonatypeProfileName := "com.rpiaggio",
-  description := "react-hotkeys in scalajs-react",
-  homepage := Some(url("https://github.com/rpiaggio/scalajs-react-hotkeys")),
-  licenses := Seq(
+  scalaVersion           := scalaVersion.value,
+  organization           := "com.rpiaggio",
+  sonatypeProfileName    := "com.rpiaggio",
+  description            := "react-hotkeys in scalajs-react",
+  homepage               := Some(url("https://github.com/rpiaggio/scalajs-react-hotkeys")),
+  licenses               := Seq(
     "BSD 3-Clause License" -> url(
       "https://opensource.org/licenses/BSD-3-Clause"
     )
   ),
   Test / publishArtifact := false,
-  publishMavenStyle := true,
+  publishMavenStyle      := true,
   scalacOptions ~= (_.filterNot(
     Set(
       // By necessity facades will have unused params
