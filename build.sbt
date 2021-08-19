@@ -14,19 +14,19 @@ addCommandAlias(
 
 inThisBuild(
   List(
-    scalaVersion := "2.13.6",
+    scalaVersion                         := "2.13.6",
     ThisBuild / Test / parallelExecution := false,
-    organization := "com.rpiaggio",
-    sonatypeProfileName := "com.rpiaggio",
-    homepage := Some(
+    organization                         := "com.rpiaggio",
+    sonatypeProfileName                  := "com.rpiaggio",
+    homepage                             := Some(
       url("https://github.com/rpiaggio/scalajs-react-datepicker")
     ),
-    licenses := Seq(
+    licenses                             := Seq(
       "BSD 3-Clause License" -> url(
         "https://opensource.org/licenses/BSD-3-Clause"
       )
     ),
-    developers := List(
+    developers                           := List(
       Developer(
         "rpiaggio",
         "Raúl Piaggio",
@@ -40,7 +40,7 @@ inThisBuild(
         url("https://github.com/cquiroz")
       )
     ),
-    scmInfo := Some(
+    scmInfo                              := Some(
       ScmInfo(
         url("https://github.com/rpiaggio/scalajs-react-datepicker"),
         "scm:git:git@github.com:rpiaggio/scalajs-react-datepicker.git"
@@ -54,13 +54,13 @@ val root =
     .in(file("."))
     .aggregate(facade, demo)
     .settings(
-      name := "scalajs-react-datepicker",
+      name            := "scalajs-react-datepicker",
       // No, SBT, we don't want any artifacts for root.
       // No, not even an empty jar.
-      publish := {},
-      publishLocal := {},
+      publish         := {},
+      publishLocal    := {},
       publishArtifact := false,
-      Keys.`package` := file("")
+      Keys.`package`  := file("")
     )
 
 lazy val demo =
@@ -68,21 +68,21 @@ lazy val demo =
     .in(file("demo"))
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(
-      webpack / version := "4.44.1",
-      startWebpackDevServer / version := "3.3.1",
-      fastOptJS / webpackConfigFile := Some(
+      webpack / version                     := "4.44.1",
+      startWebpackDevServer / version       := "3.3.1",
+      fastOptJS / webpackConfigFile         := Some(
         baseDirectory.value / "webpack" / "dev.webpack.config.js"
       ),
-      fullOptJS / webpackConfigFile := Some(
+      fullOptJS / webpackConfigFile         := Some(
         baseDirectory.value / "webpack" / "prod.webpack.config.js"
       ),
       webpackMonitoredDirectories += (Compile / resourceDirectory).value,
-      webpackResources := (baseDirectory.value / "webpack") * "*.js",
+      webpackResources                      := (baseDirectory.value / "webpack") * "*.js",
       webpackMonitoredFiles / includeFilter := "*",
-      useYarn := true,
-      fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
-      fullOptJS / webpackBundlingMode := BundlingMode.Application,
-      test := {},
+      useYarn                               := true,
+      fastOptJS / webpackBundlingMode       := BundlingMode.LibraryOnly(),
+      fullOptJS / webpackBundlingMode       := BundlingMode.Application,
+      test                                  := {},
       Compile / fastOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
       Compile / fullOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
       // NPM libs for development, mostly to let webpack do its magic
@@ -115,10 +115,10 @@ lazy val demo =
         "io.github.cquiroz" %%% "scala-java-time" % "2.3.0"
       ),
       // don't publish the demo
-      publish := {},
-      publishLocal := {},
-      publishArtifact := false,
-      Keys.`package` := file("")
+      publish                               := {},
+      publishLocal                          := {},
+      publishArtifact                       := false,
+      Keys.`package`                        := file("")
     )
     .dependsOn(facade)
 
@@ -127,29 +127,29 @@ lazy val facade =
     .in(file("facade"))
     .enablePlugins(ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
     .settings(
-      name := "facade",
-      moduleName := "scalajs-react-datepicker",
+      name                                                := "facade",
+      moduleName                                          := "scalajs-react-datepicker",
       // Requires the DOM for tests
-      Test / requireJsDomEnv := true,
+      Test / requireJsDomEnv                              := true,
       // Use yarn as it is faster than npm
-      useYarn := true,
-      yarnExtraArgs := {
+      useYarn                                             := true,
+      yarnExtraArgs                                       := {
         if (insideCI.value) List("--pure-lockfile") else List.empty
       },
-      webpack / version := "4.44.1",
-      installJsdom / version := "16.4.0",
-      scalaJSUseMainModuleInitializer := false,
+      webpack / version                                   := "4.44.1",
+      installJsdom / version                              := "16.4.0",
+      scalaJSUseMainModuleInitializer                     := false,
       // Compile tests to JS using fast-optimisation
-      Test / scalaJSStage := FastOptStage,
+      Test / scalaJSStage                                 := FastOptStage,
       Compile / npmDependencies ++= Seq(
         "react"                   -> reactJS,
         "react-dom"               -> reactJS,
         "react-datepicker"        -> reactDatePicker,
         "@types/react-datepicker" -> reactDatePickerTypes
       ),
-      stUseScalaJsDom := true,
-      stOutputPackage := "lucuma",
-      stFlavour := Flavour.ScalajsReact,
+      stUseScalaJsDom                                     := true,
+      stOutputPackage                                     := "lucuma",
+      stFlavour                                           := Flavour.ScalajsReact,
       stIgnore ++= List("react-dom"),
       (Compile / stMinimize).withRank(KeyRanks.Invisible) :=
         Selection.AllExcept("@types/react-datepicker"),
@@ -166,5 +166,5 @@ lazy val facade =
       )),
       // Some Scalablytyped generated Scaladocs are malformed.
       // Workaround: https://github.com/xerial/sbt-sonatype/issues/30#issuecomment-342532067
-      Compile / doc / sources := Seq()
+      Compile / doc / sources                             := Seq()
     )
