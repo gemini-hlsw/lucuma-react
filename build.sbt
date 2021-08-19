@@ -14,19 +14,19 @@ addCommandAlias(
 
 inThisBuild(
   List(
-    scalaVersion := "2.13.6",
+    scalaVersion             := "2.13.6",
     Test / parallelExecution := false,
-    organization := "com.rpiaggio",
-    sonatypeProfileName := "com.rpiaggio",
-    homepage := Some(
+    organization             := "com.rpiaggio",
+    sonatypeProfileName      := "com.rpiaggio",
+    homepage                 := Some(
       url("https://github.com/rpiaggio/scalajs-react-highcharts")
     ),
-    licenses := Seq(
+    licenses                 := Seq(
       "BSD 3-Clause License" -> url(
         "https://opensource.org/licenses/BSD-3-Clause"
       )
     ),
-    developers := List(
+    developers               := List(
       Developer(
         "rpiaggio",
         "Raúl Piaggio",
@@ -40,7 +40,7 @@ inThisBuild(
         url("https://github.com/cquiroz")
       )
     ),
-    scmInfo := Some(
+    scmInfo                  := Some(
       ScmInfo(
         url("https://github.com/rpiaggio/scalajs-react-highcharts"),
         "scm:git:git@github.com:rpiaggio/scalajs-react-highcharts.git"
@@ -54,13 +54,13 @@ val root =
     .in(file("."))
     .aggregate(facade, demo)
     .settings(
-      name := "scalajs-react-highcharts",
+      name            := "scalajs-react-highcharts",
       // No, SBT, we don't want any artifacts for root.
       // No, not even an empty jar.
-      publish := {},
-      publishLocal := {},
+      publish         := {},
+      publishLocal    := {},
       publishArtifact := false,
-      Keys.`package` := file("")
+      Keys.`package`  := file("")
     )
 
 lazy val demo =
@@ -68,21 +68,21 @@ lazy val demo =
     .in(file("demo"))
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(
-      webpack / version := "4.32.0",
-      startWebpackDevServer / version := "3.3.1",
-      fastOptJS / webpackConfigFile := Some(
+      webpack / version                     := "4.32.0",
+      startWebpackDevServer / version       := "3.3.1",
+      fastOptJS / webpackConfigFile         := Some(
         baseDirectory.value / "webpack" / "dev.webpack.config.js"
       ),
-      fullOptJS / webpackConfigFile := Some(
+      fullOptJS / webpackConfigFile         := Some(
         baseDirectory.value / "webpack" / "prod.webpack.config.js"
       ),
       webpackMonitoredDirectories += (Compile / resourceDirectory).value,
-      webpackResources := (baseDirectory.value / "webpack") * "*.js",
+      webpackResources                      := (baseDirectory.value / "webpack") * "*.js",
       webpackMonitoredFiles / includeFilter := "*",
-      useYarn := true,
-      fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
-      fullOptJS / webpackBundlingMode := BundlingMode.Application,
-      test := {},
+      useYarn                               := true,
+      fastOptJS / webpackBundlingMode       := BundlingMode.LibraryOnly(),
+      fullOptJS / webpackBundlingMode       := BundlingMode.Application,
+      test                                  := {},
       Compile / fastOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
       Compile / fullOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
       // NPM libs for development, mostly to let webpack do its magic
@@ -111,10 +111,10 @@ lazy val demo =
         "highcharts" -> highcharts
       ),
       // don't publish the demo
-      publish := {},
-      publishLocal := {},
-      publishArtifact := false,
-      Keys.`package` := file("")
+      publish                               := {},
+      publishLocal                          := {},
+      publishArtifact                       := false,
+      Keys.`package`                        := file("")
     )
     .dependsOn(facade)
 
@@ -124,20 +124,20 @@ lazy val facade =
     .settings(commonSettings: _*)
     .enablePlugins(ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
     .settings(
-      name := "facade",
-      moduleName := "scalajs-react-highcharts",
+      name                                                := "facade",
+      moduleName                                          := "scalajs-react-highcharts",
       // Requires the DOM for tests
-      Test / requireJsDomEnv := true,
+      Test / requireJsDomEnv                              := true,
       // Use yarn as it is faster than npm
-      useYarn := true,
-      yarnExtraArgs := {
+      useYarn                                             := true,
+      yarnExtraArgs                                       := {
         if (insideCI.value) List("--pure-lockfile") else List.empty
       },
-      webpack / version := "4.32.0",
-      installJsdom / version := "15.2.1",
-      scalaJSUseMainModuleInitializer := false,
+      webpack / version                                   := "4.32.0",
+      installJsdom / version                              := "15.2.1",
+      scalaJSUseMainModuleInitializer                     := false,
       // Compile tests to JS using fast-optimisation
-      Test / scalaJSStage := FastOptStage,
+      Test / scalaJSStage                                 := FastOptStage,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"   % scalaJsReact,
         "io.github.cquiroz.react"           %%% "common" % scalaJsReactCommon,
@@ -150,10 +150,10 @@ lazy val facade =
         "highcharts" -> highcharts
       ),
       stIgnore ++= List("react", "react-dom"),
-      stUseScalaJsDom := true,
-      stOutputPackage := "gpp",
+      stUseScalaJsDom                                     := true,
+      stOutputPackage                                     := "gpp",
       (Compile / stMinimize).withRank(KeyRanks.Invisible) := Selection.AllExcept("highcharts"),
-      stTypescriptVersion := "4.2.4",
+      stTypescriptVersion                                 := "4.2.4",
       // stEnableScalaJsDefined := Selection.All,
       scalacOptions ~= (_.filterNot(
         Set(
@@ -166,8 +166,8 @@ lazy val facade =
       )),
       // Some Scalablytyped generated Scaladocs are malformed.
       // Workaround: https://github.com/xerial/sbt-sonatype/issues/30#issuecomment-342532067
-      Compile / doc / sources := Seq(),
-      Test / webpackConfigFile := Some(
+      Compile / doc / sources                             := Seq(),
+      Test / webpackConfigFile                            := Some(
         baseDirectory.value / "test.webpack.config.js"
       ),
       testFrameworks += new TestFramework("utest.runner.Framework")
