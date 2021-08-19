@@ -14,8 +14,8 @@ Global / resolvers += Resolver.sonatypeRepo("public")
 // sbt-release-early
 inThisBuild(
   List(
-    homepage := Some(url("https://github.com/cquiroz/scalajs-react-resizable")),
-    licenses := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
+    homepage   := Some(url("https://github.com/cquiroz/scalajs-react-resizable")),
+    licenses   := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
     developers := List(
       Developer("cquiroz",
                 "Carlos Quiroz",
@@ -23,7 +23,7 @@ inThisBuild(
                 url("https://github.com/cquiroz")
       )
     ),
-    scmInfo := Some(
+    scmInfo    := Some(
       ScmInfo(url("https://github.com/cquiroz/scalajs-react-resizable"),
               "scm:git:git@github.com:cquiroz/scalajs-react-resizable"
       )
@@ -37,13 +37,13 @@ val root =
     .settings(commonSettings: _*)
     .aggregate(facade, demo)
     .settings(
-      name := "root",
+      name            := "root",
       // No, SBT, we don't want any artifacts for root.
       // No, not even an empty jar.
-      publish := {},
-      publishLocal := {},
+      publish         := {},
+      publishLocal    := {},
       publishArtifact := false,
-      Keys.`package` := file("")
+      Keys.`package`  := file("")
     )
 
 lazy val demo =
@@ -52,22 +52,22 @@ lazy val demo =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      webpack / version := "4.44.1",
-      fastOptJS / webpackConfigFile := Some(
+      webpack / version                     := "4.44.1",
+      fastOptJS / webpackConfigFile         := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"
       ),
-      fullOptJS / webpackConfigFile := Some(
+      fullOptJS / webpackConfigFile         := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-prod.config.js"
       ),
       webpackMonitoredDirectories += (Compile / resourceDirectory).value,
-      webpackResources := (baseDirectory.value / "src" / "webpack") * "*.js",
+      webpackResources                      := (baseDirectory.value / "src" / "webpack") * "*.js",
       webpackMonitoredFiles / includeFilter := "*",
-      useYarn := true,
-      fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
-      fullOptJS / webpackBundlingMode := BundlingMode.Application,
+      useYarn                               := true,
+      fastOptJS / webpackBundlingMode       := BundlingMode.LibraryOnly(),
+      fullOptJS / webpackBundlingMode       := BundlingMode.Application,
       Compile / fastOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
-      test := {},
-      webpackDevServerPort := 9090,
+      test                                  := {},
+      webpackDevServerPort                  := 9090,
       Compile / npmDevDependencies ++= Seq(
         "css-loader"                         -> "1.0.0",
         "less"                               -> "3.8.1",
@@ -89,10 +89,10 @@ lazy val demo =
         "react-resizable" -> reactResizable
       ),
       // don't publish the demo
-      publish := {},
-      publishLocal := {},
-      publishArtifact := false,
-      Keys.`package` := file("")
+      publish                               := {},
+      publishLocal                          := {},
+      publishArtifact                       := false,
+      Keys.`package`                        := file("")
     )
     .dependsOn(facade)
 
@@ -102,8 +102,8 @@ lazy val facade =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name := "react-resizable",
-      webpack / version := "4.30.0",
+      name                   := "react-resizable",
+      webpack / version      := "4.30.0",
       // Requires the DOM for tests
       Test / requireJsDomEnv := true,
       // Compile tests to JS using fast-optimisation
@@ -130,10 +130,10 @@ lazy val facade =
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.13.6",
-  organization := "io.github.cquiroz.react",
-  sonatypeProfileName := "io.github.cquiroz",
-  description := "scala.js facade for react-resizable ",
+  scalaVersion           := "2.13.6",
+  organization           := "io.github.cquiroz.react",
+  sonatypeProfileName    := "io.github.cquiroz",
+  description            := "scala.js facade for react-resizable ",
   Test / publishArtifact := false,
   scalacOptions ~= (_.filterNot(
     Set(
