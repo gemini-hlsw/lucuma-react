@@ -37,15 +37,15 @@ object HomeComponent {
         val width    = $.state.w
         val toResize =
           <.div(
-            ^.width := width.toDouble.px,
-            ^.position := "absolute",
-            ^.left := 0.px,
-            ^.top := 0.px,
-            ^.background := "blue",
-            ^.alignItems := "center",
+            ^.width          := width.toDouble.px,
+            ^.position       := "absolute",
+            ^.left           := 0.px,
+            ^.top            := 0.px,
+            ^.background     := "blue",
+            ^.alignItems     := "center",
             ^.justifyContent := "flex-end",
-            ^.height := "100vh",
-            ^.display := "flex"
+            ^.height         := "100vh",
+            ^.display        := "flex"
           )
         <.div(
           Resizable(
@@ -75,12 +75,12 @@ object ResizeHandle {
       .stateless
       .render_P { _ =>
         <.div(
-          ^.key := "handle",
-          ^.height := 20.px,
-          ^.width := 20.px,
-          ^.display := "flex",
+          ^.key            := "handle",
+          ^.height         := 20.px,
+          ^.width          := 20.px,
+          ^.display        := "flex",
           ^.justifyContent := "center",
-          ^.cursor := "ew-resize",
+          ^.cursor         := "ew-resize",
           "||"
         )
       }
