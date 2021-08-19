@@ -11,7 +11,7 @@ package object datepicker {
     def toJsDate: js.Date =
       new js.Date(
         localDate.getYear,
-        localDate.getMonthValue,
+        localDate.getMonthValue - 1,
         localDate.getDayOfMonth
       )
   }
@@ -21,7 +21,7 @@ package object datepicker {
     def fromJsDate(jsDate: js.Date): LocalDate =
       LocalDate.of(
         jsDate.getFullYear().toInt,
-        jsDate.getMonth().toInt,
+        jsDate.getMonth().toInt + 1,
         jsDate.getDate().toInt
       )
   }
