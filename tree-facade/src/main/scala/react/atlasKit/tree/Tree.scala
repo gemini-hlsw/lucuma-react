@@ -109,11 +109,15 @@ object Tree {
     val onCollapse: js.Function1[ItemId, Unit]
 
     /** Couple of Props to be spread into the rendered React.Components and DOM elements */
-    /** More info: https://github.com/atlassian/react-beautiful-dnd#children-function-render-props */
+    /**
+     * More info: https://github.com/atlassian/react-beautiful-dnd#children-function-render-props
+     */
     val provided: Draggable.ProvidedJS
 
     /** Couple of state variables */
-    /** More info: https://github.com/atlassian/react-beautiful-dnd#2-snapshot-draggablestatesnapshot */
+    /**
+     * More info: https://github.com/atlassian/react-beautiful-dnd#2-snapshot-draggablestatesnapshot
+     */
     val snapshot: Draggable.StateSnapshot
   }
 

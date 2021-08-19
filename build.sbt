@@ -20,19 +20,19 @@ addCommandAlias(
 
 inThisBuild(
   List(
-    scalaVersion := "2.13.6",
+    scalaVersion             := "2.13.6",
     Test / parallelExecution := false,
-    organization := "com.rpiaggio",
-    sonatypeProfileName := "com.rpiaggio",
-    homepage := Some(
+    organization             := "com.rpiaggio",
+    sonatypeProfileName      := "com.rpiaggio",
+    homepage                 := Some(
       url("https://github.com/rpiaggio/scalajs-react-beautiful-dnd")
     ),
-    licenses := Seq(
+    licenses                 := Seq(
       "BSD 3-Clause License" -> url(
         "https://opensource.org/licenses/BSD-3-Clause"
       )
     ),
-    developers := List(
+    developers               := List(
       Developer(
         "rpiaggio",
         "Raúl Piaggio",
@@ -46,7 +46,7 @@ inThisBuild(
         url("https://github.com/cquiroz")
       )
     ),
-    scmInfo := Some(
+    scmInfo                  := Some(
       ScmInfo(
         url("https://github.com/rpiaggio/scalajs-react-beautiful-dnd"),
         "scm:git:git@github.com:rpiaggio/scalajs-react-beautiful-dnd.git"
@@ -56,9 +56,9 @@ inThisBuild(
 )
 
 lazy val commonSettings = Seq(
-  description := "scala.js facade for react-beautiful-dnd",
+  description            := "scala.js facade for react-beautiful-dnd",
   Test / publishArtifact := false,
-  publishMavenStyle := true,
+  publishMavenStyle      := true,
   scalacOptions ~= (_.filterNot(
     Set(
       // By necessity facades will have unused params
@@ -76,13 +76,13 @@ val root =
     .settings(commonSettings: _*)
     .aggregate(facade, demo, treeFacade, treeDemo)
     .settings(
-      name := "root",
+      name            := "root",
       // No, SBT, we don't want any artifacts for root.
       // No, not even an empty jar.
-      publish := {},
-      publishLocal := {},
+      publish         := {},
+      publishLocal    := {},
       publishArtifact := false,
-      Keys.`package` := file("")
+      Keys.`package`  := file("")
     )
 
 lazy val facade =
@@ -91,16 +91,16 @@ lazy val facade =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name := "facade",
-      moduleName := "scalajs-react-beautiful-dnd",
+      name                            := "facade",
+      moduleName                      := "scalajs-react-beautiful-dnd",
       Compile / npmDependencies ++= Seq(
         "react"               -> reactJS,
         "react-dom"           -> reactJS,
         "react-beautiful-dnd" -> reactBeautiulDnD
       ),
       // Use yarn as it is faster than npm
-      useYarn := true,
-      webpack / version := "4.30.0",
+      useYarn                         := true,
+      webpack / version               := "4.30.0",
       startWebpackDevServer / version := "3.3.1",
       scalaJSUseMainModuleInitializer := false,
       libraryDependencies ++= Seq(
@@ -115,21 +115,21 @@ lazy val demo =
     .settings(commonSettings: _*)
     .settings(
       scalaJSUseMainModuleInitializer := true,
-      webpackBundlingMode := BundlingMode.LibraryOnly(),
-      webpackDevServerExtraArgs := Seq("--inline"),
-      fastOptJS / webpackConfigFile := Some(
+      webpackBundlingMode             := BundlingMode.LibraryOnly(),
+      webpackDevServerExtraArgs       := Seq("--inline"),
+      fastOptJS / webpackConfigFile   := Some(
         baseDirectory.value / "dev.webpack.config.js"
       ),
-      webpack / version := "4.30.0",
+      webpack / version               := "4.30.0",
       startWebpackDevServer / version := "3.3.1",
       libraryDependencies ++= Seq(
         "org.typelevel" %%% "cats-core" % cats
       ),
       // don't publish the demo
-      publish := {},
-      publishLocal := {},
-      publishArtifact := false,
-      Keys.`package` := file(""),
+      publish                         := {},
+      publishLocal                    := {},
+      publishArtifact                 := false,
+      Keys.`package`                  := file(""),
       Compile / npmDevDependencies ++= Seq(
         "css-loader"   -> "1.0.0",
         "style-loader" -> "0.23.0"
@@ -143,14 +143,14 @@ lazy val treeFacade =
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name := "tree-facade",
-      moduleName := "scalajs-react-atlaskit-tree",
+      name                            := "tree-facade",
+      moduleName                      := "scalajs-react-atlaskit-tree",
       Compile / npmDependencies ++= Seq(
         "@atlaskit/tree" -> atlasKitTree
       ),
       // Use yarn as it is faster than npm
-      useYarn := true,
-      webpack / version := "4.30.0",
+      useYarn                         := true,
+      webpack / version               := "4.30.0",
       startWebpackDevServer / version := "3.3.1",
       scalaJSUseMainModuleInitializer := false
     )
@@ -163,21 +163,21 @@ lazy val treeDemo =
     .settings(commonSettings: _*)
     .settings(
       scalaJSUseMainModuleInitializer := true,
-      webpackBundlingMode := BundlingMode.LibraryOnly(),
-      webpackDevServerExtraArgs := Seq("--inline"),
-      fastOptJS / webpackConfigFile := Some(
+      webpackBundlingMode             := BundlingMode.LibraryOnly(),
+      webpackDevServerExtraArgs       := Seq("--inline"),
+      fastOptJS / webpackConfigFile   := Some(
         baseDirectory.value / "dev.webpack.config.js"
       ),
-      webpack / version := "4.30.0",
+      webpack / version               := "4.30.0",
       startWebpackDevServer / version := "3.3.1",
       libraryDependencies ++= Seq(
         "org.typelevel" %%% "cats-core" % cats
       ),
       // don't publish the demo
-      publish := {},
-      publishLocal := {},
-      publishArtifact := false,
-      Keys.`package` := file(""),
+      publish                         := {},
+      publishLocal                    := {},
+      publishArtifact                 := false,
+      Keys.`package`                  := file(""),
       Compile / npmDevDependencies ++= Seq(
         "css-loader"   -> "1.0.0",
         "style-loader" -> "0.23.0"
