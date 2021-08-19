@@ -42,7 +42,7 @@ object BeautifulDnDDemo {
         (^.background := "lightgrey").unless(isDraggingOver),
         (^.background := "lightblue").when(isDraggingOver),
         ^.padding := s"${Grid}px",
-        ^.width := "250px"
+        ^.width   := "250px"
       )
 
     def getItemStyle(isDragging: Boolean, draggableStyle: TagMod): TagMod =
@@ -50,7 +50,7 @@ object BeautifulDnDDemo {
         // some basic styles to make the items look a bit nicer
         // ^.userSelect := "none",
         ^.padding := s"${Grid * 2}px",
-        ^.margin := s"0 0 ${Grid}px 0",
+        ^.margin  := s"0 0 ${Grid}px 0",
         // change background colour if dragging
         (^.background := "grey").unless(isDragging),
         (^.background := "lightgreen").when(isDragging),
@@ -58,13 +58,12 @@ object BeautifulDnDDemo {
         draggableStyle
       )
 
-    val renderClone: Draggable.Render = (provided, snapshot, _) => {
+    val renderClone: Draggable.Render = (provided, snapshot, _) =>
       <.div(provided.innerRef,
             provided.draggableProps,
             provided.dragHandleProps,
             getItemStyle(snapshot.isDragging, provided.draggableStyle)
       )("THIS IS A CLONE")
-    }
 
     def render(s: State): VdomElement =
       <.div(
