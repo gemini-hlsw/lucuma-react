@@ -4,12 +4,12 @@ val reactJS      = "17.0.2"
 val scalaJsReact = "2.0.0-RC3"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
-Global / semanticdbEnabled := true
+Global / semanticdbEnabled    := true
 
 inThisBuild(
   List(
-    homepage := Some(url("https://github.com/cquiroz/scalajs-react-common")),
-    licenses := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
+    homepage   := Some(url("https://github.com/cquiroz/scalajs-react-common")),
+    licenses   := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
     developers := List(
       Developer("cquiroz",
                 "Carlos Quiroz",
@@ -17,7 +17,7 @@ inThisBuild(
                 url("https://github.com/cquiroz")
       )
     ),
-    scmInfo := Some(
+    scmInfo    := Some(
       ScmInfo(
         url("https://github.com/cquiroz/scalajs-react-common"),
         "scm:git:git@github.com:cquiroz/scalajs-react-common.git"
@@ -60,25 +60,25 @@ lazy val test =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name := "test",
+      name                        := "test",
       Test / npmDependencies ++= Seq(
         "react"     -> reactJS,
         "react-dom" -> reactJS
       ),
       // Requires the DOM for tests
-      Test / requireJsDomEnv := true,
+      Test / requireJsDomEnv      := true,
       // Use yarn as it is faster than npm
-      useYarn := true,
-      webpack / version := "4.44.1",
+      useYarn                     := true,
+      webpack / version           := "4.44.1",
       webpackCliVersion / version := "3.3.11",
       // Compile tests to JS using fast-optimisation
-      Test / scalaJSStage := FastOptStage,
+      Test / scalaJSStage         := FastOptStage,
       libraryDependencies ++= Seq(
         "org.scalameta" %%% "munit"     % "0.7.28",
         "org.typelevel" %%% "cats-core" % "2.6.1" % Test
       ),
-      Test / webpackExtraArgs := Seq("--verbose", "--progress", "true"),
-      Test / webpackConfigFile := Some(
+      Test / webpackExtraArgs     := Seq("--verbose", "--progress", "true"),
+      Test / webpackConfigFile    := Some(
         baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
       ),
       scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
@@ -90,21 +90,21 @@ lazy val root = (project in file("."))
   .enablePlugins(ScalaJSPlugin)
   .settings(commonSettings: _*)
   .settings(
-    name := "scalajs-react-common",
+    name            := "scalajs-react-common",
     // No, SBT, we don't want any artifacts for root.
     // No, not even an empty jar.
-    publish := {},
-    publishLocal := {},
+    publish         := {},
+    publishLocal    := {},
     publishArtifact := false,
-    Keys.`package` := file("")
+    Keys.`package`  := file("")
   )
   .aggregate(common, cats, test)
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.13.6",
-  organization := "io.github.cquiroz.react",
-  description := "scala.js react common utilities",
-  sonatypeProfileName := "io.github.cquiroz",
+  scalaVersion           := "2.13.6",
+  organization           := "io.github.cquiroz.react",
+  description            := "scala.js react common utilities",
+  sonatypeProfileName    := "io.github.cquiroz",
   Test / publishArtifact := false,
   libraryDependencies ++= Seq(
     "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
