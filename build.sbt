@@ -1,7 +1,7 @@
 val reactJS        = "17.0.2"
 val scalaJsReact   = "2.0.0-RC3"
 val reactResizable = "3.0.4"
-val scalaJSDom     = "1.1.0"
+val scalaJSDom     = "1.2.0"
 
 addCommandAlias("restartWDS",
                 "; ~demo/fastOptJS/stopWebpackDevServer; demo/fastOptJS/startWebpackDevServer"
