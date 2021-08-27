@@ -54,7 +54,7 @@ object DemoMain {
         itemContent = toRow
       )(
         ^.height := "400px",
-        ^.width := "200px"
+        ^.width  := "200px"
       ),
       <.h2("Infinite List"),
       <.div("Starts with 100 elements and adds more as needed."),
@@ -69,7 +69,7 @@ object DemoMain {
         groupCounts = groups
       )(
         ^.height := "400px",
-        ^.width := "300px"
+        ^.width  := "300px"
       )
     )
       .renderIntoDOM(container)
