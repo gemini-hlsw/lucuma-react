@@ -58,14 +58,17 @@ object Virtuoso {
     var totalCount: js.UndefOr[JsNumber] = js.native
 
     /**
-     * The data items to be rendered. If data is set, the total count will be inferred from the length of the array.
+     * The data items to be rendered. If data is set, the total count will be inferred from the
+     * length of the array.
      */
     var data: js.UndefOr[js.Array[D]] = js.native
 
     /**
-     * Increases the visual window which is used to calculate the rendered items with the specified **amount in pixels**.
-     * Effectively, this makes the component "chunk" the rendering of new items by renderng more items than the necessary, but reducing the re-renders on scroll.
-     * Setting { main: number, reverse: number } lets you extend the list in both the main and the reverse scrollable directions.
+     * Increases the visual window which is used to calculate the rendered items with the specified
+     * **amount in pixels**. Effectively, this makes the component "chunk" the rendering of new
+     * items by renderng more items than the necessary, but reducing the re-renders on scroll.
+     * Setting { main: number, reverse: number } lets you extend the list in both the main and the
+     * reverse scrollable directions.
      */
     var overscan: js.UndefOr[JsNumber | OverScan] = js.native
 
@@ -82,9 +85,9 @@ object Virtuoso {
     var initialTopMostItemIndex: js.UndefOr[JsNumber] = js.native
 
     /**
-     * Set this value to offset the initial location of the list.
-     * Warning: using this property will still run a render cycle at the scrollTop: 0 list window.
-     * If possible, avoid using it and stick to `initialTopMostItemIndex` instead.
+     * Set this value to offset the initial location of the list. Warning: using this property will
+     * still run a render cycle at the scrollTop: 0 list window. If possible, avoid using it and
+     * stick to `initialTopMostItemIndex` instead.
      */
     var initialScrollTop: js.UndefOr[JsNumber] = js.native
 
@@ -95,7 +98,8 @@ object Virtuoso {
     var initialItemCount: js.UndefOr[JsNumber] = js.native
 
     /**
-     * Use the `components` property for advanced customization of the elements rendered by the list.
+     * Use the `components` property for advanced customization of the elements rendered by the
+     * list.
      */
     // Facade not currently implementd for this.
     //components?: Components
@@ -106,24 +110,27 @@ object Virtuoso {
     var itemContent: js.UndefOr[js.Function2[Double, D, facade.React.Node]] = js.native
 
     /**
-     * If specified, the component will use the function to generate the `key` property for each list item.
+     * If specified, the component will use the function to generate the `key` property for each
+     * list item.
      */
     var computeItemKey: js.UndefOr[js.Function1[Double, Key]] = js.native
 
     /**
-     * By default, the component assumes the default item height from the first rendered item (rendering it as a "probe").
+     * By default, the component assumes the default item height from the first rendered item
+     * (rendering it as a "probe").
      *
-     * If the first item turns out to be an outlier (very short or tall), the rest of the rendering will be slower,
-     * as multiple passes of rendering should happen for the list to fill the viewport.
+     * If the first item turns out to be an outlier (very short or tall), the rest of the rendering
+     * will be slower, as multiple passes of rendering should happen for the list to fill the
+     * viewport.
      *
-     * Setting `defaultItemHeight` causes the component to skip the "probe" rendering and use the property
-     * value as default height instead.
+     * Setting `defaultItemHeight` causes the component to skip the "probe" rendering and use the
+     * property value as default height instead.
      */
     var defaultItemHeight: js.UndefOr[JsNumber] = js.native
 
     /**
-     * Can be used to improve performance if the rendered items are of known size.
-     * Setting it causes the component to skip item measurements.
+     * Can be used to improve performance if the rendered items are of known size. Setting it causes
+     * the component to skip item measurements.
      */
     var fixedItemHeight: js.UndefOr[JsNumber] = js.native
 
@@ -136,21 +143,21 @@ object Virtuoso {
     // scrollSeekConfiguration?: ScrollSeekConfiguration | false
 
     /**
-     * If set to `true`, the list automatically scrolls to bottom if the total count is changed.
-     * Set to `"smooth"` for an animated scrolling.
+     * If set to `true`, the list automatically scrolls to bottom if the total count is changed. Set
+     * to `"smooth"` for an animated scrolling.
      *
-     * By default, `followOutput` scrolls down only if the list is already at the bottom.
-     * To implement an arbitrary logic behind that, pass a function:
+     * By default, `followOutput` scrolls down only if the list is already at the bottom. To
+     * implement an arbitrary logic behind that, pass a function:
      *
      * ```tsx
      * <Virtuoso
-     *  followOutput={(isAtBottom: boolean) => {
-     *    if (expression) {
-     *      return 'smooth' // can be 'auto' or false to avoid scrolling
-     *    } else {
-     *      return false
-     *    }
-     *  }} />
+     * followOutput={(isAtBottom: boolean) => {
+     *   if (expression) {
+     *     return 'smooth' // can be 'auto' or false to avoid scrolling
+     *   } else {
+     *     return false
+     *   }
+     * }} />
      * ```
      */
     // Facade not currently implementd for this.
@@ -162,10 +169,11 @@ object Virtuoso {
     var headerFooterTag: js.UndefOr[String] = js.native
 
     /**
-     * Use when implementing inverse infinite scrolling - decrease the value this property
-     * in combination with  `data` or `totalCount` to prepend items to the top of the list.
+     * Use when implementing inverse infinite scrolling - decrease the value this property in
+     * combination with `data` or `totalCount` to prepend items to the top of the list.
      *
-     * Warning: the firstItemIndex should **be a positive number**, based on the total amount of items to be displayed.
+     * Warning: the firstItemIndex should **be a positive number**, based on the total amount of
+     * items to be displayed.
      */
     var firstItemIndex: js.UndefOr[JsNumber] = js.native
 
@@ -175,8 +183,8 @@ object Virtuoso {
     var isScrolling: js.UndefOr[js.Function1[Boolean, Unit]] = js.native
 
     /**
-     * Gets called when the user scrolls to the end of the list.
-     * Receives the last item index as an argument. Can be used to implement endless scrolling.
+     * Gets called when the user scrolls to the end of the list. Receives the last item index as an
+     * argument. Can be used to implement endless scrolling.
      */
     var endReached: js.UndefOr[js.Function1[Double, Unit]] = js.native
 
@@ -191,8 +199,8 @@ object Virtuoso {
     var rangeChanged: js.UndefOr[js.Function1[ListRange, Unit]] = js.native
 
     /**
-     * Called with true / false when the list has reached the bottom / gets scrolled up.
-     * Can be used to load newer items, like `tail -f`.
+     * Called with true / false when the list has reached the bottom / gets scrolled up. Can be used
+     * to load newer items, like `tail -f`.
      */
     var atBottomStateChange: js.UndefOr[js.Function1[Boolean, Unit]] = js.native
 
@@ -213,8 +221,9 @@ object Virtuoso {
     // itemsRendered?: (items: ListItem<D>[]) => void
 
     /**
-     * Setting `alignToBottom` to `true` aligns the items to the bottom of the list if the list is shorter than the viewport.
-     * Use `followOutput` property to keep the list aligned when new items are appended.
+     * Setting `alignToBottom` to `true` aligns the items to the bottom of the list if the list is
+     * shorter than the viewport. Use `followOutput` property to keep the list aligned when new
+     * items are appended.
      */
     var alignToBottom: js.UndefOr[Boolean] = js.native
 
@@ -239,7 +248,7 @@ object Virtuoso {
     q.initialTopMostItemIndex.foreach(v => p.initialTopMostItemIndex = v)
     q.initialScrollTop.foreach(v => p.initialScrollTop = v)
     q.initialItemCount.foreach(v => p.initialItemCount = v)
-    q.itemContent.foreach(v => p.itemContent = ((idx: Double, d: D) => v(idx.toInt, d).rawNode))
+    q.itemContent.foreach(v => p.itemContent = (idx: Double, d: D) => v(idx.toInt, d).rawNode)
     q.computeItemKey.foreach(v => p.computeItemKey = (d: Double) => v(d.toInt))
     q.defaultItemHeight.foreach(v => p.defaultItemHeight = v)
     q.fixedItemHeight.foreach(v => p.fixedItemHeight = v)

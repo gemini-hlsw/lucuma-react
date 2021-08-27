@@ -24,18 +24,18 @@ addCommandAlias(
 
 inThisBuild(
   List(
-    scalaVersion := "2.13.6",
-    organization := "io.github.toddburnside",
+    scalaVersion        := "2.13.6",
+    organization        := "io.github.toddburnside",
     sonatypeProfileName := "io.github.toddburnside",
-    homepage := Some(
+    homepage            := Some(
       url("https://github.com/toddburnside/scalajs-react-virtuoso")
     ),
-    licenses := Seq(
+    licenses            := Seq(
       "BSD 3-Clause License" -> url(
         "https://opensource.org/licenses/BSD-3-Clause"
       )
     ),
-    developers := List(
+    developers          := List(
       Developer(
         "toddburnside ",
         "Todd Burnside",
@@ -55,7 +55,7 @@ inThisBuild(
         url("https://github.com/cquiroz")
       )
     ),
-    scmInfo := Some(
+    scmInfo             := Some(
       ScmInfo(
         url("https://github.com/toddburnside/scalajs-react-virtuoso"),
         "scm:git:git@github.com:toddburnside/scalajs-react-virtuoso.git"
@@ -69,13 +69,13 @@ val root =
     .in(file("."))
     .aggregate(facade, demo)
     .settings(
-      name := "scalajs-react-virtuoso",
+      name            := "scalajs-react-virtuoso",
       // No, SBT, we don't want any artifacts for root.
       // No, not even an empty jar.
-      publish := {},
-      publishLocal := {},
+      publish         := {},
+      publishLocal    := {},
       publishArtifact := false,
-      Keys.`package` := file("")
+      Keys.`package`  := file("")
     )
 
 lazy val demo =
@@ -83,22 +83,22 @@ lazy val demo =
     .in(file("demo"))
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(
-      webpack / version := "4.32.0",
-      startWebpackDevServer / version := "3.3.1",
-      fastOptJS / webpackConfigFile := Some(
+      webpack / version                     := "4.32.0",
+      startWebpackDevServer / version       := "3.3.1",
+      fastOptJS / webpackConfigFile         := Some(
         baseDirectory.value / "webpack" / "dev.webpack.config.js"
       ),
-      fullOptJS / webpackConfigFile := Some(
+      fullOptJS / webpackConfigFile         := Some(
         baseDirectory.value / "webpack" / "prod.webpack.config.js"
       ),
       webpackMonitoredDirectories += (Compile / resourceDirectory).value,
-      webpackResources := (baseDirectory.value / "webpack") * "*.js",
+      webpackResources                      := (baseDirectory.value / "webpack") * "*.js",
       webpackMonitoredFiles / includeFilter := "*",
-      webpackExtraArgs := Seq("--progress"),
-      useYarn := true,
-      fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
-      fullOptJS / webpackBundlingMode := BundlingMode.Application,
-      test := {},
+      webpackExtraArgs                      := Seq("--progress"),
+      useYarn                               := true,
+      fastOptJS / webpackBundlingMode       := BundlingMode.LibraryOnly(),
+      fullOptJS / webpackBundlingMode       := BundlingMode.Application,
+      test                                  := {},
       Compile / fullOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
       // NPM libs for development, mostly to let webpack do its magic
       Compile / npmDevDependencies ++= Seq(
@@ -126,10 +126,10 @@ lazy val demo =
         "react-virtuoso" -> reactVirtuoso
       ),
       // don't publish the demo
-      publish := {},
-      publishLocal := {},
-      publishArtifact := false,
-      Keys.`package` := file("")
+      publish                               := {},
+      publishLocal                          := {},
+      publishArtifact                       := false,
+      Keys.`package`                        := file("")
     )
     .dependsOn(facade)
 
@@ -138,21 +138,21 @@ lazy val facade =
     .in(file("facade"))
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(
-      name := "facade",
-      moduleName := "scalajs-react-virtuoso",
-      Test / publishArtifact := false,
+      name                            := "facade",
+      moduleName                      := "scalajs-react-virtuoso",
+      Test / publishArtifact          := false,
       // Requires the DOM for tests
-      Test / requireJsDomEnv := true,
+      Test / requireJsDomEnv          := true,
       // Use yarn as it is faster than npm
-      useYarn := true,
-      yarnExtraArgs := {
+      useYarn                         := true,
+      yarnExtraArgs                   := {
         if (insideCI.value) List("--frozen-lockfile") else List.empty
       },
-      webpack / version := "4.44.1",
-      installJsdom / version := "16.4.0",
+      webpack / version               := "4.44.1",
+      installJsdom / version          := "16.4.0",
       scalaJSUseMainModuleInitializer := false,
       // Compile tests to JS using fast-optimisation
-      Test / scalaJSStage := FastOptStage,
+      Test / scalaJSStage             := FastOptStage,
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"   % scalaJsReact,
         "io.github.cquiroz.react"           %%% "common" % scalaJsReactCommon,
@@ -178,7 +178,7 @@ lazy val facade =
       // Some Scalablytyped generated Scaladocs are malformed.
       // Workaround: https://github.com/xerial/sbt-sonatype/issues/30#issuecomment-342532067
       // Compile / doc / sources := Seq(),
-      Test / webpackConfigFile := Some(
+      Test / webpackConfigFile        := Some(
         baseDirectory.value / "test.webpack.config.js"
       ),
       testFrameworks += new TestFramework("munit.Framework")
