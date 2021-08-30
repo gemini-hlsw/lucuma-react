@@ -7,7 +7,7 @@ import react.common.Css
 import react.virtuoso.Virtuoso
 import reactST.reactTable.anon.Data
 import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
-import reactST.reactTable.mod.{ ^ => _, _ }
+import reactST.reactTable.mod.{^ => _, _}
 import reactST.reactTable.syntax._
 import reactST.reactTable.util._
 import reactST.std.Partial
@@ -17,7 +17,7 @@ import scalajs.js.|
 import scalajs.js.JSConverters._
 import reactTableStrings._
 
-object HTMLTableBuilder {
+object HTMLTable {
 
   /**
    * Create a table component based on the configured plugins of a `TableMaker`.
@@ -39,23 +39,16 @@ object HTMLTableBuilder {
    *   not support that. At some point, something similar for an "extra"
    *   header row might be useful since header groups have some issues.
    */
-  // format: off
-  def buildComponent[D,
-    TableOptsD <: UseTableOptions[D], 
-    TableInstanceD <: TableInstance[D], 
-    ColumnOptsD <: ColumnOptions[D], 
-    ColumnObjectD <: ColumnObject[D], 
-    State <: TableState[D] // format: on
-  ](
-    tableMaker:   TableMaker[D, TableOptsD, TableInstanceD, ColumnOptsD, ColumnObjectD, State, _],
+  def apply[D, TableInstanceD <: TableInstance[D], ColumnObjectD <: ColumnObject[D]](
+    tableMaker:   TableMaker[D, _, TableInstanceD, _, ColumnObjectD, _, _] // Only used to infer types
+  )(
     headerCellFn: Option[ColumnObjectD => TagMod],
     tableClass:   Css = Css(""),
     rowClassFn:   (Int, D) => Css = (_: Int, _: D) => Css(""),
     footer:       TagMod = TagMod.empty
   ) =
-    ScalaFnComponent[TableOptsD] { options =>
-      val tableInstance = tableMaker.use(options)
-      val bodyProps     = tableInstance.getTableBodyProps()
+    ScalaFnComponent[TableInstanceD] { tableInstance =>
+      val bodyProps = tableInstance.getTableBodyProps()
 
       val header = headerCellFn.fold(TagMod.empty) { f =>
         <.thead(
@@ -106,31 +99,16 @@ object HTMLTableBuilder {
    * parameter or via CSS or the body will collapse to nothing. In CSS, you
    * MUST NOT use relative values like "100%" or it won't work.
    */
-  // format: off
-  def buildComponentVirtualized[D,
-    TableOptsD <: UseTableOptions[D], 
-    TableInstanceD <: TableInstance[D], 
-    ColumnOptsD <: ColumnOptions[D],
-    ColumnObjectD <: ColumnObject[D], 
-    State <: TableState[D] // format: on
-  ](
-    tableMaker:   TableMaker[
-      D,
-      TableOptsD,
-      TableInstanceD,
-      ColumnOptsD,
-      ColumnObjectD,
-      State,
-      Layout.NonTable
-    ],
+  def virtualized[D, TableInstanceD <: TableInstance[D], ColumnObjectD <: ColumnObject[D]](
+    tableMaker:   TableMaker[D, _, TableInstanceD, _, ColumnObjectD, _, Layout.NonTable]
+  )(
     bodyHeight:   Option[Double] = None,
     headerCellFn: Option[ColumnObjectD => TagMod],
     tableClass:   Css = Css(""),
     rowClassFn:   (Int, D) => Css = (_: Int, _: D) => Css("")
   ) =
-    ScalaFnComponent[TableOptsD] { options =>
-      val tableInstance = tableMaker.use(options)
-      val bodyProps     = tableInstance.getTableBodyProps()
+    ScalaFnComponent[TableInstanceD] { tableInstance =>
+      val bodyProps = tableInstance.getTableBodyProps()
 
       val rowComp = (_: Int, row: Row[D]) => {
         tableInstance.prepareRow(row)

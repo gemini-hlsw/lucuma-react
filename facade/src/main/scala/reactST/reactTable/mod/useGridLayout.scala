@@ -1,9 +1,14 @@
 package reactST.reactTable.mod
 
 import org.scalablytyped.runtime.StObject
+
 import scala.scalajs.js
+import scala.scalajs.js.annotation.JSBracketAccess
+import scala.scalajs.js.annotation.JSGlobal
+import scala.scalajs.js.annotation.JSGlobalScope
+import scala.scalajs.js.annotation.JSImport
+import scala.scalajs.js.annotation.JSName
 import scala.scalajs.js.`|`
-import scala.scalajs.js.annotation.{ JSBracketAccess, JSGlobal, JSGlobalScope, JSImport, JSName }
 
 object useGridLayout {
 

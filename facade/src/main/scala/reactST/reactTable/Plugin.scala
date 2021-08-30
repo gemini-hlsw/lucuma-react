@@ -1,8 +1,9 @@
 package reactST.reactTable
 
-import Hooks._
+import TableHooks._
 
-sealed abstract class Plugin(val hook: Hook) extends Ordered[Plugin] {
+// It doesn't seem to be documented, but the order of plugins seems to matter.
+sealed abstract class Plugin(val hook: TableHook) extends Ordered[Plugin] {
   def compare(that: Plugin): Int = Plugin.index(this) - Plugin.index(that)
 }
 

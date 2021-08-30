@@ -1,7 +1,6 @@
 package react.table.demo
 
 import scala.util.Random.nextInt
-import scalajs.js.JSConverters._
 
 // word lists and code adapted from https://github.com/bmarcot/haiku
 object RandomData {
@@ -13,7 +12,7 @@ object RandomData {
 
   def newPerson(id: Int) = Person(id, getRandElt(adjs), getRandElt(nouns), getAge)
 
-  def randomPeople(count: Int) = (0 to count).map(i => newPerson(i)).toJSArray
+  def randomPeople(count: Int) = (0 to count).map(i => newPerson(i)).toList
 
   // format: off
   val adjs = List("autumn", "hidden", "bitter", "misty", "silent",

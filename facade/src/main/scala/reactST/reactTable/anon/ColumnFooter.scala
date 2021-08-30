@@ -3,9 +3,14 @@ package reactST.reactTable.mod
 import japgolly.scalajs.react.facade.React.ComponentClassP
 import japgolly.scalajs.react.vdom.VdomElement
 import org.scalablytyped.runtime.StObject
+
 import scala.scalajs.js
+import scala.scalajs.js.annotation.JSBracketAccess
+import scala.scalajs.js.annotation.JSGlobal
+import scala.scalajs.js.annotation.JSGlobalScope
+import scala.scalajs.js.annotation.JSImport
+import scala.scalajs.js.annotation.JSName
 import scala.scalajs.js.`|`
-import scala.scalajs.js.annotation.{ JSBracketAccess, JSGlobal, JSGlobalScope, JSImport, JSName }
 
 @js.native
 trait ColumnFooter[D] extends StObject {

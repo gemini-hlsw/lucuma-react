@@ -6,25 +6,25 @@ package reactST.reactTable
 import japgolly.scalajs.react.facade
 import japgolly.scalajs.react.facade.React.ComponentClassP
 import japgolly.scalajs.react.vdom._
+import org.scalablytyped.runtime.StObject
 import reactST.reactTable.anon.Data
+import reactST.reactTable.anon.IdIdType
+import reactST.reactTable.anon.IdIdType._
+import reactST.reactTable.anon.`1`._
 import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
 import reactST.reactTable.mod.{ ^ => _, _ }
 import reactST.std.Partial
-import reactST.reactTable.anon.`1`._
-import reactST.reactTable.anon.IdIdType._
 
 import scalajs.js
 import scalajs.js.|
 import scalajs.js.JSConverters._
-import reactST.reactTable.anon.IdIdType
-import org.scalablytyped.runtime.StObject
 
-// format: off
-case class TableMaker[D, 
-  TableOptsD <: UseTableOptions[D], 
-  TableInstanceD <: TableInstance[D], 
-  ColumnOptsD <: ColumnOptions[D], 
-  ColumnObjectD <: ColumnObject[D], 
+case class TableMaker[
+  D,
+  TableOptsD <: UseTableOptions[D],
+  TableInstanceD <: TableInstance[D],
+  ColumnOptsD <: ColumnOptions[D],
+  ColumnObjectD <: ColumnObject[D],
   TableStateD <: TableState[D],
   Layout // format: on
 ](plugins: Set[Plugin]) {
@@ -41,9 +41,8 @@ case class TableMaker[D,
   /**
    * Create a TableOptsD. columns and data are required. Other options can be `set*`.
    */
-  // TODO When scalajs-react supports hooks, we can probably expose Lists in the API and useMemo.
-  def Options[C <: UseTableColumnOptions[D]](
-    columns: js.Array[C],
+  def Options(
+    columns: js.Array[ColumnInterface[D]],
     data:    js.Array[D]
   ): TableOptsD =
     emptyOptions
@@ -101,40 +100,12 @@ case class TableMaker[D,
    */
   def State(): TableStateD = js.Dynamic.literal().asInstanceOf[TableStateD]
 
-  /**
-   * Create a TableInstanceD instance by calling useTable with the
-   * provided options and the plugins that have been configured by
-   * the with* methods.
-   *
-   * @param options The table options.
-   */
-  def use(options: TableOptsD): TableInstanceD =
-    Hooks
-      .useTable(options, plugins.toList.sorted.map(_.hook: PluginHook[D]): _*)
-      .asInstanceOf[TableInstanceD]
-
-  /*
-   * Convience method to create a TableInstanceD instance by calling
-   * useTable with the provided columns and data and the plugins that
-   * have been configured by the with* methods.
-   *
-   * @param columns The table columns.
-   * @param data The table data.
-   */
-  def use(columns: js.Array[_ <: UseTableColumnOptions[D]], data: js.Array[D]): TableInstanceD =
-    use(Options(columns, data))
-
   /*
    * When adding new plugins, see https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-table
    * for help determining what the necessary type changes are.
    *
    * Hooks need to have facades created in Hooks.scala, as the facades created by
    * ScalablyTyped won't work as hooks.
-   *
-   * Heads Up! It doesn't seem to be documented, but the order of plugins seems
-   * to matter. If you put useSortBy before useFilters you will get a runtime error.
-   * We may want to add some means of ordering the plugs when we submit them to
-   * "useTable" if we can figure out what the required order is.
    */
 
   // format: off
