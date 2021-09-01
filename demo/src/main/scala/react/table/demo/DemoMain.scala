@@ -7,7 +7,7 @@ import react.common.Css
 import reactST.reactTable.HTMLTable
 import reactST.reactTable.TableHooks.Implicits._
 import reactST.reactTable.TableMaker
-import reactST.reactTable.mod.{^ => _, _}
+import reactST.reactTable.mod.{ ^ => _, _ }
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel

@@ -141,7 +141,7 @@ object TableHooks {
     ) extends Primary[Ctx, Step](api) {
 
       // format: off
-      def useTableBy[
+      def useTableBy_[
         D,
         TableOptsD <: UseTableOptions[D],
         TableInstanceD <: TableInstance[D],

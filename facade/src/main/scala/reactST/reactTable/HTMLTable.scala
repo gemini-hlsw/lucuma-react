@@ -7,7 +7,7 @@ import react.common.Css
 import react.virtuoso.Virtuoso
 import reactST.reactTable.anon.Data
 import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
-import reactST.reactTable.mod.{^ => _, _}
+import reactST.reactTable.mod.{ ^ => _, _ }
 import reactST.reactTable.syntax._
 import reactST.reactTable.util._
 import reactST.std.Partial
