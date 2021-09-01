@@ -20,36 +20,37 @@ object TableHooks {
   def useTableJS[D, TI <: TableInstance[D]](options: TableOptions[D], plugins: PluginHook[D]*): TI =
     js.native
 
-  // format: off
-  def useTableHook[D,
+  def useTableHook[
+    D,
     TableOptsD <: UseTableOptions[D],
     TableInstanceD <: TableInstance[D],
     ColumnOptsD <: ColumnOptions[D],
     ColumnObjectD <: ColumnObject[D],
     TableStateD <: TableState[D],
     Layout
-  ](tableMaker: TableMaker[D,
-    TableOptsD, 
-    TableInstanceD, 
-    ColumnOptsD , 
-    ColumnObjectD, 
-    TableStateD,
-    Layout
-  ])(implicit
+  ](implicit
     reuseListC: Reusability[List[ColumnInterface[D]]],
     reuseListD: Reusability[List[D]]
-  ) = 
-    CustomHook[(List[ColumnInterface[D]], List[D], TableOptsD => TableOptsD)]
-      .useMemoBy(_._1)(_ => _.toJSArray)
-      .useMemoBy(_.input._2)(_ => _.toJSArray)
+  ) =
+    CustomHook[
+      TableDefWithOptions[
+        D,
+        TableOptsD,
+        TableInstanceD,
+        ColumnOptsD,
+        ColumnObjectD,
+        TableStateD,
+        Layout
+      ]
+    ]
+      .useMemoBy(_.cols)(_ => _.toJSArray)
+      .useMemoBy(_.input.data)(_ => _.toJSArray)
       .buildReturning { (props, cols, rows) =>
-        val modOpts = props._3
         useTableJS[D, TableInstanceD](
-          modOpts(tableMaker.Options(cols, rows)),
-          tableMaker.plugins.toList.sorted.map(_.hook: PluginHook[D]): _*
+          props.modOpts(props.tableDef.Options(cols, rows)),
+          props.tableDef.plugins.toList.sorted.map(_.hook: PluginHook[D]): _*
         )
       }
-  // format: on
 
   sealed trait TableHook extends js.Object
   object TableHook {
@@ -75,7 +76,6 @@ object TableHooks {
   object HooksApiExt {
     sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]) {
 
-      // format: off
       final def useTable[
         D,
         TableOptsD <: UseTableOptions[D],
@@ -85,7 +85,7 @@ object TableHooks {
         TableStateD <: TableState[D],
         Layout
       ](
-        tableMaker: TableMaker[
+        tableDefWithOptions: TableDefWithOptions[
           D,
           TableOptsD,
           TableInstanceD,
@@ -93,19 +93,14 @@ object TableHooks {
           ColumnObjectD,
           TableStateD,
           Layout
-        ] // format: on
-      )(
-        cols:       List[ColumnInterface[D]],
-        data:       List[D],
-        modOpts:    TableOptsD => TableOptsD = identity[TableOptsD] _
+        ]
       )(implicit
-        step:       Step,
-        reuseListC: Reusability[List[ColumnInterface[D]]],
-        reuseListD: Reusability[List[D]]
+        step:                Step,
+        reuseListC:          Reusability[List[ColumnInterface[D]]],
+        reuseListD:          Reusability[List[D]]
       ): step.Next[TableInstanceD] =
-        useTableBy(tableMaker)(_ => cols, _ => data, _ => modOpts)
+        useTableBy(_ => tableDefWithOptions)
 
-      // format: off
       final def useTableBy[
         D,
         TableOptsD <: UseTableOptions[D],
@@ -115,7 +110,7 @@ object TableHooks {
         TableStateD <: TableState[D],
         Layout
       ](
-        tableMaker: TableMaker[
+        tableDefWithOptions: Ctx => TableDefWithOptions[
           D,
           TableOptsD,
           TableInstanceD,
@@ -123,57 +118,19 @@ object TableHooks {
           ColumnObjectD,
           TableStateD,
           Layout
-        ] // format: on
-      )(
-        cols:       Ctx => List[ColumnInterface[D]],
-        data:       Ctx => List[D],
-        modOpts:    Ctx => TableOptsD => TableOptsD = (_: Ctx) => identity[TableOptsD] _
+        ]
       )(implicit
-        step:       Step,
-        reuseListC: Reusability[List[ColumnInterface[D]]],
-        reuseListD: Reusability[List[D]]
+        step:                Step,
+        reuseListC:          Reusability[List[ColumnInterface[D]]],
+        reuseListD:          Reusability[List[D]]
       ): step.Next[TableInstanceD] =
-        api.customBy(ctx => useTableHook(tableMaker).apply((cols(ctx), data(ctx), modOpts(ctx))))
+        api.customBy(ctx => useTableHook(reuseListC, reuseListD)(tableDefWithOptions(ctx)))
     }
 
     final class Secondary[Ctx, CtxFn[_], Step <: HooksApi.SubsequentStep[Ctx, CtxFn]](
       api: HooksApi.Secondary[Ctx, CtxFn, Step]
     ) extends Primary[Ctx, Step](api) {
 
-      // format: off
-      def useTableBy_[
-        D,
-        TableOptsD <: UseTableOptions[D],
-        TableInstanceD <: TableInstance[D],
-        ColumnOptsD <: ColumnOptions[D],
-        ColumnObjectD <: ColumnObject[D],
-        TableStateD <: TableState[D],
-        Layout
-      ](
-        tableMaker: TableMaker[
-          D,
-          TableOptsD,
-          TableInstanceD,
-          ColumnOptsD,
-          ColumnObjectD,
-          TableStateD,
-          Layout
-        ] // format: on
-      )(
-        cols:       CtxFn[List[ColumnInterface[D]]],
-        data:       CtxFn[List[D]],
-        modOpts:    CtxFn[TableOptsD => TableOptsD]
-      )(implicit
-        step:       Step,
-        reuseListC: Reusability[List[ColumnInterface[D]]],
-        reuseListD: Reusability[List[D]]
-      ): step.Next[TableInstanceD] =
-        super.useTableBy(tableMaker)(step.squash(cols)(_),
-                                     step.squash(data)(_),
-                                     step.squash(modOpts)(_)
-        )
-
-      // We can't lift into CtxFn, which prevents from providing a default modOpts. So we overload to allow calling without modOpts.
       def useTableBy[
         D,
         TableOptsD <: UseTableOptions[D],
@@ -183,7 +140,7 @@ object TableHooks {
         TableStateD <: TableState[D],
         Layout
       ](
-        tableMaker: TableMaker[
+        tableDefWithOptions: CtxFn[TableDefWithOptions[
           D,
           TableOptsD,
           TableInstanceD,
@@ -191,16 +148,14 @@ object TableHooks {
           ColumnObjectD,
           TableStateD,
           Layout
-        ] // format: on
-      )(
-        cols:       CtxFn[List[ColumnInterface[D]]],
-        data:       CtxFn[List[D]]
+        ]]
       )(implicit
-        step:       Step,
-        reuseListC: Reusability[List[ColumnInterface[D]]],
-        reuseListD: Reusability[List[D]]
+        step:                Step,
+        reuseListC:          Reusability[List[ColumnInterface[D]]],
+        reuseListD:          Reusability[List[D]]
       ): step.Next[TableInstanceD] =
-        super.useTableBy(tableMaker)(step.squash(cols)(_), step.squash(data)(_))
+        super.useTableBy(step.squash(tableDefWithOptions)(_))
+
     }
   }
 

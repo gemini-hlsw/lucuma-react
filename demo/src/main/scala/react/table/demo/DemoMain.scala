@@ -5,8 +5,8 @@ import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.common.Css
 import reactST.reactTable.HTMLTable
+import reactST.reactTable.TableDef
 import reactST.reactTable.TableHooks.Implicits._
-import reactST.reactTable.TableMaker
 import reactST.reactTable.mod.{ ^ => _, _ }
 
 import scala.scalajs.js
@@ -40,7 +40,7 @@ object DemoMain {
   implicit val personListReusability: Reusability[List[RandomData.Person]] = Reusability.always
 
   // TABLE 1
-  val SortedTableDef = TableMaker[Guitar].withSort
+  val SortedTableDef = TableDef[Guitar].withSort
   import SortedTableDef.syntax._
 
   val sortedTableState = SortedTableDef.State().setSortByVarargs(SortingRule("model"))
@@ -48,7 +48,9 @@ object DemoMain {
   val SortedTable =
     ScalaFnComponent
       .withHooks[(List[ColumnInterface[Guitar]], List[Guitar])]
-      .useTableBy(SortedTableDef)(_._1, _._2, _ => _.setInitialStateFull(sortedTableState))
+      .useTableBy { case (cols, data) =>
+        SortedTableDef(cols, data, _.setInitialStateFull(sortedTableState))
+      }
       .render((_, tableInstance) =>
         HTMLTable(SortedTableDef)(
           tableClass = Css("guitars"),
@@ -78,12 +80,12 @@ object DemoMain {
     )
 
   // TABLE 2
-  val VirtualizedTableDef = TableMaker[RandomData.Person].withBlockLayout
+  val VirtualizedTableDef = TableDef[RandomData.Person].withBlockLayout
 
   val VirtualizedTable =
     ScalaFnComponent
       .withHooks[(List[ColumnInterface[RandomData.Person]], List[RandomData.Person])]
-      .useTableBy(VirtualizedTableDef)(_._1, _._2)
+      .useTableBy { case (cols, data) => VirtualizedTableDef(cols, data) }
       .render((_, tableInstance) =>
         HTMLTable.virtualized(VirtualizedTableDef)(
           tableClass = Css("virtualized"),
@@ -99,12 +101,12 @@ object DemoMain {
   )
 
   // TABLE 3
-  val SortedVirtualizedTableDef = TableMaker[RandomData.Person].withSort.withBlockLayout
+  val SortedVirtualizedTableDef = TableDef[RandomData.Person].withSort.withBlockLayout
 
   val SortedVirtualizedTable =
     ScalaFnComponent
       .withHooks[(List[ColumnInterface[RandomData.Person]], List[RandomData.Person])]
-      .useTableBy(SortedVirtualizedTableDef)(_._1, _._2)
+      .useTableBy { case (cols, data) => SortedVirtualizedTableDef(cols, data) }
       .render((_, tableInstance) =>
         HTMLTable.virtualized(SortedVirtualizedTableDef)(
           tableClass = Css("virtualized"),
@@ -119,12 +121,12 @@ object DemoMain {
   )
 
   // Table 4
-  val SortedVariableVirtualizedTableDef = TableMaker[RandomData.Person].withSort.withBlockLayout
+  val SortedVariableVirtualizedTableDef = TableDef[RandomData.Person].withSort.withBlockLayout
 
   val SortedVariableVirtualizedTable =
     ScalaFnComponent
       .withHooks[(List[ColumnInterface[RandomData.Person]], List[RandomData.Person])]
-      .useTableBy(SortedVariableVirtualizedTableDef)(_._1, _._2)
+      .useTableBy { case (cols, data) => SortedVariableVirtualizedTableDef(cols, data) }
       .render((_, tableInstance) =>
         HTMLTable.virtualized(SortedVariableVirtualizedTableDef)(
           tableClass = Css("virtualized"),

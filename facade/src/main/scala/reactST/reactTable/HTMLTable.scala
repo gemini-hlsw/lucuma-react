@@ -20,10 +20,10 @@ import reactTableStrings._
 object HTMLTable {
 
   /**
-   * Create a table component based on the configured plugins of a `TableMaker`.
+   * Create a table component based on the configured plugins of a `TableDef`.
    *
-   * @param tableMaker The TableMaker providing the useTable hook.
-   * @param headerCellFn A function to use for creating the <th> elements. Simple ones are provided by the TableMaker object.
+   * @param tableDef The TableDef providing the useTable hook.
+   * @param headerCellFn A function to use for creating the <th> elements. Simple ones are provided by the TableDef object.
    * @param tableClass An optional CSS class to apply to the table element
    * @param rowClassFn An option function that takes the index and the rowData and creates a class for the row. Relying on index does not work well for sortable tables since it is the unsorted index.
    * @param footer An optional <tfoot> element. (see note below)
@@ -40,7 +40,7 @@ object HTMLTable {
    *   header row might be useful since header groups have some issues.
    */
   def apply[D, TableInstanceD <: TableInstance[D], ColumnObjectD <: ColumnObject[D]](
-    tableMaker:   TableMaker[D, _, TableInstanceD, _, ColumnObjectD, _, _] // Only used to infer types
+    tableDef:     TableDef[D, _, TableInstanceD, _, ColumnObjectD, _, _] // Only used to infer types
   )(
     headerCellFn: Option[ColumnObjectD => TagMod],
     tableClass:   Css = Css(""),
@@ -55,7 +55,7 @@ object HTMLTable {
           tableInstance.headerGroups.toTagMod { g =>
             <.tr(
               props2Attrs(g.getHeaderGroupProps()),
-              TableMaker.headersFromGroup(g).toTagMod(f(_))
+              TableDef.headersFromGroup(g).toTagMod(f(_))
             )
           }
         )
@@ -74,13 +74,13 @@ object HTMLTable {
     }
 
   /**
-   * Create a virtualized table based on the configured plugins of a `TableMaker`.
+   * Create a virtualized table based on the configured plugins of a `TableDef`.
    * The plugins MUST include withBlockLayout.
    *
-   * @param tableMaker The TableMaker providing the useTable hook, configured with withBlockLayout.
+   * @param tableDef The TableDef providing the useTable hook, configured with withBlockLayout.
    * @param options The table options to use for the table.
    * @param bodyHeight The optional height of the table body (virtualized portion) in px. See note.
-   * @param headerCellFn See note. A function to use for creating the header elements. Simple ones are provided by the TableMaker object.
+   * @param headerCellFn See note. A function to use for creating the header elements. Simple ones are provided by the TableDef object.
    * @param tableClass An optional CSS class to apply to the table element
    * @param rowClassFn An option function that takes the index and the rowData and creates a class for the row. Relying on index does not work well for sortable tables since it is the unsorted index.
    *
@@ -93,14 +93,14 @@ object HTMLTable {
    * div that handles the virtualization.
    * This means that headerCellFn must also return a <div> instead
    * of a <td>, and should probably also have a class of "td". The basic
-   * header functions in TableMaker take a boolean flag to handle this.
+   * header functions in TableDef take a boolean flag to handle this.
    *
    * The body height must be set to a value either through the bodyHeight
    * parameter or via CSS or the body will collapse to nothing. In CSS, you
    * MUST NOT use relative values like "100%" or it won't work.
    */
   def virtualized[D, TableInstanceD <: TableInstance[D], ColumnObjectD <: ColumnObject[D]](
-    tableMaker:   TableMaker[D, _, TableInstanceD, _, ColumnObjectD, _, Layout.NonTable]
+    tableDef:     TableDef[D, _, TableInstanceD, _, ColumnObjectD, _, Layout.NonTable]
   )(
     bodyHeight:   Option[Double] = None,
     headerCellFn: Option[ColumnObjectD => TagMod],
@@ -130,7 +130,7 @@ object HTMLTable {
           tableInstance.headerGroups.toTagMod { g =>
             <.div(^.className := "tr",
                   props2Attrs(g.getHeaderGroupProps()),
-                  TableMaker.headersFromGroup(g).toTagMod(f(_))
+                  TableDef.headersFromGroup(g).toTagMod(f(_))
             )
           }
         )
