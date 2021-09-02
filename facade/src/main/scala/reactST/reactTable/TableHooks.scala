@@ -46,9 +46,11 @@ object TableHooks {
       .useMemoBy(_.cols)(_ => _.toJSArray)
       .useMemoBy(_.input.data)(_ => _.toJSArray)
       .buildReturning { (props, cols, rows) =>
-        useTableJS[D, TableInstanceD](
-          props.modOpts(props.tableDef.Options(cols, rows)),
-          props.tableDef.plugins.toList.sorted.map(_.hook: PluginHook[D]): _*
+        Reusable.byRef(
+          useTableJS[D, TableInstanceD](
+            props.modOpts(props.tableDef.Options(cols, rows)),
+            props.tableDef.plugins.toList.sorted.map(_.hook: PluginHook[D]): _*
+          )
         )
       }
 
@@ -98,7 +100,7 @@ object TableHooks {
         step:                Step,
         reuseListC:          Reusability[List[ColumnInterface[D]]],
         reuseListD:          Reusability[List[D]]
-      ): step.Next[TableInstanceD] =
+      ): step.Next[Reusable[TableInstanceD]] =
         useTableBy(_ => tableDefWithOptions)
 
       final def useTableBy[
@@ -123,7 +125,7 @@ object TableHooks {
         step:                Step,
         reuseListC:          Reusability[List[ColumnInterface[D]]],
         reuseListD:          Reusability[List[D]]
-      ): step.Next[TableInstanceD] =
+      ): step.Next[Reusable[TableInstanceD]] =
         api.customBy(ctx => useTableHook(reuseListC, reuseListD)(tableDefWithOptions(ctx)))
     }
 
@@ -153,7 +155,7 @@ object TableHooks {
         step:                Step,
         reuseListC:          Reusability[List[ColumnInterface[D]]],
         reuseListD:          Reusability[List[D]]
-      ): step.Next[TableInstanceD] =
+      ): step.Next[Reusable[TableInstanceD]] =
         super.useTableBy(step.squash(tableDefWithOptions)(_))
 
     }
