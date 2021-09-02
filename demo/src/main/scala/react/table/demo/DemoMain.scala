@@ -6,7 +6,7 @@ import org.scalajs.dom
 import react.common.Css
 import reactST.reactTable.HTMLTable
 import reactST.reactTable.TableDef
-import reactST.reactTable.TableHooks.Implicits._
+import reactST.reactTable.implicits._
 import reactST.reactTable.mod.{ ^ => _, _ }
 
 import scala.scalajs.js
@@ -25,19 +25,16 @@ object DemoMain {
   def rowClassEvenOdd[D]: (Int, D) => Css = (i, _) => if (i % 2 == 0) Css("even") else Css("odd")
 
   val guitars =
-    List(
-      Guitar(1, "Fender", "Stratocaster", Details(2019, 3, "Sunburst")),
-      Guitar(2, "Gibson", "Les Paul", Details(1958, 2, "Gold top")),
-      Guitar(3, "Fender", "Telecaster", Details(1971, 2, "Ivory")),
-      Guitar(4, "Godin", "LG", Details(2008, 2, "Burgundy"))
+    Reusable.always(
+      List(
+        Guitar(1, "Fender", "Stratocaster", Details(2019, 3, "Sunburst")),
+        Guitar(2, "Gibson", "Les Paul", Details(1958, 2, "Gold top")),
+        Guitar(3, "Fender", "Telecaster", Details(1971, 2, "Ivory")),
+        Guitar(4, "Godin", "LG", Details(2008, 2, "Burgundy"))
+      )
     )
 
-  val randomData = RandomData.randomPeople(1000)
-
-  implicit def colReusability[D]: Reusability[List[ColumnInterface[D]]]    =
-    Reusability.always
-  implicit val guitarListReusability: Reusability[List[Guitar]]            = Reusability.always
-  implicit val personListReusability: Reusability[List[RandomData.Person]] = Reusability.always
+  val randomData = Reusable.always(RandomData.randomPeople(1000))
 
   // TABLE 1
   val SortedTableDef = TableDef[Guitar].withSort
@@ -47,11 +44,11 @@ object DemoMain {
 
   val SortedTable =
     ScalaFnComponent
-      .withHooks[(List[ColumnInterface[Guitar]], List[Guitar])]
+      .withHooks[(Reusable[List[ColumnInterface[Guitar]]], Reusable[List[Guitar]])]
       .useTableBy { case (cols, data) =>
-        SortedTableDef(cols, data, _.setInitialStateFull(sortedTableState))
+        SortedTableDef(cols, data, Reusable.always(_.setInitialStateFull(sortedTableState)))
       }
-      .render((_, tableInstance) =>
+      .renderWithReuse((_, tableInstance) =>
         HTMLTable(SortedTableDef)(
           tableClass = Css("guitars"),
           headerCellFn = Some(HTMLTable.sortableHeaderCellFn()),
@@ -62,21 +59,23 @@ object DemoMain {
   import ColumnInterfaceBasedOnValue._
 
   val sortedTableColumns =
-    List(
-      SortedTableDef
-        .Column("id", _.id)
-        .setCell(cell => <.span(s"g-${cell.value}"))
-        .setSortByAuto
-        .setHeader("Id"),
-      SortedTableDef.Column("make", _.make).setHeader("Make"),
-      SortedTableDef.Column("model", _.model).setHeader("Model"),
-      SortedTableDef
-        .ColumnGroup(
-          SortedTableDef.Column("year", _.details.year).setHeader("Year"),
-          SortedTableDef.Column("pickups", _.details.pickups).setHeader("Pickups"),
-          SortedTableDef.Column("color", _.details.color).setHeader("Color")
-        )
-        .setHeader("Details")
+    Reusable.always(
+      List(
+        SortedTableDef
+          .Column("id", _.id)
+          .setCell(cell => <.span(s"g-${cell.value}"))
+          .setSortByAuto
+          .setHeader("Id"),
+        SortedTableDef.Column("make", _.make).setHeader("Make"),
+        SortedTableDef.Column("model", _.model).setHeader("Model"),
+        SortedTableDef
+          .ColumnGroup(
+            SortedTableDef.Column("year", _.details.year).setHeader("Year"),
+            SortedTableDef.Column("pickups", _.details.pickups).setHeader("Pickups"),
+            SortedTableDef.Column("color", _.details.color).setHeader("Color")
+          )
+          .setHeader("Details")
+      )
     )
 
   // TABLE 2
@@ -84,7 +83,9 @@ object DemoMain {
 
   val VirtualizedTable =
     ScalaFnComponent
-      .withHooks[(List[ColumnInterface[RandomData.Person]], List[RandomData.Person])]
+      .withHooks[
+        (Reusable[List[ColumnInterface[RandomData.Person]]], Reusable[List[RandomData.Person]])
+      ]
       .useTableBy { case (cols, data) => VirtualizedTableDef(cols, data) }
       .render((_, tableInstance) =>
         HTMLTable.virtualized(VirtualizedTableDef)(
@@ -94,10 +95,12 @@ object DemoMain {
         )(tableInstance)
       )
 
-  val virtualizedTableColumns = List(
-    VirtualizedTableDef.Column("first", _.first).setHeader("First").setWidth(100),
-    VirtualizedTableDef.Column("last", _.last).setHeader("Last").setWidth(100),
-    VirtualizedTableDef.Column("age", _.age).setHeader("Age").setWidth(50)
+  val virtualizedTableColumns = Reusable.always(
+    List(
+      VirtualizedTableDef.Column("first", _.first).setHeader("First").setWidth(100),
+      VirtualizedTableDef.Column("last", _.last).setHeader("Last").setWidth(100),
+      VirtualizedTableDef.Column("age", _.age).setHeader("Age").setWidth(50)
+    )
   )
 
   // TABLE 3
@@ -105,7 +108,9 @@ object DemoMain {
 
   val SortedVirtualizedTable =
     ScalaFnComponent
-      .withHooks[(List[ColumnInterface[RandomData.Person]], List[RandomData.Person])]
+      .withHooks[
+        (Reusable[List[ColumnInterface[RandomData.Person]]], Reusable[List[RandomData.Person]])
+      ]
       .useTableBy { case (cols, data) => SortedVirtualizedTableDef(cols, data) }
       .render((_, tableInstance) =>
         HTMLTable.virtualized(SortedVirtualizedTableDef)(
@@ -114,10 +119,12 @@ object DemoMain {
         )(tableInstance)
       )
 
-  val sortedVirtualizedTableColumns = List(
-    SortedVirtualizedTableDef.Column("first", _.first).setHeader("First").setWidth(100),
-    SortedVirtualizedTableDef.Column("last", _.last).setHeader("Last").setWidth(100),
-    SortedVirtualizedTableDef.Column("age", _.age).setHeader("Age").setWidth(75)
+  val sortedVirtualizedTableColumns = Reusable.always(
+    List(
+      SortedVirtualizedTableDef.Column("first", _.first).setHeader("First").setWidth(100),
+      SortedVirtualizedTableDef.Column("last", _.last).setHeader("Last").setWidth(100),
+      SortedVirtualizedTableDef.Column("age", _.age).setHeader("Age").setWidth(75)
+    )
   )
 
   // Table 4
@@ -125,7 +132,9 @@ object DemoMain {
 
   val SortedVariableVirtualizedTable =
     ScalaFnComponent
-      .withHooks[(List[ColumnInterface[RandomData.Person]], List[RandomData.Person])]
+      .withHooks[
+        (Reusable[List[ColumnInterface[RandomData.Person]]], Reusable[List[RandomData.Person]])
+      ]
       .useTableBy { case (cols, data) => SortedVariableVirtualizedTableDef(cols, data) }
       .render((_, tableInstance) =>
         HTMLTable.virtualized(SortedVariableVirtualizedTableDef)(
@@ -136,11 +145,13 @@ object DemoMain {
         )(tableInstance)
       )
 
-  val sortedVariableVirtualizedTableColumns = List(
-    SortedVariableVirtualizedTableDef.Column("id", _.id).setHeader("Id").setWidth(50),
-    SortedVariableVirtualizedTableDef.Column("first", _.first).setHeader("First").setWidth(100),
-    SortedVariableVirtualizedTableDef.Column("last", _.last).setHeader("Last").setWidth(100),
-    SortedVariableVirtualizedTableDef.Column("age", _.age).setHeader("Age").setWidth(75)
+  val sortedVariableVirtualizedTableColumns = Reusable.always(
+    List(
+      SortedVariableVirtualizedTableDef.Column("id", _.id).setHeader("Id").setWidth(50),
+      SortedVariableVirtualizedTableDef.Column("first", _.first).setHeader("First").setWidth(100),
+      SortedVariableVirtualizedTableDef.Column("last", _.last).setHeader("Last").setWidth(100),
+      SortedVariableVirtualizedTableDef.Column("age", _.age).setHeader("Age").setWidth(75)
+    )
   )
 
   @JSExport

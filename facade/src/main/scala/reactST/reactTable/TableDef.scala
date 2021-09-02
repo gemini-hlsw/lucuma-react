@@ -3,6 +3,7 @@
 
 package reactST.reactTable
 
+import japgolly.scalajs.react.Reusable
 import japgolly.scalajs.react.facade
 import japgolly.scalajs.react.facade.React.ComponentClassP
 import japgolly.scalajs.react.vdom._
@@ -37,9 +38,9 @@ case class TableDefWithOptions[
     TableStateD,
     Layout
   ],
-  cols:     List[ColumnInterface[D]],
-  data:     List[D],
-  modOpts:  TableOptsD => TableOptsD
+  cols:     Reusable[List[ColumnInterface[D]]],
+  data:     Reusable[List[D]],
+  modOpts:  Reusable[TableOptsD => TableOptsD]
 )
 
 case class TableDef[
@@ -60,9 +61,9 @@ case class TableDef[
   import syntax._
 
   def apply(
-    cols:    List[ColumnInterface[D]],
-    data:    List[D],
-    modOpts: TableOptsD => TableOptsD = identity[TableOptsD] _
+    cols:    Reusable[List[ColumnInterface[D]]],
+    data:    Reusable[List[D]],
+    modOpts: Reusable[TableOptsD => TableOptsD] = Reusable.always(identity[TableOptsD] _)
   ): TableDefWithOptions[
     D,
     TableOptsD,
