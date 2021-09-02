@@ -2,7 +2,7 @@ package reactST
 
 import reactST.reactTable.mod._
 
-package object reactTable {
+package object reactTable extends HooksApiExt {
   type ColumnOptions[D]                                  =
     ColumnInterface[D]
       with reactST.reactTable.anon.IdIdType[D]

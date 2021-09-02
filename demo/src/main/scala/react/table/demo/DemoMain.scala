@@ -4,9 +4,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.common.Css
-import reactST.reactTable.HTMLTable
-import reactST.reactTable.TableDef
-import reactST.reactTable.implicits._
+import reactST.reactTable._
 import reactST.reactTable.mod.{ ^ => _, _ }
 
 import scala.scalajs.js

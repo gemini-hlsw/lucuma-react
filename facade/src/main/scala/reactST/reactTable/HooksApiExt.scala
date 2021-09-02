@@ -96,5 +96,3 @@ trait HooksApiExt {
   ): Secondary[Ctx, CtxFn, Step] =
     new Secondary(api)
 }
-
-object implicits extends HooksApiExt
