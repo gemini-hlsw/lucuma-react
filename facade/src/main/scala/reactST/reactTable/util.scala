@@ -1,8 +1,9 @@
 package reactST.reactTable
 
 import japgolly.scalajs.react.util.JsUtil
-import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.vdom.VdomBuilder
+import japgolly.scalajs.react.vdom.html_<^._
+
 import scalajs.js
 
 object util {

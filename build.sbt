@@ -123,7 +123,8 @@ lazy val demo =
       publish := {},
       publishLocal := {},
       publishArtifact := false,
-      Keys.`package` := file("")
+      Keys.`package` := file(""),
+      scalacOptions ~= (_.filterNot(Set("-Vtype-diffs")))
     )
     .dependsOn(facade)
 

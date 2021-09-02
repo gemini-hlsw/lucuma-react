@@ -6,27 +6,50 @@ package reactST.reactTable
 import japgolly.scalajs.react.facade
 import japgolly.scalajs.react.facade.React.ComponentClassP
 import japgolly.scalajs.react.vdom._
+import org.scalablytyped.runtime.StObject
 import reactST.reactTable.anon.Data
+import reactST.reactTable.anon.IdIdType
+import reactST.reactTable.anon.IdIdType._
+import reactST.reactTable.anon.`1`._
 import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
 import reactST.reactTable.mod.{ ^ => _, _ }
 import reactST.std.Partial
-import reactST.reactTable.anon.`1`._
-import reactST.reactTable.anon.IdIdType._
 
 import scalajs.js
 import scalajs.js.|
 import scalajs.js.JSConverters._
-import reactST.reactTable.anon.IdIdType
-import org.scalablytyped.runtime.StObject
 
-// format: off
-case class TableMaker[D, 
-  TableOptsD <: UseTableOptions[D], 
-  TableInstanceD <: TableInstance[D], 
-  ColumnOptsD <: ColumnOptions[D], 
-  ColumnObjectD <: ColumnObject[D], 
+case class TableDefWithOptions[
+  D,
+  TableOptsD <: UseTableOptions[D],
+  TableInstanceD <: TableInstance[D],
+  ColumnOptsD <: ColumnOptions[D],
+  ColumnObjectD <: ColumnObject[D],
   TableStateD <: TableState[D],
-  Layout // format: on
+  Layout
+](
+  tableDef: TableDef[
+    D,
+    TableOptsD,
+    TableInstanceD,
+    ColumnOptsD,
+    ColumnObjectD,
+    TableStateD,
+    Layout
+  ],
+  cols:     List[ColumnInterface[D]],
+  data:     List[D],
+  modOpts:  TableOptsD => TableOptsD
+)
+
+case class TableDef[
+  D,
+  TableOptsD <: UseTableOptions[D],
+  TableInstanceD <: TableInstance[D],
+  ColumnOptsD <: ColumnOptions[D],
+  ColumnObjectD <: ColumnObject[D],
+  TableStateD <: TableState[D],
+  Layout
 ](plugins: Set[Plugin]) {
   type OptionsType       = TableOptsD
   type InstanceType      = TableInstanceD
@@ -36,14 +59,28 @@ case class TableMaker[D,
 
   import syntax._
 
+  def apply(
+    cols:    List[ColumnInterface[D]],
+    data:    List[D],
+    modOpts: TableOptsD => TableOptsD = identity[TableOptsD] _
+  ): TableDefWithOptions[
+    D,
+    TableOptsD,
+    TableInstanceD,
+    ColumnOptsD,
+    ColumnObjectD,
+    TableStateD,
+    Layout
+  ] =
+    TableDefWithOptions(this, cols, data, modOpts)
+
   private def emptyOptions: TableOptsD = js.Dynamic.literal().asInstanceOf[TableOptsD]
 
   /**
    * Create a TableOptsD. columns and data are required. Other options can be `set*`.
    */
-  // TODO When scalajs-react supports hooks, we can probably expose Lists in the API and useMemo.
-  def Options[C <: UseTableColumnOptions[D]](
-    columns: js.Array[C],
+  protected[reactTable] def Options(
+    columns: js.Array[ColumnInterface[D]],
     data:    js.Array[D]
   ): TableOptsD =
     emptyOptions
@@ -101,51 +138,29 @@ case class TableMaker[D,
    */
   def State(): TableStateD = js.Dynamic.literal().asInstanceOf[TableStateD]
 
-  /**
-   * Create a TableInstanceD instance by calling useTable with the
-   * provided options and the plugins that have been configured by
-   * the with* methods.
-   *
-   * @param options The table options.
-   */
-  def use(options: TableOptsD): TableInstanceD =
-    Hooks
-      .useTable(options, plugins.toList.sorted.map(_.hook: PluginHook[D]): _*)
-      .asInstanceOf[TableInstanceD]
-
-  /*
-   * Convience method to create a TableInstanceD instance by calling
-   * useTable with the provided columns and data and the plugins that
-   * have been configured by the with* methods.
-   *
-   * @param columns The table columns.
-   * @param data The table data.
-   */
-  def use(columns: js.Array[_ <: UseTableColumnOptions[D]], data: js.Array[D]): TableInstanceD =
-    use(Options(columns, data))
-
   /*
    * When adding new plugins, see https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-table
    * for help determining what the necessary type changes are.
    *
-   * Hooks need to have facades created in Hooks.scala, as the facades created by
+   * Hooks need to have facades created in TableHooks.scala, as the facades created by
    * ScalablyTyped won't work as hooks.
-   *
-   * Heads Up! It doesn't seem to be documented, but the order of plugins seems
-   * to matter. If you put useSortBy before useFilters you will get a runtime error.
-   * We may want to add some means of ordering the plugs when we submit them to
-   * "useTable" if we can figure out what the required order is.
    */
 
-  // format: off
   protected[reactST] def withFeaturePlugin[
     NewTableOptsD <: UseTableOptions[D],
-    NewTableInstanceD <: TableInstance[D], 
-    NewColumnOptsD <: ColumnOptions[D], 
+    NewTableInstanceD <: TableInstance[D],
+    NewColumnOptsD <: ColumnOptions[D],
     NewColumnObjectD <: ColumnObject[D],
     NewState <: TableState[D]
   ](plugin: Plugin) =
-    TableMaker[D, NewTableOptsD, NewTableInstanceD, NewColumnOptsD, NewColumnObjectD, NewState, Layout](plugins + plugin)
+    TableDef[D,
+             NewTableOptsD,
+             NewTableInstanceD,
+             NewColumnOptsD,
+             NewColumnObjectD,
+             NewState,
+             Layout
+    ](plugins + plugin)
 
   /**
    * Add sort capabilities to the table via the useSortBy plugin hook.
@@ -157,7 +172,6 @@ case class TableMaker[D,
     ColumnObjectD with UseSortByColumnProps[D],
     TableStateD with UseSortByState[D]
   ](Plugin.SortBy)
-  // format: on
 
   // When trying to use a more traditional "syntax" package and implicit
   // classes, the compiler seems to somehow loose type information along
@@ -306,9 +320,8 @@ case class TableMaker[D,
   }
 }
 
-object TableMaker {
-  // format: off
-  def apply[D]: TableMaker[
+object TableDef {
+  def apply[D]: TableDef[
     D,
     UseTableOptions[D],
     TableInstance[D],
@@ -316,28 +329,26 @@ object TableMaker {
     ColumnObject[D],
     TableState[D],
     Layout.Table
-  ] = TableMaker(Set.empty)
+  ] = TableDef(Set.empty)
   // format: on
 
   def headersFromGroup[D, ColumnD <: Column[D]](headerGroup: HeaderGroup[D]) =
     headerGroup.headers.asInstanceOf[js.Array[ColumnD]]
 
   // format: off
-  implicit class TableLayoutTableMakerOps[D,
+  implicit class TableLayoutTableDefOps[D,
       TableOptsD <: UseTableOptions[D],
       TableInstanceD <: TableInstance[D],
       ColumnOptsD <: ColumnOptions[D],
       ColumnObjectD <: ColumnObject[D],
       TableStateD <: TableState[D]]
-      (val tableMaker: TableMaker[D, 
+      (val tableDef: TableDef[D, 
           TableOptsD, 
           TableInstanceD,
           ColumnOptsD,
           ColumnObjectD,
           TableStateD,
-          Layout.Table]
-      ) extends AnyVal {
-
+          Layout.Table]) extends AnyVal { // format: on
     private def withLayoutPlugin[
       NewTableOptsD <: UseTableOptions[D],
       NewTableInstanceD <: TableInstance[D],
@@ -345,14 +356,14 @@ object TableMaker {
       NewColumnObjectD <: ColumnObject[D],
       NewState <: TableState[D]
     ](plugin: Plugin) =
-    TableMaker[D,
+      TableDef[D,
                NewTableOptsD,
                NewTableInstanceD,
                NewColumnOptsD,
                NewColumnObjectD,
                NewState,
                Layout.NonTable
-    ](tableMaker.plugins + plugin)
+      ](tableDef.plugins + plugin)
 
     /**
      * Adds support for headers and cells to be rendered as inline-block divs
@@ -372,10 +383,10 @@ object TableMaker {
     ](Plugin.BlockLayout)
 
     /**
-     * Adds support for headers and cells to be rendered as divs (or other non-table elements) 
-     * with the immediate parent (table) controlling the layout using CSS Grid. This hook becomes 
-     * useful when implementing both virtualized and resizable tables that must also be able to 
-     * stretch to fill all available space. Uses a minimal amount of html to give greater control 
+     * Adds support for headers and cells to be rendered as divs (or other non-table elements)
+     * with the immediate parent (table) controlling the layout using CSS Grid. This hook becomes
+     * useful when implementing both virtualized and resizable tables that must also be able to
+     * stretch to fill all available space. Uses a minimal amount of html to give greater control
      * of styling. Works with useResizeColumns.
      */
     def withGridLayout = withLayoutPlugin[
@@ -387,31 +398,33 @@ object TableMaker {
     ](Plugin.GridLayout)
   }
 
-  implicit class NonTableLayoutTableMakerOps[D,
-      TableOptsD <: UseTableOptions[D],
-      TableInstanceD <: TableInstance[D],
-      ColumnOptsD <: ColumnOptions[D],
-      ColumnObjectD <: ColumnObject[D],
-      TableStateD <: TableState[D]]
-      (val tableMaker: TableMaker[D, 
-          TableOptsD, 
-          TableInstanceD,
-          ColumnOptsD,
-          ColumnObjectD,
-          TableStateD,
-          Layout.NonTable]
-      ) extends AnyVal {
-      /**
-       * Add column resize capabilities to the table via the useResizeColumns plugin hook.
-       */
-      def withResizeColumns = tableMaker.withFeaturePlugin[
-        TableOptsD with UseResizeColumnsOptions[D],
-        TableInstanceD,
-        ColumnOptsD with UseResizeColumnsColumnOptions[D],
-        ColumnObjectD with UseResizeColumnsColumnProps[D],
-        TableStateD with UseResizeColumnsState[D]
-      ](Plugin.ResizeColumns)        
-    }  
+  implicit class NonTableLayoutTableDefOps[D, TableOptsD <: UseTableOptions[
+    D
+  ], TableInstanceD <: TableInstance[D], ColumnOptsD <: ColumnOptions[
+    D
+  ], ColumnObjectD <: ColumnObject[D], TableStateD <: TableState[D]](
+    val tableDef: TableDef[
+      D,
+      TableOptsD,
+      TableInstanceD,
+      ColumnOptsD,
+      ColumnObjectD,
+      TableStateD,
+      Layout.NonTable
+    ]
+  ) extends AnyVal {
+
+    /**
+     * Add column resize capabilities to the table via the useResizeColumns plugin hook.
+     */
+    def withResizeColumns = tableDef.withFeaturePlugin[
+      TableOptsD with UseResizeColumnsOptions[D],
+      TableInstanceD,
+      ColumnOptsD with UseResizeColumnsColumnOptions[D],
+      ColumnObjectD with UseResizeColumnsColumnProps[D],
+      TableStateD with UseResizeColumnsState[D]
+    ](Plugin.ResizeColumns)
+  }
   // format: on
 
 }
