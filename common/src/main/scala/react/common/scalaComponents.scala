@@ -4,6 +4,8 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.component.Scala
 // import japgolly.scalajs.react.ReactExtensions._
 import scalajs.js
+import japgolly.scalajs.react.component.ScalaFn
+import japgolly.scalajs.react.vdom.VdomElement
 
 sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u]] {
   protected[common] val props: Props
@@ -87,3 +89,23 @@ class ReactProps[Props](val component: Scala.Component[Props, _, _, CtorType.Pro
 class ReactPropsWithChildren[Props](
   val component: Scala.Component[Props, _, _, CtorType.PropsAndChildren]
 ) extends ReactComponentProps[Props, CtorType.PropsAndChildren]
+
+sealed trait ReactFnComponentProps[Props, CT[-p, +u] <: CtorType[p, u]] {
+  // extends CtorWithProps[Props, CT] {
+  val component: ScalaFn.Component[Props, CT]
+
+  protected[common] lazy val props: Props = this.asInstanceOf[Props]
+}
+
+class ReactFnProps[Props](val component: ScalaFn.Component[Props, CtorType.Props])
+    extends ReactFnComponentProps[Props, CtorType.Props]
+
+object ReactFnProps {
+  implicit def render[Props, CT[-p, +u] <: CtorType[p, u]](
+    props: ReactFnComponentProps[Props, CT]
+  ): VdomElement = props.component.applyGeneric(props.props)().vdomElement
+}
+
+class ReactFnPropsWithChildren[Props](
+  val component: ScalaFn.Component[Props, CtorType.PropsAndChildren]
+) extends ReactFnComponentProps[Props, CtorType.PropsAndChildren]
