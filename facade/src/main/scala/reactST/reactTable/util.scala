@@ -9,8 +9,8 @@ import scalajs.js
 object util {
 
   /**
-   * Helper method for taking a properties object returned by JS
-   * and turning it into a TagMod of attributes.
+   * Helper method for taking a properties object returned by JS and turning it into a TagMod of
+   * attributes.
    */
   def props2Attrs(obj: js.Object): TagMod =
     TagMod(

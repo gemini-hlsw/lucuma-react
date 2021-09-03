@@ -89,8 +89,8 @@ case class TableDef[
       .setData(data)
 
   /**
-   * Create an empty instance of ColumnOptsD.
-   * As per react-table's doc: Warning: Only omit accessor if you really know what you're doing.
+   * Create an empty instance of ColumnOptsD. As per react-table's doc: Warning: Only omit accessor
+   * if you really know what you're doing.
    */
   def emptyColumn[V]: ColumnValueOptions[D, V, ColumnOptsD] =
     js.Dynamic.literal().asInstanceOf[ColumnValueOptions[D, V, ColumnOptsD]]
@@ -125,8 +125,10 @@ case class TableDef[
   /**
    * Create a column group with the specified columns in it.
    *
-   * @param header The header for the column group. Seems to be required.
-   * @param cols The columns to include in the group.
+   * @param header
+   *   The header for the column group. Seems to be required.
+   * @param cols
+   *   The columns to include in the group.
    */
   def ColumnGroup(cols: (ColumnGroup[D] | ColumnOptsD)*): ColumnGroupOptions[D] =
     js.Dynamic
@@ -191,7 +193,8 @@ case class TableDef[
       /**
        * Sets the row id for the rows of the table based on a function.
        *
-       * @param f A function from the row type to the row id.
+       * @param f
+       *   A function from the row type to the row id.
        */
       def setRowIdFn(f: D => String): Self =
         table.setGetRowId((originalRow, _, _) => f(originalRow))
@@ -199,7 +202,8 @@ case class TableDef[
       /**
        * Sets the row id for the rows of the table based on a function.
        *
-       * @param f A function from the row type and index to the row id.
+       * @param f
+       *   A function from the row type and index to the row id.
        */
       def setRowIdFn(f: (D, Int) => String): Self =
         table.setGetRowId((originalRow, relativeIndex, _) => f(originalRow, relativeIndex.toInt))
@@ -207,7 +211,8 @@ case class TableDef[
       /**
        * Sets the row id for the rows of the table based on a function.
        *
-       * @param f A function from the row type, index and parent to the row id.
+       * @param f
+       *   A function from the row type, index and parent to the row id.
        */
       def setRowIdFn(f: (D, Int, js.UndefOr[Row[D]]) => String): Self =
         table.setGetRowId((originalRow, relativeIndex, parent) =>
@@ -220,7 +225,8 @@ case class TableDef[
       /**
        * Sets the accessorFunction for the column.
        *
-       * @param f A function from the row type to the column type.
+       * @param f
+       *   A function from the row type to the column type.
        */
       def setAccessorFn[V](f: D => V): Self =
         col.setAccessorFunction3((data, _, _) => f(data).asInstanceOf[js.Any])
@@ -236,17 +242,18 @@ case class TableDef[
       /**
        * Sets the sorting for the column based on a function on the row.
        *
-       * @param f A function from the row type to the target type.
-       * @param ordering An implicit ordering for the target type.
-       * @param evidence Evidence that this column is sortable. (See note)
+       * @param f
+       *   A function from the row type to the target type.
+       * @param ordering
+       *   An implicit ordering for the target type.
+       * @param evidence
+       *   Evidence that this column is sortable. (See note)
        *
-       * Note:
-       * This method is only valid for columns that are sortable via the
-       *   useSortBy plugin. The compiler was unable to resolve the types if
-       *   an implicit class requiring UseSortByColumnOptions[D] was used, so
-       *   I switched to requiring evidence that ColumnOptsD is a subtype
-       *   of UseSortByColumnOptions[D] and that worked. Unfortunately, requires
-       *   asInstanceOfs.
+       * Note: This method is only valid for columns that are sortable via the useSortBy plugin. The
+       * compiler was unable to resolve the types if an implicit class requiring
+       * UseSortByColumnOptions[D] was used, so I switched to requiring evidence that ColumnOptsD is
+       * a subtype of UseSortByColumnOptions[D] and that worked. Unfortunately, requires
+       * asInstanceOfs.
        */
       def setSortByRowFn[V](
         f:        D => V
@@ -290,9 +297,12 @@ case class TableDef[
       /**
        * Sets the sorting for the column based on a function on its value.
        *
-       * @param f A function from the value type to the target type.
-       * @param ordering An implicit ordering for the target type.
-       * @param evidence Evidence that this column is sortable.
+       * @param f
+       *   A function from the value type to the target type.
+       * @param ordering
+       *   An implicit ordering for the target type.
+       * @param evidence
+       *   Evidence that this column is sortable.
        */
       def setSortByFn[U](f: V => U)(implicit
         ordering:           Ordering[U],
@@ -310,8 +320,10 @@ case class TableDef[
       /**
        * Sets the sorting for the column based on its value.
        *
-       * @param ordering An implicit ordering for the value type.
-       * @param evidence Evidence that this column is sortable.
+       * @param ordering
+       *   An implicit ordering for the value type.
+       * @param evidence
+       *   Evidence that this column is sortable.
        */
       def setSortByAuto(implicit
         ordering: Ordering[V],
@@ -367,13 +379,13 @@ object TableDef {
       ](tableDef.plugins + plugin)
 
     /**
-     * Adds support for headers and cells to be rendered as inline-block divs
-     * (or other non-table elements) with explicit width. This becomes useful if and when you need
-     * to virtualize rows and cells for performance.
+     * Adds support for headers and cells to be rendered as inline-block divs (or other non-table
+     * elements) with explicit width. This becomes useful if and when you need to virtualize rows
+     * and cells for performance.
      *
      * NOTE: Although no additional options are needed for this plugin to work, the core column
-     * options width, minWidth and maxWidth are used to calculate column and cell widths and must
-     * be set.
+     * options width, minWidth and maxWidth are used to calculate column and cell widths and must be
+     * set.
      */
     def withBlockLayout = withLayoutPlugin[
       TableOptsD,
@@ -384,11 +396,11 @@ object TableDef {
     ](Plugin.BlockLayout)
 
     /**
-     * Adds support for headers and cells to be rendered as divs (or other non-table elements)
-     * with the immediate parent (table) controlling the layout using CSS Grid. This hook becomes
-     * useful when implementing both virtualized and resizable tables that must also be able to
-     * stretch to fill all available space. Uses a minimal amount of html to give greater control
-     * of styling. Works with useResizeColumns.
+     * Adds support for headers and cells to be rendered as divs (or other non-table elements) with
+     * the immediate parent (table) controlling the layout using CSS Grid. This hook becomes useful
+     * when implementing both virtualized and resizable tables that must also be able to stretch to
+     * fill all available space. Uses a minimal amount of html to give greater control of styling.
+     * Works with useResizeColumns.
      */
     def withGridLayout = withLayoutPlugin[
       TableOptsD,
