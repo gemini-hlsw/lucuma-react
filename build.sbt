@@ -60,25 +60,26 @@ lazy val test =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings: _*)
     .settings(
-      name                        := "test",
+      name                                                       := "test",
       Test / npmDependencies ++= Seq(
         "react"     -> reactJS,
         "react-dom" -> reactJS
       ),
       // Requires the DOM for tests
-      Test / requireJsDomEnv      := true,
+      Test / requireJsDomEnv                                     := true,
       // Use yarn as it is faster than npm
-      useYarn                     := true,
-      webpack / version           := "4.44.1",
-      webpackCliVersion / version := "3.3.11",
+      useYarn                                                    := true,
+      webpack / version                                          := "4.44.1",
+      (webpackCliVersion / version).withRank(KeyRanks.Invisible) := "3.3.11",
       // Compile tests to JS using fast-optimisation
-      Test / scalaJSStage         := FastOptStage,
+      Test / scalaJSStage                                        := FastOptStage,
       libraryDependencies ++= Seq(
         "org.scalameta" %%% "munit"     % "0.7.29",
         "org.typelevel" %%% "cats-core" % "2.6.1" % Test
       ),
-      Test / webpackExtraArgs     := Seq("--verbose", "--progress", "true"),
-      Test / webpackConfigFile    := Some(
+      (Test / webpackExtraArgs)
+        .withRank(KeyRanks.Invisible)                            := Seq("--verbose", "--progress", "true"),
+      Test / webpackConfigFile                                   := Some(
         baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
       ),
       scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
@@ -101,7 +102,7 @@ lazy val root = (project in file("."))
   .aggregate(common, cats, test)
 
 lazy val commonSettings = Seq(
-  scalaVersion           := "2.13.6",
+  scalaVersion           := "3.0.2",
   organization           := "io.github.cquiroz.react",
   description            := "scala.js react common utilities",
   sonatypeProfileName    := "io.github.cquiroz",

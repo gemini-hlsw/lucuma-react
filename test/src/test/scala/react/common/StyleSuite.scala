@@ -2,6 +2,7 @@ package react.common
 
 import cats.syntax.all._
 import react.common.implicits._
+import react.common.style._
 
 class StyleSuite extends munit.FunSuite with TestUtils {
   test("style") {

@@ -13,3 +13,4 @@ yarn.lock
 travis/secrets.tar
 .hydra/
 .bsp/
+.vscode/
