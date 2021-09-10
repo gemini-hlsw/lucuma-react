@@ -5,6 +5,7 @@ package common
 import scala.scalajs.js
 import scala.scalajs.js.|
 import js.JSConverters._
+import japgolly.scalajs.react.Reusability
 import japgolly.scalajs.react.vdom.html_<^._
 
 package object style             {
@@ -126,5 +127,7 @@ package style {
     def apply(htmlClass: String): Css = Css(List(htmlClass))
 
     val Empty: Css = Css(Nil)
+
+    implicit val cssReuse: Reusability[Css] = Reusability.by(_.htmlClass)
   }
 }
