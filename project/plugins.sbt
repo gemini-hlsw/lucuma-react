@@ -5,6 +5,6 @@ addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.3")
 
 addSbtPlugin("edu.gemini" % "sbt-lucuma" % "0.4.0")
 
-addSbtPlugin("com.geirsson" % "sbt-ci-release" % "1.5.7")
+addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.5.9")
 
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.7.0")
