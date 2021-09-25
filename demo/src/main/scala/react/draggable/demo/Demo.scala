@@ -13,7 +13,7 @@ import react.common.Size
 import Data.DataRow
 
 object TableDemo {
-  def datum(data:     List[DataRow])(i: Int) = data(i % data.length)
+  def datum(data: List[DataRow])(i: Int)     = data(i % data.length)
   def rowheight(data: List[DataRow])(i: Int) = datum(data)(i).size
 
   final case class Widths(index: Double, name: Double, random: Double)
