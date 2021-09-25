@@ -13,10 +13,10 @@ final case class IgnoreKeys(
   except:                js.UndefOr[String | js.Array[String]] = js.undefined,
   override val children: CtorType.ChildrenArgs = Seq.empty
 ) extends GenericComponentPC[IgnoreKeys.IgnoreKeysProps, IgnoreKeys] {
-  override protected def cprops = IgnoreKeys.props(this)
+  override protected def cprops                     = IgnoreKeys.props(this)
   def withChildren(children: CtorType.ChildrenArgs) =
     copy(children = children)
-  @inline def renderWith = IgnoreKeys.component(cprops)
+  @inline def renderWith                            = IgnoreKeys.component(cprops)
 }
 
 object IgnoreKeys {

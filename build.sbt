@@ -47,7 +47,7 @@ inThisBuild(
   )
 )
 
-val root =
+val root                =
   project
     .in(file("."))
     .settings(commonSettings: _*)
@@ -62,7 +62,7 @@ val root =
       Keys.`package`  := file("")
     )
 
-lazy val demo =
+lazy val demo           =
   project
     .in(file("demo"))
     .enablePlugins(ScalaJSBundlerPlugin)
@@ -118,7 +118,7 @@ lazy val demo =
     )
     .dependsOn(facade)
 
-lazy val facade =
+lazy val facade         =
   project
     .in(file("facade"))
     .enablePlugins(ScalaJSBundlerPlugin)

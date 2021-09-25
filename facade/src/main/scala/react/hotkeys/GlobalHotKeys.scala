@@ -11,10 +11,10 @@ final case class GlobalHotKeys(
   allowChanges:          js.UndefOr[Boolean] = js.undefined,
   override val children: CtorType.ChildrenArgs = Seq.empty
 ) extends GenericComponentPC[GlobalHotKeys.GlobalHotKeysProps, GlobalHotKeys] {
-  override protected def cprops = GlobalHotKeys.props(this)
+  override protected def cprops                     = GlobalHotKeys.props(this)
   def withChildren(children: CtorType.ChildrenArgs) =
     copy(children = children)
-  @inline def renderWith = GlobalHotKeys.component(cprops)
+  @inline def renderWith                            = GlobalHotKeys.component(cprops)
 }
 
 object GlobalHotKeys {

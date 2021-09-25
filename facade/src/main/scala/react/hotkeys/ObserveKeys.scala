@@ -13,10 +13,10 @@ final case class ObserveKeys(
   except:                js.UndefOr[String | js.Array[String]] = js.undefined,
   override val children: CtorType.ChildrenArgs = Seq.empty
 ) extends GenericComponentPC[ObserveKeys.ObserveKeysProps, ObserveKeys] {
-  override protected def cprops = ObserveKeys.props(this)
+  override protected def cprops                     = ObserveKeys.props(this)
   def withChildren(children: CtorType.ChildrenArgs) =
     copy(children = children)
-  @inline def renderWith = ObserveKeys.component(cprops)
+  @inline def renderWith                            = ObserveKeys.component(cprops)
 }
 
 object ObserveKeys {
