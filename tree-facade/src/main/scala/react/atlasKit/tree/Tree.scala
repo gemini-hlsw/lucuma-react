@@ -139,7 +139,7 @@ object Tree {
     var isDragEnabled: js.UndefOr[Boolean]
     var isNestingEnabled: js.UndefOr[Boolean]
   }
-  object Props {
+  object Props            {
     def apply[A](
       tree:             Data[A],
       renderItem:       RenderItemParams[A] => VdomNode,
