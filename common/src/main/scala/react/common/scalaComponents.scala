@@ -8,7 +8,7 @@ import japgolly.scalajs.react.vdom.VdomElement
 
 import scalajs.js
 
-sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U] {
+sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U]   {
   protected[common] val props: Props
 
   val ctor: CT[Props, U]
@@ -28,7 +28,7 @@ sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U] {
 }
 
 sealed trait CtorWithProps[Props, CT[-p, +u] <: CtorType[p, u], U]
-    extends ReactRender[Props, CT, U] { self =>
+    extends ReactRender[Props, CT, U]                              { self =>
   protected type CloneType[-P, +U0] = ctor.This[P, U0]
   protected type CloneTypePU        = CloneType[Props, U]
 
@@ -40,13 +40,13 @@ sealed trait CtorWithProps[Props, CT[-p, +u] <: CtorType[p, u], U]
       override protected[common] lazy val props = self.props
     }
 
-  def withKey(key: Key) =
+  def withKey(key: Key)      =
     clone(ctor.withKey(key))
 
   final def withKey(k: Long) =
     clone(ctor.withKey(k))
 
-  def addMod(f: CtorType.ModFn) =
+  def addMod(f: CtorType.ModFn)                      =
     clone(ctor.addMod(f))
 
   final def withRawProp(name: String, value: js.Any) =
@@ -103,7 +103,7 @@ class ReactFnProps[Props](val component: ScalaFn.Component[Props, CtorType.Props
   override lazy val ctor: CtorType.Props[Props, ScalaFn.Unmounted[Props]] = component.ctor
 }
 
-object ReactFnProps {
+object ReactFnProps                                                       {
   implicit def render[Props, CT[-p, +u] <: CtorType[p, u], U](
     props: ReactFnComponentProps[Props, CT, U]
   ): VdomElement = props.component.applyGeneric(props.props)().vdomElement
