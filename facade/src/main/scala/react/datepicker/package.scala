@@ -27,7 +27,7 @@ package object datepicker {
   }
 
   implicit class JSUndefOrNullOrTuple2Ops[A](val value: js.UndefOr[A | Null | js.Tuple2[A, A]])
-      extends AnyVal {
+      extends AnyVal      {
     def toEitherOpt: Option[Either[(A, A), A]] =
       value.toOption
         .flatMap(valueOrNull => Option(valueOrNull.asInstanceOf[A | js.Tuple2[A, A]]))
