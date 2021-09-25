@@ -1,13 +1,15 @@
 package react
 
-import japgolly.scalajs.react.CtorType
-import japgolly.scalajs.react.vdom.VdomElement
-import japgolly.scalajs.react.vdom.VdomNode
+import japgolly.scalajs.react._
 import japgolly.scalajs.react.component.Generic
 import japgolly.scalajs.react.component.Js._
 import japgolly.scalajs.react.component.Scala
+import japgolly.scalajs.react.component.ScalaForwardRef
+import japgolly.scalajs.react.vdom.VdomElement
+import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.vdom.TagMod
 import react.common.syntax.AllSyntax
+
 import scala.scalajs.js
 
 package object common extends AllSyntax {
@@ -46,17 +48,24 @@ package object common extends AllSyntax {
 
   // Begin Scala Components
   @inline implicit def props2Component[Props, CT[-p, +u] <: CtorType[p, u]](
-    p: ReactRender[Props, CT]
+    p: ReactRender[Props, CT, Scala.Unmounted[Props, _, _]]
   ): VdomElement =
     p.toUnmounted
 
-  implicit class PropsWithChildren2Component[Props, CT[-p, +u] <: CtorType[p, u]](
-    p:  ReactRender[Props, CT]
-  )(implicit
-    ev: CT[Props, Scala.Unmounted[Props, _, _]] <:< CtorType.PropsAndChildren[
-      Props,
-      Scala.Unmounted[Props, _, _]
-    ]
+  implicit class PropsWithChildren2Component[Props](
+    p: ReactRender[Props, CtorType.PropsAndChildren, Scala.Unmounted[Props, _, _]]
+  ) {
+    @inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
+      p(first, rest: _*)
+  }
+
+  @inline implicit def propsForwardRef2Component[Props, R, CT[-p, +u] <: CtorType[p, u]](
+    p: ReactRender[Props, CT, ScalaForwardRef.Unmounted[Props, R]]
+  ): VdomElement =
+    p.toUnmounted
+
+  implicit class PropsForwardRefWithChildren2Component[Props, R](
+    p: ReactRender[Props, CtorType.PropsAndChildren, ScalaForwardRef.Unmounted[Props, R]]
   ) {
     @inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
       p(first, rest: _*)
