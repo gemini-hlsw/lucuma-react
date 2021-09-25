@@ -180,7 +180,7 @@ package syntax {
   }
 
   trait VdomSyntax    {
-    // Fn to VdomNode conversions
+    // FnComponent to VdomNode conversions
     implicit def GenericFnComponentP2VdomNode[P <: js.Object](
       p: GenericFnComponentP[P]
     ): VdomNode =
@@ -201,7 +201,7 @@ package syntax {
     ): VdomNode =
       p.render
 
-    // Component 2 VdomNode
+    // Component 2 VdomNode conversions
     implicit def GenericComponentP2VdomNode[P <: js.Object](
       p: GenericComponentP[P]
     ): VdomNode =
@@ -222,6 +222,28 @@ package syntax {
     ): VdomNode =
       p.render
 
+    // Facade component 2 VdomNode conversions
+    implicit def GenericComponentPF2VdomNode[P <: js.Object, F <: js.Object](
+      p: GenericComponentPF[P, F]
+    ): VdomNode =
+      p.render
+
+    implicit def GenericComponentPCF2VdomNode[P <: js.Object, F <: js.Object](
+      p: GenericComponentPCF[P, _, F]
+    ): VdomNode =
+      p.render
+
+    implicit def GenericComponentPAF2VdomNode[P <: js.Object, F <: js.Object](
+      p: GenericComponentPAF[P, _, F]
+    ): VdomNode =
+      p.render
+
+    implicit def GenericComponentPACF2VdomNode[P <: js.Object, F <: js.Object](
+      p: GenericComponentPACF[P, _, F]
+    ): VdomNode =
+      p.render
+
+    // FnComponent to js.UndefOr[VdomNode] conversions
     implicit def GenericFnComponentP2UndefVdomNode[P <: js.Object](
       p: GenericFnComponentP[P]
     ): js.UndefOr[VdomNode] =
@@ -242,6 +264,7 @@ package syntax {
     ): js.UndefOr[VdomNode] =
       p.render: VdomNode
 
+    // Component to js.UndefOr[VdomNode] conversions
     implicit def GenericComponentP2UndefVdomNode[P <: js.Object](
       p: GenericComponentP[P]
     ): js.UndefOr[VdomNode] =
@@ -261,6 +284,28 @@ package syntax {
       p: GenericComponentPAC[P, _]
     ): js.UndefOr[VdomNode] =
       p.render: VdomNode
+
+    // Facade Component to js.UndefOr[VdomNode] conversions
+    implicit def GenericComponentPF2UndefVdomNode[P <: js.Object, F <: js.Object](
+      p: GenericComponentPF[P, F]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
+
+    implicit def GenericComponentPCF2UndefVdomNode[P <: js.Object, F <: js.Object](
+      p: GenericComponentPCF[P, _, F]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
+
+    implicit def GenericComponentPAF2UndefVdomNode[P <: js.Object, F <: js.Object](
+      p: GenericComponentPAF[P, _, F]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
+
+    implicit def GenericComponentPACF2UndefVdomNode[P <: js.Object, F <: js.Object](
+      p: GenericComponentPACF[P, _, F]
+    ): js.UndefOr[VdomNode] =
+      p.render: VdomNode
+
     // End VdomNode conversions
   }
 }
