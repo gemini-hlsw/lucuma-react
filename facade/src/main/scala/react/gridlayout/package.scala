@@ -49,7 +49,7 @@ package gridlayout {
 
   final case class Breakpoint(name: BreakpointName, pos: Int)
 
-  object Breakpoint {
+  object Breakpoint                                   {
     implicit val eqBreakpoint: Eq[Breakpoint] = Eq.by(x => (x.name, x.pos))
   }
 
@@ -61,12 +61,12 @@ package gridlayout {
     }
   }
 
-  object Breakpoints {
+  object Breakpoints                           {
     implicit val eqBreakpoints: Eq[Breakpoints] = Eq.by(_.bps)
   }
 
   final case class Column(col: BreakpointName, pos: Int)
-  object Column {
+  object Column                                {
     implicit val eqColumn: Eq[Column] = Eq.by(x => (x.col, x.pos))
   }
 
@@ -98,8 +98,8 @@ package gridlayout {
 
   final case class BreakpointLayout(name: BreakpointName, layout: Layout)
 
-  object BreakpointLayout {
-    implicit val eqBreakpointLayout: Eq[BreakpointLayout] = Eq.by(x => (x.name, x.layout))
+  object BreakpointLayout                                   {
+    implicit val eqBreakpointLayout: Eq[BreakpointLayout]        = Eq.by(x => (x.name, x.layout))
     private[gridlayout] def layoutsFromRaw(l: js.Object): Layout = {
       val c                   = l.asInstanceOf[js.Array[raw.LayoutItem]]
       val i: List[LayoutItem] = c.map(LayoutItem.fromRaw).toList
@@ -163,9 +163,9 @@ package gridlayout {
       )
   }
 
-  object LayoutItem {
-    implicit def eqUndef[A: Eq]: Eq[js.UndefOr[A]] = Eq.by(_.toOption)
-    implicit val eqLayoutItem: Eq[LayoutItem]      = Eq.by(x =>
+  object LayoutItem                            {
+    implicit def eqUndef[A: Eq]: Eq[js.UndefOr[A]]                          = Eq.by(_.toOption)
+    implicit val eqLayoutItem: Eq[LayoutItem]                               = Eq.by(x =>
       (x.w,
        x.h,
        x.x,
@@ -184,7 +184,7 @@ package gridlayout {
       )
     )
 
-    private[gridlayout] def fromRaw(l: raw.LayoutItem): LayoutItem =
+    private[gridlayout] def fromRaw(l: raw.LayoutItem): LayoutItem          =
       new LayoutItem(l.w,
                      l.h,
                      l.x,
@@ -232,7 +232,7 @@ package gridlayout {
     private[gridlayout] def toRaw: raw.Layout = l.toArray.map(_.toRaw).toJSArray
   }
 
-  object Layout {
+  object Layout       {
     implicit val eqLayout: Eq[Layout] = Eq.by(_.l)
     val Empty: Layout                 = Layout(Nil)
 
@@ -241,7 +241,7 @@ package gridlayout {
   }
 
   sealed trait CompactType extends Product with Serializable
-  object CompactType {
+  object CompactType  {
     implicit val enum: EnumValue[CompactType] = EnumValue.toLowerCaseString
     case object Vertical   extends CompactType
     case object Horizontal extends CompactType
@@ -264,7 +264,7 @@ package gridlayout {
       case _    => None
     }
 
-    case object S  extends ResizeHandle
+    case object S extends ResizeHandle
     case object W  extends ResizeHandle
     case object E  extends ResizeHandle
     case object N  extends ResizeHandle
