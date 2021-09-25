@@ -18,10 +18,10 @@ final case class HotKeys(
   root:                  js.UndefOr[Boolean] = js.undefined,
   override val children: CtorType.ChildrenArgs = Seq.empty
 ) extends GenericComponentPC[HotKeys.HotKeysProps, HotKeys] {
-  override protected def cprops = HotKeys.props(this)
+  override protected def cprops                     = HotKeys.props(this)
   def withChildren(children: CtorType.ChildrenArgs) =
     copy(children = children)
-  @inline def renderWith = HotKeys.component(cprops)
+  @inline def renderWith                            = HotKeys.component(cprops)
 }
 
 object HotKeys {

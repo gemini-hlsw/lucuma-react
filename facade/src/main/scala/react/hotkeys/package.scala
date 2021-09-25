@@ -18,20 +18,20 @@ package hotkeys {
 
   sealed abstract class KeyInstance(val action: String)
   final case object KeyPress extends KeyInstance("keypress")
-  final case object KeyDown  extends KeyInstance("keydown")
-  final case object KeyUp    extends KeyInstance("keyup")
+  final case object KeyDown extends KeyInstance("keydown")
+  final case object KeyUp   extends KeyInstance("keyup")
 
   @js.native
-  trait KeyEvent    extends js.Object {
+  trait KeyEvent extends js.Object {
     val sequence: js.UndefOr[String] = js.native
     val action: js.UndefOr[String]   = js.native
   }
-  object KeyEvent {
+  object KeyEvent    {
     def apply(sequence: String, instance: KeyInstance): KeyEvent =
       js.Dynamic.literal(sequence = sequence, action = instance.action).asInstanceOf[KeyEvent]
   }
   @js.native
-  trait KeySequence extends KeyEvent  {
+  trait KeySequence extends KeyEvent {
     val name: js.UndefOr[String]                = js.native
     val sequences: js.UndefOr[js.Array[KeySeq]] = js.native
   }
@@ -85,7 +85,7 @@ package object hotkeys {
   implicit def callbackToHandler(cb: Callback): Handler =
     _ => cb
 
-  implicit class HandlersOps(h: Handlers) {
+  implicit class HandlersOps(h: Handlers)     {
     def toJs: js.Object =
       h.view
         .mapValues[js.Function1[ReactKeyboardEvent, Unit]](f => e => f(e).runNow())
@@ -94,7 +94,7 @@ package object hotkeys {
         .asInstanceOf[js.Object]
   }
 
-  implicit class KeyMapOps(km: KeyMap) {
+  implicit class KeyMapOps(km: KeyMap)        {
     def toJs: js.Object =
       km.toJSDictionary
         .asInstanceOf[js.Object]
