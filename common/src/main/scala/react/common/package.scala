@@ -1,14 +1,15 @@
 package react
 
-import japgolly.scalajs.react.CtorType
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.component.Generic
+import japgolly.scalajs.react.component.Js._
+import japgolly.scalajs.react.component.Scala
+import japgolly.scalajs.react.component.ScalaForwardRef
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode
-import japgolly.scalajs.react.component.Generic
-import japgolly.scalajs.react.component.Js.RawMounted
-import japgolly.scalajs.react.component.Js.UnmountedWithRawType
-import japgolly.scalajs.react.component.Scala
 import japgolly.scalajs.react.vdom.TagMod
 import react.common.syntax.AllSyntax
+
 import scala.scalajs.js
 
 package object common extends AllSyntax {
@@ -47,17 +48,24 @@ package object common extends AllSyntax {
 
   // Begin Scala Components
   @inline implicit def props2Component[Props, S, B, CT[-p, +u] <: CtorType[p, u]](
-    p: ReactRender[Props, S, B, CT]
+    p: ReactRender[Props, S, B, CT, Scala.Unmounted[Props, _, _]]
   ): VdomElement =
     p.toUnmounted
 
-  implicit class PropsWithChildren2Component[Props, S, B, CT[-p, +u] <: CtorType[p, u]](
-    p:  ReactRender[Props, S, B, CT]
-  )(implicit
-    ev: CT[Props, Scala.Unmounted[Props, S, B]] <:< CtorType.PropsAndChildren[
-      Props,
-      Scala.Unmounted[Props, S, B]
-    ]
+  implicit class PropsWithChildren2Component[Props, S, B](
+    p: ReactRender[Props, S, B, CtorType.PropsAndChildren, Scala.Unmounted[Props, S, B]]
+  ) {
+    @inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
+      p(first, rest: _*)
+  }
+
+  @inline implicit def propsForwardRef2Component[Props, R, CT[-p, +u] <: CtorType[p, u]](
+    p: ReactRender[Props, CT, ScalaForwardRef.Unmounted[Props, R]]
+  ): VdomElement =
+    p.toUnmounted
+
+  implicit class PropsForwardRefWithChildren2Component[Props, R](
+    p: ReactRender[Props, CtorType.PropsAndChildren, ScalaForwardRef.Unmounted[Props, R]]
   ) {
     @inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
       p(first, rest: _*)
@@ -65,10 +73,12 @@ package object common extends AllSyntax {
   // End Scala Components
 
   // Begin JS Components
-  type RenderFn[P]             = Generic.Unmounted[P, Unit]
-  type Render[P <: js.Object]  = UnmountedWithRawType[P, Null, RawMounted[P, Null]]
-  type RenderFnC[P]            = CtorType.ChildrenArgs => RenderFn[P]
-  type RenderC[P <: js.Object] = CtorType.ChildrenArgs => Render[P]
+  type RenderFn[P]                              = Generic.Unmounted[P, Unit]
+  type Render[P <: js.Object]                   = Unmounted[P, Null]
+  type RenderF[P <: js.Object, F <: js.Object]  = UnmountedWithFacade[P, Null, F]
+  type RenderFnC[P]                             = CtorType.ChildrenArgs => RenderFn[P]
+  type RenderC[P <: js.Object]                  = CtorType.ChildrenArgs => Render[P]
+  type RenderCF[P <: js.Object, F <: js.Object] = CtorType.ChildrenArgs => RenderF[P, F]
 
   type GenericFnComponentP[P <: js.Object]      = GenericFnComponent[P, CtorType.Props, Unit]
   type GenericFnComponentPC[P <: js.Object, A]  =
@@ -83,6 +93,15 @@ package object common extends AllSyntax {
   type GenericComponentPA[P <: js.Object, A]  = GenericJsComponentA[P, CtorType.Props, Unit, A]
   type GenericComponentPAC[P <: js.Object, A] =
     GenericJsComponentAC[P, CtorType.PropsAndChildren, Unit, A]
+
+  type GenericComponentPF[P <: js.Object, F <: js.Object]      =
+    GenericJsComponentF[P, CtorType.Props, Unit, F]
+  type GenericComponentPCF[P <: js.Object, A, F <: js.Object]  =
+    GenericJsComponentCF[P, CtorType.PropsAndChildren, Unit, A, F]
+  type GenericComponentPAF[P <: js.Object, A, F <: js.Object]  =
+    GenericJsComponentAF[P, CtorType.Props, Unit, A, F]
+  type GenericComponentPACF[P <: js.Object, A, F <: js.Object] =
+    GenericJsComponentACF[P, CtorType.PropsAndChildren, Unit, A, F]
 
   implicit class GenericFnComponentPCOps[P <: js.Object, A](val c: GenericFnComponentPC[P, A])
       extends AnyVal {
