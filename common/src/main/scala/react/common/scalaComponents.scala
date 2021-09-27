@@ -8,31 +8,27 @@ import japgolly.scalajs.react.vdom.VdomElement
 
 import scalajs.js
 
-sealed trait ReactRender[Props, S, B, CT[-p, +u] <: CtorType[p, u], U] {
+sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U] {
   protected[common] def props: Props
 
   def ctor: CT[Props, U]
 
   @inline def apply(
-    first: CtorType.ChildArg,
-    rest:  CtorType.ChildArg*
-  )(implicit
-    ev:    CT[Props, Scala.Unmounted[Props, S, B, U]] <:< CtorType.PropsAndChildren[Props, S, B, U]
-  ): U =
+    first:       CtorType.ChildArg,
+    rest:        CtorType.ChildArg*
+  )(implicit ev: CT[Props, U] <:< CtorType.PropsAndChildren[Props, U]): U =
     ctor.applyGeneric(props)((first +: rest): _*)
 
   @inline val toUnmounted: U = ctor.applyGeneric(props)()
 }
 
-sealed trait CtorWithProps[Props, S, B, CT[-p, +u] <: CtorType[p, u], U]
-    extends ReactRender[Props, S, B, CT, U]                            {
-  protected type CloneType[-P, +U0] = CT[P, U0]
-  protected type CloneTypePU        = CloneType[Props, U]
+sealed trait CtorWithProps[Props, CT[-p, +u] <: CtorType[p, u], U]
+    extends ReactRender[Props, CT, U]                            { self =>
 
-  protected def clone(
-    newCtor: CloneTypePU
-  ): CtorWithProps[Props, S, B, CloneType, U] =
-    new CtorWithProps[Props, S, B, CloneType, U] {
+  protected def clone[CT0[-p, +u] <: CtorType[p, u]](
+    newCtor: CT0[Props, U]
+  ): CtorWithProps[Props, CT0, U] =
+    new CtorWithProps[Props, CT0, U] {
       override lazy val ctor                    = newCtor
       override protected[common] lazy val props = self.props
     }
@@ -41,17 +37,17 @@ sealed trait CtorWithProps[Props, S, B, CT[-p, +u] <: CtorType[p, u], U]
     clone(ctor.withKey(key))
 
   final def withKey(k: Long) =
-    clone(ctor.withKey(k).asInstanceOf[CloneTypePU])
+    clone(ctor.withKey(k))
 
   def addMod(f: CtorType.ModFn)                      =
     clone(ctor.addMod(f))
 
   final def withRawProp(name: String, value: js.Any) =
-    clone(ctor.withRawProp(name, value).asInstanceOf[CloneTypePU])
+    clone(ctor.withRawProp(name, value))
 }
 
 sealed trait ReactComponentProps[Props, S, B, CT[-p, +u] <: CtorType[p, u]]
-    extends CtorWithProps[Props, S, B, CT]                             { self =>
+    extends CtorWithProps[Props, CT, Scala.Unmounted[Props, S, B]] { self =>
   def component: Scala.Component[Props, S, B, CT]
 
   protected[common] def props: Props = this.asInstanceOf[Props]
@@ -111,13 +107,13 @@ sealed trait ReactComponentPropsForwardRef[Props, R, CT[-p, +u] <: CtorType[p, u
 
   protected[common] lazy val props: Props = this.asInstanceOf[Props]
 
-  override lazy val ctor: CT[Props, ScalaForwardRef.Unmounted[Props, R]] = component.ctor
+  override val ctor: CT[Props, ScalaForwardRef.Unmounted[Props, R]] = component.ctor
 
   private def copyComponent(
     newComponent: ScalaForwardRef.Component[Props, R, CT]
   ): ReactComponentPropsForwardRef[Props, R, CT] =
     new ReactComponentPropsForwardRef[Props, R, CT] {
-      override lazy val component               = newComponent
+      override val component                    = newComponent
       override protected[common] lazy val props = self.props
     }
 

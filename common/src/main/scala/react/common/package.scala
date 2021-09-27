@@ -48,12 +48,12 @@ package object common extends AllSyntax {
 
   // Begin Scala Components
   @inline implicit def props2Component[Props, S, B, CT[-p, +u] <: CtorType[p, u]](
-    p: ReactRender[Props, S, B, CT, Scala.Unmounted[Props, _, _]]
+    p: ReactRender[Props, CT, Scala.Unmounted[Props, S, B]]
   ): VdomElement =
     p.toUnmounted
 
   implicit class PropsWithChildren2Component[Props, S, B](
-    p: ReactRender[Props, S, B, CtorType.PropsAndChildren, Scala.Unmounted[Props, S, B]]
+    p: ReactRender[Props, CtorType.PropsAndChildren, Scala.Unmounted[Props, S, B]]
   ) {
     @inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
       p(first, rest: _*)
