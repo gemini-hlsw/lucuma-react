@@ -38,9 +38,11 @@ final case class GroupedVirtuoso[D](
   groupContent:            js.UndefOr[Int => VdomNode] = js.undefined,
   groupCounts:             List[Int] = List(Int.MaxValue), // It would be cool if this was a NonEmptyList
   override val modifiers:  Seq[TagMod] = Seq.empty
-) extends GenericComponentPACF[GroupedVirtuoso.GroupedVirtuosoProps[D], GroupedVirtuoso[
-      D
-    ], VirtuosoComponent] {
+) extends GenericComponentPACF[
+      GroupedVirtuoso.GroupedVirtuosoProps[D],
+      GroupedVirtuoso[D],
+      VirtuosoComponent
+    ] {
   override protected def cprops    = GroupedVirtuoso.props(this)
   override protected val component = GroupedVirtuoso.component[D]
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
