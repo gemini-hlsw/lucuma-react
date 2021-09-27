@@ -8,34 +8,27 @@ import japgolly.scalajs.react.vdom.VdomElement
 
 import scalajs.js
 
-sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U]   {
+sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U] {
   protected[common] val props: Props
 
   val ctor: CT[Props, U]
 
   @inline def apply(
-    first: CtorType.ChildArg,
-    rest:  CtorType.ChildArg*
-  )(implicit
-    ev:    CT[Props, U] <:< CtorType.PropsAndChildren[
-      Props,
-      U
-    ]
-  ): U =
+    first:       CtorType.ChildArg,
+    rest:        CtorType.ChildArg*
+  )(implicit ev: CT[Props, U] <:< CtorType.PropsAndChildren[Props, U]): U =
     ctor.applyGeneric(props)((first +: rest): _*)
 
   @inline val toUnmounted: U = ctor.applyGeneric(props)()
 }
 
 sealed trait CtorWithProps[Props, CT[-p, +u] <: CtorType[p, u], U]
-    extends ReactRender[Props, CT, U]                              { self =>
-  protected type CloneType[-P, +U0] = ctor.This[P, U0]
-  protected type CloneTypePU        = CloneType[Props, U]
+    extends ReactRender[Props, CT, U]                            { self =>
 
-  protected def clone(
-    newCtor: CloneTypePU
-  ): CtorWithProps[Props, CloneType, U] =
-    new CtorWithProps[Props, CloneType, U] {
+  protected def clone[CT0[-p, +u] <: CtorType[p, u]](
+    newCtor: CT0[Props, U]
+  ): CtorWithProps[Props, CT0, U] =
+    new CtorWithProps[Props, CT0, U] {
       override lazy val ctor                    = newCtor
       override protected[common] lazy val props = self.props
     }
