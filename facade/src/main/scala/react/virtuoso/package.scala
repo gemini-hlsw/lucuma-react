@@ -27,7 +27,7 @@ package object virtuoso {
   protected[virtuoso] implicit def FuncOps1[A, B](f: A => B): js.UndefOr[js.Function1[A, B]] =
     f: js.Function1[A, B]
   protected[virtuoso] implicit def FuncOps2[A, B, C](
-    f:                                               (A, B) => C
+    f: (A, B) => C
   ): js.UndefOr[js.Function2[A, B, C]] =
     f: js.Function2[A, B, C]
   protected[virtuoso] implicit def FuncOps3[A, B, C, D](

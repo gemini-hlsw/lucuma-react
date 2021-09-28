@@ -1,16 +1,17 @@
 package react.virtuoso
 
+import japgolly.scalajs.react.CtorType
+import japgolly.scalajs.react._
 import japgolly.scalajs.react.component.Js
 import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom._
-import japgolly.scalajs.react.{ CtorType, _ }
 import react.common._
 import react.virtuoso.raw._
 
 import scala.scalajs.js
+import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSImport
 import scala.scalajs.js.|
-import scala.scalajs.js.JSConverters._
 
 final case class GroupedVirtuoso[D](
   totalCount:              js.UndefOr[Int] = js.undefined,
@@ -36,17 +37,17 @@ final case class GroupedVirtuoso[D](
   alignToBottom:           js.UndefOr[Boolean] = js.undefined,
   useWindowScroll:         js.UndefOr[Boolean] = js.undefined,
   groupContent:            js.UndefOr[Int => VdomNode] = js.undefined,
-  groupCounts:             List[Int] = List(Int.MaxValue), // It would be cool if this was a NonEmptyList
-  override val modifiers:  Seq[TagMod] = Seq.empty
+  groupCounts: List[Int] = List(Int.MaxValue), // It would be cool if this was a NonEmptyList
+  override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPACF[
       GroupedVirtuoso.GroupedVirtuosoProps[D],
       GroupedVirtuoso[D],
       VirtuosoComponent
     ] {
-  override protected def cprops    = GroupedVirtuoso.props(this)
-  override protected val component = GroupedVirtuoso.component[D]
+  override protected def cprops                     = GroupedVirtuoso.props(this)
+  override protected val component                  = GroupedVirtuoso.component[D]
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def apply(mods:                      TagMod*)     = addModifiers(mods)
+  def apply(mods: TagMod*)                          = addModifiers(mods)
 }
 
 object GroupedVirtuoso {

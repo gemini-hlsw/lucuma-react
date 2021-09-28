@@ -1,8 +1,8 @@
 package react.virtuoso
 
 import japgolly.scalajs.react.callback.Callback
-import scalajs.js
 
+import scalajs.js
 import scalajs.js.|
 
 trait VirtuosoComponent extends js.Object {

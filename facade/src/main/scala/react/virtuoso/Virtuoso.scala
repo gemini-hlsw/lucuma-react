@@ -1,9 +1,10 @@
 package react.virtuoso
 
+import japgolly.scalajs.react.CtorType
+import japgolly.scalajs.react._
 import japgolly.scalajs.react.component.Js
 import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom._
-import japgolly.scalajs.react.{ CtorType, _ }
 import react.common._
 import react.virtuoso.raw._
 
@@ -36,10 +37,10 @@ final case class Virtuoso[D](
   useWindowScroll:         js.UndefOr[Boolean] = js.undefined,
   override val modifiers:  Seq[TagMod] = Seq.empty
 ) extends GenericComponentPACF[Virtuoso.VirtuosoProps[D], Virtuoso[D], VirtuosoComponent] {
-  override protected def cprops    = Virtuoso.props(this)
-  override protected val component = Virtuoso.component[D]
+  override protected def cprops                     = Virtuoso.props(this)
+  override protected val component                  = Virtuoso.component[D]
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def apply(mods:                      TagMod*)     = addModifiers(mods)
+  def apply(mods: TagMod*)                          = addModifiers(mods)
 }
 
 object Virtuoso {
