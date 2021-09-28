@@ -38,9 +38,9 @@ case class TableDefWithOptions[
     TableStateD,
     Layout
   ],
-  cols:     Reusable[List[ColumnInterface[D]]],
-  data:     Reusable[List[D]],
-  modOpts:  Reusable[TableOptsD => TableOptsD]
+  cols:    Reusable[List[ColumnInterface[D]]],
+  data:    Reusable[List[D]],
+  modOpts: Reusable[TableOptsD => TableOptsD]
 )
 
 case class TableDef[
@@ -256,7 +256,7 @@ case class TableDef[
        * asInstanceOfs.
        */
       def setSortByRowFn[V](
-        f:        D => V
+        f: D => V
       )(implicit
         ordering: Ordering[V],
         ev:       Self <:< UseSortByColumnOptions[D]
