@@ -4,7 +4,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactJS            = "17.0.2"
 val scalaJsReact       = "2.0.0-RC3"
-val scalaJsReactCommon = "0.14.2"
+val scalaJsReactCommon = "0.14.3"
 val highcharts         = "9.1.2"
 
 addCommandAlias(
