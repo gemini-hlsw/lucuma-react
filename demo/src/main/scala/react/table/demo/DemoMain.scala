@@ -3,8 +3,7 @@ package react.table.demo
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
-import react.virtuoso.Virtuoso
-import react.virtuoso.GroupedVirtuoso
+import react.virtuoso._
 import react.virtuoso.raw.ListRange
 
 import scala.scalajs.js
@@ -45,6 +44,8 @@ object DemoMain {
       <.div("index ", index, " item ", item, " group ", groupIndex, ^.className := className)
     }
 
+    val ref = Ref.toJsComponent(Virtuoso.component[Int])
+
     <.div(
       <.h1("Demo for scalajs-react-virtuoso"),
       <.h2("Basic List"),
@@ -55,6 +56,11 @@ object DemoMain {
       )(
         ^.height := "400px",
         ^.width  := "200px"
+      ).withRef(ref),
+      <.button(^.onClick --> ref.foreach(
+                 _.raw.scrollTo(ScrollToOptions(top = 1, behavior = ScrollBehavior.Smooth))
+               ),
+               "Scroll to top"
       ),
       <.h2("Infinite List"),
       <.div("Starts with 100 elements and adds more as needed."),

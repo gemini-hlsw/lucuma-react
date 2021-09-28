@@ -35,7 +35,7 @@ final case class Virtuoso[D](
   alignToBottom:           js.UndefOr[Boolean] = js.undefined,
   useWindowScroll:         js.UndefOr[Boolean] = js.undefined,
   override val modifiers:  Seq[TagMod] = Seq.empty
-) extends GenericComponentPAC[Virtuoso.VirtuosoProps[D], Virtuoso[D]] {
+) extends GenericComponentPACF[Virtuoso.VirtuosoProps[D], Virtuoso[D], VirtuosoComponent] {
   override protected def cprops    = Virtuoso.props(this)
   override protected val component = Virtuoso.component[D]
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
@@ -266,5 +266,6 @@ object Virtuoso {
     p
   }
 
-  private def component[D] = JsComponent[VirtuosoProps[D], Children.Varargs, Null](RawComponent)
+  def component[D] =
+    JsComponent[VirtuosoProps[D], Children.Varargs, Null](RawComponent).addFacade[VirtuosoComponent]
 }
