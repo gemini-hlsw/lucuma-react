@@ -4,7 +4,6 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.component.Scala
 import japgolly.scalajs.react.component.ScalaFn
 import japgolly.scalajs.react.component.ScalaForwardRef
-import japgolly.scalajs.react.vdom.VdomElement
 
 import scalajs.js
 
@@ -88,12 +87,6 @@ class ReactFnProps[Props](val component: ScalaFn.Component[Props, CtorType.Props
   override lazy val ctor: CtorType.Props[Props, ScalaFn.Unmounted[Props]] = component.ctor
 }
 
-object ReactFnProps                                                       {
-  implicit def render[Props, CT[-p, +u] <: CtorType[p, u], U](
-    props: ReactFnComponentProps[Props, CT, U]
-  ): VdomElement = props.component.applyGeneric(props.props)().vdomElement
-}
-
 class ReactFnPropsWithChildren[Props](
   val component: ScalaFn.Component[Props, CtorType.PropsAndChildren]
 ) extends ReactFnComponentProps[Props, CtorType.PropsAndChildren, ScalaFn.Unmounted[Props]] {
@@ -102,18 +95,18 @@ class ReactFnPropsWithChildren[Props](
 }
 
 sealed trait ReactComponentPropsForwardRef[Props, R, CT[-p, +u] <: CtorType[p, u]]
-    extends CtorWithProps[Props, CT, ScalaForwardRef.Unmounted[Props, R]] { self =>
-  val component: ScalaForwardRef.Component[Props, R, CT]
+    extends CtorWithProps[Props, CT, ScalaForwardRef.Unmounted[Props, R]]          { self =>
+  def component: ScalaForwardRef.Component[Props, R, CT]
 
   protected[common] lazy val props: Props = this.asInstanceOf[Props]
 
-  override val ctor: CT[Props, ScalaForwardRef.Unmounted[Props, R]] = component.ctor
+  override lazy val ctor: CT[Props, ScalaForwardRef.Unmounted[Props, R]] = component.ctor
 
   private def copyComponent(
     newComponent: ScalaForwardRef.Component[Props, R, CT]
   ): ReactComponentPropsForwardRef[Props, R, CT] =
     new ReactComponentPropsForwardRef[Props, R, CT] {
-      override val component                    = newComponent
+      override lazy val component               = newComponent
       override protected[common] lazy val props = self.props
     }
 

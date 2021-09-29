@@ -4,15 +4,15 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.component.Generic
 import japgolly.scalajs.react.component.Js._
 import japgolly.scalajs.react.component.Scala
+import japgolly.scalajs.react.component.ScalaFn
 import japgolly.scalajs.react.component.ScalaForwardRef
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.vdom.TagMod
-import react.common.syntax.AllSyntax
 
 import scala.scalajs.js
 
-package object common extends AllSyntax {
+package object common extends react.common.syntax.AllSyntax {
 
   def merge(a: js.Object, b: js.Object): js.Object = {
     val m = js.Dictionary.empty[js.Any]
@@ -54,6 +54,18 @@ package object common extends AllSyntax {
 
   implicit class PropsWithChildren2Component[Props, S, B](
     p: ReactRender[Props, CtorType.PropsAndChildren, Scala.Unmounted[Props, S, B]]
+  ) {
+    @inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
+      p(first, rest: _*)
+  }
+
+  @inline implicit def fnProps2Component[Props, CT[-p, +u] <: CtorType[p, u]](
+    p: ReactRender[Props, CT, ScalaFn.Unmounted[Props]]
+  ): VdomElement =
+    p.toUnmounted
+
+  implicit class FnPropsWithChildren2Component[Props](
+    p: ReactRender[Props, CtorType.PropsAndChildren, ScalaFn.Unmounted[Props]]
   ) {
     @inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
       p(first, rest: _*)

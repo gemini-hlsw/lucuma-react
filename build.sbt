@@ -77,13 +77,12 @@ lazy val test            =
         "org.scalameta" %%% "munit"     % "0.7.29",
         "org.typelevel" %%% "cats-core" % "2.6.1" % Test
       ),
-      (Test / webpackExtraArgs)
-        .withRank(KeyRanks.Invisible)                            := Seq("--verbose", "--progress", "true"),
       Test / webpackConfigFile                                   := Some(
         baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
       ),
       scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-      testFrameworks += new TestFramework("munit.Framework")
+      testFrameworks += new TestFramework("munit.Framework"),
+      scalacOptions ~= (_.filterNot(Set("-Vtype-diffs")))
     )
     .dependsOn(cats, common)
 
