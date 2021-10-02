@@ -14,7 +14,7 @@ package object draggable {
 package draggable {
   sealed trait Axis
 
-  object Axis                               {
+  object Axis {
     implicit val enumValue: EnumValue[Axis] = EnumValue.toLowerCaseString
 
     case object Both extends Axis
@@ -97,7 +97,7 @@ package draggable {
 
   /** Raw facades, shouldn't be exposed to final users
     */
-  private[draggable] object raw        {
+  private[draggable] object raw {
     type RawOnMouseDown = js.Function1[MouseEvent, Unit]
 
     type RawDraggableEventHandler =
