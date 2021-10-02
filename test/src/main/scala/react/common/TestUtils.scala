@@ -36,7 +36,7 @@ trait TestUtils {
   def assertOuterHTML(node: Element, expect: String): Unit =
     assertEquals(scrubReactHtml(node.outerHTML), expect)
 
-  private val reactRubbish                                 =
+  private val reactRubbish =
     """\s+data-react\S*?\s*?=\s*?".*?"|<!--(?:.|[\r\n])*?-->""".r
 
   def scrubReactHtml(html: String): String =

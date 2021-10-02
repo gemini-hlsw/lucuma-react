@@ -35,7 +35,7 @@ lazy val common: Project =
       name := "common"
     )
 
-lazy val cats: Project   =
+lazy val cats: Project =
   project
     .in(file("cats"))
     .enablePlugins(ScalaJSPlugin)
@@ -53,7 +53,7 @@ lazy val cats: Project   =
     )
     .dependsOn(common)
 
-lazy val test            =
+lazy val test =
   project
     .in(file("test"))
     .enablePlugins(ScalaJSBundlerPlugin)
@@ -86,7 +86,7 @@ lazy val test            =
     )
     .dependsOn(cats, common)
 
-lazy val root            = (project in file("."))
+lazy val root = (project in file("."))
   .enablePlugins(ScalaJSPlugin)
   .settings(commonSettings: _*)
   .settings(
@@ -100,7 +100,7 @@ lazy val root            = (project in file("."))
   )
   .aggregate(common, cats, test)
 
-lazy val commonSettings  = Seq(
+lazy val commonSettings = Seq(
   scalaVersion           := "2.13.6",
   organization           := "io.github.cquiroz.react",
   description            := "scala.js react common utilities",

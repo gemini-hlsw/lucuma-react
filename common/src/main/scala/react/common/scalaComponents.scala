@@ -22,7 +22,7 @@ sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U] {
 }
 
 sealed trait CtorWithProps[Props, CT[-p, +u] <: CtorType[p, u], U]
-    extends ReactRender[Props, CT, U]                            { self =>
+    extends ReactRender[Props, CT, U] { self =>
 
   protected def clone[CT0[-p, +u] <: CtorType[p, u]](
     newCtor: CT0[Props, U]
@@ -32,13 +32,13 @@ sealed trait CtorWithProps[Props, CT[-p, +u] <: CtorType[p, u], U]
       override protected[common] lazy val props = self.props
     }
 
-  def withKey(key: Key)      =
+  def withKey(key: Key) =
     clone(ctor.withKey(key))
 
   final def withKey(k: Long) =
     clone(ctor.withKey(k))
 
-  def addMod(f: CtorType.ModFn)                      =
+  def addMod(f: CtorType.ModFn) =
     clone(ctor.addMod(f))
 
   final def withRawProp(name: String, value: js.Any) =
@@ -103,7 +103,7 @@ class ReactFnPropsWithChildren[Props](
 }
 
 sealed trait ReactComponentPropsForwardRef[Props, R, CT[-p, +u] <: CtorType[p, u]]
-    extends CtorWithProps[Props, CT, ScalaForwardRef.Unmounted[Props, R]]          { self =>
+    extends CtorWithProps[Props, CT, ScalaForwardRef.Unmounted[Props, R]] { self =>
   val component: ScalaForwardRef.Component[Props, R, CT]
 
   protected[common] lazy val props: Props = this.asInstanceOf[Props]
