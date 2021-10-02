@@ -25,13 +25,13 @@ trait ArbStyle {
   implicit val cogenStyle: Cogen[Style]                =
     Cogen[List[(String, String | Int)]].contramap(_.styles.toList)
 
-  implicit val arbGStyle: Arbitrary[Css]               = Arbitrary {
+  implicit val arbGStyle: Arbitrary[Css] = Arbitrary {
     for {
       cs <- Gen.listOf(Gen.alphaLowerStr)
     } yield Css(cs)
   }
 
-  implicit val gStyleCogen: Cogen[Css]                 =
+  implicit val gStyleCogen: Cogen[Css] =
     Cogen[String].contramap(_.htmlClass)
 
 }

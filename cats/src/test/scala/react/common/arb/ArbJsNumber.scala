@@ -21,7 +21,7 @@ trait ArbJsNumber {
     )
   }
 
-  implicit val cogenJsNumber: Cogen[JsNumber]   =
+  implicit val cogenJsNumber: Cogen[JsNumber] =
     Cogen[Either[Byte, Either[Short, Either[Int, Either[Float, Double]]]]].contramap { x =>
       (x: Any) match {
         case b: Byte   => Left(b)
