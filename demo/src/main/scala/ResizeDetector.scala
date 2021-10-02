@@ -38,11 +38,11 @@ object ResizeDetector {
     val targetRef: React.RefFn[html.Element]
   }
 
-  trait Dimensions   {
+  trait Dimensions  {
     val height: Option[Int]
     val width: Option[Int]
   }
-  object Dimensions  {
+  object Dimensions {
     implicit val dimensionsReuse: Reusability[Dimensions] = Reusability.by(d => (d.height, d.width))
   }
 
@@ -80,7 +80,7 @@ object ResizeDetector {
       case DevicePixelContent => "device-pixel-content-box"
     })
 
-    case object Content extends ObserveBox
+    case object Content            extends ObserveBox
     case object Border             extends ObserveBox
     case object DevicePixelContent extends ObserveBox
   }
