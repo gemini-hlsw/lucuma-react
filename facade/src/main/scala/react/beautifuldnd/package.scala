@@ -33,7 +33,7 @@ package object beautifuldnd {
   }
 
   type Direction = "horizontal" | "vertical"
-  object Direction                         {
+  object Direction {
     val Horizontal = "horizontal"
     val Vertical   = "vertical"
   }
