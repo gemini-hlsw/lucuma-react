@@ -35,7 +35,7 @@ package resizable {
         case x    => sys.error(s"Unkwon axis $x")
       }
 
-    case object South extends ResizeHandleAxis
+    case object South     extends ResizeHandleAxis
     case object West      extends ResizeHandleAxis
     case object East      extends ResizeHandleAxis
     case object North     extends ResizeHandleAxis
