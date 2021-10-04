@@ -39,7 +39,8 @@ object DemoMain {
         <.b(s"GROUP $groupIndex")
       )
 
-    val toGroupedRow = (index: Int, groupIndex: Int, item: Int) => {
+    val toGroupedRow = (index: Int, groupIndex: Int) => {
+      val item      = data(index)
       val className = if (index % 2 == 0) "row even" else "row odd"
       <.div("index ", index, " item ", item, " group ", groupIndex, ^.className := className)
     }
@@ -68,8 +69,7 @@ object DemoMain {
       Infinite.component(),
       <.h2("Grouped List"),
       <.div("List of 1000 elements."),
-      GroupedVirtuoso[Int](
-        data = data,
+      GroupedVirtuoso(
         itemContent = toGroupedRow,
         groupContent = groupHeader,
         groupCounts = groups

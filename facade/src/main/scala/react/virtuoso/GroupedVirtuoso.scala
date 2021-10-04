@@ -13,15 +13,14 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSImport
 import scala.scalajs.js.|
 
-final case class GroupedVirtuoso[D](
+final case class GroupedVirtuoso(
   totalCount:              js.UndefOr[Int] = js.undefined,
-  data:                    js.UndefOr[js.Array[D]] = js.undefined,
   overscan:                js.UndefOr[Int | OverScan] = js.undefined,
   topItemCount:            js.UndefOr[Int] = js.undefined,
   initialTopMostItemIndex: js.UndefOr[Int] = js.undefined,
   initialScrollTop:        js.UndefOr[Int] = js.undefined,
   initialItemCount:        js.UndefOr[Int] = js.undefined,
-  itemContent:             js.UndefOr[(Int, Int, D) => VdomNode] = js.undefined,
+  itemContent:             js.UndefOr[(Int, Int) => VdomNode] = js.undefined,
   computeItemKey:          js.UndefOr[Int => Key] = js.undefined,
   defaultItemHeight:       js.UndefOr[Double] = js.undefined,
   fixedItemHeight:         js.UndefOr[Double] = js.undefined,
@@ -40,12 +39,12 @@ final case class GroupedVirtuoso[D](
   groupCounts: List[Int] = List(Int.MaxValue), // It would be cool if this was a NonEmptyList
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPACF[
-      GroupedVirtuoso.GroupedVirtuosoProps[D],
-      GroupedVirtuoso[D],
+      GroupedVirtuoso.GroupedVirtuosoProps,
+      GroupedVirtuoso,
       VirtuosoComponent
     ] {
   override protected def cprops                     = GroupedVirtuoso.props(this)
-  override protected val component                  = GroupedVirtuoso.component[D]
+  override protected val component                  = GroupedVirtuoso.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def apply(mods: TagMod*)                          = addModifiers(mods)
 }
@@ -58,18 +57,12 @@ object GroupedVirtuoso {
   object RawComponent extends js.Object
 
   @js.native
-  trait GroupedVirtuosoProps[D] extends js.Object {
+  trait GroupedVirtuosoProps extends js.Object {
 
     /**
      * The total amount of items to be rendered.
      */
     var totalCount: js.UndefOr[JsNumber] = js.native
-
-    /**
-     * The data items to be rendered. If data is set, the total count will be inferred from the
-     * length of the array.
-     */
-    var data: js.UndefOr[js.Array[D]] = js.native
 
     /**
      * Increases the visual window which is used to calculate the rendered items with the specified
@@ -115,7 +108,7 @@ object GroupedVirtuoso {
     /**
      * Set the callback to specify the contents of the item.
      */
-    var itemContent: js.UndefOr[js.Function3[Double, Double, D, facade.React.Node]] =
+    var itemContent: js.UndefOr[js.Function2[Double, Double, facade.React.Node]] =
       js.native
 
     /**
@@ -259,21 +252,16 @@ object GroupedVirtuoso {
     var groupCounts: js.UndefOr[js.Array[Double]] = js.undefined
   }
 
-  def props[D](q: GroupedVirtuoso[D]): GroupedVirtuosoProps[D] = {
-    val p = (new js.Object).asInstanceOf[GroupedVirtuosoProps[D]]
+  def props[D](q: GroupedVirtuoso): GroupedVirtuosoProps = {
+    val p = (new js.Object).asInstanceOf[GroupedVirtuosoProps]
     q.totalCount.foreach(v => p.totalCount = v)
-    q.data.foreach(v => p.data = v)
     q.overscan.foreach(v => p.overscan = v)
     q.topItemCount.foreach(v => p.topItemCount = v)
     q.initialTopMostItemIndex.foreach(v => p.initialTopMostItemIndex = v)
     q.initialScrollTop.foreach(v => p.initialScrollTop = v)
     q.initialItemCount.foreach(v => p.initialItemCount = v)
     q.itemContent.foreach(v =>
-      p.itemContent = (
-        idx:      Double,
-        groupIdx: Double,
-        d:        D
-      ) => v(idx.toInt, groupIdx.toInt, d).rawNode
+      p.itemContent = (idx: Double, groupIdx: Double) => v(idx.toInt, groupIdx.toInt).rawNode
     )
     q.computeItemKey.foreach(v => p.computeItemKey = (d: Double) => v(d.toInt))
     q.defaultItemHeight.foreach(v => p.defaultItemHeight = v)
@@ -294,7 +282,7 @@ object GroupedVirtuoso {
     p
   }
 
-  def component[D] =
-    JsComponent[GroupedVirtuosoProps[D], Children.Varargs, Null](RawComponent)
+  val component =
+    JsComponent[GroupedVirtuosoProps, Children.Varargs, Null](RawComponent)
       .addFacade[VirtuosoComponent]
 }
