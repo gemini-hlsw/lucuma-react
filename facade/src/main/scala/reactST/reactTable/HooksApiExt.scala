@@ -25,7 +25,7 @@ object HooksApiExt {
         Layout
       ]
     )(implicit
-      step: Step
+      step:                Step
     ): step.Next[Reusable[TableInstanceD]] =
       useTableBy(_ => tableDefWithOptions)
 
@@ -48,7 +48,7 @@ object HooksApiExt {
         Layout
       ]
     )(implicit
-      step: Step
+      step:                Step
     ): step.Next[Reusable[TableInstanceD]] =
       api.customBy(ctx => TableHooks.useTableHook(tableDefWithOptions(ctx)))
   }
@@ -76,7 +76,7 @@ object HooksApiExt {
         Layout
       ]]
     )(implicit
-      step: Step
+      step:                Step
     ): step.Next[Reusable[TableInstanceD]] =
       super.useTableBy(step.squash(tableDefWithOptions)(_))
 
