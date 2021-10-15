@@ -45,7 +45,7 @@ object HTMLTable {
    *     similar for an "extra" header row might be useful since header groups have some issues.
    */
   def apply[D, TableInstanceD <: TableInstance[D], ColumnObjectD <: ColumnObject[D]](
-    tableDef: TableDef[D, _, TableInstanceD, _, ColumnObjectD, _, _] // Only used to infer types
+    tableDef:     TableDef[D, _, TableInstanceD, _, ColumnObjectD, _, _] // Only used to infer types
   )(
     headerCellFn: Option[ColumnObjectD => TagMod],
     tableClass:   Css = Css(""),
@@ -69,7 +69,7 @@ object HTMLTable {
       val rows = tableInstance.rows.toTagMod { rd =>
         tableInstance.prepareRow(rd)
         val rowClass = rowClassFn(rd.index.toInt, rd.original)
-        val cells = rd.cells.toTagMod { cell =>
+        val cells    = rd.cells.toTagMod { cell =>
           <.td(props2Attrs(cell.getCellProps()), cell.renderCell)
         }
         <.tr(rowClass, props2Attrs(rd.getRowProps()), cells)
@@ -111,7 +111,7 @@ object HTMLTable {
    *     or it won't work.
    */
   def virtualized[D, TableInstanceD <: TableInstance[D], ColumnObjectD <: ColumnObject[D]](
-    tableDef: TableDef[D, _, TableInstanceD, _, ColumnObjectD, _, Layout.NonTable]
+    tableDef:     TableDef[D, _, TableInstanceD, _, ColumnObjectD, _, Layout.NonTable]
   )(
     bodyHeight:   Option[Double] = None,
     headerCellFn: Option[ColumnObjectD => TagMod],
