@@ -36,8 +36,8 @@ final case class GroupedVirtuoso(
   alignToBottom:           js.UndefOr[Boolean] = js.undefined,
   useWindowScroll:         js.UndefOr[Boolean] = js.undefined,
   groupContent:            js.UndefOr[Int => VdomNode] = js.undefined,
-  groupCounts: List[Int] = List(Int.MaxValue), // It would be cool if this was a NonEmptyList
-  override val modifiers: Seq[TagMod] = Seq.empty
+  groupCounts:             List[Int] = List(Int.MaxValue), // It would be cool if this was a NonEmptyList
+  override val modifiers:  Seq[TagMod] = Seq.empty
 ) extends GenericComponentPACF[
       GroupedVirtuoso.GroupedVirtuosoProps,
       GroupedVirtuoso,
