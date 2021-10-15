@@ -96,13 +96,13 @@ object DemoMain {
           }.flatMap(newEles => $.setState(state ++ newEles))
 
         // these callbacks just print info to the console.
-        val isScrolling: Boolean => Callback = b => Callback(println(s"isScrolling: $b"))
-        val startReached: Int => Callback    = i => Callback(println(s"startReached index: $i"))
-        val rangeChanged: ListRange => Callback = ls =>
+        val isScrolling: Boolean => Callback         = b => Callback(println(s"isScrolling: $b"))
+        val startReached: Int => Callback            = i => Callback(println(s"startReached index: $i"))
+        val rangeChanged: ListRange => Callback      = ls =>
           Callback(println(s"rangeChanged: ${ls.startIndex}-${ls.endIndex}"))
         val atBottomStateChange: Boolean => Callback = b =>
           Callback(println(s"atBottomStateChange: $b"))
-        val atTopStateChange: Boolean => Callback = b => Callback(println(s"atTopStateChange: $b"))
+        val atTopStateChange: Boolean => Callback    = b => Callback(println(s"atTopStateChange: $b"))
 
         val toRow = (index: Int, item: Int) => {
           val className = if (index % 2 == 0) "row even" else "row odd"
@@ -119,7 +119,7 @@ object DemoMain {
           atTopStateChange = atTopStateChange
         )(
           ^.height := "400px",
-          ^.width  := "200px"
+          ^.width := "200px"
         )
       }
     }
