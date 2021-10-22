@@ -1,21 +1,11 @@
 package reactST.reactTable
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.facade.React.ComponentClassP
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.Css
 import react.virtuoso.Virtuoso
-import reactST.reactTable.anon.Data
-import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
-import reactST.reactTable.mod.{ ^ => _, _ }
-import reactST.reactTable.syntax._
+import reactST.reactTable.facade.column.Column
 import reactST.reactTable.util._
-import reactST.std.Partial
-
-import scalajs.js
-import scalajs.js.|
-import scalajs.js.JSConverters._
-import reactTableStrings._
 
 object HTMLTable {
 
@@ -44,15 +34,13 @@ object HTMLTable {
    *     span multiple columns and react-table does not support that. At some point, something
    *     similar for an "extra" header row might be useful since header groups have some issues.
    */
-  def apply[D, TableInstanceD <: TableInstance[D], ColumnObjectD <: ColumnObject[D]](
-    tableDef:     TableDef[D, _, TableInstanceD, _, ColumnObjectD, _, _] // Only used to infer types
-  )(
-    headerCellFn: Option[ColumnObjectD => TagMod],
-    tableClass:   Css = Css(""),
-    rowClassFn:   (Int, D) => Css = (_: Int, _: D) => Css(""),
-    footer:       TagMod = TagMod.empty
+  def apply[D, Plugins](tableDef: TableDef[D, Plugins, _])( // tableDef is only used to infer D type
+    headerCellFn:                 Option[tableDef.ColumnType => TagMod],
+    tableClass:                   Css = Css(""),
+    rowClassFn:                   (Int, D) => Css = (_: Int, _: D) => Css(""),
+    footer:                       TagMod = TagMod.empty
   ) =
-    ScalaFnComponent[TableInstanceD] { tableInstance =>
+    ScalaFnComponent[tableDef.InstanceType] { tableInstance =>
       val bodyProps = tableInstance.getTableBodyProps()
 
       val header = headerCellFn.fold(TagMod.empty) { f =>
@@ -60,7 +48,7 @@ object HTMLTable {
           tableInstance.headerGroups.toTagMod { g =>
             <.tr(
               props2Attrs(g.getHeaderGroupProps()),
-              TableDef.headersFromGroup(g).toTagMod(f(_))
+              g.headers.map(f).toTagMod
             )
           }
         )
@@ -110,18 +98,18 @@ object HTMLTable {
    *     or the body will collapse to nothing. In CSS, you MUST NOT use relative values like "100%"
    *     or it won't work.
    */
-  def virtualized[D, TableInstanceD <: TableInstance[D], ColumnObjectD <: ColumnObject[D]](
-    tableDef:     TableDef[D, _, TableInstanceD, _, ColumnObjectD, _, Layout.NonTable]
+  def virtualized[D, Plugins](
+    tableDef:     TableDef[D, Plugins, _] // tableDef is only used to infer D and Plugins types
   )(
     bodyHeight:   Option[Double] = None,
-    headerCellFn: Option[ColumnObjectD => TagMod],
+    headerCellFn: Option[tableDef.ColumnType => TagMod],
     tableClass:   Css = Css(""),
     rowClassFn:   (Int, D) => Css = (_: Int, _: D) => Css("")
   ) =
-    ScalaFnComponent[TableInstanceD] { tableInstance =>
+    ScalaFnComponent[tableDef.InstanceType] { tableInstance =>
       val bodyProps = tableInstance.getTableBodyProps()
 
-      val rowComp = (_: Int, row: Row[D]) => {
+      val rowComp = (_: Int, row: tableDef.RowType) => {
         tableInstance.prepareRow(row)
         val cells = row.cells.toTagMod { cell =>
           <.div(^.className := "td", props2Attrs(cell.getCellProps()), cell.renderCell)
@@ -141,14 +129,14 @@ object HTMLTable {
           tableInstance.headerGroups.toTagMod { g =>
             <.div(^.className := "tr",
                   props2Attrs(g.getHeaderGroupProps()),
-                  TableDef.headersFromGroup(g).toTagMod(f(_))
+                  g.headers.map(f).toTagMod
             )
           }
         )
       }
 
       val height = bodyHeight.fold(TagMod.empty)(h => ^.height := s"${h}px")
-      val rows   = Virtuoso[Row[D]](data = tableInstance.rows, itemContent = rowComp)
+      val rows   = Virtuoso[tableDef.RowType](data = tableInstance.rows, itemContent = rowComp)
 
       <.div(^.className := "table",
             tableClass,
@@ -169,7 +157,7 @@ object HTMLTable {
   def basicHeaderCellFn(
     cellClass: Css = Css.Empty,
     useDiv:    Boolean = false
-  ): ColumnObject[_] => TagMod =
+  ): Column[_, _] => TagMod =
     col => headerCell(useDiv)(props2Attrs(col.getHeaderProps()), cellClass, col.renderHeader)
 
   /**
@@ -183,29 +171,28 @@ object HTMLTable {
    *   True to use a <div> instead of a <th>. Needed for tables withBlockLayout.
    * @return
    */
-  def sortableHeaderCellFn(
+  def sortableHeaderCellFn[D, Plugins](
     cellClass: Css = Css.Empty,
     useDiv:    Boolean = false
-  ): ColumnObject[_] with UseSortByColumnProps[_] => TagMod =
-    col => {
-      def sortIndicator(col: UseSortByColumnProps[_]): TagMod =
-        if (col.isSorted) {
-          val index   = if (col.sortedIndex > 0) (col.sortedIndex + 1).toString else ""
-          val ascDesc = if (col.isSortedDesc.getOrElse(false)) "\u2191" else "\u2193"
-          <.span(s" $index$ascDesc")
-        } else TagMod.empty
+  )(col:       Column[D, Plugins])(implicit ev: Plugins <:< Plugin.SortBy.Tag): TagMod = {
+    def sortIndicator(col: Column[D, Plugins]): TagMod =
+      if (col.isSorted) {
+        val index   = if (col.sortedIndex > 0) (col.sortedIndex + 1).toString else ""
+        val ascDesc = if (col.isSortedDesc.getOrElse(false)) "\u2191" else "\u2193"
+        <.span(s" $index$ascDesc")
+      } else TagMod.empty
 
-      val headerProps = col.getHeaderProps()
-      val toggleProps = col.getSortByToggleProps()
+    val headerProps = col.getHeaderProps()
+    val toggleProps = col.getSortByToggleProps()
 
-      headerCell(useDiv)(
-        props2Attrs(headerProps),
-        props2Attrs(toggleProps),
-        cellClass,
-        col.renderHeader,
-        <.span(sortIndicator(col))
-      )
-    }
+    headerCell(useDiv)(
+      props2Attrs(headerProps),
+      props2Attrs(toggleProps),
+      cellClass,
+      col.renderHeader,
+      <.span(sortIndicator(col))
+    )
+  }
 
   /**
    * A function to use in the builder methods for the footerCellFn parameter. This is a a basic
@@ -216,10 +203,11 @@ object HTMLTable {
    * @param useDiv
    *   True to use a <div> instead of a <th>. Needed for tables withBlockLayout.
    */
+
   def basicFooterCellFn(
     cellClass: Css = Css.Empty,
     useDiv:    Boolean = false
-  ): ColumnObject[_] => TagMod = { col =>
+  ): Column[_, _] => TagMod = { col =>
     col.Footer.map(_ =>
       headerCell(useDiv)(
         props2Attrs(col.getFooterProps()),

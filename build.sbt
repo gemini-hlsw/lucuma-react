@@ -58,7 +58,7 @@ inThisBuild(
   )
 )
 
-val root        =
+val root =
   project
     .in(file("."))
     .aggregate(facade, demo)
@@ -72,7 +72,7 @@ val root        =
       Keys.`package`  := file("")
     )
 
-lazy val demo   =
+lazy val demo =
   project
     .in(file("demo"))
     .enablePlugins(ScalaJSBundlerPlugin)
@@ -171,10 +171,10 @@ lazy val facade =
       scalacOptions ~= (_.filterNot(
         Set(
           // By necessity facades will have unused params
-          "-Wdead-code",
           "-Wunused:params",
           "-Wunused:explicits",
           "-Wunused:imports",
+          "-Wdead-code",
           "-Wvalue-discard",
           "-Xlint:missing-interpolator",
           "-Xlint:nullary-unit"
