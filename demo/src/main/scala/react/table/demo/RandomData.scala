@@ -4,8 +4,6 @@ import scala.util.Random.nextInt
 
 // word lists and code adapted from https://github.com/bmarcot/haiku
 object RandomData {
-  case class Person(id: Int, first: String, last: String, age: Int)
-
   def getRandElt[A](xs: List[A]): A = xs.apply(nextInt(xs.size))
 
   def getAge: Int = nextInt(110)

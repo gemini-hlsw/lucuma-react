@@ -9,108 +9,98 @@ import japgolly.scalajs.react.facade.React.ComponentClassP
 import japgolly.scalajs.react.vdom._
 import org.scalablytyped.runtime.StObject
 import reactST.reactTable.anon.Data
-import reactST.reactTable.anon.IdIdType
 import reactST.reactTable.anon.IdIdType._
 import reactST.reactTable.anon.`1`._
-import reactST.reactTable.mod.ColumnInterfaceBasedOnValue._
-import reactST.reactTable.mod.{ ^ => _, _ }
+import reactST.reactTable.facade.cell.Cell
+import reactST.reactTable.facade.cell.CellProps
+import reactST.reactTable.facade.column.Column
+import reactST.reactTable.facade.columnOptions
+import reactST.reactTable.facade.columnOptions.ColumnInterfaceBasedOnValue
+import reactST.reactTable.facade.columnOptions.ColumnOptions
+import reactST.reactTable.facade.columnOptions.TableOptions
+import reactST.reactTable.facade.row.Row
+import reactST.reactTable.facade.tableInstance.TableInstance
+import reactST.reactTable.facade.tableState.TableState
+import reactST.reactTable.mod.CellValue
+import reactST.reactTable.mod.DefaultSortTypes
+import reactST.reactTable.mod.Renderer
+import reactST.reactTable.mod.SortByFn
+import reactST.reactTable.mod.UseResizeColumnsColumnOptions
+import reactST.reactTable.mod.UseResizeColumnsOptions
+import reactST.reactTable.mod.UseSortByColumnOptions
 import reactST.std.Partial
 
 import scalajs.js
 import scalajs.js.|
 import scalajs.js.JSConverters._
 
-case class TableDefWithOptions[
-  D,
-  TableOptsD <: UseTableOptions[D],
-  TableInstanceD <: TableInstance[D],
-  ColumnOptsD <: ColumnOptions[D],
-  ColumnObjectD <: ColumnObject[D],
-  TableStateD <: TableState[D],
-  Layout
-](
-  tableDef: TableDef[
-    D,
-    TableOptsD,
-    TableInstanceD,
-    ColumnOptsD,
-    ColumnObjectD,
-    TableStateD,
-    Layout
-  ],
-  cols:     Reusable[List[ColumnInterface[D]]],
+case class TableDefWithOptions[D, Plugins, Layout](
+  tableDef: TableDef[D, Plugins, Layout],
+  cols:     Reusable[List[ColumnOptions[D, Plugins]]],
   data:     Reusable[List[D]],
-  modOpts:  Reusable[TableOptsD => TableOptsD]
+  modOpts:  Reusable[TableOptions[D, Plugins] => TableOptions[D, Plugins]]
 )
 
-case class TableDef[
-  D,
-  TableOptsD <: UseTableOptions[D],
-  TableInstanceD <: TableInstance[D],
-  ColumnOptsD <: ColumnOptions[D],
-  ColumnObjectD <: ColumnObject[D],
-  TableStateD <: TableState[D],
-  Layout
-](plugins: Set[Plugin]) {
-  type OptionsType       = TableOptsD
-  type InstanceType      = TableInstanceD
-  type ColumnOptionsType = ColumnOptsD
-  type ColumnType        = ColumnObjectD
-  type StateType         = TableStateD
-
-  import syntax._
+case class TableDef[D, Plugins, Layout](plugins: Set[Plugin]) {
+  type OptionsType             = TableOptions[D, Plugins]
+  type InstanceType            = TableInstance[D, Plugins]
+  type ColumnOptionsType       = ColumnOptions[D, Plugins]
+  type SingleColumnOptionsType = SingleColumnOptions[D, Plugins]
+  type ColumnGroupOptionsType  = ColumnGroupOptions[D, Plugins]
+  type ColumnType              = Column[D, Plugins]
+  type RowType                 = Row[D, Plugins]
+  type CellType[V]             = Cell[D, V, Plugins]
+  type TableStateType          = TableState[D, Plugins]
 
   def apply(
-    cols:    Reusable[List[ColumnInterface[D]]],
+    cols:    Reusable[List[ColumnOptions[D, Plugins]]],
     data:    Reusable[List[D]],
-    modOpts: Reusable[TableOptsD => TableOptsD] = Reusable.always(identity[TableOptsD] _)
-  ): TableDefWithOptions[
-    D,
-    TableOptsD,
-    TableInstanceD,
-    ColumnOptsD,
-    ColumnObjectD,
-    TableStateD,
-    Layout
-  ] =
+    modOpts: Reusable[OptionsType => OptionsType] = Reusable.always(identity[OptionsType] _)
+  ): TableDefWithOptions[D, Plugins, Layout] =
     TableDefWithOptions(this, cols, data, modOpts)
 
-  private def emptyOptions: TableOptsD = js.Dynamic.literal().asInstanceOf[TableOptsD]
+  private def emptyOptions: OptionsType = js.Dynamic.literal().asInstanceOf[OptionsType]
 
   /**
    * Create a TableOptsD. columns and data are required. Other options can be `set*`.
    */
   protected[reactTable] def Options(
-    columns: js.Array[ColumnInterface[D]],
+    columns: js.Array[ColumnOptions[D, Plugins]],
     data:    js.Array[D]
-  ): TableOptsD =
+  ): OptionsType =
     emptyOptions
-      .setColumns(columns.asInstanceOf[js.Array[Column[D]]])
+      .setColumns(columns)
       .setData(data)
 
   /**
    * Create an empty instance of ColumnOptsD. As per react-table's doc: Warning: Only omit accessor
    * if you really know what you're doing.
    */
-  def emptyColumn[V]: ColumnValueOptions[D, V, ColumnOptsD] =
-    js.Dynamic.literal().asInstanceOf[ColumnValueOptions[D, V, ColumnOptsD]]
+  def emptyColumn[V]: ColumnValueOptions[D, V, Plugins] =
+    js.Dynamic.literal().asInstanceOf[ColumnValueOptions[D, V, Plugins]]
 
   /**
    * Create a ColumnOptsD setup up for a simple column with an accessor string.
    */
-  def Column[V](accessor: String): ColumnValueOptions[D, V, ColumnOptsD] =
+  def Column[V](accessor: String): ColumnValueOptions[D, V, Plugins] =
     emptyColumn[V].setAccessor(accessor)
 
   /**
    * Create a ColumnOptsD setup up for a simple column with an accessor function.
    */
-  def Column[V](id: String, accessor: D => V): ColumnValueOptions[D, V, ColumnOptsD] =
+  def Column[V](
+    id:       String,
+    accessor: D => V
+  ): ColumnValueOptions[D, V, Plugins] =
     emptyColumn[V].setId(id).setAccessorFn(accessor)
 
   /**
    * Create a ColumnOptsD setup up for a simple column with an accessor function.
    */
-  def Column[V](id: String, accessor: (D, Int) => V): ColumnValueOptions[D, V, ColumnOptsD] =
+  def Column[V](
+    id:       String,
+    accessor: (D, Int) => V
+  ): ColumnValueOptions[D, V, Plugins] =
     emptyColumn[V].setId(id).setAccessorFn(accessor)
 
   /**
@@ -119,7 +109,7 @@ case class TableDef[
   def Column[V](
     id:       String,
     accessor: (D, Int, Data[D]) => V
-  ): ColumnValueOptions[D, V, ColumnOptsD] =
+  ): ColumnValueOptions[D, V, Plugins] =
     emptyColumn.setId(id).setAccessorFn(accessor)
 
   /**
@@ -130,16 +120,19 @@ case class TableDef[
    * @param cols
    *   The columns to include in the group.
    */
-  def ColumnGroup(cols: (ColumnGroup[D] | ColumnOptsD)*): ColumnGroupOptions[D] =
+  def ColumnGroup(
+    cols: (ColumnGroupOptionsType | ColumnOptionsType)*
+  ): ColumnGroupOptions[D, Plugins] =
     js.Dynamic
       .literal()
-      .asInstanceOf[ColumnGroupOptions[D]]
-      .setColumns(cols.toJSArray.asInstanceOf[js.Array[Column[D]]])
+      .asInstanceOf[ColumnGroupOptions[D, Plugins]]
+      .setColumns(cols.toJSArray.asInstanceOf[js.Array[ColumnType]])
 
   /**
    * Create an empty instance of type TableStateD
    */
-  def State(): TableStateD = js.Dynamic.literal().asInstanceOf[TableStateD]
+  def State(): TableState[D, Plugins] /*TableStateType*/ =
+    js.Dynamic.literal().asInstanceOf[TableStateType]
 
   /*
    * When adding new plugins, see https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-table
@@ -149,234 +142,26 @@ case class TableDef[
    * ScalablyTyped won't work as hooks.
    */
 
-  protected[reactST] def withFeaturePlugin[
-    NewTableOptsD <: UseTableOptions[D],
-    NewTableInstanceD <: TableInstance[D],
-    NewColumnOptsD <: ColumnOptions[D],
-    NewColumnObjectD <: ColumnObject[D],
-    NewState <: TableState[D]
-  ](plugin: Plugin) =
-    TableDef[D,
-             NewTableOptsD,
-             NewTableInstanceD,
-             NewColumnOptsD,
-             NewColumnObjectD,
-             NewState,
-             Layout
-    ](plugins + plugin)
+  protected[reactST] def withFeaturePlugin[NewPlugin <: Plugin#Tag](plugin: Plugin) =
+    TableDef[D, Plugins with NewPlugin, Layout](plugins + plugin)
 
   /**
    * Add sort capabilities to the table via the useSortBy plugin hook.
    */
-  def withSort = withFeaturePlugin[
-    TableOptsD with UseSortByOptions[D],
-    TableInstanceD with UseSortByInstanceProps[D],
-    ColumnOptsD with UseSortByColumnOptions[D],
-    ColumnObjectD with UseSortByColumnProps[D],
-    TableStateD with UseSortByState[D]
-  ](Plugin.SortBy)
+  def withSortBy = withFeaturePlugin[Plugin.SortBy.Tag](Plugin.SortBy)
 
-  // When trying to use a more traditional "syntax" package and implicit
-  // classes, the compiler seems to somehow loose type information along
-  // the way. Putting the syntax here allows resolution to work correctly.
-  object syntax {
-    implicit class TableOptionOps[Self <: TableOptsD](val table: Self) {
+  def withGroupBy = withFeaturePlugin[Plugin.GroupBy.Tag](Plugin.GroupBy)
 
-      /**
-       * Sets the initial state of the table.
-       *
-       * The provided setInitialState method takes a Partial[TableState[D]]
-       */
-      def setInitialStateFull(s: TableState[D]): Self =
-        table.setInitialState(s.asInstanceOf[Partial[TableState[D]]])
-
-      /**
-       * Sets the row id for the rows of the table based on a function.
-       *
-       * @param f
-       *   A function from the row type to the row id.
-       */
-      def setRowIdFn(f: D => String): Self =
-        table.setGetRowId((originalRow, _, _) => f(originalRow))
-
-      /**
-       * Sets the row id for the rows of the table based on a function.
-       *
-       * @param f
-       *   A function from the row type and index to the row id.
-       */
-      def setRowIdFn(f: (D, Int) => String): Self =
-        table.setGetRowId((originalRow, relativeIndex, _) => f(originalRow, relativeIndex.toInt))
-
-      /**
-       * Sets the row id for the rows of the table based on a function.
-       *
-       * @param f
-       *   A function from the row type, index and parent to the row id.
-       */
-      def setRowIdFn(f: (D, Int, js.UndefOr[Row[D]]) => String): Self =
-        table.setGetRowId((originalRow, relativeIndex, parent) =>
-          f(originalRow, relativeIndex.toInt, parent)
-        )
-    }
-
-    implicit class ColumnOptionOps[Self <: ColumnOptsD](val col: Self) {
-
-      /**
-       * Sets the accessorFunction for the column.
-       *
-       * @param f
-       *   A function from the row type to the column type.
-       */
-      def setAccessorFn[V](f: D => V): Self =
-        col.setAccessorFunction3((data, _, _) => f(data).asInstanceOf[js.Any])
-
-      def setAccessorFn[V](f: (D, Int) => V): Self =
-        col.setAccessorFunction3((data, index, _) => f(data, index.toInt).asInstanceOf[js.Any])
-
-      def setAccessorFn[V](f: (D, Int, Data[D]) => V): Self =
-        col.setAccessorFunction3((data, index, sub) =>
-          f(data, index.toInt, sub).asInstanceOf[js.Any]
-        )
-
-      /**
-       * Sets the sorting for the column based on a function on the row.
-       *
-       * @param f
-       *   A function from the row type to the target type.
-       * @param ordering
-       *   An implicit ordering for the target type.
-       * @param evidence
-       *   Evidence that this column is sortable. (See note)
-       *
-       * Note: This method is only valid for columns that are sortable via the useSortBy plugin. The
-       * compiler was unable to resolve the types if an implicit class requiring
-       * UseSortByColumnOptions[D] was used, so I switched to requiring evidence that ColumnOptsD is
-       * a subtype of UseSortByColumnOptions[D] and that worked. Unfortunately, requires
-       * asInstanceOfs.
-       */
-      def setSortByRowFn[V](
-        f:        D => V
-      )(implicit
-        ordering: Ordering[V],
-        ev:       Self <:< UseSortByColumnOptions[D]
-      ): Self = {
-        val sbfn: SortByFn[D] = (d1, d2, _, _) =>
-          ordering.compare(f(d1.original), f(d2.original)).toDouble
-        ev(col).setSortType(sbfn).asInstanceOf[Self]
-      }
-    }
-
-    implicit class ColumnValueOptionOps[V, Self <: ColumnInterfaceBasedOnValue[_, _]](
-      col: Self with (ColumnInterfaceBasedOnValue[D, V])
-    ) {
-      @scala.inline
-      def setCell(value: CellProps[D, V] => VdomNode): Self =
-        StObject.set(col,
-                     "Cell",
-                     value
-                       .andThen(_.rawNode): js.Function1[CellProps[D, V], facade.React.Node]
-        )
-
-      // Next 4 methods just copied from ColumnInterfaceBasedOnValueMutableBuilder, which lacks the function overload above.
-      @scala.inline
-      def setCell(value: Renderer[CellProps[D, V]]): Self =
-        StObject.set(col, "Cell", value.asInstanceOf[js.Any])
-
-      @scala.inline
-      def setCellComponentClass(value: ComponentClassP[(CellProps[D, V]) with js.Object]): Self =
-        StObject.set(col, "Cell", value.asInstanceOf[js.Any])
-
-      @scala.inline
-      def setCellUndefined: Self = StObject.set(col, "Cell", js.undefined)
-
-      @scala.inline
-      def setCellVdomElement(value: VdomElement): Self =
-        StObject.set(col, "Cell", value.rawElement.asInstanceOf[js.Any])
-
-      /**
-       * Sets the sorting for the column based on a function on its value.
-       *
-       * @param f
-       *   A function from the value type to the target type.
-       * @param ordering
-       *   An implicit ordering for the target type.
-       * @param evidence
-       *   Evidence that this column is sortable.
-       */
-      def setSortByFn[U](f: V => U)(implicit
-        ordering:           Ordering[U],
-        ev:                 Self <:< UseSortByColumnOptions[D]
-      ): Self = {
-        val sbfn: SortByFn[D] = (d1, d2, col, _) =>
-          ordering
-            .compare(f(d1.values(col.asInstanceOf[String]).asInstanceOf[CellValue[V]]),
-                     f(d2.values(col.asInstanceOf[String]).asInstanceOf[CellValue[V]])
-            )
-            .toDouble
-        ev(col).setSortType(sbfn).asInstanceOf[Self]
-      }
-
-      /**
-       * Sets the sorting for the column based on its value.
-       *
-       * @param ordering
-       *   An implicit ordering for the value type.
-       * @param evidence
-       *   Evidence that this column is sortable.
-       */
-      def setSortByAuto(implicit
-        ordering: Ordering[V],
-        ev:       Self <:< UseSortByColumnOptions[D]
-      ): Self = setSortByFn(identity)
-    }
-  }
 }
 
 object TableDef {
-  def apply[D]: TableDef[
-    D,
-    UseTableOptions[D],
-    TableInstance[D],
-    ColumnOptions[D],
-    ColumnObject[D],
-    TableState[D],
-    Layout.Table
-  ] = TableDef(Set.empty)
-  // format: on
+  def apply[D]: TableDef[D, Plugin.Base, Layout.Table] = TableDef(Set.empty)
 
-  def headersFromGroup[D, ColumnD <: Column[D]](headerGroup: HeaderGroup[D]) =
-    headerGroup.headers.asInstanceOf[js.Array[ColumnD]]
-
-  // format: off
-  implicit class TableLayoutTableDefOps[D,
-      TableOptsD <: UseTableOptions[D],
-      TableInstanceD <: TableInstance[D],
-      ColumnOptsD <: ColumnOptions[D],
-      ColumnObjectD <: ColumnObject[D],
-      TableStateD <: TableState[D]]
-      (val tableDef: TableDef[D, 
-          TableOptsD, 
-          TableInstanceD,
-          ColumnOptsD,
-          ColumnObjectD,
-          TableStateD,
-          Layout.Table]) extends AnyVal { // format: on
-    private def withLayoutPlugin[
-      NewTableOptsD <: UseTableOptions[D],
-      NewTableInstanceD <: TableInstance[D],
-      NewColumnOptsD <: ColumnOptions[D],
-      NewColumnObjectD <: ColumnObject[D],
-      NewState <: TableState[D]
-    ](plugin: Plugin) =
-      TableDef[D,
-               NewTableOptsD,
-               NewTableInstanceD,
-               NewColumnOptsD,
-               NewColumnObjectD,
-               NewState,
-               Layout.NonTable
-      ](tableDef.plugins + plugin)
+  implicit class TableLayoutTableDefOps[D, Plugins](
+    val tableDef: TableDef[D, Plugins, Layout.Table]
+  ) extends AnyVal {
+    private def withLayoutPlugin[NewPlugin <: Plugin#Tag](plugin: Plugin) =
+      TableDef[D, Plugins with NewPlugin, Layout.NonTable](tableDef.plugins + plugin)
 
     /**
      * Adds support for headers and cells to be rendered as inline-block divs (or other non-table
@@ -387,13 +172,7 @@ object TableDef {
      * options width, minWidth and maxWidth are used to calculate column and cell widths and must be
      * set.
      */
-    def withBlockLayout = withLayoutPlugin[
-      TableOptsD,
-      TableInstanceD,
-      ColumnOptsD,
-      ColumnObjectD,
-      TableStateD
-    ](Plugin.BlockLayout)
+    def withBlockLayout = withLayoutPlugin[Plugin.BlockLayout.Tag](Plugin.BlockLayout)
 
     /**
      * Adds support for headers and cells to be rendered as divs (or other non-table elements) with
@@ -402,42 +181,18 @@ object TableDef {
      * fill all available space. Uses a minimal amount of html to give greater control of styling.
      * Works with useResizeColumns.
      */
-    def withGridLayout = withLayoutPlugin[
-      TableOptsD,
-      TableInstanceD,
-      ColumnOptsD,
-      ColumnObjectD,
-      TableStateD
-    ](Plugin.GridLayout)
+    def withGridLayout = withLayoutPlugin[Plugin.GridLayout.Tag](Plugin.GridLayout)
   }
 
-  implicit class NonTableLayoutTableDefOps[D, TableOptsD <: UseTableOptions[
-    D
-  ], TableInstanceD <: TableInstance[D], ColumnOptsD <: ColumnOptions[
-    D
-  ], ColumnObjectD <: ColumnObject[D], TableStateD <: TableState[D]](
-    val tableDef: TableDef[
-      D,
-      TableOptsD,
-      TableInstanceD,
-      ColumnOptsD,
-      ColumnObjectD,
-      TableStateD,
-      Layout.NonTable
-    ]
+  implicit class NonTableLayoutTableDefOps[D, Plugins](
+    val tableDef: TableDef[D, Plugins, Layout.NonTable]
   ) extends AnyVal {
 
     /**
      * Add column resize capabilities to the table via the useResizeColumns plugin hook.
      */
-    def withResizeColumns = tableDef.withFeaturePlugin[
-      TableOptsD with UseResizeColumnsOptions[D],
-      TableInstanceD,
-      ColumnOptsD with UseResizeColumnsColumnOptions[D],
-      ColumnObjectD with UseResizeColumnsColumnProps[D],
-      TableStateD with UseResizeColumnsState[D]
-    ](Plugin.ResizeColumns)
+    def withResizeColumns =
+      tableDef.withFeaturePlugin[Plugin.ResizeColumns.Tag](Plugin.ResizeColumns)
   }
-  // format: on
 
 }

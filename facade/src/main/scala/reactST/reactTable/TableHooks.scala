@@ -2,53 +2,35 @@ package reactST.reactTable
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.hooks.CustomHook
-import reactST.reactTable.mod._
+import reactST.reactTable.facade.columnOptions.TableOptions
+import reactST.reactTable.facade.tableInstance.TableInstance
+import reactST.reactTable.facade.tableState.TableState
+import reactST.reactTable.mod.PluginHook
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSBracketAccess
-import scala.scalajs.js.annotation.JSGlobal
-import scala.scalajs.js.annotation.JSGlobalScope
+import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSImport
-import scala.scalajs.js.annotation.JSName
-import scala.scalajs.js.`|`
-
-import scalajs.js.JSConverters._
 
 object TableHooks {
   @JSImport("react-table", "useTable")
   @js.native
-  def useTableJS[D, TI <: TableInstance[D]](options: TableOptions[D], plugins: PluginHook[D]*): TI =
+  def useTableJS[D, Plugins, TI <: TableInstance[D, Plugins]](
+    options: TableOptions[D, Plugins],
+    plugins: PluginHook[D]*
+  ): TI =
     js.native
 
   // According to documentation, react-table memoizes the table state.
-  private implicit def reuseTableState[T <: TableState[_]]: Reusability[T] =
+  private implicit def reuseTableState[T <: TableState[_, _]]: Reusability[T] =
     Reusability.byRef
 
-  def useTableHook[
-    D,
-    TableOptsD <: UseTableOptions[D],
-    TableInstanceD <: TableInstance[D],
-    ColumnOptsD <: ColumnOptions[D],
-    ColumnObjectD <: ColumnObject[D],
-    TableStateD <: TableState[D],
-    Layout
-  ] =
-    CustomHook[
-      TableDefWithOptions[
-        D,
-        TableOptsD,
-        TableInstanceD,
-        ColumnOptsD,
-        ColumnObjectD,
-        TableStateD,
-        Layout
-      ]
-    ]
+  def useTableHook[D, Plugins, Layout] =
+    CustomHook[TableDefWithOptions[D, Plugins, Layout]]
       .useMemoBy(_.cols)(_ => _.toJSArray)
       .useMemoBy(_.input.data)(_ => _.toJSArray)
       .buildReturning { (props, cols, rows) =>
         val tableInstance =
-          useTableJS[D, TableInstanceD](
+          useTableJS[D, Plugins, TableInstance[D, Plugins]](
             props.modOpts(props.tableDef.Options(cols, rows)),
             props.tableDef.plugins.toList.sorted.map(_.hook: PluginHook[D]): _*
           )
@@ -65,6 +47,10 @@ object TableHooks {
   @JSImport("react-table", "useSortBy")
   @js.native
   object useSortBy extends TableHook
+
+  @JSImport("react-table", "useGroupBy")
+  @js.native
+  object useGroupBy extends TableHook
 
   @JSImport("react-table", "useBlockLayout")
   @js.native

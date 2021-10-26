@@ -1,55 +1,23 @@
 package reactST.reactTable
 
 import japgolly.scalajs.react._
-import reactST.reactTable.mod._
+import reactST.reactTable.facade.tableInstance.TableInstance
 
 object HooksApiExt {
   sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]) {
 
-    final def useTable[
-      D,
-      TableOptsD <: UseTableOptions[D],
-      TableInstanceD <: TableInstance[D],
-      ColumnOptsD <: ColumnOptions[D],
-      ColumnObjectD <: ColumnObject[D],
-      TableStateD <: TableState[D],
-      Layout
-    ](
-      tableDefWithOptions: TableDefWithOptions[
-        D,
-        TableOptsD,
-        TableInstanceD,
-        ColumnOptsD,
-        ColumnObjectD,
-        TableStateD,
-        Layout
-      ]
+    final def useTable[D, Plugins, Layout](
+      tableDefWithOptions: TableDefWithOptions[D, Plugins, Layout]
     )(implicit
       step:                Step
-    ): step.Next[Reusable[TableInstanceD]] =
+    ): step.Next[Reusable[TableInstance[D, Plugins]]] =
       useTableBy(_ => tableDefWithOptions)
 
-    final def useTableBy[
-      D,
-      TableOptsD <: UseTableOptions[D],
-      TableInstanceD <: TableInstance[D],
-      ColumnOptsD <: ColumnOptions[D],
-      ColumnObjectD <: ColumnObject[D],
-      TableStateD <: TableState[D],
-      Layout
-    ](
-      tableDefWithOptions: Ctx => TableDefWithOptions[
-        D,
-        TableOptsD,
-        TableInstanceD,
-        ColumnOptsD,
-        ColumnObjectD,
-        TableStateD,
-        Layout
-      ]
+    final def useTableBy[D, Plugins, Layout](
+      tableDefWithOptions: Ctx => TableDefWithOptions[D, Plugins, Layout]
     )(implicit
       step:                Step
-    ): step.Next[Reusable[TableInstanceD]] =
+    ): step.Next[Reusable[TableInstance[D, Plugins]]] =
       api.customBy(ctx => TableHooks.useTableHook(tableDefWithOptions(ctx)))
   }
 
@@ -57,27 +25,11 @@ object HooksApiExt {
     api: HooksApi.Secondary[Ctx, CtxFn, Step]
   ) extends Primary[Ctx, Step](api) {
 
-    def useTableBy[
-      D,
-      TableOptsD <: UseTableOptions[D],
-      TableInstanceD <: TableInstance[D],
-      ColumnOptsD <: ColumnOptions[D],
-      ColumnObjectD <: ColumnObject[D],
-      TableStateD <: TableState[D],
-      Layout
-    ](
-      tableDefWithOptions: CtxFn[TableDefWithOptions[
-        D,
-        TableOptsD,
-        TableInstanceD,
-        ColumnOptsD,
-        ColumnObjectD,
-        TableStateD,
-        Layout
-      ]]
+    def useTableBy[D, Plugins, Layout](
+      tableDefWithOptions: CtxFn[TableDefWithOptions[D, Plugins, Layout]]
     )(implicit
       step:                Step
-    ): step.Next[Reusable[TableInstanceD]] =
+    ): step.Next[Reusable[TableInstance[D, Plugins]]] =
       super.useTableBy(step.squash(tableDefWithOptions)(_))
 
   }
