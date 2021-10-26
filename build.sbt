@@ -5,7 +5,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 inThisBuild(
   Seq(
-    homepage                      := Some(url("https://github.com/gemini-hlsw/gpp-svgdotjs")),
+    homepage                      := Some(url("https://github.com/gemini-hlsw/lucuma-svgdotjs")),
     Global / onChangedBuildSource := ReloadOnSourceChanges
   ) ++ lucumaPublishSettings
 )
@@ -14,6 +14,7 @@ lazy val root = project
   .in(file("."))
   .settings(name := "lucuma-svgdotjs")
   .settings(
+    crossScalaVersions := Seq("2.13.6", "3.1.0"),
     // shade into another package
     stOutputPackage         := "lucuma.svgdotjs",
     /* javascript / typescript deps */
