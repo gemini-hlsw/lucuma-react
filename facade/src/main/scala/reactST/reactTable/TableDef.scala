@@ -14,12 +14,13 @@ import reactST.reactTable.anon.`1`._
 import reactST.reactTable.facade.cell.Cell
 import reactST.reactTable.facade.cell.CellProps
 import reactST.reactTable.facade.column.Column
+import reactST.reactTable.facade.column.HeaderProps
 import reactST.reactTable.facade.columnOptions
 import reactST.reactTable.facade.columnOptions.ColumnInterfaceBasedOnValue
 import reactST.reactTable.facade.columnOptions.ColumnOptions
-import reactST.reactTable.facade.columnOptions.TableOptions
 import reactST.reactTable.facade.row.Row
 import reactST.reactTable.facade.tableInstance.TableInstance
+import reactST.reactTable.facade.tableOptions.TableOptions
 import reactST.reactTable.facade.tableState.TableState
 import reactST.reactTable.mod.CellValue
 import reactST.reactTable.mod.DefaultSortTypes
@@ -48,6 +49,7 @@ case class TableDef[D, Plugins, Layout](plugins: Set[Plugin]) {
   type SingleColumnOptionsType = SingleColumnOptions[D, Plugins]
   type ColumnGroupOptionsType  = ColumnGroupOptions[D, Plugins]
   type ColumnType              = Column[D, Plugins]
+  type HeaderType              = HeaderProps[D, Plugins]
   type RowType                 = Row[D, Plugins]
   type CellType[V]             = Cell[D, V, Plugins]
   type TableStateType          = TableState[D, Plugins]
@@ -82,34 +84,25 @@ case class TableDef[D, Plugins, Layout](plugins: Set[Plugin]) {
   /**
    * Create a ColumnOptsD setup up for a simple column with an accessor string.
    */
-  def Column[V](accessor: String): ColumnValueOptions[D, V, Plugins] =
-    emptyColumn[V].setAccessor(accessor)
+  def Column(id: String): ColumnValueOptions[D, Unit, Plugins] =
+    emptyColumn[Unit].setId(id)
 
   /**
    * Create a ColumnOptsD setup up for a simple column with an accessor function.
    */
-  def Column[V](
-    id:       String,
-    accessor: D => V
-  ): ColumnValueOptions[D, V, Plugins] =
+  def Column[V](id: String, accessor: D => V): ColumnValueOptions[D, V, Plugins] =
     emptyColumn[V].setId(id).setAccessorFn(accessor)
 
   /**
    * Create a ColumnOptsD setup up for a simple column with an accessor function.
    */
-  def Column[V](
-    id:       String,
-    accessor: (D, Int) => V
-  ): ColumnValueOptions[D, V, Plugins] =
+  def Column[V](id: String, accessor: (D, Int) => V): ColumnValueOptions[D, V, Plugins] =
     emptyColumn[V].setId(id).setAccessorFn(accessor)
 
   /**
    * Create a ColumnOptsD setup up for a simple column with an accessor function.
    */
-  def Column[V](
-    id:       String,
-    accessor: (D, Int, Data[D]) => V
-  ): ColumnValueOptions[D, V, Plugins] =
+  def Column[V](id: String, accessor: (D, Int, Data[D]) => V): ColumnValueOptions[D, V, Plugins] =
     emptyColumn.setId(id).setAccessorFn(accessor)
 
   /**
@@ -142,57 +135,51 @@ case class TableDef[D, Plugins, Layout](plugins: Set[Plugin]) {
    * ScalablyTyped won't work as hooks.
    */
 
-  protected[reactST] def withFeaturePlugin[NewPlugin <: Plugin#Tag](plugin: Plugin) =
-    TableDef[D, Plugins with NewPlugin, Layout](plugins + plugin)
+  private def withPlugin[L](plugin: Plugin) =
+    TableDef[D, Plugins with plugin.Tag, L](plugins + plugin)
+
+  // Keeps current Layout
+  private def withFeaturePlugin(plugin: Plugin) = withPlugin[Layout](plugin)
+
+  // Forces Layout.NonTable
+  private def withLayoutPlugin(plugin: Plugin) = withPlugin[Layout.NonTable](plugin)
+
+  def withGroupBy = withFeaturePlugin(Plugin.GroupBy)
+
+  def withExpanded(implicit ev: D <:< Expandable[_]) = withFeaturePlugin(Plugin.Expanded)
 
   /**
    * Add sort capabilities to the table via the useSortBy plugin hook.
    */
-  def withSortBy = withFeaturePlugin[Plugin.SortBy.Tag](Plugin.SortBy)
+  def withSortBy = withFeaturePlugin(Plugin.SortBy)
 
-  def withGroupBy = withFeaturePlugin[Plugin.GroupBy.Tag](Plugin.GroupBy)
+  /**
+   * Adds support for headers and cells to be rendered as inline-block divs (or other non-table
+   * elements) with explicit width. This becomes useful if and when you need to virtualize rows and
+   * cells for performance.
+   *
+   * NOTE: Although no additional options are needed for this plugin to work, the core column
+   * options width, minWidth and maxWidth are used to calculate column and cell widths and must be
+   * set.
+   */
+  def withBlockLayout(implicit ev: Layout =:= Layout.Table) = withLayoutPlugin(Plugin.BlockLayout)
 
+  /**
+   * Adds support for headers and cells to be rendered as divs (or other non-table elements) with
+   * the immediate parent (table) controlling the layout using CSS Grid. This hook becomes useful
+   * when implementing both virtualized and resizable tables that must also be able to stretch to
+   * fill all available space. Uses a minimal amount of html to give greater control of styling.
+   * Works with useResizeColumns.
+   */
+  def withGridLayout(implicit ev: Layout =:= Layout.Table) = withLayoutPlugin(Plugin.GridLayout)
+
+  /**
+   * Add column resize capabilities to the table via the useResizeColumns plugin hook.
+   */
+  def withResizeColumns(implicit ev: Layout =:= Layout.NonTable) =
+    withFeaturePlugin(Plugin.ResizeColumns)
 }
 
 object TableDef {
   def apply[D]: TableDef[D, Plugin.Base, Layout.Table] = TableDef(Set.empty)
-
-  implicit class TableLayoutTableDefOps[D, Plugins](
-    val tableDef: TableDef[D, Plugins, Layout.Table]
-  ) extends AnyVal {
-    private def withLayoutPlugin[NewPlugin <: Plugin#Tag](plugin: Plugin) =
-      TableDef[D, Plugins with NewPlugin, Layout.NonTable](tableDef.plugins + plugin)
-
-    /**
-     * Adds support for headers and cells to be rendered as inline-block divs (or other non-table
-     * elements) with explicit width. This becomes useful if and when you need to virtualize rows
-     * and cells for performance.
-     *
-     * NOTE: Although no additional options are needed for this plugin to work, the core column
-     * options width, minWidth and maxWidth are used to calculate column and cell widths and must be
-     * set.
-     */
-    def withBlockLayout = withLayoutPlugin[Plugin.BlockLayout.Tag](Plugin.BlockLayout)
-
-    /**
-     * Adds support for headers and cells to be rendered as divs (or other non-table elements) with
-     * the immediate parent (table) controlling the layout using CSS Grid. This hook becomes useful
-     * when implementing both virtualized and resizable tables that must also be able to stretch to
-     * fill all available space. Uses a minimal amount of html to give greater control of styling.
-     * Works with useResizeColumns.
-     */
-    def withGridLayout = withLayoutPlugin[Plugin.GridLayout.Tag](Plugin.GridLayout)
-  }
-
-  implicit class NonTableLayoutTableDefOps[D, Plugins](
-    val tableDef: TableDef[D, Plugins, Layout.NonTable]
-  ) extends AnyVal {
-
-    /**
-     * Add column resize capabilities to the table via the useResizeColumns plugin hook.
-     */
-    def withResizeColumns =
-      tableDef.withFeaturePlugin[Plugin.ResizeColumns.Tag](Plugin.ResizeColumns)
-  }
-
 }

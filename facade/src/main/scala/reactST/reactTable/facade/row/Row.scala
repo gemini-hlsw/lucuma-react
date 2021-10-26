@@ -1,6 +1,6 @@
 package reactST.reactTable.facade.row
 
-import org.scalablytyped.runtime.StObject
+import reactST.reactTable.Plugin
 import reactST.reactTable.facade.cell.Cell
 import reactST.reactTable.mod.CellValue
 import reactST.reactTable.mod.IdType
@@ -11,7 +11,7 @@ import reactST.std.Record
 import scala.scalajs.js
 
 @js.native
-trait Row[D, Plugins] extends StObject {
+trait Row[D, Plugins] extends js.Object {
 
   var allCells: js.Array[Cell[D, js.Any, Plugins]] = js.native
 
@@ -29,4 +29,21 @@ trait Row[D, Plugins] extends StObject {
   var subRows: js.Array[Row[D, Plugins]] = js.native
 
   var values: Record[IdType[D], CellValue[js.Any]] = js.native
+}
+
+object Row {
+  // The "conv" mechanism is mainly to get the implicit conversion to kick in when we have a Reusable.
+  @inline
+  implicit def toGroupByRow[D, Plugins, Self](row: Self)(implicit
+    conv:                                          Self => Row[D, Plugins],
+    ev:                                            Plugins <:< Plugin.GroupBy.Tag
+  ): Self with UseGroupByRow[D, Plugins] =
+    conv(row).asInstanceOf[Self with UseGroupByRow[D, Plugins]]
+
+  @inline
+  implicit def toExpandedRow[D, Plugins, Self](row: Self)(implicit
+    conv:                                           Self => Row[D, Plugins],
+    ev:                                             Plugins <:< Plugin.Expanded.Tag
+  ): Self with UseExpandedRow[D, Plugins] =
+    conv(row).asInstanceOf[Self with UseExpandedRow[D, Plugins]]
 }

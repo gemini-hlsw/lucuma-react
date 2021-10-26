@@ -10,6 +10,7 @@ import reactST.reactTable.mod.IdType
 import reactST.reactTable.mod.Renderer
 import reactST.reactTable.mod.TableFooterProps
 import reactST.reactTable.mod.TableHeaderProps
+import reactST.reactTable.mod.UseGroupByColumnProps
 import reactST.reactTable.mod.UseSortByColumnProps
 import reactST.reactTable.reactTableStrings
 
@@ -75,13 +76,25 @@ trait Column[D, Plugins] extends js.Object {
 }
 
 object Column {
-  @inline
-  implicit def UseSortByTableColumnOpts[D, Plugins](tableState: Column[D, Plugins])(implicit
-    ev:                                                         Plugins <:< Plugin.SortBy.Tag
-  ): UseSortByColumnProps[D] = tableState.asInstanceOf[UseSortByColumnProps[D]]
 
+  @inline
   implicit class ColumnObjectOps[Self <: Column[_, _]](val col: Self) extends AnyVal {
-    def renderHeader: Node = col.render_Header(reactTableStrings.Header)
-    def renderFooter: Node = col.render_Footer(reactTableStrings.Footer)
+    @inline def renderHeader: Node = col.render_Header(reactTableStrings.Header)
+    @inline def renderFooter: Node = col.render_Footer(reactTableStrings.Footer)
   }
+
+  // The "conv" mechanism is mainly to get the implicit conversion to kick in when we have a Reusable.
+  @inline
+  implicit def toGroupByColumn[D, Plugins, Self](col: Self)(implicit
+    conv:                                             Self => Column[D, Plugins],
+    ev:                                               Plugins <:< Plugin.GroupBy.Tag
+  ): Self with UseGroupByColumnProps[D] =
+    conv(col).asInstanceOf[Self with UseGroupByColumnProps[D]]
+
+  @inline
+  implicit def toSortByColumn[D, Plugins, Self](col: Self)(implicit
+    conv:                                            Self => Column[D, Plugins],
+    ev:                                              Plugins <:< Plugin.SortBy.Tag
+  ): Self with UseSortByColumnProps[D] =
+    conv(col).asInstanceOf[Self with UseSortByColumnProps[D]]
 }

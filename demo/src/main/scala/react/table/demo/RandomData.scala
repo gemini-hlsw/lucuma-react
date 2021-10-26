@@ -1,5 +1,7 @@
 package react.table.demo
 
+import reactST.reactTable.Expandable
+
 import scala.util.Random.nextInt
 
 // word lists and code adapted from https://github.com/bmarcot/haiku
@@ -10,7 +12,12 @@ object RandomData {
 
   def newPerson(id: Int) = Person(id, getRandElt(adjs), getRandElt(nouns), getAge)
 
-  def randomPeople(count: Int) = (0 to count).map(i => newPerson(i)).toList
+  def newExpandablePerson(id: Int) =
+    Expandable[Person](newPerson(id), (0 to nextInt(5)).toList.map(newPerson).map(Expandable.leaf))
+
+  def randomPeople(count: Int) = (0 to count).map(newPerson).toList
+
+  def randomExpandablePeople(count: Int) = (0 to count).map(newExpandablePerson).toList
 
   // format: off
   val adjs = List("autumn", "hidden", "bitter", "misty", "silent",

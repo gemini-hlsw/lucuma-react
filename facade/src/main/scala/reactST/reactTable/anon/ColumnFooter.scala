@@ -12,6 +12,7 @@ import scala.scalajs.js.annotation.JSImport
 import scala.scalajs.js.annotation.JSName
 import scala.scalajs.js.`|`
 
+// TODO: See if we can get rid of this file and integrate into ColumnOptions
 @js.native
 trait ColumnFooter[D] extends StObject {
 
