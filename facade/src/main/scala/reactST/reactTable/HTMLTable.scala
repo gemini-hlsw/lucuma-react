@@ -5,7 +5,6 @@ import japgolly.scalajs.react.vdom.html_<^._
 import react.common.Css
 import react.virtuoso.Virtuoso
 import reactST.reactTable.facade.column.Column
-import reactST.reactTable.util._
 
 object HTMLTable {
 
@@ -47,7 +46,7 @@ object HTMLTable {
         <.thead(
           tableInstance.headerGroups.toTagMod { g =>
             <.tr(
-              props2Attrs(g.getHeaderGroupProps()),
+              g.getHeaderGroupProps(),
               g.headers.map(f).toTagMod
             )
           }
@@ -58,12 +57,12 @@ object HTMLTable {
         tableInstance.prepareRow(rd)
         val rowClass = rowClassFn(rd.index.toInt, rd.original)
         val cells    = rd.cells.toTagMod { cell =>
-          <.td(props2Attrs(cell.getCellProps()), cell.renderCell)
+          <.td(cell.getCellProps(), cell.renderCell)
         }
-        <.tr(rowClass, props2Attrs(rd.getRowProps()), cells)
+        <.tr(rowClass, rd.getRowProps(), cells)
       }
 
-      <.table(tableClass, header, <.tbody(props2Attrs(bodyProps), rows), footer)
+      <.table(tableClass, header, <.tbody(bodyProps, rows), footer)
     }
 
   /**
@@ -112,7 +111,7 @@ object HTMLTable {
       val rowComp = (_: Int, row: tableDef.RowType) => {
         tableInstance.prepareRow(row)
         val cells = row.cells.toTagMod { cell =>
-          <.div(^.className := "td", props2Attrs(cell.getCellProps()), cell.renderCell)
+          <.div(^.className := "td", cell.getCellProps(), cell.renderCell)
         }
 
         val rowClass = rowClassFn(row.index.toInt, row.original)
@@ -120,17 +119,14 @@ object HTMLTable {
         // This means the the `getRowProps` are nested an extra layer in. This does
         // not seem to cause any issues with react-table, but could possibly be an
         // issue with some plugins.
-        <.div(^.className := "tr", rowClass, props2Attrs(row.getRowProps()), cells)
+        <.div(^.className := "tr", rowClass, row.getRowProps(), cells)
       }
 
       val header = headerCellFn.fold(TagMod.empty) { f =>
         <.div(
           ^.className := "thead",
           tableInstance.headerGroups.toTagMod { g =>
-            <.div(^.className := "tr",
-                  props2Attrs(g.getHeaderGroupProps()),
-                  g.headers.map(f).toTagMod
-            )
+            <.div(^.className := "tr", g.getHeaderGroupProps(), g.headers.map(f).toTagMod)
           }
         )
       }
@@ -141,7 +137,7 @@ object HTMLTable {
       <.div(^.className := "table",
             tableClass,
             header,
-            <.div(^.className := "tbody", height, props2Attrs(bodyProps), rows)
+            <.div(^.className := "tbody", height, bodyProps, rows)
       )
     }
 
@@ -158,7 +154,7 @@ object HTMLTable {
     cellClass: Css = Css.Empty,
     useDiv:    Boolean = false
   ): Column[_, _] => TagMod =
-    col => headerCell(useDiv)(props2Attrs(col.getHeaderProps()), cellClass, col.renderHeader)
+    col => headerCell(useDiv)(col.getHeaderProps(), cellClass, col.renderHeader)
 
   /**
    * A function to use in the builder methods for the headerCellFn parameter. This header will make
@@ -186,8 +182,8 @@ object HTMLTable {
     val toggleProps = col.getSortByToggleProps()
 
     headerCell(useDiv)(
-      props2Attrs(headerProps),
-      props2Attrs(toggleProps),
+      headerProps,
+      toggleProps,
       cellClass,
       col.renderHeader,
       <.span(sortIndicator(col))
@@ -210,7 +206,7 @@ object HTMLTable {
   ): Column[_, _] => TagMod = { col =>
     col.Footer.map(_ =>
       headerCell(useDiv)(
-        props2Attrs(col.getFooterProps()),
+        col.getFooterProps(),
         cellClass,
         col.renderFooter
       )

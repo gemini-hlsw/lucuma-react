@@ -41,7 +41,11 @@ object Cell {
     def renderCell: Node = cell.render_Cell(reactTableStrings.Cell)
   }
 
-  implicit def UseGroupByCellOpts[D, V, Plugins](cellProps: Cell[D, V, Plugins])(implicit
-    ev:                                                     Plugins <:< Plugin.GroupBy.Tag
-  ): UseGroupByCellProps[D] = cellProps.asInstanceOf[UseGroupByCellProps[D]]
+  // The "conv" mechanism is mainly to get the implicit conversion to kick in when we have a Reusable.
+  @inline
+  implicit def toGroupByCell[D, V, Plugins, Self](cell: Self)(implicit
+    conv:                                               Self => Cell[D, V, Plugins],
+    ev:                                                 Plugins <:< Plugin.GroupBy.Tag
+  ): Self with UseGroupByCellProps[D] =
+    conv(cell).asInstanceOf[Self with UseGroupByCellProps[D]]
 }

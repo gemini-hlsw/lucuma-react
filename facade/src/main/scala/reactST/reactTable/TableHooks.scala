@@ -2,8 +2,8 @@ package reactST.reactTable
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.hooks.CustomHook
-import reactST.reactTable.facade.columnOptions.TableOptions
 import reactST.reactTable.facade.tableInstance.TableInstance
+import reactST.reactTable.facade.tableOptions.TableOptions
 import reactST.reactTable.facade.tableState.TableState
 import reactST.reactTable.mod.PluginHook
 
@@ -44,21 +44,25 @@ object TableHooks {
     implicit def asPluginHook[D](hook: TableHook): PluginHook[D] = hook.asInstanceOf[PluginHook[D]]
   }
 
-  @JSImport("react-table", "useSortBy")
-  @js.native
-  object useSortBy extends TableHook
-
   @JSImport("react-table", "useGroupBy")
   @js.native
   object useGroupBy extends TableHook
 
-  @JSImport("react-table", "useBlockLayout")
+  @JSImport("react-table", "useExpanded")
   @js.native
-  object useBlockLayout extends TableHook
+  object useExpanded extends TableHook
+
+  @JSImport("react-table", "useSortBy")
+  @js.native
+  object useSortBy extends TableHook
 
   @JSImport("react-table", "useResizeColumns")
   @js.native
   object useResizeColumns extends TableHook
+
+  @JSImport("react-table", "useBlockLayout")
+  @js.native
+  object useBlockLayout extends TableHook
 
   @JSImport("react-table", "useGridLayout")
   @js.native

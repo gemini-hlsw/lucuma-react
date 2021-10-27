@@ -1,5 +1,6 @@
 package reactST.reactTable.facade.tableInstance
 
+import reactST.reactTable.Plugin
 import reactST.reactTable.anon.PartialTableToggleHideAll
 import reactST.reactTable.facade.column.Column
 import reactST.reactTable.facade.column.HeaderGroup
@@ -119,4 +120,30 @@ trait TableInstance[D, Plugins] extends js.Object {
   ] = js.native
 
   var visibleColumns: js.Array[Column[D, Plugins]] = js.native
+}
+
+object TableInstance {
+
+  // The "conv" mechanism is mainly to get the implicit conversion to kick in when we have a Reusable.
+  @inline
+  implicit def toGroupByTableInstance[D, Plugins, Self](tableInstance: Self)(implicit
+    conv:                                                              Self => TableInstance[D, Plugins],
+    ev:                                                                Plugins <:< Plugin.GroupBy.Tag
+  ): Self with UseGroupByTableInstance[D, Plugins] =
+    conv(tableInstance).asInstanceOf[Self with UseGroupByTableInstance[D, Plugins]]
+
+  @inline
+  implicit def toSortByTableInstance[D, Plugins, Self](tableInstance: Self)(implicit
+    conv:                                                             Self => TableInstance[D, Plugins],
+    ev:                                                               Plugins <:< Plugin.SortBy.Tag
+  ): Self with UseSortByTableInstance[D, Plugins] =
+    conv(tableInstance).asInstanceOf[Self with UseSortByTableInstance[D, Plugins]]
+
+  @inline
+  implicit def toExpandedTableInstance[D, Plugins, Self](tableInstance: Self)(implicit
+    conv:                                                               Self => TableInstance[D, Plugins],
+    ev:                                                                 Plugins <:< Plugin.Expanded.Tag
+  ): Self with UseExpandedTableInstance[D, Plugins] =
+    conv(tableInstance).asInstanceOf[Self with UseExpandedTableInstance[D, Plugins]]
+
 }

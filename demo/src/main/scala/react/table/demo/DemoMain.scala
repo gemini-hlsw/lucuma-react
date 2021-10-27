@@ -23,6 +23,8 @@ object DemoMain {
 
   val randomData = RandomData.randomPeople(1000)
 
+  val randomExpandableData = RandomData.randomExpandablePeople(1000)
+
   @JSExport
   def main(): Unit = {
 
@@ -38,7 +40,8 @@ object DemoMain {
       Table1.component(guitars),
       Table2.component(randomData),
       Table3.component(randomData),
-      Table4.component(randomData)
+      Table4.component(randomData),
+      Table5.component(randomExpandableData)
     )
       .renderIntoDOM(container)
 

@@ -1,6 +1,7 @@
 package reactST
 
 import japgolly.scalajs.react.facade.{ React => ReactRaw }
+import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode
 import org.scalablytyped.runtime.StObject
@@ -9,8 +10,11 @@ import reactST.reactTable.facade.cell.CellProps
 import reactST.reactTable.facade.columnOptions.ColumnGroupInterface
 import reactST.reactTable.facade.columnOptions.ColumnInterfaceBasedOnValue
 import reactST.reactTable.facade.columnOptions.ColumnOptions
+import reactST.reactTable.facade.row.Row
+import reactST.reactTable.mod.AggregatedValue
 import reactST.reactTable.mod.CellValue
 import reactST.reactTable.mod.ColumnFooter
+import reactST.reactTable.mod.DefaultAggregators
 import reactST.reactTable.mod.DefaultSortTypes
 import reactST.reactTable.mod.Renderer
 import reactST.reactTable.mod.SortByFn
@@ -36,6 +40,28 @@ package object reactTable extends HooksApiExt {
       with reactST.reactTable.anon.Accessor[D]
       with ColumnFooter[D]
 
+  type AggregatorFn[D, Plugins] = js.Function3[
+    /* columnValues */ js.Array[CellValue[js.Any]],
+    /* rows */ js.Array[Row[D, Plugins]],
+    /* isAggregated */ scala.Boolean,
+    AggregatedValue
+  ]
+
+  type Aggregator[D, Plugins] = AggregatorFn[D, Plugins] | DefaultAggregators | String
+
+  /**
+   * Helper method for taking a properties object returned by JS and turning it into a TagMod of
+   * attributes.
+   */
+  implicit def props2Attrs(obj: js.Object): TagMod =
+    TagMod(
+      TagMod.fn(_.addAttrsObject(obj, _ != "style")),
+      obj
+        .asInstanceOf[js.Dictionary[js.Object]]
+        .get("style")
+        .fold(TagMod.empty)(styles => TagMod.fn(_.addStylesObject(styles)))
+    )
+
   implicit class ColumnValueOptionOps[D, V, Plugins](val col: ColumnValueOptions[D, V, Plugins])
       extends AnyVal {
 
@@ -60,8 +86,7 @@ package object reactTable extends HooksApiExt {
       StObject.set(
         col,
         "Cell",
-        value
-          .andThen(_.rawNode): js.Function1[CellProps[D, V, Plugins], ReactRaw.Node]
+        value.andThen(_.rawNode): js.Function1[CellProps[D, V, Plugins], ReactRaw.Node]
       )
 
     @scala.inline
