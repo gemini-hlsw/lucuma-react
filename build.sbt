@@ -3,7 +3,7 @@ name := "scalajs-react-beautiful-dnd"
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactJS          = "17.0.2"
-val scalaJsReact     = "2.0.0-RC4"
+val scalaJsReact     = "2.0.0-RC5"
 val reactBeautiulDnD = "13.1.0"
 val atlasKitTree     = "8.2.0"
 val cats             = "2.6.1" // Only used in demo
