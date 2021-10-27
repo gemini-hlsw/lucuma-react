@@ -13,7 +13,8 @@ object RandomData {
   def newPerson(id: Int) = Person(id, getRandElt(adjs), getRandElt(nouns), getAge)
 
   def newExpandablePerson(id: Int) =
-    Expandable[Person](newPerson(id), (0 to nextInt(5)).toList.map(newPerson).map(Expandable.leaf))
+    Expandable(newPerson(id))
+      .withSubRows((0 to nextInt(5)).toList.map(newPerson).map(Expandable.apply))
 
   def randomPeople(count: Int) = (0 to count).map(newPerson).toList
 

@@ -15,16 +15,18 @@ trait Expandable[D] extends js.Object {
 }
 
 object Expandable {
-  def apply[D](
-    value_   : D,
-    subRows_ : js.UndefOr[List[Expandable[D]]]
-  ): Expandable[D] =
+  def apply[D](value_ : D): Expandable[D] =
     new Expandable[D] {
       override val value   = value_
-      override val subRows = subRows_.map(_.toJSArray)
+      override val subRows = js.undefined
     }
 
-  def leaf[D](value_ : D): Expandable[D] = apply(value_, js.undefined)
+  implicit class ExpandableOps[D](val expandable: Expandable[D]) extends AnyVal {
+    def withSubRows(subRows: List[Expandable[D]]): Expandable[D] = {
+      expandable.asInstanceOf[js.Dynamic].subRows = subRows.toJSArray
+      expandable
+    }
+  }
 
   implicit def reuseExpandable[D: Reusability]: Reusability[Expandable[D]] =
     Reusability { (a, b) =>

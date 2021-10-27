@@ -6,7 +6,8 @@ import react.common.style.Css
 import reactST.reactTable._
 
 object Table5 {
-  private val ExpandedTableDef = TableDef[Expandable[Person]].withExpanded.withBlockLayout
+  private val ExpandedTableDef =
+    TableDef[Expandable[Person]].withSortBy.withExpanded.withBlockLayout
 
   private val ExpandedTable =
     ScalaFnComponent
@@ -40,7 +41,7 @@ object Table5 {
       .render((_, _, _, tableInstance) =>
         HTMLTable.virtualized(ExpandedTableDef)(
           tableClass = Css("virtualized"),
-          headerCellFn = Some(HTMLTable.basicHeaderCellFn(useDiv = true))
+          headerCellFn = Some(HTMLTable.sortableHeaderCellFn(useDiv = true))
         )(tableInstance)
       )
 

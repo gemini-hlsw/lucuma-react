@@ -13,15 +13,15 @@ object Plugin {
   type Base
 
   final case object GroupBy       extends Plugin(useGroupBy)
-  final case object Expanded      extends Plugin(useExpanded)
   final case object SortBy        extends Plugin(useSortBy)
+  final case object Expanded      extends Plugin(useExpanded)
   final case object ResizeColumns extends Plugin(useResizeColumns)
   final case object BlockLayout   extends Plugin(useBlockLayout)
   final case object GridLayout    extends Plugin(useGridLayout)
 
   // Regardless of what order plugins are declared in usage site,
   // we always enforce the order required by react-table.
-  val all: List[Plugin] = List(GroupBy, Expanded, SortBy, ResizeColumns, BlockLayout, GridLayout)
+  val all: List[Plugin] = List(GroupBy, SortBy, Expanded, ResizeColumns, BlockLayout, GridLayout)
 
   val index: Map[Plugin, Int] = all.zipWithIndex.toMap
 }
