@@ -75,7 +75,7 @@ trait BaseProps extends js.Object {
   var onDrag: raw.RawItemCallback
   // Calls when drag is complete.
   var onDragStop: raw.RawItemCallback
-  //Calls when resize starts.
+  // Calls when resize starts.
   var onResizeStart: raw.RawItemCallback
   // Calls when resize movement happens.
   var onResize: raw.RawItemCallback

@@ -81,7 +81,7 @@ object ResponsiveReactGridLayout {
     // (currentLayout: Layout, allLayouts: {[key: $Keys<breakpoints>]: Layout}) => void,
     // Callback when the width changes, so you can modify the layout as needed.
     var onWidthChange: raw.WidthChangeCallback   = js.native
-    //(containerWidth: number, margin: [number, number], cols: number, containerPadding: [number, number]) => void;
+    // (containerWidth: number, margin: [number, number], cols: number, containerPadding: [number, number]) => void;
 
   }
 
