@@ -1,9 +1,13 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
 val reactJS         = "17.0.2"
-val scalaJsReact    = "2.0.0-RC3"
 val reactGridLayout = "1.2.5"
-val scalaJSDom      = "1.2.0"
+
+val scalaJsReact = "2.0.0-RC5"
+val scalaJSDom   = "2.0.0"
+val reactCommon  = "0.14.6"
+val cats         = "2.6.1"
+val utest        = "0.7.10"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -98,9 +102,9 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReact % Test,
         "org.scala-js"                      %%% "scalajs-dom" % scalaJSDom,
-        "org.typelevel"                     %%% "cats-core"   % "2.6.1",
-        "io.github.cquiroz.react"           %%% "common"      % "0.13.1",
-        "com.lihaoyi"                       %%% "utest"       % "0.7.10"     % Test
+        "org.typelevel"                     %%% "cats-core"   % cats,
+        "io.github.cquiroz.react"           %%% "common"      % reactCommon,
+        "com.lihaoyi"                       %%% "utest"       % utest        % Test
       ),
       Test / webpackConfigFile        := Some(
         baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"

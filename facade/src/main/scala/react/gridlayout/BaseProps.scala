@@ -7,8 +7,8 @@ import scala.scalajs.js.JSConverters._
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.facade.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
+import org.scalajs.dom.Event
 import org.scalajs.dom.MouseEvent
-import org.scalajs.dom.raw.Event
 import react.common._
 
 @js.native
