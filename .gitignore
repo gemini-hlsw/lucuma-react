@@ -7,9 +7,11 @@ react-virtualized
 node_modules/
 package-lock.json
 .bloop/
+.bsp/
+.vscode/
+metals.sbt
 local.*
 node_modules/
 package-lock.json
 yarn.lock
 travis/secrets.tar
-project/metals.sbt
