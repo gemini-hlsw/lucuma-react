@@ -200,7 +200,7 @@ object DemoMain {
       )
       .setSeries(
         List(
-          SeriesAreasplineOptions(areaspline)
+          SeriesAreasplineOptions((), (), areaspline)
             .setName("Observation-1")
             .setData(
               List(
@@ -211,7 +211,7 @@ object DemoMain {
                 (1584655240000.0, 14.0)
               )
             ),
-          SeriesAreasplineOptions(areaspline)
+          SeriesAreasplineOptions((), (), areaspline)
             .setName("Observation-2")
             .setData(
               List(
