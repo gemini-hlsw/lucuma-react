@@ -103,7 +103,7 @@ object GroupedVirtuoso {
      * list.
      */
     // Facade not currently implementd for this.
-    //components?: Components
+    // components?: Components
 
     /**
      * Set the callback to specify the contents of the item.
