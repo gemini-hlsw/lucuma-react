@@ -2,7 +2,7 @@ package reactST.reactTable.facade.tableOptions
 
 import japgolly.scalajs.react.ReactMouseEventFrom
 import org.scalablytyped.runtime.StObject
-import org.scalajs.dom.raw.Element
+import org.scalajs.dom.Element
 import reactST.reactTable.AggregatorFn
 import reactST.reactTable.Plugin
 import reactST.reactTable.facade.columnOptions.ColumnOptions

@@ -2,14 +2,15 @@ name := "scalajs-react-table"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-val reactTable           = "7.7.0"
-val reactTableTypes      = "7.7.0"
-val scalaJsReact         = "2.0.0-RC3"
-val reactJS              = "17.0.2"
-val reactTypes           = "17.0.14"
-val reactDomTypes        = "17.0.9"
+val reactTable      = "7.7.0"
+val reactTableTypes = "7.7.0"
+val reactJS         = "17.0.2"
+val reactTypes      = "17.0.14"
+val reactDomTypes   = "17.0.9"
+
+val scalaJsReact         = "2.0.0-RC5"
+val scalajsReactVirtuoso = "0.2.1"
 val munit                = "0.7.29"
-val scalajsReactVirtuoso = "0.2.0"
 
 addCommandAlias(
   "restartWDS",
