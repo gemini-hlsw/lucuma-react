@@ -1,7 +1,12 @@
 val reactJS        = "17.0.2"
-val scalaJsReact   = "2.0.0-RC3"
 val reactResizable = "3.0.4"
-val scalaJSDom     = "1.2.0"
+
+val scalaJsReact          = "2.0.0-RC5"
+val scalaJSDom            = "2.0.0"
+val scalaJSReactCommon    = "0.14.6"
+val scalaJSReactDraggable = "0.14.0"
+val cats                  = "2.6.1"
+val uTest                 = "0.7.10"
 
 addCommandAlias("restartWDS",
                 "; ~demo/fastOptJS/stopWebpackDevServer; demo/fastOptJS/startWebpackDevServer"
@@ -118,10 +123,10 @@ lazy val facade =
         "com.github.japgolly.scalajs-react" %%% "extra"           % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"            % scalaJsReact % Test,
         "org.scala-js"                      %%% "scalajs-dom"     % scalaJSDom,
-        "io.github.cquiroz.react"           %%% "common"          % "0.13.1",
-        "io.github.cquiroz.react"           %%% "react-draggable" % "0.13.0",
-        "com.lihaoyi"                       %%% "utest"           % "0.7.10"     % Test,
-        "org.typelevel"                     %%% "cats-core"       % "2.6.1"      % Test
+        "io.github.cquiroz.react"           %%% "common"          % scalaJSReactCommon,
+        "io.github.cquiroz.react"           %%% "react-draggable" % scalaJSReactDraggable,
+        "com.lihaoyi"                       %%% "utest"           % uTest        % Test,
+        "org.typelevel"                     %%% "cats-core"       % cats         % Test
       ),
       // webpackConfigFile in Test := Some(
       //   baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
