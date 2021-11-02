@@ -14,7 +14,7 @@ addCommandAlias(
 
 inThisBuild(
   List(
-    scalaVersion                         := "2.13.6",
+    scalaVersion                         := "2.13.7",
     ThisBuild / Test / parallelExecution := false,
     organization                         := "com.rpiaggio",
     sonatypeProfileName                  := "com.rpiaggio",
