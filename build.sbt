@@ -1,6 +1,6 @@
 name := "scalajs-react-hotkeys"
 
-ThisBuild / scalaVersion := "2.13.6"
+ThisBuild / scalaVersion := "2.13.7"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
