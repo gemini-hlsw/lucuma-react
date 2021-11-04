@@ -242,15 +242,15 @@ package gridlayout {
 
   sealed trait CompactType extends Product with Serializable
   object CompactType {
-    implicit val enum: EnumValue[CompactType] = EnumValue.toLowerCaseString
+    implicit val enumValue: EnumValue[CompactType] = EnumValue.toLowerCaseString
     case object Vertical   extends CompactType
     case object Horizontal extends CompactType
   }
 
   sealed trait ResizeHandle extends Product with Serializable
   object ResizeHandle {
-    implicit val eqResizeHandle: Eq[ResizeHandle] = Eq.by(enum.value)
-    implicit val enum: EnumValue[ResizeHandle]    = EnumValue.toLowerCaseString
+    implicit val eqResizeHandle: Eq[ResizeHandle]   = Eq.by(enumValue.value)
+    implicit val enumValue: EnumValue[ResizeHandle] = EnumValue.toLowerCaseString
 
     def fromRaw(s: String): Option[ResizeHandle] = s match {
       case "s"  => Some(S)
