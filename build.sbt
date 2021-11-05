@@ -1,10 +1,10 @@
 val reactJS        = "17.0.2"
 val reactResizable = "3.0.4"
 
-val scalaJsReact          = "2.0.0-RC5"
+val scalaJsReact          = "2.0.0"
 val scalaJSDom            = "2.0.0"
-val scalaJSReactCommon    = "0.14.6"
-val scalaJSReactDraggable = "0.14.0"
+val scalaJSReactCommon    = "0.14.7"
+val scalaJSReactDraggable = "0.14.1"
 val cats                  = "2.6.1"
 val uTest                 = "0.7.10"
 
