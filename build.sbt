@@ -60,7 +60,7 @@ lazy val demo =
       startWebpackDevServer / version       := "3.3.1",
       webpackCliVersion / version           := "3.3.1",
       libraryDependencies ++= List(
-        "io.github.cquiroz.react" %%% "react-virtualized" % "0.13.0"
+        "io.github.cquiroz.react" %%% "react-virtualized" % "0.13.1"
       ),
       fastOptJS / webpackConfigFile         := Some(
         baseDirectory.value / "src" / "webpack" / "webpack-dev.config.js"
