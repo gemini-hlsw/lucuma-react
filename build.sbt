@@ -1,6 +1,6 @@
 val reactJS         = "17.0.2"
 val copyToClipboard = "3.3.1"
-val scalaJsReact    = "2.0.0-RC3"
+val scalaJsReact    = "2.0.0"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -74,8 +74,8 @@ lazy val facade =
       libraryDependencies ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReact % Test,
-        "io.github.cquiroz.react"           %%% "common"    % "0.13.1",
-        "io.github.cquiroz.react"           %%% "test"      % "0.13.1"     % Test,
+        "io.github.cquiroz.react"           %%% "common"    % "0.14.7",
+        "io.github.cquiroz.react"           %%% "test"      % "0.14.7"     % Test,
         "org.scalameta"                     %%% "munit"     % "0.7.29"     % Test,
         "org.typelevel"                     %%% "cats-core" % "2.6.1"      % Test
       ),
