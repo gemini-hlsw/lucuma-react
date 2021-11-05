@@ -4,7 +4,6 @@ val reactJS      = "17.0.2"
 val scalaJsReact = "2.0.0"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
-Global / semanticdbEnabled    := true
 
 inThisBuild(
   List(
@@ -101,7 +100,7 @@ lazy val root = (project in file("."))
   .aggregate(common, cats, test)
 
 lazy val commonSettings = Seq(
-  scalaVersion           := "2.13.6",
+  scalaVersion           := "2.13.7",
   organization           := "io.github.cquiroz.react",
   description            := "scala.js react common utilities",
   sonatypeProfileName    := "io.github.cquiroz",
