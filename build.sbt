@@ -3,10 +3,11 @@ name := "scalajs-react-beautiful-dnd"
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactJS          = "17.0.2"
-val scalaJsReact     = "2.0.0"
 val reactBeautiulDnD = "13.1.0"
-val atlasKitTree     = "8.2.0"
-val cats             = "2.6.1" // Only used in demo
+val atlasKitTree     = "8.4.0"
+
+val scalaJsReact = "2.0.0"
+val cats         = "2.6.1" // Only used in demo
 
 addCommandAlias(
   "restartDemoWDS",
@@ -120,6 +121,7 @@ lazy val demo =
       fastOptJS / webpackConfigFile   := Some(
         baseDirectory.value / "dev.webpack.config.js"
       ),
+      useYarn                         := true,
       webpack / version               := "4.30.0",
       startWebpackDevServer / version := "3.3.1",
       libraryDependencies ++= Seq(
@@ -168,6 +170,7 @@ lazy val treeDemo =
       fastOptJS / webpackConfigFile   := Some(
         baseDirectory.value / "dev.webpack.config.js"
       ),
+      useYarn                         := true,
       webpack / version               := "4.30.0",
       startWebpackDevServer / version := "3.3.1",
       libraryDependencies ++= Seq(
