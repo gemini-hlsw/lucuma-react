@@ -14,7 +14,7 @@ final case class GlobalHotKeys(
   override protected def cprops                     = GlobalHotKeys.props(this)
   def withChildren(children: CtorType.ChildrenArgs) =
     copy(children = children)
-  @inline def renderWith                            = GlobalHotKeys.component(cprops)
+  val component                                     = GlobalHotKeys.component
 }
 
 object GlobalHotKeys {

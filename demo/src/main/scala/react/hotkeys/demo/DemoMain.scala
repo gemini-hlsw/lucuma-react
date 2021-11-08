@@ -66,7 +66,7 @@ object DemoMain {
           )(
             HotKeys(keyMap = keyMap,
                     handlers = handlers,
-                    component = <.span,
+                    tag = <.span,
                     tabIndex = 1,
                     innerRef = ref
             )(

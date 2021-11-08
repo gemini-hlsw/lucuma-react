@@ -11,7 +11,7 @@ import japgolly.scalajs.react.{ facade => Raw }
 final case class HotKeys(
   keyMap:                js.UndefOr[KeyMap] = js.undefined,
   handlers:              js.UndefOr[Handlers] = js.undefined,
-  component:             js.UndefOr[HtmlTagOf[_]] = js.undefined,
+  tag:                   js.UndefOr[HtmlTagOf[_]] = js.undefined,
   tabIndex:              js.UndefOr[Int] = js.undefined,
   allowChanges:          js.UndefOr[Boolean] = js.undefined,
   innerRef:              js.UndefOr[Ref.Handle[_]] = js.undefined,
@@ -21,7 +21,7 @@ final case class HotKeys(
   override protected def cprops                     = HotKeys.props(this)
   def withChildren(children: CtorType.ChildrenArgs) =
     copy(children = children)
-  @inline def renderWith                            = HotKeys.component(cprops)
+  val component                                     = HotKeys.component
 }
 
 object HotKeys {
@@ -43,7 +43,7 @@ object HotKeys {
     val p = (new js.Object).asInstanceOf[HotKeysProps]
     q.keyMap.foreach(v => p.keyMap = v.toJs)
     q.handlers.foreach(v => p.handlers = v.toJs)
-    q.component.foreach(v => p.component = v.name)
+    q.tag.foreach(v => p.component = v.name)
     q.tabIndex.foreach(v => p.tabIndex = v)
     q.allowChanges.foreach(v => p.allowChanges = v)
     q.innerRef.foreach(v => p.innerRef = v.raw)

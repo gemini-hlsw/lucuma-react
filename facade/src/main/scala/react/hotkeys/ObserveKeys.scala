@@ -16,7 +16,7 @@ final case class ObserveKeys(
   override protected def cprops                     = ObserveKeys.props(this)
   def withChildren(children: CtorType.ChildrenArgs) =
     copy(children = children)
-  @inline def renderWith                            = ObserveKeys.component(cprops)
+  val component                                     = ObserveKeys.component
 }
 
 object ObserveKeys {

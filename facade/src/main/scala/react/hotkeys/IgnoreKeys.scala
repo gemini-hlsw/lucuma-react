@@ -16,7 +16,7 @@ final case class IgnoreKeys(
   override protected def cprops                     = IgnoreKeys.props(this)
   def withChildren(children: CtorType.ChildrenArgs) =
     copy(children = children)
-  @inline def renderWith                            = IgnoreKeys.component(cprops)
+  val component                                     = IgnoreKeys.component
 }
 
 object IgnoreKeys {
