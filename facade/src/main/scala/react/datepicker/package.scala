@@ -3,9 +3,15 @@ package react
 import scalajs.js
 import js.|
 import java.time.LocalDate
+import lucuma.reactDatepicker.components.SharedBuilder_ReactDatePickerProps_1216478921
+import japgolly.scalajs.react.vdom.VdomElement
 
 package object datepicker {
-  val Datepicker = lucuma.reactDatepicker.components.ReactDatepicker
+  type DateRange = js.Tuple2[js.Date | Null, js.Date | Null]
+
+  type NonNullDate = js.Date | DateRange
+
+  type DateOrRange = NonNullDate | Null
 
   implicit class LocalDateOps(val localDate: LocalDate) extends AnyVal {
     def toJsDate: js.Date =
@@ -26,8 +32,9 @@ package object datepicker {
       )
   }
 
-  implicit class JSUndefOrNullOrTuple2Ops[A](val value: js.UndefOr[A | Null | js.Tuple2[A, A]])
-      extends AnyVal {
+  implicit class JSUndefOrNullOrTuple2Ops[A](
+    val value: js.UndefOr[A | js.Tuple2[A | Null, A | Null] | Null]
+  ) extends AnyVal {
     def toEitherOpt: Option[Either[(A, A), A]] =
       value.toOption
         .flatMap(valueOrNull => Option(valueOrNull.asInstanceOf[A | js.Tuple2[A, A]]))
@@ -60,4 +67,13 @@ package object datepicker {
     def toLocalDateTupleOpt(implicit ev: A <:< js.Date): Option[(LocalDate, LocalDate)] =
       toLocalDateEitherOpt.flatMap(_.left.toOption)
   }
+
+  // We can remove this once ST handles multiple casings of the same type.
+  implicit def builder2VdomElement(
+    builder: SharedBuilder_ReactDatePickerProps_1216478921[
+      lucuma.reactDatepicker.mod.ReactDatePicker[_],
+      _
+    ]
+  ): VdomElement =
+    builder.build
 }
