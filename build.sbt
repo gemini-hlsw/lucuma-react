@@ -3,9 +3,10 @@ name := "scalajs-react-datepicker"
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val reactJS              = "17.0.2"
-val scalaJsReact         = "2.0.0-RC2"
-val reactDatePicker      = "4.1.1"
-val reactDatePickerTypes = "3.1.8"
+val reactDatePicker      = "4.3.0"
+val reactDatePickerTypes = "4.1.7"
+
+val scalaJsReact = "2.0.0"
 
 addCommandAlias(
   "restartWDS",
@@ -156,8 +157,11 @@ lazy val facade =
       // stEnableScalaJsDefined := Selection.All,
       scalacOptions ~= (_.filterNot(
         Set(
-          // By necessity facades will have unused params
+          // Types are declared for ReactDatepicker and ReactDatePicker, which are the same.
+          // Scalac issues a warning about them differing only in case, which I can find no way to single out and turn off.
+          "-Xfatal-warnings",
           "-Wdead-code",
+          // By necessity facades will have unused params
           "-Wunused:params",
           "-Wunused:explicits",
           "-Wunused:imports",
