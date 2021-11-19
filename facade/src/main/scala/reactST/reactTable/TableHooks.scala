@@ -64,6 +64,10 @@ object TableHooks {
   @js.native
   object useBlockLayout extends TableHook
 
+  @JSImport("react-table", "useFlexLayout")
+  @js.native
+  object useFlexLayout extends TableHook
+
   @JSImport("react-table", "useGridLayout")
   @js.native
   object useGridLayout extends TableHook
