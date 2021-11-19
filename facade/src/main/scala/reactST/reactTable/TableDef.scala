@@ -165,6 +165,18 @@ case class TableDef[D, Plugins, Layout](plugins: Set[Plugin]) {
   def withBlockLayout(implicit ev: Layout =:= Layout.Table) = withLayoutPlugin(Plugin.BlockLayout)
 
   /**
+   * Adds support for headers and cells to be rendered as inline-block divs (or other non-table
+   * elements) with width being used as the flex-basis and flex-grow. This hook becomes useful when
+   * implementing both virtualized and resizable tables that must also be able to stretch to fill
+   * all available space.
+   *
+   * NOTE: Although no additional options are needed for this plugin to work, the core column
+   * options width, minWidth and maxWidth are used to calculate column and cell widths and must be
+   * set.
+   */
+  def withFlexLayout(implicit ev: Layout =:= Layout.Table) = withLayoutPlugin(Plugin.FlexLayout)
+
+  /**
    * Adds support for headers and cells to be rendered as divs (or other non-table elements) with
    * the immediate parent (table) controlling the layout using CSS Grid. This hook becomes useful
    * when implementing both virtualized and resizable tables that must also be able to stretch to
