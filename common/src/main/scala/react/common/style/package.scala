@@ -56,8 +56,9 @@ package style {
       s.map(cssToTagMod).toTagMod
   }
 
-  /** Simple class to represent styles
-    */
+  /**
+   * Simple class to represent styles
+   */
   final case class Style(styles: Map[String, String | Int]) {
     def isEmpty: Boolean = styles.isEmpty
 
@@ -101,8 +102,9 @@ package style {
     val Empty: Style = Style(Map.empty)
   }
 
-  /** Simple class to represent css class
-    */
+  /**
+   * Simple class to represent css class
+   */
   final case class Css(htmlClasses: List[String]) {
     def isEmpty: Boolean = htmlClasses.isEmpty
 
