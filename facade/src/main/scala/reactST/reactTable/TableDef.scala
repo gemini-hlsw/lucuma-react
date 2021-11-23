@@ -14,6 +14,7 @@ import reactST.reactTable.anon.`1`._
 import reactST.reactTable.facade.cell.Cell
 import reactST.reactTable.facade.cell.CellProps
 import reactST.reactTable.facade.column.Column
+import reactST.reactTable.facade.column.HeaderGroup
 import reactST.reactTable.facade.column.HeaderProps
 import reactST.reactTable.facade.columnOptions
 import reactST.reactTable.facade.columnOptions.ColumnInterfaceBasedOnValue
@@ -49,6 +50,7 @@ case class TableDef[D, Plugins, Layout](plugins: Set[Plugin]) {
   type SingleColumnOptionsType = SingleColumnOptions[D, Plugins]
   type ColumnGroupOptionsType  = ColumnGroupOptions[D, Plugins]
   type ColumnType              = Column[D, Plugins]
+  type HeaderGroupType         = HeaderGroup[D, Plugins]
   type HeaderType              = HeaderProps[D, Plugins]
   type RowType                 = Row[D, Plugins]
   type CellType[V]             = Cell[D, V, Plugins]
