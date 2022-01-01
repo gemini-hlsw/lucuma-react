@@ -46,9 +46,9 @@ package implicits {
       (a, b) match {
         case (a: js.Array[_], b: js.Array[_]) =>
           a.length == b.length &&
-            a.zip(b).forall { x =>
-              jsAnyEq.eqv(x._1.asInstanceOf[js.Any], x._2.asInstanceOf[js.Any])
-            }
+          a.zip(b).forall { x =>
+            jsAnyEq.eqv(x._1.asInstanceOf[js.Any], x._2.asInstanceOf[js.Any])
+          }
 
         case _
             if a.asInstanceOf[js.Dynamic].constructor == js.constructorOf[js.Object] &&
