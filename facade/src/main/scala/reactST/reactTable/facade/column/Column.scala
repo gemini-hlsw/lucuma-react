@@ -54,14 +54,14 @@ trait Column[D, Plugins] extends js.Object {
   // not documented
   var placeholderOf: js.UndefOr[Column[js.Object, Plugins]] = js.native
 
-  def render(`type`: String): Node                   = js.native
-  def render(`type`: String, props: js.Object): Node = js.native
+  def render(`type`: String): Node                                            = js.native
+  def render(`type`: String, props: js.Object): Node                          = js.native
   @JSName("render")
-  def render_Footer(`type`: reactTableStrings.Footer): Node = js.native
+  def render_Footer(`type`: reactTableStrings.Footer): Node                   = js.native
   @JSName("render")
   def render_Footer(`type`: reactTableStrings.Footer, props: js.Object): Node = js.native
   @JSName("render")
-  def render_Header(`type`: reactTableStrings.Header): Node = js.native
+  def render_Header(`type`: reactTableStrings.Header): Node                   = js.native
   @JSName("render")
   def render_Header(`type`: reactTableStrings.Header, props: js.Object): Node = js.native
 

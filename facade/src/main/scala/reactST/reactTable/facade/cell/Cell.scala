@@ -22,10 +22,10 @@ trait Cell[D, V, Plugins] extends js.Object {
   def getCellProps(): TableCellProps                              = js.native
   def getCellProps(propGetter: CellPropGetter[D]): TableCellProps = js.native
 
-  def render(`type`: String): Node                       = js.native
-  def render(`type`: String, userProps: js.Object): Node = js.native
+  def render(`type`: String): Node                                            = js.native
+  def render(`type`: String, userProps: js.Object): Node                      = js.native
   @JSName("render")
-  def render_Cell(`type`: reactTableStrings.Cell): Node = js.native
+  def render_Cell(`type`: reactTableStrings.Cell): Node                       = js.native
   @JSName("render")
   def render_Cell(`type`: reactTableStrings.Cell, userProps: js.Object): Node =
     js.native
