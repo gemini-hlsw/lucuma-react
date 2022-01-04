@@ -6,7 +6,7 @@ Global / excludeLintKeys += webpackExtraArgs
 
 Global / semanticdbEnabled := true
 
-val reactVirtuoso = "2.2.8"
+val reactVirtuoso = "2.4.0"
 val reactJS       = "17.0.2"
 
 val scalaJsReact       = "2.0.0"
