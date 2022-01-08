@@ -8,13 +8,15 @@ import org.scalajs.dom
 import react.gridlayout._
 import react.common._
 import react.resizeDetector.hooks._
+import react.resizeDetector._
 
 object RGLDemo {
 
   val component = ScalaFnComponent
     .withHooks[Unit]
-    .useResizeDetector(1)
-    .render { (_, useResize) =>
+    .useCallback((x: Int, y: Int) => Callback.log(s"$x $y"))
+    .useResizeDetectorBy((_, f) => UseResizeDetectorProps(onResize = f.value))
+    .renderWithReuse { (_, _, useResize) =>
       org.scalajs.dom.window.console.log(useResize.width)
 
       val layout                                           = Layout(
@@ -34,11 +36,9 @@ object RGLDemo {
       <.div(
         ^.width  := "80%",
         ^.border := "red solid 1px",
-        // ResizeDetector() { s =>
-        // org.scalajs.dom.window.console.log(s.width.getOrElse(-1))
         <.div(
           ResponsiveReactGridLayout(
-            useResize.width, // .getOrElse(1),
+            useResize.width,
             // onLayoutChange = (_, b) => Callback.log(pprint.apply(b).toString),
             margin = (10, 10),
             containerPadding = (10, 10),
