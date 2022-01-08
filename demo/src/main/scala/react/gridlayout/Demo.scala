@@ -7,14 +7,18 @@ import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 import react.gridlayout._
 import react.common._
-import react.resizeDetector.ResizeDetector
+import react.resizeDetector.hooks._
+import react.resizeDetector._
 
 object RGLDemo {
 
-  val component = ScalaComponent
-    .builder[Unit]("RGLDemo")
-    .render { _ =>
-      println("Render")
+  val component = ScalaFnComponent
+    .withHooks[Unit]
+    .useCallback((x: Int, y: Int) => Callback.log(s"$x $y"))
+    .useResizeDetectorBy((_, f) => UseResizeDetectorProps(onResize = f.value))
+    .renderWithReuse { (_, _, useResize) =>
+      org.scalajs.dom.window.console.log(useResize.width)
+
       val layout                                           = Layout(
         List(
           LayoutItem(x = 0, y = 0, w = 6, h = 2, i = "a", static = true),
@@ -30,28 +34,26 @@ object RGLDemo {
           (BreakpointName.xs, (480, 6, layout))
         )
       <.div(
-        ^.width := "100%",
-        ResizeDetector() { s =>
-          <.div(
-            ResponsiveReactGridLayout(
-              s.width.getOrElse(1),
-              onLayoutChange = (_, b) => Callback.log(pprint.apply(b).toString),
-              margin = (10, 10),
-              containerPadding = (10, 10),
-              className = "layout",
-              draggableHandle = ".item",
-              rowHeight = 30,
-              layouts = layouts
-            )(
-              <.div(^.key := "a", "a"),
-              <.div(^.key := "c", "c"),
-              <.div(^.key := "b", "b")
-            )
+        ^.width  := "80%",
+        ^.border := "red solid 1px",
+        <.div(
+          ResponsiveReactGridLayout(
+            useResize.width,
+            // onLayoutChange = (_, b) => Callback.log(pprint.apply(b).toString),
+            margin = (10, 10),
+            containerPadding = (10, 10),
+            className = "layout",
+            draggableHandle = ".item",
+            rowHeight = 30,
+            layouts = layouts
+          )(
+            <.div(^.key := "a", "a"),
+            <.div(^.key := "c", "c"),
+            <.div(^.key := "b", "b")
           )
-        }
-      )
+        )
+      ).withRef(useResize.ref)
     }
-    .build
 
   def apply() = component()
 

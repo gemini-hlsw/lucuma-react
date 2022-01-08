@@ -5,9 +5,7 @@ package react.resizeDetector
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import japgolly.scalajs.react.facade.React
-import japgolly.scalajs.react.facade.JsNumber
-import japgolly.scalajs.react.vdom.VdomBuilder
+import japgolly.scalajs.react.{ facade => Raw }
 import org.scalajs.dom.html
 import react.common._
 
@@ -18,24 +16,19 @@ import scalajs.js.|
 
 object ResizeDetector {
 
-  implicit class BuilderOps(b: VdomBuilder) {
-    def addRefFn[A](refFn: React.RefFn[A]): Unit =
-      b.addAttr("ref", refFn)
-  }
-
   @js.native
   @JSImport("react-resize-detector", JSImport.Default)
   private object RawComponent extends js.Object
 
   @js.native
   protected trait DimensionsJS extends js.Object {
-    val height: js.UndefOr[JsNumber]
-    val width: js.UndefOr[JsNumber]
+    val height: js.UndefOr[Raw.JsNumber]
+    val width: js.UndefOr[Raw.JsNumber]
   }
 
   @js.native
   protected trait RenderPropsJS extends DimensionsJS {
-    val targetRef: React.RefFn[html.Element]
+    val targetRef: Raw.React.RefFn[html.Element]
   }
 
   trait Dimensions  {
@@ -58,7 +51,7 @@ object ResizeDetector {
 
   }
 
-  protected type RenderJS = js.Function1[RenderPropsJS, React.Node | Null]
+  protected type RenderJS = js.Function1[RenderPropsJS, Raw.React.Node | Null]
 
   type Render = RenderProps => VdomNode
 
@@ -119,7 +112,7 @@ object ResizeDetector {
   @js.native
   trait Props extends js.Object {
     var children: RenderJS
-    var onResize: js.UndefOr[js.Function2[Int, Int, Unit]]
+    var onResize: js.UndefOr[js.Function2[Raw.JsNumber, Raw.JsNumber, Unit]]
     var handleHeight: js.UndefOr[Boolean]
     var handleWidth: js.UndefOr[Boolean]
     var skipOnMount: js.UndefOr[Boolean]
@@ -143,7 +136,15 @@ object ResizeDetector {
     ): Props = {
       val p = (new js.Object).asInstanceOf[Props]
       p.children = renderPropsJS => children(RenderProps(renderPropsJS)).rawNode
-      onResize.foreach(v => p.onResize = v: js.Function2[Int, Int, Unit])
+      onResize.foreach(v =>
+        p.onResize = { case (x: Raw.JsNumber, y: Raw.JsNumber) =>
+          v(x.toInt, y.toInt)
+        }: js.Function2[
+          Raw.JsNumber,
+          Raw.JsNumber,
+          Unit
+        ]
+      )
       handleHeight.foreach(v => p.handleHeight = v)
       handleWidth.foreach(v => p.handleWidth = v)
       skipOnMount.foreach(v => p.skipOnMount = v)
