@@ -1,4 +1,4 @@
-import reactRefresh from "@vitejs/plugin-react-refresh";
+import react from "@vitejs/plugin-react";
 import path from "path";
 import fs from "fs";
 
@@ -36,7 +36,7 @@ export default ({ command, mode }) => {
       },
     },
     build: {
-      minify: 'esbuild',
+      minify: 'terser',
       // minify: false,
       terserOptions: {
         // sourceMap: false,
@@ -44,6 +44,6 @@ export default ({ command, mode }) => {
       },
       outDir: path.resolve(__dirname, "../docs"),
     },
-    plugins: [reactRefresh()],
+    plugins: [react()],
   };
 };
