@@ -8,7 +8,7 @@ val reactJS      = "17.0.2"
 val reactHotkeys = "2.0.0"
 
 val scalaJsReact       = "2.0.1"
-val scalaJSReactCommon = "0.14.7"
+val scalaJSReactCommon = "0.14.8"
 val utest              = "0.7.10"
 
 addCommandAlias(
