@@ -1,8 +1,8 @@
 val reactJS        = "17.0.2"
 val reactResizable = "3.0.4"
 
-val scalaJsReact          = "2.0.0"
-val scalaJSDom            = "2.1.0"
+val scalaJsReact          = "2.0.1"
+val scalaJSDom            = "2.0.0"
 val scalaJSReactCommon    = "0.14.7"
 val scalaJSReactDraggable = "0.14.1"
 val cats                  = "2.7.0"
@@ -135,7 +135,7 @@ lazy val facade =
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion           := "2.13.7",
+  scalaVersion           := "2.13.8",
   organization           := "io.github.cquiroz.react",
   sonatypeProfileName    := "io.github.cquiroz",
   description            := "scala.js facade for react-resizable ",
