@@ -1,6 +1,6 @@
 val reactJS         = "17.0.2"
 val copyToClipboard = "3.3.1"
-val scalaJsReact    = "2.0.0"
+val scalaJsReact    = "2.0.1"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
