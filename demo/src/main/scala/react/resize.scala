@@ -106,7 +106,7 @@ object HooksApiExt {
     val base: js.Any = js.native
 
     @scala.inline
-    def useResizeDetector(): UseResizeDetectorReturn = UseResizeDetectorReturn.fromJS(
+    def useResizeDetector(): UseResizeDetectorReturn                              = UseResizeDetectorReturn.fromJS(
       base
         .asInstanceOf[js.Dynamic]
         .applyDynamic("useResizeDetector")()
