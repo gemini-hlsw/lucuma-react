@@ -6,7 +6,7 @@ val reactJS              = "17.0.2"
 val reactDatePicker      = "4.3.0"
 val reactDatePickerTypes = "4.1.7"
 
-val scalaJsReact = "2.0.0"
+val scalaJsReact = "2.0.1"
 
 addCommandAlias(
   "restartWDS",
