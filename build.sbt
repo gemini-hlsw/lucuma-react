@@ -1,8 +1,8 @@
 val reactJS        = "17.0.2"
 val reactDraggable = "4.4.3"
 
-val scalaJsReact       = "2.0.0"
-val scalaJSDom         = "2.1.0"
+val scalaJsReact       = "2.0.1"
+val scalaJSDom         = "2.0.0"
 val scalaJSReactCommon = "0.14.7"
 val cats               = "2.7.0"
 val uTest              = "0.7.10"
@@ -139,7 +139,7 @@ lazy val facade =
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion           := "2.13.7",
+  scalaVersion           := "2.13.8",
   organization           := "io.github.cquiroz.react",
   sonatypeProfileName    := "io.github.cquiroz",
   description            := "scala.js facade for react-draggable ",
