@@ -80,7 +80,7 @@ object DraggableTests extends TestSuite {
         .map(_.asInstanceOf[DraggableBounds].left) ==> Some(1)
     }
     "supportCancel" - {
-      Draggable(Draggable.props(), <.div("Abc")).props.cancel.toOption ==> Some(null)
+      Draggable(Draggable.props(), <.div("Abc")).props.cancel.toOption ==> None
       val draggable =
         Draggable(Draggable.props(cancel = "cancel"), <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
@@ -161,7 +161,7 @@ object DraggableTests extends TestSuite {
       draggable.props.disabled.toOption ==> Some(true)
     }
     "supportGrid" - {
-      Draggable(Draggable.props(), <.div("Abc")).props.grid.toOption ==> Some(null)
+      Draggable(Draggable.props(), <.div("Abc")).props.grid.toOption ==> None
       val draggable =
         Draggable(Draggable.props(grid = Grid(1, 2)), <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
@@ -174,7 +174,7 @@ object DraggableTests extends TestSuite {
       draggable.props.grid.toOption.map(_.apply(1)) ==> Some(2)
     }
     "supportHandle" - {
-      Draggable(Draggable.props(), <.div("Abc")).props.handle.toOption ==> Some(null)
+      Draggable(Draggable.props(), <.div("Abc")).props.handle.toOption ==> None
       val draggable =
         Draggable(Draggable.props(handle = "handle"), <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
@@ -186,7 +186,7 @@ object DraggableTests extends TestSuite {
       draggable.props.handle.toOption ==> Some("handle")
     }
     "supportOffsetParent" - {
-      Draggable(Draggable.props(), <.div("Abc")).props.offsetParent.toOption ==> Some(null)
+      Draggable(Draggable.props(), <.div("Abc")).props.offsetParent.toOption ==> None
     }
     "supportOnMouseDown" - {
       Draggable(Draggable.props(onMouseDown = (_: MouseEvent) => Callback.empty), <.div("Abc"))
@@ -207,7 +207,7 @@ object DraggableTests extends TestSuite {
       )
     }
     "supportPosition" - {
-      Draggable(Draggable.props(), <.div("Abc")).props.position.toOption ==> Some(null)
+      Draggable(Draggable.props(), <.div("Abc")).props.position.toOption ==> None
       val draggable =
         Draggable(Draggable.props(position = ControlPosition(1, 2)), <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
