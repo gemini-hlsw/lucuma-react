@@ -6,7 +6,7 @@ val scalaJSDom            = "2.1.0"
 val scalaJSReactCommon    = "0.14.8"
 val scalaJSReactDraggable = "0.14.3"
 val cats                  = "2.7.0"
-val uTest                 = "0.7.10"
+val uTest                 = "0.7.11"
 
 addCommandAlias("restartWDS",
                 "; ~demo/fastOptJS/stopWebpackDevServer; demo/fastOptJS/startWebpackDevServer"
