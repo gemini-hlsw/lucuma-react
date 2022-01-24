@@ -7,7 +7,7 @@ val scalaJsReact = "2.0.1"
 val scalaJSDom   = "2.1.0"
 val reactCommon  = "0.14.8"
 val cats         = "2.7.0"
-val utest        = "0.7.10"
+val utest        = "0.7.11"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
