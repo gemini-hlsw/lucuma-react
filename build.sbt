@@ -1,4 +1,4 @@
-ThisBuild / tlBaseVersion       := "0.2"
+ThisBuild / tlBaseVersion       := "0.3"
 ThisBuild / tlCiReleaseBranches := Seq("master")
 
 /* ScalablyTyped configuration */
