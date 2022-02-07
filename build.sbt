@@ -1,14 +1,10 @@
+ThisBuild / tlBaseVersion       := "0.2"
+ThisBuild / tlCiReleaseBranches := Seq("master")
+
 /* ScalablyTyped configuration */
 enablePlugins(ScalablyTypedConverterGenSourcePlugin)
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
-
-inThisBuild(
-  Seq(
-    homepage                      := Some(url("https://github.com/gemini-hlsw/lucuma-svgdotjs")),
-    Global / onChangedBuildSource := ReloadOnSourceChanges
-  ) ++ lucumaPublishSettings
-)
 
 lazy val root = project
   .in(file("."))
@@ -27,20 +23,11 @@ lazy val root = project
     useYarn                 := true,
     stSourceGenMode         := SourceGenMode.ResourceGenerator,
     stUseScalaJsDom         := true,
-    scalacOptions ~= (_.filterNot(
-      Set(
-        // By necessity facades will have unused params
-        "-Wdead-code",
-        "-Wunused:params",
-        "-Wunused:imports",
-        "-Wunused:explicits"
-      )
-    )),
+    tlFatalWarnings         := false, // By necessity facades will have unused params
     Compile / doc / sources := Seq(),
     // focus only on these libraries
     stMinimize              := Selection.AllExcept("@svgdotjs/svg.js")
     // stMinimize := Selection.All,
     // stMinimizeKeep ++= List("svgdotjsSvgJs.mod.Element")
   )
-  .settings(lucumaScalaJsSettings: _*)
   .enablePlugins(ScalablyTypedConverterGenSourcePlugin)
