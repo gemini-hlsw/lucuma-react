@@ -10,7 +10,7 @@ lazy val root = project
   .in(file("."))
   .settings(name := "lucuma-svgdotjs")
   .settings(
-    crossScalaVersions      := Seq("2.13.8", "3.1.0"),
+    crossScalaVersions      := Seq("2.13.8", "3.1.1"),
     // shade into another package
     stOutputPackage         := "lucuma.svgdotjs",
     /* javascript / typescript deps */
