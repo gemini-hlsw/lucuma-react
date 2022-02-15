@@ -13,10 +13,6 @@ lazy val root = project
     crossScalaVersions      := Seq("2.13.8", "3.1.1"),
     // shade into another package
     stOutputPackage         := "lucuma.svgdotjs",
-    /* javascript / typescript deps */
-    Compile / npmDependencies ++= Seq(
-      "@svgdotjs/svg.js" -> "3.0.16"
-    ),
     /* disabled because it somehow triggers many warnings */
     scalaJSLinkerConfig ~= (_.withSourceMap(false)),
     // because npm is slow
