@@ -1,4 +1,4 @@
-# scalajs-react-window
+# scalajs-react-virtuoso
 
 A scalajs facade for [react-virtuoso](https://virtuoso.dev/)
 
