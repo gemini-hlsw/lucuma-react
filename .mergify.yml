@@ -13,7 +13,6 @@ pull_request_rules:
     - body~=labels:.*early-semver-patch
     - body~=labels:.*early-semver-minor
   - status-success=Build and Test (ubuntu-latest, 2.13.8, temurin@17)
-  - status-success=Build and Test (ubuntu-latest, 3.1.1, temurin@17)
   actions:
     merge: {}
 - name: Label cats PRs

@@ -6,7 +6,7 @@ val munitV           = "0.7.29"
 val disciplineMunitV = "1.0.9"
 
 val Scala3 = "3.1.1"
-ThisBuild / crossScalaVersions += Scala3
+// ThisBuild / crossScalaVersions += Scala3
 
 lazy val root = project
   .in(file("."))
