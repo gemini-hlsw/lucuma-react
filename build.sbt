@@ -29,7 +29,10 @@ lazy val cats = project
   .settings(
     name := "lucuma-react-cats",
     libraryDependencies ++= Seq(
-      "org.typelevel" %%% "cats-core" % catsV
+      "org.typelevel" %%% "cats-core"        % catsV,
+      "org.typelevel" %%% "cats-laws"        % catsV            % Test,
+      "org.scalameta" %%% "munit-scalacheck" % munitV           % Test,
+      "org.typelevel" %%% "discipline-munit" % disciplineMunitV % Test
     )
   )
   .dependsOn(common)
@@ -41,9 +44,9 @@ lazy val test = project
     Test / requireJsDomEnv   := true,
     useYarn                  := true,
     libraryDependencies ++= Seq(
-      "org.scalameta"                     %%% "munit"        % munitV,
-      "org.typelevel"                     %%% "cats-testkit" % catsV         % Test,
-      "com.github.japgolly.scalajs-react" %%% "test"         % scalaJsReactV % Test
+      "org.scalameta"                     %%% "munit"            % munitV,
+      "org.typelevel"                     %%% "discipline-munit" % disciplineMunitV % Test,
+      "com.github.japgolly.scalajs-react" %%% "test"             % scalaJsReactV    % Test
     ),
     Test / webpackConfigFile := Some(
       baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
