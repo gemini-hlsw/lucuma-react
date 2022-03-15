@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.resizeDetector
 
 import japgolly.scalajs.react._
@@ -8,6 +11,8 @@ import scala.scalajs.js.annotation._
 import org.scalajs.dom.html
 import react.common._
 import react.resizeDetector.ResizeDetector._
+
+import scala.language.implicitConversions
 
 @js.native
 protected trait ReactResizeDetectorDimensions extends js.Object {

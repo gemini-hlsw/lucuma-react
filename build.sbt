@@ -74,3 +74,13 @@ lazy val gridLayout = project
     ),
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
+
+lazy val gridLayoutDemo = project
+  .in(file("grid-layout-demo"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, NoPublishPlugin)
+  .dependsOn(gridLayout)
+  .settings(
+    useYarn                               := true,
+    scalaJSLinkerConfig ~= { _.withSourceMap(false) },
+    libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.1"
+  )
