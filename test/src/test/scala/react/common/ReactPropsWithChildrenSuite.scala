@@ -9,6 +9,8 @@ import japgolly.scalajs.react.facade.React.RefHandle
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 
+import scala.language.implicitConversions
+
 class ReactPropsWithChildrenSuite extends munit.FunSuite {
 
   case class PropsWithChildren() extends ReactPropsWithChildren(propsWithChildrenComponent)

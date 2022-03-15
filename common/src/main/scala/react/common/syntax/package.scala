@@ -10,6 +10,8 @@ import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.VdomNode
 
+import scala.language.implicitConversions
+
 package syntax {
   trait EnumValueSyntax {
     implicit def syntaxEnumValue[A: EnumValue](a: A): EnumValueOps[A] =
@@ -146,17 +148,17 @@ package syntax {
       p.render
 
     implicit def GenericFnComponentPC2RenderFn[P <: js.Object](
-      p: GenericFnComponentPC[P, _]
+      p: GenericFnComponentPC[P, ?]
     ): RenderFn[P] =
       p.render
 
     implicit def GenericFnComponentPA2RenderFn[P <: js.Object](
-      p: GenericFnComponentPA[P, _]
+      p: GenericFnComponentPA[P, ?]
     ): RenderFn[P] =
       p.render
 
     implicit def GenericFnComponentPAC2RenderFn[P <: js.Object](
-      p: GenericFnComponentPAC[P, _]
+      p: GenericFnComponentPAC[P, ?]
     ): RenderFn[P] =
       p.render
 
@@ -167,17 +169,17 @@ package syntax {
       p.render
 
     implicit def GenericComponentPC2Render[P <: js.Object](
-      p: GenericComponentPC[P, _]
+      p: GenericComponentPC[P, ?]
     ): Render[P] =
       p.render
 
     implicit def GenericComponentPA2Render[P <: js.Object](
-      p: GenericComponentPA[P, _]
+      p: GenericComponentPA[P, ?]
     ): Render[P] =
       p.render
 
     implicit def GenericComponentPAC2Render[P <: js.Object](
-      p: GenericComponentPAC[P, _]
+      p: GenericComponentPAC[P, ?]
     ): Render[P] =
       p.render
   }
@@ -190,17 +192,17 @@ package syntax {
       p.render
 
     implicit def GenericFnComponentPC2VdomNode[P <: js.Object](
-      p: GenericFnComponentPC[P, _]
+      p: GenericFnComponentPC[P, ?]
     ): VdomNode =
       p.render
 
     implicit def GenericFnComponentPA2VdomNode[P <: js.Object](
-      p: GenericFnComponentPA[P, _]
+      p: GenericFnComponentPA[P, ?]
     ): VdomNode =
       p.render
 
     implicit def GenericFnComponentPAC2VdomNode[P <: js.Object](
-      p: GenericFnComponentPAC[P, _]
+      p: GenericFnComponentPAC[P, ?]
     ): VdomNode =
       p.render
 
@@ -211,17 +213,17 @@ package syntax {
       p.render
 
     implicit def GenericComponentPC2VdomNode[P <: js.Object](
-      p: GenericComponentPC[P, _]
+      p: GenericComponentPC[P, ?]
     ): VdomNode =
       p.render
 
     implicit def GenericComponentPA2VdomNode[P <: js.Object](
-      p: GenericComponentPA[P, _]
+      p: GenericComponentPA[P, ?]
     ): VdomNode =
       p.render
 
     implicit def GenericComponentPAC2VdomNode[P <: js.Object](
-      p: GenericComponentPAC[P, _]
+      p: GenericComponentPAC[P, ?]
     ): VdomNode =
       p.render
 
@@ -232,17 +234,17 @@ package syntax {
       p.render
 
     implicit def GenericComponentPCF2VdomNode[P <: js.Object, F <: js.Object](
-      p: GenericComponentPCF[P, _, F]
+      p: GenericComponentPCF[P, ?, F]
     ): VdomNode =
       p.render
 
     implicit def GenericComponentPAF2VdomNode[P <: js.Object, F <: js.Object](
-      p: GenericComponentPAF[P, _, F]
+      p: GenericComponentPAF[P, ?, F]
     ): VdomNode =
       p.render
 
     implicit def GenericComponentPACF2VdomNode[P <: js.Object, F <: js.Object](
-      p: GenericComponentPACF[P, _, F]
+      p: GenericComponentPACF[P, ?, F]
     ): VdomNode =
       p.render
 
@@ -253,17 +255,17 @@ package syntax {
       p.render: VdomNode
 
     implicit def GenericFnComponentPC2UndefVdomNode[P <: js.Object](
-      p: GenericFnComponentPC[P, _]
+      p: GenericFnComponentPC[P, ?]
     ): js.UndefOr[VdomNode] =
       p.render: VdomNode
 
     implicit def GenericFnComponentPA2UndefVdomNode[P <: js.Object](
-      p: GenericFnComponentPA[P, _]
+      p: GenericFnComponentPA[P, ?]
     ): js.UndefOr[VdomNode] =
       p.render: VdomNode
 
     implicit def GenericFnComponentPAC2UndefVdomNode[P <: js.Object](
-      p: GenericFnComponentPAC[P, _]
+      p: GenericFnComponentPAC[P, ?]
     ): js.UndefOr[VdomNode] =
       p.render: VdomNode
 
@@ -274,17 +276,17 @@ package syntax {
       p.render: VdomNode
 
     implicit def GenericComponentPC2UndefVdomNode[P <: js.Object](
-      p: GenericComponentPC[P, _]
+      p: GenericComponentPC[P, ?]
     ): js.UndefOr[VdomNode] =
       p.render: VdomNode
 
     implicit def GenericComponentPA2UndefVdomNode[P <: js.Object](
-      p: GenericComponentPA[P, _]
+      p: GenericComponentPA[P, ?]
     ): js.UndefOr[VdomNode] =
       p.render: VdomNode
 
     implicit def GenericComponentPAC2UndefVdomNode[P <: js.Object](
-      p: GenericComponentPAC[P, _]
+      p: GenericComponentPAC[P, ?]
     ): js.UndefOr[VdomNode] =
       p.render: VdomNode
 
@@ -295,17 +297,17 @@ package syntax {
       p.render: VdomNode
 
     implicit def GenericComponentPCF2UndefVdomNode[P <: js.Object, F <: js.Object](
-      p: GenericComponentPCF[P, _, F]
+      p: GenericComponentPCF[P, ?, F]
     ): js.UndefOr[VdomNode] =
       p.render: VdomNode
 
     implicit def GenericComponentPAF2UndefVdomNode[P <: js.Object, F <: js.Object](
-      p: GenericComponentPAF[P, _, F]
+      p: GenericComponentPAF[P, ?, F]
     ): js.UndefOr[VdomNode] =
       p.render: VdomNode
 
     implicit def GenericComponentPACF2UndefVdomNode[P <: js.Object, F <: js.Object](
-      p: GenericComponentPACF[P, _, F]
+      p: GenericComponentPACF[P, ?, F]
     ): js.UndefOr[VdomNode] =
       p.render: VdomNode
 

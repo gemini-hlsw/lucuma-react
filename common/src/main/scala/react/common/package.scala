@@ -13,6 +13,7 @@ import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.vdom.TagMod
 
+import scala.language.implicitConversions
 import scala.scalajs.js
 
 package object common extends react.common.syntax.AllSyntax {
