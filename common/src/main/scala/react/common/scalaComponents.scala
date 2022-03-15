@@ -109,7 +109,7 @@ sealed trait ReactComponentPropsForwardRef[Props, R, CT[-p, +u] <: CtorType[p, u
     newComponent: ScalaForwardRef.Component[Props, R, CT]
   ): ReactComponentPropsForwardRef[Props, R, CT] =
     new ReactComponentPropsForwardRef[Props, R, CT] {
-      override val component               = newComponent
+      override val component                    = newComponent
       override protected[common] lazy val props = self.props
     }
 
