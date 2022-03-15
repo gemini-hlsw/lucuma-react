@@ -1,4 +1,4 @@
-ThisBuild / tlBaseVersion       := "0.0"
+ThisBuild / tlBaseVersion       := "1.0"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 
 val scalaJsReactV    = "2.0.1"
@@ -6,8 +6,7 @@ val catsV            = "2.7.0"
 val munitV           = "0.7.29"
 val disciplineMunitV = "1.0.9"
 
-val Scala3 = "3.1.1"
-// ThisBuild / crossScalaVersions += Scala3
+ThisBuild / crossScalaVersions := Seq("3.1.1")
 
 lazy val root = project
   .in(file("."))

@@ -10,7 +10,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 
 class ReactFnPropsSuite extends munit.FunSuite {
 
-  case class Props() extends ReactFnProps[Props](fnPropsComponent)
+  case class Props() extends ReactFnProps(fnPropsComponent)
 
   val fnPropsComponent = ScalaFnComponent[Props](_ => <.div)
 

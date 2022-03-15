@@ -10,6 +10,8 @@ import japgolly.scalajs.react.internal.FacadeExports
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 
+import scala.language.implicitConversions
+
 class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite {
 
   val forwardee = ScalaComponent
@@ -17,13 +19,8 @@ class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite {
     .render_C(c => <.div(c))
     .build
 
-  type RefType = japgolly.scalajs.react.facade.React.Component[Box[Unit], Box[Unit]]
-    with Scala.Vars[Unit, Unit, Unit]
-
   case class PropsWithChildren()
-      extends ReactPropsForwardRefWithChildren[PropsWithChildren, RefType](
-        fwdRefWithChildrenPropsComponent
-      )
+      extends ReactPropsForwardRefWithChildren(fwdRefWithChildrenPropsComponent)
 
   val fwdRefWithChildrenPropsComponent =
     React.forwardRef

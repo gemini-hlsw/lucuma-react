@@ -10,8 +10,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 
 class ReactFnPropsWithChildrenSuite extends munit.FunSuite {
 
-  case class PropsWithChildren()
-      extends ReactFnPropsWithChildren[PropsWithChildren](fnPropsWithChildrenComponent)
+  case class PropsWithChildren() extends ReactFnPropsWithChildren(fnPropsWithChildrenComponent)
 
   val fnPropsWithChildrenComponent =
     ScalaFnComponent.withChildren[PropsWithChildren]((_, c) => <.div(c))

@@ -47,7 +47,7 @@ package implicits {
 
     implicit val jsAnyEq: Eq[js.Any] = Eq.instance { (a, b) =>
       (a, b) match {
-        case (a: js.Array[_], b: js.Array[_]) =>
+        case (a: js.Array[?], b: js.Array[?]) =>
           a.length == b.length &&
           a.zip(b).forall { x =>
             jsAnyEq.eqv(x._1.asInstanceOf[js.Any], x._2.asInstanceOf[js.Any])

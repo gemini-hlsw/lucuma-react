@@ -9,12 +9,13 @@ import japgolly.scalajs.react.facade.React.RefHandle
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 
+import scala.language.implicitConversions
+
 class ReactPropsSuite extends munit.FunSuite {
 
-  case class Props() extends ReactProps[Props](propsComponent)
+  case class Props() extends ReactProps(propsComponent)
 
-  val propsComponent =
-    ScalaComponent.builder[Props].render(_ => <.div).build
+  val propsComponent = ScalaComponent.builder[Props].render(_ => <.div).build
 
   test("props") {
     val p        = Props()

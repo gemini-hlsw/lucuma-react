@@ -12,11 +12,11 @@ import japgolly.scalajs.react.component.ScalaForwardRef
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.vdom.TagMod
-import react.common.syntax.AllSyntax
 
+import scala.language.implicitConversions
 import scala.scalajs.js
 
-package object common extends AllSyntax {
+package object common extends react.common.syntax.AllSyntax {
 
   def merge(a: js.Object, b: js.Object): js.Object = {
     val m = js.Dictionary.empty[js.Any]
@@ -51,13 +51,13 @@ package object common extends AllSyntax {
   type Css   = style.Css
 
   // Begin Scala Components
-  @inline implicit def props2Component[Props, CT[-p, +u] <: CtorType[p, u]](
-    p: ReactRender[Props, CT, Scala.Unmounted[Props, _, _]]
+  @inline implicit def props2Component[Props, S, B, CT[-p, +u] <: CtorType[p, u]](
+    p: ReactRender[Props, CT, Scala.Unmounted[Props, S, B]]
   ): VdomElement =
     p.toUnmounted
 
-  implicit class PropsWithChildren2Component[Props](
-    p: ReactRender[Props, CtorType.PropsAndChildren, Scala.Unmounted[Props, _, _]]
+  implicit class PropsWithChildren2Component[Props, S, B](
+    p: ReactRender[Props, CtorType.PropsAndChildren, Scala.Unmounted[Props, S, B]]
   ) {
     @inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
       p(first, rest: _*)

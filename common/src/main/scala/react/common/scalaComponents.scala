@@ -11,9 +11,9 @@ import japgolly.scalajs.react.component.ScalaForwardRef
 import scalajs.js
 
 sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U] {
-  protected[common] val props: Props
+  protected[common] def props: Props
 
-  val ctor: CT[Props, U]
+  def ctor: CT[Props, U]
 
   @inline def apply(
     first:       CtorType.ChildArg,
@@ -21,7 +21,7 @@ sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U] {
   )(implicit ev: CT[Props, U] <:< CtorType.PropsAndChildren[Props, U]): U =
     ctor.applyGeneric(props)((first +: rest): _*)
 
-  @inline val toUnmounted: U = ctor.applyGeneric(props)()
+  inline def toUnmounted: U = ctor.applyGeneric(props)()
 }
 
 sealed trait CtorWithProps[Props, CT[-p, +u] <: CtorType[p, u], U]
@@ -48,43 +48,35 @@ sealed trait CtorWithProps[Props, CT[-p, +u] <: CtorType[p, u], U]
     clone(ctor.withRawProp(name, value))
 }
 
-sealed trait ReactComponentProps[Props, CT[-p, +u] <: CtorType[p, u]]
-    extends CtorWithProps[Props, CT, Scala.Unmounted[Props, _, _]] { self =>
-  val component: Scala.Component[Props, _, _, CT]
+sealed trait ReactComponentProps[Props, S, B, CT[-p, +u] <: CtorType[p, u]]
+    extends CtorWithProps[Props, CT, Scala.Unmounted[Props, S, B]] { self =>
+  def component: Scala.Component[Props, S, B, CT]
 
-  protected[common] lazy val props: Props = this.asInstanceOf[Props]
+  protected[common] def props: Props = this.asInstanceOf[Props]
 
-  override lazy val ctor: CT[Props, Scala.Unmounted[Props, _, _]] = component.ctor
+  override lazy val ctor: CT[Props, Scala.Unmounted[Props, S, B]] = component.ctor
 
   private def copyComponent(
-    newComponent: Scala.Component[Props, _, _, CT]
-  ): ReactComponentProps[Props, CT] =
-    new ReactComponentProps[Props, CT] {
+    newComponent: Scala.Component[Props, S, B, CT]
+  ): ReactComponentProps[Props, S, B, CT] =
+    new ReactComponentProps[Props, S, B, CT] {
       override lazy val component               = newComponent
       override protected[common] lazy val props = self.props
     }
 
-  def withRef[S, B](ref: Ref.Handle[ScalaComponent.RawMounted[Props, S, B]]) =
-    copyComponent(
-      component
-        .asInstanceOf[ScalaComponent.Component[Props, S, B, CT]]
-        .withRef(ref)
-    )
+  def withRef(ref: Ref.Handle[ScalaComponent.RawMounted[Props, S, B]]) =
+    copyComponent(component.withRef(ref))
 
-  def withOptionalRef[S, B](ref: Option[Ref.Handle[ScalaComponent.RawMounted[Props, S, B]]]) =
-    copyComponent(
-      component
-        .asInstanceOf[Scala.Component[Props, S, B, CT]]
-        .withOptionalRef(ref)
-    )
+  def withOptionalRef(ref: Option[Ref.Handle[ScalaComponent.RawMounted[Props, S, B]]]) =
+    copyComponent(component.withOptionalRef(ref))
 }
 
-class ReactProps[Props](val component: Scala.Component[Props, _, _, CtorType.Props])
-    extends ReactComponentProps[Props, CtorType.Props]
+class ReactProps[Props, S, B](val component: Scala.Component[Props, S, B, CtorType.Props])
+    extends ReactComponentProps[Props, S, B, CtorType.Props]
 
-class ReactPropsWithChildren[Props](
-  val component: Scala.Component[Props, _, _, CtorType.PropsAndChildren]
-) extends ReactComponentProps[Props, CtorType.PropsAndChildren]
+class ReactPropsWithChildren[Props, S, B](
+  val component: Scala.Component[Props, S, B, CtorType.PropsAndChildren]
+) extends ReactComponentProps[Props, S, B, CtorType.PropsAndChildren]
 
 sealed trait ReactFnComponentProps[Props, CT[-p, +u] <: CtorType[p, u], U]
     extends CtorWithProps[Props, CT, U] {
@@ -117,7 +109,7 @@ sealed trait ReactComponentPropsForwardRef[Props, R, CT[-p, +u] <: CtorType[p, u
     newComponent: ScalaForwardRef.Component[Props, R, CT]
   ): ReactComponentPropsForwardRef[Props, R, CT] =
     new ReactComponentPropsForwardRef[Props, R, CT] {
-      override lazy val component               = newComponent
+      override val component                    = newComponent
       override protected[common] lazy val props = self.props
     }
 
