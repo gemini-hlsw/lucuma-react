@@ -1,4 +1,4 @@
-ThisBuild / tlBaseVersion := "0.0"
+ThisBuild / tlBaseVersion       := "0.0"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 
 val scalaJsReactV    = "2.0.1"
