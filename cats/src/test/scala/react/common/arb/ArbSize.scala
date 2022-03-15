@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.common.arb
 
 import japgolly.scalajs.react.facade.JsNumber
@@ -14,7 +17,7 @@ trait ArbSize {
     } yield Size(w, h)
   }
 
-  implicit val cogenSize: Cogen[Size]   =
+  implicit val cogenSize: Cogen[Size] =
     Cogen[(JsNumber, JsNumber)].contramap(x => (x.width, x.height))
 }
 

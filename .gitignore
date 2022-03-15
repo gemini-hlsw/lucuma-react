@@ -8,8 +8,6 @@ metals.sbt
 .bloop/
 local.*
 node_modules/
-package-lock.json
-yarn.lock
 travis/secrets.tar
 .hydra/
 .bsp/

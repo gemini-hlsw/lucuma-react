@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react
 
 package common
@@ -8,8 +11,8 @@ import js.JSConverters._
 import japgolly.scalajs.react.Reusability
 import japgolly.scalajs.react.vdom.html_<^._
 
-package object style                                                     {
-  implicit val IntStyleExtractor: StyleExtractor[Int]       = new StyleExtractor[Int] {
+package object style             {
+  implicit val IntStyleExtractor: StyleExtractor[Int] = new StyleExtractor[Int] {
     override def extract(s: Style, key: String): Option[Int] =
       s.styles.get(key).flatMap { x =>
         (x: Any) match {
@@ -31,7 +34,7 @@ package object style                                                     {
 }
 
 package style {
-  sealed trait StyleExtractor[A]                                         {
+  sealed trait StyleExtractor[A] {
     def extract(s: Style, key: String): Option[A]
   }
 
@@ -49,15 +52,16 @@ package style {
     implicit def styePairU(a: (js.UndefOr[String], js.UndefOr[Css])): ClassnameCssOps =
       new ClassnameCssOps(a)
 
-    implicit final def cssToTagMod(s: Css): TagMod                                    =
+    implicit final def cssToTagMod(s: Css): TagMod =
       ^.className := s.htmlClass
 
     implicit final def listCssToTagMod(s: List[Css]): TagMod =
       s.map(cssToTagMod).toTagMod
   }
 
-  /** Simple class to represent styles
-    */
+  /**
+   * Simple class to represent styles
+   */
   final case class Style(styles: Map[String, String | Int]) {
     def isEmpty: Boolean = styles.isEmpty
 
@@ -101,8 +105,9 @@ package style {
     val Empty: Style = Style(Map.empty)
   }
 
-  /** Simple class to represent css class
-    */
+  /**
+   * Simple class to represent css class
+   */
   final case class Css(htmlClasses: List[String]) {
     def isEmpty: Boolean = htmlClasses.isEmpty
 

@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.common.arb
 
 import japgolly.scalajs.react.facade.JsNumber
@@ -21,7 +24,7 @@ trait ArbJsNumber {
     )
   }
 
-  implicit val cogenJsNumber: Cogen[JsNumber]   =
+  implicit val cogenJsNumber: Cogen[JsNumber] =
     Cogen[Either[Byte, Either[Short, Either[Int, Either[Float, Double]]]]].contramap { x =>
       (x: Any) match {
         case b: Byte   => Left(b)

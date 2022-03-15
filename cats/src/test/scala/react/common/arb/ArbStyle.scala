@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.common.arb
 
 import scala.scalajs.js.|
@@ -25,13 +28,13 @@ trait ArbStyle {
   implicit val cogenStyle: Cogen[Style]                =
     Cogen[List[(String, String | Int)]].contramap(_.styles.toList)
 
-  implicit val arbGStyle: Arbitrary[Css]               = Arbitrary {
+  implicit val arbGStyle: Arbitrary[Css] = Arbitrary {
     for {
       cs <- Gen.listOf(Gen.alphaLowerStr)
     } yield Css(cs)
   }
 
-  implicit val gStyleCogen: Cogen[Css]                 =
+  implicit val gStyleCogen: Cogen[Css] =
     Cogen[String].contramap(_.htmlClass)
 
 }
