@@ -10,6 +10,8 @@ import japgolly.scalajs.react.internal.FacadeExports
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 
+import scala.language.implicitConversions
+
 class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite {
 
   val forwardee = ScalaComponent
