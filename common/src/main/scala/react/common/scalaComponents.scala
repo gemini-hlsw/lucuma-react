@@ -21,7 +21,7 @@ sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U] {
   )(implicit ev: CT[Props, U] <:< CtorType.PropsAndChildren[Props, U]): U =
     ctor.applyGeneric(props)((first +: rest): _*)
 
-  @inline val toUnmounted: U = ctor.applyGeneric(props)()
+  inline def toUnmounted: U = ctor.applyGeneric(props)()
 }
 
 sealed trait CtorWithProps[Props, CT[-p, +u] <: CtorType[p, u], U]
