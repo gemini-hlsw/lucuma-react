@@ -92,8 +92,9 @@ lazy val gridLayoutDemo = project
   .dependsOn(gridLayout)
   .settings(
     libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.1",
-    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) },
+    Compile / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) },
     Compile / fastLinkJS / scalaJSLinkerConfig ~= (_.withModuleSplitStyle(
       ModuleSplitStyle.SmallestModules
-    ))
+    )),
+    Keys.test                             := {}
   )
