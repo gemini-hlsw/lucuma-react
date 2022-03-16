@@ -47,6 +47,22 @@ pull_request_rules:
       add:
       - grid-layout-demo
       remove: []
+- name: Label semantic-ui PRs
+  conditions:
+  - files~=^semantic-ui/
+  actions:
+    label:
+      add:
+      - semantic-ui
+      remove: []
+- name: Label semantic-ui-demo PRs
+  conditions:
+  - files~=^semantic-ui-demo/
+  actions:
+    label:
+      add:
+      - semantic-ui-demo
+      remove: []
 - name: Label test PRs
   conditions:
   - files~=^test/
