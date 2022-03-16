@@ -14,7 +14,7 @@ ThisBuild / crossScalaVersions := Seq("3.1.1")
 lazy val root = project
   .in(file("."))
   .enablePlugins(NoPublishPlugin)
-  .aggregate(common, cats, test)
+  .aggregate(common, cats, test, gridLayout, gridLayoutDemo)
 
 lazy val common = project
   .in(file("common"))
