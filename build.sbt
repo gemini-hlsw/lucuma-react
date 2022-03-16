@@ -1,3 +1,5 @@
+import org.scalajs.linker.interface.ModuleSplitStyle
+
 ThisBuild / tlBaseVersion       := "1.0"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 
@@ -77,10 +79,12 @@ lazy val gridLayout = project
 
 lazy val gridLayoutDemo = project
   .in(file("grid-layout-demo"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, NoPublishPlugin)
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(gridLayout)
   .settings(
-    useYarn                               := true,
-    scalaJSLinkerConfig ~= { _.withSourceMap(false) },
-    libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.1"
+    libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.1",
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) },
+    Compile / fastLinkJS / scalaJSLinkerConfig ~= (_.withModuleSplitStyle(
+      ModuleSplitStyle.SmallestModules
+    ))
   )
