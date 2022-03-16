@@ -11,6 +11,15 @@ val utestV           = "0.7.11"
 
 ThisBuild / crossScalaVersions := Seq("3.1.1")
 
+lazy val yarnSettings = Seq(
+  useYarn := true,
+  yarnExtraArgs ++= {
+    if (githubIsWorkflowBuild.value)
+      List("--frozen-lockfile")
+    else Nil
+  }
+)
+
 lazy val root = project
   .in(file("."))
   .enablePlugins(NoPublishPlugin)
@@ -44,8 +53,8 @@ lazy val test = project
   .in(file("test"))
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .settings(
+    yarnSettings,
     Test / requireJsDomEnv   := true,
-    useYarn                  := true,
     libraryDependencies ++= Seq(
       "org.scalameta"                     %%% "munit"            % munitV,
       "org.typelevel"                     %%% "discipline-munit" % disciplineMunitV % Test,
@@ -63,7 +72,7 @@ lazy val gridLayout = project
   .dependsOn(common)
   .settings(
     Test / requireJsDomEnv   := true,
-    useYarn                  := true,
+    yarnSettings,
     libraryDependencies ++= Seq(
       "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReactV,
       "com.github.japgolly.scalajs-react" %%% "extra"     % scalaJsReactV,
