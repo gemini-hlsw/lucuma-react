@@ -31,6 +31,22 @@ pull_request_rules:
       add:
       - common
       remove: []
+- name: Label grid-layout PRs
+  conditions:
+  - files~=^grid-layout/
+  actions:
+    label:
+      add:
+      - grid-layout
+      remove: []
+- name: Label grid-layout-demo PRs
+  conditions:
+  - files~=^grid-layout-demo/
+  actions:
+    label:
+      add:
+      - grid-layout-demo
+      remove: []
 - name: Label test PRs
   conditions:
   - files~=^test/
