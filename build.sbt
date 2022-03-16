@@ -45,8 +45,8 @@ lazy val demoSettings       = Seq(
           |export default ({ command, mode }) => {
           |  const sjs =
           |    mode == "production"
-          |      ? path.resolve(__dirname, "$prodTarget")
-          |      : path.resolve(__dirname, "$devTarget");
+          |      ? path.resolve(__dirname, "$prodTarget/")
+          |      : path.resolve(__dirname, "$devTarget/");
           |  return {
           |    root: "${baseDirectory.value.getName}/src/main/webapp",
           |    resolve: {
