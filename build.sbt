@@ -114,7 +114,9 @@ lazy val root = project
     gridLayoutDemo,
     draggable,
     clipboard,
-    svgdotjs
+    svgdotjs,
+    virtuoso,
+    virtuosoDemo
   )
 
 lazy val common = project
@@ -206,4 +208,21 @@ lazy val svgdotjs = project
     tlFatalWarnings         := false,
     Compile / doc / sources := Seq(),
     yarnSettings
+  )
+
+lazy val virtuoso = project
+  .in(file("virtuoso"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common)
+  .settings(
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val virtuosoDemo = project
+  .in(file("virtuoso-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(virtuoso)
+  .settings(
+    demoSettings
   )

@@ -79,3 +79,19 @@ pull_request_rules:
       add:
       - test
       remove: []
+- name: Label virtuoso PRs
+  conditions:
+  - files~=^virtuoso/
+  actions:
+    label:
+      add:
+      - virtuoso
+      remove: []
+- name: Label virtuoso-demo PRs
+  conditions:
+  - files~=^virtuoso-demo/
+  actions:
+    label:
+      add:
+      - virtuoso-demo
+      remove: []
