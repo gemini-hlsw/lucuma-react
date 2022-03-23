@@ -113,7 +113,8 @@ lazy val root = project
     gridLayout,
     gridLayoutDemo,
     draggable,
-    clipboard
+    clipboard,
+    svgdotjs
   )
 
 lazy val common = project
@@ -190,5 +191,19 @@ lazy val clipboard = project
   .dependsOn(common, test % Test)
   .settings(
     facadeSettings,
+    yarnSettings
+  )
+
+lazy val svgdotjs = project
+  .in(file("svgdotjs"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .settings(
+    stOutputPackage         := "lucuma.svgdotjs",
+    stSourceGenMode         := SourceGenMode.ResourceGenerator,
+    stUseScalaJsDom         := true,
+    stMinimize              := Selection.AllExcept("@svgdotjs/svg.js"),
+    scalaJSLinkerConfig ~= (_.withSourceMap(false)),
+    tlFatalWarnings         := false,
+    Compile / doc / sources := Seq(),
     yarnSettings
   )

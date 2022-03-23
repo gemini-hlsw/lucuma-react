@@ -63,6 +63,14 @@ pull_request_rules:
       add:
       - grid-layout-demo
       remove: []
+- name: Label svgdotjs PRs
+  conditions:
+  - files~=^svgdotjs/
+  actions:
+    label:
+      add:
+      - svgdotjs
+      remove: []
 - name: Label test PRs
   conditions:
   - files~=^test/
