@@ -106,7 +106,15 @@ lazy val demoSettings       = Seq(
 lazy val root = project
   .in(file("."))
   .enablePlugins(NoPublishPlugin)
-  .aggregate(common, cats, test, gridLayout, gridLayoutDemo)
+  .aggregate(
+    common,
+    cats,
+    test,
+    gridLayout,
+    gridLayoutDemo,
+    draggable,
+    // draggableDemo // TODO
+  )
 
 lazy val common = project
   .in(file("common"))
