@@ -23,6 +23,14 @@ pull_request_rules:
       add:
       - cats
       remove: []
+- name: Label clipboard PRs
+  conditions:
+  - files~=^clipboard/
+  actions:
+    label:
+      add:
+      - clipboard
+      remove: []
 - name: Label common PRs
   conditions:
   - files~=^common/
