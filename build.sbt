@@ -114,7 +114,6 @@ lazy val root = project
     gridLayoutDemo,
     draggable,
     clipboard
-    // draggableDemo // TODO
   )
 
 lazy val common = project
@@ -185,14 +184,6 @@ lazy val draggable = project
     yarnSettings
   )
 
-lazy val draggableDemo = project
-  .in(file("draggable-demo"))
-  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
-  .dependsOn(draggable)
-  .settings(
-    demoSettings
-  )
-
 lazy val clipboard = project
   .in(file("clipboard"))
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
@@ -201,4 +192,3 @@ lazy val clipboard = project
     facadeSettings,
     yarnSettings
   )
-

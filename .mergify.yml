@@ -47,14 +47,6 @@ pull_request_rules:
       add:
       - draggable
       remove: []
-- name: Label draggable-demo PRs
-  conditions:
-  - files~=^draggable-demo/
-  actions:
-    label:
-      add:
-      - draggable-demo
-      remove: []
 - name: Label grid-layout PRs
   conditions:
   - files~=^grid-layout/
