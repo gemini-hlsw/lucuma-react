@@ -12,7 +12,7 @@ pull_request_rules:
   - or:
     - body~=labels:.*early-semver-patch
     - body~=labels:.*early-semver-minor
-  - status-success=Build and Test (ubuntu-latest, 3.1.1, temurin@17)
+  - status-success=Build and Test (ubuntu-latest, 3.1.2-RC2, temurin@17)
   actions:
     merge: {}
 - name: Label cats PRs
@@ -30,6 +30,22 @@ pull_request_rules:
     label:
       add:
       - common
+      remove: []
+- name: Label draggable PRs
+  conditions:
+  - files~=^draggable/
+  actions:
+    label:
+      add:
+      - draggable
+      remove: []
+- name: Label draggable-demo PRs
+  conditions:
+  - files~=^draggable-demo/
+  actions:
+    label:
+      add:
+      - draggable-demo
       remove: []
 - name: Label grid-layout PRs
   conditions:
