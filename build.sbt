@@ -112,7 +112,7 @@ lazy val root = project
     test,
     gridLayout,
     gridLayoutDemo,
-    draggable,
+    draggable
     // draggableDemo // TODO
   )
 
