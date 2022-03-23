@@ -9,7 +9,23 @@ val munitV           = "0.7.29"
 val disciplineMunitV = "1.0.9"
 val utestV           = "0.7.11"
 
-ThisBuild / crossScalaVersions := Seq("3.1.1")
+ThisBuild / crossScalaVersions := Seq("3.1.2-RC2")
+
+lazy val facadeSettings = Seq(
+  libraryDependencies ++= Seq(
+    "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReactV,
+    "com.github.japgolly.scalajs-react" %%% "extra"     % scalaJsReactV,
+    "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReactV % Test,
+    "org.typelevel"                     %%% "cats-core" % catsV,
+    "com.lihaoyi"                       %%% "utest"     % utestV        % Test,
+    "org.scalameta"                     %%% "munit"     % munitV        % Test
+  ),
+  Test / webpackConfigFile := Some(
+    baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
+  ),
+  Test / requireJsDomEnv   := true,
+  testFrameworks += new TestFramework("utest.runner.Framework")
+)
 
 lazy val yarnSettings = Seq(
   useYarn := true,
@@ -90,7 +106,15 @@ lazy val demoSettings       = Seq(
 lazy val root = project
   .in(file("."))
   .enablePlugins(NoPublishPlugin)
-  .aggregate(common, cats, test, gridLayout, gridLayoutDemo)
+  .aggregate(
+    common,
+    cats,
+    test,
+    gridLayout,
+    gridLayoutDemo,
+    draggable
+    // draggableDemo // TODO
+  )
 
 lazy val common = project
   .in(file("common"))
@@ -138,19 +162,8 @@ lazy val gridLayout = project
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common)
   .settings(
-    Test / requireJsDomEnv   := true,
-    yarnSettings,
-    libraryDependencies ++= Seq(
-      "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReactV,
-      "com.github.japgolly.scalajs-react" %%% "extra"     % scalaJsReactV,
-      "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReactV % Test,
-      "org.typelevel"                     %%% "cats-core" % catsV,
-      "com.lihaoyi"                       %%% "utest"     % utestV        % Test
-    ),
-    Test / webpackConfigFile := Some(
-      baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
-    ),
-    testFrameworks += new TestFramework("utest.runner.Framework")
+    facadeSettings,
+    yarnSettings
   )
 
 lazy val gridLayoutDemo = project
@@ -159,5 +172,22 @@ lazy val gridLayoutDemo = project
   .dependsOn(gridLayout)
   .settings(
     libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.1",
+    demoSettings
+  )
+
+lazy val draggable = project
+  .in(file("draggable"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common)
+  .settings(
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val draggableDemo = project
+  .in(file("draggable-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(draggable)
+  .settings(
     demoSettings
   )
