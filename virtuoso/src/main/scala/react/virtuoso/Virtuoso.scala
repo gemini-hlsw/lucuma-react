@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.virtuoso
 
 import japgolly.scalajs.react.CtorType
@@ -244,7 +247,7 @@ object Virtuoso {
     val p = (new js.Object).asInstanceOf[VirtuosoProps[D]]
     q.totalCount.foreach(v => p.totalCount = v)
     q.data.foreach(v => p.data = v)
-    q.overscan.foreach(v => p.overscan = v)
+    q.overscan.foreach((v: js.UndefOr[JsNumber | OverScan]) => p.overscan = v)
     q.topItemCount.foreach(v => p.topItemCount = v)
     q.initialTopMostItemIndex.foreach(v => p.initialTopMostItemIndex = v)
     q.initialScrollTop.foreach(v => p.initialScrollTop = v)

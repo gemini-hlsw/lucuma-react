@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.virtuoso
 
 import japgolly.scalajs.react.CtorType
@@ -243,19 +246,19 @@ object GroupedVirtuoso {
     /*
      * Specifies how each each group header gets rendered. The callback receives the zero-based index of the group.
      */
-    var groupContent: js.UndefOr[js.Function1[Double, facade.React.Node]] = js.undefined
+    var groupContent: js.UndefOr[js.Function1[Double, facade.React.Node]] = js.native
 
     /*
      * Specifies the amount of items in each group (and, actually, how many groups are there).
      * For example, passing [20, 30] will display 2 groups with 20 and 30 items each.
      */
-    var groupCounts: js.UndefOr[js.Array[Double]] = js.undefined
+    var groupCounts: js.UndefOr[js.Array[Double]] = js.native
   }
 
   def props[D](q: GroupedVirtuoso): GroupedVirtuosoProps = {
     val p = (new js.Object).asInstanceOf[GroupedVirtuosoProps]
     q.totalCount.foreach(v => p.totalCount = v)
-    q.overscan.foreach(v => p.overscan = v)
+    q.overscan.foreach((v: js.UndefOr[JsNumber | OverScan]) => p.overscan = v)
     q.topItemCount.foreach(v => p.topItemCount = v)
     q.initialTopMostItemIndex.foreach(v => p.initialTopMostItemIndex = v)
     q.initialScrollTop.foreach(v => p.initialScrollTop = v)

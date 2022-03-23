@@ -1,8 +1,12 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.table.demo
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
+import react.common.syntax.all._
 import react.virtuoso._
 import react.virtuoso.raw.ListRange
 
@@ -12,8 +16,8 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 
 import js.annotation._
 
-@JSExportTopLevel("DemoMain")
-object DemoMain {
+@JSExportTopLevel("Demo")
+object Demo {
 
   @JSExport
   def main(): Unit = {
