@@ -1,16 +1,15 @@
 package react.common
 
 import scala.scalajs.js
-import japgolly.scalajs.react.facade.JsNumber
 
 @js.native
 trait Size extends js.Object {
-  var height: JsNumber
-  var width: JsNumber
+  var height: Double
+  var width: Double
 }
 
 object Size {
-  def apply(height: JsNumber, width: JsNumber): Size = {
+  def apply(height: Double, width: Double): Size = {
     val p = (new js.Object).asInstanceOf[Size]
     p.height = height
     p.width = width

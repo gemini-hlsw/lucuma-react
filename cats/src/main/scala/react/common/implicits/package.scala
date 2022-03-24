@@ -4,7 +4,6 @@ package common
 
 import scala.scalajs.js
 import scala.scalajs.js.|
-import japgolly.scalajs.react.facade.JsNumber
 import cats._
 import cats.syntax.all._
 
@@ -28,18 +27,6 @@ package implicits {
     implicit val jsShow: Show[js.Object] = Show.show { a =>
       val aDict = a.asInstanceOf[js.Dictionary[Any]]
       aDict.keySet.map(key => s"$key=${aDict(key)}").mkString("{", ",", "}")
-    }
-
-    implicit val jsNumberEq: Eq[JsNumber] = Eq.instance { (a, b) =>
-      (a: Any, b: Any) match {
-        case (a: Double, b: Double) => a === b
-        case (a: Int, b: Int)       => a === b
-        case (a: Long, b: Long)     => a === b
-        case (a: Float, b: Float)   => a === b
-        case (a: Short, b: Short)   => a === b
-        case (a: Byte, b: Byte)     => a === b
-        case _                      => false
-      }
     }
 
     implicit val jsAnyEq: Eq[js.Any] = Eq.instance { (a, b) =>
