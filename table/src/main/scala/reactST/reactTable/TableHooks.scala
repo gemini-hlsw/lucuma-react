@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable
 
 import japgolly.scalajs.react._
@@ -21,7 +24,7 @@ object TableHooks {
     js.native
 
   // According to documentation, react-table memoizes the table state.
-  private implicit def reuseTableState[T <: TableState[_, _]]: Reusability[T] =
+  private implicit def reuseTableState[T <: TableState[?, ?]]: Reusability[T] =
     Reusability.byRef
 
   def useTableHook[D, Plugins, Layout] =

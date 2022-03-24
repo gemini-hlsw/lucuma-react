@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable.facade.columnOptions
 
 import japgolly.scalajs.react.vdom.VdomElement
@@ -21,9 +24,9 @@ object ColumnInterfaceBasedOnValue {
   }
 
   @scala.inline
-  implicit class ColumnInterfaceBasedOnValueMutableBuilder[Self <: ColumnInterfaceBasedOnValue[_,
-                                                                                               _,
-                                                                                               _
+  implicit class ColumnInterfaceBasedOnValueMutableBuilder[Self <: ColumnInterfaceBasedOnValue[?,
+                                                                                               ?,
+                                                                                               ?
   ], D, V, Plugins](val col: Self with (ColumnInterfaceBasedOnValue[D, V, Plugins]))
       extends AnyVal {
 

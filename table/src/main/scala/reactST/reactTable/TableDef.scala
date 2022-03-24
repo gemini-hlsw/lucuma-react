@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Association of Universities for Research in Astronomy, Inc. (AURA)
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
 // For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
 
 package reactST.reactTable
@@ -148,7 +148,7 @@ case class TableDef[D, Plugins, Layout](plugins: Set[Plugin]) {
 
   def withGroupBy = withFeaturePlugin(Plugin.GroupBy)
 
-  def withExpanded(implicit ev: D <:< Expandable[_]) = withFeaturePlugin(Plugin.Expanded)
+  def withExpanded(implicit ev: D <:< Expandable[?]) = withFeaturePlugin(Plugin.Expanded)
 
   /**
    * Add sort capabilities to the table via the useSortBy plugin hook.

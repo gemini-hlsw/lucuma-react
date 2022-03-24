@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable.mod
 
 import japgolly.scalajs.react.facade.React.ComponentClassP
@@ -28,7 +31,7 @@ object ColumnFooter {
   }
 
   @scala.inline
-  implicit class ColumnFooterMutableBuilder[Self <: ColumnFooter[_]](val x: Self) extends AnyVal {
+  implicit class ColumnFooterMutableBuilder[Self <: ColumnFooter[?]](val x: Self) extends AnyVal {
 
     @scala.inline
     def setFooter(value: String): Self = StObject.set(x, "Footer", value.asInstanceOf[js.Any])

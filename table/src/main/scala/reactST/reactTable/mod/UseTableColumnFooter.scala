@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable.mod
 
 import japgolly.scalajs.react.facade.React.ComponentClassP
@@ -21,7 +24,7 @@ object UseTableColumnFooter {
 
   @scala.inline
   implicit class UseTableColumnFooterMutableBuilder[Self <: UseTableColumnFooter[
-    _
+    ?
   ], D /* <: js.Object */ ](val x: Self with UseTableColumnFooter[D])
       extends AnyVal {
 

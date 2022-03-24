@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable.facade.columnOptions
 
 import org.scalablytyped.runtime.StObject
@@ -22,8 +25,8 @@ object ColumnGroupInterface {
 
   @scala.inline
   implicit class ColumnGroupInterfaceMutableBuilder[Self <: ColumnGroupInterface[
-    _,
-    _
+    ?,
+    ?
   ], D, Plugins](val x: Self with ColumnGroupInterface[D, Plugins])
       extends AnyVal {
 

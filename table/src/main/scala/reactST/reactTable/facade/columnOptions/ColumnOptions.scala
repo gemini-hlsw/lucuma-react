@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable.facade.columnOptions
 
 import japgolly.scalajs.react.facade.{ React => ReactRaw }
@@ -39,8 +42,8 @@ object ColumnOptions {
 
   @inline
   implicit class UseTableColumnOptionsMutableBuilder[Self <: ColumnOptions[
-    _,
-    _
+    ?,
+    ?
   ], D, Plugins](val x: Self with ColumnOptions[D, Plugins])
       extends AnyVal {
 

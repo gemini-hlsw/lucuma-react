@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable
 
 import TableHooks._
@@ -12,13 +15,13 @@ sealed abstract class Plugin(val hook: TableHook) extends Ordered[Plugin] {
 object Plugin {
   type Base
 
-  final case object GroupBy       extends Plugin(useGroupBy)
-  final case object SortBy        extends Plugin(useSortBy)
-  final case object Expanded      extends Plugin(useExpanded)
-  final case object ResizeColumns extends Plugin(useResizeColumns)
-  final case object BlockLayout   extends Plugin(useBlockLayout)
-  final case object FlexLayout    extends Plugin(useFlexLayout)
-  final case object GridLayout    extends Plugin(useGridLayout)
+  case object GroupBy       extends Plugin(useGroupBy)
+  case object SortBy        extends Plugin(useSortBy)
+  case object Expanded      extends Plugin(useExpanded)
+  case object ResizeColumns extends Plugin(useResizeColumns)
+  case object BlockLayout   extends Plugin(useBlockLayout)
+  case object FlexLayout    extends Plugin(useFlexLayout)
+  case object GridLayout    extends Plugin(useGridLayout)
 
   // Regardless of what order plugins are declared in usage site,
   // we always enforce the order required by react-table.

@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable
 
 import japgolly.scalajs.react._
@@ -5,6 +8,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import react.common.Css
 import react.virtuoso.Virtuoso
 import reactST.reactTable.facade.column.Column
+import react.common.syntax.all.*
 
 object HTMLTable {
 
@@ -33,7 +37,7 @@ object HTMLTable {
    *     span multiple columns and react-table does not support that. At some point, something
    *     similar for an "extra" header row might be useful since header groups have some issues.
    */
-  def apply[D, Plugins](tableDef: TableDef[D, Plugins, _])( // tableDef is only used to infer D type
+  def apply[D, Plugins](tableDef: TableDef[D, Plugins, ?])( // tableDef is only used to infer D type
     headerCellFn:                 Option[tableDef.ColumnType => TagMod],
     tableClass:                   Css = Css(""),
     rowClassFn:                   (Int, D) => Css = (_: Int, _: D) => Css(""),
@@ -98,7 +102,7 @@ object HTMLTable {
    *     or it won't work.
    */
   def virtualized[D, Plugins](
-    tableDef:     TableDef[D, Plugins, _] // tableDef is only used to infer D and Plugins types
+    tableDef:     TableDef[D, Plugins, ?] // tableDef is only used to infer D and Plugins types
   )(
     bodyHeight:   Option[Double] = None,
     headerCellFn: Option[tableDef.ColumnType => TagMod],
@@ -153,7 +157,7 @@ object HTMLTable {
   def basicHeaderCellFn(
     cellClass: Css = Css.Empty,
     useDiv:    Boolean = false
-  ): Column[_, _] => TagMod =
+  ): Column[?, ?] => TagMod =
     col => headerCell(useDiv)(col.getHeaderProps(), cellClass, col.renderHeader)
 
   /**
@@ -203,7 +207,7 @@ object HTMLTable {
   def basicFooterCellFn(
     cellClass: Css = Css.Empty,
     useDiv:    Boolean = false
-  ): Column[_, _] => TagMod = { col =>
+  ): Column[?, ?] => TagMod = { col =>
     col.Footer.map(_ =>
       headerCell(useDiv)(
         col.getFooterProps(),

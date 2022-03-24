@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable.facade.cell
 
 import japgolly.scalajs.react.facade.React.Node
@@ -37,7 +40,7 @@ trait Cell[D, V, Plugins] extends js.Object {
 
 object Cell {
 
-  implicit class CellOps[Self <: Cell[_, _, _]](val cell: Self) extends AnyVal {
+  implicit class CellOps[Self <: Cell[?, ?, ?]](val cell: Self) extends AnyVal {
     def renderCell: Node = cell.render_Cell(reactTableStrings.Cell)
   }
 

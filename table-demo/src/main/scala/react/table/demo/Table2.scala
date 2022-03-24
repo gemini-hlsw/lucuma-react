@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.table.demo
 
 import japgolly.scalajs.react._
@@ -5,6 +8,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import react.common.style.Css
 import reactST.reactTable.HTMLTable
 import reactST.reactTable.TableDef
+import reactST.reactTable.*
 
 object Table2 {
   private def rowClassEvenOdd[D]: (Int, D) => Css = (i, _) =>

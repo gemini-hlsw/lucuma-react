@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable.facade.tableOptions
 
 import japgolly.scalajs.react.ReactMouseEventFrom
@@ -67,7 +70,7 @@ trait TableOptions[D, Plugins] extends js.Object {
 }
 object TableOptions {
   @inline
-  implicit class UseTableOptionsMutableBuilder[Self <: TableOptions[_, _], D, Plugins](
+  implicit class UseTableOptionsMutableBuilder[Self <: TableOptions[?, ?], D, Plugins](
     val x: Self with TableOptions[D, Plugins]
   ) extends AnyVal {
 

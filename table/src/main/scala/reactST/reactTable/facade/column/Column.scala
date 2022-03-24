@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable.facade.column
 
 import japgolly.scalajs.react.facade.React.Node
@@ -78,7 +81,7 @@ trait Column[D, Plugins] extends js.Object {
 object Column {
 
   @inline
-  implicit class ColumnObjectOps[Self <: Column[_, _]](val col: Self) extends AnyVal {
+  implicit class ColumnObjectOps[Self <: Column[?, ?]](val col: Self) extends AnyVal {
     @inline def renderHeader: Node = col.render_Header(reactTableStrings.Header)
     @inline def renderFooter: Node = col.render_Footer(reactTableStrings.Footer)
   }

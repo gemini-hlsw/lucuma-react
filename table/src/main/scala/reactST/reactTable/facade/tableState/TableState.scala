@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package reactST.reactTable.facade.tableState
 
 import org.scalablytyped.runtime.StObject
@@ -18,7 +21,7 @@ trait TableState[D, Plugins] extends js.Object {
 object TableState {
 
   @scala.inline
-  implicit class TableStateMutableBuilder[Self <: TableState[_, _], D, Plugins](
+  implicit class TableStateMutableBuilder[Self <: TableState[?, ?], D, Plugins](
     val x: Self with TableState[D, Plugins]
   ) extends AnyVal {
 
