@@ -116,7 +116,9 @@ lazy val root = project
     clipboard,
     svgdotjs,
     virtuoso,
-    virtuosoDemo
+    virtuosoDemo,
+    table,
+    tableDemo
   )
 
 lazy val common = project
@@ -223,6 +225,29 @@ lazy val virtuosoDemo = project
   .in(file("virtuoso-demo"))
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(virtuoso)
+  .settings(
+    demoSettings
+  )
+
+lazy val table = project
+  .in(file("table"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .dependsOn(common, virtuoso)
+  .settings(
+    stOutputPackage          := "reactST",
+    stUseScalaJsDom          := true,
+    stFlavour                := Flavour.ScalajsReact,
+    stReactEnableTreeShaking := Selection.All,
+    stMinimize               := Selection.AllExcept("react-table"),
+    Compile / doc / sources  := Seq(),
+    Compile / scalacOptions += "-language:implicitConversions",
+    yarnSettings
+  )
+
+lazy val tableDemo = project
+  .in(file("table-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(table)
   .settings(
     demoSettings
   )
