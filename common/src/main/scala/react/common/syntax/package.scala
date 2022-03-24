@@ -3,7 +3,6 @@ package react.common
 import scala.scalajs.js
 import scala.scalajs.js.|
 import japgolly.scalajs.react.Callback
-import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.VdomNode
 
@@ -94,30 +93,6 @@ package syntax {
     }
   }
 
-  final class JsNumberOps(val d: JsNumber) extends AnyVal {
-    // Some uglies for js union types
-    def toDouble: Double =
-      (d: Any) match {
-        case d: Float  => d.toDouble
-        case d: Double => d
-        case d: Byte   => d.toDouble
-        case d: Short  => d.toDouble
-        case d: Int    => d.toDouble
-        case _         => sys.error("Unsupported type")
-      }
-
-    // Some uglies for js union types
-    def toInt: Int =
-      (d: Any) match {
-        case d: Float  => d.toInt
-        case d: Double => d.toInt
-        case d: Byte   => d.toInt
-        case d: Short  => d.toInt
-        case d: Int    => d
-        case _         => sys.error("Unsupported type")
-      }
-  }
-
   trait AllSyntax
       extends EnumValueSyntax
       with CallbackPairSyntax
@@ -129,9 +104,6 @@ package syntax {
 
     implicit def vdomUndefOps(node: js.UndefOr[VdomNode]): VdomUndefOps =
       new VdomUndefOps(node)
-
-    implicit def jsNumberOps(d: JsNumber): JsNumberOps =
-      new JsNumberOps(d)
 
   }
 
