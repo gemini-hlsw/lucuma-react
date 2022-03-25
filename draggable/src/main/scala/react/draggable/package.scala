@@ -69,12 +69,12 @@ package draggable {
   @js.native
   trait DraggableData extends js.Object {
     var node: HTMLElement = js.native
-    var x: Double       = js.native
-    var y: Double       = js.native
-    var deltaX: Double  = js.native
-    var deltaY: Double  = js.native
-    var lastX: Double   = js.native
-    var lastY: Double   = js.native
+    var x: Double         = js.native
+    var y: Double         = js.native
+    var deltaX: Double    = js.native
+    var deltaY: Double    = js.native
+    var lastX: Double     = js.native
+    var lastY: Double     = js.native
   }
 
   @js.native
