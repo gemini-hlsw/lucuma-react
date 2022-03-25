@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.beautifuldnd
 
 import japgolly.scalajs.react._
@@ -14,7 +17,7 @@ object Provided {
     Provided(
       TagMod.fn(_.addRefFn(provided.innerRef)),
       TagMod.fn(_.addAttrsObject(provided.droppableProps)),
-      provided.placeholder.toOption.whenDefined(identity)
+      js.|.undefOr2ops[Raw.React.Node](provided.placeholder).toOption.whenDefined(identity)
     )
 }
 
@@ -71,10 +74,10 @@ object Droppable {
       val p = (new js.Object).asInstanceOf[Props]
       p.droppableId = droppableId
       tpe.foreach(p.tpe = _)
-      mode.foreach(p.mode = _)
+      js.|.undefOr2ops[DroppableMode](mode).foreach(p.mode = _)
       isDropDisabled.foreach(p.isDropDisabled = _)
       isCombineEnabled.foreach(p.isCombineEnabled = _)
-      direction.foreach(p.direction = _)
+      js.|.undefOr2ops[Direction](direction).foreach(p.direction = _)
       ignoreContainerClipping.foreach(p.ignoreContainerClipping = _)
       renderClone.foreach(f =>
         p.renderClone = (

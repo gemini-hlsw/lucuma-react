@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.atlasKit.tree.demo
 
 import japgolly.scalajs.react._
@@ -5,6 +8,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.document
 import react.atlasKit.tree.Tree
 import react.atlasKit.tree.Tree.RenderItemParams
+import scala.scalajs.js.annotation._
 
 // Adaptation of https://atlaskit.atlassian.com/examples/confluence/tree/drag-and-drop
 object TreeDemo {
@@ -40,7 +44,8 @@ object TreeDemo {
 
 }
 
-object MainDemo {
+@JSExportTopLevel("Demo")
+object Demo {
   def renderItem(params: RenderItemParams[DemoData]) =
     <.div(params.provided.innerRef,
           params.provided.draggableProps,
@@ -59,8 +64,15 @@ object MainDemo {
     }
     .build
 
-  def main(args: Array[String]): Unit = {
-    component().renderIntoDOM(document.getElementById("root"))
+  @JSExport
+  def main(): Unit = {
+    val container = Option(document.getElementById("root")).getOrElse {
+      val elem = document.createElement("div")
+      elem.id = "root"
+      document.body.appendChild(elem)
+      elem
+    }
+    component().renderIntoDOM(container)
     ()
   }
 }

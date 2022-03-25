@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.beautifuldnd.demo
 
 import cats._
@@ -6,6 +9,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.document
 import react.beautifuldnd._
+import scala.scalajs.js.annotation._
 
 // Adaptation of https://codesandbox.io/s/k260nyxq9v
 object BeautifulDnDDemo {
@@ -106,7 +110,8 @@ object BeautifulDnDDemo {
   def apply(p: Props) = component(p)
 }
 
-object MainDemo {
+@JSExportTopLevel("Demo")
+object Demo {
   val component = ScalaComponent
     .builder[Unit]("Demo")
     .stateless
@@ -117,8 +122,15 @@ object MainDemo {
     }
     .build
 
-  def main(args: Array[String]): Unit = {
-    component().renderIntoDOM(document.getElementById("root"))
+  @JSExport
+  def main(): Unit = {
+    val container = Option(document.getElementById("root")).getOrElse {
+      val elem = document.createElement("div")
+      elem.id = "root"
+      document.body.appendChild(elem)
+      elem
+    }
+    component().renderIntoDOM(container)
     ()
   }
 }
