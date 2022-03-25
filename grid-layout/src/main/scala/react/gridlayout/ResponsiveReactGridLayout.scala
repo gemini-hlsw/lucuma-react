@@ -180,7 +180,7 @@ object ResponsiveReactGridLayout {
       isDroppable,
       preventCollision,
       useCSSTransforms,
-      transformScale,
+      transformScale.map(_.toDouble),
       droppingItem,
       resizeHandles,
       onDragStart,
