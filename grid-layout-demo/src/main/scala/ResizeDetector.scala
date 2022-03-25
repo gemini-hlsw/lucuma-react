@@ -22,8 +22,8 @@ object ResizeDetector {
 
   @js.native
   protected trait DimensionsJS extends js.Object {
-    val height: js.UndefOr[Raw.JsNumber]
-    val width: js.UndefOr[Raw.JsNumber]
+    val height: js.UndefOr[Double]
+    val width: js.UndefOr[Double]
   }
 
   @js.native
@@ -112,7 +112,7 @@ object ResizeDetector {
   @js.native
   trait Props extends js.Object {
     var children: RenderJS
-    var onResize: js.UndefOr[js.Function2[Raw.JsNumber, Raw.JsNumber, Unit]]
+    var onResize: js.UndefOr[js.Function2[Double, Double, Unit]]
     var handleHeight: js.UndefOr[Boolean]
     var handleWidth: js.UndefOr[Boolean]
     var skipOnMount: js.UndefOr[Boolean]
@@ -137,11 +137,11 @@ object ResizeDetector {
       val p = (new js.Object).asInstanceOf[Props]
       p.children = renderPropsJS => children(RenderProps(renderPropsJS)).rawNode
       onResize.foreach(v =>
-        p.onResize = { case (x: Raw.JsNumber, y: Raw.JsNumber) =>
+        p.onResize = { case (x: Double, y: Double) =>
           v(x.toInt, y.toInt)
         }: js.Function2[
-          Raw.JsNumber,
-          Raw.JsNumber,
+          Double,
+          Double,
           Unit
         ]
       )
