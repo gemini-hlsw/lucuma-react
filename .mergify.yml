@@ -39,6 +39,22 @@ pull_request_rules:
       add:
       - common
       remove: []
+- name: Label datepicker PRs
+  conditions:
+  - files~=^datepicker/
+  actions:
+    label:
+      add:
+      - datepicker
+      remove: []
+- name: Label datepicker-demo PRs
+  conditions:
+  - files~=^datepicker-demo/
+  actions:
+    label:
+      add:
+      - datepicker-demo
+      remove: []
 - name: Label draggable PRs
   conditions:
   - files~=^draggable/
