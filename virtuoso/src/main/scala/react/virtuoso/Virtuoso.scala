@@ -73,7 +73,7 @@ object Virtuoso {
      * Setting { main: number, reverse: number } lets you extend the list in both the main and the
      * reverse scrollable directions.
      */
-    var overscan: js.UndefOr[Double | OverScan] = js.native
+    var overscan: js.UndefOr[Int | OverScan] = js.native
 
     /**
      * Set the amount of items to remain fixed at the top of the list.
@@ -246,7 +246,7 @@ object Virtuoso {
     val p = (new js.Object).asInstanceOf[VirtuosoProps[D]]
     q.totalCount.foreach(v => p.totalCount = v)
     q.data.foreach(v => p.data = v)
-    q.overscan.foreach((v: js.UndefOr[Double | OverScan]) => p.overscan = v)
+    q.overscan.foreach((v: js.UndefOr[Int | OverScan]) => p.overscan = v)
     q.topItemCount.foreach(v => p.topItemCount = v)
     q.initialTopMostItemIndex.foreach(v => p.initialTopMostItemIndex = v)
     q.initialScrollTop.foreach(v => p.initialScrollTop = v)
