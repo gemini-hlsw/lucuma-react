@@ -149,6 +149,7 @@ lazy val test = project
   .in(file("test"))
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .settings(
+    name                     := "lucuma-react-test",
     yarnSettings,
     Test / requireJsDomEnv   := true,
     libraryDependencies ++= Seq(
@@ -167,6 +168,7 @@ lazy val gridLayout = project
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common)
   .settings(
+    name := "lucuma-react-grid-layout",
     facadeSettings,
     yarnSettings
   )
@@ -185,6 +187,7 @@ lazy val draggable = project
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common)
   .settings(
+    name := "lucuma-react-draggable",
     facadeSettings,
     yarnSettings
   )
@@ -194,6 +197,7 @@ lazy val clipboard = project
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common, test % Test)
   .settings(
+    name := "lucuma-react-clipboard",
     facadeSettings,
     yarnSettings
   )
@@ -202,6 +206,7 @@ lazy val svgdotjs = project
   .in(file("svgdotjs"))
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
   .settings(
+    name                    := "lucuma-svgdotjs",
     stOutputPackage         := "lucuma.svgdotjs",
     stSourceGenMode         := SourceGenMode.ResourceGenerator,
     stUseScalaJsDom         := true,
@@ -217,6 +222,7 @@ lazy val virtuoso = project
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common)
   .settings(
+    name := "lucuma-react-virtuoso",
     facadeSettings,
     yarnSettings
   )
@@ -234,6 +240,7 @@ lazy val table = project
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
   .dependsOn(common, virtuoso)
   .settings(
+    name                     := "lucuma-react-table",
     stOutputPackage          := "reactST",
     stUseScalaJsDom          := true,
     stFlavour                := Flavour.ScalajsReact,
