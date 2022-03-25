@@ -251,3 +251,27 @@ lazy val tableDemo = project
   .settings(
     demoSettings
   )
+
+lazy val highcharts = project
+  .in(file("highcharts"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .dependsOn(common)
+  .settings(
+    name                    := "lucuma-react-highcharts",
+    stIgnore ++= List("react", "react-dom"),
+    stUseScalaJsDom         := true,
+    stOutputPackage         := "gpp",
+    stMinimize              := Selection.AllExcept("highcharts"),
+    Compile / doc / sources := Seq(),
+    Compile / scalacOptions += "-language:implicitConversions",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val highchartsDemo = project
+  .in(file("highcharts-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(highcharts)
+  .settings(
+    demoSettings
+  )

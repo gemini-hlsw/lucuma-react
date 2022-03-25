@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.highcharts.demo
 
 import org.scalajs.dom
@@ -45,11 +48,12 @@ import gpp.highcharts.mod.XAxisPlotBandsLabelOptions
 import react.highcharts.seriesLabel
 import japgolly.scalajs.react.callback.Callback
 import gpp.highcharts.mod.PointOptionsObject
+import react.common._
 
 // Reproducing https://jsfiddle.net/rpiaggio/xdz4pLg9/105/
 
-@JSExportTopLevel("DemoMain")
-object DemoMain {
+@JSExportTopLevel("Demo")
+object Demo {
 
   @JSExport
   def main(): Unit = {

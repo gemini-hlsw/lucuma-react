@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.highcharts
 
 import scala.scalajs.js
@@ -35,7 +38,7 @@ final case class Chart(
   options:    Options,
   onCreate:   Chart_ => Callback = _ => Callback.empty,
   highcharts: TypeofHighchartsAST = Highcharts
-) extends ReactProps[Chart](Chart.component)
+) extends ReactProps(Chart.component)
 
 object Chart {
   type Props = Chart
