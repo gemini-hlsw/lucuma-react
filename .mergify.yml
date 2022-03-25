@@ -63,6 +63,22 @@ pull_request_rules:
       add:
       - grid-layout-demo
       remove: []
+- name: Label highcharts PRs
+  conditions:
+  - files~=^highcharts/
+  actions:
+    label:
+      add:
+      - highcharts
+      remove: []
+- name: Label highcharts-demo PRs
+  conditions:
+  - files~=^highcharts-demo/
+  actions:
+    label:
+      add:
+      - highcharts-demo
+      remove: []
 - name: Label svgdotjs PRs
   conditions:
   - files~=^svgdotjs/
