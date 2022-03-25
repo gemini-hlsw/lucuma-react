@@ -71,6 +71,22 @@ pull_request_rules:
       add:
       - svgdotjs
       remove: []
+- name: Label table PRs
+  conditions:
+  - files~=^table/
+  actions:
+    label:
+      add:
+      - table
+      remove: []
+- name: Label table-demo PRs
+  conditions:
+  - files~=^table-demo/
+  actions:
+    label:
+      add:
+      - table-demo
+      remove: []
 - name: Label test PRs
   conditions:
   - files~=^test/
