@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.datepicker.demo
 
 import org.scalajs.dom
@@ -8,9 +11,10 @@ import japgolly.scalajs.react._
 import java.time.LocalDate
 import java.time.Instant
 import java.time.ZoneOffset
+import lucuma.reactDatepicker.components.ReactDatepicker
 
-@JSExportTopLevel("DemoMain")
-object DemoMain {
+@JSExportTopLevel("Demo")
+object Demo {
   case class State(date: Option[LocalDate])
   object State {
     def now(): State =
@@ -26,7 +30,7 @@ object DemoMain {
       .builder[Unit]
       .initialState(State.now())
       .render($ =>
-        Datepicker(onChange =
+        ReactDatepicker(onChange =
           (newValue, _) =>
             Callback(println(newValue.toLocalDateOpt)) >>
               $.setState(State(newValue.toLocalDateOpt))

@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react
 
 import scalajs.js
@@ -65,6 +68,6 @@ package object datepicker {
       toLocalDateEitherOpt.flatMap(_.left.toOption)
   }
 
-  implicit def builder2VdomElement(builder: StBuildingComponent[_]): VdomElement =
+  implicit def builder2VdomElement(builder: StBuildingComponent[?]): VdomElement =
     builder.build
 }
