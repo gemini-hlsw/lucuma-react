@@ -118,7 +118,9 @@ lazy val root = project
     virtuoso,
     virtuosoDemo,
     table,
-    tableDemo
+    tableDemo,
+    highcharts,
+    highchartsDemo
   )
 
 lazy val common = project
