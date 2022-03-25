@@ -6,7 +6,7 @@ val reactJS    = "17.0.2"
 val highcharts = "9.3.1"
 
 val scalaJsReact       = "2.0.1"
-val scalaJsReactCommon = "0.15.0"
+val scalaJsReactCommon = "0.16.0"
 
 addCommandAlias(
   "restartWDS",
