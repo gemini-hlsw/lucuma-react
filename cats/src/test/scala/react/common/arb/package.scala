@@ -3,4 +3,4 @@
 
 package react.common
 
-package object arb extends ArbJsNumber with ArbStyle with ArbSize
+package object arb extends ArbStyle with ArbSize
