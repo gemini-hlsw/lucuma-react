@@ -44,10 +44,11 @@ object Chart {
   type Props = Chart
 
   type Data =
-    Double | scala.scalajs.js.Tuple2[
-      Double | String,
-      Double | Null
-    ] | Null | PointOptionsObject
+    Double |
+      scala.scalajs.js.Tuple2[
+        Double | String,
+        Double | Null
+      ] | Null | PointOptionsObject
 
   class Backend($ : BackendScope[Props, Unit]) {
     private val containerRef = Ref[html.Element]
