@@ -292,7 +292,7 @@ lazy val datepicker = project
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
   .dependsOn(common)
   .settings(
-    name                    := "lucuma-react-highcharts",
+    name                    := "lucuma-react-datepicker",
     stIgnore ++= List("react-dom"),
     stUseScalaJsDom         := true,
     stOutputPackage         := "lucuma",
