@@ -120,7 +120,9 @@ lazy val root = project
     table,
     tableDemo,
     highcharts,
-    highchartsDemo
+    highchartsDemo,
+    datepicker,
+    datepickerDemo
   )
 
 lazy val common = project
@@ -283,4 +285,33 @@ lazy val highchartsDemo = project
   .dependsOn(highcharts)
   .settings(
     demoSettings
+  )
+
+lazy val datepicker = project
+  .in(file("datepicker"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .dependsOn(common)
+  .settings(
+    name                    := "lucuma-react-highcharts",
+    stIgnore ++= List("react-dom"),
+    stUseScalaJsDom         := true,
+    stOutputPackage         := "lucuma",
+    stFlavour               := Flavour.ScalajsReact,
+    stMinimize              := Selection.AllExcept("@types/react-datepicker"),
+    Compile / doc / sources := Seq(),
+    Compile / scalacOptions += "-language:implicitConversions",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val datepickerDemo = project
+  .in(file("datepicker-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(datepicker)
+  .settings(
+    demoSettings,
+    Compile / scalacOptions += "-language:implicitConversions",
+    libraryDependencies ++= Seq(
+      "io.github.cquiroz" %%% "scala-java-time" % "2.3.0"
+    )
   )
