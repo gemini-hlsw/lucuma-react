@@ -5,7 +5,6 @@ package gridlayout
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import japgolly.scalajs.react.Callback
-import japgolly.scalajs.react.facade.JsNumber
 import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.Event
 import org.scalajs.dom.MouseEvent
@@ -15,7 +14,7 @@ import react.common._
 trait BaseProps extends js.Object {
   var className: js.UndefOr[String]
   var style: js.UndefOr[js.Object]
-  var width: JsNumber
+  var width: Double
   // If true, the container height swells and contracts to fit contents
   var autoSize: js.UndefOr[Boolean]
   // # of cols.
@@ -28,9 +27,9 @@ trait BaseProps extends js.Object {
   // Choose vertical or hotizontal compaction
   var compactType: js.UndefOr[String]
   // Margin between items [x, y] in px
-  var margin: js.UndefOr[js.Array[JsNumber]]
+  var margin: js.UndefOr[js.Array[Double]]
   // Padding inside the container [x, y] in px
-  var containerPadding: js.UndefOr[js.Array[JsNumber]]
+  var containerPadding: js.UndefOr[js.Array[Double]]
   // Rows have a static height, but you can change this based on breakpoints if you like
   var rowHeight: js.UndefOr[Int]
   var maxRows: js.UndefOr[Int]
@@ -54,7 +53,7 @@ trait BaseProps extends js.Object {
   var useCSSTransforms: js.UndefOr[Boolean]
 // If parent DOM node of ResponsiveReactGridLayout or ReactGridLayout has "transform: scale(n)" css property,
 // we should set scale coefficient to avoid render artefacts while dragging.
-  var transformScale: js.UndefOr[JsNumber]
+  var transformScale: js.UndefOr[Double]
   var droppingItem: js.UndefOr[raw.DroppingItem]
   // Defines which resize handles should be rendered (default: 'se')
   // Allows for any combination of:
@@ -86,7 +85,7 @@ trait BaseProps extends js.Object {
 
 object BaseProps {
   def props(
-    width:            JsNumber,
+    width:            Double,
     className:        js.UndefOr[String] = js.undefined,
     style:            js.UndefOr[Style] = js.undefined,
     autoSize:         js.UndefOr[Boolean] = js.undefined,
@@ -105,7 +104,7 @@ object BaseProps {
     isDroppable:      js.UndefOr[Boolean] = js.undefined,
     preventCollision: js.UndefOr[Boolean] = js.undefined,
     useCSSTransforms: js.UndefOr[Boolean] = js.undefined,
-    transformScale:   js.UndefOr[JsNumber] = js.undefined,
+    transformScale:   js.UndefOr[Double] = js.undefined,
     droppingItem:     js.UndefOr[DroppingItem] = js.undefined,
     resizeHandles:    js.UndefOr[List[ResizeHandle]] = js.undefined,
     onDragStart:      ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -126,8 +125,8 @@ object BaseProps {
     p.draggableHandle = draggableHandle
     p.verticalCompact = verticalCompact
     p.compactType = compactType.toJs
-    p.margin = margin.map(x => js.Array(x._1, x._2))
-    p.containerPadding = containerPadding.map(x => js.Array(x._1, x._2))
+    p.margin = margin.map(x => js.Array(x._1.toDouble, x._2.toDouble))
+    p.containerPadding = containerPadding.map(x => js.Array(x._1.toDouble, x._2.toDouble))
     p.rowHeight = rowHeight
     p.maxRows = maxRows
     p.isDraggable = isDraggable
