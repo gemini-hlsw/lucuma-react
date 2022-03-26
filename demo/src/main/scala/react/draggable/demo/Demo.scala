@@ -4,7 +4,6 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import japgolly.scalajs.react.facade.JsNumber
 import org.scalajs.dom
 import react.resizable._
 import react.common._
@@ -27,7 +26,7 @@ object Demo {
 
 object HomeComponent {
 
-  final case class State(w: JsNumber)
+  final case class State(w: Double)
 
   val component =
     ScalaComponent
@@ -37,7 +36,7 @@ object HomeComponent {
         val width    = $.state.w
         val toResize =
           <.div(
-            ^.width          := width.toDouble.px,
+            ^.width          := width.px,
             ^.position       := "absolute",
             ^.left           := 0.px,
             ^.top            := 0.px,
@@ -53,7 +52,7 @@ object HomeComponent {
             width = width,
             height = 500,
             onResize = (_: ReactEvent, d: ResizeCallbackData) =>
-              Callback.log(s"${d.size.width}") *> $.modState(_.copy(w = d.size.width)),
+              Callback.log(s"${d.size.width}") *> $.modState(_.copy(w = d.size.width.toDouble)),
             resizeHandles = List(ResizeHandleAxis.East)
           )(
           )
@@ -66,7 +65,7 @@ object HomeComponent {
 
 object ResizeHandle {
   // type Props = ResizeHandle
-  final case class Props(left: JsNumber)
+  final case class Props(left: Double)
   // extends ReactProps[ResizeHandle](ResizeHandle.component)
 
   val component =
@@ -87,10 +86,10 @@ object ResizeHandle {
       .build
   // This will be the props object used from JS-land
   trait JsProps extends js.Object {
-    var left: JsNumber
+    var left: Double
   }
   object JsProps {
-    def apply(left: JsNumber): JsProps = {
+    def apply(left: Double): JsProps = {
       val p = (new js.Object()).asInstanceOf[JsProps]
       p.left = left
       p
@@ -101,6 +100,6 @@ object ResizeHandle {
       .cmapCtorProps[JsProps](x => Props(x.left)) // Change props from JS to Scala
       .toJsComponent                              // Create a new, real JS component
       .raw                                        // Leave the nice Scala wrappers behind and obtain the underlying JS value
-  def apply(left: JsNumber) = jsComponent(JsProps(left))
+  def apply(left: Double) = jsComponent(JsProps(left))
 
 }
