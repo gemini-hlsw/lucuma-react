@@ -63,19 +63,19 @@ object Resizable {
      * 'y' - only allows the height to be changed
      * 'none' - disables resizing altogether
      * */
-    var axis: js.UndefOr[String]                       = js.native
-    var className: js.UndefOr[String]                  = js.native
+    var axis: js.UndefOr[String]                     = js.native
+    var className: js.UndefOr[String]                = js.native
     /*
      * Require that one and only one child be present.
      * */
-    var children: js.UndefOr[React.Node]               = js.native
+    var children: js.UndefOr[React.Node]             = js.native
     /*
      * Require that one and only one child be present.
      * */
     /*
      * These will be passed wholesale to react-draggable's DraggableCore
      * */
-    var draggableOpts: js.UndefOr[DraggableProps]      = js.native
+    var draggableOpts: js.UndefOr[DraggableProps]    = js.native
     /*
      * Initial height
      * */
@@ -83,12 +83,12 @@ object Resizable {
     /*
      * Customize cursor resize handle
      * */
-    var handle: js.UndefOr[Handle]                     = js.native
+    var handle: js.UndefOr[Handle]                   = js.native
     /*
      * If you change this, be sure to update your css
      * */
     var handleSize: js.UndefOr[js.Array[Double]]     = js.native
-    var lockAspectRatio: js.UndefOr[Boolean]           = js.native
+    var lockAspectRatio: js.UndefOr[Boolean]         = js.native
     /*
      * Max X & Y measure
      * */
@@ -100,15 +100,15 @@ object Resizable {
     /*
      * Called on stop resize event
      * */
-    var onResizeStop: js.UndefOr[RawOnResize]          = js.native
+    var onResizeStop: js.UndefOr[RawOnResize]        = js.native
     /*
      * Called on start resize event
      * */
-    var onResizeStart: js.UndefOr[RawOnResize]         = js.native
+    var onResizeStart: js.UndefOr[RawOnResize]       = js.native
     /*
      * Called on resize event
      * */
-    var onResize: js.UndefOr[RawOnResize]              = js.native
+    var onResize: js.UndefOr[RawOnResize]            = js.native
     /*
      * Defines which resize handles should be rendered (default: 'se')
      * 's' - South handle (bottom-center)
@@ -120,7 +120,7 @@ object Resizable {
      * 'se' - Southeast handle (bottom-right)
      * 'ne' - Northeast handle (top-center)
      * */
-    var resizeHandles: js.UndefOr[js.Array[String]]    = js.native
+    var resizeHandles: js.UndefOr[js.Array[String]]  = js.native
     var transformScale: js.UndefOr[Double]           = js.native
     /*
      * Initial width
