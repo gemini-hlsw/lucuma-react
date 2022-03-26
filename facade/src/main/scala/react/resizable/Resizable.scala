@@ -8,7 +8,6 @@ import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.Children
 import japgolly.scalajs.react.JsComponent
 import japgolly.scalajs.react.ReactEvent
-import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
@@ -22,7 +21,7 @@ final case class Resizable(
   content:                VdomNode,
   clazz:                  js.UndefOr[Css] = js.undefined,
   draggableOpts:          js.UndefOr[DraggableProps] = js.undefined,
-  height:                 JsNumber,
+  height:                 Double,
   // TODO This needs some work
   handle:                 js.UndefOr[Resizable.RawReactElement] = js.undefined,
   handleFn:               js.UndefOr[ResizeHandleAxis => Resizable.RawReactElement] = js.undefined,
@@ -34,8 +33,8 @@ final case class Resizable(
   onResizeStart:          js.UndefOr[Resizable.OnResize] = js.undefined,
   onResize:               js.UndefOr[Resizable.OnResize] = js.undefined,
   resizeHandles:          js.UndefOr[List[ResizeHandleAxis]] = js.undefined,
-  transformScale:         js.UndefOr[JsNumber] = js.undefined,
-  width:                  JsNumber,
+  transformScale:         js.UndefOr[Double] = js.undefined,
+  width:                  Double,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Resizable.Props, Resizable] {
   override protected def cprops                     = Resizable.props(this)
@@ -64,52 +63,52 @@ object Resizable {
      * 'y' - only allows the height to be changed
      * 'none' - disables resizing altogether
      * */
-    var axis: js.UndefOr[String]                       = js.native
-    var className: js.UndefOr[String]                  = js.native
+    var axis: js.UndefOr[String]                     = js.native
+    var className: js.UndefOr[String]                = js.native
     /*
      * Require that one and only one child be present.
      * */
-    var children: js.UndefOr[React.Node]               = js.native
+    var children: js.UndefOr[React.Node]             = js.native
     /*
      * Require that one and only one child be present.
      * */
     /*
      * These will be passed wholesale to react-draggable's DraggableCore
      * */
-    var draggableOpts: js.UndefOr[DraggableProps]      = js.native
+    var draggableOpts: js.UndefOr[DraggableProps]    = js.native
     /*
      * Initial height
      * */
-    var height: JsNumber                               = js.native
+    var height: Double                               = js.native
     /*
      * Customize cursor resize handle
      * */
-    var handle: js.UndefOr[Handle]                     = js.native
+    var handle: js.UndefOr[Handle]                   = js.native
     /*
      * If you change this, be sure to update your css
      * */
-    var handleSize: js.UndefOr[js.Array[JsNumber]]     = js.native
-    var lockAspectRatio: js.UndefOr[Boolean]           = js.native
+    var handleSize: js.UndefOr[js.Array[Double]]     = js.native
+    var lockAspectRatio: js.UndefOr[Boolean]         = js.native
     /*
      * Max X & Y measure
      * */
-    var maxConstraints: js.UndefOr[js.Array[JsNumber]] = js.native
+    var maxConstraints: js.UndefOr[js.Array[Double]] = js.native
     /*
      * Min X & Y measure
      * */
-    var minConstraints: js.UndefOr[js.Array[JsNumber]] = js.native
+    var minConstraints: js.UndefOr[js.Array[Double]] = js.native
     /*
      * Called on stop resize event
      * */
-    var onResizeStop: js.UndefOr[RawOnResize]          = js.native
+    var onResizeStop: js.UndefOr[RawOnResize]        = js.native
     /*
      * Called on start resize event
      * */
-    var onResizeStart: js.UndefOr[RawOnResize]         = js.native
+    var onResizeStart: js.UndefOr[RawOnResize]       = js.native
     /*
      * Called on resize event
      * */
-    var onResize: js.UndefOr[RawOnResize]              = js.native
+    var onResize: js.UndefOr[RawOnResize]            = js.native
     /*
      * Defines which resize handles should be rendered (default: 'se')
      * 's' - South handle (bottom-center)
@@ -121,12 +120,12 @@ object Resizable {
      * 'se' - Southeast handle (bottom-right)
      * 'ne' - Northeast handle (top-center)
      * */
-    var resizeHandles: js.UndefOr[js.Array[String]]    = js.native
-    var transformScale: js.UndefOr[JsNumber]           = js.native
+    var resizeHandles: js.UndefOr[js.Array[String]]  = js.native
+    var transformScale: js.UndefOr[Double]           = js.native
     /*
      * Initial width
      */
-    var width: JsNumber                                = js.native
+    var width: Double                                = js.native
   }
 
   def props(q: Resizable): Props =
@@ -156,7 +155,7 @@ object Resizable {
     className:       js.UndefOr[String] = js.undefined,
     clazz:           js.UndefOr[Css] = js.undefined,
     draggableOpts:   js.UndefOr[DraggableProps] = js.undefined,
-    height:          JsNumber,
+    height:          Double,
     handle:          js.UndefOr[RawReactElement] = js.undefined,
     handleFn:        js.UndefOr[ResizeHandleAxis => RawReactElement] = js.undefined,
     handleSize:      js.UndefOr[(Int, Int)] = js.undefined,
@@ -167,8 +166,8 @@ object Resizable {
     onResizeStart:   js.UndefOr[OnResize] = js.undefined,
     onResize:        js.UndefOr[OnResize] = js.undefined,
     resizeHandles:   js.UndefOr[List[ResizeHandleAxis]] = js.undefined,
-    transformScale:  js.UndefOr[JsNumber] = js.undefined,
-    width:           JsNumber
+    transformScale:  js.UndefOr[Double] = js.undefined,
+    width:           Double
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     axis.foreach(v => p.axis = v.toJs)
@@ -178,10 +177,10 @@ object Resizable {
     p.height = height
     handle.foreach(v => p.handle = v)
     handleFn.foreach(v => p.handle = ((s: String) => v(ResizeHandleAxis.fromString(s))): HandleFn)
-    handleSize.foreach(x => p.handleSize = js.Array(x._1: JsNumber, x._2: JsNumber))
+    handleSize.foreach(x => p.handleSize = js.Array(x._1.toDouble, x._2.toDouble))
     lockAspectRatio.foreach(v => p.lockAspectRatio = v)
-    minConstraints.foreach(x => p.minConstraints = js.Array(x._1: JsNumber, x._2: JsNumber))
-    maxConstraints.foreach(x => p.maxConstraints = js.Array(x._1: JsNumber, x._2: JsNumber))
+    minConstraints.foreach(x => p.minConstraints = js.Array(x._1.toDouble, x._2.toDouble))
+    maxConstraints.foreach(x => p.maxConstraints = js.Array(x._1.toDouble, x._2.toDouble))
     onResizeStop.foreach(cb =>
       p.onResizeStop = ((e: ReactEvent, d: ResizeCallbackData) => cb(e, d).runNow()): RawOnResize
     )
