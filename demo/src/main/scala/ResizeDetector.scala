@@ -5,7 +5,7 @@ package react.resizeDetector
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import japgolly.scalajs.react.{ facade => Raw }
+import japgolly.scalajs.react.facade
 import org.scalajs.dom.html
 import react.common._
 
@@ -22,13 +22,13 @@ object ResizeDetector {
 
   @js.native
   protected trait DimensionsJS extends js.Object {
-    val height: js.UndefOr[Raw.JsNumber]
-    val width: js.UndefOr[Raw.JsNumber]
+    val height: js.UndefOr[Double]
+    val width: js.UndefOr[Double]
   }
 
   @js.native
   protected trait RenderPropsJS extends DimensionsJS {
-    val targetRef: Raw.React.RefFn[html.Element]
+    val targetRef: facade.React.RefFn[html.Element]
   }
 
   trait Dimensions  {
@@ -51,7 +51,7 @@ object ResizeDetector {
 
   }
 
-  protected type RenderJS = js.Function1[RenderPropsJS, Raw.React.Node | Null]
+  protected type RenderJS = js.Function1[RenderPropsJS, facade.React.Node | Null]
 
   type Render = RenderProps => VdomNode
 
@@ -112,7 +112,7 @@ object ResizeDetector {
   @js.native
   trait Props extends js.Object {
     var children: RenderJS
-    var onResize: js.UndefOr[js.Function2[Raw.JsNumber, Raw.JsNumber, Unit]]
+    var onResize: js.UndefOr[js.Function2[Double, Double, Unit]]
     var handleHeight: js.UndefOr[Boolean]
     var handleWidth: js.UndefOr[Boolean]
     var skipOnMount: js.UndefOr[Boolean]
@@ -137,13 +137,9 @@ object ResizeDetector {
       val p = (new js.Object).asInstanceOf[Props]
       p.children = renderPropsJS => children(RenderProps(renderPropsJS)).rawNode
       onResize.foreach(v =>
-        p.onResize = { case (x: Raw.JsNumber, y: Raw.JsNumber) =>
+        p.onResize = { case (x: Double, y: Double) =>
           v(x.toInt, y.toInt)
-        }: js.Function2[
-          Raw.JsNumber,
-          Raw.JsNumber,
-          Unit
-        ]
+        }: js.Function2[Double, Double, Unit]
       )
       handleHeight.foreach(v => p.handleHeight = v)
       handleWidth.foreach(v => p.handleWidth = v)

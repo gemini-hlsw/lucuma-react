@@ -7,12 +7,11 @@ import js.annotation.JSImport
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.JsComponent
 import japgolly.scalajs.react.Children
-import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom.TagMod
 import react.common._
 
 final case class ReactGridLayout(
-  width:                  JsNumber,
+  width:                  Double,
   className:              js.UndefOr[String] = js.undefined,
   style:                  js.UndefOr[Style] = js.undefined,
   autoSize:               js.UndefOr[Boolean] = js.undefined,
@@ -32,7 +31,7 @@ final case class ReactGridLayout(
   isDroppable:            js.UndefOr[Boolean] = js.undefined,
   preventCollision:       js.UndefOr[Boolean] = js.undefined,
   useCSSTransforms:       js.UndefOr[Boolean] = js.undefined,
-  transformScale:         js.UndefOr[JsNumber] = js.undefined,
+  transformScale:         js.UndefOr[Double] = js.undefined,
   droppingItem:           js.UndefOr[DroppingItem] = js.undefined,
   resizeHandles:          js.UndefOr[List[ResizeHandle]] = js.undefined,
   onLayoutChange:         OnLayoutChange = _ => Callback.empty,
@@ -101,7 +100,7 @@ object ReactGridLayout {
     )
 
   def rawprops(
-    width:            JsNumber,
+    width:            Double,
     className:        js.UndefOr[String] = js.undefined,
     style:            js.UndefOr[Style] = js.undefined,
     autoSize:         js.UndefOr[Boolean] = js.undefined,
@@ -121,7 +120,7 @@ object ReactGridLayout {
     isDroppable:      js.UndefOr[Boolean] = js.undefined,
     preventCollision: js.UndefOr[Boolean] = js.undefined,
     useCSSTransforms: js.UndefOr[Boolean] = js.undefined,
-    transformScale:   js.UndefOr[JsNumber] = js.undefined,
+    transformScale:   js.UndefOr[Double] = js.undefined,
     droppingItem:     js.UndefOr[DroppingItem] = js.undefined,
     resizeHandles:    js.UndefOr[List[ResizeHandle]] = js.undefined,
     onLayoutChange:   OnLayoutChange = _ => Callback.empty,
@@ -172,6 +171,6 @@ object ReactGridLayout {
 
   val component = JsComponent[ReactGridLayoutProps, Children.Varargs, Null](RawComponent)
 
-  def apply(width: JsNumber, content: TagMod*): ReactGridLayout =
+  def apply(width: Double, content: TagMod*): ReactGridLayout =
     new ReactGridLayout(width = width, modifiers = content)
 }

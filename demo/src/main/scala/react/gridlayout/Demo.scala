@@ -38,7 +38,7 @@ object RGLDemo {
         ^.border := "red solid 1px",
         <.div(
           ResponsiveReactGridLayout(
-            useResize.width,
+            useResize.width.toDouble,
             // onLayoutChange = (_, b) => Callback.log(pprint.apply(b).toString),
             margin = (10, 10),
             containerPadding = (10, 10),
