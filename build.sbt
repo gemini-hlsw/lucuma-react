@@ -70,7 +70,7 @@ lazy val demo =
         ModuleSplitStyle.FewestModules
       )),
       publish / skip                        := true,
-      libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.2",
+      libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.3",
       // don't publish the demo
       publish                               := {},
       publishLocal                          := {},
