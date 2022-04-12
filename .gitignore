@@ -12,3 +12,5 @@ facade/yarn.lock
 .bloop/
 .metals/
 travis/secrets.tar
+.bsp/
+.direnv/
