@@ -1,7 +1,7 @@
 import sbt._
 
 val reactJS      = "17.0.2"
-val scalaJsReact = "2.0.1"
+val scalaJsReact = "2.1.0"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
