@@ -7,7 +7,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 val reactJS      = "17.0.2"
 val reactHotkeys = "2.0.0"
 
-val scalaJsReact       = "2.0.1"
+val scalaJsReact       = "2.1.0"
 val scalaJSReactCommon = "0.16.0"
 val utest              = "0.7.11"
 
