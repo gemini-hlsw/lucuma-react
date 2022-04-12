@@ -4,7 +4,7 @@ val reactResizable = "3.0.4"
 val scalaJsReact          = "2.1.0"
 val scalaJSDom            = "2.1.0"
 val scalaJSReactCommon    = "0.17.0"
-val scalaJSReactDraggable = "0.15.0"
+val scalaJSReactDraggable = "0.16.0"
 val cats                  = "2.7.0"
 val uTest                 = "0.7.11"
 
