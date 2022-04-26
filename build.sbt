@@ -3,7 +3,7 @@ import org.scalajs.linker.interface.ModuleSplitStyle
 val reactJS         = "17.0.2"
 val reactGridLayout = "1.2.5"
 
-val scalaJsReact = "2.1.0"
+val scalaJsReact = "2.1.1"
 val scalaJSDom   = "2.1.0"
 val reactCommon  = "0.17.0"
 val cats         = "2.7.0"
