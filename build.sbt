@@ -1,7 +1,7 @@
 val reactJS        = "17.0.2"
 val reactDraggable = "4.4.4"
 
-val scalaJsReact       = "2.1.0"
+val scalaJsReact       = "2.1.1"
 val scalaJSDom         = "2.1.0"
 val scalaJSReactCommon = "0.17.0"
 val cats               = "2.7.0"
