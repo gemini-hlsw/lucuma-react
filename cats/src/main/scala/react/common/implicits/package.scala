@@ -66,7 +66,8 @@ package implicits {
         Style(a.styles ++ b.styles)
     }
 
-    implicit val cssEq: Eq[Css]     = Eq.by(_.htmlClass)
+    implicit val cssOrder: Order[Css] = Order.by(_.htmlClass)
+
     implicit val cssShow: Show[Css] =
       Show.show(_.htmlClass)
 
