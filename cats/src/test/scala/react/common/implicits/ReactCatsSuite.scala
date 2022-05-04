@@ -8,7 +8,7 @@ import munit._
 
 class StyleSuite extends DisciplineSuite {
   checkAll("Eq[Style]", EqTests[Style].eqv)
-  checkAll("Eq[Css]", EqTests[Css].eqv)
+  checkAll("Order[Css]", OrderTests[Css].eqv)
   checkAll("Eq[Size]", EqTests[Size].eqv)
   checkAll("Monoid[Css]", MonoidTests[Css].monoid)
   checkAll("Monoid[Style]", MonoidTests[Style].monoid)
