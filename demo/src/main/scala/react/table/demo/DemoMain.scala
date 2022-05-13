@@ -92,7 +92,7 @@ object DemoMain {
           CallbackTo {
             println(s"endReached - loading more")
             val l = state.length
-            l to (l + 20)
+            l to l + 20
           }.flatMap(newEles => $.setState(state ++ newEles))
 
         // these callbacks just print info to the console.
