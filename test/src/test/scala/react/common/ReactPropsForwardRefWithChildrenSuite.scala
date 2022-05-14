@@ -25,7 +25,7 @@ class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite {
   val fwdRefWithChildrenPropsComponent =
     React.forwardRef
       .toScalaComponent(forwardee)
-      .withChildren[PropsWithChildren](((_, c, ref) => forwardee.withOptionalRef(ref)(c)))
+      .withChildren[PropsWithChildren]((_, c, ref) => forwardee.withOptionalRef(ref)(c))
 
   test("propsWithChildren") {
     val p        = PropsWithChildren()
