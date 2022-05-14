@@ -70,8 +70,8 @@ lazy val demo =
         ModuleSplitStyle.FewestModules
       )),
       publish / skip                        := true,
-      libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.3",
-      libraryDependencies += "edu.gemini" %%% "lucuma-ui" % "0.35.1",
+      libraryDependencies += "com.lihaoyi" %%% "pprint"    % "0.7.3",
+      libraryDependencies += "edu.gemini"  %%% "lucuma-ui" % "0.35.1",
       // don't publish the demo
       publish                               := {},
       publishLocal                          := {},
