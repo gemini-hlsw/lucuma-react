@@ -90,7 +90,7 @@ object ResizeHandle {
   }
   object JsProps {
     def apply(left: Double): JsProps = {
-      val p = (new js.Object()).asInstanceOf[JsProps]
+      val p = (new js.Object).asInstanceOf[JsProps]
       p.left = left
       p
     }
