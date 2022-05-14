@@ -65,7 +65,7 @@ lazy val demo =
         baseDirectory.value / "src" / "webpack" / "webpack-prod.config.js"
       ),
       webpackMonitoredDirectories += (Compile / resourceDirectory).value,
-      webpackResources                      := (baseDirectory.value / "src" / "webpack") * "*.js",
+      webpackResources                      := baseDirectory.value / "src" / "webpack" * "*.js",
       webpackMonitoredFiles / includeFilter := "*",
       useYarn                               := true,
       fastOptJS / webpackBundlingMode       := BundlingMode.LibraryOnly(),
