@@ -71,7 +71,7 @@ lazy val demo =
       )),
       publish / skip                        := true,
       libraryDependencies += "com.lihaoyi" %%% "pprint"    % "0.7.3",
-      libraryDependencies += "edu.gemini"  %%% "lucuma-ui" % "0.35.4",
+      libraryDependencies += "edu.gemini"  %%% "lucuma-ui" % "0.35.5",
       // don't publish the demo
       publish                               := {},
       publishLocal                          := {},
