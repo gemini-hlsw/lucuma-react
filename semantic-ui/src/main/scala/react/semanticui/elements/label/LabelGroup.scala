@@ -91,7 +91,7 @@ object LabelGroup {
     tag:       js.UndefOr[Boolean] = js.undefined
   ): LabelGroupProps = {
     val p = as.toJsObject[LabelGroupProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     circular.foreach(v => p.circular = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)

@@ -133,7 +133,7 @@ object Form {
     widths:      js.UndefOr[FormWidths] = js.undefined
   ): FormProps = {
     val p = as.toJsObject[FormProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     action.foreach(v => p.action = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     error.foreach(v => p.error = v)

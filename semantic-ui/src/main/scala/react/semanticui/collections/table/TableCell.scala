@@ -106,11 +106,11 @@ object TableCell {
 
   def props(q: TableCell): TableCellProps = {
     val p = q.as.toJsObject[TableCellProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     q.active.foreach(v => p.active = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
     q.collapsing.foreach(v => p.collapsing = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     q.disabled.foreach(v => p.disabled = v)
     q.error.foreach(v => p.error = v)
     q.icon.toJs.foreach(v => p.icon = v)

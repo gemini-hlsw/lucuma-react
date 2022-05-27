@@ -191,8 +191,8 @@ object Message {
     warning:    js.UndefOr[Boolean] = js.undefined
   ): MessageProps = {
     val p = as.toJsObject[MessageProps]
-    as.toJs.foreach(v => p.as = v)
-    attached.toJs.foreach(v => p.attached = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
+    attached.toJs.foreachUnchecked(v => p.attached = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     compact.foreach(v => p.compact = v)
@@ -201,7 +201,7 @@ object Message {
     floating.foreach(v => p.floating = v)
     header.toJs.foreach(v => p.header = v)
     hidden.foreach(v => p.hidden = v)
-    icon.toJs.foreach(v => p.icon = v)
+    icon.toJs.foreachUnchecked(v => p.icon = v)
     info.foreach(v => p.info = v)
     list
       .map[RawList](v =>
@@ -213,7 +213,7 @@ object Message {
           case _              => sys.error("Shouldn't happen")
         }
       )
-      .foreach(v => p.list = v)
+      .foreachUnchecked(v => p.list = v)
     negative.foreach(v => p.negative = v)
     (onDismissE, onDismiss).toJs.foreach(v => p.onDismiss = v)
     positive.foreach(v => p.positive = v)

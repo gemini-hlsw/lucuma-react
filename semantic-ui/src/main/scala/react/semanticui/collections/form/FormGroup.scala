@@ -95,9 +95,9 @@ object FormGroup {
     widths:      js.UndefOr[SemanticWidth | FormWidths] = js.undefined
   ): FormGroupProps = {
     val p = as.toJsObject[FormGroupProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     grouped.foreach(v => p.grouped = v)
     inline.foreach(v => p.inline = v)
     unstackable.foreach(v => p.unstackable = v)

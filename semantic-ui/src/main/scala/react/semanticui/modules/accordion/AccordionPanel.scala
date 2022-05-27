@@ -66,7 +66,7 @@ object AccordionPanel {
     val p = (new js.Object).asInstanceOf[AccordionPanelProps]
     q.active.foreach(v => p.active = v)
     q.content.toJs.foreach(v => p.content = v)
-    q.index.foreach(v => p.index = v)
+    q.index.foreachUnchecked(v => p.index = v)
     (q.onTitleClickE, q.onTitleClick).toJs.foreach(v => p.onTitleClick = v)
     q.title.toJs.foreach(v => p.title = v)
     p

@@ -64,9 +64,9 @@ object ListDescription {
     content:   js.UndefOr[ShorthandS[VdomNode]] = js.undefined
   ): ListDescriptionProps = {
     val p = as.toJsObject[ListDescriptionProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     p
   }
 

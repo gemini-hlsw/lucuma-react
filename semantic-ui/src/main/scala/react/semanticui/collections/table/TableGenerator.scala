@@ -167,22 +167,22 @@ object TableGenerator {
 
   def props[A](q: TableGenerator[A]): TableGeneratorProps = {
     val p = q.as.toJsObject[TableGeneratorProps]
-    q.as.toJs.foreach(v => p.as = v)
-    q.attached.toJs.foreach(v => p.attached = v)
-    q.basic.toJs.foreach(v => p.basic = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
+    q.attached.toJs.foreachUnchecked(v => p.attached = v)
+    q.basic.toJs.foreachUnchecked(v => p.basic = v)
     q.celled.foreach(v => p.celled = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
     q.collapsing.foreach(v => p.collapsing = v)
     q.color.toJs.foreach(v => p.color = v)
     q.columns.toJs.foreach(v => p.columns = v)
-    q.compact.toJs.foreach(v => p.compact = v)
+    q.compact.toJs.foreachUnchecked(v => p.compact = v)
     q.definition.foreach(v => p.definition = v)
     q.fixed.foreach(v => p.fixed = v)
     q.footerRow.foreach(v => p.footerRow = v.props)
     q.headerRow.foreach(v => p.headerRow = v.props)
     q.headerRows.map(_.map(_.props).toJSArray).foreach(v => p.headerRows = v)
     q.inverted.foreach(v => p.inverted = v)
-    q.padded.toJs.foreach(v => p.padded = v)
+    q.padded.toJs.foreachUnchecked(v => p.padded = v)
     p.renderBodyRow = (item: js.Any, index: Int) =>
       q.renderBodyRow(item.asInstanceOf[A], index).props
     q.selectable.foreach(v => p.selectable = v)

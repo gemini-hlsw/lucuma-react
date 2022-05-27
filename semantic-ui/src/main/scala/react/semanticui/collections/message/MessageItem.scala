@@ -68,7 +68,7 @@ object MessageItem {
     content:   js.UndefOr[ShorthandS[MessageItem]] = js.undefined
   ): MessageItemProps = {
     val p = as.toJsObject[MessageItemProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     content.toJs.foreach(v => p.content = v)
     p

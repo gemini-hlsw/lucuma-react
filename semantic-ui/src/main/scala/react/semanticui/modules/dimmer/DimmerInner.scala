@@ -140,7 +140,7 @@ object DimmerInner {
     verticalAlign:   js.UndefOr[DimmerVerticalAlign] = js.undefined
   ): DimmerInnerProps = {
     val p = as.toJsObject[DimmerInnerProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     active.foreach(v => p.active = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     disabled.foreach(v => p.disabled = v)

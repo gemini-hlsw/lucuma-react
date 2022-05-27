@@ -146,17 +146,17 @@ object Grid {
     verticalAlign: js.UndefOr[SemanticVerticalAlignment] = js.undefined
   ): GridProps = {
     val p = as.toJsObject[GridProps]
-    as.toJs.foreach(v => p.as = v)
-    celled.toJs.foreach(v => p.celled = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
+    celled.toJs.foreachUnchecked(v => p.celled = v)
     centered.foreach(v => p.centered = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     columns.toJs.foreach(v => p.columns = v)
     container.foreach(v => p.container = v)
-    divided.toJs.foreach(v => p.divided = v)
+    divided.toJs.foreachUnchecked(v => p.divided = v)
     doubling.foreach(v => p.doubling = v)
     inverted.foreach(v => p.inverted = v)
-    padded.toJs.foreach(v => p.padded = v)
-    relaxed.toJs.foreach(v => p.relaxed = v)
+    padded.toJs.foreachUnchecked(v => p.padded = v)
+    relaxed.toJs.foreachUnchecked(v => p.relaxed = v)
     reversed.toJs.foreach(v => p.reversed = v)
     stackable.foreach(v => p.stackable = v)
     stretched.foreach(v => p.stretched = v)

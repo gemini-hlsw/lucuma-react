@@ -166,20 +166,20 @@ object Button {
     toggle:        js.UndefOr[Boolean] = js.undefined
   ): ButtonProps = {
     val p = as.toJsObject[ButtonProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     active.foreach(v => p.active = v)
-    animated.toJs.foreach(v => p.animated = v)
-    attached.toJs.foreach(v => p.attached = v)
+    animated.toJs.foreachUnchecked(v => p.animated = v)
+    attached.toJs.foreachUnchecked(v => p.attached = v)
     basic.foreach(v => p.basic = v)
     circular.foreach(v => p.circular = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     compact.foreach(v => p.compact = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     disabled.foreach(v => p.disabled = v)
     floated.toJs.foreach(v => p.floated = v)
     fluid.foreach(v => p.fluid = v)
-    icon.toJs.foreach(v => p.icon = v)
+    icon.toJs.foreachUnchecked(v => p.icon = v)
     inverted.foreach(v => p.inverted = v)
     label.toJs.foreach(v => p.label = v)
     labelPosition.toJs.foreach(v => p.labelPosition = v)
@@ -191,7 +191,7 @@ object Button {
     role.foreach(v => p.role = v)
     secondary.foreach(v => p.secondary = v)
     size.toJs.foreach(v => p.size = v)
-    tabIndex.foreach(v => p.tabIndex = v)
+    tabIndex.foreachUnchecked(v => p.tabIndex = v)
     toggle.foreach(v => p.toggle = v)
     p
   }

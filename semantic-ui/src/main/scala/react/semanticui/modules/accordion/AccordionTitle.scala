@@ -84,12 +84,12 @@ object AccordionTitle {
 
   def props(q: AccordionTitle): AccordionTitleProps = {
     val p = q.as.toJsObject[AccordionTitleProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     q.active.foreach(v => p.active = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     q.icon.toJs.foreach(v => p.icon = v)
-    q.index.foreach(v => p.index = v)
+    q.index.foreachUnchecked(v => p.index = v)
     (q.onClickE, q.onClick).toJs.foreach(v => p.onClick = v)
     p
   }

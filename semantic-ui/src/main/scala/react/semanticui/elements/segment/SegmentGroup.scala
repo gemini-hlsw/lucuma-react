@@ -64,10 +64,10 @@ object SegmentGroup {
     q: SegmentGroup
   ): SegmentGroupProps = {
     val p = q.as.toJsObject[SegmentGroupProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
     q.compact.foreach(v => p.compact = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     q.horizontal.foreach(v => p.horizontal = v)
     q.piled.foreach(v => p.piled = v)
     q.raised.foreach(v => p.raised = v)

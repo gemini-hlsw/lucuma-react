@@ -176,8 +176,8 @@ object ButtonGroup {
     widths:    js.UndefOr[SemanticWidth] = js.undefined
   ): ButtonGroupProps = {
     val p = as.toJsObject[ButtonGroupProps]
-    as.toJs.foreach(v => p.as = v)
-    attached.foreach(v => p.attached = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
+    attached.foreachUnchecked(v => p.attached = v)
     basic.foreach(v => p.basic = v)
     buttons.map(x => x.map(btn => btn.props).toJSArray).foreach(v => p.buttons = v)
     (className, clazz).toJs.foreach(v => p.className = v)

@@ -163,9 +163,9 @@ object FormTextArea {
     width:     js.UndefOr[SemanticWidth] = js.undefined
   ): FormFieldProps = {
     val p = as.toJsObject[FormFieldProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     control.foreach(v => p.control = v)
     disabled.foreach(v => p.disabled = v)
     error.toJs.foreach(v => p.error = v)
@@ -176,8 +176,8 @@ object FormTextArea {
     width.toJs.foreach(v => p.width = v)
     (onChangeE, onChange).toJs.foreach(v => p.onChange = v)
     (onInputE, onInput).toJs.foreach(v => p.onInput = v)
-    rows.foreach(v => p.rows = v)
-    value.foreach(v => p.value = v)
+    rows.foreachUnchecked(v => p.rows = v)
+    value.foreachUnchecked(v => p.value = v)
     p
   }
 

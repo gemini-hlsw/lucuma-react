@@ -84,10 +84,10 @@ object ModalActions {
     onActionClick:  js.UndefOr[Callback] = js.undefined
   ): ModalActionsProps = {
     val p = as.toJsObject[ModalActionsProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     actions.toJs.foreach(v => p.actions = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     (onActionClickE, onActionClick).toJs.foreach(v => p.onActionClick = v)
     p
   }

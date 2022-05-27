@@ -60,9 +60,9 @@ object PlaceholderParagraph {
     q: PlaceholderParagraph
   ): PlaceholderParagraphProps = {
     val p = q.as.toJsObject[PlaceholderParagraphProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     p
   }
 

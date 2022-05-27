@@ -151,12 +151,12 @@ object Header {
     textAlign: js.UndefOr[SemanticTextAlignment] = js.undefined
   ): HeaderProps = {
     val p = as.toJsObject[HeaderProps]
-    as.toJs.foreach(v => p.as = v)
-    attached.toJs.foreach(v => p.attached = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
+    attached.toJs.foreachUnchecked(v => p.attached = v)
     block.foreach(v => p.block = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     disabled.foreach(v => p.disabled = v)
     dividing.foreach(v => p.dividing = v)
     floated.toJs.foreach(v => p.floated = v)

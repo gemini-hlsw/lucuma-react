@@ -63,9 +63,9 @@ object PopupHeader {
     content:   js.UndefOr[ShorthandS[VdomNode]] = js.undefined
   ): PopupHeaderProps = {
     val p = as.toJsObject[PopupHeaderProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     p
   }
 

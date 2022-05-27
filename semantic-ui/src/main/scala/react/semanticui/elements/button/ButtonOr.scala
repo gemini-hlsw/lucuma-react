@@ -60,9 +60,9 @@ object ButtonOr {
     text:      js.UndefOr[JsNumber | String] = js.undefined
   ): ButtonOrProps = {
     val p = as.toJsObject[ButtonOrProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    text.foreach(v => p.text = v)
+    text.foreachUnchecked(v => p.text = v)
     p
   }
 

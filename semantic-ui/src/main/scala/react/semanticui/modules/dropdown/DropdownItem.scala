@@ -122,10 +122,10 @@ object DropdownItem {
     q: DropdownItem
   ): DropdownItemProps = {
     val p = q.as.toJsObject[DropdownItemProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     q.active.foreach(v => p.active = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     q.description.foreach(v => p.description = v)
     q.disabled.foreach(v => p.disabled = v)
     q.flag.toJs.foreach(v => p.flag = v)
@@ -135,7 +135,7 @@ object DropdownItem {
     (q.onClickE, q.onClick).toJs.foreach(v => p.onClick = v)
     q.selected.foreach(v => p.selected = v)
     q.text.foreach(v => p.text = v)
-    q.value.foreach(v => p.value = v)
+    q.value.foreachUnchecked(v => p.value = v)
     p
   }
 

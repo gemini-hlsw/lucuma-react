@@ -245,7 +245,7 @@ object Modal {
     trigger:              js.UndefOr[VdomNode] = js.undefined
   ): ModalProps = {
     val p = as.toJsObject[ModalProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     actions.toJs.foreach(v => p.actions = v)
     basic.foreach(v => p.basic = v)
     centered.foreach(v => p.centered = v)
@@ -272,7 +272,7 @@ object Modal {
     open.foreach(v => p.open = v)
     size.toJs.foreach(v => p.size = v)
     style.map(_.toJsObject).foreach(v => p.style = v)
-    trigger.toJs.foreach(v => p.trigger = v)
+    trigger.toJs.foreachUnchecked(v => p.trigger = v)
     p
   }
 

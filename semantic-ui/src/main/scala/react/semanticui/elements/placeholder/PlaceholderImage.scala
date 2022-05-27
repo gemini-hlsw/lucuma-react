@@ -68,9 +68,9 @@ object PlaceholderImage {
     q: PlaceholderImage
   ): PlaceholderImageProps = {
     val p = q.as.toJsObject[PlaceholderImageProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     q.square.foreach(v => p.square = v)
     q.rectangular.foreach(v => p.rectangular = v)
     p

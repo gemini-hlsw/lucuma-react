@@ -91,8 +91,8 @@ object Accordion {
 
   def props(q: Accordion): AccordionProps = {
     val p = q.as.toJsObject[AccordionProps]
-    q.as.toJs.foreach(v => p.as = v)
-    q.activeIndex.foreach(v => p.activeIndex = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
+    q.activeIndex.foreachUnchecked(v => p.activeIndex = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
     q.defaultActiveIndex
       .map[JsNumber | js.Array[JsNumber]] { x =>
@@ -101,7 +101,7 @@ object Accordion {
           case p      => p.asInstanceOf[Seq[JsNumber]].toJSArray
         }
       }
-      .foreach(v => p.defaultActiveIndex = v)
+      .foreachUnchecked(v => p.defaultActiveIndex = v)
     q.exclusive.foreach(v => p.exclusive = v)
     q.fluid.foreach(v => p.fluid = v)
     q.inverted.foreach(v => p.inverted = v)
