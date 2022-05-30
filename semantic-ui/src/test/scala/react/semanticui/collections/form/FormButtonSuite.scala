@@ -9,6 +9,7 @@ import react.semanticui.widths._
 import react.semanticui.elements.label.Label
 import react.semanticui.elements.button.LabelPosition
 import react.common.syntax.vdom._
+import react.common.GenericComponentPACOps
 
 class FormButtonSuite extends munit.FunSuite {
   test("render") {
