@@ -8,7 +8,7 @@ import js.annotation._
 import js.|
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
-import japgolly.scalajs.react.facade.JsNumber
+import japgolly.scalajs.react.facade.Double
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
 import react.semanticui.{ raw => suiraw }
@@ -38,7 +38,7 @@ final case class Input(
   onChangeE:              js.UndefOr[Input.OnChange] = js.undefined,
   onChange:               js.UndefOr[Callback] = js.undefined,
   size:                   js.UndefOr[SemanticSize] = js.undefined,
-  tabIndex:               js.UndefOr[String | JsNumber] = js.undefined,
+  tabIndex:               js.UndefOr[String | Double] = js.undefined,
   transparent:            js.UndefOr[Boolean] = js.undefined,
   tpe:                    js.UndefOr[String] = js.undefined,
   value:                  js.UndefOr[String] = js.undefined,
@@ -126,7 +126,7 @@ object Input {
     var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
 
     /** An Input can receive focus. */
-    var tabIndex: js.UndefOr[String | JsNumber] = js.native
+    var tabIndex: js.UndefOr[String | Double] = js.native
 
     /** Transparent Input has no background. */
     var transparent: js.UndefOr[Boolean] = js.native
@@ -142,8 +142,8 @@ object Input {
     q: Input
   ): InputProps = {
     val p = q.as.toJsObject[InputProps]
-    q.as.toJs.foreach(v => p.as = v)
-    q.action.toJs.foreach(v => p.action = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
+    q.action.toJs.foreachUnchecked(v => p.action = v)
     q.actionPosition.toJs.foreach(v => p.actionPosition = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
     q.disabled.foreach(v => p.disabled = v)
@@ -154,7 +154,7 @@ object Input {
     q.iconPosition.toJs.foreach(v => p.iconPosition = v)
     q.input.toJs.foreachUnchecked(v => p.input = v)
     q.inverted.foreach(v => p.inverted = v)
-    q.label.toJs.foreach(v => p.label = v)
+    CompToPropsS(q.label).toJs.foreachUnchecked(v => p.label = v)
     q.labelPosition.toJs.foreach(v => p.labelPosition = v)
     q.loading.foreach(v => p.loading = v)
     (q.onChangeE, q.onChange).toJs.foreach(v => p.onChange = v)

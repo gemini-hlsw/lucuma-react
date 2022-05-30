@@ -75,7 +75,7 @@ object DropdownHeader {
     as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
-    icon.toJs.foreach(v => p.icon = v)
+    CompToPropsS(icon).toJs.foreachUnchecked(v => p.icon = v)
     p
   }
 

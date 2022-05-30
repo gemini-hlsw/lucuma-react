@@ -13,7 +13,6 @@ import react.semanticui.elements.label.Label
 import react.semanticui.{ raw => suiraw }
 import react.semanticui.addons.textarea.TextArea
 import japgolly.scalajs.react.vdom.TagMod
-import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class FormTextArea(
@@ -33,7 +32,7 @@ final case class FormTextArea(
   required:               js.UndefOr[Boolean] = js.undefined,
   rows:                   js.UndefOr[Int | String] = js.undefined,
   tpe:                    js.UndefOr[String] = js.undefined,
-  value:                  js.UndefOr[String | JsNumber] = js.undefined,
+  value:                  js.UndefOr[String | Double] = js.undefined,
   width:                  js.UndefOr[SemanticWidth] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[FormTextArea.FormFieldProps, FormTextArea] {
@@ -114,10 +113,10 @@ object FormTextArea {
     var onInput: js.UndefOr[TextArea.RawEvent] = js.undefined
 
     /** Indicates row count for a TextArea. */
-    var rows: js.UndefOr[JsNumber | String] = js.undefined
+    var rows: js.UndefOr[Double | String] = js.undefined
 
     /** The value of the textarea. */
-    var value: js.UndefOr[JsNumber | String] = js.undefined
+    var value: js.UndefOr[Double | String] = js.undefined
   }
 
   def props(q: FormTextArea): FormFieldProps =
@@ -159,7 +158,7 @@ object FormTextArea {
     required:  js.UndefOr[Boolean] = js.undefined,
     rows:      js.UndefOr[Int | String] = js.undefined,
     tpe:       js.UndefOr[String] = js.undefined,
-    value:     js.UndefOr[String | JsNumber] = js.undefined,
+    value:     js.UndefOr[String | Double] = js.undefined,
     width:     js.UndefOr[SemanticWidth] = js.undefined
   ): FormFieldProps = {
     val p = as.toJsObject[FormFieldProps]
@@ -168,9 +167,9 @@ object FormTextArea {
     content.toJs.foreachUnchecked(v => p.content = v)
     control.foreach(v => p.control = v)
     disabled.foreach(v => p.disabled = v)
-    error.toJs.foreach(v => p.error = v)
+    CompToPropsB(error).toJs.foreachUnchecked(v => p.error = v)
     inline.foreach(v => p.inline = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     required.foreach(v => p.required = v)
     p.`type` = tpe
     width.toJs.foreach(v => p.width = v)

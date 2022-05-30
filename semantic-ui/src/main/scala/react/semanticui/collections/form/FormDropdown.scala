@@ -15,7 +15,6 @@ import react.semanticui.elements.icon.Icon
 import react.semanticui.modules.dropdown._
 import react.semanticui.{ raw => suiraw }
 import japgolly.scalajs.react.facade.React
-import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
@@ -38,7 +37,7 @@ final case class FormDropdown(
   deburr:                 js.UndefOr[Boolean] = js.undefined,
   defaultOpen:            js.UndefOr[Boolean] = js.undefined,
   defaultSearchQuery:     js.UndefOr[String] = js.undefined,
-  defaultSelectedLabel:   js.UndefOr[JsNumber | String] = js.undefined,
+  defaultSelectedLabel:   js.UndefOr[Double | String] = js.undefined,
   defaultUpward:          js.UndefOr[Boolean] = js.undefined,
   defaultValue:           js.UndefOr[Dropdown.Value] = js.undefined,
   direction:              js.UndefOr[Direction] = js.undefined,
@@ -54,7 +53,7 @@ final case class FormDropdown(
   labeled:                js.UndefOr[Boolean] = js.undefined,
   lazyLoad:               js.UndefOr[Boolean] = js.undefined,
   loading:                js.UndefOr[Boolean] = js.undefined,
-  minCharacters:          js.UndefOr[JsNumber] = js.undefined,
+  minCharacters:          js.UndefOr[Double] = js.undefined,
   multiple:               js.UndefOr[Boolean] = js.undefined,
   noResultsMessage:       js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
   onAddItem:              js.UndefOr[Dropdown.OnAddItem] = js.undefined,
@@ -89,10 +88,10 @@ final case class FormDropdown(
   searchQuery:            js.UndefOr[String] = js.undefined,
   selectOnBlur:           js.UndefOr[Boolean] = js.undefined,
   selectOnNavigation:     js.UndefOr[Boolean] = js.undefined,
-  selectedLabel:          js.UndefOr[JsNumber | String] = js.undefined,
+  selectedLabel:          js.UndefOr[Double | String] = js.undefined,
   selection:              js.UndefOr[Boolean] = js.undefined,
   simple:                 js.UndefOr[Boolean] = js.undefined,
-  tabIndex:               js.UndefOr[String | JsNumber] = js.undefined,
+  tabIndex:               js.UndefOr[String | Double] = js.undefined,
   text:                   js.UndefOr[String] = js.undefined,
   tpe:                    js.UndefOr[String] = js.undefined,
   trigger:                js.UndefOr[VdomNode] = js.undefined,
@@ -154,7 +153,7 @@ object FormDropdown {
     var width: js.UndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
 
     /** Label prefixed to an option added by a user. */
-    var additionLabel: js.UndefOr[JsNumber | String | suiraw.SemanticShorthandContent] = js.native
+    var additionLabel: js.UndefOr[Double | String | suiraw.SemanticShorthandContent] = js.native
 
     /** Position of the `Add: ...` option in the dropdown list ('top' or 'bottom'). */
     var additionPosition: js.UndefOr[String]
@@ -203,7 +202,7 @@ object FormDropdown {
     var defaultSearchQuery: js.UndefOr[String] = js.native
 
     /** Currently selected label in multi-select. */
-    var defaultSelectedLabel: js.UndefOr[JsNumber | String] = js.native
+    var defaultSelectedLabel: js.UndefOr[Double | String] = js.native
 
     /** Initial value of upward. */
     var defaultUpward: js.UndefOr[Boolean] = js.native
@@ -248,7 +247,7 @@ object FormDropdown {
     var loading: js.UndefOr[Boolean] = js.native
 
     /** The minimum characters for a search to begin showing results. */
-    var minCharacters: js.UndefOr[JsNumber] = js.native
+    var minCharacters: js.UndefOr[Double] = js.native
 
     /** A selection dropdown can allow multiple selections. */
     var multiple: js.UndefOr[Boolean] = js.native
@@ -411,7 +410,7 @@ object FormDropdown {
     var selectOnNavigation: js.UndefOr[Boolean] = js.native
 
     /** Currently selected label in multi-select. */
-    var selectedLabel: js.UndefOr[JsNumber | String]
+    var selectedLabel: js.UndefOr[Double | String]
 
     /** A dropdown can be used to select between choices in a form. */
     var selection: js.UndefOr[Boolean]
@@ -420,7 +419,7 @@ object FormDropdown {
     var simple: js.UndefOr[Boolean] = js.native
 
     /** A dropdown can receive focus. */
-    var tabIndex: js.UndefOr[String | JsNumber] = js.native
+    var tabIndex: js.UndefOr[String | Double] = js.native
 
     /** The text displayed in the dropdown, usually for the active item. */
     var text: js.UndefOr[String] = js.native
@@ -544,7 +543,7 @@ object FormDropdown {
     deburr:               js.UndefOr[Boolean] = js.undefined,
     defaultOpen:          js.UndefOr[Boolean] = js.undefined,
     defaultSearchQuery:   js.UndefOr[String] = js.undefined,
-    defaultSelectedLabel: js.UndefOr[JsNumber | String] = js.undefined,
+    defaultSelectedLabel: js.UndefOr[Double | String] = js.undefined,
     defaultUpward:        js.UndefOr[Boolean] = js.undefined,
     defaultValue:         js.UndefOr[Dropdown.Value] = js.undefined,
     direction:            js.UndefOr[Direction] = js.undefined,
@@ -560,7 +559,7 @@ object FormDropdown {
     labeled:              js.UndefOr[Boolean] = js.undefined,
     lazyLoad:             js.UndefOr[Boolean] = js.undefined,
     loading:              js.UndefOr[Boolean] = js.undefined,
-    minCharacters:        js.UndefOr[JsNumber] = js.undefined,
+    minCharacters:        js.UndefOr[Double] = js.undefined,
     multiple:             js.UndefOr[Boolean] = js.undefined,
     noResultsMessage:     js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
     onAddItem:            js.UndefOr[Dropdown.OnAddItem] = js.undefined,
@@ -595,10 +594,10 @@ object FormDropdown {
     searchQuery:          js.UndefOr[String] = js.undefined,
     selectOnBlur:         js.UndefOr[Boolean] = js.undefined,
     selectOnNavigation:   js.UndefOr[Boolean] = js.undefined,
-    selectedLabel:        js.UndefOr[JsNumber | String] = js.undefined,
+    selectedLabel:        js.UndefOr[Double | String] = js.undefined,
     selection:            js.UndefOr[Boolean] = js.undefined,
     simple:               js.UndefOr[Boolean] = js.undefined,
-    tabIndex:             js.UndefOr[String | JsNumber] = js.undefined,
+    tabIndex:             js.UndefOr[String | Double] = js.undefined,
     text:                 js.UndefOr[String] = js.undefined,
     tpe:                  js.UndefOr[String] = js.undefined,
     trigger:              js.UndefOr[VdomNode] = js.undefined,
@@ -608,9 +607,9 @@ object FormDropdown {
     wrapSelection:        js.UndefOr[Boolean] = js.undefined
   ): FormDropdownProps = {
     val p = as.toJsObject[FormDropdownProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     additionLabel
-      .map[JsNumber | String | suiraw.SemanticShorthandContent] {
+      .map[Double | String | suiraw.SemanticShorthandContent] {
         (_: Any) match {
           case b: String   => b
           case b: Byte     => b
@@ -644,7 +643,7 @@ object FormDropdown {
     floating.foreach(v => p.floating = v)
     fluid.foreach(v => p.fluid = v)
     header.toJs.foreachUnchecked(v => p.header = v)
-    icon.toJs.foreach(v => p.icon = v)
+    CompToPropsS(icon).toJs.foreachUnchecked(v => p.icon = v)
     item.foreach(v => p.item = v)
     labeled.foreach(v => p.labeled = v)
     lazyLoad.foreach(v => p.lazyLoad = v)
@@ -713,9 +712,9 @@ object FormDropdown {
     content.toJs.foreachUnchecked(v => p.content = v)
     control.foreach(v => p.control = v)
     disabled.foreach(v => p.disabled = v)
-    error.toJs.foreach(v => p.error = v)
+    CompToPropsB(error).toJs.foreachUnchecked(v => p.error = v)
     inline.foreach(v => p.inline = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     required.foreach(v => p.required = v)
     p.`type` = tpe
     width.toJs.foreach(v => p.width = v)

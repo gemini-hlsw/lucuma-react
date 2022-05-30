@@ -8,7 +8,6 @@ import scala.scalajs.js.|
 import js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
-import japgolly.scalajs.react.facade.JsNumber
 import react.common._
 import react.semanticui._
 import react.semanticui.elements.label.Label
@@ -42,7 +41,7 @@ final case class FormInput(
   onChangeE:              js.UndefOr[Input.OnChange] = js.undefined,
   required:               js.UndefOr[Boolean] = js.undefined,
   size:                   js.UndefOr[SemanticSize] = js.undefined,
-  tabIndex:               js.UndefOr[String | JsNumber] = js.undefined,
+  tabIndex:               js.UndefOr[String | Double] = js.undefined,
   tpe:                    js.UndefOr[String] = js.undefined,
   transparent:            js.UndefOr[Boolean] = js.undefined,
   width:                  js.UndefOr[SemanticWidth] = js.undefined,
@@ -153,7 +152,7 @@ object FormInput {
     var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
 
     /** An Input can receive focus. */
-    var tabIndex: js.UndefOr[String | JsNumber] = js.native
+    var tabIndex: js.UndefOr[String | Double] = js.native
 
     /** Transparent Input has no background. */
     var transparent: js.UndefOr[Boolean] = js.native
@@ -218,7 +217,7 @@ object FormInput {
     onChangeE:      js.UndefOr[Input.OnChange] = js.undefined,
     required:       js.UndefOr[Boolean] = js.undefined,
     size:           js.UndefOr[SemanticSize] = js.undefined,
-    tabIndex:       js.UndefOr[String | JsNumber] = js.undefined,
+    tabIndex:       js.UndefOr[String | Double] = js.undefined,
     tpe:            js.UndefOr[String] = js.undefined,
     transparent:    js.UndefOr[Boolean] = js.undefined,
     width:          js.UndefOr[SemanticWidth] = js.undefined,
@@ -230,14 +229,14 @@ object FormInput {
     actionPosition.toJs.foreach(v => p.actionPosition = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     disabled.foreach(v => p.disabled = v)
-    error.toJs.foreachUnchecked(v => p.error = v)
+    CompToPropsB(error).toJs.foreachUnchecked(v => p.error = v)
     fluid.foreach(v => p.fluid = v)
     focus.foreach(v => p.focus = v)
     icon.toJs.foreachUnchecked(v => p.icon = v)
     iconPosition.toJs.foreach(v => p.iconPosition = v)
     input.toJs.foreachUnchecked(v => p.input = v)
     inverted.foreach(v => p.inverted = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     labelPosition.toJs.foreach(v => p.labelPosition = v)
     loading.foreach(v => p.loading = v)
     (onChangeE, onChange).toJs.foreach(v => p.onChange = v)
@@ -249,9 +248,9 @@ object FormInput {
     content.toJs.foreachUnchecked(v => p.content = v)
     control.foreach(v => p.control = v)
     disabled.foreach(v => p.disabled = v)
-    error.toJs.foreach(v => p.error = v)
+    CompToPropsB(error).toJs.foreachUnchecked(v => p.error = v)
     inline.foreach(v => p.inline = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     required.foreach(v => p.required = v)
     p.`type` = tpe
     width.toJs.foreach(v => p.width = v)

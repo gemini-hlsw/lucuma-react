@@ -152,7 +152,7 @@ object Image {
     q.hidden.foreach(v => p.hidden = v)
     q.href.foreach(v => p.href = v)
     q.inline.foreach(v => p.inline = v)
-    q.label.toJs.foreach(v => p.label = v)
+    CompToPropsS(q.label).toJs.foreachUnchecked(v => p.label = v)
     q.rounded.foreach(v => p.rounded = v)
     q.size.toJs.foreach(v => p.size = v)
     q.spaced.toJs.foreachUnchecked(v => p.spaced = v)

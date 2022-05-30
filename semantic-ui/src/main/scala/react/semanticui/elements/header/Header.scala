@@ -160,7 +160,7 @@ object Header {
     disabled.foreach(v => p.disabled = v)
     dividing.foreach(v => p.dividing = v)
     floated.toJs.foreach(v => p.floated = v)
-    icon.toJs.foreach(v => p.icon = v)
+    CompToPropsS(icon).toJs.foreachUnchecked(v => p.icon = v)
     image.foreach(v => p.image = v)
     inverted.foreach(v => p.inverted = v)
     size.toJs.foreach(v => p.size = v)

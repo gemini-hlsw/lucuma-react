@@ -11,6 +11,7 @@ import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import react.common._
+import react.common.syntax._
 import react.semanticui._
 import react.semanticui.elements.icon.Icon
 import react.semanticui.elements.icon.Icon.IconProps
@@ -250,20 +251,20 @@ object Modal {
     basic.foreach(v => p.basic = v)
     centered.foreach(v => p.centered = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    closeIcon.toJs.foreach(v => p.closeIcon = v)
+    CompToPropsS(closeIcon).toJs.foreachUnchecked(v => p.closeIcon = v)
     closeOnDimmerClick.foreach(v => p.closeOnDimmerClick = v)
     closeOnDocumentClick.foreach(v => p.closeOnDocumentClick = v)
-    content.toJs.foreach(v => p.content = v)
+    CompFnToPropsS(content).toJs.foreachUnchecked(v => p.content = v)
     defaultOpen.foreach(v => p.defaultOpen = v)
     dimmer.foreach { v =>
       (v: Any) match {
-        case x: Dimmer => x.toJs
+        case x: Dimmer => EnumValueOpsB(x).toJs
         case x         => x
       }
     }
 
     eventPool.foreach(v => p.eventPool = v)
-    header.toJs.foreach(v => p.header = v)
+    CompFnToPropsS(header).toJs.foreachUnchecked(v => p.header = v)
     (onActionClickE, onActionClick).toJs.foreach(v => p.onActionClick = v)
     (onCloseE, onClose).toJs.foreach(v => p.onClose = v)
     (onMountE, onMount).toJs

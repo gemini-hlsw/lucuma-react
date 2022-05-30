@@ -99,7 +99,7 @@ object ListContent {
     as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     content.map(_.map(_.rawNode).toJSArray).foreach(v => p.content = v)
-    description.toJs.foreach(v => p.description = v)
+    CompFnToPropsS(description).toJs.foreachUnchecked(v => p.description = v)
     floated.toJs.foreach(v => p.floated = v)
     header.map(_.props).foreach(v => p.header = v)
     verticalAlign.toJs.foreach(v => p.verticalAlign = v)

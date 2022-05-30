@@ -6,10 +6,10 @@ package react.semanticui.addons.portal
 import scala.scalajs.js
 import js.annotation._
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.facade.React
 import react.common._
+import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Portal(
@@ -21,8 +21,8 @@ final case class Portal(
   closeOnTriggerMouseLeave: js.UndefOr[Boolean] = js.undefined,
   defaultOpen:              js.UndefOr[Boolean] = js.undefined,
   eventPool:                js.UndefOr[String] = js.undefined,
-  mouseEnterDelay:          js.UndefOr[JsNumber] = js.undefined,
-  mouseLeaveDelay:          js.UndefOr[JsNumber] = js.undefined,
+  mouseEnterDelay:          js.UndefOr[Double] = js.undefined,
+  mouseLeaveDelay:          js.UndefOr[Double] = js.undefined,
   onCloseE:                 js.UndefOr[Portal.OnClose] = js.undefined,
   onClose:                  js.UndefOr[Callback] = js.undefined,
   onMountE:                 js.UndefOr[Portal.OnMount] = js.undefined,
@@ -100,10 +100,10 @@ object Portal {
     var mountNode: js.UndefOr[Any] = js.undefined
 
     /** Milliseconds to wait before opening on mouse over */
-    var mouseEnterDelay: js.UndefOr[JsNumber] = js.undefined
+    var mouseEnterDelay: js.UndefOr[Double] = js.undefined
 
     /** Milliseconds to wait before closing on mouse leave */
-    var mouseLeaveDelay: js.UndefOr[JsNumber] = js.undefined
+    var mouseLeaveDelay: js.UndefOr[Double] = js.undefined
 
     /**
      * Called when a close event happens
@@ -198,8 +198,8 @@ object Portal {
     closeOnTriggerMouseLeave: js.UndefOr[Boolean] = js.undefined,
     defaultOpen:              js.UndefOr[Boolean] = js.undefined,
     eventPool:                js.UndefOr[String] = js.undefined,
-    mouseEnterDelay:          js.UndefOr[JsNumber] = js.undefined,
-    mouseLeaveDelay:          js.UndefOr[JsNumber] = js.undefined,
+    mouseEnterDelay:          js.UndefOr[Double] = js.undefined,
+    mouseLeaveDelay:          js.UndefOr[Double] = js.undefined,
     onCloseE:                 js.UndefOr[Portal.OnClose] = js.undefined,
     onClose:                  js.UndefOr[Callback] = js.undefined,
     onMountE:                 js.UndefOr[Portal.OnMount] = js.undefined,
@@ -233,7 +233,7 @@ object Portal {
     openOnTriggerClick.foreach(v => p.openOnTriggerClick = v)
     openOnTriggerFocus.foreach(v => p.openOnTriggerFocus = v)
     openOnTriggerMouseEnter.foreach(v => p.openOnTriggerMouseEnter = v)
-    trigger.toJs.foreach(v => p.trigger = v)
+    trigger.toJs.foreachUnchecked(v => p.trigger = v)
     p
   }
 

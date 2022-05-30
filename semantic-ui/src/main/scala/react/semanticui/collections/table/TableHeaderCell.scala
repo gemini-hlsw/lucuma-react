@@ -117,7 +117,7 @@ object TableHeaderCell {
     q.content.toJs.foreachUnchecked(v => p.content = v)
     q.disabled.foreach(v => p.disabled = v)
     q.error.foreach(v => p.error = v)
-    q.icon.toJs.foreach(v => p.icon = v)
+    CompToPropsS(q.icon).toJs.foreachUnchecked(v => p.icon = v)
     q.negative.foreach(v => p.negative = v)
     q.positive.foreach(v => p.positive = v)
     q.selectable.foreach(v => p.selectable = v)

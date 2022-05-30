@@ -187,7 +187,7 @@ object Progress {
     error.foreach(v => p.error = v)
     indicating.foreach(v => p.indicating = v)
     inverted.foreach(v => p.inverted = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     percent.foreachUnchecked(v => p.percent = v)
     precision.foreachUnchecked(v => p.precision = v)
     progress.foreachUnchecked(v => p.progress = v)

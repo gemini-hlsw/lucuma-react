@@ -9,6 +9,7 @@ import js.|
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import react.common._
+import react.common.syntax._
 import react.semanticui._
 import react.semanticui.{ raw => suiraw }
 import japgolly.scalajs.react.vdom.TagMod
@@ -121,8 +122,8 @@ object GridRow {
     color.toJs.foreach(v => p.color = v)
     columns
       .map((_: Any) match {
-        case s: GridColumns => s.toJs
-        case s              => s.asInstanceOf[SemanticWidth].toJs
+        case s: GridColumns => EnumValueOps(s).toJs
+        case s              => EnumValueOps(s.asInstanceOf[SemanticWidth]).toJs
       })
       .foreachUnchecked(v => p.columns = v)
     divided.foreach(v => p.divided = v)

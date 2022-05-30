@@ -8,7 +8,6 @@ import js.annotation._
 import js.|
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
-import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common._
 import react.semanticui.{ raw => suiraw }
@@ -40,7 +39,7 @@ final case class DropdownItem(
   onClick:                js.UndefOr[Callback] = js.undefined,
   selected:               js.UndefOr[Boolean] = js.undefined,
   text:                   js.UndefOr[String] = js.undefined,
-  value:                  js.UndefOr[Boolean | JsNumber | String] = js.undefined,
+  value:                  js.UndefOr[Boolean | Double | String] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[DropdownItem.DropdownItemProps, DropdownItem] {
   override protected def cprops                     = DropdownItem.props(this)
@@ -115,7 +114,7 @@ object DropdownItem {
     var text: js.UndefOr[SemanticShorthandContent] = js.native
 
     /** Stored value. */
-    var value: js.UndefOr[Boolean | JsNumber | String] = js.native
+    var value: js.UndefOr[Boolean | Double | String] = js.native
   }
 
   def props(
@@ -128,10 +127,10 @@ object DropdownItem {
     q.content.toJs.foreachUnchecked(v => p.content = v)
     q.description.foreach(v => p.description = v)
     q.disabled.foreach(v => p.disabled = v)
-    q.flag.toJs.foreach(v => p.flag = v)
-    q.icon.toJs.foreach(v => p.icon = v)
-    q.image.toJs.foreach(v => p.image = v)
-    q.label.toJs.foreach(v => p.label = v)
+    CompToPropsS(q.flag).toJs.foreachUnchecked(v => p.flag = v)
+    CompToPropsS(q.icon).toJs.foreachUnchecked(v => p.icon = v)
+    CompFnToPropsS(q.image).toJs.foreachUnchecked(v => p.image = v)
+    CompToPropsS(q.label).toJs.foreachUnchecked(v => p.label = v)
     (q.onClickE, q.onClick).toJs.foreach(v => p.onClick = v)
     q.selected.foreach(v => p.selected = v)
     q.text.foreach(v => p.text = v)
@@ -142,7 +141,7 @@ object DropdownItem {
   private val component =
     JsComponent[DropdownItemProps, Children.Varargs, Null](RawComponent)
 
-  def apply(v: Boolean | JsNumber | String): DropdownItem =
+  def apply(v: Boolean | Double | String): DropdownItem =
     new DropdownItem(value = v, modifiers = Seq(v.toString))
 
 }

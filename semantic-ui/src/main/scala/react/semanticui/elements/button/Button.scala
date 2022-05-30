@@ -181,7 +181,7 @@ object Button {
     fluid.foreach(v => p.fluid = v)
     icon.toJs.foreachUnchecked(v => p.icon = v)
     inverted.foreach(v => p.inverted = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     labelPosition.toJs.foreach(v => p.labelPosition = v)
     loading.foreach(v => p.loading = v)
     negative.foreach(v => p.negative = v)

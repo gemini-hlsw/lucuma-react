@@ -70,7 +70,7 @@ object MessageContent {
     val p = as.toJsObject[MessageContentProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    CompToPropsS(content).toJs.foreachUnchecked(v => p.content = v)
     p
   }
 

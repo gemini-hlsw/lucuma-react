@@ -9,9 +9,9 @@ import js.|
 import js.JSConverters._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
-import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
+import react.common.syntax._
 import react.semanticui._
 import react.semanticui.sizes._
 import react.semanticui.{ raw => suiraw }
@@ -30,7 +30,7 @@ final case class Popup(
   hideOnScroll:           js.UndefOr[Boolean] = js.undefined,
   hoverable:              js.UndefOr[Boolean] = js.undefined,
   inverted:               js.UndefOr[Boolean] = js.undefined,
-  offset:                 js.UndefOr[(JsNumber, JsNumber)] = js.undefined,
+  offset:                 js.UndefOr[(Double, Double)] = js.undefined,
   on:                     js.UndefOr[PopupOn | List[PopupOn]] = js.undefined,
   onCloseE:               js.UndefOr[Popup.OnClose] = js.undefined,
   onClose:                js.UndefOr[Callback] = js.undefined,
@@ -56,7 +56,7 @@ object Popup {
   // TODO Implement this if needed but it needs a facade for Popper
   // @js.native
   // trait PopperOffsetFunctionParams extends js.Object
-  // private type RawPoperOffset = js.Function1[PopperOffsetFunctionParams, js.Array[JsNumber]]
+  // private type RawPoperOffset = js.Function1[PopperOffsetFunctionParams, js.Array[Double]]
   private type RawOnClose = js.Function2[ReactMouseEvent, PopupProps, Unit]
   type OnClose            = (ReactMouseEvent, PopupProps) => Callback
   private type RawOnOpen  = RawOnClose
@@ -125,7 +125,7 @@ object Popup {
      * @see
      *   https://popper.js.org/docs/v2/modifiers/offset/
      */
-    var offset: js.UndefOr[js.Array[JsNumber]] = js.native
+    var offset: js.UndefOr[js.Array[Double]] = js.native
 
     /** Events triggering the popup. */
     var on: js.UndefOr[String | js.Array[String]] = js.native
@@ -246,7 +246,7 @@ object Popup {
     hideOnScroll:    js.UndefOr[Boolean] = js.undefined,
     hoverable:       js.UndefOr[Boolean] = js.undefined,
     inverted:        js.UndefOr[Boolean] = js.undefined,
-    offset:          js.UndefOr[(JsNumber, JsNumber)] = js.undefined,
+    offset:          js.UndefOr[(Double, Double)] = js.undefined,
     on:              js.UndefOr[PopupOn | List[PopupOn]] = js.undefined,
     onCloseE:        js.UndefOr[OnClose] = js.undefined,
     onClose:         js.UndefOr[Callback] = js.undefined,
@@ -266,11 +266,11 @@ object Popup {
     as.toJs.foreachUnchecked(v => p.as = v)
     basic.foreach(v => p.basic = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    CompFnToPropsS(content).toJs.foreachUnchecked(v => p.content = v)
     disabled.foreach(v => p.disabled = v)
     eventsEnabled.foreach(v => p.eventsEnabled = v)
     flowing.foreach(v => p.flowing = v)
-    header.toJs.foreach(v => p.header = v)
+    CompFnToPropsS(header).toJs.foreachUnchecked(v => p.header = v)
     hideOnScroll.foreach(v => p.hideOnScroll = v)
     hoverable.foreach(v => p.hoverable = v)
     inverted.foreach(v => p.inverted = v)
@@ -278,7 +278,7 @@ object Popup {
     on.map[String | js.Array[String]] { x =>
       (x: Any) match {
         case p: PopupOn => p.toJs
-        case p          => p.asInstanceOf[List[PopupOn]].map(_.toJs).toJSArray
+        case p          => p.asInstanceOf[List[PopupOn]].map(EnumValueOps(_).toJs).toJSArray
       }
     }.foreachUnchecked(v => p.on = v)
     (onCloseE, onClose).toJs.foreach(v => p.onClose = v)
