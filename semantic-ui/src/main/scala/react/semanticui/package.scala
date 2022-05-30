@@ -12,6 +12,8 @@ import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom._
 import react.common._
 
+import scala.language.implicitConversions
+
 package semanticui {
 
   sealed trait As extends Product with Serializable {

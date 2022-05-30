@@ -8,7 +8,6 @@ import js.annotation._
 import js.|
 import js.JSConverters._
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
@@ -33,8 +32,8 @@ object Pane {
 
 final case class Tab(
   as:                     js.UndefOr[AsC] = js.undefined,
-  defaultActiveIndex:     js.UndefOr[JsNumber | String] = js.undefined,
-  activeIndex:            js.UndefOr[JsNumber | String] = js.undefined,
+  defaultActiveIndex:     js.UndefOr[Double | String] = js.undefined,
+  activeIndex:            js.UndefOr[Double | String] = js.undefined,
   menu:                   js.UndefOr[Menu] = js.undefined,
   menuPosition:           js.UndefOr[TabMenuPosition] = js.undefined,
   grid:                   js.UndefOr[Grid] = js.undefined,
@@ -74,7 +73,7 @@ object Tab {
             case _           => sys.error("Shouldn't happen")
           }
         )
-        .foreach(v => p.menuItem = v)
+        .foreachUnchecked(v => p.menuItem = v)
       q.render
         .map { f =>
           val r: js.Function0[React.Node] = f
@@ -101,10 +100,10 @@ object Tab {
     var as: js.UndefOr[AsT] = js.native
 
     /** The initial activeIndex. */
-    var defaultActiveIndex: js.UndefOr[JsNumber | String]
+    var defaultActiveIndex: js.UndefOr[Double | String]
 
     /** Index of the currently active tab. */
-    var activeIndex: js.UndefOr[JsNumber | String]
+    var activeIndex: js.UndefOr[Double | String]
 
     /** Shorthand props for the Menu. */
     var menu: js.UndefOr[Menu.MenuProps]
@@ -145,10 +144,10 @@ object Tab {
     q: Tab
   ): TabProps = {
     val p = q.as.toJsObject[TabProps]
-    q.as.toJs.foreach(v => p.as = v)
-    q.defaultActiveIndex.foreach(v => p.defaultActiveIndex = v)
-    q.activeIndex.foreach(v => p.activeIndex = v)
-    q.menu.map(_.props).foreach(v => p.menu = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
+    q.defaultActiveIndex.foreachUnchecked(v => p.defaultActiveIndex = v)
+    q.activeIndex.foreachUnchecked(v => p.activeIndex = v)
+    q.menu.map(_.props).foreachUnchecked(v => p.menu = v)
     q.menuPosition.toJs.foreach(v => p.menuPosition = v)
     q.grid.map(_.props).foreach(v => p.grid = v)
     q.onTabChangeE.toJs

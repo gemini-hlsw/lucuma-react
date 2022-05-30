@@ -98,13 +98,13 @@ object ItemContent {
     verticalAlign: js.UndefOr[SemanticVerticalAlignment] = js.undefined
   ): ItemContentProps = {
     val p = as.toJsObject[ItemContentProps]
-    as.toJs.foreach(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
-    description.toJs.foreach(v => p.description = v)
-    extra.toJs.foreach(v => p.extra = v)
-    header.toJs.foreach(v => p.header = v)
-    meta.toJs.foreach(v => p.meta = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
+    (className, clazz).toJs.foreachUnchecked(v => p.className = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
+    CompFnToPropsS(description).toJs.foreachUnchecked(v => p.description = v)
+    CompFnToPropsS(extra).toJs.foreachUnchecked(v => p.extra = v)
+    CompFnToPropsS(header).toJs.foreachUnchecked(v => p.header = v)
+    CompFnToPropsS(meta).toJs.foreachUnchecked(v => p.meta = v)
     verticalAlign.toJs.foreach(v => p.verticalAlign = v)
     p
   }

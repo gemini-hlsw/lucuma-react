@@ -148,19 +148,19 @@ object Card {
     raised:      js.UndefOr[Boolean] = js.undefined
   ): CardProps = {
     val p = as.toJsObject[CardProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     centered.foreach(v => p.centered = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
-    content.toJs.foreach(v => p.content = v)
-    description.toJs.foreach(v => p.description = v)
-    extra.toJs.foreach(v => p.extra = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
+    CompFnToPropsS(description).toJs.foreachUnchecked(v => p.description = v)
+    extra.toJs.foreachUnchecked(v => p.extra = v)
     fluid.foreach(v => p.fluid = v)
-    header.toJs.foreach(v => p.header = v)
+    CompFnToPropsS(header).toJs.foreachUnchecked(v => p.header = v)
     href.foreach(v => p.href = v)
-    image.toJs.foreach(v => p.image = v)
+    CompFnToPropsS(image).toJs.foreachUnchecked(v => p.image = v)
     link.foreach(v => p.link = v)
-    meta.toJs.foreach(v => p.meta = v)
+    CompFnToPropsS(meta).toJs.foreachUnchecked(v => p.meta = v)
     (onClickE, onClick).toJs.foreach(v => p.onClick = v)
     raised.foreach(v => p.raised = v)
     p
