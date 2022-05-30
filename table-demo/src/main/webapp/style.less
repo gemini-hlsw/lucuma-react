@@ -1,0 +1,63 @@
+table.guitars {
+    border-spacing: 0;
+    border: 1px solid black;
+
+    tr {
+      :last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    th,
+    td {
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+  }
+
+  // Note: These are classes, not elements for virtualized tables.
+  .table.virtualized {
+    display: inline-block;
+    border-spacing: 0;
+    border: 1px solid black;
+
+    .tr {
+      :last-child {
+        .td {
+          border-bottom: 0;
+        }
+      }
+
+      &.odd {
+        background-color: antiquewhite;
+      }
+
+      &.big {
+        height: 50px;
+      }
+    }
+
+    .th,
+    .td {
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+    }
+
+    .th {
+      font-weight: bold;
+    }
+
+    .tbody {
+      height: 200px;
+    }
+  }

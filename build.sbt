@@ -9,7 +9,7 @@ val munitV           = "0.7.29"
 val disciplineMunitV = "1.0.9"
 val utestV           = "0.7.11"
 
-ThisBuild / crossScalaVersions := Seq("3.1.1")
+ThisBuild / crossScalaVersions := Seq("3.1.2-RC2")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(
@@ -106,7 +106,29 @@ lazy val demoSettings       = Seq(
 lazy val root = project
   .in(file("."))
   .enablePlugins(NoPublishPlugin)
-  .aggregate(common, cats, test, gridLayout, gridLayoutDemo, semanticUI, semanticUIDemo)
+  .aggregate(
+    common,
+    cats,
+    test,
+    gridLayout,
+    gridLayoutDemo,
+    semanticUI, semanticUIDemo,
+    draggable,
+    clipboard,
+    svgdotjs,
+    virtuoso,
+    virtuosoDemo,
+    table,
+    tableDemo,
+    highcharts,
+    highchartsDemo,
+    datepicker,
+    datepickerDemo,
+    beautifulDnd,
+    beautifulDndDemo,
+    tree,
+    treeDemo
+  )
 
 lazy val common = project
   .in(file("common"))
@@ -136,6 +158,7 @@ lazy val test = project
   .in(file("test"))
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .settings(
+    name                     := "lucuma-react-test",
     yarnSettings,
     Test / requireJsDomEnv   := true,
     libraryDependencies ++= Seq(
@@ -154,6 +177,7 @@ lazy val gridLayout = project
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common)
   .settings(
+    name := "lucuma-react-grid-layout",
     facadeSettings,
     yarnSettings
   )
@@ -172,6 +196,7 @@ lazy val semanticUI = project
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common)
   .settings(
+    name := "lucuma-react-semantic-ui",
     facadeSettings,
     yarnSettings
   )
@@ -181,5 +206,173 @@ lazy val semanticUIDemo = project
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(semanticUI)
   .settings(
+    demoSettings
+  )
+
+lazy val draggable = project
+  .in(file("draggable"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-draggable",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val clipboard = project
+  .in(file("clipboard"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common, test % Test)
+  .settings(
+    name := "lucuma-react-clipboard",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val svgdotjs = project
+  .in(file("svgdotjs"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .settings(
+    name                    := "lucuma-svgdotjs",
+    stOutputPackage         := "lucuma.svgdotjs",
+    stSourceGenMode         := SourceGenMode.ResourceGenerator,
+    stUseScalaJsDom         := true,
+    stMinimize              := Selection.AllExcept("@svgdotjs/svg.js"),
+    scalaJSLinkerConfig ~= (_.withSourceMap(false)),
+    tlFatalWarnings         := false,
+    Compile / doc / sources := Seq(),
+    yarnSettings
+  )
+
+lazy val virtuoso = project
+  .in(file("virtuoso"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-virtuoso",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val virtuosoDemo = project
+  .in(file("virtuoso-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(virtuoso)
+  .settings(
+    demoSettings
+  )
+
+lazy val table = project
+  .in(file("table"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .dependsOn(common, virtuoso)
+  .settings(
+    name                     := "lucuma-react-table",
+    stOutputPackage          := "reactST",
+    stUseScalaJsDom          := true,
+    stFlavour                := Flavour.ScalajsReact,
+    stReactEnableTreeShaking := Selection.All,
+    stMinimize               := Selection.AllExcept("react-table"),
+    Compile / doc / sources  := Seq(),
+    Compile / scalacOptions += "-language:implicitConversions",
+    yarnSettings
+  )
+
+lazy val tableDemo = project
+  .in(file("table-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(table)
+  .settings(
+    demoSettings
+  )
+
+lazy val highcharts = project
+  .in(file("highcharts"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .dependsOn(common)
+  .settings(
+    name                    := "lucuma-react-highcharts",
+    stIgnore ++= List("react", "react-dom"),
+    stUseScalaJsDom         := true,
+    stOutputPackage         := "gpp",
+    stMinimize              := Selection.AllExcept("highcharts"),
+    Compile / doc / sources := Seq(),
+    Compile / scalacOptions += "-language:implicitConversions",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val highchartsDemo = project
+  .in(file("highcharts-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(highcharts)
+  .settings(
+    demoSettings
+  )
+
+lazy val datepicker = project
+  .in(file("datepicker"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .dependsOn(common)
+  .settings(
+    name                    := "lucuma-react-datepicker",
+    stIgnore ++= List("react-dom"),
+    stUseScalaJsDom         := true,
+    stOutputPackage         := "lucuma",
+    stFlavour               := Flavour.ScalajsReact,
+    stMinimize              := Selection.AllExcept("@types/react-datepicker"),
+    Compile / doc / sources := Seq(),
+    Compile / scalacOptions += "-language:implicitConversions",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val datepickerDemo = project
+  .in(file("datepicker-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(datepicker)
+  .settings(
+    demoSettings,
+    Compile / scalacOptions += "-language:implicitConversions",
+    libraryDependencies ++= Seq(
+      "io.github.cquiroz" %%% "scala-java-time" % "2.3.0"
+    )
+  )
+
+lazy val beautifulDnd = project
+  .in(file("beautiful-dnd"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-beautiful-dnd",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val beautifulDndDemo = project
+  .in(file("beautiful-dnd-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(beautifulDnd)
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
+    demoSettings
+  )
+
+lazy val tree = project
+  .in(file("tree"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common, beautifulDnd)
+  .settings(
+    name := "lucuma-react-tree",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val treeDemo = project
+  .in(file("tree-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(tree)
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
     demoSettings
   )

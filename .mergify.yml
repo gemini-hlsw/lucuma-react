@@ -12,9 +12,25 @@ pull_request_rules:
   - or:
     - body~=labels:.*early-semver-patch
     - body~=labels:.*early-semver-minor
-  - status-success=Build and Test (ubuntu-latest, 3.1.1, temurin@17)
+  - status-success=Build and Test (ubuntu-latest, 3.1.2-RC2, temurin@17)
   actions:
     merge: {}
+- name: Label beautiful-dnd PRs
+  conditions:
+  - files~=^beautiful-dnd/
+  actions:
+    label:
+      add:
+      - beautiful-dnd
+      remove: []
+- name: Label beautiful-dnd-demo PRs
+  conditions:
+  - files~=^beautiful-dnd-demo/
+  actions:
+    label:
+      add:
+      - beautiful-dnd-demo
+      remove: []
 - name: Label cats PRs
   conditions:
   - files~=^cats/
@@ -23,6 +39,14 @@ pull_request_rules:
       add:
       - cats
       remove: []
+- name: Label clipboard PRs
+  conditions:
+  - files~=^clipboard/
+  actions:
+    label:
+      add:
+      - clipboard
+      remove: []
 - name: Label common PRs
   conditions:
   - files~=^common/
@@ -30,6 +54,30 @@ pull_request_rules:
     label:
       add:
       - common
+      remove: []
+- name: Label datepicker PRs
+  conditions:
+  - files~=^datepicker/
+  actions:
+    label:
+      add:
+      - datepicker
+      remove: []
+- name: Label datepicker-demo PRs
+  conditions:
+  - files~=^datepicker-demo/
+  actions:
+    label:
+      add:
+      - datepicker-demo
+      remove: []
+- name: Label draggable PRs
+  conditions:
+  - files~=^draggable/
+  actions:
+    label:
+      add:
+      - draggable
       remove: []
 - name: Label grid-layout PRs
   conditions:
@@ -47,6 +95,22 @@ pull_request_rules:
       add:
       - grid-layout-demo
       remove: []
+- name: Label highcharts PRs
+  conditions:
+  - files~=^highcharts/
+  actions:
+    label:
+      add:
+      - highcharts
+      remove: []
+- name: Label highcharts-demo PRs
+  conditions:
+  - files~=^highcharts-demo/
+  actions:
+    label:
+      add:
+      - highcharts-demo
+      remove: []
 - name: Label semantic-ui PRs
   conditions:
   - files~=^semantic-ui/
@@ -63,6 +127,30 @@ pull_request_rules:
       add:
       - semantic-ui-demo
       remove: []
+- name: Label svgdotjs PRs
+  conditions:
+  - files~=^svgdotjs/
+  actions:
+    label:
+      add:
+      - svgdotjs
+      remove: []
+- name: Label table PRs
+  conditions:
+  - files~=^table/
+  actions:
+    label:
+      add:
+      - table
+      remove: []
+- name: Label table-demo PRs
+  conditions:
+  - files~=^table-demo/
+  actions:
+    label:
+      add:
+      - table-demo
+      remove: []
 - name: Label test PRs
   conditions:
   - files~=^test/
@@ -70,4 +158,36 @@ pull_request_rules:
     label:
       add:
       - test
+      remove: []
+- name: Label tree PRs
+  conditions:
+  - files~=^tree/
+  actions:
+    label:
+      add:
+      - tree
+      remove: []
+- name: Label tree-demo PRs
+  conditions:
+  - files~=^tree-demo/
+  actions:
+    label:
+      add:
+      - tree-demo
+      remove: []
+- name: Label virtuoso PRs
+  conditions:
+  - files~=^virtuoso/
+  actions:
+    label:
+      add:
+      - virtuoso
+      remove: []
+- name: Label virtuoso-demo PRs
+  conditions:
+  - files~=^virtuoso-demo/
+  actions:
+    label:
+      add:
+      - virtuoso-demo
       remove: []
