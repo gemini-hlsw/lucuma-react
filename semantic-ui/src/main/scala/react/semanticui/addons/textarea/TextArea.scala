@@ -55,7 +55,7 @@ object TextArea {
      * @param {object}
      *   data - All props and the event value.
      */
-    var onChange: js.UndefOr[RawEvent] = js.undefined
+    var onChange: js.UndefOr[RawEvent] = js.native
 
     /**
      * Called on input.
@@ -65,13 +65,13 @@ object TextArea {
      * @param {object}
      *   data - All props and the event value.
      */
-    var onInput: js.UndefOr[RawEvent] = js.undefined
+    var onInput: js.UndefOr[RawEvent] = js.native
 
     /** Indicates row count for a TextArea. */
-    var rows: js.UndefOr[Double | String] = js.undefined
+    var rows: js.UndefOr[Double | String] = js.native
 
     /** The value of the textarea. */
-    var value: js.UndefOr[Double | String] = js.undefined
+    var value: js.UndefOr[Double | String] = js.native
 
   }
 

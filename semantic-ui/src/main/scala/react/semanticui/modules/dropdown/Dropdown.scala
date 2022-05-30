@@ -297,7 +297,7 @@ object Dropdown {
      * @param {object}
      *   data - All props and proposed value.
      */
-    var onChange: js.UndefOr[RawOnChange] = js.undefined
+    var onChange: js.UndefOr[RawOnChange] = js.native
 
     /**
      * Called on click.
@@ -317,7 +317,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onClose: js.UndefOr[RawOnClose] = js.undefined
+    var onClose: js.UndefOr[RawOnClose] = js.native
 
     /**
      * Called on focus.
@@ -327,7 +327,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onFocus: js.UndefOr[RawOnFocus] = js.undefined
+    var onFocus: js.UndefOr[RawOnFocus] = js.native
 
     /**
      * Called when a multi-select label is clicked.
@@ -337,7 +337,7 @@ object Dropdown {
      * @param {object}
      *   data - All label props.
      */
-    var onLabelClick: js.UndefOr[RawOnLabelClick] = js.undefined
+    var onLabelClick: js.UndefOr[RawOnLabelClick] = js.native
 
     /**
      * Called on mousedown.
@@ -347,7 +347,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onMouseDown: js.UndefOr[RawOnMouseDown] = js.undefined
+    var onMouseDown: js.UndefOr[RawOnMouseDown] = js.native
 
     /**
      * Called when an open event happens.
@@ -357,7 +357,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onOpen: js.UndefOr[RawOnOpen] = js.undefined
+    var onOpen: js.UndefOr[RawOnOpen] = js.native
 
     /**
      * Called on search input change.
@@ -367,7 +367,7 @@ object Dropdown {
      * @param {object}
      *   data - All props, includes current value of searchQuery.
      */
-    var onSearchChange: js.UndefOr[RawOnSearchChange] = js.undefined
+    var onSearchChange: js.UndefOr[RawOnSearchChange] = js.native
 
     /** Controls whether or not the dropdown menu is displayed. */
     var open: js.UndefOr[Boolean] = js.native

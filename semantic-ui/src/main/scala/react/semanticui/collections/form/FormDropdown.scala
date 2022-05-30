@@ -131,7 +131,7 @@ object FormDropdown {
 
     /** Shorthand for primary content. */
     var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+      js.native
 
     /**
      * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input'). Extra FormDropdown
@@ -283,7 +283,7 @@ object FormDropdown {
      * @param {object}
      *   data - All props and proposed value.
      */
-    var onChange: js.UndefOr[FormDropdown.RawOnChange] = js.undefined
+    var onChange: js.UndefOr[FormDropdown.RawOnChange] = js.native
 
     /**
      * Called on click.
@@ -303,7 +303,7 @@ object FormDropdown {
      * @param {object}
      *   data - All props.
      */
-    var onClose: js.UndefOr[Dropdown.RawOnClose] = js.undefined
+    var onClose: js.UndefOr[Dropdown.RawOnClose] = js.native
 
     /**
      * Called on focus.
@@ -313,7 +313,7 @@ object FormDropdown {
      * @param {object}
      *   data - All props.
      */
-    var onFocus: js.UndefOr[Dropdown.RawOnFocus] = js.undefined
+    var onFocus: js.UndefOr[Dropdown.RawOnFocus] = js.native
 
     /**
      * Called when a multi-select label is clicked.
@@ -323,7 +323,7 @@ object FormDropdown {
      * @param {object}
      *   data - All label props.
      */
-    var onLabelClick: js.UndefOr[Dropdown.RawOnLabelClick] = js.undefined
+    var onLabelClick: js.UndefOr[Dropdown.RawOnLabelClick] = js.native
 
     /**
      * Called on mousedown.
@@ -333,7 +333,7 @@ object FormDropdown {
      * @param {object}
      *   data - All props.
      */
-    var onMouseDown: js.UndefOr[Dropdown.RawOnMouseDown] = js.undefined
+    var onMouseDown: js.UndefOr[Dropdown.RawOnMouseDown] = js.native
 
     /**
      * Called when an open event happens.
@@ -343,7 +343,7 @@ object FormDropdown {
      * @param {object}
      *   data - All props.
      */
-    var onOpen: js.UndefOr[Dropdown.RawOnOpen] = js.undefined
+    var onOpen: js.UndefOr[Dropdown.RawOnOpen] = js.native
 
     /**
      * Called on search input change.
@@ -353,7 +353,7 @@ object FormDropdown {
      * @param {object}
      *   data - All props, includes current value of searchQuery.
      */
-    var onSearchChange: js.UndefOr[Dropdown.RawOnSearchChange] = js.undefined
+    var onSearchChange: js.UndefOr[Dropdown.RawOnSearchChange] = js.native
 
     /** Controls whether or not the dropdown menu is displayed. */
     var open: js.UndefOr[Boolean] = js.native

@@ -63,7 +63,7 @@ object FormTextArea {
 
     /** Shorthand for primary content. */
     var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+      js.native
 
     /**
      * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input'). Extra FormTextArea
@@ -100,7 +100,7 @@ object FormTextArea {
      * @param {object}
      *   data - All props and the event value.
      */
-    var onChange: js.UndefOr[TextArea.RawEvent] = js.undefined
+    var onChange: js.UndefOr[TextArea.RawEvent] = js.native
 
     /**
      * Called on input.
@@ -110,13 +110,13 @@ object FormTextArea {
      * @param {object}
      *   data - All props and the event value.
      */
-    var onInput: js.UndefOr[TextArea.RawEvent] = js.undefined
+    var onInput: js.UndefOr[TextArea.RawEvent] = js.native
 
     /** Indicates row count for a TextArea. */
-    var rows: js.UndefOr[Double | String] = js.undefined
+    var rows: js.UndefOr[Double | String] = js.native
 
     /** The value of the textarea. */
-    var value: js.UndefOr[Double | String] = js.undefined
+    var value: js.UndefOr[Double | String] = js.native
   }
 
   def props(q: FormTextArea): FormFieldProps =

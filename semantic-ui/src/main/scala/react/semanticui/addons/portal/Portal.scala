@@ -69,41 +69,41 @@ object Portal {
     var children: js.UndefOr[React.Node] = js.native
 
     /** Controls whether or not the portal should close on a click outside. */
-    var closeOnDocumentClick: js.UndefOr[Boolean] = js.undefined
+    var closeOnDocumentClick: js.UndefOr[Boolean] = js.native
 
     /** Controls whether or not the portal should close when escape is pressed is displayed. */
-    var closeOnEscape: js.UndefOr[Boolean] = js.undefined
+    var closeOnEscape: js.UndefOr[Boolean] = js.native
 
     /**
      * Controls whether or not the portal should close when mousing out of the portal. NOTE: This
      * will prevent `closeOnTriggerMouseLeave` when mousing over the gap from the trigger to the
      * portal.
      */
-    var closeOnPortalMouseLeave: js.UndefOr[Boolean] = js.undefined
+    var closeOnPortalMouseLeave: js.UndefOr[Boolean] = js.native
 
     /** Controls whether or not the portal should close on blur of the trigger. */
-    var closeOnTriggerBlur: js.UndefOr[Boolean] = js.undefined
+    var closeOnTriggerBlur: js.UndefOr[Boolean] = js.native
 
     /** Controls whether or not the portal should close on click of the trigger. */
-    var closeOnTriggerClick: js.UndefOr[Boolean] = js.undefined
+    var closeOnTriggerClick: js.UndefOr[Boolean] = js.native
 
     /** Controls whether or not the portal should close when mousing out of the trigger. */
-    var closeOnTriggerMouseLeave: js.UndefOr[Boolean] = js.undefined
+    var closeOnTriggerMouseLeave: js.UndefOr[Boolean] = js.native
 
     /** Initial value of open. */
-    var defaultOpen: js.UndefOr[Boolean] = js.undefined
+    var defaultOpen: js.UndefOr[Boolean] = js.native
 
     /** Event pool namespace that is used to handle component events. */
-    var eventPool: js.UndefOr[String] = js.undefined
+    var eventPool: js.UndefOr[String] = js.native
 
     /** The node where the portal should mount. */
-    var mountNode: js.UndefOr[Any] = js.undefined
+    var mountNode: js.UndefOr[Any] = js.native
 
     /** Milliseconds to wait before opening on mouse over */
-    var mouseEnterDelay: js.UndefOr[Double] = js.undefined
+    var mouseEnterDelay: js.UndefOr[Double] = js.native
 
     /** Milliseconds to wait before closing on mouse leave */
-    var mouseLeaveDelay: js.UndefOr[Double] = js.undefined
+    var mouseLeaveDelay: js.UndefOr[Double] = js.native
 
     /**
      * Called when a close event happens
@@ -113,7 +113,7 @@ object Portal {
      * @param {object}
      *   data - All props.
      */
-    var onClose: js.UndefOr[RawOnClose] = js.undefined
+    var onClose: js.UndefOr[RawOnClose] = js.native
 
     /**
      * Called when the portal is mounted on the DOM
@@ -132,7 +132,7 @@ object Portal {
      * @param {object}
      *   data - All props.
      */
-    var onOpen: js.UndefOr[RawOnOpen] = js.undefined
+    var onOpen: js.UndefOr[RawOnOpen] = js.native
 
     /**
      * Called when the portal is unmounted from the DOM
@@ -144,19 +144,19 @@ object Portal {
     var onUnmount: js.UndefOr[RawOnUnmount]
 
     /** Controls whether or not the portal is displayed. */
-    var open: js.UndefOr[Boolean] = js.undefined
+    var open: js.UndefOr[Boolean] = js.native
 
     /** Controls whether or not the portal should open when the trigger is clicked. */
-    var openOnTriggerClick: js.UndefOr[Boolean] = js.undefined
+    var openOnTriggerClick: js.UndefOr[Boolean] = js.native
 
     /** Controls whether or not the portal should open on focus of the trigger. */
-    var openOnTriggerFocus: js.UndefOr[Boolean] = js.undefined
+    var openOnTriggerFocus: js.UndefOr[Boolean] = js.native
 
     /** Controls whether or not the portal should open when mousing over the trigger. */
-    var openOnTriggerMouseEnter: js.UndefOr[Boolean] = js.undefined
+    var openOnTriggerMouseEnter: js.UndefOr[Boolean] = js.native
 
     /** Element to be rendered in-place where the portal is defined. */
-    var trigger: js.UndefOr[React.Node] = js.undefined
+    var trigger: js.UndefOr[React.Node] = js.native
 
     // /** Called with a ref to the trigger node. */
     // var triggerRef: js.UndefOr[Ref]

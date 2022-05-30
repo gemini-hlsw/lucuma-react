@@ -40,17 +40,17 @@ object MessageList {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.undefined
+    var as: js.UndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.undefined
+    var children: js.UndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.undefined
+    var className: js.UndefOr[String] = js.native
 
     /** Shorthand for primary content. */
     var items: js.UndefOr[suiraw.SemanticShorthandArray[MessageItem.MessageItemProps]] =
-      js.undefined
+      js.native
   }
 
   def props(q: MessageList): MessageListProps =

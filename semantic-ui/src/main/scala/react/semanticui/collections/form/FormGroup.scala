@@ -56,7 +56,7 @@ object FormGroup {
 
     /** Shorthand for primary content. */
     var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+      js.native
 
     var grouped: js.UndefOr[Boolean] = js.native
 

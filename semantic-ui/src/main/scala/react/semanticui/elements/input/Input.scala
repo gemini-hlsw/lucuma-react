@@ -8,7 +8,6 @@ import js.annotation._
 import js.|
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
-import japgolly.scalajs.react.facade.Double
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
 import react.semanticui.{ raw => suiraw }

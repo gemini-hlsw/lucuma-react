@@ -182,7 +182,7 @@ package object semanticui {
         (d: Any) match {
           case s: String   => s
           case s: VdomNode => s.rawNode
-          case c           => shorthandObject(c.asInstanceOf[C])
+          case c           => shorthandObject(render(c.asInstanceOf[C]))
         }
       }
   }
@@ -195,7 +195,7 @@ package object semanticui {
         (d: Any) match {
           case b: Boolean  => b
           case s: VdomNode => s.rawNode
-          case c           => shorthandObject(c.asInstanceOf[C])
+          case c           => shorthandObject(render(c.asInstanceOf[C]))
         }
       }
   }
@@ -209,7 +209,7 @@ package object semanticui {
           case s: String   => s
           case b: Boolean  => b
           case s: VdomNode => s.rawNode
-          case c           => shorthandObject(c.asInstanceOf[C])
+          case c           => shorthandObject(render(c.asInstanceOf[C]))
         }
       }
   }
@@ -220,7 +220,7 @@ package object semanticui {
     (c: Any) match {
       case s: String   => s
       case s: VdomNode => s.rawNode
-      case _           => shorthandObject(c.asInstanceOf[C])
+      case _           => shorthandObject(render(c.asInstanceOf[C]))
     }
 
   object shorthand {
@@ -349,7 +349,7 @@ package object semanticui {
     render:                                         C => Render[P]
   ) {
     def toJs: js.UndefOr[raw.SemanticShorthandItemS[P]] =
-      c.map(d => compToPropS(d)(render))
+      c.map((d: ShorthandS[C]) => compToPropS[P, C](d)(render))
   }
 
   implicit class CompToPropsB[P <: js.Object, C](c: js.UndefOr[ShorthandB[C]])(implicit
@@ -359,7 +359,7 @@ package object semanticui {
       c.map { d =>
         (d: Any) match {
           case b: Boolean => b
-          case c          => shorthandObject(c.asInstanceOf[C])
+          case c          => shorthandObject(render(c.asInstanceOf[C]))
         }
       }
   }
@@ -373,7 +373,7 @@ package object semanticui {
           case s: String   => s
           case b: Boolean  => b
           case b: VdomNode => b.rawNode
-          case c           => shorthandObject(c.asInstanceOf[C])
+          case c           => shorthandObject(render(c.asInstanceOf[C]))
         }
       }
   }

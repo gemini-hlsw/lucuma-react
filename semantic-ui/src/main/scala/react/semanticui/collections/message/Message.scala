@@ -66,52 +66,52 @@ object Message {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.undefined
+    var as: js.UndefOr[AsT] = js.native
 
     /** A message can be formatted to attach itself to other content. */
-    var attached: js.UndefOr[Boolean | String] = js.undefined
+    var attached: js.UndefOr[Boolean | String] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.undefined
+    var children: js.UndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.undefined
+    var className: js.UndefOr[String] = js.native
 
     /** A message can be formatted to be different colors. */
-    var color: js.UndefOr[suiraw.SemanticCOLORS] = js.undefined
+    var color: js.UndefOr[suiraw.SemanticCOLORS] = js.native
 
     /** A message can only take up the width of its content. */
-    var compact: js.UndefOr[Boolean] = js.undefined
+    var compact: js.UndefOr[Boolean] = js.native
 
     /** Shorthand for primary content. */
     var content: js.UndefOr[suiraw.SemanticShorthandItemS[MessageContent.MessageContentProps]] =
-      js.undefined
+      js.native
 
     /** A message may be formatted to display a negative message. Same as `negative`. */
-    var error: js.UndefOr[Boolean] = js.undefined
+    var error: js.UndefOr[Boolean] = js.native
 
     /** A message can float above content that it is related to. */
-    var floating: js.UndefOr[Boolean] = js.undefined
+    var floating: js.UndefOr[Boolean] = js.native
 
     /** Shorthand for MessageHeader. */
     var header: js.UndefOr[suiraw.SemanticShorthandItemS[MessageHeader.MessageHeaderProps]] =
-      js.undefined
+      js.native
 
     /** A message can be hidden. */
-    var hidden: js.UndefOr[Boolean] = js.undefined
+    var hidden: js.UndefOr[Boolean] = js.native
 
     /** Add an icon by icon name or pass an <Icon /.> */
-    var icon: js.UndefOr[suiraw.SemanticShorthandItemSB[IconProps]] = js.undefined
+    var icon: js.UndefOr[suiraw.SemanticShorthandItemSB[IconProps]] = js.native
 
     /** A message may be formatted to display information. */
-    var info: js.UndefOr[Boolean] = js.undefined
+    var info: js.UndefOr[Boolean] = js.native
 
     /** Array shorthand items for the MessageList. Mutually exclusive with children. */
     var list: js.UndefOr[RawList] =
-      js.undefined
+      js.native
 
     /** A message may be formatted to display a negative message. Same as `error`. */
-    var negative: js.UndefOr[Boolean] = js.undefined
+    var negative: js.UndefOr[Boolean] = js.native
 
     /**
      * A message that the user can choose to hide. Called when the user clicks the "x" icon. This
@@ -122,22 +122,22 @@ object Message {
      * @param {object}
      *   data - All props.
      */
-    var onDismiss: js.UndefOr[js.Function2[ReactEvent, MessageProps, Unit]] = js.undefined
+    var onDismiss: js.UndefOr[js.Function2[ReactEvent, MessageProps, Unit]] = js.native
 
     /** A message may be formatted to display a positive message.  Same as `success`. */
-    var positive: js.UndefOr[Boolean] = js.undefined
+    var positive: js.UndefOr[Boolean] = js.native
 
     /** A message can have different sizes. */
     var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
 
     /** A message may be formatted to display a positive message.  Same as `positive`. */
-    var success: js.UndefOr[Boolean] = js.undefined
+    var success: js.UndefOr[Boolean] = js.native
 
     /** A message can be set to visible to force itself to be shown. */
-    var visible: js.UndefOr[Boolean] = js.undefined
+    var visible: js.UndefOr[Boolean] = js.native
 
     /** A message may be formatted to display warning messages. */
-    var warning: js.UndefOr[Boolean] = js.undefined
+    var warning: js.UndefOr[Boolean] = js.native
   }
 
   def props(q: Message): MessageProps =
