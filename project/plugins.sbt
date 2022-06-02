@@ -1,7 +1,7 @@
 val sbtLucumaVersion = "0.6.4"
 addSbtPlugin("edu.gemini"                  % "sbt-lucuma-lib"         % sbtLucumaVersion)
 addSbtPlugin("edu.gemini"                  % "sbt-lucuma-sjs-bundler" % sbtLucumaVersion)
-addSbtPlugin("org.scalablytyped.converter" % "sbt-converter"          % "1.0.0-beta37+8-3ddfae51-SNAPSHOT")
+addSbtPlugin("org.scalablytyped.converter" % "sbt-converter"          % "1.0.0-beta37+35-ae213d76-SNAPSHOT")
 
 resolvers += MavenRepository(
   "sonatype-s01-snapshots",
