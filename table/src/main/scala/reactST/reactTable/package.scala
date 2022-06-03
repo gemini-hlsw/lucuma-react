@@ -3,7 +3,7 @@
 
 package reactST
 
-import japgolly.scalajs.react.facade.{ React => ReactRaw }
+import japgolly.scalajs.react.facade.{React => ReactRaw}
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode

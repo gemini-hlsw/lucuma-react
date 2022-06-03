@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.JSImport
 
 import gpp.highcharts.mod.Options
 import gpp.highcharts.mod.charts
-import gpp.highcharts.mod.{ ^ => HighCharts, _ }
+import gpp.highcharts.mod.{^ => HighCharts, _}
 
 import org.scalajs.dom.document
 import scala.scalajs.js.annotation.JSGlobal
