@@ -5,7 +5,7 @@ package react
 
 import scala.scalajs.js
 import scala.scalajs.js.|
-import org.scalajs.dom.html.{ Element => HTMLElement }
+import org.scalajs.dom.html.{Element => HTMLElement}
 import org.scalajs.dom.MouseEvent
 import react.common.EnumValue
 
