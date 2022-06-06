@@ -3,7 +3,7 @@
 
 package reactST.reactTable.facade.columnOptions
 
-import japgolly.scalajs.react.facade.{ React => ReactRaw }
+import japgolly.scalajs.react.facade.{React => ReactRaw}
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode
 import org.scalablytyped.runtime.StObject

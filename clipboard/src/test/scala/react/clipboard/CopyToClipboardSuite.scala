@@ -3,7 +3,7 @@
 
 package react.clipboard
 
-import japgolly.scalajs.react.vdom.html_<^.{ < => <<, _ }
+import japgolly.scalajs.react.vdom.html_<^.{< => <<, _}
 import react.common.TestUtils
 
 class CopyToClipboardSuite extends munit.FunSuite with TestUtils {
