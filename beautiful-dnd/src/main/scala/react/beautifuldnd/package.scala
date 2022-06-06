@@ -5,7 +5,7 @@ package react
 
 import scala.scalajs.js
 import scala.scalajs.js.|
-import japgolly.scalajs.react.{ facade => Raw }
+import japgolly.scalajs.react.{facade => Raw}
 import japgolly.scalajs.react.vdom.VdomBuilder
 import japgolly.scalajs.react.util.JsUtil
 
