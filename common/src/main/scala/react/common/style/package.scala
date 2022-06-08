@@ -5,13 +5,14 @@ package react
 
 package common
 
-import scala.scalajs.js
-import scala.scalajs.js.|
-import js.JSConverters._
 import japgolly.scalajs.react.Reusability
 import japgolly.scalajs.react.vdom.html_<^._
 
 import scala.language.implicitConversions
+import scala.scalajs.js
+import scala.scalajs.js.|
+
+import js.JSConverters._
 
 package object style             {
   implicit val IntStyleExtractor: StyleExtractor[Int] = new StyleExtractor[Int] {

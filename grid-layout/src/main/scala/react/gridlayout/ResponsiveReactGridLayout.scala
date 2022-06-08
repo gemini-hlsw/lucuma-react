@@ -5,14 +5,16 @@ package react
 
 package gridlayout
 
-import scala.scalajs.js
-import js.annotation.JSImport
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.Children
 import japgolly.scalajs.react.JsComponent
+import japgolly.scalajs.react.vdom.TagMod
 import react.common.Style
 import react.common._
-import japgolly.scalajs.react.vdom.TagMod
+
+import scala.scalajs.js
+
+import js.annotation.JSImport
 
 final case class ResponsiveReactGridLayout(
   width:                  Int,

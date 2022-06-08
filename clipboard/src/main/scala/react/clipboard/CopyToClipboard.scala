@@ -8,10 +8,10 @@ package clipboard
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common._
-import scala.scalajs.js
-import scala.scalajs.js.annotation.JSImport
 
 import scala.language.implicitConversions
+import scala.scalajs.js
+import scala.scalajs.js.annotation.JSImport
 
 /**
  * Text to be copied to clipboard Optional callback, will be called when text is copied Optional

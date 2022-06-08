@@ -5,15 +5,17 @@ package react
 
 package draggable
 
-import scala.scalajs.js
-import js.annotation.JSImport
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.Children
 import japgolly.scalajs.react.JsComponent
 import japgolly.scalajs.react.vdom.VdomNode
-import org.scalajs.dom.html.{ Element => HTMLElement }
 import org.scalajs.dom.MouseEvent
+import org.scalajs.dom.html.{Element => HTMLElement}
 import react.common._
+
+import scala.scalajs.js
+
+import js.annotation.JSImport
 
 trait Draggable extends js.Object
 

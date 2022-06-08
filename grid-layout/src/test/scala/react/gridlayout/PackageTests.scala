@@ -5,9 +5,8 @@ package react.gridlayout
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import utest._
-
 import react.common.syntax.all.*
+import utest._
 
 object PackageTests extends TestSuite {
 
