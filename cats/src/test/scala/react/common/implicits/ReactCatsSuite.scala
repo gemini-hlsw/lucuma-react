@@ -4,15 +4,10 @@
 package react.common.implicits
 
 import cats.kernel.laws.discipline._
-import japgolly.scalajs.react.facade.JsNumber
 import org.scalacheck.Arbitrary._
 import react.common._
 import react.common.arb._
 import munit._
-
-class ImplicitsSuite extends DisciplineSuite {
-  checkAll("Eq[JsNumber]", EqTests[JsNumber].eqv)
-}
 
 class StyleSuite extends DisciplineSuite {
   checkAll("Eq[Style]", EqTests[Style].eqv)
