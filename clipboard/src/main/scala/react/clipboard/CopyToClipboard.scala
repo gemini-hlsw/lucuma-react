@@ -1,3 +1,6 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react
 
 package clipboard
@@ -8,6 +11,8 @@ import react.common._
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
+import scala.language.implicitConversions
+
 /**
  * Text to be copied to clipboard Optional callback, will be called when text is copied Optional
  * copy-to-clipboard options.
@@ -16,7 +21,7 @@ final case class CopyToClipboard(
   text:    String,
   onCopy:  OnCopy = (_, _) => Callback.empty,
   options: Option[ClipboardOptions] = None
-) extends ReactPropsWithChildren[CopyToClipboard](CopyToClipboard.component) {
+) extends ReactPropsWithChildren(CopyToClipboard.component) {
   @inline def render: Seq[CtorType.ChildArg] => VdomElement =
     CopyToClipboard.component(this)
 }
