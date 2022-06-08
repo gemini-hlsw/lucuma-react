@@ -4,15 +4,15 @@
 package react.resizeDetector
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.{ facade => Raw }
-import scala.scalajs.js
-import scala.scalajs.js.|
-import scala.scalajs.js.annotation._
+import japgolly.scalajs.react.{facade => Raw}
 import org.scalajs.dom.html
 import react.common._
 import react.resizeDetector.ResizeDetector._
 
 import scala.language.implicitConversions
+import scala.scalajs.js
+import scala.scalajs.js.annotation._
+import scala.scalajs.js.|
 
 @js.native
 protected trait ReactResizeDetectorDimensions extends js.Object {

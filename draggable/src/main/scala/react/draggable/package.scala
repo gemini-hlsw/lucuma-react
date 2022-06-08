@@ -3,11 +3,12 @@
 
 package react
 
+import org.scalajs.dom.MouseEvent
+import org.scalajs.dom.html.{Element => HTMLElement}
+import react.common.EnumValue
+
 import scala.scalajs.js
 import scala.scalajs.js.|
-import org.scalajs.dom.html.{ Element => HTMLElement }
-import org.scalajs.dom.MouseEvent
-import react.common.EnumValue
 
 package object draggable {
   type Bounds = DraggableBounds | String | FalseBounds.type

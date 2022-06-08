@@ -3,19 +3,17 @@
 
 package react.highcharts
 
-import utest._
-import japgolly.scalajs.react.test._
-
-import scala.scalajs.js
-import scala.scalajs.js.annotation.JSImport
-
 import gpp.highcharts.mod.Options
 import gpp.highcharts.mod.charts
-import gpp.highcharts.mod.{ ^ => HighCharts, _ }
-
+import gpp.highcharts.mod.{^ => HighCharts, _}
+import japgolly.scalajs.react.test._
 import org.scalajs.dom.document
-import scala.scalajs.js.annotation.JSGlobal
 import org.scalajs.dom.raw.HTMLElement
+import utest._
+
+import scala.scalajs.js
+import scala.scalajs.js.annotation.JSGlobal
+import scala.scalajs.js.annotation.JSImport
 
 object MainTest extends TestSuite {
   val tests = Tests {

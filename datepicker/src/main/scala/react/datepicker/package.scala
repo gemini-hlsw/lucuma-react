@@ -3,11 +3,13 @@
 
 package react
 
-import scalajs.js
-import scalajs.js.|
-import java.time.LocalDate
 import japgolly.scalajs.react.vdom.VdomElement
 import lucuma.StBuildingComponent
+
+import java.time.LocalDate
+
+import scalajs.js
+import scalajs.js.|
 
 package object datepicker {
   type DateRange = js.Tuple2[js.Date | Null, js.Date | Null]

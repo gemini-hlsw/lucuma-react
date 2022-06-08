@@ -4,8 +4,8 @@
 package react.common
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.internal.FacadeExports
 import japgolly.scalajs.react.facade.React.RefHandle
+import japgolly.scalajs.react.internal.FacadeExports
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 

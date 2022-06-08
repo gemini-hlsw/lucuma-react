@@ -9,9 +9,9 @@ import japgolly.scalajs.react.component.Js._
 import japgolly.scalajs.react.component.Scala
 import japgolly.scalajs.react.component.ScalaFn
 import japgolly.scalajs.react.component.ScalaForwardRef
+import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode
-import japgolly.scalajs.react.vdom.TagMod
 
 import scala.language.implicitConversions
 import scala.scalajs.js
