@@ -30,6 +30,7 @@ jobs:
         os: [ubuntu-latest]
         scala: [3.1.2]
         java: [temurin@17]
+        project: [rootCore, rootGridLayout, rootDraggable, rootClipboard, rootSvgdotjs, rootVirtuoso, rootTable, rootHighcharts, rootDatepicker, rootBeautifulDnd, rootTree]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)
@@ -66,29 +67,29 @@ jobs:
           key: ${{ runner.os }}-sbt-cache-v2-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/build.properties') }}
 
       - name: Check that workflows are up to date
-        run: sbt '++${{ matrix.scala }}' 'project /' githubWorkflowCheck
+        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' 'project /' githubWorkflowCheck
 
       - name: Check headers and formatting
         if: matrix.java == 'temurin@17'
-        run: sbt '++${{ matrix.scala }}' headerCheckAll scalafmtCheckAll 'project /' scalafmtSbtCheck lucumaScalafmtCheck lucumaScalafixCheck
+        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' headerCheckAll scalafmtCheckAll 'project /' scalafmtSbtCheck lucumaScalafmtCheck lucumaScalafixCheck
 
       - name: Test
-        run: sbt '++${{ matrix.scala }}' test
+        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' test
 
       - name: Check scalafix lints
         if: matrix.java == 'temurin@17'
-        run: sbt '++${{ matrix.scala }}' 'scalafixAll --check'
+        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' 'scalafixAll --check'
 
       - name: Check binary compatibility
         if: matrix.java == 'temurin@17'
-        run: sbt '++${{ matrix.scala }}' mimaReportBinaryIssues
+        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' mimaReportBinaryIssues
 
       - name: Generate API documentation
         if: matrix.java == 'temurin@17'
-        run: sbt '++${{ matrix.scala }}' doc
+        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' doc
 
       - name: Aggregate coverage reports
-        run: sbt '++${{ matrix.scala }}' coverageReport coverageAggregate
+        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' coverageReport coverageAggregate
 
       - name: Upload code coverage data
         run: 'bash <(curl -s https://codecov.io/bash)'
