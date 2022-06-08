@@ -5,7 +5,7 @@ import path from "path";
 export default ({ command, mode }) => {
   const sjs =
     mode == "production"
-      ? path.resolve(__dirname, "target/scala-3.1.1/gridlayoutdemo-opt")
+      ? path.resolve(__dirname, "target/scala-3.1.1/gridlayoutdemo-opt/")
       : path.resolve(__dirname, "target/scala-3.1.1/gridlayoutdemo-fastopt/");
   return {
     root: "grid-layout-demo/src/main/webapp",

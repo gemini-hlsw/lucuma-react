@@ -20,6 +20,73 @@ lazy val yarnSettings = Seq(
   }
 )
 
+lazy val viteConfigGenerate = taskKey[Unit]("Generate vite config")
+lazy val demoSettings       = Seq(
+  Compile / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) },
+  Compile / fastLinkJS / scalaJSLinkerConfig ~= (_.withModuleSplitStyle(
+    ModuleSplitStyle.SmallestModules
+  )),
+  Keys.test          := {},
+  viteConfigGenerate := {
+    val prodTarget =
+      (Compile / fullLinkJS / scalaJSLinkerOutputDirectory).value
+        .relativeTo(baseDirectory.value)
+        .get
+    val devTarget  =
+      (Compile / fastLinkJS / scalaJSLinkerOutputDirectory).value
+        .relativeTo(baseDirectory.value)
+        .get
+    IO.write(
+      baseDirectory.value / "vite.config.js",
+      s"""|import react from "@vitejs/plugin-react";
+          |import path from "path";
+          |
+          |// https://vitejs.dev/config/
+          |export default ({ command, mode }) => {
+          |  const sjs =
+          |    mode == "production"
+          |      ? path.resolve(__dirname, "$prodTarget/")
+          |      : path.resolve(__dirname, "$devTarget/");
+          |  return {
+          |    root: "${baseDirectory.value.getName}/src/main/webapp",
+          |    resolve: {
+          |      alias: [
+          |        {
+          |          find: "@sjs",
+          |          replacement: sjs,
+          |        },
+          |      ],
+          |    },
+          |    server: {
+          |      watch: {
+          |        ignored: [
+          |          function ignoreThisPath(_path) {
+          |            const sjsIgnored =
+          |              _path.includes("/target/stream") ||
+          |              _path.includes("/zinc/") ||
+          |              _path.includes("/classes");
+          |            return sjsIgnored;
+          |          },
+          |        ],
+          |      },
+          |    },
+          |    build: {
+          |      minify: 'terser',
+          |      // minify: false,
+          |      terserOptions: {
+          |        // sourceMap: false,
+          |        toplevel: true
+          |      },
+          |      outDir: path.resolve(__dirname, "../docs"),
+          |    },
+          |    plugins: [react()],
+          |  };
+          |};
+          |""".stripMargin
+    )
+  }
+)
+
 lazy val root = project
   .in(file("."))
   .enablePlugins(NoPublishPlugin)
@@ -92,9 +159,5 @@ lazy val gridLayoutDemo = project
   .dependsOn(gridLayout)
   .settings(
     libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.1",
-    Compile / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) },
-    Compile / fastLinkJS / scalaJSLinkerConfig ~= (_.withModuleSplitStyle(
-      ModuleSplitStyle.SmallestModules
-    )),
-    Keys.test                             := {}
+    demoSettings
   )
