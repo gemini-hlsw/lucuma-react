@@ -16,8 +16,8 @@ import scala.language.implicitConversions
 
 @js.native
 protected trait ReactResizeDetectorDimensions extends js.Object {
-  val height: js.UndefOr[Raw.JsNumber]
-  val width: js.UndefOr[Raw.JsNumber]
+  val height: js.UndefOr[Double]
+  val width: js.UndefOr[Double]
 }
 
 @js.native
@@ -84,11 +84,11 @@ object UseResizeDetectorProps {
   ): UseResizeDetectorProps = {
     val p = (new js.Object).asInstanceOf[UseResizeDetectorProps]
     onResize.foreach(v =>
-      p.onResize = { case (x: Raw.JsNumber, y: Raw.JsNumber) =>
+      p.onResize = { case (x: Double, y: Double) =>
         v(x.toInt, y.toInt).runNow()
       }: js.Function2[
-        Raw.JsNumber,
-        Raw.JsNumber,
+        Double,
+        Double,
         Unit
       ]
     )

@@ -6,7 +6,6 @@ package react.virtuoso
 import japgolly.scalajs.react.CtorType
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.component.Js
-import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom._
 import react.common._
 import react.virtuoso.raw._
@@ -59,7 +58,7 @@ object Virtuoso {
     /**
      * The total amount of items to be rendered.
      */
-    var totalCount: js.UndefOr[JsNumber] = js.native
+    var totalCount: js.UndefOr[Double] = js.native
 
     /**
      * The data items to be rendered. If data is set, the total count will be inferred from the
@@ -74,32 +73,32 @@ object Virtuoso {
      * Setting { main: number, reverse: number } lets you extend the list in both the main and the
      * reverse scrollable directions.
      */
-    var overscan: js.UndefOr[JsNumber | OverScan] = js.native
+    var overscan: js.UndefOr[Int | OverScan] = js.native
 
     /**
      * Set the amount of items to remain fixed at the top of the list.
      *
      * For a header that scrolls away when scrolling, check the `components.Header` property.
      */
-    var topItemCount: js.UndefOr[JsNumber] = js.native
+    var topItemCount: js.UndefOr[Double] = js.native
 
     /**
      * Set to a value between 0 and totalCount - 1 to make the list start scrolled to that item.
      */
-    var initialTopMostItemIndex: js.UndefOr[JsNumber] = js.native
+    var initialTopMostItemIndex: js.UndefOr[Double] = js.native
 
     /**
      * Set this value to offset the initial location of the list. Warning: using this property will
      * still run a render cycle at the scrollTop: 0 list window. If possible, avoid using it and
      * stick to `initialTopMostItemIndex` instead.
      */
-    var initialScrollTop: js.UndefOr[JsNumber] = js.native
+    var initialScrollTop: js.UndefOr[Double] = js.native
 
     /**
      * Use for server-side rendering - if set, the list will render the specified amount of items
      * regardless of the container / item size.
      */
-    var initialItemCount: js.UndefOr[JsNumber] = js.native
+    var initialItemCount: js.UndefOr[Double] = js.native
 
     /**
      * Use the `components` property for advanced customization of the elements rendered by the
@@ -130,13 +129,13 @@ object Virtuoso {
      * Setting `defaultItemHeight` causes the component to skip the "probe" rendering and use the
      * property value as default height instead.
      */
-    var defaultItemHeight: js.UndefOr[JsNumber] = js.native
+    var defaultItemHeight: js.UndefOr[Double] = js.native
 
     /**
      * Can be used to improve performance if the rendered items are of known size. Setting it causes
      * the component to skip item measurements.
      */
-    var fixedItemHeight: js.UndefOr[JsNumber] = js.native
+    var fixedItemHeight: js.UndefOr[Double] = js.native
 
     /**
      * Use to display placeholders if the user scrolls fast through the list.
@@ -179,7 +178,7 @@ object Virtuoso {
      * Warning: the firstItemIndex should **be a positive number**, based on the total amount of
      * items to be displayed.
      */
-    var firstItemIndex: js.UndefOr[JsNumber] = js.native
+    var firstItemIndex: js.UndefOr[Double] = js.native
 
     /**
      * Called when the list starts/stops scrolling.
@@ -247,7 +246,7 @@ object Virtuoso {
     val p = (new js.Object).asInstanceOf[VirtuosoProps[D]]
     q.totalCount.foreach(v => p.totalCount = v)
     q.data.foreach(v => p.data = v)
-    q.overscan.foreach((v: js.UndefOr[JsNumber | OverScan]) => p.overscan = v)
+    q.overscan.foreach((v: js.UndefOr[Int | OverScan]) => p.overscan = v)
     q.topItemCount.foreach(v => p.topItemCount = v)
     q.initialTopMostItemIndex.foreach(v => p.initialTopMostItemIndex = v)
     q.initialScrollTop.foreach(v => p.initialScrollTop = v)
