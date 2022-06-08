@@ -129,17 +129,27 @@ lazy val root = project
     treeDemo
   )
 
-lazy val rootCore         = project.aggregate(common, cats, test)
-lazy val rootGridLayout   = project.aggregate(gridLayout, gridLayoutDemo)
-lazy val rootDraggable    = project.aggregate(draggable)
-lazy val rootClipboard    = project.aggregate(clipboard)
-lazy val rootSvgdotjs     = project.aggregate(svgdotjs)
-lazy val rootVirtuoso     = project.aggregate(virtuoso, virtuosoDemo)
-lazy val rootTable        = project.aggregate(table, tableDemo)
-lazy val rootHighcharts   = project.aggregate(highcharts, highchartsDemo)
-lazy val rootDatepicker   = project.aggregate(datepicker, datepickerDemo)
-lazy val rootBeautifulDnd = project.aggregate(beautifulDnd, beautifulDndDemo)
-lazy val rootTree         = project.aggregate(tree, treeDemo)
+lazy val rootCore         = project.aggregate(common, cats, test).enablePlugins(NoPublishPlugin)
+lazy val rootGridLayout   =
+  project.aggregate(gridLayout, gridLayoutDemo).enablePlugins(NoPublishPlugin)
+lazy val rootDraggable    =
+  project.aggregate(draggable).enablePlugins(NoPublishPlugin)
+lazy val rootClipboard    =
+  project.aggregate(clipboard).enablePlugins(NoPublishPlugin)
+lazy val rootSvgdotjs     =
+  project.aggregate(svgdotjs).enablePlugins(NoPublishPlugin)
+lazy val rootVirtuoso     =
+  project.aggregate(virtuoso, virtuosoDemo).enablePlugins(NoPublishPlugin)
+lazy val rootTable        =
+  project.aggregate(table, tableDemo).enablePlugins(NoPublishPlugin)
+lazy val rootHighcharts   =
+  project.aggregate(highcharts, highchartsDemo).enablePlugins(NoPublishPlugin)
+lazy val rootDatepicker   =
+  project.aggregate(datepicker, datepickerDemo).enablePlugins(NoPublishPlugin)
+lazy val rootBeautifulDnd =
+  project.aggregate(beautifulDnd, beautifulDndDemo).enablePlugins(NoPublishPlugin)
+lazy val rootTree         =
+  project.aggregate(tree, treeDemo).enablePlugins(NoPublishPlugin)
 
 val projects = List(rootCore,
                     rootGridLayout,
