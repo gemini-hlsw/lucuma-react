@@ -4,12 +4,12 @@
 package react.common
 
 import japgolly.scalajs.react.ReactDOMServer
-import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.TopNode
-import org.scalajs.dom.Element
+import japgolly.scalajs.react.vdom.html_<^._
 import munit.Assertions._
+import org.scalajs.dom.Element
 
 trait TestUtils {
 

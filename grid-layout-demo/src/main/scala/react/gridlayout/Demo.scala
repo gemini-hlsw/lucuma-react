@@ -3,15 +3,16 @@
 
 package react.gridlayout.demo
 
-import scala.scalajs.js
-import scala.scalajs.js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
-import react.gridlayout._
 import react.common._
-import react.resizeDetector.hooks._
+import react.gridlayout._
 import react.resizeDetector._
+import react.resizeDetector.hooks._
+
+import scala.scalajs.js
+import scala.scalajs.js.annotation._
 
 object RGLDemo {
 

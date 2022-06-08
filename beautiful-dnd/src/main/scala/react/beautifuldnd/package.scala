@@ -3,11 +3,12 @@
 
 package react
 
+import japgolly.scalajs.react.util.JsUtil
+import japgolly.scalajs.react.vdom.VdomBuilder
+import japgolly.scalajs.react.{facade => Raw}
+
 import scala.scalajs.js
 import scala.scalajs.js.|
-import japgolly.scalajs.react.{facade => Raw}
-import japgolly.scalajs.react.vdom.VdomBuilder
-import japgolly.scalajs.react.util.JsUtil
 
 package object beautifuldnd {
   type Id          = String

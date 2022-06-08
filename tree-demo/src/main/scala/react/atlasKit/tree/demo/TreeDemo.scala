@@ -8,6 +8,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.document
 import react.atlasKit.tree.Tree
 import react.atlasKit.tree.Tree.RenderItemParams
+
 import scala.scalajs.js.annotation._
 
 // Adaptation of https://atlaskit.atlassian.com/examples/confluence/tree/drag-and-drop

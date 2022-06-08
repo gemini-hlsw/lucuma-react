@@ -3,15 +3,17 @@
 
 package react.datepicker.demo
 
-import org.scalajs.dom
-import scala.scalajs.js
-import js.annotation._
-import react.datepicker._
 import japgolly.scalajs.react._
-import java.time.LocalDate
-import java.time.Instant
-import java.time.ZoneOffset
 import lucuma.reactDatepicker.components.ReactDatepicker
+import org.scalajs.dom
+import react.datepicker._
+
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneOffset
+import scala.scalajs.js
+
+import js.annotation._
 
 @JSExportTopLevel("Demo")
 object Demo {

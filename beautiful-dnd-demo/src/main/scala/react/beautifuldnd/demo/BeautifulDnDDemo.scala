@@ -9,6 +9,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.document
 import react.beautifuldnd._
+
 import scala.scalajs.js.annotation._
 
 // Adaptation of https://codesandbox.io/s/k260nyxq9v
