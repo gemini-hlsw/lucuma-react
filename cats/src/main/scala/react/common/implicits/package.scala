@@ -5,10 +5,11 @@ package react
 
 package common
 
-import scala.scalajs.js
-import scala.scalajs.js.|
 import cats._
 import cats.syntax.all._
+
+import scala.scalajs.js
+import scala.scalajs.js.|
 
 package implicits {
   trait ReactCatsImplicits {

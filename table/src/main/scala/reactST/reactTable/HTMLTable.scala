@@ -6,9 +6,9 @@ package reactST.reactTable
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.Css
+import react.common.syntax.all.*
 import react.virtuoso.Virtuoso
 import reactST.reactTable.facade.column.Column
-import react.common.syntax.all.*
 
 object HTMLTable {
 

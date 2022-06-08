@@ -3,13 +3,15 @@
 
 package react.atlasKit.tree
 
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.VdomNode
+import japgolly.scalajs.react.{facade => Raw}
+import react.beautifuldnd.Draggable
+
+import scala.scalajs.js.annotation.JSImport
+
 import scalajs.js
 import js.JSConverters._
-import scala.scalajs.js.annotation.JSImport
-import react.beautifuldnd.Draggable
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.{facade => Raw}
-import japgolly.scalajs.react.vdom.VdomNode
 
 object Tree {
   @js.native

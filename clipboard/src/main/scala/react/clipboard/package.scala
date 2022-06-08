@@ -3,8 +3,9 @@
 
 package react
 
-import scala.scalajs.js
 import japgolly.scalajs.react.Callback
+
+import scala.scalajs.js
 
 package clipboard {
   // Options

@@ -3,22 +3,21 @@
 
 package react.highcharts
 
-import scala.scalajs.js
-import scala.scalajs.js.|
-import scala.scalajs.js.annotation.JSImport
-import scala.scalajs.js.annotation.JSName
-
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.html_<^._
-
-import org.scalajs.dom.html
 import gpp.highcharts.anon.TypeofHighcharts
+import gpp.highcharts.anon.TypeofHighchartsAST
+import gpp.highcharts.mod.Chart_
 import gpp.highcharts.mod.HTMLDOMElement
 import gpp.highcharts.mod.Options
-import gpp.highcharts.mod.Chart_
-import gpp.highcharts.anon.TypeofHighchartsAST
-import react.common.ReactProps
 import gpp.highcharts.mod.PointOptionsObject
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.html_<^._
+import org.scalajs.dom.html
+import react.common.ReactProps
+
+import scala.scalajs.js
+import scala.scalajs.js.annotation.JSImport
+import scala.scalajs.js.annotation.JSName
+import scala.scalajs.js.|
 
 @js.native
 trait WrapProceed extends js.ThisFunction0[Chart_, Unit]

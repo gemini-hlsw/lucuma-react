@@ -3,10 +3,11 @@
 
 package react.gridlayout
 
-import scala.scalajs.js
-import org.scalajs.dom.html.{Element => HTMLElement}
 import org.scalajs.dom.Event
 import org.scalajs.dom.MouseEvent
+import org.scalajs.dom.html.{Element => HTMLElement}
+
+import scala.scalajs.js
 
 package object raw {
 

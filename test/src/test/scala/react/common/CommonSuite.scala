@@ -3,8 +3,9 @@
 
 package react.common
 
-import react.common.implicits._
 import cats.syntax.all._
+import react.common.implicits._
+
 import scala.scalajs.js
 
 class CommonSuite extends munit.FunSuite with TestUtils {
