@@ -129,6 +129,33 @@ lazy val root = project
     treeDemo
   )
 
+lazy val rootCore         = project.aggregate(common, cats, test)
+lazy val rootGridLayout   = project.aggregate(gridLayout, gridLayoutDemo)
+lazy val rootDraggable    = project.aggregate(draggable)
+lazy val rootClipboard    = project.aggregate(clipboard)
+lazy val rootSvgdotjs     = project.aggregate(svgdotjs)
+lazy val rootVirtuoso     = project.aggregate(virtuoso, virtuosoDemo)
+lazy val rootTable        = project.aggregate(table, tableDemo)
+lazy val rootHighcharts   = project.aggregate(highcharts, highchartsDemo)
+lazy val rootDatepicker   = project.aggregate(datepicker, datepickerDemo)
+lazy val rootBeautifulDnd = project.aggregate(beautifulDnd, beautifulDndDemo)
+lazy val rootTree         = project.aggregate(tree, treeDemo)
+
+val projects = List(rootCore,
+                    rootGridLayout,
+                    rootDraggable,
+                    rootClipboard,
+                    rootSvgdotjs,
+                    rootVirtuoso,
+                    rootTable,
+                    rootHighcharts,
+                    rootDatepicker,
+                    rootBeautifulDnd,
+                    rootTree
+).map(_.id)
+ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
+ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
+
 lazy val common = project
   .in(file("common"))
   .enablePlugins(ScalaJSPlugin)
