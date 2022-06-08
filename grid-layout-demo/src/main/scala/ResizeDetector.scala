@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Association of Universities for Research in Astronomy, Inc. (AURA)
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
 // For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
 
 package react.resizeDetector
@@ -44,8 +44,8 @@ object ResizeDetector {
   object RenderProps {
     def apply(renderPropsJS: RenderPropsJS): RenderProps =
       RenderProps(
-        renderPropsJS.height.toOption.map(_.toInt),
-        renderPropsJS.width.toOption.map(_.toInt),
+        renderPropsJS.height.toOption.map(_.asInstanceOf[Int]),
+        renderPropsJS.width.toOption.map(_.asInstanceOf[Int]),
         TagMod.fn(_.addRefFn(renderPropsJS.targetRef))
       )
 

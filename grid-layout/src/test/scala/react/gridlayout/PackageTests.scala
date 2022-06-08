@@ -1,8 +1,13 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.gridlayout
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 import utest._
+
+import react.common.syntax.all.*
 
 object PackageTests extends TestSuite {
 
@@ -19,7 +24,7 @@ object PackageTests extends TestSuite {
       val layout = ReactGridLayout(200, <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(layout) { m =>
         val html =
-          """<div class="react-grid-layout" style="height: 170px;"></div>""".stripMargin
+          """<div class="react-grid-layout" style="height: 10px;"></div>""".stripMargin
             .replaceAll("[\n\r]", "")
         assert(m.outerHtmlScrubbed() == html)
       }
@@ -36,7 +41,7 @@ object PackageTests extends TestSuite {
         ResponsiveReactGridLayout(200, layouts = layouts, <.div("Abc"))
       ReactTestUtils.withRenderedIntoDocument(layout) { m =>
         val html =
-          """<div class="react-grid-layout" style="height: 170px;"></div>""".stripMargin
+          """<div class="react-grid-layout" style="height: 10px;"></div>""".stripMargin
             .replaceAll("[\n\r]", "")
         assert(m.outerHtmlScrubbed() == html)
       }
