@@ -3,8 +3,9 @@
 
 package react
 
-import scalajs.js
 import scala.language.implicitConversions
+
+import scalajs.js
 
 package object virtuoso {
 

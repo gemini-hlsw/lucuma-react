@@ -3,12 +3,13 @@
 
 package react.common.arb
 
-import scala.scalajs.js.|
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary._
-import org.scalacheck.Gen
 import org.scalacheck.Cogen
+import org.scalacheck.Gen
 import react.common._
+
+import scala.scalajs.js.|
 
 trait ArbStyle {
   implicit val arbStyleMember: Arbitrary[String | Int] = Arbitrary {

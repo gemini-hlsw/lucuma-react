@@ -5,7 +5,7 @@ package react.resizeDetector
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import japgolly.scalajs.react.{ facade => Raw }
+import japgolly.scalajs.react.{facade => Raw}
 import org.scalajs.dom.html
 import react.common._
 

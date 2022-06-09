@@ -5,11 +5,12 @@ package react.common
 
 import japgolly.scalajs.react.CtorType
 import japgolly.scalajs.react.Ref
-import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.component.Js
 import japgolly.scalajs.react.component.JsFn
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomBuilder
+import japgolly.scalajs.react.vdom.VdomNode
+
 import scala.scalajs.js
 
 class AttrsBuilder(p: js.Object) extends VdomBuilder.ToJs {
