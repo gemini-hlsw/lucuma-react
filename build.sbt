@@ -3,13 +3,13 @@ import org.scalajs.linker.interface.ModuleSplitStyle
 ThisBuild / tlBaseVersion       := "1.0"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 
-val scalaJsReactV    = "2.0.1"
+val scalaJsReactV    = "2.1.1"
 val catsV            = "2.7.0"
 val munitV           = "0.7.29"
 val disciplineMunitV = "1.0.9"
 val utestV           = "0.7.11"
 
-ThisBuild / crossScalaVersions := Seq("3.1.2-RC2")
+ThisBuild / crossScalaVersions := Seq("3.1.2")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(
@@ -186,7 +186,7 @@ lazy val gridLayoutDemo = project
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(gridLayout)
   .settings(
-    libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.1",
+    libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.3",
     demoSettings
   )
 
@@ -316,7 +316,7 @@ lazy val datepickerDemo = project
     demoSettings,
     Compile / scalacOptions += "-language:implicitConversions",
     libraryDependencies ++= Seq(
-      "io.github.cquiroz" %%% "scala-java-time" % "2.3.0"
+      "io.github.cquiroz" %%% "scala-java-time" % "2.4.0"
     )
   )
 
