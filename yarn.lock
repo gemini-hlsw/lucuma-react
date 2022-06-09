@@ -790,6 +790,11 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
+highcharts@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-10.0.0.tgz#a78c3c8f077834ab2431a03c6699b2fbc511a37f"
+  integrity sha512-a14PrTraVaoSNyaRPhLF/jJ3/09rJwfUZedLgZOkzozGz4K/H8WtWNJtUZt/tc5QiJkaZHw4YX7vvuO98s+EoA==
+
 html-encoding-sniffer@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/html-encoding-sniffer/-/html-encoding-sniffer-1.0.2.tgz"
