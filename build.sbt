@@ -122,7 +122,11 @@ lazy val root = project
     highcharts,
     highchartsDemo,
     datepicker,
-    datepickerDemo
+    datepickerDemo,
+    beautifulDnd,
+    beautifulDndDemo,
+    tree,
+    treeDemo
   )
 
 lazy val common = project
@@ -314,4 +318,42 @@ lazy val datepickerDemo = project
     libraryDependencies ++= Seq(
       "io.github.cquiroz" %%% "scala-java-time" % "2.3.0"
     )
+  )
+
+lazy val beautifulDnd = project
+  .in(file("beautiful-dnd"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-beautiful-dnd",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val beautifulDndDemo = project
+  .in(file("beautiful-dnd-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(beautifulDnd)
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
+    demoSettings
+  )
+
+lazy val tree = project
+  .in(file("tree"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common, beautifulDnd)
+  .settings(
+    name := "lucuma-react-tree",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val treeDemo = project
+  .in(file("tree-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(tree)
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
+    demoSettings
   )

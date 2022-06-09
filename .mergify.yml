@@ -15,6 +15,22 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3.1.2-RC2, temurin@17)
   actions:
     merge: {}
+- name: Label beautiful-dnd PRs
+  conditions:
+  - files~=^beautiful-dnd/
+  actions:
+    label:
+      add:
+      - beautiful-dnd
+      remove: []
+- name: Label beautiful-dnd-demo PRs
+  conditions:
+  - files~=^beautiful-dnd-demo/
+  actions:
+    label:
+      add:
+      - beautiful-dnd-demo
+      remove: []
 - name: Label cats PRs
   conditions:
   - files~=^cats/
@@ -126,6 +142,22 @@ pull_request_rules:
     label:
       add:
       - test
+      remove: []
+- name: Label tree PRs
+  conditions:
+  - files~=^tree/
+  actions:
+    label:
+      add:
+      - tree
+      remove: []
+- name: Label tree-demo PRs
+  conditions:
+  - files~=^tree-demo/
+  actions:
+    label:
+      add:
+      - tree-demo
       remove: []
 - name: Label virtuoso PRs
   conditions:
