@@ -92,7 +92,7 @@ lazy val demo =
         baseDirectory.value / "webpack" / "prod.webpack.config.js"
       ),
       webpackMonitoredDirectories += (Compile / resourceDirectory).value,
-      webpackResources                      := (baseDirectory.value / "webpack") * "*.js",
+      webpackResources                      := baseDirectory.value / "webpack" * "*.js",
       webpackMonitoredFiles / includeFilter := "*",
       webpackExtraArgs                      := Seq("--progress"),
       useYarn                               := true,
