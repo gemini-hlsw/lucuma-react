@@ -4,7 +4,7 @@ ThisBuild / tlBaseVersion       := "1.0"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 
 val scalaJsReactV    = "2.1.1"
-val catsV            = "2.7.0"
+val catsV            = "2.8.0"
 val munitV           = "0.7.29"
 val disciplineMunitV = "1.0.9"
 val utestV           = "0.7.11"
