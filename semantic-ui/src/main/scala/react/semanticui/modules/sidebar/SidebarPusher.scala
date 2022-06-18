@@ -15,10 +15,10 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class SidebarPusher(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
-  dimmed:                 js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  content:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  dimmed:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[SidebarPusher.SidebarPusherProps, SidebarPusher] {
   override protected def cprops                     = SidebarPusher.props(this)
@@ -40,21 +40,21 @@ object SidebarPusher {
 
     @JSBracketAccess
     def update(key: String, v: js.Any): Unit          = js.native
-    var as: js.UndefOr[AsT]                           = js.native
-    var children: js.UndefOr[React.Node]              = js.native
-    var className: js.UndefOr[String]                 = js.native
-    var content: js.UndefOr[SemanticShorthandContent] = js.native
-    var dimmed: js.UndefOr[Boolean]                   = js.native
+    var as: MyUndefOr[AsT]                           = js.native
+    var children: MyUndefOr[React.Node]              = js.native
+    var className: MyUndefOr[String]                 = js.native
+    var content: MyUndefOr[SemanticShorthandContent] = js.native
+    var dimmed: MyUndefOr[Boolean]                   = js.native
   }
 
   def props(q: SidebarPusher): SidebarPusherProps =
     rawprops(q.as, q.className, q.content, q.dimmed)
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    content:   js.UndefOr[VdomNode] = js.undefined,
-    dimmed:    js.UndefOr[Boolean] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    content:   MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    dimmed:    MyUndefOr[Boolean] = MyUndefOr.undefined
   ): SidebarPusherProps = {
     val p = as.toJsObject[SidebarPusherProps]
     as.toJs.foreach(v => p.as = v)

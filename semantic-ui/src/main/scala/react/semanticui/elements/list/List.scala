@@ -17,26 +17,26 @@ import react.semanticui.raw._
 import react.semanticui._
 
 final case class List(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  animated:               js.UndefOr[Boolean] = js.undefined,
-  bulleted:               js.UndefOr[Boolean] = js.undefined,
-  celled:                 js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[Seq[VdomNode]] = js.undefined,
-  divided:                js.UndefOr[Boolean] = js.undefined,
-  floated:                js.UndefOr[SemanticFloat] = js.undefined,
-  horizontal:             js.UndefOr[Boolean] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  items:                  js.UndefOr[Seq[ShorthandS[ListItem]]] = js.undefined,
-  onItemClickE:           js.UndefOr[List.OnItemClick] = js.undefined,
-  onItemClick:            js.UndefOr[Callback] = js.undefined,
-  link:                   js.UndefOr[Boolean] = js.undefined,
-  ordered:                js.UndefOr[Boolean] = js.undefined,
-  relaxed:                js.UndefOr[Boolean] = js.undefined,
-  selection:              js.UndefOr[Boolean] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  animated:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  bulleted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  celled:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[Seq[VdomNode]] = MyUndefOr.undefined,
+  divided:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  floated:                MyUndefOr[SemanticFloat] = MyUndefOr.undefined,
+  horizontal:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  items:                  MyUndefOr[Seq[ShorthandS[ListItem]]] = MyUndefOr.undefined,
+  onItemClickE:           MyUndefOr[List.OnItemClick] = MyUndefOr.undefined,
+  onItemClick:            MyUndefOr[Callback] = MyUndefOr.undefined,
+  link:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  ordered:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  relaxed:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  selection:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  verticalAlign:          MyUndefOr[SemanticVerticalAlignment] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[List.ListProps, List] {
   override protected def cprops                     = List.props(this)
@@ -60,44 +60,44 @@ object List {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** A list can animate to set the current item apart from the list. */
-    var animated: js.UndefOr[Boolean] = js.native
+    var animated: MyUndefOr[Boolean] = js.native
 
     /** A list can mark items with a bullet. */
-    var bulleted: js.UndefOr[Boolean] = js.native
+    var bulleted: MyUndefOr[Boolean] = js.native
 
     /** A list can divide its items into cells. */
-    var celled: js.UndefOr[Boolean] = js.native
+    var celled: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[js.Array[SemanticShorthandContent]] = js.native
+    var content: MyUndefOr[js.Array[SemanticShorthandContent]] = js.native
 
     /** A list can show divisions between content. */
-    var divided: js.UndefOr[Boolean] = js.native
+    var divided: MyUndefOr[Boolean] = js.native
 
     /** An list can be floated left or right. */
-    var floated: js.UndefOr[suiraw.SemanticFLOATS] = js.native
+    var floated: MyUndefOr[suiraw.SemanticFLOATS] = js.native
 
     /** A list can be formatted to have items appear horizontally. */
-    var horizontal: js.UndefOr[Boolean] = js.native
+    var horizontal: MyUndefOr[Boolean] = js.native
 
     /** A list can be inverted to appear on a dark background. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** Shorthand array of props for ListItem. */
-    var items: js.UndefOr[js.Array[suiraw.SemanticShorthandItemS[ListItem.ListItemProps]]] =
+    var items: MyUndefOr[js.Array[suiraw.SemanticShorthandItemS[ListItem.ListItemProps]]] =
       js.native
 
     /** A list can be specially formatted for navigation links. */
-    var link: js.UndefOr[Boolean] = js.native
+    var link: MyUndefOr[Boolean] = js.native
 
     /**
      * onClick handler for ListItem. Mutually exclusive with children.
@@ -107,23 +107,23 @@ object List {
      * @param {object}
      *   data - All item props.
      */
-    var onItemClick: js.UndefOr[js.Function2[ReactMouseEvent, ListItem.ListItemProps, Unit]] =
+    var onItemClick: MyUndefOr[js.Function2[ReactMouseEvent, ListItem.ListItemProps, Unit]] =
       js.native
 
     /** A list can be ordered numerically. */
-    var ordered: js.UndefOr[Boolean] = js.native
+    var ordered: MyUndefOr[Boolean] = js.native
 
     /** A list can relax its padding to provide more negative space. */
-    var relaxed: js.UndefOr[Boolean | String] = js.native
+    var relaxed: MyUndefOr[Boolean | String] = js.native
 
     /** A selection list formats list items as possible choices. */
-    var selection: js.UndefOr[Boolean] = js.native
+    var selection: MyUndefOr[Boolean] = js.native
 
     /** A list can vary in size. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
 
     /** An element inside a list can be vertically aligned. */
-    var verticalAlign: js.UndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
+    var verticalAlign: MyUndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
 
   }
 

@@ -14,15 +14,15 @@ import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Item(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
-  description:            js.UndefOr[ShorthandS[ItemDescription]] = js.undefined,
-  extra:                  js.UndefOr[ShorthandS[ItemExtra]] = js.undefined,
-  header:                 js.UndefOr[ShorthandS[ItemHeader]] = js.undefined,
-  image:                  js.UndefOr[ShorthandS[ItemImage]] = js.undefined,
-  meta:                   js.UndefOr[ShorthandS[ItemMeta]] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  description:            MyUndefOr[ShorthandS[ItemDescription]] = MyUndefOr.undefined,
+  extra:                  MyUndefOr[ShorthandS[ItemExtra]] = MyUndefOr.undefined,
+  header:                 MyUndefOr[ShorthandS[ItemHeader]] = MyUndefOr.undefined,
+  image:                  MyUndefOr[ShorthandS[ItemImage]] = MyUndefOr.undefined,
+  meta:                   MyUndefOr[ShorthandS[ItemMeta]] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Item.ItemProps, Item] {
   override protected def cprops                     = Item.props(this)
@@ -46,32 +46,32 @@ object Item {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for Item component. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** Shorthand for ItemDescription component. */
     var description
-      : js.UndefOr[suiraw.SemanticShorthandItemS[ItemDescription.ItemDescriptionProps]] = js.native
+      : MyUndefOr[suiraw.SemanticShorthandItemS[ItemDescription.ItemDescriptionProps]] = js.native
 
     /** Shorthand for ItemExtra component. */
-    var extra: js.UndefOr[suiraw.SemanticShorthandItemS[ItemExtra.ItemExtraProps]] = js.native
+    var extra: MyUndefOr[suiraw.SemanticShorthandItemS[ItemExtra.ItemExtraProps]] = js.native
 
     /** Shorthand for ItemHeader component. */
-    var header: js.UndefOr[suiraw.SemanticShorthandItemS[ItemHeader.ItemHeaderProps]] = js.native
+    var header: MyUndefOr[suiraw.SemanticShorthandItemS[ItemHeader.ItemHeaderProps]] = js.native
 
     /** Shorthand for ItemImage component. */
-    var image: js.UndefOr[suiraw.SemanticShorthandItemS[ItemImage.ItemImageProps]] = js.native
+    var image: MyUndefOr[suiraw.SemanticShorthandItemS[ItemImage.ItemImageProps]] = js.native
 
     /** Shorthand for ItemMeta component. */
-    var meta: js.UndefOr[suiraw.SemanticShorthandItemS[ItemMeta.ItemMetaProps]] = js.native
+    var meta: MyUndefOr[suiraw.SemanticShorthandItemS[ItemMeta.ItemMetaProps]] = js.native
   }
 
   def props(q: Item): ItemProps =
@@ -87,15 +87,15 @@ object Item {
     )
 
   def rawprops(
-    as:          js.UndefOr[AsC] = js.undefined,
-    className:   js.UndefOr[String] = js.undefined,
-    clazz:       js.UndefOr[Css] = js.undefined,
-    content:     js.UndefOr[VdomNode] = js.undefined,
-    description: js.UndefOr[ShorthandS[ItemDescription]] = js.undefined,
-    extra:       js.UndefOr[ShorthandS[ItemExtra]] = js.undefined,
-    header:      js.UndefOr[ShorthandS[ItemHeader]] = js.undefined,
-    image:       js.UndefOr[ShorthandS[ItemImage]] = js.undefined,
-    meta:        js.UndefOr[ShorthandS[ItemMeta]] = js.undefined
+    as:          MyUndefOr[AsC] = MyUndefOr.undefined,
+    className:   MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:       MyUndefOr[Css] = MyUndefOr.undefined,
+    content:     MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    description: MyUndefOr[ShorthandS[ItemDescription]] = MyUndefOr.undefined,
+    extra:       MyUndefOr[ShorthandS[ItemExtra]] = MyUndefOr.undefined,
+    header:      MyUndefOr[ShorthandS[ItemHeader]] = MyUndefOr.undefined,
+    image:       MyUndefOr[ShorthandS[ItemImage]] = MyUndefOr.undefined,
+    meta:        MyUndefOr[ShorthandS[ItemMeta]] = MyUndefOr.undefined
   ): ItemProps = {
     val p = as.toJsObject[ItemProps]
     as.toJs.foreach(v => p.as = v)

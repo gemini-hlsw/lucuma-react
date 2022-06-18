@@ -17,28 +17,28 @@ import react.semanticui.elements.icon.Icon.IconProps
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Message(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  attached:               js.UndefOr[MessageAttached] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  compact:                js.UndefOr[Boolean] = js.undefined,
-  content:                js.UndefOr[ShorthandS[MessageContent]] = js.undefined,
-  error:                  js.UndefOr[Boolean] = js.undefined,
-  floating:               js.UndefOr[Boolean] = js.undefined,
-  header:                 js.UndefOr[ShorthandS[MessageHeader]] = js.undefined,
-  hidden:                 js.UndefOr[Boolean] = js.undefined,
-  icon:                   js.UndefOr[ShorthandSB[Icon]] = js.undefined,
-  info:                   js.UndefOr[Boolean] = js.undefined,
-  list:                   js.UndefOr[Seq[ShorthandS[MessageItem]] | MessageList] = js.undefined,
-  negative:               js.UndefOr[Boolean] = js.undefined,
-  onDismissE:             js.UndefOr[Message.OnDismiss] = js.undefined,
-  onDismiss:              js.UndefOr[Callback] = js.undefined,
-  positive:               js.UndefOr[Boolean] = js.undefined,
-  size:                   js.UndefOr[MessageSize] = js.undefined,
-  success:                js.UndefOr[Boolean] = js.undefined,
-  visible:                js.UndefOr[Boolean] = js.undefined,
-  warning:                js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  attached:               MyUndefOr[MessageAttached] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  compact:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[MessageContent]] = MyUndefOr.undefined,
+  error:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  floating:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  header:                 MyUndefOr[ShorthandS[MessageHeader]] = MyUndefOr.undefined,
+  hidden:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  icon:                   MyUndefOr[ShorthandSB[Icon]] = MyUndefOr.undefined,
+  info:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  list:                   MyUndefOr[Seq[ShorthandS[MessageItem]] | MessageList] = MyUndefOr.undefined,
+  negative:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  onDismissE:             MyUndefOr[Message.OnDismiss] = MyUndefOr.undefined,
+  onDismiss:              MyUndefOr[Callback] = MyUndefOr.undefined,
+  positive:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  size:                   MyUndefOr[MessageSize] = MyUndefOr.undefined,
+  success:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  visible:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  warning:                MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Message.MessageProps, Message] {
   override protected def cprops                     = Message.props(this)
@@ -66,52 +66,52 @@ object Message {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.undefined
+    var as: MyUndefOr[AsT] = MyUndefOr.undefined
 
     /** A message can be formatted to attach itself to other content. */
-    var attached: js.UndefOr[Boolean | String] = js.undefined
+    var attached: MyUndefOr[Boolean | String] = MyUndefOr.undefined
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.undefined
+    var children: MyUndefOr[React.Node] = MyUndefOr.undefined
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.undefined
+    var className: MyUndefOr[String] = MyUndefOr.undefined
 
     /** A message can be formatted to be different colors. */
-    var color: js.UndefOr[suiraw.SemanticCOLORS] = js.undefined
+    var color: MyUndefOr[suiraw.SemanticCOLORS] = MyUndefOr.undefined
 
     /** A message can only take up the width of its content. */
-    var compact: js.UndefOr[Boolean] = js.undefined
+    var compact: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandItemS[MessageContent.MessageContentProps]] =
-      js.undefined
+    var content: MyUndefOr[suiraw.SemanticShorthandItemS[MessageContent.MessageContentProps]] =
+      MyUndefOr.undefined
 
     /** A message may be formatted to display a negative message. Same as `negative`. */
-    var error: js.UndefOr[Boolean] = js.undefined
+    var error: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** A message can float above content that it is related to. */
-    var floating: js.UndefOr[Boolean] = js.undefined
+    var floating: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Shorthand for MessageHeader. */
-    var header: js.UndefOr[suiraw.SemanticShorthandItemS[MessageHeader.MessageHeaderProps]] =
-      js.undefined
+    var header: MyUndefOr[suiraw.SemanticShorthandItemS[MessageHeader.MessageHeaderProps]] =
+      MyUndefOr.undefined
 
     /** A message can be hidden. */
-    var hidden: js.UndefOr[Boolean] = js.undefined
+    var hidden: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Add an icon by icon name or pass an <Icon /.> */
-    var icon: js.UndefOr[suiraw.SemanticShorthandItemSB[IconProps]] = js.undefined
+    var icon: MyUndefOr[suiraw.SemanticShorthandItemSB[IconProps]] = MyUndefOr.undefined
 
     /** A message may be formatted to display information. */
-    var info: js.UndefOr[Boolean] = js.undefined
+    var info: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Array shorthand items for the MessageList. Mutually exclusive with children. */
-    var list: js.UndefOr[RawList] =
-      js.undefined
+    var list: MyUndefOr[RawList] =
+      MyUndefOr.undefined
 
     /** A message may be formatted to display a negative message. Same as `error`. */
-    var negative: js.UndefOr[Boolean] = js.undefined
+    var negative: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /**
      * A message that the user can choose to hide. Called when the user clicks the "x" icon. This
@@ -122,22 +122,22 @@ object Message {
      * @param {object}
      *   data - All props.
      */
-    var onDismiss: js.UndefOr[js.Function2[ReactEvent, MessageProps, Unit]] = js.undefined
+    var onDismiss: MyUndefOr[js.Function2[ReactEvent, MessageProps, Unit]] = MyUndefOr.undefined
 
     /** A message may be formatted to display a positive message.  Same as `success`. */
-    var positive: js.UndefOr[Boolean] = js.undefined
+    var positive: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** A message can have different sizes. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
 
     /** A message may be formatted to display a positive message.  Same as `positive`. */
-    var success: js.UndefOr[Boolean] = js.undefined
+    var success: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** A message can be set to visible to force itself to be shown. */
-    var visible: js.UndefOr[Boolean] = js.undefined
+    var visible: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** A message may be formatted to display warning messages. */
-    var warning: js.UndefOr[Boolean] = js.undefined
+    var warning: MyUndefOr[Boolean] = MyUndefOr.undefined
   }
 
   def props(q: Message): MessageProps =
@@ -167,28 +167,28 @@ object Message {
     )
 
   def rawprops(
-    as:         js.UndefOr[AsC] = js.undefined,
-    attached:   js.UndefOr[MessageAttached] = js.undefined,
-    className:  js.UndefOr[String] = js.undefined,
-    clazz:      js.UndefOr[Css] = js.undefined,
-    color:      js.UndefOr[SemanticColor] = js.undefined,
-    compact:    js.UndefOr[Boolean] = js.undefined,
-    content:    js.UndefOr[ShorthandS[MessageContent]] = js.undefined,
-    error:      js.UndefOr[Boolean] = js.undefined,
-    floating:   js.UndefOr[Boolean] = js.undefined,
-    header:     js.UndefOr[ShorthandS[MessageHeader]] = js.undefined,
-    hidden:     js.UndefOr[Boolean] = js.undefined,
-    icon:       js.UndefOr[ShorthandSB[Icon]] = js.undefined,
-    info:       js.UndefOr[Boolean] = js.undefined,
-    list:       js.UndefOr[Seq[ShorthandS[MessageItem]] | MessageList] = js.undefined,
-    negative:   js.UndefOr[Boolean] = js.undefined,
-    onDismissE: js.UndefOr[Message.OnDismiss] = js.undefined,
-    onDismiss:  js.UndefOr[Callback] = js.undefined,
-    positive:   js.UndefOr[Boolean] = js.undefined,
-    size:       js.UndefOr[MessageSize] = js.undefined,
-    success:    js.UndefOr[Boolean] = js.undefined,
-    visible:    js.UndefOr[Boolean] = js.undefined,
-    warning:    js.UndefOr[Boolean] = js.undefined
+    as:         MyUndefOr[AsC] = MyUndefOr.undefined,
+    attached:   MyUndefOr[MessageAttached] = MyUndefOr.undefined,
+    className:  MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:      MyUndefOr[Css] = MyUndefOr.undefined,
+    color:      MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+    compact:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    content:    MyUndefOr[ShorthandS[MessageContent]] = MyUndefOr.undefined,
+    error:      MyUndefOr[Boolean] = MyUndefOr.undefined,
+    floating:   MyUndefOr[Boolean] = MyUndefOr.undefined,
+    header:     MyUndefOr[ShorthandS[MessageHeader]] = MyUndefOr.undefined,
+    hidden:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    icon:       MyUndefOr[ShorthandSB[Icon]] = MyUndefOr.undefined,
+    info:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    list:       MyUndefOr[Seq[ShorthandS[MessageItem]] | MessageList] = MyUndefOr.undefined,
+    negative:   MyUndefOr[Boolean] = MyUndefOr.undefined,
+    onDismissE: MyUndefOr[Message.OnDismiss] = MyUndefOr.undefined,
+    onDismiss:  MyUndefOr[Callback] = MyUndefOr.undefined,
+    positive:   MyUndefOr[Boolean] = MyUndefOr.undefined,
+    size:       MyUndefOr[MessageSize] = MyUndefOr.undefined,
+    success:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    visible:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    warning:    MyUndefOr[Boolean] = MyUndefOr.undefined
   ): MessageProps = {
     val p = as.toJsObject[MessageProps]
     as.toJs.foreach(v => p.as = v)

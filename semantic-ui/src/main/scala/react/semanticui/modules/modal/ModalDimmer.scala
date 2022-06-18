@@ -14,14 +14,14 @@ import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class ModalDimmer(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  blurring:               js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  centered:               js.UndefOr[Boolean] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  scrolling:              js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  blurring:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  centered:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  scrolling:              MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[ModalDimmer.ModalDimmerProps, ModalDimmer] {
   override protected def cprops                     = ModalDimmer.props(this)
@@ -45,45 +45,45 @@ object ModalDimmer {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** A dimmer can be blurred. */
-    var blurring: js.UndefOr[Boolean] = js.native
+    var blurring: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** A dimmer can center its contents in the viewport. */
-    var centered: js.UndefOr[Boolean] = js.native
+    var centered: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** A dimmer can be inverted. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** The node where the modal should mount. Defaults to document.body. */
     // mountNode?: any
 
     /** A dimmer can make body scrollable. */
-    var scrolling: js.UndefOr[Boolean] = js.native
+    var scrolling: MyUndefOr[Boolean] = js.native
   }
 
   def props(q: ModalDimmer): ModalDimmerProps =
     rawprops(q.as, q.blurring, q.className, q.clazz, q.centered, q.content, q.inverted, q.scrolling)
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    blurring:  js.UndefOr[Boolean] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    centered:  js.UndefOr[Boolean] = js.undefined,
-    content:   js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    inverted:  js.UndefOr[Boolean] = js.undefined,
-    scrolling: js.UndefOr[Boolean] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    blurring:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    centered:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    content:   MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    inverted:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    scrolling: MyUndefOr[Boolean] = MyUndefOr.undefined
   ): ModalDimmerProps = {
     val p = as.toJsObject[ModalDimmerProps]
     as.toJs.foreach(v => p.as = v)

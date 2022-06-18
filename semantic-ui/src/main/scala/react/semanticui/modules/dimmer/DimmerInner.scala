@@ -14,20 +14,20 @@ import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class DimmerInner(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  active:                 js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  onClickE:               js.UndefOr[DimmerInner.OnClick] = js.undefined,
-  onClick:                js.UndefOr[Callback] = js.undefined,
-  onClickOutsideE:        js.UndefOr[DimmerInner.OnClickOutside] = js.undefined,
-  onClickOutside:         js.UndefOr[Callback] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  page:                   js.UndefOr[Boolean] = js.undefined,
-  simple:                 js.UndefOr[Boolean] = js.undefined,
-  verticalAlign:          js.UndefOr[DimmerVerticalAlign] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  active:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  onClickE:               MyUndefOr[DimmerInner.OnClick] = MyUndefOr.undefined,
+  onClick:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  onClickOutsideE:        MyUndefOr[DimmerInner.OnClickOutside] = MyUndefOr.undefined,
+  onClickOutside:         MyUndefOr[Callback] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  page:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  simple:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  verticalAlign:          MyUndefOr[DimmerVerticalAlign] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[DimmerInner.DimmerInnerProps, DimmerInner] {
   override protected def cprops                     = DimmerInner.props(this)
@@ -54,23 +54,23 @@ object DimmerInner {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** An active dimmer will dim its parent container. */
-    var active: js.UndefOr[Boolean] = js.native
+    var active: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] =
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] =
       js.native
 
     /** A disabled dimmer cannot be activated */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /**
      * Called when the dimmer is clicked.
@@ -80,7 +80,7 @@ object DimmerInner {
      * @param {object}
      *   data - All props.
      */
-    var onClick: js.UndefOr[RawOnClick] = js.native
+    var onClick: MyUndefOr[RawOnClick] = js.native
 
     /**
      * Handles click outside Dimmer's content, but inside Dimmer area.
@@ -90,19 +90,19 @@ object DimmerInner {
      * @param {object}
      *   data - All props.
      */
-    var onClickOutside: js.UndefOr[RawOnClickOutside] = js.native
+    var onClickOutside: MyUndefOr[RawOnClickOutside] = js.native
 
     /** A dimmer can be formatted to have its colors inverted. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** A dimmer can be formatted to be fixed to the page. */
-    var page: js.UndefOr[Boolean] = js.native
+    var page: MyUndefOr[Boolean] = js.native
 
     /** A dimmer can be controlled with simple prop. */
-    var simple: js.UndefOr[Boolean] = js.native
+    var simple: MyUndefOr[Boolean] = js.native
 
     /** A dimmer can have its content top or bottom aligned. */
-    var verticalAlign: js.UndefOr[String] = js.native
+    var verticalAlign: MyUndefOr[String] = js.native
   }
 
   def props(q: DimmerInner): DimmerInnerProps =
@@ -124,20 +124,20 @@ object DimmerInner {
     )
 
   def rawprops(
-    as:              js.UndefOr[AsC] = js.undefined,
-    active:          js.UndefOr[Boolean] = js.undefined,
-    className:       js.UndefOr[String] = js.undefined,
-    clazz:           js.UndefOr[Css] = js.undefined,
-    content:         js.UndefOr[VdomNode] = js.undefined,
-    disabled:        js.UndefOr[Boolean] = js.undefined,
-    onClickE:        js.UndefOr[OnClick] = js.undefined,
-    onClick:         js.UndefOr[Callback] = js.undefined,
-    onClickOutsideE: js.UndefOr[OnClickOutside] = js.undefined,
-    onClickOutside:  js.UndefOr[Callback] = js.undefined,
-    inverted:        js.UndefOr[Boolean] = js.undefined,
-    page:            js.UndefOr[Boolean] = js.undefined,
-    simple:          js.UndefOr[Boolean] = js.undefined,
-    verticalAlign:   js.UndefOr[DimmerVerticalAlign] = js.undefined
+    as:              MyUndefOr[AsC] = MyUndefOr.undefined,
+    active:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className:       MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:           MyUndefOr[Css] = MyUndefOr.undefined,
+    content:         MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    disabled:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+    onClickE:        MyUndefOr[OnClick] = MyUndefOr.undefined,
+    onClick:         MyUndefOr[Callback] = MyUndefOr.undefined,
+    onClickOutsideE: MyUndefOr[OnClickOutside] = MyUndefOr.undefined,
+    onClickOutside:  MyUndefOr[Callback] = MyUndefOr.undefined,
+    inverted:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+    page:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+    simple:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+    verticalAlign:   MyUndefOr[DimmerVerticalAlign] = MyUndefOr.undefined
   ): DimmerInnerProps = {
     val p = as.toJsObject[DimmerInnerProps]
     as.toJs.foreach(v => p.as = v)

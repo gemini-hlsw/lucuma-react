@@ -17,39 +17,39 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class FormCheckbox(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  checked:                js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  control:                js.UndefOr[String] = js.undefined,
-  defaultChecked:         js.UndefOr[Boolean] = js.undefined,
-  defaultIndeterminate:   js.UndefOr[Boolean] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  error:                  js.UndefOr[ShorthandB[Label]] = js.undefined,
-  fitted:                 js.UndefOr[Boolean] = js.undefined,
-  id:                     js.UndefOr[Double | String] = js.undefined,
-  indeterminate:          js.UndefOr[Boolean] = js.undefined,
-  inline:                 js.UndefOr[Boolean] = js.undefined,
-  label:                  js.UndefOr[ShorthandS[Label]] = js.undefined,
-  name:                   js.UndefOr[String] = js.undefined,
-  onChange:               js.UndefOr[Boolean => Callback] = js.undefined,
-  onChangeE:              js.UndefOr[Checkbox.Event] = js.undefined,
-  onClick:                js.UndefOr[Callback] = js.undefined,
-  onClickE:               js.UndefOr[Checkbox.Event] = js.undefined,
-  onMouseDown:            js.UndefOr[Callback] = js.undefined,
-  onMouseDownE:           js.UndefOr[Checkbox.Event] = js.undefined,
-  onMouseUp:              js.UndefOr[Callback] = js.undefined,
-  onMouseUpE:             js.UndefOr[Checkbox.Event] = js.undefined,
-  radio:                  js.UndefOr[Boolean] = js.undefined,
-  readOnly:               js.UndefOr[Boolean] = js.undefined,
-  required:               js.UndefOr[Boolean] = js.undefined,
-  slider:                 js.UndefOr[Boolean] = js.undefined,
-  tabIndex:               js.UndefOr[Double | String] = js.undefined,
-  toggle:                 js.UndefOr[Boolean] = js.undefined,
-  tpe:                    js.UndefOr[CheckboxType] = CheckboxType.Checkbox,
-  value:                  js.UndefOr[String | Double] = js.undefined,
-  width:                  js.UndefOr[SemanticWidth] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  checked:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  control:                MyUndefOr[String] = MyUndefOr.undefined,
+  defaultChecked:         MyUndefOr[Boolean] = MyUndefOr.undefined,
+  defaultIndeterminate:   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  error:                  MyUndefOr[ShorthandB[Label]] = MyUndefOr.undefined,
+  fitted:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  id:                     MyUndefOr[Double | String] = MyUndefOr.undefined,
+  indeterminate:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+  inline:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  label:                  MyUndefOr[ShorthandS[Label]] = MyUndefOr.undefined,
+  name:                   MyUndefOr[String] = MyUndefOr.undefined,
+  onChange:               MyUndefOr[Boolean => Callback] = MyUndefOr.undefined,
+  onChangeE:              MyUndefOr[Checkbox.Event] = MyUndefOr.undefined,
+  onClick:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  onClickE:               MyUndefOr[Checkbox.Event] = MyUndefOr.undefined,
+  onMouseDown:            MyUndefOr[Callback] = MyUndefOr.undefined,
+  onMouseDownE:           MyUndefOr[Checkbox.Event] = MyUndefOr.undefined,
+  onMouseUp:              MyUndefOr[Callback] = MyUndefOr.undefined,
+  onMouseUpE:             MyUndefOr[Checkbox.Event] = MyUndefOr.undefined,
+  radio:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  readOnly:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  required:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  slider:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  tabIndex:               MyUndefOr[Double | String] = MyUndefOr.undefined,
+  toggle:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  tpe:                    MyUndefOr[CheckboxType] = CheckboxType.Checkbox,
+  value:                  MyUndefOr[String | Double] = MyUndefOr.undefined,
+  width:                  MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[FormCheckbox.FormCheckboxProps, FormCheckbox] {
   override protected def cprops                     = FormCheckbox.props(this)
@@ -74,63 +74,63 @@ object FormCheckbox {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] =
+      MyUndefOr.undefined
 
     /**
      * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input'). Extra FormField
      * props are passed to the control component. Mutually exclusive with children.
      */
     // control?: any
-    var control: js.UndefOr[String]
+    var control: MyUndefOr[String]
 
     /** Individual fields may be disabled. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** Individual fields may display an error state along with a message. */
-    var error: js.UndefOr[suiraw.SemanticShorthandItemB[Label.LabelProps]] = js.native
+    var error: MyUndefOr[suiraw.SemanticShorthandItemB[Label.LabelProps]] = js.native
 
     /** A field can have its label next to instead of above it. */
-    var inline: js.UndefOr[Boolean] = js.native
+    var inline: MyUndefOr[Boolean] = js.native
 
     /** Mutually exclusive with children. */
-    var label: js.UndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]] = js.native
+    var label: MyUndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]] = js.native
 
     /** A field can show that input is mandatory.  Requires a label. */
-    var required: js.UndefOr[Boolean] = js.native
+    var required: MyUndefOr[Boolean] = js.native
 
     /** A field can specify its width in grid columns */
-    var width: js.UndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
+    var width: MyUndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
 
     /** Whether or not checkbox is checked. */
-    var checked: js.UndefOr[Boolean] = js.native
+    var checked: MyUndefOr[Boolean] = js.native
 
     /** The initial value of checked. */
-    var defaultChecked: js.UndefOr[Boolean] = js.native
+    var defaultChecked: MyUndefOr[Boolean] = js.native
 
     /** Whether or not checkbox is indeterminate. */
-    var defaultIndeterminate: js.UndefOr[Boolean] = js.native
+    var defaultIndeterminate: MyUndefOr[Boolean] = js.native
 
     /** Removes padding for a label. Auto applied when there is no label. */
-    var fitted: js.UndefOr[Boolean] = js.native
+    var fitted: MyUndefOr[Boolean] = js.native
 
     /** A unique identifier. */
-    var id: js.UndefOr[Double | String] = js.native
+    var id: MyUndefOr[Double | String] = js.native
 
     /** Whether or not checkbox is indeterminate. */
-    var indeterminate: js.UndefOr[Boolean] = js.native
+    var indeterminate: MyUndefOr[Boolean] = js.native
 
     /** The HTML input name. */
-    var name: js.UndefOr[String] = js.native
+    var name: MyUndefOr[String] = js.native
 
     /**
      * Called when the user attempts to change the checked state.
@@ -140,7 +140,7 @@ object FormCheckbox {
      * @param {object}
      *   data - All props and proposed checked/indeterminate state.
      */
-    var onChange: js.UndefOr[Checkbox.RawEvent] = js.native
+    var onChange: MyUndefOr[Checkbox.RawEvent] = js.native
 
     /**
      * Called when the checkbox or label is clicked.
@@ -150,7 +150,7 @@ object FormCheckbox {
      * @param {object}
      *   data - All props and current checked/indeterminate state.
      */
-    var onClick: js.UndefOr[Checkbox.RawEvent] = js.native
+    var onClick: MyUndefOr[Checkbox.RawEvent] = js.native
 
     /**
      * Called when the user presses down on the mouse.
@@ -160,7 +160,7 @@ object FormCheckbox {
      * @param {object}
      *   data - All props and current checked/indeterminate state.
      */
-    var onMouseDown: js.UndefOr[Checkbox.RawEvent] = js.native
+    var onMouseDown: MyUndefOr[Checkbox.RawEvent] = js.native
 
     /**
      * Called when the user releases the mouse.
@@ -170,28 +170,28 @@ object FormCheckbox {
      * @param {object}
      *   data - All props and current checked/indeterminate state.
      */
-    var onMouseUp: js.UndefOr[Checkbox.RawEvent] = js.native
+    var onMouseUp: MyUndefOr[Checkbox.RawEvent] = js.native
 
     /** Format as a radio element. This means it is an exclusive option. */
-    var radio: js.UndefOr[Boolean] = js.native
+    var radio: MyUndefOr[Boolean] = js.native
 
     /** A checkbox can be read-only and unable to change states. */
-    var readOnly: js.UndefOr[Boolean] = js.native
+    var readOnly: MyUndefOr[Boolean] = js.native
 
     /** Format to emphasize the current selection state. */
-    var slider: js.UndefOr[Boolean] = js.native
+    var slider: MyUndefOr[Boolean] = js.native
 
     /** A checkbox can receive focus. */
-    var tabIndex: js.UndefOr[Double | String] = js.native
+    var tabIndex: MyUndefOr[Double | String] = js.native
 
     /** Format to show an on or off choice. */
-    var toggle: js.UndefOr[Boolean] = js.native
+    var toggle: MyUndefOr[Boolean] = js.native
 
     /** HTML input type, either checkbox or radio. */
-    var `type`: js.UndefOr[String] = js.native
+    var `type`: MyUndefOr[String] = js.native
 
     /** The HTML input value. */
-    var value: js.UndefOr[String | Double] = js.native
+    var value: MyUndefOr[String | Double] = js.native
   }
 
   def props(q: FormCheckbox): FormCheckboxProps =
@@ -232,39 +232,39 @@ object FormCheckbox {
     )
 
   def rawprops(
-    as:                   js.UndefOr[AsC] = js.undefined,
-    checked:              js.UndefOr[Boolean] = js.undefined,
-    className:            js.UndefOr[String] = js.undefined,
-    clazz:                js.UndefOr[Css] = js.undefined,
-    content:              js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    control:              js.UndefOr[String] = js.undefined,
-    defaultChecked:       js.UndefOr[Boolean] = js.undefined,
-    defaultIndeterminate: js.UndefOr[Boolean] = js.undefined,
-    disabled:             js.UndefOr[Boolean] = js.undefined,
-    error:                js.UndefOr[ShorthandB[Label]] = js.undefined,
-    fitted:               js.UndefOr[Boolean] = js.undefined,
-    id:                   js.UndefOr[Double | String] = js.undefined,
-    indeterminate:        js.UndefOr[Boolean] = js.undefined,
-    inline:               js.UndefOr[Boolean] = js.undefined,
-    label:                js.UndefOr[ShorthandS[Label]] = js.undefined,
-    name:                 js.UndefOr[String] = js.undefined,
-    onChange:             js.UndefOr[Boolean => Callback] = js.undefined,
-    onChangeE:            js.UndefOr[Checkbox.Event] = js.undefined,
-    onClick:              js.UndefOr[Callback] = js.undefined,
-    onClickE:             js.UndefOr[Checkbox.Event] = js.undefined,
-    onMouseDown:          js.UndefOr[Callback] = js.undefined,
-    onMouseDownE:         js.UndefOr[Checkbox.Event] = js.undefined,
-    onMouseUp:            js.UndefOr[Callback] = js.undefined,
-    onMouseUpE:           js.UndefOr[Checkbox.Event] = js.undefined,
-    radio:                js.UndefOr[Boolean] = js.undefined,
-    readOnly:             js.UndefOr[Boolean] = js.undefined,
-    required:             js.UndefOr[Boolean] = js.undefined,
-    slider:               js.UndefOr[Boolean] = js.undefined,
-    tabIndex:             js.UndefOr[Double | String] = js.undefined,
-    toggle:               js.UndefOr[Boolean] = js.undefined,
-    tpe:                  js.UndefOr[CheckboxType] = CheckboxType.Checkbox,
-    value:                js.UndefOr[String | Double] = js.undefined,
-    width:                js.UndefOr[SemanticWidth] = js.undefined
+    as:                   MyUndefOr[AsC] = MyUndefOr.undefined,
+    checked:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className:            MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:                MyUndefOr[Css] = MyUndefOr.undefined,
+    content:              MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    control:              MyUndefOr[String] = MyUndefOr.undefined,
+    defaultChecked:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    defaultIndeterminate: MyUndefOr[Boolean] = MyUndefOr.undefined,
+    disabled:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+    error:                MyUndefOr[ShorthandB[Label]] = MyUndefOr.undefined,
+    fitted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+    id:                   MyUndefOr[Double | String] = MyUndefOr.undefined,
+    indeterminate:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+    inline:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+    label:                MyUndefOr[ShorthandS[Label]] = MyUndefOr.undefined,
+    name:                 MyUndefOr[String] = MyUndefOr.undefined,
+    onChange:             MyUndefOr[Boolean => Callback] = MyUndefOr.undefined,
+    onChangeE:            MyUndefOr[Checkbox.Event] = MyUndefOr.undefined,
+    onClick:              MyUndefOr[Callback] = MyUndefOr.undefined,
+    onClickE:             MyUndefOr[Checkbox.Event] = MyUndefOr.undefined,
+    onMouseDown:          MyUndefOr[Callback] = MyUndefOr.undefined,
+    onMouseDownE:         MyUndefOr[Checkbox.Event] = MyUndefOr.undefined,
+    onMouseUp:            MyUndefOr[Callback] = MyUndefOr.undefined,
+    onMouseUpE:           MyUndefOr[Checkbox.Event] = MyUndefOr.undefined,
+    radio:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+    readOnly:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+    required:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+    slider:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+    tabIndex:             MyUndefOr[Double | String] = MyUndefOr.undefined,
+    toggle:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+    tpe:                  MyUndefOr[CheckboxType] = CheckboxType.Checkbox,
+    value:                MyUndefOr[String | Double] = MyUndefOr.undefined,
+    width:                MyUndefOr[SemanticWidth] = MyUndefOr.undefined
   ): FormCheckboxProps = {
     val p = as.toJsObject[FormCheckboxProps]
     (className, clazz).toJs.foreach(v => p.className = v)

@@ -12,9 +12,9 @@ import react.common._
 import react.semanticui._
 
 final case class TableBody(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[TableBody.TableBodyProps, TableBody] {
   override protected def cprops                     = TableBody.props(this)
@@ -36,13 +36,13 @@ object TableBody {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
   }
 
   def props(q: TableBody): TableBodyProps = {

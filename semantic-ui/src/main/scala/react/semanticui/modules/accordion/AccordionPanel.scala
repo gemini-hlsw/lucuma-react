@@ -12,12 +12,12 @@ import react.semanticui._
 import react.semanticui.{raw => suiraw}
 
 final case class AccordionPanel(
-  active:        js.UndefOr[Boolean] = js.undefined,
-  content:       js.UndefOr[ShorthandS[AccordionContent]] = js.undefined,
-  index:         js.UndefOr[Double | String] = js.undefined,
-  onTitleClickE: js.UndefOr[AccordionTitle.OnClick] = js.undefined,
-  onTitleClick:  js.UndefOr[Callback] = js.undefined,
-  title:         js.UndefOr[ShorthandS[AccordionTitle]] = js.undefined
+  active:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+  content:       MyUndefOr[ShorthandS[AccordionContent]] = MyUndefOr.undefined,
+  index:         MyUndefOr[Double | String] = MyUndefOr.undefined,
+  onTitleClickE: MyUndefOr[AccordionTitle.OnClick] = MyUndefOr.undefined,
+  onTitleClick:  MyUndefOr[Callback] = MyUndefOr.undefined,
+  title:         MyUndefOr[ShorthandS[AccordionTitle]] = MyUndefOr.undefined
 ) extends GenericComponentP[AccordionPanel.AccordionPanelProps] {
   override protected def cprops    = AccordionPanel.props(this)
   override protected val component = AccordionPanel.component
@@ -37,14 +37,14 @@ object AccordionPanel {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** Whether or not the title is in the open state. */
-    var active: js.UndefOr[Boolean] = js.native
+    var active: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for Accordion.Content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandItemS[AccordionContent.AccordionContentProps]] =
+    var content: MyUndefOr[suiraw.SemanticShorthandItemS[AccordionContent.AccordionContentProps]] =
       js.native
 
     /** A panel index. */
-    var index: js.UndefOr[Double | String] = js.native
+    var index: MyUndefOr[Double | String] = js.native
 
     /**
      * Called when a panel title is clicked.
@@ -54,10 +54,10 @@ object AccordionPanel {
      * @param {AccordionTitleProps}
      *   data - All item props.
      */
-    var onTitleClick: js.UndefOr[AccordionTitle.RawOnClick]
+    var onTitleClick: MyUndefOr[AccordionTitle.RawOnClick]
 
     /** A shorthand for Accordion.Title. */
-    var title: js.UndefOr[suiraw.SemanticShorthandItemS[AccordionTitle.AccordionTitleProps]] =
+    var title: MyUndefOr[suiraw.SemanticShorthandItemS[AccordionTitle.AccordionTitleProps]] =
       js.native
   }
 

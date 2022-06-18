@@ -18,23 +18,23 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class Header(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  attached:               js.UndefOr[HeaderAttached] = js.undefined,
-  block:                  js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  dividing:               js.UndefOr[Boolean] = js.undefined,
-  floated:                js.UndefOr[SemanticFloat] = js.undefined,
-  icon:                   js.UndefOr[ShorthandS[Icon]] = js.undefined,
-  image:                  js.UndefOr[Boolean] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  sub:                    js.UndefOr[Boolean] = js.undefined,
-  subheader:              js.UndefOr[HeaderSubheader] = js.undefined,
-  textAlign:              js.UndefOr[SemanticTextAlignment] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  attached:               MyUndefOr[HeaderAttached] = MyUndefOr.undefined,
+  block:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  dividing:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  floated:                MyUndefOr[SemanticFloat] = MyUndefOr.undefined,
+  icon:                   MyUndefOr[ShorthandS[Icon]] = MyUndefOr.undefined,
+  image:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  sub:                    MyUndefOr[Boolean] = MyUndefOr.undefined,
+  subheader:              MyUndefOr[HeaderSubheader] = MyUndefOr.undefined,
+  textAlign:              MyUndefOr[SemanticTextAlignment] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Header.HeaderProps, Header] {
   override protected def cprops                     = Header.props(this)
@@ -58,56 +58,56 @@ object Header {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Attach header  to other content, like a segment. */
-    var attached: js.UndefOr[Boolean | String] = js.native
+    var attached: MyUndefOr[Boolean | String] = js.native
 
     /** Format header to appear inside a content block. */
-    var block: js.UndefOr[Boolean] = js.native
+    var block: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Color of the header. */
-    var color: js.UndefOr[suiraw.SemanticCOLORS] = js.native
+    var color: MyUndefOr[suiraw.SemanticCOLORS] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** Show that the header is inactive. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** Divide header from the content below it. */
-    var dividing: js.UndefOr[Boolean] = js.native
+    var dividing: MyUndefOr[Boolean] = js.native
 
     /** Header can sit to the left or right of other content. */
-    var floated: js.UndefOr[suiraw.SemanticFLOATS] = js.native
+    var floated: MyUndefOr[suiraw.SemanticFLOATS] = js.native
 
     /** Add an icon by icon name or pass an Icon. */
-    var icon: js.UndefOr[suiraw.SemanticShorthandItemS[IconProps]] = js.native
+    var icon: MyUndefOr[suiraw.SemanticShorthandItemS[IconProps]] = js.native
 
     /** Add an image by img src or pass an Image. */
-    var image: js.UndefOr[Boolean] = js.native
+    var image: MyUndefOr[Boolean] = js.native
 
     /** Inverts the color of the header for dark backgrounds. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** Content headings are sized with em and are based on the font-size of their container. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
 
     /** Headers may be formatted to label smaller or de-emphasized content. */
-    var sub: js.UndefOr[Boolean] = js.native
+    var sub: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for Header.Subheader. */
-    var subheader: js.UndefOr[suiraw.SemanticShorthandItemS[HeaderSubheader.HeaderSubheaderProps]] =
+    var subheader: MyUndefOr[suiraw.SemanticShorthandItemS[HeaderSubheader.HeaderSubheaderProps]] =
       js.native
 
     /** Align header content. */
-    var textAlign: js.UndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
+    var textAlign: MyUndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
   }
 
   def props(q: Header): HeaderProps =
@@ -132,23 +132,23 @@ object Header {
     )
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    attached:  js.UndefOr[HeaderAttached] = js.undefined,
-    block:     js.UndefOr[Boolean] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    color:     js.UndefOr[SemanticColor] = js.undefined,
-    content:   js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    disabled:  js.UndefOr[Boolean] = js.undefined,
-    dividing:  js.UndefOr[Boolean] = js.undefined,
-    floated:   js.UndefOr[SemanticFloat] = js.undefined,
-    icon:      js.UndefOr[ShorthandS[Icon]] = js.undefined,
-    image:     js.UndefOr[Boolean] = js.undefined,
-    inverted:  js.UndefOr[Boolean] = js.undefined,
-    size:      js.UndefOr[SemanticSize] = js.undefined,
-    sub:       js.UndefOr[Boolean] = js.undefined,
-    subheader: js.UndefOr[HeaderSubheader] = js.undefined,
-    textAlign: js.UndefOr[SemanticTextAlignment] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    attached:  MyUndefOr[HeaderAttached] = MyUndefOr.undefined,
+    block:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    color:     MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+    content:   MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    disabled:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    dividing:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    floated:   MyUndefOr[SemanticFloat] = MyUndefOr.undefined,
+    icon:      MyUndefOr[ShorthandS[Icon]] = MyUndefOr.undefined,
+    image:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    inverted:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    size:      MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+    sub:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    subheader: MyUndefOr[HeaderSubheader] = MyUndefOr.undefined,
+    textAlign: MyUndefOr[SemanticTextAlignment] = MyUndefOr.undefined
   ): HeaderProps = {
     val p = as.toJsObject[HeaderProps]
     as.toJs.foreach(v => p.as = v)

@@ -15,19 +15,19 @@ import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class ListItem(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  active:                 js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  description:            js.UndefOr[ShorthandS[ListDescription]] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  header:                 js.UndefOr[ShorthandS[ListHeader]] = js.undefined,
-  icon:                   js.UndefOr[ShorthandS[ListIcon]] = js.undefined,
-  image:                  js.UndefOr[ShorthandS[Image]] = js.undefined,
-  onClickE:               js.UndefOr[ListItem.OnClick] = js.undefined,
-  onClick:                js.UndefOr[Callback] = js.undefined,
-  value:                  js.UndefOr[String] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  active:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  description:            MyUndefOr[ShorthandS[ListDescription]] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  header:                 MyUndefOr[ShorthandS[ListHeader]] = MyUndefOr.undefined,
+  icon:                   MyUndefOr[ShorthandS[ListIcon]] = MyUndefOr.undefined,
+  image:                  MyUndefOr[ShorthandS[Image]] = MyUndefOr.undefined,
+  onClickE:               MyUndefOr[ListItem.OnClick] = MyUndefOr.undefined,
+  onClick:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  value:                  MyUndefOr[String] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[ListItem.ListItemProps, ListItem] {
   override protected def cprops                     = ListItem.props(this)
@@ -53,35 +53,35 @@ object ListItem {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** A list item can active. */
-    var active: js.UndefOr[Boolean] = js.native
+    var active: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for ListItem component. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** Shorthand for ListDescription. */
     var description
-      : js.UndefOr[suiraw.SemanticShorthandItemS[ListDescription.ListDescriptionProps]] = js.native
+      : MyUndefOr[suiraw.SemanticShorthandItemS[ListDescription.ListDescriptionProps]] = js.native
 
     /** A list item can disabled. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for ListHeader. */
-    var header: js.UndefOr[suiraw.SemanticShorthandItemS[ListHeader.ListHeaderProps]] = js.native
+    var header: MyUndefOr[suiraw.SemanticShorthandItemS[ListHeader.ListHeaderProps]] = js.native
 
     /** Shorthand for ListIcon. */
-    var icon: js.UndefOr[suiraw.SemanticShorthandItemS[ListIcon.ListIconProps]] = js.native
+    var icon: MyUndefOr[suiraw.SemanticShorthandItemS[ListIcon.ListIconProps]] = js.native
 
     /** Shorthand for Image. */
-    var image: js.UndefOr[suiraw.SemanticShorthandItemS[Image.ImageProps]] = js.native
+    var image: MyUndefOr[suiraw.SemanticShorthandItemS[Image.ImageProps]] = js.native
 
     /**
      * Called on click.
@@ -91,10 +91,10 @@ object ListItem {
      * @param {object}
      *   data - All props.
      */
-    var onClick: js.UndefOr[js.Function2[ReactMouseEvent, ListItemProps, Unit]] = js.native
+    var onClick: MyUndefOr[js.Function2[ReactMouseEvent, ListItemProps, Unit]] = js.native
 
     /** A value for an ordered list. */
-    var value: js.UndefOr[String] = js.native
+    var value: MyUndefOr[String] = js.native
   }
 
   def props(q: ListItem): ListItemProps =
@@ -114,19 +114,19 @@ object ListItem {
     )
 
   def rawprops(
-    as:          js.UndefOr[AsC] = js.undefined,
-    active:      js.UndefOr[Boolean] = js.undefined,
-    className:   js.UndefOr[String] = js.undefined,
-    clazz:       js.UndefOr[Css] = js.undefined,
-    content:     js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    description: js.UndefOr[ShorthandS[ListDescription]] = js.undefined,
-    disabled:    js.UndefOr[Boolean] = js.undefined,
-    header:      js.UndefOr[ShorthandS[ListHeader]] = js.undefined,
-    icon:        js.UndefOr[ShorthandS[ListIcon]] = js.undefined,
-    image:       js.UndefOr[ShorthandS[Image]] = js.undefined,
-    onClickE:    js.UndefOr[ListItem.OnClick] = js.undefined,
-    onClick:     js.UndefOr[Callback] = js.undefined,
-    value:       js.UndefOr[String] = js.undefined
+    as:          MyUndefOr[AsC] = MyUndefOr.undefined,
+    active:      MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className:   MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:       MyUndefOr[Css] = MyUndefOr.undefined,
+    content:     MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    description: MyUndefOr[ShorthandS[ListDescription]] = MyUndefOr.undefined,
+    disabled:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    header:      MyUndefOr[ShorthandS[ListHeader]] = MyUndefOr.undefined,
+    icon:        MyUndefOr[ShorthandS[ListIcon]] = MyUndefOr.undefined,
+    image:       MyUndefOr[ShorthandS[Image]] = MyUndefOr.undefined,
+    onClickE:    MyUndefOr[ListItem.OnClick] = MyUndefOr.undefined,
+    onClick:     MyUndefOr[Callback] = MyUndefOr.undefined,
+    value:       MyUndefOr[String] = MyUndefOr.undefined
   ): ListItemProps = {
     val p = as.toJsObject[ListItemProps]
     as.toJs.foreach(v => p.as = v)

@@ -14,10 +14,10 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class MessageHeader(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[MessageHeader.MessageHeaderProps, MessageHeader] {
   override protected def cprops                     = MessageHeader.props(this)
@@ -41,17 +41,17 @@ object MessageHeader {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.undefined
+    var as: MyUndefOr[AsT] = MyUndefOr.undefined
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.undefined
+    var children: MyUndefOr[React.Node] = MyUndefOr.undefined
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.undefined
+    var className: MyUndefOr[String] = MyUndefOr.undefined
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] =
+      MyUndefOr.undefined
   }
 
   def props(q: MessageHeader): MessageHeaderProps =
@@ -63,10 +63,10 @@ object MessageHeader {
     )
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    content:   js.UndefOr[ShorthandS[VdomNode]] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    content:   MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined
   ): MessageHeaderProps = {
     val p = as.toJsObject[MessageHeaderProps]
     as.toJs.foreach(v => p.as = v)

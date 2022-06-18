@@ -16,24 +16,24 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class FormTextArea(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  control:                js.UndefOr[String] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  error:                  js.UndefOr[ShorthandB[Label]] = js.undefined,
-  inline:                 js.UndefOr[Boolean] = js.undefined,
-  label:                  js.UndefOr[ShorthandS[Label]] = js.undefined,
-  onChange:               js.UndefOr[Callback] = js.undefined,
-  onChangeE:              js.UndefOr[TextArea.Event] = js.undefined,
-  onInput:                js.UndefOr[Callback] = js.undefined,
-  onInputE:               js.UndefOr[TextArea.Event] = js.undefined,
-  required:               js.UndefOr[Boolean] = js.undefined,
-  rows:                   js.UndefOr[Int | String] = js.undefined,
-  tpe:                    js.UndefOr[String] = js.undefined,
-  value:                  js.UndefOr[String | Double] = js.undefined,
-  width:                  js.UndefOr[SemanticWidth] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  control:                MyUndefOr[String] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  error:                  MyUndefOr[ShorthandB[Label]] = MyUndefOr.undefined,
+  inline:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  label:                  MyUndefOr[ShorthandS[Label]] = MyUndefOr.undefined,
+  onChange:               MyUndefOr[Callback] = MyUndefOr.undefined,
+  onChangeE:              MyUndefOr[TextArea.Event] = MyUndefOr.undefined,
+  onInput:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  onInputE:               MyUndefOr[TextArea.Event] = MyUndefOr.undefined,
+  required:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  rows:                   MyUndefOr[Int | String] = MyUndefOr.undefined,
+  tpe:                    MyUndefOr[String] = MyUndefOr.undefined,
+  value:                  MyUndefOr[String | Double] = MyUndefOr.undefined,
+  width:                  MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[FormTextArea.FormFieldProps, FormTextArea] {
   override protected def cprops                     = FormTextArea.props(this)
@@ -56,41 +56,41 @@ object FormTextArea {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] =
+      MyUndefOr.undefined
 
     /**
      * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input'). Extra FormTextArea
      * props are passed to the control component. Mutually exclusive with children.
      */
-    var control: js.UndefOr[String]
+    var control: MyUndefOr[String]
 
     /** Individual fields may be disabled. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** Individual fields may display an error state along with a message. */
-    var error: js.UndefOr[suiraw.SemanticShorthandItemB[Label.LabelProps]] = js.native
+    var error: MyUndefOr[suiraw.SemanticShorthandItemB[Label.LabelProps]] = js.native
 
     /** A field can have its label next to instead of above it. */
-    var inline: js.UndefOr[Boolean] = js.native
+    var inline: MyUndefOr[Boolean] = js.native
 
     /** Mutually exclusive with children. */
-    var label: js.UndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]] = js.native
+    var label: MyUndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]] = js.native
 
     /** A field can show that input is mandatory.  Requires a label. */
-    var required: js.UndefOr[Boolean] = js.native
+    var required: MyUndefOr[Boolean] = js.native
 
     /** Passed to the control component (i.e. <input type='password' />) */
-    var `type`: js.UndefOr[String] = js.native
+    var `type`: MyUndefOr[String] = js.native
 
     /** A field can specify its width in grid columns */
-    var width: js.UndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
+    var width: MyUndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
 
     /**
      * Called on change.
@@ -100,7 +100,7 @@ object FormTextArea {
      * @param {object}
      *   data - All props and the event value.
      */
-    var onChange: js.UndefOr[TextArea.RawEvent] = js.undefined
+    var onChange: MyUndefOr[TextArea.RawEvent] = MyUndefOr.undefined
 
     /**
      * Called on input.
@@ -110,13 +110,13 @@ object FormTextArea {
      * @param {object}
      *   data - All props and the event value.
      */
-    var onInput: js.UndefOr[TextArea.RawEvent] = js.undefined
+    var onInput: MyUndefOr[TextArea.RawEvent] = MyUndefOr.undefined
 
     /** Indicates row count for a TextArea. */
-    var rows: js.UndefOr[Double | String] = js.undefined
+    var rows: MyUndefOr[Double | String] = MyUndefOr.undefined
 
     /** The value of the textarea. */
-    var value: js.UndefOr[Double | String] = js.undefined
+    var value: MyUndefOr[Double | String] = MyUndefOr.undefined
   }
 
   def props(q: FormTextArea): FormFieldProps =
@@ -142,24 +142,24 @@ object FormTextArea {
     )
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    content:   js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    control:   js.UndefOr[String] = js.undefined,
-    disabled:  js.UndefOr[Boolean] = js.undefined,
-    error:     js.UndefOr[ShorthandB[Label]] = js.undefined,
-    inline:    js.UndefOr[Boolean] = js.undefined,
-    label:     js.UndefOr[ShorthandS[Label]] = js.undefined,
-    onChange:  js.UndefOr[Callback] = js.undefined,
-    onChangeE: js.UndefOr[TextArea.Event] = js.undefined,
-    onInput:   js.UndefOr[Callback] = js.undefined,
-    onInputE:  js.UndefOr[TextArea.Event] = js.undefined,
-    required:  js.UndefOr[Boolean] = js.undefined,
-    rows:      js.UndefOr[Int | String] = js.undefined,
-    tpe:       js.UndefOr[String] = js.undefined,
-    value:     js.UndefOr[String | Double] = js.undefined,
-    width:     js.UndefOr[SemanticWidth] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    content:   MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    control:   MyUndefOr[String] = MyUndefOr.undefined,
+    disabled:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    error:     MyUndefOr[ShorthandB[Label]] = MyUndefOr.undefined,
+    inline:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    label:     MyUndefOr[ShorthandS[Label]] = MyUndefOr.undefined,
+    onChange:  MyUndefOr[Callback] = MyUndefOr.undefined,
+    onChangeE: MyUndefOr[TextArea.Event] = MyUndefOr.undefined,
+    onInput:   MyUndefOr[Callback] = MyUndefOr.undefined,
+    onInputE:  MyUndefOr[TextArea.Event] = MyUndefOr.undefined,
+    required:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    rows:      MyUndefOr[Int | String] = MyUndefOr.undefined,
+    tpe:       MyUndefOr[String] = MyUndefOr.undefined,
+    value:     MyUndefOr[String | Double] = MyUndefOr.undefined,
+    width:     MyUndefOr[SemanticWidth] = MyUndefOr.undefined
   ): FormFieldProps = {
     val p = as.toJsObject[FormFieldProps]
     as.toJs.foreach(v => p.as = v)

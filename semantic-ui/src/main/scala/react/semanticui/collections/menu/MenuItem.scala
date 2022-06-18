@@ -18,22 +18,22 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class MenuItem(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  active:                 js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  fitted:                 js.UndefOr[MenuItemFitted] = js.undefined,
-  header:                 js.UndefOr[Boolean] = js.undefined,
-  icon:                   js.UndefOr[ShorthandSB[Icon]] = js.undefined,
-  index:                  js.UndefOr[Int] = js.undefined,
-  link:                   js.UndefOr[Boolean] = js.undefined,
-  name:                   js.UndefOr[String] = js.undefined,
-  onClickE:               js.UndefOr[MenuItem.OnClick] = js.undefined,
-  onClick:                js.UndefOr[Callback] = js.undefined,
-  position:               js.UndefOr[MenuItemPosition] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  active:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  fitted:                 MyUndefOr[MenuItemFitted] = MyUndefOr.undefined,
+  header:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  icon:                   MyUndefOr[ShorthandSB[Icon]] = MyUndefOr.undefined,
+  index:                  MyUndefOr[Int] = MyUndefOr.undefined,
+  link:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  name:                   MyUndefOr[String] = MyUndefOr.undefined,
+  onClickE:               MyUndefOr[MenuItem.OnClick] = MyUndefOr.undefined,
+  onClick:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  position:               MyUndefOr[MenuItemPosition] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[MenuItem.MenuItemProps, MenuItem] {
   override protected def cprops                     = MenuItem.props(this)
@@ -57,44 +57,44 @@ object MenuItem {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** A menu item can be active. */
-    var active: js.UndefOr[Boolean] = js.native
+    var active: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Additional colors can be specified. */
-    var color: js.UndefOr[suiraw.SemanticCOLORS] = js.native
+    var color: MyUndefOr[suiraw.SemanticCOLORS] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** A menu item can be disabled. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** A menu item or menu can remove element padding, vertically or horizontally. */
-    var fitted: js.UndefOr[Boolean | String] = js.native
+    var fitted: MyUndefOr[Boolean | String] = js.native
 
     /** A menu item may include a header or may itself be a header. */
-    var header: js.UndefOr[Boolean] = js.native
+    var header: MyUndefOr[Boolean] = js.native
 
     /** Item can be only icon. */
-    var icon: js.UndefOr[suiraw.SemanticShorthandItemSB[IconProps]] =
+    var icon: MyUndefOr[suiraw.SemanticShorthandItemSB[IconProps]] =
       js.native
 
     /** Item index inside Menu. */
-    var index: js.UndefOr[Int] = js.native
+    var index: MyUndefOr[Int] = js.native
 
     /** A menu item can be link. */
-    var link: js.UndefOr[Boolean] = js.native
+    var link: MyUndefOr[Boolean] = js.native
 
     /** Internal name of the Item. */
-    var name: js.UndefOr[String] = js.native
+    var name: MyUndefOr[String] = js.native
 
     /**
      * Called on click. When passed, the component will render as an `a` tag by default instead of a
@@ -105,10 +105,10 @@ object MenuItem {
      * @param {object}
      *   data - All props.
      */
-    var onClick: js.UndefOr[js.Function1[ReactEvent, Unit]] = js.native
+    var onClick: MyUndefOr[js.Function1[ReactEvent, Unit]] = js.native
 
     /** A menu item can take left or right position. */
-    var position: js.UndefOr[String] = js.native
+    var position: MyUndefOr[String] = js.native
   }
 
   def props(
@@ -133,22 +133,22 @@ object MenuItem {
     )
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    active:    js.UndefOr[Boolean] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    color:     js.UndefOr[SemanticColor] = js.undefined,
-    content:   js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    disabled:  js.UndefOr[Boolean] = js.undefined,
-    fitted:    js.UndefOr[MenuItemFitted] = js.undefined,
-    header:    js.UndefOr[Boolean] = js.undefined,
-    icon:      js.UndefOr[ShorthandSB[Icon]] = js.undefined,
-    index:     js.UndefOr[Int] = js.undefined,
-    link:      js.UndefOr[Boolean] = js.undefined,
-    name:      js.UndefOr[String] = js.undefined,
-    onClickE:  js.UndefOr[OnClick] = js.undefined,
-    onClick:   js.UndefOr[Callback] = js.undefined,
-    position:  js.UndefOr[MenuItemPosition] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    active:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    color:     MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+    content:   MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    disabled:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    fitted:    MyUndefOr[MenuItemFitted] = MyUndefOr.undefined,
+    header:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    icon:      MyUndefOr[ShorthandSB[Icon]] = MyUndefOr.undefined,
+    index:     MyUndefOr[Int] = MyUndefOr.undefined,
+    link:      MyUndefOr[Boolean] = MyUndefOr.undefined,
+    name:      MyUndefOr[String] = MyUndefOr.undefined,
+    onClickE:  MyUndefOr[OnClick] = MyUndefOr.undefined,
+    onClick:   MyUndefOr[Callback] = MyUndefOr.undefined,
+    position:  MyUndefOr[MenuItemPosition] = MyUndefOr.undefined
   ): MenuItemProps = {
     val p = as.toJsObject[MenuItemProps]
     as.toJs.foreach(v => p.as = v)

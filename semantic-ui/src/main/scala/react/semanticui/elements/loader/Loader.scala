@@ -15,16 +15,16 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Loader(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  active:                 js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  indeterminate:          js.UndefOr[Boolean] = js.undefined,
-  inline:                 js.UndefOr[LoaderInline] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  active:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  indeterminate:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+  inline:                 MyUndefOr[LoaderInline] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Loader.LoaderProps, Loader] {
   override protected def cprops                     = Loader.props(this)
@@ -48,34 +48,34 @@ object Loader {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** A loader can be active or visible. */
-    var active: js.UndefOr[Boolean] = js.native
+    var active: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** A loader can be disabled or hidden. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** A loader can show it's unsure of how long a task will take. */
-    var indeterminate: js.UndefOr[Boolean] = js.native
+    var indeterminate: MyUndefOr[Boolean] = js.native
 
     /** Loaders can appear inline with content. */
-    var inline: js.UndefOr[Boolean | String] = js.native
+    var inline: MyUndefOr[Boolean | String] = js.native
 
     /** Loaders can have their colors inverted. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** Loaders can have different sizes. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
   }
 
   def props(

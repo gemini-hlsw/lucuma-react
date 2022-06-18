@@ -14,17 +14,17 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class Divider(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  clearing:               js.UndefOr[Boolean] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  fitted:                 js.UndefOr[Boolean] = js.undefined,
-  hidden:                 js.UndefOr[Boolean] = js.undefined,
-  horizontal:             js.UndefOr[Boolean] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  section:                js.UndefOr[Boolean] = js.undefined,
-  vertical:               js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  clearing:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  fitted:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  hidden:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  horizontal:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  section:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  vertical:               MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Divider.DividerProps, Divider] {
   override protected def cprops                     = Divider.props(this)
@@ -48,37 +48,37 @@ object Divider {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Divider can clear the content above it. */
-    var clearing: js.UndefOr[Boolean] = js.native
+    var clearing: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** Divider can be fitted without any space above or below it. */
-    var fitted: js.UndefOr[Boolean] = js.native
+    var fitted: MyUndefOr[Boolean] = js.native
 
     /** Divider can divide content without creating a dividing line. */
-    var hidden: js.UndefOr[Boolean] = js.native
+    var hidden: MyUndefOr[Boolean] = js.native
 
     /** Divider can segment content horizontally. */
-    var horizontal: js.UndefOr[Boolean] = js.native
+    var horizontal: MyUndefOr[Boolean] = js.native
 
     /** Divider can have its colours inverted. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** Divider can provide greater margins to divide sections of content. */
-    var section: js.UndefOr[Boolean] = js.native
+    var section: MyUndefOr[Boolean] = js.native
 
     /** Divider can segment content vertically. */
-    var vertical: js.UndefOr[Boolean] = js.native
+    var vertical: MyUndefOr[Boolean] = js.native
   }
 
   def props(

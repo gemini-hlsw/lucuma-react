@@ -15,16 +15,16 @@ import react.semanticui._
 import react.semanticui.{raw => suiraw}
 
 final case class CardGroup(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  centered:               js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
-  doubling:               js.UndefOr[Boolean] = js.undefined,
-  items:                  js.UndefOr[Seq[Card]] = js.undefined,
-  itemsPerRow:            js.UndefOr[SemanticWidth] = js.undefined,
-  stackable:              js.UndefOr[Boolean] = js.undefined,
-  textAlign:              js.UndefOr[SemanticTextAlignment] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  centered:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  doubling:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  items:                  MyUndefOr[Seq[Card]] = MyUndefOr.undefined,
+  itemsPerRow:            MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+  stackable:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  textAlign:              MyUndefOr[SemanticTextAlignment] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[CardGroup.CardGroupProps, CardGroup] {
   override protected def cprops                     = CardGroup.props(this)
@@ -48,34 +48,34 @@ object CardGroup {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** A group of cards can center itself inside its container. */
-    var centered: js.UndefOr[Boolean] = js.native
+    var centered: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** A group of cards can double its column width for mobile. */
-    var doubling: js.UndefOr[Boolean] = js.native
+    var doubling: MyUndefOr[Boolean] = js.native
 
     /** Shorthand array of props for Card. */
-    var items: js.UndefOr[js.Array[Card.CardProps]] = js.native
+    var items: MyUndefOr[js.Array[Card.CardProps]] = js.native
 
     /** Shorthand for primary content. */
-    var itemsPerRow: js.UndefOr[suiraw.SemanticWIDTHS] = js.native
+    var itemsPerRow: MyUndefOr[suiraw.SemanticWIDTHS] = js.native
 
     /** A group of cards can automatically stack rows to a single columns on mobile devices. */
-    var stackable: js.UndefOr[Boolean] = js.native
+    var stackable: MyUndefOr[Boolean] = js.native
 
     /** A card group can adjust its text alignment. */
-    var textAlign: js.UndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
+    var textAlign: MyUndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
 
   }
 
@@ -93,16 +93,16 @@ object CardGroup {
     )
 
   def rawprops(
-    as:          js.UndefOr[AsC] = js.undefined,
-    centered:    js.UndefOr[Boolean] = js.undefined,
-    className:   js.UndefOr[String] = js.undefined,
-    clazz:       js.UndefOr[Css] = js.undefined,
-    content:     js.UndefOr[VdomNode] = js.undefined,
-    doubling:    js.UndefOr[Boolean] = js.undefined,
-    items:       js.UndefOr[Seq[Card]] = js.undefined,
-    itemsPerRow: js.UndefOr[SemanticWidth] = js.undefined,
-    stackable:   js.UndefOr[Boolean] = js.undefined,
-    textAlign:   js.UndefOr[SemanticTextAlignment] = js.undefined
+    as:          MyUndefOr[AsC] = MyUndefOr.undefined,
+    centered:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className:   MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:       MyUndefOr[Css] = MyUndefOr.undefined,
+    content:     MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    doubling:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    items:       MyUndefOr[Seq[Card]] = MyUndefOr.undefined,
+    itemsPerRow: MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+    stackable:   MyUndefOr[Boolean] = MyUndefOr.undefined,
+    textAlign:   MyUndefOr[SemanticTextAlignment] = MyUndefOr.undefined
   ): CardGroupProps = {
     val p = as.toJsObject[CardGroupProps]
     as.toJs.foreach(v => p.as = v)

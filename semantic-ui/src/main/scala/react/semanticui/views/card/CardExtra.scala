@@ -10,14 +10,14 @@ import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.vdom.TagMod
 
 case class CardExtra(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  description:            js.UndefOr[ShorthandS[CardDescription]] = js.undefined,
-  header:                 js.UndefOr[ShorthandS[CardHeader]] = js.undefined,
-  meta:                   js.UndefOr[ShorthandS[CardMeta]] = js.undefined,
-  textAlign:              js.UndefOr[SemanticTextAlignment] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  description:            MyUndefOr[ShorthandS[CardDescription]] = MyUndefOr.undefined,
+  header:                 MyUndefOr[ShorthandS[CardHeader]] = MyUndefOr.undefined,
+  meta:                   MyUndefOr[ShorthandS[CardMeta]] = MyUndefOr.undefined,
+  textAlign:              MyUndefOr[SemanticTextAlignment] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[CardContent.CardContentProps, CardExtra] {
   override protected def cprops                     =

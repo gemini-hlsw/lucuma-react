@@ -14,13 +14,13 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class Container(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  fluid:                  js.UndefOr[Boolean] = js.undefined,
-  text:                   js.UndefOr[Boolean] = js.undefined,
-  textAlign:              js.UndefOr[SemanticTextAlignment] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  fluid:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  text:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  textAlign:              MyUndefOr[SemanticTextAlignment] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Container.ContainerProps, Container] {
   override protected def cprops                     = Container.props(this)
@@ -44,25 +44,25 @@ object Container {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** Container has no maximum width. */
-    var fluid: js.UndefOr[Boolean] = js.native
+    var fluid: MyUndefOr[Boolean] = js.native
 
     /** Reduce maximum width to more naturally accommodate text. */
-    var text: js.UndefOr[Boolean] = js.native
+    var text: MyUndefOr[Boolean] = js.native
 
     /** Align container text. */
-    var textAlign: js.UndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
+    var textAlign: MyUndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
   }
 
   def props(

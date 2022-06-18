@@ -14,31 +14,31 @@ import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Menu(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  activeIndex:            js.UndefOr[Int | String] = js.undefined,
-  attached:               js.UndefOr[MenuAttached] = js.undefined,
-  borderless:             js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  compact:                js.UndefOr[Boolean] = js.undefined,
-  defaultActiveIndex:     js.UndefOr[Int | String] = js.undefined,
-  fixed:                  js.UndefOr[MenuFixed] = js.undefined,
-  floated:                js.UndefOr[MenuFloated] = js.undefined,
-  fluid:                  js.UndefOr[Boolean] = js.undefined,
-  icon:                   js.UndefOr[MenuIcon] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  onItemClickE:           js.UndefOr[Menu.OnItemClick] = js.undefined,
-  onItemClick:            js.UndefOr[Callback] = js.undefined,
-  pagination:             js.UndefOr[Boolean] = js.undefined,
-  pointing:               js.UndefOr[Boolean] = js.undefined,
-  secondary:              js.UndefOr[Boolean] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  stackable:              js.UndefOr[Boolean] = js.undefined,
-  tabular:                js.UndefOr[MenuTabular] = js.undefined,
-  text:                   js.UndefOr[Boolean] = js.undefined,
-  vertical:               js.UndefOr[Boolean] = js.undefined,
-  widths:                 js.UndefOr[SemanticWidth] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  activeIndex:            MyUndefOr[Int | String] = MyUndefOr.undefined,
+  attached:               MyUndefOr[MenuAttached] = MyUndefOr.undefined,
+  borderless:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  compact:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  defaultActiveIndex:     MyUndefOr[Int | String] = MyUndefOr.undefined,
+  fixed:                  MyUndefOr[MenuFixed] = MyUndefOr.undefined,
+  floated:                MyUndefOr[MenuFloated] = MyUndefOr.undefined,
+  fluid:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  icon:                   MyUndefOr[MenuIcon] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  onItemClickE:           MyUndefOr[Menu.OnItemClick] = MyUndefOr.undefined,
+  onItemClick:            MyUndefOr[Callback] = MyUndefOr.undefined,
+  pagination:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  pointing:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  secondary:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  stackable:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  tabular:                MyUndefOr[MenuTabular] = MyUndefOr.undefined,
+  text:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  vertical:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  widths:                 MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Menu.MenuProps, Menu] {
   override protected def cprops                     = Menu.props(this)
@@ -64,47 +64,47 @@ object Menu {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** a menu item can be active. */
-    var activeIndex: js.UndefOr[Int | String] = js.native
+    var activeIndex: MyUndefOr[Int | String] = js.native
 
     /** A menu may be attached to other content segments. */
-    var attached: js.UndefOr[Boolean | String] = js.native
+    var attached: MyUndefOr[Boolean | String] = js.native
 
     /** A menu item or menu can have no borders. */
-    var borderless: js.UndefOr[Boolean] = js.native
+    var borderless: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Additional colors can be specified. */
-    var color: js.UndefOr[suiraw.SemanticCOLORS] = js.native
+    var color: MyUndefOr[suiraw.SemanticCOLORS] = js.native
 
     /** A menu can take up only the space necessary to fit its content. */
-    var compact: js.UndefOr[Boolean] = js.native
+    var compact: MyUndefOr[Boolean] = js.native
 
     /** Initial activeIndex value. */
-    var defaultActiveIndex: js.UndefOr[Int | String] = js.native
+    var defaultActiveIndex: MyUndefOr[Int | String] = js.native
 
     /** A menu can be floated. */
-    var fixed: js.UndefOr[String] = js.native
+    var fixed: MyUndefOr[String] = js.native
 
     /** A menu item or menu can remove element padding, vertically or horizontally. */
-    var floated: js.UndefOr[Boolean | String] = js.native
+    var floated: MyUndefOr[Boolean | String] = js.native
 
     /** A vertical menu may take the size of its container. */
-    var fluid: js.UndefOr[Boolean] = js.native
+    var fluid: MyUndefOr[Boolean] = js.native
 
     /** A menu may have just icons (bool) or labeled icons. */
-    var icon: js.UndefOr[Boolean | String] =
+    var icon: MyUndefOr[Boolean | String] =
       js.native
 
     /** A menu may have its colors inverted to show greater contrast. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** Shorthand array of props for Menu. */
     // items: customPropTypes.collectionShorthand,
@@ -117,34 +117,34 @@ object Menu {
      * @param {object}
      *   data - All item props.
      */
-    var onItemClick: js.UndefOr[js.Function1[ReactEvent, Unit]] = js.native
+    var onItemClick: MyUndefOr[js.Function1[ReactEvent, Unit]] = js.native
 
     /** A pagination menu is specially formatted to present links to pages of content. */
-    var pagination: js.UndefOr[Boolean] = js.native
+    var pagination: MyUndefOr[Boolean] = js.native
 
     /** A menu can point to show its relationship to nearby content. */
-    var pointing: js.UndefOr[Boolean] = js.native
+    var pointing: MyUndefOr[Boolean] = js.native
 
     /** A menu can adjust its appearance to de-emphasize its contents. */
-    var secondary: js.UndefOr[Boolean] = js.native
+    var secondary: MyUndefOr[Boolean] = js.native
 
     /** A menu can vary in size. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
 
     /** A menu can stack at mobile resolutions. */
-    var stackable: js.UndefOr[Boolean] = js.native
+    var stackable: MyUndefOr[Boolean] = js.native
 
     /** A menu can be formatted to show tabs of information. */
-    var tabular: js.UndefOr[Boolean | String]
+    var tabular: MyUndefOr[Boolean | String]
 
     /** A menu can be formatted for text content. */
-    var text: js.UndefOr[Boolean] = js.native
+    var text: MyUndefOr[Boolean] = js.native
 
     /** A vertical menu displays elements vertically. */
-    var vertical: js.UndefOr[Boolean] = js.native
+    var vertical: MyUndefOr[Boolean] = js.native
 
     /** A menu can vary in size. */
-    var widths: js.UndefOr[suiraw.SemanticWIDTHS] = js.native
+    var widths: MyUndefOr[suiraw.SemanticWIDTHS] = js.native
   }
 
   def props(q: Menu): MenuProps =
@@ -177,31 +177,31 @@ object Menu {
     )
 
   def rawprops(
-    as:                 js.UndefOr[AsC] = js.undefined,
-    activeIndex:        js.UndefOr[Int | String] = js.undefined,
-    attached:           js.UndefOr[MenuAttached] = js.undefined,
-    borderless:         js.UndefOr[Boolean] = js.undefined,
-    className:          js.UndefOr[String] = js.undefined,
-    clazz:              js.UndefOr[Css] = js.undefined,
-    color:              js.UndefOr[SemanticColor] = js.undefined,
-    compact:            js.UndefOr[Boolean] = js.undefined,
-    defaultActiveIndex: js.UndefOr[Int | String] = js.undefined,
-    fixed:              js.UndefOr[MenuFixed] = js.undefined,
-    floated:            js.UndefOr[MenuFloated] = js.undefined,
-    fluid:              js.UndefOr[Boolean] = js.undefined,
-    icon:               js.UndefOr[MenuIcon] = js.undefined,
-    inverted:           js.UndefOr[Boolean] = js.undefined,
-    onItemClickE:       js.UndefOr[OnItemClick] = js.undefined,
-    onItemClick:        js.UndefOr[Callback] = js.undefined,
-    pagination:         js.UndefOr[Boolean] = js.undefined,
-    pointing:           js.UndefOr[Boolean] = js.undefined,
-    secondary:          js.UndefOr[Boolean] = js.undefined,
-    size:               js.UndefOr[SemanticSize] = js.undefined,
-    stackable:          js.UndefOr[Boolean] = js.undefined,
-    tabular:            js.UndefOr[MenuTabular] = js.undefined,
-    text:               js.UndefOr[Boolean] = js.undefined,
-    vertical:           js.UndefOr[Boolean] = js.undefined,
-    widths:             js.UndefOr[SemanticWidth] = js.undefined
+    as:                 MyUndefOr[AsC] = MyUndefOr.undefined,
+    activeIndex:        MyUndefOr[Int | String] = MyUndefOr.undefined,
+    attached:           MyUndefOr[MenuAttached] = MyUndefOr.undefined,
+    borderless:         MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className:          MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:              MyUndefOr[Css] = MyUndefOr.undefined,
+    color:              MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+    compact:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+    defaultActiveIndex: MyUndefOr[Int | String] = MyUndefOr.undefined,
+    fixed:              MyUndefOr[MenuFixed] = MyUndefOr.undefined,
+    floated:            MyUndefOr[MenuFloated] = MyUndefOr.undefined,
+    fluid:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+    icon:               MyUndefOr[MenuIcon] = MyUndefOr.undefined,
+    inverted:           MyUndefOr[Boolean] = MyUndefOr.undefined,
+    onItemClickE:       MyUndefOr[OnItemClick] = MyUndefOr.undefined,
+    onItemClick:        MyUndefOr[Callback] = MyUndefOr.undefined,
+    pagination:         MyUndefOr[Boolean] = MyUndefOr.undefined,
+    pointing:           MyUndefOr[Boolean] = MyUndefOr.undefined,
+    secondary:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+    size:               MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+    stackable:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+    tabular:            MyUndefOr[MenuTabular] = MyUndefOr.undefined,
+    text:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+    vertical:           MyUndefOr[Boolean] = MyUndefOr.undefined,
+    widths:             MyUndefOr[SemanticWidth] = MyUndefOr.undefined
   ): MenuProps = {
     val p = (new js.Object).asInstanceOf[MenuProps]
     as.toJs.foreach(v => p.as = v)

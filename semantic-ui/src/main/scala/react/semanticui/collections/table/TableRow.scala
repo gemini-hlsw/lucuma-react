@@ -15,19 +15,19 @@ import react.semanticui.{raw => suiraw}
 import react.semanticui._
 
 final case class TableRow(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  active:                 js.UndefOr[Boolean] = js.undefined,
-  cellAs:                 js.UndefOr[AsC] = js.undefined,
-  cells:                  js.UndefOr[Seq[TableCell | TableHeaderCell]] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  error:                  js.UndefOr[Boolean] = js.undefined,
-  negative:               js.UndefOr[Boolean] = js.undefined,
-  positive:               js.UndefOr[Boolean] = js.undefined,
-  textAlign:              js.UndefOr[TableTextAlign] = js.undefined,
-  verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
-  warning:                js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  active:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  cellAs:                 MyUndefOr[AsC] = MyUndefOr.undefined,
+  cells:                  MyUndefOr[Seq[TableCell | TableHeaderCell]] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  error:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  negative:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  positive:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  textAlign:              MyUndefOr[TableTextAlign] = MyUndefOr.undefined,
+  verticalAlign:          MyUndefOr[SemanticVerticalAlignment] = MyUndefOr.undefined,
+  warning:                MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[TableRow.TableRowProps, TableRow] {
   override protected def cprops                     = TableRow.props(this)
@@ -49,45 +49,45 @@ object TableRow {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Style as the currently chosen item. */
-    var active: js.UndefOr[Boolean] = js.native
+    var active: MyUndefOr[Boolean] = js.native
 
     /** An element type to render as (string or function). */
-    var cellAs: js.UndefOr[AsT] = js.native
+    var cellAs: MyUndefOr[AsT] = js.native
 
     /** Shorthand array of props for TableCell. */
     var cells
-      : js.UndefOr[js.Array[TableCell.TableCellProps | TableHeaderCell.TableHeaderCellProps]] =
+      : MyUndefOr[js.Array[TableCell.TableCellProps | TableHeaderCell.TableHeaderCellProps]] =
       js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** A row can be disabled. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** A row may call attention to an error or a negative value. */
-    var error: js.UndefOr[Boolean] = js.native
+    var error: MyUndefOr[Boolean] = js.native
 
     /** A row may let a user know whether a value is bad. */
-    var negative: js.UndefOr[Boolean] = js.native
+    var negative: MyUndefOr[Boolean] = js.native
 
     /** A row may let a user know whether a value is good. */
-    var positive: js.UndefOr[Boolean] = js.native
+    var positive: MyUndefOr[Boolean] = js.native
 
     /** A table row can adjust its text alignment. */
-    var textAlign: js.UndefOr[String] = js.native
+    var textAlign: MyUndefOr[String] = js.native
 
     /** A table row can adjust its vertical alignment. */
-    var verticalAlign: js.UndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
+    var verticalAlign: MyUndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
 
     /** A cell may warn a user. */
-    var warning: js.UndefOr[Boolean] = js.native
+    var warning: MyUndefOr[Boolean] = js.native
   }
 
   def props(q: TableRow): TableRowProps = {

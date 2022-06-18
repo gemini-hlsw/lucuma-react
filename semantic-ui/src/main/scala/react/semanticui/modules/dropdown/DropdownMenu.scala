@@ -14,13 +14,13 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class DropdownMenu(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
-  direction:              js.UndefOr[MenuDirection] = js.undefined,
-  open:                   js.UndefOr[Boolean] = js.undefined,
-  scrolling:              js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  direction:              MyUndefOr[MenuDirection] = MyUndefOr.undefined,
+  open:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  scrolling:              MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[DropdownMenu.DropdownMenuProps, DropdownMenu] {
   override protected def cprops                     = DropdownMenu.props(this)
@@ -44,38 +44,38 @@ object DropdownMenu {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[SemanticShorthandContent] = js.native
+    var content: MyUndefOr[SemanticShorthandContent] = js.native
 
     /** A dropdown menu can open to the left or to the right. */
-    var direction: js.UndefOr[String] = js.native
+    var direction: MyUndefOr[String] = js.native
 
     /** Whether or not the dropdown menu is displayed. */
-    var open: js.UndefOr[Boolean] = js.native
+    var open: MyUndefOr[Boolean] = js.native
 
     /** A dropdown menu can scroll. */
-    var scrolling: js.UndefOr[Boolean] = js.native
+    var scrolling: MyUndefOr[Boolean] = js.native
   }
 
   def props(q: DropdownMenu): DropdownMenuProps =
     rawprops(q.as, q.className, q.clazz, q.content, q.direction, q.open, q.scrolling)
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    content:   js.UndefOr[VdomNode] = js.undefined,
-    direction: js.UndefOr[MenuDirection] = js.undefined,
-    open:      js.UndefOr[Boolean] = js.undefined,
-    scrolling: js.UndefOr[Boolean] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    content:   MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    direction: MyUndefOr[MenuDirection] = MyUndefOr.undefined,
+    open:      MyUndefOr[Boolean] = MyUndefOr.undefined,
+    scrolling: MyUndefOr[Boolean] = MyUndefOr.undefined
   ): DropdownMenuProps = {
     val p = as.toJsObject[DropdownMenuProps]
     as.toJs.foreach(v => p.as = v)

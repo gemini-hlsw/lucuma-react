@@ -15,14 +15,14 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class LabelGroup(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  circular:               js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  content:                js.UndefOr[Seq[VdomNode]] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  tag:                    js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  circular:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  content:                MyUndefOr[Seq[VdomNode]] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  tag:                    MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[LabelGroup.LabelGroupProps, LabelGroup] {
   override protected def cprops                     = LabelGroup.props(this)
@@ -44,28 +44,28 @@ object LabelGroup {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Labels can share shapes. */
-    var circular: js.UndefOr[Boolean] = js.native
+    var circular: MyUndefOr[Boolean] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Label group can share colors together. */
-    var color: js.UndefOr[suiraw.SemanticCOLORS] = js.native
+    var color: MyUndefOr[suiraw.SemanticCOLORS] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[js.Array[suiraw.SemanticShorthandContent]] = js.native
+    var content: MyUndefOr[js.Array[suiraw.SemanticShorthandContent]] = js.native
 
     /** Label group can share sizes together. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
 
     /** Label group can share tag formatting. */
-    var tag: js.UndefOr[Boolean] = js.native
+    var tag: MyUndefOr[Boolean] = js.native
   }
 
   def props(q: LabelGroup): LabelGroupProps =
@@ -81,14 +81,14 @@ object LabelGroup {
     )
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    circular:  js.UndefOr[Boolean] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    color:     js.UndefOr[SemanticColor] = js.undefined,
-    content:   js.UndefOr[Seq[VdomNode]] = js.undefined,
-    size:      js.UndefOr[SemanticSize] = js.undefined,
-    tag:       js.UndefOr[Boolean] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    circular:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    color:     MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+    content:   MyUndefOr[Seq[VdomNode]] = MyUndefOr.undefined,
+    size:      MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+    tag:       MyUndefOr[Boolean] = MyUndefOr.undefined
   ): LabelGroupProps = {
     val p = as.toJsObject[LabelGroupProps]
     as.toJs.foreach(v => p.as = v)

@@ -15,14 +15,14 @@ import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class ListContent(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  description:            js.UndefOr[ShorthandS[ListDescription]] = js.undefined,
-  content:                js.UndefOr[Seq[VdomNode]] = js.undefined,
-  floated:                js.UndefOr[SemanticFloat] = js.undefined,
-  header:                 js.UndefOr[ListHeader] = js.undefined,
-  verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  description:            MyUndefOr[ShorthandS[ListDescription]] = MyUndefOr.undefined,
+  content:                MyUndefOr[Seq[VdomNode]] = MyUndefOr.undefined,
+  floated:                MyUndefOr[SemanticFloat] = MyUndefOr.undefined,
+  header:                 MyUndefOr[ListHeader] = MyUndefOr.undefined,
+  verticalAlign:          MyUndefOr[SemanticVerticalAlignment] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[ListContent.ListContentProps, ListContent] {
   override protected def cprops                     = ListContent.props(this)
@@ -46,29 +46,29 @@ object ListContent {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[js.Array[suiraw.SemanticShorthandContent]] = js.native
+    var content: MyUndefOr[js.Array[suiraw.SemanticShorthandContent]] = js.native
 
     /** Shorthand for ListDescription. */
     var description
-      : js.UndefOr[suiraw.SemanticShorthandItemS[ListDescription.ListDescriptionProps]] = js.native
+      : MyUndefOr[suiraw.SemanticShorthandItemS[ListDescription.ListDescriptionProps]] = js.native
 
     /** An list content can be floated left or right. */
-    var floated: js.UndefOr[suiraw.SemanticFLOATS] = js.native
+    var floated: MyUndefOr[suiraw.SemanticFLOATS] = js.native
 
     /** Shorthand for ListHeader. */
-    var header: js.UndefOr[suiraw.SemanticShorthandItemS[ListHeader.ListHeaderProps]] = js.native
+    var header: MyUndefOr[suiraw.SemanticShorthandItemS[ListHeader.ListHeaderProps]] = js.native
 
     /** An element inside a list can be vertically aligned. */
-    var verticalAlign: js.UndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
+    var verticalAlign: MyUndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
 
   }
 
@@ -86,14 +86,14 @@ object ListContent {
     )
 
   def rawprops(
-    as:            js.UndefOr[AsC] = js.undefined,
-    className:     js.UndefOr[String] = js.undefined,
-    clazz:         js.UndefOr[Css] = js.undefined,
-    content:       js.UndefOr[Seq[VdomNode]] = js.undefined,
-    description:   js.UndefOr[ShorthandS[ListDescription]] = js.undefined,
-    floated:       js.UndefOr[SemanticFloat] = js.undefined,
-    header:        js.UndefOr[ListHeader] = js.undefined,
-    verticalAlign: js.UndefOr[SemanticVerticalAlignment] = js.undefined
+    as:            MyUndefOr[AsC] = MyUndefOr.undefined,
+    className:     MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:         MyUndefOr[Css] = MyUndefOr.undefined,
+    content:       MyUndefOr[Seq[VdomNode]] = MyUndefOr.undefined,
+    description:   MyUndefOr[ShorthandS[ListDescription]] = MyUndefOr.undefined,
+    floated:       MyUndefOr[SemanticFloat] = MyUndefOr.undefined,
+    header:        MyUndefOr[ListHeader] = MyUndefOr.undefined,
+    verticalAlign: MyUndefOr[SemanticVerticalAlignment] = MyUndefOr.undefined
   ): ListContentProps = {
     val p = as.toJsObject[ListContentProps]
     as.toJs.foreach(v => p.as = v)

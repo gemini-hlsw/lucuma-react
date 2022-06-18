@@ -15,13 +15,13 @@ import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class ModalActions(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  actions:                js.UndefOr[Seq[ShorthandS[Button]]] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
-  onActionClickE:         js.UndefOr[ModalActions.OnActionClick] = js.undefined,
-  onActionClick:          js.UndefOr[Callback] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  actions:                MyUndefOr[Seq[ShorthandS[Button]]] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  onActionClickE:         MyUndefOr[ModalActions.OnActionClick] = MyUndefOr.undefined,
+  onActionClick:          MyUndefOr[Callback] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[ModalActions.ModalActionsProps, ModalActions] {
   override protected def cprops                     = ModalActions.props(this)
@@ -46,19 +46,19 @@ object ModalActions {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Array of shorthand buttons. */
-    var actions: js.UndefOr[suiraw.SemanticShorthandArray[Button.ButtonProps]] = js.native
+    var actions: MyUndefOr[suiraw.SemanticShorthandArray[Button.ButtonProps]] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /**
      * onClick handler for an action. Mutually exclusive with children.
@@ -68,20 +68,20 @@ object ModalActions {
      * @param {object}
      *   data - All item props.
      */
-    var onActionClick: js.UndefOr[RawOnActionClick] = js.native
+    var onActionClick: MyUndefOr[RawOnActionClick] = js.native
   }
 
   def props(q: ModalActions): ModalActionsProps =
     rawprops(q.as, q.actions, q.className, q.clazz, q.content, q.onActionClickE, q.onActionClick)
 
   def rawprops(
-    as:             js.UndefOr[AsC] = js.undefined,
-    actions:        js.UndefOr[Seq[ShorthandS[Button]]] = js.undefined,
-    className:      js.UndefOr[String] = js.undefined,
-    clazz:          js.UndefOr[Css] = js.undefined,
-    content:        js.UndefOr[VdomNode] = js.undefined,
-    onActionClickE: js.UndefOr[OnActionClick] = js.undefined,
-    onActionClick:  js.UndefOr[Callback] = js.undefined
+    as:             MyUndefOr[AsC] = MyUndefOr.undefined,
+    actions:        MyUndefOr[Seq[ShorthandS[Button]]] = MyUndefOr.undefined,
+    className:      MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:          MyUndefOr[Css] = MyUndefOr.undefined,
+    content:        MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    onActionClickE: MyUndefOr[OnActionClick] = MyUndefOr.undefined,
+    onActionClick:  MyUndefOr[Callback] = MyUndefOr.undefined
   ): ModalActionsProps = {
     val p = as.toJsObject[ModalActionsProps]
     as.toJs.foreach(v => p.as = v)

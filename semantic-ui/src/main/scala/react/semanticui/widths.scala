@@ -30,7 +30,7 @@ object widths {
   case object Fifteen  extends SemanticWidth
   case object Sixteen  extends SemanticWidth
 
-  def widthOf(i: Int): js.UndefOr[SemanticWidth] =
+  def widthOf(i: Int): MyUndefOr[SemanticWidth] =
     allWidths.get(i).orUndefined
 
   val allWidths: Map[Int, SemanticWidth] =

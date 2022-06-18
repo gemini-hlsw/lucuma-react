@@ -21,80 +21,80 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Dropdown(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  additionLabel:          js.UndefOr[Dropdown.AdditionLabel] = js.undefined,
-  additionPosition:       js.UndefOr[AdditionPosition] = js.undefined,
-  allowAdditions:         js.UndefOr[Boolean] = js.undefined,
-  basic:                  js.UndefOr[Boolean] = js.undefined,
-  button:                 js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  clearable:              js.UndefOr[Boolean] = js.undefined,
-  closeOnBlur:            js.UndefOr[Boolean] = js.undefined,
-  closeOnEscape:          js.UndefOr[Boolean] = js.undefined,
-  closeOnChange:          js.UndefOr[Boolean] = js.undefined,
-  compact:                js.UndefOr[Boolean] = js.undefined,
-  deburr:                 js.UndefOr[Boolean] = js.undefined,
-  defaultOpen:            js.UndefOr[Boolean] = js.undefined,
-  defaultSearchQuery:     js.UndefOr[String] = js.undefined,
-  defaultSelectedLabel:   js.UndefOr[Double | String] = js.undefined,
-  defaultUpward:          js.UndefOr[Boolean] = js.undefined,
-  defaultValue:           js.UndefOr[Dropdown.Value] = js.undefined,
-  direction:              js.UndefOr[Direction] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  error:                  js.UndefOr[Boolean] = js.undefined,
-  floating:               js.UndefOr[Boolean] = js.undefined,
-  fluid:                  js.UndefOr[Boolean] = js.undefined,
-  header:                 js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  icon:                   js.UndefOr[ShorthandS[Icon]] = js.undefined,
-  inline:                 js.UndefOr[Boolean] = js.undefined,
-  item:                   js.UndefOr[Boolean] = js.undefined,
-  labeled:                js.UndefOr[Boolean] = js.undefined,
-  lazyLoad:               js.UndefOr[Boolean] = js.undefined,
-  loading:                js.UndefOr[Boolean] = js.undefined,
-  minCharacters:          js.UndefOr[Double] = js.undefined,
-  multiple:               js.UndefOr[Boolean] = js.undefined,
-  noResultsMessage:       js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  onAddItem:              js.UndefOr[Dropdown.OnAddItem] = js.undefined,
-  onBlurE:                js.UndefOr[Dropdown.OnBlur] = js.undefined,
-  onBlur:                 js.UndefOr[Callback] = js.undefined,
-  onClickE:               js.UndefOr[Dropdown.OnClick] = js.undefined,
-  onClick:                js.UndefOr[Callback] = js.undefined,
-  onChangeE:              js.UndefOr[Dropdown.OnChangeE] = js.undefined,
-  onChange:               js.UndefOr[Dropdown.OnChange] = js.undefined,
-  onCloseE:               js.UndefOr[Dropdown.OnClose] = js.undefined,
-  onClose:                js.UndefOr[Callback] = js.undefined,
-  onFocusE:               js.UndefOr[Dropdown.OnFocus] = js.undefined,
-  onFocus:                js.UndefOr[Callback] = js.undefined,
-  onLabelClickE:          js.UndefOr[Dropdown.OnLabelClick] = js.undefined,
-  onLabelClick:           js.UndefOr[Callback] = js.undefined,
-  onMouseDownE:           js.UndefOr[Dropdown.OnMouseDown] = js.undefined,
-  onMouseDown:            js.UndefOr[Callback] = js.undefined,
-  onOpenE:                js.UndefOr[Dropdown.OnOpen] = js.undefined,
-  onOpen:                 js.UndefOr[Callback] = js.undefined,
-  onSearchChangeE:        js.UndefOr[Dropdown.OnSearchChangeE] = js.undefined,
-  onSearchChange:         js.UndefOr[Dropdown.OnSearchChange] = js.undefined,
-  open:                   js.UndefOr[Boolean] = js.undefined,
-  openOnFocus:            js.UndefOr[Boolean] = js.undefined,
-  options:                js.UndefOr[Seq[DropdownItem]] = js.undefined,
-  placeholder:            js.UndefOr[String] = js.undefined,
-  pointing:               js.UndefOr[Pointing] = js.undefined,
-  renderLabel:            js.UndefOr[Dropdown.RenderLabel] = js.undefined,
-  scrolling:              js.UndefOr[Boolean] = js.undefined,
-  search:                 js.UndefOr[Boolean | Dropdown.SearchFunction] = js.undefined,
-  searchInput:            js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  searchQuery:            js.UndefOr[String] = js.undefined,
-  selectOnBlur:           js.UndefOr[Boolean] = js.undefined,
-  selectOnNavigation:     js.UndefOr[Boolean] = js.undefined,
-  selectedLabel:          js.UndefOr[Double | String] = js.undefined,
-  selection:              js.UndefOr[Boolean] = js.undefined,
-  simple:                 js.UndefOr[Boolean] = js.undefined,
-  tabIndex:               js.UndefOr[String | Double] = js.undefined,
-  text:                   js.UndefOr[String] = js.undefined,
-  trigger:                js.UndefOr[VdomNode] = js.undefined,
-  value:                  js.UndefOr[Dropdown.Value] = js.undefined,
-  upward:                 js.UndefOr[Boolean] = js.undefined,
-  wrapSelection:          js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  additionLabel:          MyUndefOr[Dropdown.AdditionLabel] = MyUndefOr.undefined,
+  additionPosition:       MyUndefOr[AdditionPosition] = MyUndefOr.undefined,
+  allowAdditions:         MyUndefOr[Boolean] = MyUndefOr.undefined,
+  basic:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  button:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  clearable:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  closeOnBlur:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+  closeOnEscape:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+  closeOnChange:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+  compact:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  deburr:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  defaultOpen:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+  defaultSearchQuery:     MyUndefOr[String] = MyUndefOr.undefined,
+  defaultSelectedLabel:   MyUndefOr[Double | String] = MyUndefOr.undefined,
+  defaultUpward:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+  defaultValue:           MyUndefOr[Dropdown.Value] = MyUndefOr.undefined,
+  direction:              MyUndefOr[Direction] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  error:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  floating:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  fluid:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  header:                 MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  icon:                   MyUndefOr[ShorthandS[Icon]] = MyUndefOr.undefined,
+  inline:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  item:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  labeled:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  lazyLoad:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  loading:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  minCharacters:          MyUndefOr[Double] = MyUndefOr.undefined,
+  multiple:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  noResultsMessage:       MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  onAddItem:              MyUndefOr[Dropdown.OnAddItem] = MyUndefOr.undefined,
+  onBlurE:                MyUndefOr[Dropdown.OnBlur] = MyUndefOr.undefined,
+  onBlur:                 MyUndefOr[Callback] = MyUndefOr.undefined,
+  onClickE:               MyUndefOr[Dropdown.OnClick] = MyUndefOr.undefined,
+  onClick:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  onChangeE:              MyUndefOr[Dropdown.OnChangeE] = MyUndefOr.undefined,
+  onChange:               MyUndefOr[Dropdown.OnChange] = MyUndefOr.undefined,
+  onCloseE:               MyUndefOr[Dropdown.OnClose] = MyUndefOr.undefined,
+  onClose:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  onFocusE:               MyUndefOr[Dropdown.OnFocus] = MyUndefOr.undefined,
+  onFocus:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  onLabelClickE:          MyUndefOr[Dropdown.OnLabelClick] = MyUndefOr.undefined,
+  onLabelClick:           MyUndefOr[Callback] = MyUndefOr.undefined,
+  onMouseDownE:           MyUndefOr[Dropdown.OnMouseDown] = MyUndefOr.undefined,
+  onMouseDown:            MyUndefOr[Callback] = MyUndefOr.undefined,
+  onOpenE:                MyUndefOr[Dropdown.OnOpen] = MyUndefOr.undefined,
+  onOpen:                 MyUndefOr[Callback] = MyUndefOr.undefined,
+  onSearchChangeE:        MyUndefOr[Dropdown.OnSearchChangeE] = MyUndefOr.undefined,
+  onSearchChange:         MyUndefOr[Dropdown.OnSearchChange] = MyUndefOr.undefined,
+  open:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  openOnFocus:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+  options:                MyUndefOr[Seq[DropdownItem]] = MyUndefOr.undefined,
+  placeholder:            MyUndefOr[String] = MyUndefOr.undefined,
+  pointing:               MyUndefOr[Pointing] = MyUndefOr.undefined,
+  renderLabel:            MyUndefOr[Dropdown.RenderLabel] = MyUndefOr.undefined,
+  scrolling:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  search:                 MyUndefOr[Boolean | Dropdown.SearchFunction] = MyUndefOr.undefined,
+  searchInput:            MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  searchQuery:            MyUndefOr[String] = MyUndefOr.undefined,
+  selectOnBlur:           MyUndefOr[Boolean] = MyUndefOr.undefined,
+  selectOnNavigation:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+  selectedLabel:          MyUndefOr[Double | String] = MyUndefOr.undefined,
+  selection:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  simple:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  tabIndex:               MyUndefOr[String | Double] = MyUndefOr.undefined,
+  text:                   MyUndefOr[String] = MyUndefOr.undefined,
+  trigger:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  value:                  MyUndefOr[Dropdown.Value] = MyUndefOr.undefined,
+  upward:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  wrapSelection:          MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Dropdown.DropdownProps, Dropdown] {
   override protected def cprops                     = Dropdown.props(this)
@@ -161,113 +161,113 @@ object Dropdown {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Label prefixed to an option added by a user. */
-    var additionLabel: js.UndefOr[Double | String | SemanticShorthandContent] = js.native
+    var additionLabel: MyUndefOr[Double | String | SemanticShorthandContent] = js.native
 
     /** Position of the `Add: ...` option in the dropdown list ('top' or 'bottom'). */
-    var additionPosition: js.UndefOr[String]
+    var additionPosition: MyUndefOr[String]
 
     /**
      * Allow user additions to the list of options (boolean). Requires the use of `selection`,
      * `options` and `search`.
      */
-    var allowAdditions: js.UndefOr[Boolean] = js.native
+    var allowAdditions: MyUndefOr[Boolean] = js.native
 
     /** A Dropdown can reduce its complexity. */
-    var basic: js.UndefOr[Boolean] = js.native
+    var basic: MyUndefOr[Boolean] = js.native
 
     /** Format the Dropdown to appear as a button. */
-    var button: js.UndefOr[Boolean] = js.native
+    var button: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Using the clearable setting will let users remove their selection from a dropdown. */
-    var clearable: js.UndefOr[Boolean] = js.native
+    var clearable: MyUndefOr[Boolean] = js.native
 
     /** Whether or not the menu should close when the dropdown is blurred. */
-    var closeOnBlur: js.UndefOr[Boolean] = js.native
+    var closeOnBlur: MyUndefOr[Boolean] = js.native
 
     /** Whether or not the dropdown should close when the escape key is pressed. */
-    var closeOnEscape: js.UndefOr[Boolean] = js.native
+    var closeOnEscape: MyUndefOr[Boolean] = js.native
 
     /**
      * Whether or not the menu should close when a value is selected from the dropdown. By default,
      * multiple selection dropdowns will remain open on change, while single selection dropdowns
      * will close on change.
      */
-    var closeOnChange: js.UndefOr[Boolean] = js.native
+    var closeOnChange: MyUndefOr[Boolean] = js.native
 
     /** A compact dropdown has no minimum width. */
-    var compact: js.UndefOr[Boolean] = js.native
+    var compact: MyUndefOr[Boolean] = js.native
 
     /** Whether or not the dropdown should strip diacritics in options and input search */
-    var deburr: js.UndefOr[Boolean] = js.native
+    var deburr: MyUndefOr[Boolean] = js.native
 
     /** Initial value of open. */
-    var defaultOpen: js.UndefOr[Boolean] = js.native
+    var defaultOpen: MyUndefOr[Boolean] = js.native
 
     /** Initial value of searchQuery. */
-    var defaultSearchQuery: js.UndefOr[String] = js.native
+    var defaultSearchQuery: MyUndefOr[String] = js.native
 
     /** Currently selected label in multi-select. */
-    var defaultSelectedLabel: js.UndefOr[Double | String] = js.native
+    var defaultSelectedLabel: MyUndefOr[Double | String] = js.native
 
     /** Initial value of upward. */
-    var defaultUpward: js.UndefOr[Boolean] = js.native
+    var defaultUpward: MyUndefOr[Boolean] = js.native
 
     /** Initial value or value array if multiple. */
-    var defaultValue: js.UndefOr[Value] = js.native
+    var defaultValue: MyUndefOr[Value] = js.native
 
     /** A dropdown menu can open to the left or to the right. */
-    var direction: js.UndefOr[String] = js.native
+    var direction: MyUndefOr[String] = js.native
 
     /** A disabled dropdown menu or item does not allow user interaction. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** An errored dropdown can alert a user to a problem. */
-    var error: js.UndefOr[Boolean] = js.native
+    var error: MyUndefOr[Boolean] = js.native
 
     /** A dropdown menu can contain floated content. */
-    var floating: js.UndefOr[Boolean] = js.native
+    var floating: MyUndefOr[Boolean] = js.native
 
     /** A dropdown can take the full width of its parent */
-    var fluid: js.UndefOr[Boolean] = js.native
+    var fluid: MyUndefOr[Boolean] = js.native
 
     /** A dropdown menu can contain a header. */
-    var header: js.UndefOr[React.Node] = js.native
+    var header: MyUndefOr[React.Node] = js.native
 
     /** Shorthand for Icon. */
-    var icon: js.UndefOr[suiraw.SemanticShorthandItemS[IconProps]] = js.native
+    var icon: MyUndefOr[suiraw.SemanticShorthandItemS[IconProps]] = js.native
 
     /** A dropdown can be formatted to appear inline in other content. */
-    var inline: js.UndefOr[Boolean] = js.native
+    var inline: MyUndefOr[Boolean] = js.native
 
     /** A dropdown can be formatted as a Menu item. */
-    var item: js.UndefOr[Boolean] = js.native
+    var item: MyUndefOr[Boolean] = js.native
 
     /** A dropdown can be labeled. */
-    var labeled: js.UndefOr[Boolean] = js.native
+    var labeled: MyUndefOr[Boolean] = js.native
 
     /** A dropdown can defer rendering its options until it is open. */
-    var lazyLoad: js.UndefOr[Boolean] = js.native
+    var lazyLoad: MyUndefOr[Boolean] = js.native
 
     /** A dropdown can show that it is currently loading data. */
-    var loading: js.UndefOr[Boolean] = js.native
+    var loading: MyUndefOr[Boolean] = js.native
 
     /** The minimum characters for a search to begin showing results. */
-    var minCharacters: js.UndefOr[Double] = js.native
+    var minCharacters: MyUndefOr[Double] = js.native
 
     /** A selection dropdown can allow multiple selections. */
-    var multiple: js.UndefOr[Boolean] = js.native
+    var multiple: MyUndefOr[Boolean] = js.native
 
     /** Message to display when there are no results. */
-    var noResultsMessage: js.UndefOr[React.Node] = js.native
+    var noResultsMessage: MyUndefOr[React.Node] = js.native
 
     /**
      * Called when a user adds a new item. Use this to update the options list.
@@ -277,7 +277,7 @@ object Dropdown {
      * @param {object}
      *   data - All props and the new item's value.
      */
-    var onAddItem: js.UndefOr[RawOnAddItem] = js.native
+    var onAddItem: MyUndefOr[RawOnAddItem] = js.native
 
     /**
      * Called on blur.
@@ -287,7 +287,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onBlur: js.UndefOr[RawOnBlur] = js.native
+    var onBlur: MyUndefOr[RawOnBlur] = js.native
 
     /**
      * Called when the user attempts to change the value.
@@ -297,7 +297,7 @@ object Dropdown {
      * @param {object}
      *   data - All props and proposed value.
      */
-    var onChange: js.UndefOr[RawOnChange] = js.undefined
+    var onChange: MyUndefOr[RawOnChange] = MyUndefOr.undefined
 
     /**
      * Called on click.
@@ -307,7 +307,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onClick: js.UndefOr[RawOnClick]
+    var onClick: MyUndefOr[RawOnClick]
 
     /**
      * Called when a close event happens.
@@ -317,7 +317,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onClose: js.UndefOr[RawOnClose] = js.undefined
+    var onClose: MyUndefOr[RawOnClose] = MyUndefOr.undefined
 
     /**
      * Called on focus.
@@ -327,7 +327,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onFocus: js.UndefOr[RawOnFocus] = js.undefined
+    var onFocus: MyUndefOr[RawOnFocus] = MyUndefOr.undefined
 
     /**
      * Called when a multi-select label is clicked.
@@ -337,7 +337,7 @@ object Dropdown {
      * @param {object}
      *   data - All label props.
      */
-    var onLabelClick: js.UndefOr[RawOnLabelClick] = js.undefined
+    var onLabelClick: MyUndefOr[RawOnLabelClick] = MyUndefOr.undefined
 
     /**
      * Called on mousedown.
@@ -347,7 +347,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onMouseDown: js.UndefOr[RawOnMouseDown] = js.undefined
+    var onMouseDown: MyUndefOr[RawOnMouseDown] = MyUndefOr.undefined
 
     /**
      * Called when an open event happens.
@@ -357,7 +357,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onOpen: js.UndefOr[RawOnOpen] = js.undefined
+    var onOpen: MyUndefOr[RawOnOpen] = MyUndefOr.undefined
 
     /**
      * Called on search input change.
@@ -367,22 +367,22 @@ object Dropdown {
      * @param {object}
      *   data - All props, includes current value of searchQuery.
      */
-    var onSearchChange: js.UndefOr[RawOnSearchChange] = js.undefined
+    var onSearchChange: MyUndefOr[RawOnSearchChange] = MyUndefOr.undefined
 
     /** Controls whether or not the dropdown menu is displayed. */
-    var open: js.UndefOr[Boolean] = js.native
+    var open: MyUndefOr[Boolean] = js.native
 
     /** Whether or not the menu should open when the dropdown is focused. */
-    var openOnFocus: js.UndefOr[Boolean] = js.native
+    var openOnFocus: MyUndefOr[Boolean] = js.native
 
     /** Array of Dropdown.Item props e.g. `{ text: '', value: '' }` */
-    var options: js.UndefOr[js.Array[DropdownItem.DropdownItemProps]] = js.native
+    var options: MyUndefOr[js.Array[DropdownItem.DropdownItemProps]] = js.native
 
     /** Placeholder text. */
-    var placeholder: js.UndefOr[String] = js.native
+    var placeholder: MyUndefOr[String] = js.native
 
     /** A dropdown can be formatted so that its menu is pointing. */
-    var pointing: js.UndefOr[Boolean | String] = js.native
+    var pointing: MyUndefOr[Boolean | String] = js.native
 
     /**
      * Mapped over the active items and returns shorthand for the active item Labels. Only applies
@@ -397,61 +397,61 @@ object Dropdown {
      * @return
      *   {*} Shorthand for a Label.
      */
-    var renderLabel: js.UndefOr[RawRenderLabel] = js.native
+    var renderLabel: MyUndefOr[RawRenderLabel] = js.native
 
     /** A dropdown can have its menu scroll. */
-    var scrolling: js.UndefOr[Boolean] = js.native
+    var scrolling: MyUndefOr[Boolean] = js.native
 
     /**
      * A selection dropdown can allow a user to search through a large list of choices. Pass a
      * function here to replace the default search.
      */
-    var search: js.UndefOr[Boolean | RawSearchFunction] = js.native
+    var search: MyUndefOr[Boolean | RawSearchFunction] = js.native
 
     /** A shorthand for a search input. */
-    var searchInput: js.UndefOr[React.Node] = js.native
+    var searchInput: MyUndefOr[React.Node] = js.native
 
     /** Current value of searchQuery. Creates a controlled component. */
-    var searchQuery: js.UndefOr[String] = js.native
+    var searchQuery: MyUndefOr[String] = js.native
 
     /** Define whether the highlighted item should be selected on blur. */
-    var selectOnBlur: js.UndefOr[Boolean] = js.native
+    var selectOnBlur: MyUndefOr[Boolean] = js.native
 
     /**
      * Whether dropdown should select new option when using keyboard shortcuts. Setting to false
      * will require enter or left click to confirm a choice.
      */
-    var selectOnNavigation: js.UndefOr[Boolean] = js.native
+    var selectOnNavigation: MyUndefOr[Boolean] = js.native
 
     /** Currently selected label in multi-select. */
-    var selectedLabel: js.UndefOr[Double | String]
+    var selectedLabel: MyUndefOr[Double | String]
 
     /** A dropdown can be used to select between choices in a form. */
-    var selection: js.UndefOr[Boolean]
+    var selection: MyUndefOr[Boolean]
 
     /** A simple dropdown can open without Javascript. */
-    var simple: js.UndefOr[Boolean] = js.native
+    var simple: MyUndefOr[Boolean] = js.native
 
     /** A dropdown can receive focus. */
-    var tabIndex: js.UndefOr[String | Double] = js.native
+    var tabIndex: MyUndefOr[String | Double] = js.native
 
     /** The text displayed in the dropdown, usually for the active item. */
-    var text: js.UndefOr[String] = js.native
+    var text: MyUndefOr[String] = js.native
 
     /** Custom element to trigger the menu to become visible. Takes place of 'text'. */
-    var trigger: js.UndefOr[React.Node]
+    var trigger: MyUndefOr[React.Node]
 
     /** Current value or value array if multiple. Creates a controlled component. */
-    var value: js.UndefOr[Value] = js.native
+    var value: MyUndefOr[Value] = js.native
 
     /** Controls whether the dropdown will open upward. */
-    var upward: js.UndefOr[Boolean] = js.native
+    var upward: MyUndefOr[Boolean] = js.native
 
     /**
      * A dropdown will go to the last element when ArrowUp is pressed on the first, or go to the
      * first when ArrowDown is pressed on the last( aka infinite selection )
      */
-    var wrapSelection: js.UndefOr[Boolean] = js.native
+    var wrapSelection: MyUndefOr[Boolean] = js.native
   }
 
   def props(q: Dropdown): DropdownProps =
@@ -533,80 +533,80 @@ object Dropdown {
     )
 
   def rawprops(
-    as:                   js.UndefOr[AsC] = js.undefined,
-    additionLabel:        js.UndefOr[AdditionLabel] = js.undefined,
-    additionPosition:     js.UndefOr[AdditionPosition] = js.undefined,
-    allowAdditions:       js.UndefOr[Boolean] = js.undefined,
-    basic:                js.UndefOr[Boolean] = js.undefined,
-    button:               js.UndefOr[Boolean] = js.undefined,
-    className:            js.UndefOr[String] = js.undefined,
-    clazz:                js.UndefOr[Css] = js.undefined,
-    clearable:            js.UndefOr[Boolean] = js.undefined,
-    closeOnBlur:          js.UndefOr[Boolean] = js.undefined,
-    closeOnEscape:        js.UndefOr[Boolean] = js.undefined,
-    closeOnChange:        js.UndefOr[Boolean] = js.undefined,
-    compact:              js.UndefOr[Boolean] = js.undefined,
-    deburr:               js.UndefOr[Boolean] = js.undefined,
-    defaultOpen:          js.UndefOr[Boolean] = js.undefined,
-    defaultSearchQuery:   js.UndefOr[String] = js.undefined,
-    defaultSelectedLabel: js.UndefOr[Double | String] = js.undefined,
-    defaultUpward:        js.UndefOr[Boolean] = js.undefined,
-    defaultValue:         js.UndefOr[Value] = js.undefined,
-    direction:            js.UndefOr[Direction] = js.undefined,
-    disabled:             js.UndefOr[Boolean] = js.undefined,
-    error:                js.UndefOr[Boolean] = js.undefined,
-    floating:             js.UndefOr[Boolean] = js.undefined,
-    fluid:                js.UndefOr[Boolean] = js.undefined,
-    header:               js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    icon:                 js.UndefOr[ShorthandS[Icon]] = js.undefined,
-    inline:               js.UndefOr[Boolean] = js.undefined,
-    item:                 js.UndefOr[Boolean] = js.undefined,
-    labeled:              js.UndefOr[Boolean] = js.undefined,
-    lazyLoad:             js.UndefOr[Boolean] = js.undefined,
-    loading:              js.UndefOr[Boolean] = js.undefined,
-    minCharacters:        js.UndefOr[Double] = js.undefined,
-    multiple:             js.UndefOr[Boolean] = js.undefined,
-    noResultsMessage:     js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    onAddItem:            js.UndefOr[OnAddItem] = js.undefined,
-    onBlurE:              js.UndefOr[OnBlur] = js.undefined,
-    onBlur:               js.UndefOr[Callback] = js.undefined,
-    onClickE:             js.UndefOr[OnClick] = js.undefined,
-    onClick:              js.UndefOr[Callback] = js.undefined,
-    onChangeE:            js.UndefOr[OnChangeE] = js.undefined,
-    onChange:             js.UndefOr[OnChange] = js.undefined,
-    onCloseE:             js.UndefOr[OnClose] = js.undefined,
-    onClose:              js.UndefOr[Callback] = js.undefined,
-    onFocusE:             js.UndefOr[OnFocus] = js.undefined,
-    onFocus:              js.UndefOr[Callback] = js.undefined,
-    onLabelClickE:        js.UndefOr[OnLabelClick] = js.undefined,
-    onLabelClick:         js.UndefOr[Callback] = js.undefined,
-    onMouseDownE:         js.UndefOr[OnMouseDown] = js.undefined,
-    onMouseDown:          js.UndefOr[Callback] = js.undefined,
-    onOpenE:              js.UndefOr[OnOpen] = js.undefined,
-    onOpen:               js.UndefOr[Callback] = js.undefined,
-    onSearchChangeE:      js.UndefOr[OnSearchChangeE] = js.undefined,
-    onSearchChange:       js.UndefOr[OnSearchChange] = js.undefined,
-    open:                 js.UndefOr[Boolean] = js.undefined,
-    openOnFocus:          js.UndefOr[Boolean] = js.undefined,
-    options:              js.UndefOr[Seq[DropdownItem]] = js.undefined,
-    placeholder:          js.UndefOr[String] = js.undefined,
-    pointing:             js.UndefOr[Pointing] = js.undefined,
-    renderLabel:          js.UndefOr[RenderLabel] = js.undefined,
-    scrolling:            js.UndefOr[Boolean] = js.undefined,
-    search:               js.UndefOr[Boolean | SearchFunction] = js.undefined,
-    searchInput:          js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    searchQuery:          js.UndefOr[String] = js.undefined,
-    selectOnBlur:         js.UndefOr[Boolean] = js.undefined,
-    selectOnNavigation:   js.UndefOr[Boolean] = js.undefined,
-    selectedLabel:        js.UndefOr[Double | String] = js.undefined,
-    selection:            js.UndefOr[Boolean] = js.undefined,
-    simple:               js.UndefOr[Boolean] = js.undefined,
-    tabIndex:             js.UndefOr[String | Double] = js.undefined,
-    text:                 js.UndefOr[String] = js.undefined,
-    trigger:              js.UndefOr[VdomNode] = js.undefined,
-    value:                js.UndefOr[Value] = js.undefined,
-    upward:               js.UndefOr[Boolean] = js.undefined,
-    wrapSelection:        js.UndefOr[Boolean] = js.undefined
+    as:                   MyUndefOr[AsC] = MyUndefOr.undefined,
+    additionLabel:        MyUndefOr[AdditionLabel] = MyUndefOr.undefined,
+    additionPosition:     MyUndefOr[AdditionPosition] = MyUndefOr.undefined,
+    allowAdditions:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    basic:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+    button:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className:            MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:                MyUndefOr[Css] = MyUndefOr.undefined,
+    clearable:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+    closeOnBlur:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+    closeOnEscape:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+    closeOnChange:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+    compact:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+    deburr:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+    defaultOpen:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+    defaultSearchQuery:   MyUndefOr[String] = MyUndefOr.undefined,
+    defaultSelectedLabel: MyUndefOr[Double | String] = MyUndefOr.undefined,
+    defaultUpward:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+    defaultValue:         MyUndefOr[Value] = MyUndefOr.undefined,
+    direction:            MyUndefOr[Direction] = MyUndefOr.undefined,
+    disabled:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+    error:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+    floating:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+    fluid:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+    header:               MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    icon:                 MyUndefOr[ShorthandS[Icon]] = MyUndefOr.undefined,
+    inline:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+    item:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+    labeled:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+    lazyLoad:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+    loading:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+    minCharacters:        MyUndefOr[Double] = MyUndefOr.undefined,
+    multiple:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+    noResultsMessage:     MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    onAddItem:            MyUndefOr[OnAddItem] = MyUndefOr.undefined,
+    onBlurE:              MyUndefOr[OnBlur] = MyUndefOr.undefined,
+    onBlur:               MyUndefOr[Callback] = MyUndefOr.undefined,
+    onClickE:             MyUndefOr[OnClick] = MyUndefOr.undefined,
+    onClick:              MyUndefOr[Callback] = MyUndefOr.undefined,
+    onChangeE:            MyUndefOr[OnChangeE] = MyUndefOr.undefined,
+    onChange:             MyUndefOr[OnChange] = MyUndefOr.undefined,
+    onCloseE:             MyUndefOr[OnClose] = MyUndefOr.undefined,
+    onClose:              MyUndefOr[Callback] = MyUndefOr.undefined,
+    onFocusE:             MyUndefOr[OnFocus] = MyUndefOr.undefined,
+    onFocus:              MyUndefOr[Callback] = MyUndefOr.undefined,
+    onLabelClickE:        MyUndefOr[OnLabelClick] = MyUndefOr.undefined,
+    onLabelClick:         MyUndefOr[Callback] = MyUndefOr.undefined,
+    onMouseDownE:         MyUndefOr[OnMouseDown] = MyUndefOr.undefined,
+    onMouseDown:          MyUndefOr[Callback] = MyUndefOr.undefined,
+    onOpenE:              MyUndefOr[OnOpen] = MyUndefOr.undefined,
+    onOpen:               MyUndefOr[Callback] = MyUndefOr.undefined,
+    onSearchChangeE:      MyUndefOr[OnSearchChangeE] = MyUndefOr.undefined,
+    onSearchChange:       MyUndefOr[OnSearchChange] = MyUndefOr.undefined,
+    open:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+    openOnFocus:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+    options:              MyUndefOr[Seq[DropdownItem]] = MyUndefOr.undefined,
+    placeholder:          MyUndefOr[String] = MyUndefOr.undefined,
+    pointing:             MyUndefOr[Pointing] = MyUndefOr.undefined,
+    renderLabel:          MyUndefOr[RenderLabel] = MyUndefOr.undefined,
+    scrolling:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+    search:               MyUndefOr[Boolean | SearchFunction] = MyUndefOr.undefined,
+    searchInput:          MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    searchQuery:          MyUndefOr[String] = MyUndefOr.undefined,
+    selectOnBlur:         MyUndefOr[Boolean] = MyUndefOr.undefined,
+    selectOnNavigation:   MyUndefOr[Boolean] = MyUndefOr.undefined,
+    selectedLabel:        MyUndefOr[Double | String] = MyUndefOr.undefined,
+    selection:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+    simple:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+    tabIndex:             MyUndefOr[String | Double] = MyUndefOr.undefined,
+    text:                 MyUndefOr[String] = MyUndefOr.undefined,
+    trigger:              MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    value:                MyUndefOr[Value] = MyUndefOr.undefined,
+    upward:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+    wrapSelection:        MyUndefOr[Boolean] = MyUndefOr.undefined
   ): DropdownProps = {
     val p = as.toJsObject[DropdownProps]
     as.toJs.foreach(v => p.as = v)

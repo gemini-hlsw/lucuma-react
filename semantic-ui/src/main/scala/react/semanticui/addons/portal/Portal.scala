@@ -12,29 +12,29 @@ import react.common._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Portal(
-  closeOnDocumentClick:     js.UndefOr[Boolean] = js.undefined,
-  closeOnEscape:            js.UndefOr[Boolean] = js.undefined,
-  closeOnPortalMouseLeave:  js.UndefOr[Boolean] = js.undefined,
-  closeOnTriggerBlur:       js.UndefOr[Boolean] = js.undefined,
-  closeOnTriggerClick:      js.UndefOr[Boolean] = js.undefined,
-  closeOnTriggerMouseLeave: js.UndefOr[Boolean] = js.undefined,
-  defaultOpen:              js.UndefOr[Boolean] = js.undefined,
-  eventPool:                js.UndefOr[String] = js.undefined,
-  mouseEnterDelay:          js.UndefOr[Double] = js.undefined,
-  mouseLeaveDelay:          js.UndefOr[Double] = js.undefined,
-  onCloseE:                 js.UndefOr[Portal.OnClose] = js.undefined,
-  onClose:                  js.UndefOr[Callback] = js.undefined,
-  onMountE:                 js.UndefOr[Portal.OnMount] = js.undefined,
-  onMount:                  js.UndefOr[Callback] = js.undefined,
-  onOpenE:                  js.UndefOr[Portal.OnOpen] = js.undefined,
-  onOpen:                   js.UndefOr[Callback] = js.undefined,
-  onUnmountE:               js.UndefOr[Portal.OnUnmount] = js.undefined,
-  onUnmount:                js.UndefOr[Callback] = js.undefined,
-  open:                     js.UndefOr[Boolean] = js.undefined,
-  openOnTriggerClick:       js.UndefOr[Boolean] = js.undefined,
-  openOnTriggerFocus:       js.UndefOr[Boolean] = js.undefined,
-  openOnTriggerMouseEnter:  js.UndefOr[Boolean] = js.undefined,
-  trigger:                  js.UndefOr[VdomNode] = js.undefined,
+  closeOnDocumentClick:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+  closeOnEscape:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+  closeOnPortalMouseLeave:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  closeOnTriggerBlur:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+  closeOnTriggerClick:      MyUndefOr[Boolean] = MyUndefOr.undefined,
+  closeOnTriggerMouseLeave: MyUndefOr[Boolean] = MyUndefOr.undefined,
+  defaultOpen:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  eventPool:                MyUndefOr[String] = MyUndefOr.undefined,
+  mouseEnterDelay:          MyUndefOr[Double] = MyUndefOr.undefined,
+  mouseLeaveDelay:          MyUndefOr[Double] = MyUndefOr.undefined,
+  onCloseE:                 MyUndefOr[Portal.OnClose] = MyUndefOr.undefined,
+  onClose:                  MyUndefOr[Callback] = MyUndefOr.undefined,
+  onMountE:                 MyUndefOr[Portal.OnMount] = MyUndefOr.undefined,
+  onMount:                  MyUndefOr[Callback] = MyUndefOr.undefined,
+  onOpenE:                  MyUndefOr[Portal.OnOpen] = MyUndefOr.undefined,
+  onOpen:                   MyUndefOr[Callback] = MyUndefOr.undefined,
+  onUnmountE:               MyUndefOr[Portal.OnUnmount] = MyUndefOr.undefined,
+  onUnmount:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  open:                     MyUndefOr[Boolean] = MyUndefOr.undefined,
+  openOnTriggerClick:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+  openOnTriggerFocus:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+  openOnTriggerMouseEnter:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  trigger:                  MyUndefOr[VdomNode] = MyUndefOr.undefined,
   override val modifiers:   Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Portal.PortalProps, Portal] {
   override protected def cprops                     = Portal.props(this)
@@ -65,44 +65,44 @@ object Portal {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Controls whether or not the portal should close on a click outside. */
-    var closeOnDocumentClick: js.UndefOr[Boolean] = js.undefined
+    var closeOnDocumentClick: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Controls whether or not the portal should close when escape is pressed is displayed. */
-    var closeOnEscape: js.UndefOr[Boolean] = js.undefined
+    var closeOnEscape: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /**
      * Controls whether or not the portal should close when mousing out of the portal. NOTE: This
      * will prevent `closeOnTriggerMouseLeave` when mousing over the gap from the trigger to the
      * portal.
      */
-    var closeOnPortalMouseLeave: js.UndefOr[Boolean] = js.undefined
+    var closeOnPortalMouseLeave: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Controls whether or not the portal should close on blur of the trigger. */
-    var closeOnTriggerBlur: js.UndefOr[Boolean] = js.undefined
+    var closeOnTriggerBlur: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Controls whether or not the portal should close on click of the trigger. */
-    var closeOnTriggerClick: js.UndefOr[Boolean] = js.undefined
+    var closeOnTriggerClick: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Controls whether or not the portal should close when mousing out of the trigger. */
-    var closeOnTriggerMouseLeave: js.UndefOr[Boolean] = js.undefined
+    var closeOnTriggerMouseLeave: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Initial value of open. */
-    var defaultOpen: js.UndefOr[Boolean] = js.undefined
+    var defaultOpen: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Event pool namespace that is used to handle component events. */
-    var eventPool: js.UndefOr[String] = js.undefined
+    var eventPool: MyUndefOr[String] = MyUndefOr.undefined
 
     /** The node where the portal should mount. */
-    var mountNode: js.UndefOr[Any] = js.undefined
+    var mountNode: MyUndefOr[Any] = MyUndefOr.undefined
 
     /** Milliseconds to wait before opening on mouse over */
-    var mouseEnterDelay: js.UndefOr[Double] = js.undefined
+    var mouseEnterDelay: MyUndefOr[Double] = MyUndefOr.undefined
 
     /** Milliseconds to wait before closing on mouse leave */
-    var mouseLeaveDelay: js.UndefOr[Double] = js.undefined
+    var mouseLeaveDelay: MyUndefOr[Double] = MyUndefOr.undefined
 
     /**
      * Called when a close event happens
@@ -112,7 +112,7 @@ object Portal {
      * @param {object}
      *   data - All props.
      */
-    var onClose: js.UndefOr[RawOnClose] = js.undefined
+    var onClose: MyUndefOr[RawOnClose] = MyUndefOr.undefined
 
     /**
      * Called when the portal is mounted on the DOM
@@ -121,7 +121,7 @@ object Portal {
      * @param {object}
      *   data - All props.
      */
-    var onMount: js.UndefOr[RawOnMount] = js.native
+    var onMount: MyUndefOr[RawOnMount] = js.native
 
     /**
      * Called when an open event happens
@@ -131,7 +131,7 @@ object Portal {
      * @param {object}
      *   data - All props.
      */
-    var onOpen: js.UndefOr[RawOnOpen] = js.undefined
+    var onOpen: MyUndefOr[RawOnOpen] = MyUndefOr.undefined
 
     /**
      * Called when the portal is unmounted from the DOM
@@ -140,25 +140,25 @@ object Portal {
      * @param {object}
      *   data - All props.
      */
-    var onUnmount: js.UndefOr[RawOnUnmount]
+    var onUnmount: MyUndefOr[RawOnUnmount]
 
     /** Controls whether or not the portal is displayed. */
-    var open: js.UndefOr[Boolean] = js.undefined
+    var open: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Controls whether or not the portal should open when the trigger is clicked. */
-    var openOnTriggerClick: js.UndefOr[Boolean] = js.undefined
+    var openOnTriggerClick: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Controls whether or not the portal should open on focus of the trigger. */
-    var openOnTriggerFocus: js.UndefOr[Boolean] = js.undefined
+    var openOnTriggerFocus: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Controls whether or not the portal should open when mousing over the trigger. */
-    var openOnTriggerMouseEnter: js.UndefOr[Boolean] = js.undefined
+    var openOnTriggerMouseEnter: MyUndefOr[Boolean] = MyUndefOr.undefined
 
     /** Element to be rendered in-place where the portal is defined. */
-    var trigger: js.UndefOr[React.Node] = js.undefined
+    var trigger: MyUndefOr[React.Node] = MyUndefOr.undefined
 
     // /** Called with a ref to the trigger node. */
-    // var triggerRef: js.UndefOr[Ref]
+    // var triggerRef: MyUndefOr[Ref]
   }
 
   def props(q: Portal): PortalProps =
@@ -189,29 +189,29 @@ object Portal {
     )
 
   def rawprops(
-    closeOnDocumentClick:     js.UndefOr[Boolean] = js.undefined,
-    closeOnEscape:            js.UndefOr[Boolean] = js.undefined,
-    closeOnPortalMouseLeave:  js.UndefOr[Boolean] = js.undefined,
-    closeOnTriggerBlur:       js.UndefOr[Boolean] = js.undefined,
-    closeOnTriggerClick:      js.UndefOr[Boolean] = js.undefined,
-    closeOnTriggerMouseLeave: js.UndefOr[Boolean] = js.undefined,
-    defaultOpen:              js.UndefOr[Boolean] = js.undefined,
-    eventPool:                js.UndefOr[String] = js.undefined,
-    mouseEnterDelay:          js.UndefOr[Double] = js.undefined,
-    mouseLeaveDelay:          js.UndefOr[Double] = js.undefined,
-    onCloseE:                 js.UndefOr[Portal.OnClose] = js.undefined,
-    onClose:                  js.UndefOr[Callback] = js.undefined,
-    onMountE:                 js.UndefOr[Portal.OnMount] = js.undefined,
-    onMount:                  js.UndefOr[Callback] = js.undefined,
-    onOpenE:                  js.UndefOr[Portal.OnOpen] = js.undefined,
-    onOpen:                   js.UndefOr[Callback] = js.undefined,
-    onUnmountE:               js.UndefOr[Portal.OnUnmount] = js.undefined,
-    onUnmount:                js.UndefOr[Callback] = js.undefined,
-    open:                     js.UndefOr[Boolean] = js.undefined,
-    openOnTriggerClick:       js.UndefOr[Boolean] = js.undefined,
-    openOnTriggerFocus:       js.UndefOr[Boolean] = js.undefined,
-    openOnTriggerMouseEnter:  js.UndefOr[Boolean] = js.undefined,
-    trigger:                  js.UndefOr[VdomNode] = js.undefined
+    closeOnDocumentClick:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    closeOnEscape:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+    closeOnPortalMouseLeave:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    closeOnTriggerBlur:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    closeOnTriggerClick:      MyUndefOr[Boolean] = MyUndefOr.undefined,
+    closeOnTriggerMouseLeave: MyUndefOr[Boolean] = MyUndefOr.undefined,
+    defaultOpen:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+    eventPool:                MyUndefOr[String] = MyUndefOr.undefined,
+    mouseEnterDelay:          MyUndefOr[Double] = MyUndefOr.undefined,
+    mouseLeaveDelay:          MyUndefOr[Double] = MyUndefOr.undefined,
+    onCloseE:                 MyUndefOr[Portal.OnClose] = MyUndefOr.undefined,
+    onClose:                  MyUndefOr[Callback] = MyUndefOr.undefined,
+    onMountE:                 MyUndefOr[Portal.OnMount] = MyUndefOr.undefined,
+    onMount:                  MyUndefOr[Callback] = MyUndefOr.undefined,
+    onOpenE:                  MyUndefOr[Portal.OnOpen] = MyUndefOr.undefined,
+    onOpen:                   MyUndefOr[Callback] = MyUndefOr.undefined,
+    onUnmountE:               MyUndefOr[Portal.OnUnmount] = MyUndefOr.undefined,
+    onUnmount:                MyUndefOr[Callback] = MyUndefOr.undefined,
+    open:                     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    openOnTriggerClick:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    openOnTriggerFocus:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    openOnTriggerMouseEnter:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    trigger:                  MyUndefOr[VdomNode] = MyUndefOr.undefined
   ): PortalProps = {
     val p = (new js.Object).asInstanceOf[PortalProps]
     closeOnDocumentClick.foreach(v => p.closeOnDocumentClick = v)

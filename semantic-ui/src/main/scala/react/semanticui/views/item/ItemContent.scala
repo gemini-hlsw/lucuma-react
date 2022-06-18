@@ -14,15 +14,15 @@ import react.semanticui._
 import react.semanticui.{raw => suiraw}
 
 final case class ItemContent(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  description:            js.UndefOr[ShorthandS[ItemDescription]] = js.undefined,
-  extra:                  js.UndefOr[ShorthandS[ItemExtra]] = js.undefined,
-  header:                 js.UndefOr[ShorthandS[ItemHeader]] = js.undefined,
-  meta:                   js.UndefOr[ShorthandS[ItemMeta]] = js.undefined,
-  verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  description:            MyUndefOr[ShorthandS[ItemDescription]] = MyUndefOr.undefined,
+  extra:                  MyUndefOr[ShorthandS[ItemExtra]] = MyUndefOr.undefined,
+  header:                 MyUndefOr[ShorthandS[ItemHeader]] = MyUndefOr.undefined,
+  meta:                   MyUndefOr[ShorthandS[ItemMeta]] = MyUndefOr.undefined,
+  verticalAlign:          MyUndefOr[SemanticVerticalAlignment] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[ItemContent.ItemContentProps, ItemContent] {
   override protected def cprops                     = ItemContent.props(this)
@@ -46,32 +46,32 @@ object ItemContent {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** Shorthand for ItemDescription component. */
     var description
-      : js.UndefOr[suiraw.SemanticShorthandItemS[ItemDescription.ItemDescriptionProps]] = js.native
+      : MyUndefOr[suiraw.SemanticShorthandItemS[ItemDescription.ItemDescriptionProps]] = js.native
 
     /** Shorthand for ItemExtra component. */
-    var extra: js.UndefOr[suiraw.SemanticShorthandItemS[ItemExtra.ItemExtraProps]] = js.native
+    var extra: MyUndefOr[suiraw.SemanticShorthandItemS[ItemExtra.ItemExtraProps]] = js.native
 
     /** Shorthand for ItemHeader component. */
-    var header: js.UndefOr[suiraw.SemanticShorthandItemS[ItemHeader.ItemHeaderProps]] = js.native
+    var header: MyUndefOr[suiraw.SemanticShorthandItemS[ItemHeader.ItemHeaderProps]] = js.native
 
     /** Shorthand for ItemMeta component. */
-    var meta: js.UndefOr[suiraw.SemanticShorthandItemS[ItemMeta.ItemMetaProps]] = js.native
+    var meta: MyUndefOr[suiraw.SemanticShorthandItemS[ItemMeta.ItemMetaProps]] = js.native
 
     /** Content can specify its vertical alignment. */
-    var verticalAlign: js.UndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
+    var verticalAlign: MyUndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
   }
 
   def props(q: ItemContent): ItemContentProps =
@@ -87,15 +87,15 @@ object ItemContent {
     )
 
   def rawprops(
-    as:            js.UndefOr[AsC] = js.undefined,
-    className:     js.UndefOr[String] = js.undefined,
-    clazz:         js.UndefOr[Css] = js.undefined,
-    content:       js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    description:   js.UndefOr[ShorthandS[ItemDescription]] = js.undefined,
-    extra:         js.UndefOr[ShorthandS[ItemExtra]] = js.undefined,
-    header:        js.UndefOr[ShorthandS[ItemHeader]] = js.undefined,
-    meta:          js.UndefOr[ShorthandS[ItemMeta]] = js.undefined,
-    verticalAlign: js.UndefOr[SemanticVerticalAlignment] = js.undefined
+    as:            MyUndefOr[AsC] = MyUndefOr.undefined,
+    className:     MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:         MyUndefOr[Css] = MyUndefOr.undefined,
+    content:       MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    description:   MyUndefOr[ShorthandS[ItemDescription]] = MyUndefOr.undefined,
+    extra:         MyUndefOr[ShorthandS[ItemExtra]] = MyUndefOr.undefined,
+    header:        MyUndefOr[ShorthandS[ItemHeader]] = MyUndefOr.undefined,
+    meta:          MyUndefOr[ShorthandS[ItemMeta]] = MyUndefOr.undefined,
+    verticalAlign: MyUndefOr[SemanticVerticalAlignment] = MyUndefOr.undefined
   ): ItemContentProps = {
     val p = as.toJsObject[ItemContentProps]
     as.toJs.foreach(v => p.as = v)

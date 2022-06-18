@@ -10,8 +10,8 @@ import japgolly.scalajs.react.vdom.TagMod
 import react.common._
 
 final case class Dimmer(
-  active:                 js.UndefOr[Boolean] = js.undefined,
-  page:                   js.UndefOr[Boolean] = js.undefined,
+  active:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  page:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[Dimmer.DimmerProps, Dimmer] {
   override protected def cprops                     = Dimmer.props(this)
@@ -33,18 +33,18 @@ object Dimmer {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An active dimmer will dim its parent container. */
-    var active: js.UndefOr[Boolean] = js.native
+    var active: MyUndefOr[Boolean] = js.native
 
     /** A dimmer can be formatted to be fixed to the page. */
-    var page: js.UndefOr[Boolean] = js.native
+    var page: MyUndefOr[Boolean] = js.native
   }
 
   def props(q: Dimmer): DimmerProps =
     rawprops(q.active, q.page)
 
   def rawprops(
-    active: js.UndefOr[Boolean] = js.undefined,
-    page:   js.UndefOr[Boolean] = js.undefined
+    active: MyUndefOr[Boolean] = MyUndefOr.undefined,
+    page:   MyUndefOr[Boolean] = MyUndefOr.undefined
   ): DimmerProps = {
     val p = (new js.Object).asInstanceOf[DimmerProps]
     active.foreach(v => p.active = v)

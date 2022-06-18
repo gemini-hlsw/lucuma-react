@@ -18,29 +18,29 @@ import japgolly.scalajs.react.vdom.TagMod
 import react.semanticui.elements.label.Label
 
 final case class Input(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  action:                 js.UndefOr[ShorthandSB[VdomNode]] = js.undefined,
-  actionPosition:         js.UndefOr[ActionPosition] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  error:                  js.UndefOr[Boolean] = js.undefined,
-  fluid:                  js.UndefOr[Boolean] = js.undefined,
-  focus:                  js.UndefOr[Boolean] = js.undefined,
-  icon:                   js.UndefOr[ShorthandSB[Icon]] = js.undefined,
-  iconPosition:           js.UndefOr[IconPosition] = js.undefined,
-  input:                  js.UndefOr[VdomNode] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  label:                  js.UndefOr[ShorthandS[Label]] = js.undefined,
-  labelPosition:          js.UndefOr[LabelPosition] = js.undefined,
-  loading:                js.UndefOr[Boolean] = js.undefined,
-  onChangeE:              js.UndefOr[Input.OnChange] = js.undefined,
-  onChange:               js.UndefOr[Callback] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  tabIndex:               js.UndefOr[String | Double] = js.undefined,
-  transparent:            js.UndefOr[Boolean] = js.undefined,
-  tpe:                    js.UndefOr[String] = js.undefined,
-  value:                  js.UndefOr[String] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  action:                 MyUndefOr[ShorthandSB[VdomNode]] = MyUndefOr.undefined,
+  actionPosition:         MyUndefOr[ActionPosition] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  error:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  fluid:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  focus:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  icon:                   MyUndefOr[ShorthandSB[Icon]] = MyUndefOr.undefined,
+  iconPosition:           MyUndefOr[IconPosition] = MyUndefOr.undefined,
+  input:                  MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  label:                  MyUndefOr[ShorthandS[Label]] = MyUndefOr.undefined,
+  labelPosition:          MyUndefOr[LabelPosition] = MyUndefOr.undefined,
+  loading:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  onChangeE:              MyUndefOr[Input.OnChange] = MyUndefOr.undefined,
+  onChange:               MyUndefOr[Callback] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  tabIndex:               MyUndefOr[String | Double] = MyUndefOr.undefined,
+  transparent:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+  tpe:                    MyUndefOr[String] = MyUndefOr.undefined,
+  value:                  MyUndefOr[String] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Input.InputProps, Input] {
   override protected def cprops                     = Input.props(this)
@@ -64,52 +64,52 @@ object Input {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** An Input can be formatted to alert the user to an action they may perform. */
-    var action: js.UndefOr[suiraw.SemanticShorthandContentB] = js.native
+    var action: MyUndefOr[suiraw.SemanticShorthandContentB] = js.native
 
     /** An action can appear along side an Input on the left or right. */
-    var actionPosition: js.UndefOr[String] = js.native
+    var actionPosition: MyUndefOr[String] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** An Input field can show that it is disabled. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** An Input field can show the data contains errors. */
-    var error: js.UndefOr[Boolean] = js.native
+    var error: MyUndefOr[Boolean] = js.native
 
     /** Take on the size of its container. */
-    var fluid: js.UndefOr[Boolean] = js.native
+    var fluid: MyUndefOr[Boolean] = js.native
 
     /** An Input field can show a user is currently interacting with it. */
-    var focus: js.UndefOr[Boolean] = js.native
+    var focus: MyUndefOr[Boolean] = js.native
 
     /** Optional Icon to display inside the Input. */
-    var icon: js.UndefOr[suiraw.SemanticShorthandItemSB[Icon.IconProps]] = js.native
+    var icon: MyUndefOr[suiraw.SemanticShorthandItemSB[Icon.IconProps]] = js.native
 
     /** An Icon can appear inside an Input on the left or right. */
-    var iconPosition: js.UndefOr[String]
+    var iconPosition: MyUndefOr[String]
 
     /** Shorthand for creating the HTML Input. */
-    var input: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var input: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** Format to appear on dark backgrounds. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** Optional Label to display along side the Input. */
-    var label: js.UndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]] = js.native
+    var label: MyUndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]] = js.native
 
     /** A Label can appear outside an Input on the left or right. */
-    var labelPosition: js.UndefOr[String] = js.native
+    var labelPosition: MyUndefOr[String] = js.native
 
     /** An Icon Input field can show that it is currently loading data. */
-    var loading: js.UndefOr[Boolean] = js.native
+    var loading: MyUndefOr[Boolean] = js.native
 
     /**
      * Called on change.
@@ -119,22 +119,22 @@ object Input {
      * @param {object}
      *   data - All props and a proposed value.
      */
-    var onChange: js.UndefOr[js.Function1[ReactEventFromInput, Unit]]
+    var onChange: MyUndefOr[js.Function1[ReactEventFromInput, Unit]]
 
     /** An Input can vary in size. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
 
     /** An Input can receive focus. */
-    var tabIndex: js.UndefOr[String | Double] = js.native
+    var tabIndex: MyUndefOr[String | Double] = js.native
 
     /** Transparent Input has no background. */
-    var transparent: js.UndefOr[Boolean] = js.native
+    var transparent: MyUndefOr[Boolean] = js.native
 
     /** The HTML input type. */
-    var `type`: js.UndefOr[String] = js.native
+    var `type`: MyUndefOr[String] = js.native
 
     /** The HTML value. */
-    var value: js.UndefOr[String] = js.native
+    var value: MyUndefOr[String] = js.native
   }
 
   def props(

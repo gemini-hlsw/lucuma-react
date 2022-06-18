@@ -11,10 +11,10 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Flag(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  name:                   js.UndefOr[String] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  name:                   MyUndefOr[String] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[Flag.FlagProps, Flag] {
   override protected def cprops                     = Flag.props(this)
@@ -38,13 +38,13 @@ object Flag {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Flag name, can use the two digit country code, the full name, or a common alias. */
-    var name: js.UndefOr[String] = js.native
+    var name: MyUndefOr[String] = js.native
   }
 
   def props(

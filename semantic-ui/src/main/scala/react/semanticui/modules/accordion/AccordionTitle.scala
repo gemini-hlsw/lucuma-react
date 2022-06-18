@@ -17,15 +17,15 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class AccordionTitle(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  active:                 js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  icon:                   js.UndefOr[ShorthandS[Icon]] = js.undefined,
-  index:                  js.UndefOr[Double | String] = js.undefined,
-  onClickE:               js.UndefOr[AccordionTitle.OnClick] = js.undefined,
-  onClick:                js.UndefOr[Callback] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  active:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  icon:                   MyUndefOr[ShorthandS[Icon]] = MyUndefOr.undefined,
+  index:                  MyUndefOr[Double | String] = MyUndefOr.undefined,
+  onClickE:               MyUndefOr[AccordionTitle.OnClick] = MyUndefOr.undefined,
+  onClick:                MyUndefOr[Callback] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[AccordionTitle.AccordionTitleProps, AccordionTitle] {
   override protected def cprops                     = AccordionTitle.props(this)
@@ -50,25 +50,25 @@ object AccordionTitle {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Whether or not the title is in the open state. */
-    var active: js.UndefOr[Boolean] = js.native
+    var active: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[SemanticShorthandContent] = js.native
+    var content: MyUndefOr[SemanticShorthandContent] = js.native
 
     /** Shorthand for Icon. */
-    var icon: js.UndefOr[SemanticShorthandItemS[IconProps]] = js.native
+    var icon: MyUndefOr[SemanticShorthandItemS[IconProps]] = js.native
 
     /** AccordionTitle index inside Accordion. */
-    var index: js.UndefOr[Double | String] = js.native
+    var index: MyUndefOr[Double | String] = js.native
 
     /**
      * Called on click.
@@ -78,7 +78,7 @@ object AccordionTitle {
      * @param {object}
      *   data - All props.
      */
-    var onClick: js.UndefOr[RawOnClick]
+    var onClick: MyUndefOr[RawOnClick]
   }
 
   def props(q: AccordionTitle): AccordionTitleProps = {

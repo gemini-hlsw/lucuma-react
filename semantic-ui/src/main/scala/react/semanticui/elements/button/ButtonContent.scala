@@ -14,12 +14,12 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class ButtonContent(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  hidden:                 js.UndefOr[Boolean] = js.undefined,
-  visible:                js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  hidden:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  visible:                MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[ButtonContent.ButtonContentProps, ButtonContent] {
   override protected def cprops                     = ButtonContent.props(this)
@@ -42,23 +42,23 @@ object ButtonContent {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] =
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] =
       js.native
 
     /** Initially hidden, visible on hover. */
-    var hidden: js.UndefOr[Boolean] = js.native
+    var hidden: MyUndefOr[Boolean] = js.native
 
     /** Initially visible, hidden on hover. */
-    var visible: js.UndefOr[Boolean] = js.native
+    var visible: MyUndefOr[Boolean] = js.native
   }
 
   def props(
@@ -66,12 +66,12 @@ object ButtonContent {
   ): ButtonContentProps =
     rawprops(q.as, q.className, q.clazz, q.content, q.hidden, q.visible)
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    content:   js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    hidden:    js.UndefOr[Boolean] = js.undefined,
-    visible:   js.UndefOr[Boolean] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    content:   MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    hidden:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    visible:   MyUndefOr[Boolean] = MyUndefOr.undefined
   ): ButtonContentProps = {
     val p = as.toJsObject[ButtonContentProps]
     as.toJs.foreach(v => p.as = v)

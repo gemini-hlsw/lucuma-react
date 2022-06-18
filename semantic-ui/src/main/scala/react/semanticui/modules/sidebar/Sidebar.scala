@@ -16,20 +16,20 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Sidebar(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  animation:              js.UndefOr[SidebarAnimation] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
-  direction:              js.UndefOr[SidebarDirection] = js.undefined,
-  onHideE:                js.UndefOr[Sidebar.OnHide] = js.undefined,
-  onHide:                 js.UndefOr[Callback] = js.undefined,
-  onHidden:               js.UndefOr[Callback] = js.undefined,
-  onShow:                 js.UndefOr[Callback] = js.undefined,
-  onVisible:              js.UndefOr[Callback] = js.undefined,
-  target:                 js.UndefOr[Ref] = js.undefined,
-  visible:                js.UndefOr[Boolean] = js.undefined,
-  width:                  js.UndefOr[SidebarWidth] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  animation:              MyUndefOr[SidebarAnimation] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  direction:              MyUndefOr[SidebarDirection] = MyUndefOr.undefined,
+  onHideE:                MyUndefOr[Sidebar.OnHide] = MyUndefOr.undefined,
+  onHide:                 MyUndefOr[Callback] = MyUndefOr.undefined,
+  onHidden:               MyUndefOr[Callback] = MyUndefOr.undefined,
+  onShow:                 MyUndefOr[Callback] = MyUndefOr.undefined,
+  onVisible:              MyUndefOr[Callback] = MyUndefOr.undefined,
+  target:                 MyUndefOr[Ref] = MyUndefOr.undefined,
+  visible:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  width:                  MyUndefOr[SidebarWidth] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Sidebar.SidebarProps, Sidebar] {
   override protected def cprops                     = Sidebar.props(this)
@@ -51,19 +51,19 @@ object Sidebar {
 
     @JSBracketAccess
     def update(key: String, v: js.Any): Unit               = js.native
-    var as: js.UndefOr[AsT]                                = js.native
-    var animation: js.UndefOr[String]                      = js.native
-    var children: js.UndefOr[React.Node]                   = js.native
-    var className: js.UndefOr[String]                      = js.native
-    var content: js.UndefOr[SemanticShorthandContent]      = js.native
-    var direction: js.UndefOr[String]                      = js.native
-    var onHide: js.UndefOr[js.Function1[ReactEvent, Unit]] = js.native
-    var onHidden: js.UndefOr[js.Function0[Unit]]           = js.native
-    var onShow: js.UndefOr[js.Function0[Unit]]             = js.native
-    var onVisible: js.UndefOr[js.Function0[Unit]]          = js.native
-    var target: js.UndefOr[js.Object | Ref]                = js.native
-    var visible: js.UndefOr[Boolean]                       = js.native
-    var width: js.UndefOr[String]                          = js.native
+    var as: MyUndefOr[AsT]                                = js.native
+    var animation: MyUndefOr[String]                      = js.native
+    var children: MyUndefOr[React.Node]                   = js.native
+    var className: MyUndefOr[String]                      = js.native
+    var content: MyUndefOr[SemanticShorthandContent]      = js.native
+    var direction: MyUndefOr[String]                      = js.native
+    var onHide: MyUndefOr[js.Function1[ReactEvent, Unit]] = js.native
+    var onHidden: MyUndefOr[js.Function0[Unit]]           = js.native
+    var onShow: MyUndefOr[js.Function0[Unit]]             = js.native
+    var onVisible: MyUndefOr[js.Function0[Unit]]          = js.native
+    var target: MyUndefOr[js.Object | Ref]                = js.native
+    var visible: MyUndefOr[Boolean]                       = js.native
+    var width: MyUndefOr[String]                          = js.native
   }
 
   def props(q: Sidebar): SidebarProps =
@@ -84,20 +84,20 @@ object Sidebar {
     )
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    animation: js.UndefOr[SidebarAnimation] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    content:   js.UndefOr[VdomNode] = js.undefined,
-    direction: js.UndefOr[SidebarDirection] = js.undefined,
-    onHideE:   js.UndefOr[OnHide] = js.undefined,
-    onHide:    js.UndefOr[Callback] = js.undefined,
-    onHidden:  js.UndefOr[Callback] = js.undefined,
-    onShow:    js.UndefOr[Callback] = js.undefined,
-    onVisible: js.UndefOr[Callback] = js.undefined,
-    target:    js.UndefOr[Ref] = js.undefined,
-    visible:   js.UndefOr[Boolean] = js.undefined,
-    width:     js.UndefOr[SidebarWidth] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    animation: MyUndefOr[SidebarAnimation] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    content:   MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    direction: MyUndefOr[SidebarDirection] = MyUndefOr.undefined,
+    onHideE:   MyUndefOr[OnHide] = MyUndefOr.undefined,
+    onHide:    MyUndefOr[Callback] = MyUndefOr.undefined,
+    onHidden:  MyUndefOr[Callback] = MyUndefOr.undefined,
+    onShow:    MyUndefOr[Callback] = MyUndefOr.undefined,
+    onVisible: MyUndefOr[Callback] = MyUndefOr.undefined,
+    target:    MyUndefOr[Ref] = MyUndefOr.undefined,
+    visible:   MyUndefOr[Boolean] = MyUndefOr.undefined,
+    width:     MyUndefOr[SidebarWidth] = MyUndefOr.undefined
   ): SidebarProps = {
     val p = as.toJsObject[SidebarProps]
     as.toJs.foreach(v => p.as = v)

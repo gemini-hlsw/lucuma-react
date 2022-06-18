@@ -12,10 +12,10 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class PlaceholderLine(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  length:                 js.UndefOr[LineLength] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  length:                 MyUndefOr[LineLength] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPA[
       PlaceholderLine.PlaceholderLineProps,
@@ -42,16 +42,16 @@ object PlaceholderLine {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** A line can specify how long its contents should appear. */
-    var length: js.UndefOr[String]
+    var length: MyUndefOr[String]
   }
 
   def props(

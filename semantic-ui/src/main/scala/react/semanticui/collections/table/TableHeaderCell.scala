@@ -15,24 +15,24 @@ import react.semanticui.{raw => suiraw}
 import react.semanticui._
 
 final case class TableHeaderCell(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  active:                 js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  collapsing:             js.UndefOr[Boolean] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  error:                  js.UndefOr[Boolean] = js.undefined,
-  icon:                   js.UndefOr[ShorthandS[Icon]] = js.undefined,
-  negative:               js.UndefOr[Boolean] = js.undefined,
-  positive:               js.UndefOr[Boolean] = js.undefined,
-  selectable:             js.UndefOr[Boolean] = js.undefined,
-  singleLine:             js.UndefOr[Boolean] = js.undefined,
-  sorted:                 js.UndefOr[TableSorted] = js.undefined,
-  textAlign:              js.UndefOr[TableTextAlign] = js.undefined,
-  verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
-  warning:                js.UndefOr[Boolean] = js.undefined,
-  width:                  js.UndefOr[SemanticWidth] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  active:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  collapsing:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  error:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  icon:                   MyUndefOr[ShorthandS[Icon]] = MyUndefOr.undefined,
+  negative:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  positive:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  selectable:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  singleLine:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  sorted:                 MyUndefOr[TableSorted] = MyUndefOr.undefined,
+  textAlign:              MyUndefOr[TableTextAlign] = MyUndefOr.undefined,
+  verticalAlign:          MyUndefOr[SemanticVerticalAlignment] = MyUndefOr.undefined,
+  warning:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  width:                  MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[TableHeaderCell.TableHeaderCellProps, TableHeaderCell] {
   override protected def cprops                     = TableHeaderCell.props(this)
@@ -54,58 +54,58 @@ object TableHeaderCell {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Style as the currently chosen item. */
-    var active: js.UndefOr[Boolean] = js.native
+    var active: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** A table can be collapsing, taking up only as much space as its rows. */
-    var collapsing: js.UndefOr[Boolean] = js.native
+    var collapsing: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** A cell can be disabled. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** A cell may call attention to an error or a negative value. */
-    var error: js.UndefOr[Boolean] = js.native
+    var error: MyUndefOr[Boolean] = js.native
 
     /** Add an Icon by name, props object, or pass an <Icon /> */
-    var icon: js.UndefOr[suiraw.SemanticShorthandItemS[IconProps]] = js.native
+    var icon: MyUndefOr[suiraw.SemanticShorthandItemS[IconProps]] = js.native
 
     /** A cell may let a user know whether a value is bad. */
-    var negative: js.UndefOr[Boolean] = js.native
+    var negative: MyUndefOr[Boolean] = js.native
 
     /** A cell may let a user know whether a value is good. */
-    var positive: js.UndefOr[Boolean] = js.native
+    var positive: MyUndefOr[Boolean] = js.native
 
     /** A cell can be selectable. */
-    var selectable: js.UndefOr[Boolean] = js.native
+    var selectable: MyUndefOr[Boolean] = js.native
 
     /** A cell can specify that its contents should remain on a single line and not wrap. */
-    var singleLine: js.UndefOr[Boolean] = js.native
+    var singleLine: MyUndefOr[Boolean] = js.native
 
     /** A header cell can be sorted in ascending or descending order. */
-    var sorted: js.UndefOr[String] = js.native
+    var sorted: MyUndefOr[String] = js.native
 
     /** A table cell can adjust its text alignment. */
-    var textAlign: js.UndefOr[String] = js.native
+    var textAlign: MyUndefOr[String] = js.native
 
     /** A table cell can adjust its vertical alignment. */
-    var verticalAlign: js.UndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
+    var verticalAlign: MyUndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
 
     /** A cell may warn a user. */
-    var warning: js.UndefOr[Boolean] = js.native
+    var warning: MyUndefOr[Boolean] = js.native
 
     /** A table can specify the width of individual columns independently. */
-    var width: js.UndefOr[suiraw.SemanticWIDTHS] = js.native
+    var width: MyUndefOr[suiraw.SemanticWIDTHS] = js.native
   }
 
   def props(q: TableHeaderCell): TableHeaderCellProps = {

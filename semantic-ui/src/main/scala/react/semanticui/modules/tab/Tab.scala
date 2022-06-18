@@ -18,30 +18,30 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Pane private (
-  pane:     js.UndefOr[TabPane],
-  menuItem: js.UndefOr[String | MenuItem],
-  render:   js.UndefOr[Tab.PaneRender]
+  pane:     MyUndefOr[TabPane],
+  menuItem: MyUndefOr[String | MenuItem],
+  render:   MyUndefOr[Tab.PaneRender]
 )
 
 object Pane {
-  def apply(menuItem: js.UndefOr[String | MenuItem], render: => VdomNode): Pane =
-    new Pane(pane = js.undefined, menuItem = menuItem, render = () => render.rawNode)
-  def apply(menuItem: js.UndefOr[String | MenuItem], pane: TabPane): Pane       =
-    new Pane(pane = pane, menuItem = menuItem, render = js.undefined)
+  def apply(menuItem: MyUndefOr[String | MenuItem], render: => VdomNode): Pane =
+    new Pane(pane = MyUndefOr.undefined, menuItem = menuItem, render = () => render.rawNode)
+  def apply(menuItem: MyUndefOr[String | MenuItem], pane: TabPane): Pane       =
+    new Pane(pane = pane, menuItem = menuItem, render = MyUndefOr.undefined)
 }
 
 final case class Tab(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  defaultActiveIndex:     js.UndefOr[Double | String] = js.undefined,
-  activeIndex:            js.UndefOr[Double | String] = js.undefined,
-  menu:                   js.UndefOr[Menu] = js.undefined,
-  menuPosition:           js.UndefOr[TabMenuPosition] = js.undefined,
-  grid:                   js.UndefOr[Grid] = js.undefined,
-  onTabChangeE:           js.UndefOr[Tab.OnTabChange] = js.undefined,
-  onTabChange:            js.UndefOr[Tab.TabProps => Callback] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  defaultActiveIndex:     MyUndefOr[Double | String] = MyUndefOr.undefined,
+  activeIndex:            MyUndefOr[Double | String] = MyUndefOr.undefined,
+  menu:                   MyUndefOr[Menu] = MyUndefOr.undefined,
+  menuPosition:           MyUndefOr[TabMenuPosition] = MyUndefOr.undefined,
+  grid:                   MyUndefOr[Grid] = MyUndefOr.undefined,
+  onTabChangeE:           MyUndefOr[Tab.OnTabChange] = MyUndefOr.undefined,
+  onTabChange:            MyUndefOr[Tab.TabProps => Callback] = MyUndefOr.undefined,
   panes:                  List[Pane] = Nil,
-  renderActiveOnly:       js.UndefOr[Boolean] = js.undefined,
-  vertical:               js.UndefOr[Boolean] = js.undefined,
+  renderActiveOnly:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+  vertical:               MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[Tab.TabProps, Tab] {
   override protected def cprops                     = Tab.props(this)
@@ -56,9 +56,9 @@ object Tab {
   type PaneRender     = () => React.Node
 
   trait RawPane extends js.Object {
-    var pane: js.UndefOr[TabPane.TabPaneProps]
-    var menuItem: js.UndefOr[String | MenuItem.MenuItemProps]
-    var render: js.UndefOr[RawPaneRender]
+    var pane: MyUndefOr[TabPane.TabPaneProps]
+    var menuItem: MyUndefOr[String | MenuItem.MenuItemProps]
+    var render: MyUndefOr[RawPaneRender]
   }
 
   object RawPane {
@@ -97,22 +97,22 @@ object Tab {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** The initial activeIndex. */
-    var defaultActiveIndex: js.UndefOr[Double | String]
+    var defaultActiveIndex: MyUndefOr[Double | String]
 
     /** Index of the currently active tab. */
-    var activeIndex: js.UndefOr[Double | String]
+    var activeIndex: MyUndefOr[Double | String]
 
     /** Shorthand props for the Menu. */
-    var menu: js.UndefOr[Menu.MenuProps]
+    var menu: MyUndefOr[Menu.MenuProps]
 
     /** Align vertical menu */
-    var menuPosition: js.UndefOr[String]
+    var menuPosition: MyUndefOr[String]
 
     /** Shorthand props for the Grid. */
-    var grid: js.UndefOr[Grid.GridProps]
+    var grid: MyUndefOr[Grid.GridProps]
 
     /**
      * Called on tab change.
@@ -126,18 +126,18 @@ object Tab {
      * @param {panes}
      *   data.panes - Props of the new proposed active pane.
      */
-    var onTabChange: js.UndefOr[RawOnTabChange]
+    var onTabChange: MyUndefOr[RawOnTabChange]
 
     /**
      * Array of objects describing each Menu.Item and Tab.Pane: { menuItem: 'Home', render: () =>
      * <Tab.Pane>Welcome!</Tab.Pane>, } or { menuItem: 'Home', pane: 'Welcome', }
      */
-    var panes: js.UndefOr[js.Array[RawPane]] = js.native
+    var panes: MyUndefOr[js.Array[RawPane]] = js.native
 
     /** A Tab can render only active pane. */
-    var renderActiveOnly: js.UndefOr[Boolean]
+    var renderActiveOnly: MyUndefOr[Boolean]
 
-    var vertical: js.UndefOr[Boolean]
+    var vertical: MyUndefOr[Boolean]
   }
 
   def props(

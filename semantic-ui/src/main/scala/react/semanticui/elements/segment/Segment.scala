@@ -17,30 +17,30 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Segment(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  attached:               js.UndefOr[SegmentAttached] = js.undefined,
-  basic:                  js.UndefOr[Boolean] = js.undefined,
-  circular:               js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  clearing:               js.UndefOr[Boolean] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  compact:                js.UndefOr[Boolean] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  floated:                js.UndefOr[SemanticFloat] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  loading:                js.UndefOr[Boolean] = js.undefined,
-  padded:                 js.UndefOr[String] = js.undefined,
-  placeholder:            js.UndefOr[Boolean] = js.undefined,
-  piled:                  js.UndefOr[Boolean] = js.undefined,
-  raised:                 js.UndefOr[Boolean] = js.undefined,
-  secondary:              js.UndefOr[Boolean] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  stacked:                js.UndefOr[Boolean] = js.undefined,
-  tertiary:               js.UndefOr[Boolean] = js.undefined,
-  textAlign:              js.UndefOr[SemanticTextAlignment] = js.undefined,
-  vertical:               js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  attached:               MyUndefOr[SegmentAttached] = MyUndefOr.undefined,
+  basic:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  circular:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  clearing:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  compact:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  floated:                MyUndefOr[SemanticFloat] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  loading:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  padded:                 MyUndefOr[String] = MyUndefOr.undefined,
+  placeholder:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+  piled:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  raised:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  secondary:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  stacked:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  tertiary:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  textAlign:              MyUndefOr[SemanticTextAlignment] = MyUndefOr.undefined,
+  vertical:               MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Segment.SegmentProps, Segment] {
   override protected def cprops                     = Segment.props(this)
@@ -62,30 +62,30 @@ object Segment {
 
     @JSBracketAccess
     def update(key: String, v: js.Any): Unit                 = js.native
-    var as: js.UndefOr[AsT]                                  = js.native
-    var attached: js.UndefOr[Boolean | String]               = js.native
-    var basic: js.UndefOr[Boolean]                           = js.native
-    var children: js.UndefOr[React.Node]                     = js.native
-    var circular: js.UndefOr[Boolean]                        = js.native
-    var className: js.UndefOr[String]                        = js.native
-    var clearing: js.UndefOr[Boolean]                        = js.native
-    var color: js.UndefOr[suiraw.SemanticCOLORS]             = js.native
-    var compact: js.UndefOr[Boolean]                         = js.native
-    var content: js.UndefOr[SemanticShorthandContent]        = js.native
-    var disabled: js.UndefOr[Boolean]                        = js.native
-    var floated: js.UndefOr[suiraw.SemanticFLOATS]           = js.native
-    var inverted: js.UndefOr[Boolean]                        = js.native
-    var loading: js.UndefOr[Boolean]                         = js.native
-    var padded: js.UndefOr[String]                           = js.native
-    var placeholder: js.UndefOr[Boolean]                     = js.native
-    var piled: js.UndefOr[Boolean]                           = js.native
-    var raised: js.UndefOr[Boolean]                          = js.native
-    var secondary: js.UndefOr[Boolean]                       = js.native
-    var size: js.UndefOr[suiraw.SemanticSIZES]               = js.native
-    var stacked: js.UndefOr[Boolean]                         = js.native
-    var tertiary: js.UndefOr[Boolean]                        = js.native
-    var textAlign: js.UndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
-    var vertical: js.UndefOr[Boolean]                        = js.native
+    var as: MyUndefOr[AsT]                                  = js.native
+    var attached: MyUndefOr[Boolean | String]               = js.native
+    var basic: MyUndefOr[Boolean]                           = js.native
+    var children: MyUndefOr[React.Node]                     = js.native
+    var circular: MyUndefOr[Boolean]                        = js.native
+    var className: MyUndefOr[String]                        = js.native
+    var clearing: MyUndefOr[Boolean]                        = js.native
+    var color: MyUndefOr[suiraw.SemanticCOLORS]             = js.native
+    var compact: MyUndefOr[Boolean]                         = js.native
+    var content: MyUndefOr[SemanticShorthandContent]        = js.native
+    var disabled: MyUndefOr[Boolean]                        = js.native
+    var floated: MyUndefOr[suiraw.SemanticFLOATS]           = js.native
+    var inverted: MyUndefOr[Boolean]                        = js.native
+    var loading: MyUndefOr[Boolean]                         = js.native
+    var padded: MyUndefOr[String]                           = js.native
+    var placeholder: MyUndefOr[Boolean]                     = js.native
+    var piled: MyUndefOr[Boolean]                           = js.native
+    var raised: MyUndefOr[Boolean]                          = js.native
+    var secondary: MyUndefOr[Boolean]                       = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES]               = js.native
+    var stacked: MyUndefOr[Boolean]                         = js.native
+    var tertiary: MyUndefOr[Boolean]                        = js.native
+    var textAlign: MyUndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
+    var vertical: MyUndefOr[Boolean]                        = js.native
   }
 
   def props(

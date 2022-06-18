@@ -14,19 +14,19 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class FormField(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  control:                js.UndefOr[String] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  error:                  js.UndefOr[ShorthandB[Label]] = js.undefined,
-  id:                     js.UndefOr[String] = js.undefined,
-  inline:                 js.UndefOr[Boolean] = js.undefined,
-  label:                  js.UndefOr[ShorthandS[Label]] = js.undefined,
-  required:               js.UndefOr[Boolean] = js.undefined,
-  tpe:                    js.UndefOr[String] = js.undefined,
-  width:                  js.UndefOr[SemanticWidth] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  control:                MyUndefOr[String] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  error:                  MyUndefOr[ShorthandB[Label]] = MyUndefOr.undefined,
+  id:                     MyUndefOr[String] = MyUndefOr.undefined,
+  inline:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  label:                  MyUndefOr[ShorthandS[Label]] = MyUndefOr.undefined,
+  required:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  tpe:                    MyUndefOr[String] = MyUndefOr.undefined,
+  width:                  MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[FormField.FormFieldProps, FormField] {
   override protected def cprops                     = FormField.props(this)
@@ -49,45 +49,45 @@ object FormField {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] =
+      MyUndefOr.undefined
 
     /**
      * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input'). Extra FormField
      * props are passed to the control component. Mutually exclusive with children.
      */
     // control?: any
-    var control: js.UndefOr[String]
+    var control: MyUndefOr[String]
 
     /** Individual fields may be disabled. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** Individual fields may display an error state along with a message. */
-    var error: js.UndefOr[suiraw.SemanticShorthandItemB[Label.LabelProps]] = js.native
+    var error: MyUndefOr[suiraw.SemanticShorthandItemB[Label.LabelProps]] = js.native
 
     /** The id of the control */
-    var id: js.UndefOr[String] = js.native
+    var id: MyUndefOr[String] = js.native
 
     /** A field can have its label next to instead of above it. */
-    var inline: js.UndefOr[Boolean] = js.native
+    var inline: MyUndefOr[Boolean] = js.native
 
     /** Mutually exclusive with children. */
-    var label: js.UndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]] = js.native
+    var label: MyUndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]] = js.native
 
     /** A field can show that input is mandatory.  Requires a label. */
-    var required: js.UndefOr[Boolean] = js.native
+    var required: MyUndefOr[Boolean] = js.native
 
     /** Passed to the control component (i.e. <input type='password' />) */
-    var `type`: js.UndefOr[String] = js.native
+    var `type`: MyUndefOr[String] = js.native
 
     /** A field can specify its width in grid columns */
-    var width: js.UndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
+    var width: MyUndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
   }
 
   def props(q: FormField): FormFieldProps =
@@ -108,19 +108,19 @@ object FormField {
     )
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    content:   js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    control:   js.UndefOr[String] = js.undefined,
-    disabled:  js.UndefOr[Boolean] = js.undefined,
-    error:     js.UndefOr[ShorthandB[Label]] = js.undefined,
-    id:        js.UndefOr[String] = js.undefined,
-    inline:    js.UndefOr[Boolean] = js.undefined,
-    label:     js.UndefOr[ShorthandS[Label]] = js.undefined,
-    required:  js.UndefOr[Boolean] = js.undefined,
-    tpe:       js.UndefOr[String] = js.undefined,
-    width:     js.UndefOr[SemanticWidth] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    content:   MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    control:   MyUndefOr[String] = MyUndefOr.undefined,
+    disabled:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    error:     MyUndefOr[ShorthandB[Label]] = MyUndefOr.undefined,
+    id:        MyUndefOr[String] = MyUndefOr.undefined,
+    inline:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    label:     MyUndefOr[ShorthandS[Label]] = MyUndefOr.undefined,
+    required:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    tpe:       MyUndefOr[String] = MyUndefOr.undefined,
+    width:     MyUndefOr[SemanticWidth] = MyUndefOr.undefined
   ): FormFieldProps = {
     val p = as.toJsObject[FormFieldProps]
     as.toJs.foreach(v => p.as = v)

@@ -18,29 +18,29 @@ import react.semanticui.modules.dimmer.Dimmer
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class Image(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  avatar:                 js.UndefOr[Boolean] = js.undefined,
-  bordered:               js.UndefOr[Boolean] = js.undefined,
-  centered:               js.UndefOr[Boolean] = js.undefined,
-  circular:               js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  dimmer:                 js.UndefOr[Dimmer] = js.undefined,
-  floated:                js.UndefOr[SemanticFloat] = js.undefined,
-  fluid:                  js.UndefOr[Boolean | String] = js.undefined,
-  hidden:                 js.UndefOr[Boolean] = js.undefined,
-  href:                   js.UndefOr[String] = js.undefined,
-  inline:                 js.UndefOr[Boolean] = js.undefined,
-  label:                  js.UndefOr[ShorthandS[Label]] = js.undefined,
-  rounded:                js.UndefOr[Boolean] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  spaced:                 js.UndefOr[ImageSpaced] = js.undefined,
-  src:                    js.UndefOr[String] = js.undefined,
-  ui:                     js.UndefOr[Boolean] = js.undefined,
-  verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
-  wrapped:                js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  avatar:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  bordered:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  centered:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  circular:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  dimmer:                 MyUndefOr[Dimmer] = MyUndefOr.undefined,
+  floated:                MyUndefOr[SemanticFloat] = MyUndefOr.undefined,
+  fluid:                  MyUndefOr[Boolean | String] = MyUndefOr.undefined,
+  hidden:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  href:                   MyUndefOr[String] = MyUndefOr.undefined,
+  inline:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  label:                  MyUndefOr[ShorthandS[Label]] = MyUndefOr.undefined,
+  rounded:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  spaced:                 MyUndefOr[ImageSpaced] = MyUndefOr.undefined,
+  src:                    MyUndefOr[String] = MyUndefOr.undefined,
+  ui:                     MyUndefOr[Boolean] = MyUndefOr.undefined,
+  verticalAlign:          MyUndefOr[SemanticVerticalAlignment] = MyUndefOr.undefined,
+  wrapped:                MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Image.ImageProps, Image] {
   override protected def cprops                     = Image.props(this)
@@ -64,74 +64,74 @@ object Image {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** An image may be formatted to appear inline with text as an avatar. */
-    var avatar: js.UndefOr[Boolean] = js.native
+    var avatar: MyUndefOr[Boolean] = js.native
 
     /** An image may include a border to emphasize the edges of white or transparent content. */
-    var bordered: js.UndefOr[Boolean] = js.native
+    var bordered: MyUndefOr[Boolean] = js.native
 
     /** An image can appear centered in a content block. */
-    var centered: js.UndefOr[Boolean] = js.native
+    var centered: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** An image may appear circular. */
-    var circular: js.UndefOr[Boolean] = js.native
+    var circular: MyUndefOr[Boolean] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** An image can show that it is disabled and cannot be selected. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for Dimmer. */
-    var dimmer: js.UndefOr[Dimmer.DimmerProps] = js.native
+    var dimmer: MyUndefOr[Dimmer.DimmerProps] = js.native
 
     /** An image can sit to the left or right of other content. */
-    var floated: js.UndefOr[suiraw.SemanticFLOATS] = js.native
+    var floated: MyUndefOr[suiraw.SemanticFLOATS] = js.native
 
     /** An image can take up the width of its container. */
-    var fluid: js.UndefOr[Boolean | String] = js.native
+    var fluid: MyUndefOr[Boolean | String] = js.native
 
     /** An image can be hidden. */
-    var hidden: js.UndefOr[Boolean] = js.native
+    var hidden: MyUndefOr[Boolean] = js.native
 
     /** Renders the Image as an <a> tag with this href. */
-    var href: js.UndefOr[String] = js.native
+    var href: MyUndefOr[String] = js.native
 
     /** An image may appear inline. */
-    var inline: js.UndefOr[Boolean] = js.native
+    var inline: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for Label. */
-    var label: js.UndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]]
+    var label: MyUndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]]
 
     /** An image may appear rounded. */
-    var rounded: js.UndefOr[Boolean] = js.native
+    var rounded: MyUndefOr[Boolean] = js.native
 
     /** An image may appear at different sizes. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
 
     /**
      * An image can specify that it needs an additional spacing to separate it from nearby content.
      */
-    var spaced: js.UndefOr[Boolean | String] = js.native
+    var spaced: MyUndefOr[Boolean | String] = js.native
 
-    var src: js.UndefOr[String] = js.native
+    var src: MyUndefOr[String] = js.native
 
     /** Whether or not to add the ui className. */
-    var ui: js.UndefOr[Boolean] = js.native
+    var ui: MyUndefOr[Boolean] = js.native
 
     /** An image can specify its vertical alignment. */
-    var verticalAlign: js.UndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
+    var verticalAlign: MyUndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
 
     /** An image can render wrapped in a `div.ui.image` as alternative HTML markup. */
-    var wrapped: js.UndefOr[Boolean] = js.native
+    var wrapped: MyUndefOr[Boolean] = js.native
   }
 
   def props(

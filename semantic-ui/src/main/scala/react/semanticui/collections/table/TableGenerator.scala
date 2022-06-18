@@ -17,33 +17,33 @@ import react.semanticui.collections.table.TableRow.TableRowProps
 final case class TableGenerator[A](
   tableData:              Seq[A],
   renderBodyRow:          TableGenerator.RenderBodyRow[A],
-  as:                     js.UndefOr[AsC] = js.undefined,
-  attached:               js.UndefOr[TableAttached] = js.undefined,
-  basic:                  js.UndefOr[TableBasic] = js.undefined,
-  celled:                 js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  collapsing:             js.UndefOr[Boolean] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  columns:                js.UndefOr[SemanticWidth] = js.undefined,
-  compact:                js.UndefOr[TableCompact] = js.undefined,
-  definition:             js.UndefOr[Boolean] = js.undefined,
-  fixed:                  js.UndefOr[Boolean] = js.undefined,
-  footerRow:              js.UndefOr[TableRow] = js.undefined,
-  headerRow:              js.UndefOr[TableRow] = js.undefined,
-  headerRows:             js.UndefOr[Seq[TableRow]] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  padded:                 js.UndefOr[TablePadded] = js.undefined,
-  selectable:             js.UndefOr[Boolean] = js.undefined,
-  singleLine:             js.UndefOr[Boolean] = js.undefined,
-  size:                   js.UndefOr[TableSize] = js.undefined,
-  sortable:               js.UndefOr[Boolean] = js.undefined,
-  stackable:              js.UndefOr[Boolean] = js.undefined,
-  striped:                js.UndefOr[Boolean] = js.undefined,
-  structured:             js.UndefOr[Boolean] = js.undefined,
-  textAlign:              js.UndefOr[TableTextAlign] = js.undefined,
-  unstackable:            js.UndefOr[Boolean] = js.undefined,
-  verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  attached:               MyUndefOr[TableAttached] = MyUndefOr.undefined,
+  basic:                  MyUndefOr[TableBasic] = MyUndefOr.undefined,
+  celled:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  collapsing:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  columns:                MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+  compact:                MyUndefOr[TableCompact] = MyUndefOr.undefined,
+  definition:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  fixed:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  footerRow:              MyUndefOr[TableRow] = MyUndefOr.undefined,
+  headerRow:              MyUndefOr[TableRow] = MyUndefOr.undefined,
+  headerRows:             MyUndefOr[Seq[TableRow]] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  padded:                 MyUndefOr[TablePadded] = MyUndefOr.undefined,
+  selectable:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  singleLine:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  size:                   MyUndefOr[TableSize] = MyUndefOr.undefined,
+  sortable:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  stackable:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  striped:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  structured:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  textAlign:              MyUndefOr[TableTextAlign] = MyUndefOr.undefined,
+  unstackable:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+  verticalAlign:          MyUndefOr[SemanticVerticalAlignment] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[TableGenerator.TableGeneratorProps, TableGenerator[A]] {
   override protected def cprops                     = TableGenerator.props(this)
@@ -68,55 +68,55 @@ object TableGenerator {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Attach table to other content */
-    var attached: js.UndefOr[Boolean | String] = js.native
+    var attached: MyUndefOr[Boolean | String] = js.native
 
     /** A table can reduce its complexity to increase readability. */
-    var basic: js.UndefOr[Boolean | String] = js.native
+    var basic: MyUndefOr[Boolean | String] = js.native
 
     /** A table may be divided each row into separate cells. */
-    var celled: js.UndefOr[Boolean] = js.native
+    var celled: MyUndefOr[Boolean] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** A table can be collapsing, taking up only as much space as its rows. */
-    var collapsing: js.UndefOr[Boolean] = js.native
+    var collapsing: MyUndefOr[Boolean] = js.native
 
     /** A table can be given a color to distinguish it from other tables. */
-    var color: js.UndefOr[suiraw.SemanticCOLORS] = js.native
+    var color: MyUndefOr[suiraw.SemanticCOLORS] = js.native
 
     /** A table can specify its column count to divide its content evenly. */
-    var columns: js.UndefOr[String] = js.native
+    var columns: MyUndefOr[String] = js.native
 
     /** A table may sometimes need to be more compact to make more rows visible at a time. */
-    var compact: js.UndefOr[Boolean | String] = js.native
+    var compact: MyUndefOr[Boolean | String] = js.native
 
     /** A table may be formatted to emphasize a first column that defines a rows content. */
-    var definition: js.UndefOr[Boolean] = js.native
+    var definition: MyUndefOr[Boolean] = js.native
 
     /**
      * A table can use fixed a special faster form of table rendering that does not resize table
      * cells based on content.
      */
-    var fixed: js.UndefOr[Boolean] = js.native
+    var fixed: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for a TableRow to be placed within Table.Footer. */
-    var footerRow: js.UndefOr[TableRow.TableRowProps] = js.native
+    var footerRow: MyUndefOr[TableRow.TableRowProps] = js.native
 
     /** Shorthand for a TableRow to be placed within Table.Header. */
-    var headerRow: js.UndefOr[TableRow.TableRowProps] = js.native
+    var headerRow: MyUndefOr[TableRow.TableRowProps] = js.native
 
     /** Shorthand for multiple TableRows to be placed within Table.Header. */
-    var headerRows: js.UndefOr[js.Array[TableRow.TableRowProps]] = js.native
+    var headerRows: MyUndefOr[js.Array[TableRow.TableRowProps]] = js.native
 
     /** A table's colors can be inverted. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** A table may sometimes need to be more padded for legibility. */
-    var padded: js.UndefOr[Boolean | String] = js.native
+    var padded: MyUndefOr[Boolean | String] = js.native
 
     /**
      * Mapped over `tableData` and should return shorthand for each Table.Row to be placed within
@@ -132,37 +132,37 @@ object TableGenerator {
     var renderBodyRow: RawRenderBodyRow = js.native
 
     /** A table can have its rows appear selectable. */
-    var selectable: js.UndefOr[Boolean] = js.native
+    var selectable: MyUndefOr[Boolean] = js.native
 
     /** A table can specify that its cell contents should remain on a single line and not wrap. */
-    var singleLine: js.UndefOr[Boolean] = js.native
+    var singleLine: MyUndefOr[Boolean] = js.native
 
     /** A table can also be small or large. */
-    var size: js.UndefOr[Boolean | String] = js.native
+    var size: MyUndefOr[Boolean | String] = js.native
 
     /** A table may allow a user to sort contents by clicking on a table header. */
-    var sortable: js.UndefOr[Boolean] = js.native
+    var sortable: MyUndefOr[Boolean] = js.native
 
     /** A table can specify how it stacks table content responsively. */
-    var stackable: js.UndefOr[Boolean] = js.native
+    var stackable: MyUndefOr[Boolean] = js.native
 
     /** A table can stripe alternate rows of content with a darker color to increase contrast. */
-    var striped: js.UndefOr[Boolean] = js.native
+    var striped: MyUndefOr[Boolean] = js.native
 
     /** A table can be formatted to display complex structured data. */
-    var structured: js.UndefOr[Boolean] = js.native
+    var structured: MyUndefOr[Boolean] = js.native
 
     /** Data to be passed to the renderBodyRow function. */
-    var tableData: js.UndefOr[js.Array[js.Any]] = js.native
+    var tableData: MyUndefOr[js.Array[js.Any]] = js.native
 
     /** A table can adjust its text alignment. */
-    var textAlign: js.UndefOr[Boolean | String] = js.native
+    var textAlign: MyUndefOr[Boolean | String] = js.native
 
     /** A table can specify how it stacks table content responsively. */
-    var unstackable: js.UndefOr[Boolean] = js.native
+    var unstackable: MyUndefOr[Boolean] = js.native
 
     /** A table can adjust its text alignment. */
-    var verticalAlign: js.UndefOr[suiraw.SemanticVERTICALALIGNMENTS]
+    var verticalAlign: MyUndefOr[suiraw.SemanticVERTICALALIGNMENTS]
   }
 
   def props[A](q: TableGenerator[A]): TableGeneratorProps = {

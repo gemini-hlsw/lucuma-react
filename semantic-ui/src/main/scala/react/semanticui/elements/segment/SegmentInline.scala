@@ -15,10 +15,10 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class SegmentInline(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[SegmentInline.SegmentInlineProps, SegmentInline] {
   override protected def cprops                     = SegmentInline.props(this)
@@ -40,10 +40,10 @@ object SegmentInline {
 
     @JSBracketAccess
     def update(key: String, v: js.Any): Unit          = js.native
-    var as: js.UndefOr[AsT]                           = js.native
-    var children: js.UndefOr[React.Node]              = js.native
-    var className: js.UndefOr[String]                 = js.native
-    var content: js.UndefOr[SemanticShorthandContent] = js.native
+    var as: MyUndefOr[AsT]                           = js.native
+    var children: MyUndefOr[React.Node]              = js.native
+    var className: MyUndefOr[String]                 = js.native
+    var content: MyUndefOr[SemanticShorthandContent] = js.native
   }
 
   def props(

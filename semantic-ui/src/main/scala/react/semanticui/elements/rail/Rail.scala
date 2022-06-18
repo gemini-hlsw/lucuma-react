@@ -15,16 +15,16 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Rail(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  attached:               js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  close:                  js.UndefOr[RailClose] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  dividing:               js.UndefOr[Boolean] = js.undefined,
-  internal:               js.UndefOr[Boolean] = js.undefined,
-  position:               js.UndefOr[SemanticFloat],
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  attached:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  close:                  MyUndefOr[RailClose] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  dividing:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  internal:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  position:               MyUndefOr[SemanticFloat],
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Rail.RailProps, Rail] {
   override protected def cprops                     = Rail.props(this)
@@ -48,34 +48,34 @@ object Rail {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** A rail can appear attached to the main viewport. */
-    var attached: js.UndefOr[Boolean] = js.native
+    var attached: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** A rail can appear closer to the main viewport. */
-    var close: js.UndefOr[Boolean | String] = js.native
+    var close: MyUndefOr[Boolean | String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** A rail can create a division between itself and a container. */
-    var dividing: js.UndefOr[Boolean] = js.native
+    var dividing: MyUndefOr[Boolean] = js.native
 
     /** A rail can attach itself to the inside of a container. */
-    var internal: js.UndefOr[Boolean] = js.native
+    var internal: MyUndefOr[Boolean] = js.native
 
     /** A rail can be presented on the left or right side of a container. */
-    var position: js.UndefOr[suiraw.SemanticFLOATS] = js.native
+    var position: MyUndefOr[suiraw.SemanticFLOATS] = js.native
 
     /** A rail can have different sizes. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
   }
 
   def props(
@@ -95,16 +95,16 @@ object Rail {
     )
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    attached:  js.UndefOr[Boolean] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    close:     js.UndefOr[RailClose] = js.undefined,
-    content:   js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    dividing:  js.UndefOr[Boolean] = js.undefined,
-    internal:  js.UndefOr[Boolean] = js.undefined,
-    position:  js.UndefOr[SemanticFloat] = js.undefined,
-    size:      js.UndefOr[SemanticSize] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    attached:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    close:     MyUndefOr[RailClose] = MyUndefOr.undefined,
+    content:   MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    dividing:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    internal:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    position:  MyUndefOr[SemanticFloat] = MyUndefOr.undefined,
+    size:      MyUndefOr[SemanticSize] = MyUndefOr.undefined
   ): RailProps = {
     val p = as.toJsObject[RailProps]
     attached.foreach(v => p.attached = v)

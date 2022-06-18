@@ -12,10 +12,10 @@ import react.semanticui._
 import react.common._
 
 final case class ButtonOr(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  text:                   js.UndefOr[Double | String] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  text:                   MyUndefOr[Double | String] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[ButtonOr.ButtonOrProps, ButtonOr] {
   override protected def cprops                     = ButtonOr.props(this)
@@ -38,13 +38,13 @@ object ButtonOr {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Or buttons can have their text localized, or adjusted by using the text prop. */
-    var text: js.UndefOr[Double | String] = js.native
+    var text: MyUndefOr[Double | String] = js.native
   }
 
   def props(
@@ -53,10 +53,10 @@ object ButtonOr {
     rawprops(q.as, q.className, q.clazz, q.text)
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    text:      js.UndefOr[Double | String] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    text:      MyUndefOr[Double | String] = MyUndefOr.undefined
   ): ButtonOrProps = {
     val p = as.toJsObject[ButtonOrProps]
     as.toJs.foreach(v => p.as = v)

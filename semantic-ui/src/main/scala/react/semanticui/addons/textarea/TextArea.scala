@@ -13,13 +13,13 @@ import react.semanticui._
 import org.scalajs.dom
 
 final case class TextArea(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  onChangeE:              js.UndefOr[TextArea.Event] = js.undefined,
-  onChange:               js.UndefOr[Callback] = js.undefined,
-  onInputE:               js.UndefOr[TextArea.Event] = js.undefined,
-  onInput:                js.UndefOr[Callback] = js.undefined,
-  rows:                   js.UndefOr[Int | String] = js.undefined,
-  value:                  js.UndefOr[String | Double] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  onChangeE:              MyUndefOr[TextArea.Event] = MyUndefOr.undefined,
+  onChange:               MyUndefOr[Callback] = MyUndefOr.undefined,
+  onInputE:               MyUndefOr[TextArea.Event] = MyUndefOr.undefined,
+  onInput:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  rows:                   MyUndefOr[Int | String] = MyUndefOr.undefined,
+  value:                  MyUndefOr[String | Double] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[TextArea.TextAreaProps, TextArea] {
   override protected def cprops                     = TextArea.props(this)
@@ -45,7 +45,7 @@ object TextArea {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /**
      * Called on change.
@@ -55,7 +55,7 @@ object TextArea {
      * @param {object}
      *   data - All props and the event value.
      */
-    var onChange: js.UndefOr[RawEvent] = js.undefined
+    var onChange: MyUndefOr[RawEvent] = MyUndefOr.undefined
 
     /**
      * Called on input.
@@ -65,13 +65,13 @@ object TextArea {
      * @param {object}
      *   data - All props and the event value.
      */
-    var onInput: js.UndefOr[RawEvent] = js.undefined
+    var onInput: MyUndefOr[RawEvent] = MyUndefOr.undefined
 
     /** Indicates row count for a TextArea. */
-    var rows: js.UndefOr[Double | String] = js.undefined
+    var rows: MyUndefOr[Double | String] = MyUndefOr.undefined
 
     /** The value of the textarea. */
-    var value: js.UndefOr[Double | String] = js.undefined
+    var value: MyUndefOr[Double | String] = MyUndefOr.undefined
 
   }
 
@@ -87,13 +87,13 @@ object TextArea {
     )
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    onChangeE: js.UndefOr[TextArea.Event] = js.undefined,
-    onChange:  js.UndefOr[Callback] = js.undefined,
-    onInputE:  js.UndefOr[TextArea.Event] = js.undefined,
-    onInput:   js.UndefOr[Callback] = js.undefined,
-    rows:      js.UndefOr[Int | String] = js.undefined,
-    value:     js.UndefOr[String | Double] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    onChangeE: MyUndefOr[TextArea.Event] = MyUndefOr.undefined,
+    onChange:  MyUndefOr[Callback] = MyUndefOr.undefined,
+    onInputE:  MyUndefOr[TextArea.Event] = MyUndefOr.undefined,
+    onInput:   MyUndefOr[Callback] = MyUndefOr.undefined,
+    rows:      MyUndefOr[Int | String] = MyUndefOr.undefined,
+    value:     MyUndefOr[String | Double] = MyUndefOr.undefined
   ): TextAreaProps = {
     val p = as.toJsObject[TextAreaProps]
     as.toJs.foreach(v => p.as = v)

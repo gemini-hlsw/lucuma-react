@@ -13,23 +13,23 @@ import js.annotation._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Icon(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  bordered:               js.UndefOr[Boolean] = js.undefined,
-  circular:               js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  corner:                 js.UndefOr[IconCorner] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  fitted:                 js.UndefOr[Boolean] = js.undefined,
-  flipped:                js.UndefOr[IconFlip] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  link:                   js.UndefOr[Boolean] = js.undefined,
-  loading:                js.UndefOr[Boolean] = js.undefined,
-  name:                   js.UndefOr[String] = js.undefined,
-  rotated:                js.UndefOr[IconRotated] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  ariaLabel:              js.UndefOr[String] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  bordered:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  circular:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  corner:                 MyUndefOr[IconCorner] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  fitted:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  flipped:                MyUndefOr[IconFlip] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  link:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  loading:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  name:                   MyUndefOr[String] = MyUndefOr.undefined,
+  rotated:                MyUndefOr[IconRotated] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  ariaLabel:              MyUndefOr[String] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[Icon.IconProps, Icon] {
   override protected def cprops                     = Icon.props(this)
@@ -49,22 +49,22 @@ object Icon {
 
     @JSBracketAccess
     def update(key: String, v: js.Any): Unit     = js.native
-    var as: js.UndefOr[AsT]                      = js.native
-    var bordered: js.UndefOr[Boolean]            = js.native
-    var circular: js.UndefOr[Boolean]            = js.native
-    var className: js.UndefOr[String]            = js.native
-    var color: js.UndefOr[suiraw.SemanticCOLORS] = js.native
-    var corner: js.UndefOr[Boolean | String]     = js.native
-    var disabled: js.UndefOr[Boolean]            = js.native
-    var fitted: js.UndefOr[Boolean]              = js.native
-    var flipped: js.UndefOr[String]              = js.native
-    var inverted: js.UndefOr[Boolean]            = js.native
-    var link: js.UndefOr[Boolean]                = js.native
-    var loading: js.UndefOr[Boolean]             = js.native
-    var name: js.UndefOr[suiraw.SemanticICONS]   = js.native
-    var rotated: js.UndefOr[String]              = js.native
-    var size: js.UndefOr[suiraw.SemanticSIZES]   = js.native
-    var `aria-label`: js.UndefOr[String]         = js.native
+    var as: MyUndefOr[AsT]                      = js.native
+    var bordered: MyUndefOr[Boolean]            = js.native
+    var circular: MyUndefOr[Boolean]            = js.native
+    var className: MyUndefOr[String]            = js.native
+    var color: MyUndefOr[suiraw.SemanticCOLORS] = js.native
+    var corner: MyUndefOr[Boolean | String]     = js.native
+    var disabled: MyUndefOr[Boolean]            = js.native
+    var fitted: MyUndefOr[Boolean]              = js.native
+    var flipped: MyUndefOr[String]              = js.native
+    var inverted: MyUndefOr[Boolean]            = js.native
+    var link: MyUndefOr[Boolean]                = js.native
+    var loading: MyUndefOr[Boolean]             = js.native
+    var name: MyUndefOr[suiraw.SemanticICONS]   = js.native
+    var rotated: MyUndefOr[String]              = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES]   = js.native
+    var `aria-label`: MyUndefOr[String]         = js.native
   }
 
   def props(

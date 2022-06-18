@@ -14,12 +14,12 @@ import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class DimmerDimmable(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  blurring:               js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
-  dimmed:                 js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  blurring:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  dimmed:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[DimmerDimmable.DimmerDimmableProps, DimmerDimmable] {
   override protected def cprops                     = DimmerDimmable.props(this)
@@ -43,34 +43,34 @@ object DimmerDimmable {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** A dimmable element can blur its contents. */
-    var blurring: js.UndefOr[Boolean] = js.native
+    var blurring: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** Controls whether or not the dim is displayed. */
-    var dimmed: js.UndefOr[Boolean] = js.native
+    var dimmed: MyUndefOr[Boolean] = js.native
   }
 
   def props(q: DimmerDimmable): DimmerDimmableProps =
     rawprops(q.as, q.blurring, q.className, q.clazz, q.content, q.dimmed)
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    blurring:  js.UndefOr[Boolean] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    content:   js.UndefOr[VdomNode] = js.undefined,
-    dimmed:    js.UndefOr[Boolean] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    blurring:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    content:   MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    dimmed:    MyUndefOr[Boolean] = MyUndefOr.undefined
   ): DimmerDimmableProps = {
     val p = as.toJsObject[DimmerDimmableProps]
     as.toJs.foreach(v => p.as = v)

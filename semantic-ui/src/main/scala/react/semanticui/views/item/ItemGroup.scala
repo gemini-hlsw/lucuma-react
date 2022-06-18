@@ -16,15 +16,15 @@ import react.semanticui._
 import react.semanticui.{raw => suiraw}
 
 final case class ItemGroup(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
-  divided:                js.UndefOr[Boolean] = js.undefined,
-  items:                  js.UndefOr[Seq[Item]] = js.undefined,
-  link:                   js.UndefOr[Boolean] = js.undefined,
-  relaxed:                js.UndefOr[ItemRelaxed] = js.undefined,
-  unstackable:            js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  divided:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  items:                  MyUndefOr[Seq[Item]] = MyUndefOr.undefined,
+  link:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  relaxed:                MyUndefOr[ItemRelaxed] = MyUndefOr.undefined,
+  unstackable:            MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[ItemGroup.ItemGroupProps, ItemGroup] {
   override protected def cprops                     = ItemGroup.props(this)
@@ -48,31 +48,31 @@ object ItemGroup {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** Items can be divided to better distinguish between grouped content. */
-    var divided: js.UndefOr[Boolean] = js.native
+    var divided: MyUndefOr[Boolean] = js.native
 
     /** Shorthand array of props for Item. */
-    var items: js.UndefOr[js.Array[Item.ItemProps]] = js.native
+    var items: MyUndefOr[js.Array[Item.ItemProps]] = js.native
 
     /** An item can be formatted so that the entire contents link to another page. */
-    var link: js.UndefOr[Boolean] = js.native
+    var link: MyUndefOr[Boolean] = js.native
 
     /** A group of items can relax its padding to provide more negative space. */
-    var relaxed: js.UndefOr[Boolean | String] = js.native
+    var relaxed: MyUndefOr[Boolean | String] = js.native
 
     /** Prevent items from stacking on mobile. */
-    var unstackable: js.UndefOr[Boolean] = js.native
+    var unstackable: MyUndefOr[Boolean] = js.native
   }
 
   def props(q: ItemGroup): ItemGroupProps =
@@ -88,15 +88,15 @@ object ItemGroup {
     )
 
   def rawprops(
-    as:          js.UndefOr[AsC] = js.undefined,
-    className:   js.UndefOr[String] = js.undefined,
-    clazz:       js.UndefOr[Css] = js.undefined,
-    content:     js.UndefOr[VdomNode] = js.undefined,
-    divided:     js.UndefOr[Boolean] = js.undefined,
-    items:       js.UndefOr[Seq[Item]] = js.undefined,
-    link:        js.UndefOr[Boolean] = js.undefined,
-    relaxed:     js.UndefOr[ItemRelaxed] = js.undefined,
-    unstackable: js.UndefOr[Boolean] = js.undefined
+    as:          MyUndefOr[AsC] = MyUndefOr.undefined,
+    className:   MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:       MyUndefOr[Css] = MyUndefOr.undefined,
+    content:     MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    divided:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    items:       MyUndefOr[Seq[Item]] = MyUndefOr.undefined,
+    link:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+    relaxed:     MyUndefOr[ItemRelaxed] = MyUndefOr.undefined,
+    unstackable: MyUndefOr[Boolean] = MyUndefOr.undefined
   ): ItemGroupProps = {
     val p = as.toJsObject[ItemGroupProps]
     as.toJs.foreach(v => p.as = v)

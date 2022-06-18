@@ -12,13 +12,13 @@ import react.common._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class DropdownSearchInput(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  autoComplete:           js.UndefOr[String] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  tabIndex:               js.UndefOr[String | Double] = js.undefined,
-  tpe:                    js.UndefOr[String] = js.undefined,
-  value:                  js.UndefOr[Double | String] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  autoComplete:           MyUndefOr[String] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  tabIndex:               MyUndefOr[String | Double] = MyUndefOr.undefined,
+  tpe:                    MyUndefOr[String] = MyUndefOr.undefined,
+  value:                  MyUndefOr[Double | String] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[DropdownSearchInput.DropdownSearchInputProps, DropdownSearchInput] {
   override protected def cprops                     = DropdownSearchInput.props(this)
@@ -40,35 +40,35 @@ object DropdownSearchInput {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** An input can have the auto complete. */
-    var autoComplete: js.UndefOr[String] = js.native
+    var autoComplete: MyUndefOr[String] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** An input can receive focus. */
-    var tabIndex: js.UndefOr[String | Double] = js.native
+    var tabIndex: MyUndefOr[String | Double] = js.native
 
     /** The HTML input type. */
-    var `type`: js.UndefOr[String] = js.native
+    var `type`: MyUndefOr[String] = js.native
 
     /** Stored value. */
-    var value: js.UndefOr[Double | String] = js.native
+    var value: MyUndefOr[Double | String] = js.native
   }
 
   def props(q: DropdownSearchInput): DropdownSearchInputProps =
     rawprops(q.as, q.autoComplete, q.className, q.clazz, q.tabIndex, q.tpe, q.value)
 
   def rawprops(
-    as:           js.UndefOr[AsC] = js.undefined,
-    autoComplete: js.UndefOr[String] = js.undefined,
-    className:    js.UndefOr[String] = js.undefined,
-    clazz:        js.UndefOr[Css] = js.undefined,
-    tabIndex:     js.UndefOr[String | Double] = js.undefined,
-    `type`:       js.UndefOr[String] = js.undefined,
-    value:        js.UndefOr[Double | String] = js.undefined
+    as:           MyUndefOr[AsC] = MyUndefOr.undefined,
+    autoComplete: MyUndefOr[String] = MyUndefOr.undefined,
+    className:    MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:        MyUndefOr[Css] = MyUndefOr.undefined,
+    tabIndex:     MyUndefOr[String | Double] = MyUndefOr.undefined,
+    `type`:       MyUndefOr[String] = MyUndefOr.undefined,
+    value:        MyUndefOr[Double | String] = MyUndefOr.undefined
   ): DropdownSearchInputProps = {
     val p = as.toJsObject[DropdownSearchInputProps]
     as.toJs.foreach(v => p.as = v)

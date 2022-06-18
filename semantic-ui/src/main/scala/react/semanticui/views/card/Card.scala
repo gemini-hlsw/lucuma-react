@@ -15,23 +15,23 @@ import japgolly.scalajs.react.vdom.TagMod
 import react.semanticui.elements.image.Image
 
 final case class Card(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  centered:               js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
-  description:            js.UndefOr[ShorthandS[CardDescription]] = js.undefined,
-  extra:                  js.UndefOr[VdomNode] = js.undefined,
-  fluid:                  js.UndefOr[Boolean] = js.undefined,
-  header:                 js.UndefOr[ShorthandS[CardHeader]] = js.undefined,
-  href:                   js.UndefOr[String] = js.undefined,
-  image:                  js.UndefOr[ShorthandS[Image]] = js.undefined,
-  link:                   js.UndefOr[Boolean] = js.undefined,
-  meta:                   js.UndefOr[ShorthandS[CardMeta]] = js.undefined,
-  onClickE:               js.UndefOr[Card.OnClick] = js.undefined,
-  onClick:                js.UndefOr[Callback] = js.undefined,
-  raised:                 js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  centered:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  content:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  description:            MyUndefOr[ShorthandS[CardDescription]] = MyUndefOr.undefined,
+  extra:                  MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  fluid:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  header:                 MyUndefOr[ShorthandS[CardHeader]] = MyUndefOr.undefined,
+  href:                   MyUndefOr[String] = MyUndefOr.undefined,
+  image:                  MyUndefOr[ShorthandS[Image]] = MyUndefOr.undefined,
+  link:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  meta:                   MyUndefOr[ShorthandS[CardMeta]] = MyUndefOr.undefined,
+  onClickE:               MyUndefOr[Card.OnClick] = MyUndefOr.undefined,
+  onClick:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  raised:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Card.CardProps, Card] {
   override protected def cprops                     = Card.props(this)
@@ -55,56 +55,56 @@ object Card {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** A Card can center itself inside its container. */
-    var centered: js.UndefOr[Boolean] = js.native
+    var centered: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** A Card can be formatted to display different colors. */
-    var color: js.UndefOr[suiraw.SemanticCOLORS] = js.native
+    var color: MyUndefOr[suiraw.SemanticCOLORS] = js.native
 
     /** Shorthand for primary component. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** Shorthand for CardDescription. */
     var description
-      : js.UndefOr[suiraw.SemanticShorthandItemS[CardDescription.CardDescriptionProps]] = js.native
+      : MyUndefOr[suiraw.SemanticShorthandItemS[CardDescription.CardDescriptionProps]] = js.native
 
     /** Shorthand for primary content of CardContent. */
-    var extra: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var extra: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** A Card can be formatted to take up the width of its container. */
-    var fluid: js.UndefOr[Boolean] = js.native
+    var fluid: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for CardHeader. */
-    var header: js.UndefOr[suiraw.SemanticShorthandItemS[CardHeader.CardHeaderProps]] = js.native
+    var header: MyUndefOr[suiraw.SemanticShorthandItemS[CardHeader.CardHeaderProps]] = js.native
 
     /** Render as an `a` tag instead of a `div` and adds the href attribute. */
-    var href: js.UndefOr[String] = js.native
+    var href: MyUndefOr[String] = js.native
 
     /** A card can contain an Image component. */
-    var image: js.UndefOr[suiraw.SemanticShorthandItemS[Image.ImageProps]] = js.native
+    var image: MyUndefOr[suiraw.SemanticShorthandItemS[Image.ImageProps]] = js.native
 
     /** A card can be formatted to link to other content. */
-    var link: js.UndefOr[Boolean] = js.native
+    var link: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for CardMeta. */
-    var meta: js.UndefOr[suiraw.SemanticShorthandItemS[CardMeta.CardMetaProps]] = js.native
+    var meta: MyUndefOr[suiraw.SemanticShorthandItemS[CardMeta.CardMetaProps]] = js.native
 
     /**
      * Called on click. When passed, the component renders as an `a` tag by default instead of a
      * `div`.
      */
-    var onClick: js.UndefOr[js.Function2[ReactMouseEvent, CardProps, Unit]] = js.native
+    var onClick: MyUndefOr[js.Function2[ReactMouseEvent, CardProps, Unit]] = js.native
 
     /** A Card can be formatted to raise above the page. */
-    var raised: js.UndefOr[Boolean] = js.native
+    var raised: MyUndefOr[Boolean] = js.native
   }
 
   def props(q: Card): CardProps =
@@ -129,23 +129,23 @@ object Card {
     )
 
   def rawprops(
-    as:          js.UndefOr[AsC] = js.undefined,
-    centered:    js.UndefOr[Boolean] = js.undefined,
-    className:   js.UndefOr[String] = js.undefined,
-    clazz:       js.UndefOr[Css] = js.undefined,
-    color:       js.UndefOr[SemanticColor] = js.undefined,
-    content:     js.UndefOr[VdomNode] = js.undefined,
-    description: js.UndefOr[ShorthandS[CardDescription]] = js.undefined,
-    extra:       js.UndefOr[VdomNode] = js.undefined,
-    fluid:       js.UndefOr[Boolean] = js.undefined,
-    header:      js.UndefOr[ShorthandS[CardHeader]] = js.undefined,
-    href:        js.UndefOr[String] = js.undefined,
-    image:       js.UndefOr[ShorthandS[Image]] = js.undefined,
-    link:        js.UndefOr[Boolean] = js.undefined,
-    meta:        js.UndefOr[ShorthandS[CardMeta]] = js.undefined,
-    onClickE:    js.UndefOr[Card.OnClick] = js.undefined,
-    onClick:     js.UndefOr[Callback] = js.undefined,
-    raised:      js.UndefOr[Boolean] = js.undefined
+    as:          MyUndefOr[AsC] = MyUndefOr.undefined,
+    centered:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className:   MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:       MyUndefOr[Css] = MyUndefOr.undefined,
+    color:       MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+    content:     MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    description: MyUndefOr[ShorthandS[CardDescription]] = MyUndefOr.undefined,
+    extra:       MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    fluid:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    header:      MyUndefOr[ShorthandS[CardHeader]] = MyUndefOr.undefined,
+    href:        MyUndefOr[String] = MyUndefOr.undefined,
+    image:       MyUndefOr[ShorthandS[Image]] = MyUndefOr.undefined,
+    link:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+    meta:        MyUndefOr[ShorthandS[CardMeta]] = MyUndefOr.undefined,
+    onClickE:    MyUndefOr[Card.OnClick] = MyUndefOr.undefined,
+    onClick:     MyUndefOr[Callback] = MyUndefOr.undefined,
+    raised:      MyUndefOr[Boolean] = MyUndefOr.undefined
   ): CardProps = {
     val p = as.toJsObject[CardProps]
     as.toJs.foreach(v => p.as = v)

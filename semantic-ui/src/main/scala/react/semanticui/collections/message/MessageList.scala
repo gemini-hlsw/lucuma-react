@@ -13,10 +13,10 @@ import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class MessageList(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  items:                  js.UndefOr[Seq[ShorthandS[MessageItem]]] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  items:                  MyUndefOr[Seq[ShorthandS[MessageItem]]] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[MessageList.MessageListProps, MessageList] {
   override protected def cprops                     = MessageList.props(this)
@@ -40,17 +40,17 @@ object MessageList {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.undefined
+    var as: MyUndefOr[AsT] = MyUndefOr.undefined
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.undefined
+    var children: MyUndefOr[React.Node] = MyUndefOr.undefined
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.undefined
+    var className: MyUndefOr[String] = MyUndefOr.undefined
 
     /** Shorthand for primary content. */
-    var items: js.UndefOr[suiraw.SemanticShorthandArray[MessageItem.MessageItemProps]] =
-      js.undefined
+    var items: MyUndefOr[suiraw.SemanticShorthandArray[MessageItem.MessageItemProps]] =
+      MyUndefOr.undefined
   }
 
   def props(q: MessageList): MessageListProps =
@@ -62,10 +62,10 @@ object MessageList {
     )
 
   def rawprops(
-    as:        js.UndefOr[AsC] = js.undefined,
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    items:     js.UndefOr[Seq[ShorthandS[MessageItem]]] = js.undefined
+    as:        MyUndefOr[AsC] = MyUndefOr.undefined,
+    className: MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:     MyUndefOr[Css] = MyUndefOr.undefined,
+    items:     MyUndefOr[Seq[ShorthandS[MessageItem]]] = MyUndefOr.undefined
   ): MessageListProps = {
     val p = as.toJsObject[MessageListProps]
     as.toJs.foreach(v => p.as = v)

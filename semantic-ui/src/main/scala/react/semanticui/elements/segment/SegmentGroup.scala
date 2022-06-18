@@ -16,16 +16,16 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class SegmentGroup(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  compact:                js.UndefOr[Boolean] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  horizontal:             js.UndefOr[Boolean] = js.undefined,
-  piled:                  js.UndefOr[Boolean] = js.undefined,
-  raised:                 js.UndefOr[Boolean] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  stacked:                js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  compact:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  horizontal:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  piled:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  raised:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  stacked:                MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[SegmentGroup.SegmentGroupProps, SegmentGroup] {
   override protected def cprops                     = SegmentGroup.props(this)
@@ -47,17 +47,17 @@ object SegmentGroup {
 
     @JSBracketAccess
     def update(key: String, v: js.Any): Unit          = js.native
-    var as: js.UndefOr[AsT]                           = js.native
-    var children: js.UndefOr[React.Node]              = js.native
-    var className: js.UndefOr[String]                 = js.native
-    var color: js.UndefOr[suiraw.SemanticCOLORS]      = js.native
-    var compact: js.UndefOr[Boolean]                  = js.native
-    var content: js.UndefOr[SemanticShorthandContent] = js.native
-    var horizontal: js.UndefOr[Boolean]               = js.native
-    var piled: js.UndefOr[Boolean]                    = js.native
-    var raised: js.UndefOr[Boolean]                   = js.native
-    var size: js.UndefOr[suiraw.SemanticSIZES]        = js.native
-    var stacked: js.UndefOr[Boolean]                  = js.native
+    var as: MyUndefOr[AsT]                           = js.native
+    var children: MyUndefOr[React.Node]              = js.native
+    var className: MyUndefOr[String]                 = js.native
+    var color: MyUndefOr[suiraw.SemanticCOLORS]      = js.native
+    var compact: MyUndefOr[Boolean]                  = js.native
+    var content: MyUndefOr[SemanticShorthandContent] = js.native
+    var horizontal: MyUndefOr[Boolean]               = js.native
+    var piled: MyUndefOr[Boolean]                    = js.native
+    var raised: MyUndefOr[Boolean]                   = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES]        = js.native
+    var stacked: MyUndefOr[Boolean]                  = js.native
   }
 
   def props(

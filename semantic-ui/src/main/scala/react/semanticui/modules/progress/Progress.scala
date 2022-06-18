@@ -17,26 +17,26 @@ import japgolly.scalajs.react.vdom.TagMod
 import react.semanticui.elements.label.Label
 
 final case class Progress(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  active:                 js.UndefOr[Boolean] = js.undefined,
-  attached:               js.UndefOr[String] = js.undefined,
-  autoSuccess:            js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  error:                  js.UndefOr[Boolean] = js.undefined,
-  indicating:             js.UndefOr[Boolean] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  label:                  js.UndefOr[ShorthandS[Label]] = js.undefined,
-  percent:                js.UndefOr[Double | String] = js.undefined,
-  precision:              js.UndefOr[Double] = js.undefined,
-  progress:               js.UndefOr[Boolean | String] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  success:                js.UndefOr[Boolean] = js.undefined,
-  total:                  js.UndefOr[Double | String] = js.undefined,
-  value:                  js.UndefOr[Double | String] = js.undefined,
-  warning:                js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  active:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  attached:               MyUndefOr[String] = MyUndefOr.undefined,
+  autoSuccess:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  error:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  indicating:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  label:                  MyUndefOr[ShorthandS[Label]] = MyUndefOr.undefined,
+  percent:                MyUndefOr[Double | String] = MyUndefOr.undefined,
+  precision:              MyUndefOr[Double] = MyUndefOr.undefined,
+  progress:               MyUndefOr[Boolean | String] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  success:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  total:                  MyUndefOr[Double | String] = MyUndefOr.undefined,
+  value:                  MyUndefOr[Double | String] = MyUndefOr.undefined,
+  warning:                MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Progress.ProgressProps, Progress] {
   override protected def cprops                     = Progress.props(this)
@@ -62,71 +62,71 @@ object Progress {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** A progress bar can show activity. */
-    var active: js.UndefOr[Boolean] = js.native
+    var active: MyUndefOr[Boolean] = js.native
 
     /** A progress bar can attach to and show the progress of an element (i.e. Card or Segment). */
-    var attached: js.UndefOr[String] = js.native
+    var attached: MyUndefOr[String] = js.native
 
     /** Whether success state should automatically trigger when progress completes. */
-    var autoSuccess: js.UndefOr[Boolean] = js.native
+    var autoSuccess: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** A progress bar can have different colors. */
-    var color: js.UndefOr[String] = js.native
+    var color: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** A progress bar be disabled. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** A progress bar can show a error state. */
-    var error: js.UndefOr[Boolean] = js.native
+    var error: MyUndefOr[Boolean] = js.native
 
     /** An indicating progress bar visually indicates the current level of progress of a task. */
-    var indicating: js.UndefOr[Boolean] = js.native
+    var indicating: MyUndefOr[Boolean] = js.native
 
     /** A progress bar can have its colors inverted. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** Can be set to either to display progress as percent or ratio. */
-    var label: js.UndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]] = js.native
+    var label: MyUndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]] = js.native
 
     /** Current percent complete. */
-    var percent: js.UndefOr[Double | String] = js.native
+    var percent: MyUndefOr[Double | String] = js.native
 
     /** Decimal point precision for calculated progress. */
-    var precision: js.UndefOr[Double] = js.native
+    var precision: MyUndefOr[Double] = js.native
 
     /** A progress bar can contain a text value indicating current progress. */
-    var progress: js.UndefOr[Boolean | String] = js.native
+    var progress: MyUndefOr[Boolean | String] = js.native
 
     /** A progress bar can vary in size. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
 
     /** A progress bar can show a success state. */
-    var success: js.UndefOr[Boolean] = js.native
+    var success: MyUndefOr[Boolean] = js.native
 
     /**
      * For use with value. Together, these will calculate the percent. Mutually excludes percent.
      */
-    var total: js.UndefOr[Double | String] = js.native
+    var total: MyUndefOr[Double | String] = js.native
 
     /**
      * For use with total. Together, these will calculate the percent. Mutually excludes percent.
      */
-    var value: js.UndefOr[Double | String] = js.native
+    var value: MyUndefOr[Double | String] = js.native
 
     /** A progress bar can show a warning state. */
-    var warning: js.UndefOr[Boolean] = js.native
+    var warning: MyUndefOr[Boolean] = js.native
   }
 
   def props(q: Progress): ProgressProps =
@@ -154,26 +154,26 @@ object Progress {
     )
 
   def rawprops(
-    as:          js.UndefOr[AsC] = js.undefined,
-    active:      js.UndefOr[Boolean] = js.undefined,
-    attached:    js.UndefOr[String] = js.undefined,
-    autoSuccess: js.UndefOr[Boolean] = js.undefined,
-    className:   js.UndefOr[String] = js.undefined,
-    clazz:       js.UndefOr[Css] = js.undefined,
-    color:       js.UndefOr[SemanticColor] = js.undefined,
-    content:     js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    error:       js.UndefOr[Boolean] = js.undefined,
-    indicating:  js.UndefOr[Boolean] = js.undefined,
-    inverted:    js.UndefOr[Boolean] = js.undefined,
-    label:       js.UndefOr[ShorthandS[Label]] = js.undefined,
-    percent:     js.UndefOr[Double | String] = js.undefined,
-    precision:   js.UndefOr[Double] = js.undefined,
-    progress:    js.UndefOr[Boolean | String] = js.undefined,
-    size:        js.UndefOr[SemanticSize] = js.undefined,
-    success:     js.UndefOr[Boolean] = js.undefined,
-    total:       js.UndefOr[Double | String] = js.undefined,
-    value:       js.UndefOr[Double | String] = js.undefined,
-    warning:     js.UndefOr[Boolean] = js.undefined
+    as:          MyUndefOr[AsC] = MyUndefOr.undefined,
+    active:      MyUndefOr[Boolean] = MyUndefOr.undefined,
+    attached:    MyUndefOr[String] = MyUndefOr.undefined,
+    autoSuccess: MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className:   MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:       MyUndefOr[Css] = MyUndefOr.undefined,
+    color:       MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+    content:     MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    error:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    indicating:  MyUndefOr[Boolean] = MyUndefOr.undefined,
+    inverted:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    label:       MyUndefOr[ShorthandS[Label]] = MyUndefOr.undefined,
+    percent:     MyUndefOr[Double | String] = MyUndefOr.undefined,
+    precision:   MyUndefOr[Double] = MyUndefOr.undefined,
+    progress:    MyUndefOr[Boolean | String] = MyUndefOr.undefined,
+    size:        MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+    success:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    total:       MyUndefOr[Double | String] = MyUndefOr.undefined,
+    value:       MyUndefOr[Double | String] = MyUndefOr.undefined,
+    warning:     MyUndefOr[Boolean] = MyUndefOr.undefined
   ): ProgressProps = {
     val p = as.toJsObject[ProgressProps]
     as.toJs.foreach(v => p.as = v)

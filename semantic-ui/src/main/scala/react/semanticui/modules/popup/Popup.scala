@@ -17,33 +17,33 @@ import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Popup(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  basic:                  js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[PopupContent]] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  eventsEnabled:          js.UndefOr[Boolean] = js.undefined,
-  flowing:                js.UndefOr[Boolean] = js.undefined,
-  header:                 js.UndefOr[ShorthandS[PopupHeader]] = js.undefined,
-  hideOnScroll:           js.UndefOr[Boolean] = js.undefined,
-  hoverable:              js.UndefOr[Boolean] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  offset:                 js.UndefOr[(Double, Double)] = js.undefined,
-  on:                     js.UndefOr[PopupOn | List[PopupOn]] = js.undefined,
-  onCloseE:               js.UndefOr[Popup.OnClose] = js.undefined,
-  onClose:                js.UndefOr[Callback] = js.undefined,
-  onOpenE:                js.UndefOr[Popup.OnOpen] = js.undefined,
-  onOpen:                 js.UndefOr[Callback] = js.undefined,
-  pinned:                 js.UndefOr[Boolean] = js.undefined,
-  position:               js.UndefOr[PopupPosition] = js.undefined,
-  positionFixed:          js.UndefOr[Boolean] = js.undefined,
-  popper:                 js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  popperModifiers:        js.UndefOr[js.Object] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  style:                  js.UndefOr[Style] = js.undefined,
-  trigger:                js.UndefOr[VdomNode] = js.undefined,
-  wide:                   js.UndefOr[PopupWide] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  basic:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[PopupContent]] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  eventsEnabled:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+  flowing:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  header:                 MyUndefOr[ShorthandS[PopupHeader]] = MyUndefOr.undefined,
+  hideOnScroll:           MyUndefOr[Boolean] = MyUndefOr.undefined,
+  hoverable:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  offset:                 MyUndefOr[(Double, Double)] = MyUndefOr.undefined,
+  on:                     MyUndefOr[PopupOn | List[PopupOn]] = MyUndefOr.undefined,
+  onCloseE:               MyUndefOr[Popup.OnClose] = MyUndefOr.undefined,
+  onClose:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  onOpenE:                MyUndefOr[Popup.OnOpen] = MyUndefOr.undefined,
+  onOpen:                 MyUndefOr[Callback] = MyUndefOr.undefined,
+  pinned:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  position:               MyUndefOr[PopupPosition] = MyUndefOr.undefined,
+  positionFixed:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+  popper:                 MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  popperModifiers:        MyUndefOr[js.Object] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  style:                  MyUndefOr[Style] = MyUndefOr.undefined,
+  trigger:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
+  wide:                   MyUndefOr[PopupWide] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Popup.PopupProps, Popup] {
   override protected def cprops                     = Popup.props(this)
@@ -74,44 +74,44 @@ object Popup {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Display the popup without the pointing arrow */
-    var basic: js.UndefOr[Boolean] = js.native
+    var basic: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Simple text content for the popover. */
-    var content: js.UndefOr[suiraw.SemanticShorthandItemS[PopupContent.PopupContentProps]] =
+    var content: MyUndefOr[suiraw.SemanticShorthandItemS[PopupContent.PopupContentProps]] =
       js.native
 
     /** Existing element the pop-up should be bound to. */
     // context?: object | React.RefObject<HTMLElement>
 
     /** A disabled popup only renders its trigger. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** Enables the Popper.js event listeners. */
-    var eventsEnabled: js.UndefOr[Boolean] = js.native
+    var eventsEnabled: MyUndefOr[Boolean] = js.native
 
     /** A flowing Popup has no maximum width and continues to flow to fit its content. */
-    var flowing: js.UndefOr[Boolean] = js.native
+    var flowing: MyUndefOr[Boolean] = js.native
 
     /** Header displayed above the content in bold. */
-    var header: js.UndefOr[suiraw.SemanticShorthandItemS[PopupHeader.PopupHeaderProps]] = js.native
+    var header: MyUndefOr[suiraw.SemanticShorthandItemS[PopupHeader.PopupHeaderProps]] = js.native
 
     /** Hide the Popup when scrolling the window. */
-    var hideOnScroll: js.UndefOr[Boolean] = js.native
+    var hideOnScroll: MyUndefOr[Boolean] = js.native
 
     /** Whether the popup should not close on hover. */
-    var hoverable: js.UndefOr[Boolean] = js.native
+    var hoverable: MyUndefOr[Boolean] = js.native
 
     /** Invert the colors of the popup */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /**
      * Offset values in px unit to apply to rendered popup. The basic offset accepts an array with
@@ -124,10 +124,10 @@ object Popup {
      * @see
      *   https://popper.js.org/docs/v2/modifiers/offset/
      */
-    var offset: js.UndefOr[js.Array[Double]] = js.native
+    var offset: MyUndefOr[js.Array[Double]] = js.native
 
     /** Events triggering the popup. */
-    var on: js.UndefOr[String | js.Array[String]] = js.native
+    var on: MyUndefOr[String | js.Array[String]] = js.native
 
     /**
      * Called when a close event happens.
@@ -137,7 +137,7 @@ object Popup {
      * @param {object}
      *   data - All props.
      */
-    var onClose: js.UndefOr[RawOnClose] = js.native
+    var onClose: MyUndefOr[RawOnClose] = js.native
 
     /**
      * Called when the portal is mounted on the DOM.
@@ -156,7 +156,7 @@ object Popup {
      * @param {object}
      *   data - All props.
      */
-    var onOpen: js.UndefOr[RawOnOpen] = js.native
+    var onOpen: MyUndefOr[RawOnOpen] = js.native
 
     /**
      * Called when the portal is unmounted from the DOM.
@@ -171,34 +171,34 @@ object Popup {
      * Disables automatic repositioning of the component, it will always be placed according to the
      * position value.
      */
-    var pinned: js.UndefOr[Boolean] = js.native
+    var pinned: MyUndefOr[Boolean] = js.native
 
     /** Position for the popover. */
-    var position: js.UndefOr[String] = js.native
+    var position: MyUndefOr[String] = js.native
 
     /** Tells `Popper.js` to use the `position: fixed` strategy to position the popover. */
-    var positionFixed: js.UndefOr[Boolean] = js.native
+    var positionFixed: MyUndefOr[Boolean] = js.native
 
     /** A wrapping element for an actual content that will be used for positioning. */
-    var popper: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var popper: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** An object containing custom settings for the Popper.js modifiers. */
-    var popperModifiers: js.UndefOr[js.Object] = js.native
+    var popperModifiers: MyUndefOr[js.Object] = js.native
 
     /** A popup can have dependencies which update will schedule a position update. */
     // popperDependencies?: any[]
 
     /** Popup size. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
 
     /** Custom Popup style. */
-    var style: js.UndefOr[js.Object] = js.native
+    var style: MyUndefOr[js.Object] = js.native
 
     /** Element to be rendered in-place where the popup is defined. */
-    var trigger: js.UndefOr[React.Node] = js.native
+    var trigger: MyUndefOr[React.Node] = js.native
 
     /** Popup width. */
-    var wide: js.UndefOr[Boolean | String] = js.native
+    var wide: MyUndefOr[Boolean | String] = js.native
   }
 
   def props(q: Popup): PopupProps =
@@ -233,33 +233,33 @@ object Popup {
     )
 
   def rawprops(
-    as:              js.UndefOr[AsC] = js.undefined,
-    basic:           js.UndefOr[Boolean] = js.undefined,
-    className:       js.UndefOr[String] = js.undefined,
-    clazz:           js.UndefOr[Css] = js.undefined,
-    content:         js.UndefOr[ShorthandS[PopupContent]] = js.undefined,
-    disabled:        js.UndefOr[Boolean] = js.undefined,
-    eventsEnabled:   js.UndefOr[Boolean] = js.undefined,
-    flowing:         js.UndefOr[Boolean] = js.undefined,
-    header:          js.UndefOr[ShorthandS[PopupHeader]] = js.undefined,
-    hideOnScroll:    js.UndefOr[Boolean] = js.undefined,
-    hoverable:       js.UndefOr[Boolean] = js.undefined,
-    inverted:        js.UndefOr[Boolean] = js.undefined,
-    offset:          js.UndefOr[(Double, Double)] = js.undefined,
-    on:              js.UndefOr[PopupOn | List[PopupOn]] = js.undefined,
-    onCloseE:        js.UndefOr[OnClose] = js.undefined,
-    onClose:         js.UndefOr[Callback] = js.undefined,
-    onOpenE:         js.UndefOr[OnOpen] = js.undefined,
-    onOpen:          js.UndefOr[Callback] = js.undefined,
-    pinned:          js.UndefOr[Boolean] = js.undefined,
-    position:        js.UndefOr[PopupPosition] = js.undefined,
-    positionFixed:   js.UndefOr[Boolean] = js.undefined,
-    popper:          js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    popperModifiers: js.UndefOr[js.Object] = js.undefined,
-    size:            js.UndefOr[SemanticSize] = js.undefined,
-    style:           js.UndefOr[Style] = js.undefined,
-    trigger:         js.UndefOr[VdomNode] = js.undefined,
-    wide:            js.UndefOr[PopupWide] = js.undefined
+    as:              MyUndefOr[AsC] = MyUndefOr.undefined,
+    basic:           MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className:       MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:           MyUndefOr[Css] = MyUndefOr.undefined,
+    content:         MyUndefOr[ShorthandS[PopupContent]] = MyUndefOr.undefined,
+    disabled:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+    eventsEnabled:   MyUndefOr[Boolean] = MyUndefOr.undefined,
+    flowing:         MyUndefOr[Boolean] = MyUndefOr.undefined,
+    header:          MyUndefOr[ShorthandS[PopupHeader]] = MyUndefOr.undefined,
+    hideOnScroll:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    hoverable:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    inverted:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+    offset:          MyUndefOr[(Double, Double)] = MyUndefOr.undefined,
+    on:              MyUndefOr[PopupOn | List[PopupOn]] = MyUndefOr.undefined,
+    onCloseE:        MyUndefOr[OnClose] = MyUndefOr.undefined,
+    onClose:         MyUndefOr[Callback] = MyUndefOr.undefined,
+    onOpenE:         MyUndefOr[OnOpen] = MyUndefOr.undefined,
+    onOpen:          MyUndefOr[Callback] = MyUndefOr.undefined,
+    pinned:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+    position:        MyUndefOr[PopupPosition] = MyUndefOr.undefined,
+    positionFixed:   MyUndefOr[Boolean] = MyUndefOr.undefined,
+    popper:          MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    popperModifiers: MyUndefOr[js.Object] = MyUndefOr.undefined,
+    size:            MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+    style:           MyUndefOr[Style] = MyUndefOr.undefined,
+    trigger:         MyUndefOr[VdomNode] = MyUndefOr.undefined,
+    wide:            MyUndefOr[PopupWide] = MyUndefOr.undefined
   ): PopupProps = {
     val p = as.toJsObject[PopupProps]
     as.toJs.foreach(v => p.as = v)

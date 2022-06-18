@@ -14,18 +14,18 @@ import react.semanticui._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Accordion(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  activeIndex:            js.UndefOr[Double | js.Array[Double]] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  defaultActiveIndex:     js.UndefOr[Int | Seq[Int]] = js.undefined,
-  exclusive:              js.UndefOr[Boolean] = js.undefined,
-  fluid:                  js.UndefOr[Boolean] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  styled:                 js.UndefOr[Boolean] = js.undefined,
-  onTitleClickE:          js.UndefOr[AccordionTitle.OnClick] = js.undefined,
-  onTitleClick:           js.UndefOr[Callback] = js.undefined,
-  panels:                 js.UndefOr[Seq[AccordionPanel]] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  activeIndex:            MyUndefOr[Double | js.Array[Double]] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  defaultActiveIndex:     MyUndefOr[Int | Seq[Int]] = MyUndefOr.undefined,
+  exclusive:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  fluid:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  styled:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  onTitleClickE:          MyUndefOr[AccordionTitle.OnClick] = MyUndefOr.undefined,
+  onTitleClick:           MyUndefOr[Callback] = MyUndefOr.undefined,
+  panels:                 MyUndefOr[Seq[AccordionPanel]] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[Accordion.AccordionProps, Accordion] {
   override protected def cprops                     = Accordion.props(this)
@@ -47,31 +47,31 @@ object Accordion {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Index of the currently active panel. */
-    var activeIndex: js.UndefOr[Double | js.Array[Double]] = js.native
+    var activeIndex: MyUndefOr[Double | js.Array[Double]] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Initial activeIndex value. */
-    var defaultActiveIndex: js.UndefOr[Double | js.Array[Double]] = js.native
+    var defaultActiveIndex: MyUndefOr[Double | js.Array[Double]] = js.native
 
     /** Only allow one panel open at a time. */
-    var exclusive: js.UndefOr[Boolean] = js.native
+    var exclusive: MyUndefOr[Boolean] = js.native
 
     /** Format to take up the width of its container . */
-    var fluid: js.UndefOr[Boolean] = js.native
+    var fluid: MyUndefOr[Boolean] = js.native
 
     /** Format for dark backgrounds. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** Adds some basic styling to accordion panels. */
-    var styled: js.UndefOr[Boolean] = js.native
+    var styled: MyUndefOr[Boolean] = js.native
 
     /**
      * Called when a panel title is clicked.
@@ -81,10 +81,10 @@ object Accordion {
      * @param {AccordionTitleProps}
      *   data - All item props.
      */
-    var onTitleClick: js.UndefOr[AccordionTitle.RawOnClick]
+    var onTitleClick: MyUndefOr[AccordionTitle.RawOnClick]
 
     /** Shorthand array of props for Accordion. */
-    var panels: js.UndefOr[js.Array[AccordionPanel.AccordionPanelProps]] =
+    var panels: MyUndefOr[js.Array[AccordionPanel.AccordionPanelProps]] =
       js.native
   }
 

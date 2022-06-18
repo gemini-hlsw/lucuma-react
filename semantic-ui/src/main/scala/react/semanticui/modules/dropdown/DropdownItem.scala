@@ -24,22 +24,22 @@ import react.semanticui.elements.image.Image
 import react.semanticui._
 
 final case class DropdownItem(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  active:                 js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  description:            js.UndefOr[String] = js.undefined,
-  disabled:               js.UndefOr[Boolean] = js.undefined,
-  flag:                   js.UndefOr[ShorthandS[Flag]] = js.undefined,
-  icon:                   js.UndefOr[ShorthandS[Icon]] = js.undefined,
-  image:                  js.UndefOr[ShorthandS[Image]] = js.undefined,
-  label:                  js.UndefOr[ShorthandS[Label]] = js.undefined,
-  onClickE:               js.UndefOr[DropdownItem.OnClick] = js.undefined,
-  onClick:                js.UndefOr[Callback] = js.undefined,
-  selected:               js.UndefOr[Boolean] = js.undefined,
-  text:                   js.UndefOr[String] = js.undefined,
-  value:                  js.UndefOr[Boolean | Double | String] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  active:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  description:            MyUndefOr[String] = MyUndefOr.undefined,
+  disabled:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  flag:                   MyUndefOr[ShorthandS[Flag]] = MyUndefOr.undefined,
+  icon:                   MyUndefOr[ShorthandS[Icon]] = MyUndefOr.undefined,
+  image:                  MyUndefOr[ShorthandS[Image]] = MyUndefOr.undefined,
+  label:                  MyUndefOr[ShorthandS[Label]] = MyUndefOr.undefined,
+  onClickE:               MyUndefOr[DropdownItem.OnClick] = MyUndefOr.undefined,
+  onClick:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  selected:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  text:                   MyUndefOr[String] = MyUndefOr.undefined,
+  value:                  MyUndefOr[Boolean | Double | String] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[DropdownItem.DropdownItemProps, DropdownItem] {
   override protected def cprops                     = DropdownItem.props(this)
@@ -63,37 +63,37 @@ object DropdownItem {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Style as the currently chosen item. */
-    var active: js.UndefOr[Boolean] = js.native
+    var active: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[SemanticShorthandContent] = js.native
+    var content: MyUndefOr[SemanticShorthandContent] = js.native
 
     /** Additional text with less emphasis. */
-    var description: js.UndefOr[suiraw.SemanticShorthandItemS[String]] = js.native
+    var description: MyUndefOr[suiraw.SemanticShorthandItemS[String]] = js.native
 
     /** A dropdown item can be disabled. */
-    var disabled: js.UndefOr[Boolean] = js.native
+    var disabled: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for Flag. */
-    var flag: js.UndefOr[suiraw.SemanticShorthandItemS[FlagProps]] = js.native
+    var flag: MyUndefOr[suiraw.SemanticShorthandItemS[FlagProps]] = js.native
 
     /** Shorthand for Icon. */
-    var icon: js.UndefOr[suiraw.SemanticShorthandItemS[IconProps]] = js.native
+    var icon: MyUndefOr[suiraw.SemanticShorthandItemS[IconProps]] = js.native
 
     /** Shorthand for Image. */
-    var image: js.UndefOr[suiraw.SemanticShorthandItemS[ImageProps]] = js.native
+    var image: MyUndefOr[suiraw.SemanticShorthandItemS[ImageProps]] = js.native
 
     /** Shorthand for Label. */
-    var label: js.UndefOr[suiraw.SemanticShorthandItemS[LabelProps]] = js.native
+    var label: MyUndefOr[suiraw.SemanticShorthandItemS[LabelProps]] = js.native
 
     /**
      * Called on click.
@@ -103,18 +103,18 @@ object DropdownItem {
      * @param {object}
      *   data - All props.
      */
-    var onClick: js.UndefOr[js.Function2[ReactMouseEvent, DropdownItemProps, Unit]] = js.native
+    var onClick: MyUndefOr[js.Function2[ReactMouseEvent, DropdownItemProps, Unit]] = js.native
 
     /**
      * The item currently selected by keyboard shortcut. This is not the active item.
      */
-    var selected: js.UndefOr[Boolean] = js.native
+    var selected: MyUndefOr[Boolean] = js.native
 
     /** Display text. */
-    var text: js.UndefOr[SemanticShorthandContent] = js.native
+    var text: MyUndefOr[SemanticShorthandContent] = js.native
 
     /** Stored value. */
-    var value: js.UndefOr[Boolean | Double | String] = js.native
+    var value: MyUndefOr[Boolean | Double | String] = js.native
   }
 
   def props(

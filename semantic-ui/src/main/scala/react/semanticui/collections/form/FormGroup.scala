@@ -15,14 +15,14 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class FormGroup(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  grouped:                js.UndefOr[Boolean] = js.undefined,
-  inline:                 js.UndefOr[Boolean] = js.undefined,
-  unstackable:            js.UndefOr[Boolean] = js.undefined,
-  widths:                 js.UndefOr[SemanticWidth | FormWidths] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  grouped:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  inline:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  unstackable:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+  widths:                 MyUndefOr[SemanticWidth | FormWidths] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[FormGroup.FormGroupProps, FormGroup] {
   override protected def cprops                     = FormGroup.props(this)
@@ -45,31 +45,31 @@ object FormGroup {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] =
+      MyUndefOr.undefined
 
-    var grouped: js.UndefOr[Boolean] = js.native
+    var grouped: MyUndefOr[Boolean] = js.native
 
     /** Multiple fields may be inline in a row. */
-    var inline: js.UndefOr[Boolean] = js.native
+    var inline: MyUndefOr[Boolean] = js.native
 
     /** A form group can prevent itself from stacking on mobile. */
-    var unstackable: js.UndefOr[Boolean] = js.native
+    var unstackable: MyUndefOr[Boolean] = js.native
 
     /**
      * Fields Groups can specify their width in grid columns or automatically divide fields to be
      * equal width.
      */
-    var widths: js.UndefOr[String] = js.native
+    var widths: MyUndefOr[String] = js.native
   }
 
   def props(q: FormGroup): FormGroupProps =
@@ -85,14 +85,14 @@ object FormGroup {
     )
 
   def rawprops(
-    as:          js.UndefOr[AsC] = js.undefined,
-    className:   js.UndefOr[String] = js.undefined,
-    clazz:       js.UndefOr[Css] = js.undefined,
-    content:     js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    grouped:     js.UndefOr[Boolean] = js.undefined,
-    inline:      js.UndefOr[Boolean] = js.undefined,
-    unstackable: js.UndefOr[Boolean] = js.undefined,
-    widths:      js.UndefOr[SemanticWidth | FormWidths] = js.undefined
+    as:          MyUndefOr[AsC] = MyUndefOr.undefined,
+    className:   MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:       MyUndefOr[Css] = MyUndefOr.undefined,
+    content:     MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    grouped:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    inline:      MyUndefOr[Boolean] = MyUndefOr.undefined,
+    unstackable: MyUndefOr[Boolean] = MyUndefOr.undefined,
+    widths:      MyUndefOr[SemanticWidth | FormWidths] = MyUndefOr.undefined
   ): FormGroupProps = {
     val p = as.toJsObject[FormGroupProps]
     as.toJs.foreach(v => p.as = v)

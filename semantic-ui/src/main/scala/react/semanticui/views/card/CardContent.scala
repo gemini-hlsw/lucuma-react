@@ -14,15 +14,15 @@ import react.semanticui._
 import react.semanticui.{raw => suiraw}
 
 case class CardContent(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  description:            js.UndefOr[ShorthandS[CardDescription]] = js.undefined,
-  extra:                  js.UndefOr[Boolean] = js.undefined,
-  header:                 js.UndefOr[ShorthandS[CardHeader]] = js.undefined,
-  meta:                   js.UndefOr[ShorthandS[CardMeta]] = js.undefined,
-  textAlign:              js.UndefOr[SemanticTextAlignment] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  description:            MyUndefOr[ShorthandS[CardDescription]] = MyUndefOr.undefined,
+  extra:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  header:                 MyUndefOr[ShorthandS[CardHeader]] = MyUndefOr.undefined,
+  meta:                   MyUndefOr[ShorthandS[CardMeta]] = MyUndefOr.undefined,
+  textAlign:              MyUndefOr[SemanticTextAlignment] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[CardContent.CardContentProps, CardContent] {
   override protected def cprops                     = CardContent.props(this)
@@ -46,32 +46,32 @@ object CardContent {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Shorthand for primary content. */
-    var content: js.UndefOr[suiraw.SemanticShorthandContent] = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent] = js.native
 
     /** Shorthand for CardDescription component. */
     var description
-      : js.UndefOr[suiraw.SemanticShorthandItemS[CardDescription.CardDescriptionProps]] = js.native
+      : MyUndefOr[suiraw.SemanticShorthandItemS[CardDescription.CardDescriptionProps]] = js.native
 
     /** Shorthand for CardExtra component. */
-    var extra: js.UndefOr[Boolean] = js.native
+    var extra: MyUndefOr[Boolean] = js.native
 
     /** Shorthand for CardHeader component. */
-    var header: js.UndefOr[suiraw.SemanticShorthandItemS[CardHeader.CardHeaderProps]] = js.native
+    var header: MyUndefOr[suiraw.SemanticShorthandItemS[CardHeader.CardHeaderProps]] = js.native
 
     /** Shorthand for CardMeta component. */
-    var meta: js.UndefOr[suiraw.SemanticShorthandItemS[CardMeta.CardMetaProps]] = js.native
+    var meta: MyUndefOr[suiraw.SemanticShorthandItemS[CardMeta.CardMetaProps]] = js.native
 
     /** Content can specify its vertical alignment. */
-    var textAlign: js.UndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
+    var textAlign: MyUndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
   }
 
   def props(q: CardContent): CardContentProps =
@@ -87,15 +87,15 @@ object CardContent {
     )
 
   def rawprops(
-    as:          js.UndefOr[AsC] = js.undefined,
-    className:   js.UndefOr[String] = js.undefined,
-    clazz:       js.UndefOr[Css] = js.undefined,
-    content:     js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-    description: js.UndefOr[ShorthandS[CardDescription]] = js.undefined,
-    extra:       js.UndefOr[Boolean] = js.undefined,
-    header:      js.UndefOr[ShorthandS[CardHeader]] = js.undefined,
-    meta:        js.UndefOr[ShorthandS[CardMeta]] = js.undefined,
-    textAlign:   js.UndefOr[SemanticTextAlignment] = js.undefined
+    as:          MyUndefOr[AsC] = MyUndefOr.undefined,
+    className:   MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:       MyUndefOr[Css] = MyUndefOr.undefined,
+    content:     MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+    description: MyUndefOr[ShorthandS[CardDescription]] = MyUndefOr.undefined,
+    extra:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    header:      MyUndefOr[ShorthandS[CardHeader]] = MyUndefOr.undefined,
+    meta:        MyUndefOr[ShorthandS[CardMeta]] = MyUndefOr.undefined,
+    textAlign:   MyUndefOr[SemanticTextAlignment] = MyUndefOr.undefined
   ): CardContentProps = {
     val p = as.toJsObject[CardContentProps]
     as.toJs.foreach(v => p.as = v)

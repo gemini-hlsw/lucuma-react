@@ -18,33 +18,33 @@ import react.semanticui.{raw => suiraw}
 import react.semanticui.elements.button.Button
 
 final case class Modal(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  actions:                js.UndefOr[Seq[ShorthandS[Button]]] = js.undefined,
-  basic:                  js.UndefOr[Boolean] = js.undefined,
-  centered:               js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  closeIcon:              js.UndefOr[ShorthandS[Icon]] = js.undefined,
-  closeOnDimmerClick:     js.UndefOr[Boolean] = js.undefined,
-  closeOnDocumentClick:   js.UndefOr[Boolean] = js.undefined,
-  closeOnEscape:          js.UndefOr[Boolean] = js.undefined,
-  content:                js.UndefOr[ShorthandS[ModalContent]] = js.undefined,
-  defaultOpen:            js.UndefOr[Boolean] = js.undefined,
-  dimmer:                 js.UndefOr[Dimmer | ModalDimmer] = js.undefined,
-  eventPool:              js.UndefOr[String] = js.undefined,
-  header:                 js.UndefOr[ShorthandS[ModalHeader]] = js.undefined,
-  onActionClickE:         js.UndefOr[Modal.OnActionClick] = js.undefined,
-  onActionClick:          js.UndefOr[Callback] = js.undefined,
-  onCloseE:               js.UndefOr[Modal.OnClose] = js.undefined,
-  onClose:                js.UndefOr[Callback] = js.undefined,
-  onOpenE:                js.UndefOr[Modal.OnOpen] = js.undefined,
-  onOpen:                 js.UndefOr[Callback] = js.undefined,
-  onMountE:               js.UndefOr[Modal.OnMount] = js.undefined,
-  onMount:                js.UndefOr[Callback] = js.undefined,
-  open:                   js.UndefOr[Boolean] = js.undefined,
-  size:                   js.UndefOr[ModalSize] = js.undefined,
-  style:                  js.UndefOr[Style] = js.undefined,
-  trigger:                js.UndefOr[VdomNode] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  actions:                MyUndefOr[Seq[ShorthandS[Button]]] = MyUndefOr.undefined,
+  basic:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  centered:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  closeIcon:              MyUndefOr[ShorthandS[Icon]] = MyUndefOr.undefined,
+  closeOnDimmerClick:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+  closeOnDocumentClick:   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  closeOnEscape:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[ModalContent]] = MyUndefOr.undefined,
+  defaultOpen:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+  dimmer:                 MyUndefOr[Dimmer | ModalDimmer] = MyUndefOr.undefined,
+  eventPool:              MyUndefOr[String] = MyUndefOr.undefined,
+  header:                 MyUndefOr[ShorthandS[ModalHeader]] = MyUndefOr.undefined,
+  onActionClickE:         MyUndefOr[Modal.OnActionClick] = MyUndefOr.undefined,
+  onActionClick:          MyUndefOr[Callback] = MyUndefOr.undefined,
+  onCloseE:               MyUndefOr[Modal.OnClose] = MyUndefOr.undefined,
+  onClose:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  onOpenE:                MyUndefOr[Modal.OnOpen] = MyUndefOr.undefined,
+  onOpen:                 MyUndefOr[Callback] = MyUndefOr.undefined,
+  onMountE:               MyUndefOr[Modal.OnMount] = MyUndefOr.undefined,
+  onMount:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  open:                   MyUndefOr[Boolean] = MyUndefOr.undefined,
+  size:                   MyUndefOr[ModalSize] = MyUndefOr.undefined,
+  style:                  MyUndefOr[Style] = MyUndefOr.undefined,
+  trigger:                MyUndefOr[VdomNode] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Modal.ModalProps, Modal] {
   override protected def cprops                     = Modal.props(this)
@@ -77,53 +77,53 @@ object Modal {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Shorthand for Modal.Actions. Typically an array of button shorthand. */
-    var actions: js.UndefOr[suiraw.SemanticShorthandArray[Button.ButtonProps]] =
+    var actions: MyUndefOr[suiraw.SemanticShorthandArray[Button.ButtonProps]] =
       js.native
 
     /** A Modal can reduce its complexity */
-    var basic: js.UndefOr[Boolean] = js.native
+    var basic: MyUndefOr[Boolean] = js.native
 
     /** A modal can be vertically centered in the viewport */
-    var centered: js.UndefOr[Boolean] = js.native
+    var centered: MyUndefOr[Boolean] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Icon. */
-    var closeIcon: js.UndefOr[suiraw.SemanticShorthandItemS[IconProps]]
+    var closeIcon: MyUndefOr[suiraw.SemanticShorthandItemS[IconProps]]
 
     /** Whether or not the Modal should close when the dimmer is clicked. */
-    var closeOnDimmerClick: js.UndefOr[Boolean] = js.native
+    var closeOnDimmerClick: MyUndefOr[Boolean] = js.native
 
     /** Whether or not the Modal should close when the document is clicked. */
-    var closeOnDocumentClick: js.UndefOr[Boolean] = js.native
+    var closeOnDocumentClick: MyUndefOr[Boolean] = js.native
 
     /** Whether or not the Modal should close when escape is pressed. */
-    var closeOnEscape: js.UndefOr[Boolean] = js.native
+    var closeOnEscape: MyUndefOr[Boolean] = js.native
 
     /** A Modal can be passed content via shorthand. */
-    var content: js.UndefOr[suiraw.SemanticShorthandItemS[ModalContent.ModalContentProps]] =
+    var content: MyUndefOr[suiraw.SemanticShorthandItemS[ModalContent.ModalContentProps]] =
       js.native
 
     /** Initial value of open. */
-    var defaultOpen: js.UndefOr[Boolean] = js.native
+    var defaultOpen: MyUndefOr[Boolean] = js.native
 
     /** A modal can appear in a dimmer. */
     var dimmer
-      : js.UndefOr[Boolean | String | suiraw.SemanticShorthandItemS[ModalDimmer.ModalDimmerProps]] =
+      : MyUndefOr[Boolean | String | suiraw.SemanticShorthandItemS[ModalDimmer.ModalDimmerProps]] =
       js.native
 
     /** Event pool namespace that is used to handle component events */
-    var eventPool: js.UndefOr[String] = js.native
+    var eventPool: MyUndefOr[String] = js.native
 
     /** A Modal can be passed header via shorthand. */
-    var header: js.UndefOr[suiraw.SemanticShorthandItemS[ModalHeader.ModalHeaderProps]] = js.native
+    var header: MyUndefOr[suiraw.SemanticShorthandItemS[ModalHeader.ModalHeaderProps]] = js.native
 
     /** The node where the modal should mount. Defaults to document.body. */
     // mountNode?: any
@@ -136,7 +136,7 @@ object Modal {
      * @param {object}
      *   data - All props.
      */
-    var onActionClick: js.UndefOr[RawOnActionClick] = js.native
+    var onActionClick: MyUndefOr[RawOnActionClick] = js.native
 
     /**
      * Called when a close event happens.
@@ -146,7 +146,7 @@ object Modal {
      * @param {object}
      *   data - All props.
      */
-    var onClose: js.UndefOr[RawOnClose] = js.native
+    var onClose: MyUndefOr[RawOnClose] = js.native
 
     /**
      * Called when the portal is mounted on the DOM.
@@ -155,7 +155,7 @@ object Modal {
      * @param {object}
      *   data - All props.
      */
-    var onMount: js.UndefOr[RawOnMount] = js.native
+    var onMount: MyUndefOr[RawOnMount] = js.native
 
     /**
      * Called when an open event happens.
@@ -165,7 +165,7 @@ object Modal {
      * @param {object}
      *   data - All props.
      */
-    var onOpen: js.UndefOr[RawOnClose] = js.native
+    var onOpen: MyUndefOr[RawOnClose] = js.native
 
     /**
      * Called when the portal is unmounted from the DOM.
@@ -174,20 +174,20 @@ object Modal {
      * @param {object}
      *   data - All props.
      */
-    var onUnmount: js.UndefOr[RawOnUnmount] = js.native
+    var onUnmount: MyUndefOr[RawOnUnmount] = js.native
 
     /** Controls whether or not the Modal is displayed. */
-    var open: js.UndefOr[Boolean] = js.native
+    var open: MyUndefOr[Boolean] = js.native
 
     /** A modal can vary in size. */
     // size?: 'mini' | 'tiny' | 'small' | 'large' | 'fullscreen'
-    var size: js.UndefOr[String] = js.native
+    var size: MyUndefOr[String] = js.native
 
     /** Custom styles. */
-    var style: js.UndefOr[js.Object] = js.native
+    var style: MyUndefOr[js.Object] = js.native
 
     /** Element to be rendered in-place where the portal is defined. */
-    var trigger: js.UndefOr[React.Node] = js.native
+    var trigger: MyUndefOr[React.Node] = js.native
   }
 
   def props(q: Modal): ModalProps =
@@ -222,33 +222,33 @@ object Modal {
     )
 
   def rawprops(
-    as:                   js.UndefOr[AsC] = js.undefined,
-    actions:              js.UndefOr[Seq[ShorthandS[Button]]] = js.undefined,
-    basic:                js.UndefOr[Boolean] = js.undefined,
-    centered:             js.UndefOr[Boolean] = js.undefined,
-    className:            js.UndefOr[String] = js.undefined,
-    clazz:                js.UndefOr[Css] = js.undefined,
-    closeIcon:            js.UndefOr[ShorthandS[Icon]] = js.undefined,
-    closeOnDimmerClick:   js.UndefOr[Boolean] = js.undefined,
-    closeOnDocumentClick: js.UndefOr[Boolean] = js.undefined,
-    closeOnEscape:        js.UndefOr[Boolean] = js.undefined,
-    content:              js.UndefOr[ShorthandS[ModalContent]] = js.undefined,
-    defaultOpen:          js.UndefOr[Boolean] = js.undefined,
-    dimmer:               js.UndefOr[Dimmer | ModalDimmer] = js.undefined,
-    eventPool:            js.UndefOr[String] = js.undefined,
-    header:               js.UndefOr[ShorthandS[ModalHeader]] = js.undefined,
-    onActionClickE:       js.UndefOr[OnActionClick] = js.undefined,
-    onActionClick:        js.UndefOr[Callback] = js.undefined,
-    onCloseE:             js.UndefOr[OnClose] = js.undefined,
-    onClose:              js.UndefOr[Callback] = js.undefined,
-    onOpenE:              js.UndefOr[OnOpen] = js.undefined,
-    onOpen:               js.UndefOr[Callback] = js.undefined,
-    onMountE:             js.UndefOr[OnMount] = js.undefined,
-    onMount:              js.UndefOr[Callback] = js.undefined,
-    open:                 js.UndefOr[Boolean] = js.undefined,
-    size:                 js.UndefOr[ModalSize] = js.undefined,
-    style:                js.UndefOr[Style] = js.undefined,
-    trigger:              js.UndefOr[VdomNode] = js.undefined
+    as:                   MyUndefOr[AsC] = MyUndefOr.undefined,
+    actions:              MyUndefOr[Seq[ShorthandS[Button]]] = MyUndefOr.undefined,
+    basic:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+    centered:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+    className:            MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:                MyUndefOr[Css] = MyUndefOr.undefined,
+    closeIcon:            MyUndefOr[ShorthandS[Icon]] = MyUndefOr.undefined,
+    closeOnDimmerClick:   MyUndefOr[Boolean] = MyUndefOr.undefined,
+    closeOnDocumentClick: MyUndefOr[Boolean] = MyUndefOr.undefined,
+    closeOnEscape:        MyUndefOr[Boolean] = MyUndefOr.undefined,
+    content:              MyUndefOr[ShorthandS[ModalContent]] = MyUndefOr.undefined,
+    defaultOpen:          MyUndefOr[Boolean] = MyUndefOr.undefined,
+    dimmer:               MyUndefOr[Dimmer | ModalDimmer] = MyUndefOr.undefined,
+    eventPool:            MyUndefOr[String] = MyUndefOr.undefined,
+    header:               MyUndefOr[ShorthandS[ModalHeader]] = MyUndefOr.undefined,
+    onActionClickE:       MyUndefOr[OnActionClick] = MyUndefOr.undefined,
+    onActionClick:        MyUndefOr[Callback] = MyUndefOr.undefined,
+    onCloseE:             MyUndefOr[OnClose] = MyUndefOr.undefined,
+    onClose:              MyUndefOr[Callback] = MyUndefOr.undefined,
+    onOpenE:              MyUndefOr[OnOpen] = MyUndefOr.undefined,
+    onOpen:               MyUndefOr[Callback] = MyUndefOr.undefined,
+    onMountE:             MyUndefOr[OnMount] = MyUndefOr.undefined,
+    onMount:              MyUndefOr[Callback] = MyUndefOr.undefined,
+    open:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+    size:                 MyUndefOr[ModalSize] = MyUndefOr.undefined,
+    style:                MyUndefOr[Style] = MyUndefOr.undefined,
+    trigger:              MyUndefOr[VdomNode] = MyUndefOr.undefined
   ): ModalProps = {
     val p = as.toJsObject[ModalProps]
     as.toJs.foreach(v => p.as = v)

@@ -13,21 +13,21 @@ import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class GridColumn(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  computer:               js.UndefOr[SemanticWidth] = js.undefined,
-  floated:                js.UndefOr[SemanticFloat] = js.undefined,
-  largeScreen:            js.UndefOr[SemanticWidth] = js.undefined,
-  mobile:                 js.UndefOr[SemanticWidth] = js.undefined,
-  only:                   js.UndefOr[GridOnly] = js.undefined,
-  stretched:              js.UndefOr[Boolean] = js.undefined,
-  tablet:                 js.UndefOr[SemanticWidth] = js.undefined,
-  textAlign:              js.UndefOr[SemanticTextAlignment] = js.undefined,
-  verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
-  widescreen:             js.UndefOr[SemanticWidth] = js.undefined,
-  width:                  js.UndefOr[SemanticWidth] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  computer:               MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+  floated:                MyUndefOr[SemanticFloat] = MyUndefOr.undefined,
+  largeScreen:            MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+  mobile:                 MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+  only:                   MyUndefOr[GridOnly] = MyUndefOr.undefined,
+  stretched:              MyUndefOr[Boolean] = MyUndefOr.undefined,
+  tablet:                 MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+  textAlign:              MyUndefOr[SemanticTextAlignment] = MyUndefOr.undefined,
+  verticalAlign:          MyUndefOr[SemanticVerticalAlignment] = MyUndefOr.undefined,
+  widescreen:             MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+  width:                  MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[GridColumn.GridColumnProps, GridColumn] {
   override protected def cprops                     = GridColumn.props(this)
@@ -51,49 +51,49 @@ object GridColumn {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** A grid column can be colored. */
-    var color: js.UndefOr[suiraw.SemanticCOLORS] = js.native
+    var color: MyUndefOr[suiraw.SemanticCOLORS] = js.native
 
     /** A column can specify a width for a computer. */
-    var computer: js.UndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
+    var computer: MyUndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
 
     /** A column can sit flush against the left or right edge of a row. */
-    var floated: js.UndefOr[suiraw.SemanticFLOATS] = js.native
+    var floated: MyUndefOr[suiraw.SemanticFLOATS] = js.native
 
     /** A column can specify a width for a large screen device. */
-    var largeScreen: js.UndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
+    var largeScreen: MyUndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
 
     /** A column can specify a width for a mobile device. */
-    var mobile: js.UndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
+    var mobile: MyUndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
 
     /** A column can appear only for a specific device, or screen sizes. */
-    var only: js.UndefOr[String] = js.native
+    var only: MyUndefOr[String] = js.native
 
     /** An can stretch its contents to take up the entire grid or row height. */
-    var stretched: js.UndefOr[Boolean] = js.native
+    var stretched: MyUndefOr[Boolean] = js.native
 
     /** A column can specify a width for a tablet device. */
-    var tablet: js.UndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
+    var tablet: MyUndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
 
     /** A row can specify its text alignment. */
-    var textAlign: js.UndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
+    var textAlign: MyUndefOr[suiraw.SemanticTEXTALIGNMENTS] = js.native
 
     /** A column can specify its vertical alignment to have all its columns vertically centered. */
-    var verticalAlign: js.UndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
+    var verticalAlign: MyUndefOr[suiraw.SemanticVERTICALALIGNMENTS] = js.native
 
     /** A column can specify a width for a wide screen device. */
-    var widescreen: js.UndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
+    var widescreen: MyUndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
 
     /** Represents width of column. */
-    var width: js.UndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
+    var width: MyUndefOr[suiraw.SemanticWIDTHS] = js.native // | 'equal'
   }
 
   def props(q: GridColumn): GridColumnProps =
@@ -116,21 +116,21 @@ object GridColumn {
     )
 
   def rawprops(
-    as:            js.UndefOr[AsC] = js.undefined,
-    className:     js.UndefOr[String] = js.undefined,
-    clazz:         js.UndefOr[Css] = js.undefined,
-    color:         js.UndefOr[SemanticColor] = js.undefined,
-    computer:      js.UndefOr[SemanticWidth] = js.undefined,
-    floated:       js.UndefOr[SemanticFloat] = js.undefined,
-    largeScreen:   js.UndefOr[SemanticWidth] = js.undefined,
-    mobile:        js.UndefOr[SemanticWidth] = js.undefined,
-    only:          js.UndefOr[GridOnly] = js.undefined,
-    stretched:     js.UndefOr[Boolean] = js.undefined,
-    tablet:        js.UndefOr[SemanticWidth] = js.undefined,
-    textAlign:     js.UndefOr[SemanticTextAlignment] = js.undefined,
-    verticalAlign: js.UndefOr[SemanticVerticalAlignment] = js.undefined,
-    widescreen:    js.UndefOr[SemanticWidth] = js.undefined,
-    width:         js.UndefOr[SemanticWidth] = js.undefined
+    as:            MyUndefOr[AsC] = MyUndefOr.undefined,
+    className:     MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:         MyUndefOr[Css] = MyUndefOr.undefined,
+    color:         MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+    computer:      MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+    floated:       MyUndefOr[SemanticFloat] = MyUndefOr.undefined,
+    largeScreen:   MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+    mobile:        MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+    only:          MyUndefOr[GridOnly] = MyUndefOr.undefined,
+    stretched:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    tablet:        MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+    textAlign:     MyUndefOr[SemanticTextAlignment] = MyUndefOr.undefined,
+    verticalAlign: MyUndefOr[SemanticVerticalAlignment] = MyUndefOr.undefined,
+    widescreen:    MyUndefOr[SemanticWidth] = MyUndefOr.undefined,
+    width:         MyUndefOr[SemanticWidth] = MyUndefOr.undefined
   ): GridColumnProps = {
     val p = as.toJsObject[GridColumnProps]
     as.toJs.foreach(v => p.as = v)

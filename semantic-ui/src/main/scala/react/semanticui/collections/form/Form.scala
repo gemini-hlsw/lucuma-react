@@ -14,21 +14,21 @@ import org.scalajs.dom
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Form(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  action:                 js.UndefOr[String] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  error:                  js.UndefOr[Boolean] = js.undefined,
-  inverted:               js.UndefOr[Boolean] = js.undefined,
-  loading:                js.UndefOr[Boolean] = js.undefined,
-  onSubmitE:              js.UndefOr[Form.OnSubmitE] = js.undefined,
-  onSubmit:               js.UndefOr[Callback] = js.undefined,
-  reply:                  js.UndefOr[Boolean] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  success:                js.UndefOr[Boolean] = js.undefined,
-  unstackable:            js.UndefOr[Boolean] = js.undefined,
-  warning:                js.UndefOr[Boolean] = js.undefined,
-  widths:                 js.UndefOr[FormWidths] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  action:                 MyUndefOr[String] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  error:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  inverted:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  loading:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  onSubmitE:              MyUndefOr[Form.OnSubmitE] = MyUndefOr.undefined,
+  onSubmit:               MyUndefOr[Callback] = MyUndefOr.undefined,
+  reply:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  success:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  unstackable:            MyUndefOr[Boolean] = MyUndefOr.undefined,
+  warning:                MyUndefOr[Boolean] = MyUndefOr.undefined,
+  widths:                 MyUndefOr[FormWidths] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Form.FormProps, Form] {
   override protected def cprops                     = Form.props(this)
@@ -54,46 +54,46 @@ object Form {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.native
+    var as: MyUndefOr[AsT] = js.native
 
     /** The HTML form action */
-    var action: js.UndefOr[String] = js.native
+    var action: MyUndefOr[String] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.native
+    var className: MyUndefOr[String] = js.native
 
     /** Automatically show any error Message children. */
-    var error: js.UndefOr[Boolean] = js.native
+    var error: MyUndefOr[Boolean] = js.native
 
     /** A form can have its color inverted for contrast. */
-    var inverted: js.UndefOr[Boolean] = js.native
+    var inverted: MyUndefOr[Boolean] = js.native
 
     /** Automatically show a loading indicator. */
-    var loading: js.UndefOr[Boolean] = js.native
+    var loading: MyUndefOr[Boolean] = js.native
 
     /** The HTML form submit handler. */
-    var onSubmit: js.UndefOr[OnRawSubmit] = js.native
+    var onSubmit: MyUndefOr[OnRawSubmit] = js.native
 
     /** A comment can contain a form to reply to a comment. This may have arbitrary content. */
-    var reply: js.UndefOr[Boolean] = js.native
+    var reply: MyUndefOr[Boolean] = js.native
 
     /** A form can vary in size. */
-    var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES] = js.native
 
     /** Automatically show any success Message children. */
-    var success: js.UndefOr[Boolean] = js.native
+    var success: MyUndefOr[Boolean] = js.native
 
     /** A form can prevent itself from stacking on mobile. */
-    var unstackable: js.UndefOr[Boolean] = js.native
+    var unstackable: MyUndefOr[Boolean] = js.native
 
     /** Automatically show any warning Message children. */
-    var warning: js.UndefOr[Boolean] = js.native
+    var warning: MyUndefOr[Boolean] = js.native
 
     /** Forms can automatically divide fields to be equal width. */
-    var widths: js.UndefOr[String] = js.native
+    var widths: MyUndefOr[String] = js.native
   }
 
   def props(q: Form): FormProps =
@@ -116,21 +116,21 @@ object Form {
     )
 
   def rawprops(
-    as:          js.UndefOr[AsC] = js.undefined,
-    action:      js.UndefOr[String] = js.undefined,
-    className:   js.UndefOr[String] = js.undefined,
-    clazz:       js.UndefOr[Css] = js.undefined,
-    error:       js.UndefOr[Boolean] = js.undefined,
-    inverted:    js.UndefOr[Boolean] = js.undefined,
-    loading:     js.UndefOr[Boolean] = js.undefined,
-    onSubmitE:   js.UndefOr[Form.OnSubmitE] = js.undefined,
-    onSubmit:    js.UndefOr[Callback] = js.undefined,
-    reply:       js.UndefOr[Boolean] = js.undefined,
-    size:        js.UndefOr[SemanticSize] = js.undefined,
-    success:     js.UndefOr[Boolean] = js.undefined,
-    unstackable: js.UndefOr[Boolean] = js.undefined,
-    warning:     js.UndefOr[Boolean] = js.undefined,
-    widths:      js.UndefOr[FormWidths] = js.undefined
+    as:          MyUndefOr[AsC] = MyUndefOr.undefined,
+    action:      MyUndefOr[String] = MyUndefOr.undefined,
+    className:   MyUndefOr[String] = MyUndefOr.undefined,
+    clazz:       MyUndefOr[Css] = MyUndefOr.undefined,
+    error:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    inverted:    MyUndefOr[Boolean] = MyUndefOr.undefined,
+    loading:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    onSubmitE:   MyUndefOr[Form.OnSubmitE] = MyUndefOr.undefined,
+    onSubmit:    MyUndefOr[Callback] = MyUndefOr.undefined,
+    reply:       MyUndefOr[Boolean] = MyUndefOr.undefined,
+    size:        MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+    success:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    unstackable: MyUndefOr[Boolean] = MyUndefOr.undefined,
+    warning:     MyUndefOr[Boolean] = MyUndefOr.undefined,
+    widths:      MyUndefOr[FormWidths] = MyUndefOr.undefined
   ): FormProps = {
     val p = as.toJsObject[FormProps]
     as.toJs.foreach(v => p.as = v)

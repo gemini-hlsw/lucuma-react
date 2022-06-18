@@ -12,11 +12,11 @@ import react.common._
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class PortalInner(
-  // innerRef:             js.UndefOr[Ref[html.Element]]                     = js.undefined,
-  onMountE:               js.UndefOr[PortalInner.OnMount] = js.undefined,
-  onMount:                js.UndefOr[Callback] = js.undefined,
-  onUnmountE:             js.UndefOr[PortalInner.OnUnmount] = js.undefined,
-  onUnmount:              js.UndefOr[Callback] = js.undefined,
+  // innerRef:             MyUndefOr[Ref[html.Element]]                     = MyUndefOr.undefined,
+  onMountE:               MyUndefOr[PortalInner.OnMount] = MyUndefOr.undefined,
+  onMount:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  onUnmountE:             MyUndefOr[PortalInner.OnUnmount] = MyUndefOr.undefined,
+  onUnmount:              MyUndefOr[Callback] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[PortalInner.PortalInnerProps, PortalInner] {
   override protected def cprops                     = PortalInner.props(this)
@@ -43,10 +43,10 @@ object PortalInner {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.native
+    var children: MyUndefOr[React.Node] = js.native
 
     /** Called with a ref to the inner node. */
-    // var innerRef: js.UndefOr[Ref] = js.native
+    // var innerRef: MyUndefOr[Ref] = js.native
 
     /** The node where the portal should mount. */
     // var mountNode?: any
@@ -58,7 +58,7 @@ object PortalInner {
      * @param {object}
      *   data - All props.
      */
-    var onMount: js.UndefOr[RawOnMount] = js.native
+    var onMount: MyUndefOr[RawOnMount] = js.native
 
     /**
      * Called when the PortalInner is unmounted from the DOM.
@@ -67,7 +67,7 @@ object PortalInner {
      * @param {object}
      *   data - All props.
      */
-    var onUnmount: js.UndefOr[RawOnUnmount]
+    var onUnmount: MyUndefOr[RawOnUnmount]
   }
 
   def props(q: PortalInner): PortalInnerProps =
@@ -80,11 +80,11 @@ object PortalInner {
     )
 
   def rawprops(
-    // innerRef:             js.UndefOr[Ref]                     = js.undefined,
-    onMountE:   js.UndefOr[OnMount] = js.undefined,
-    onMount:    js.UndefOr[Callback] = js.undefined,
-    onUnmountE: js.UndefOr[OnUnmount] = js.undefined,
-    onUnmount:  js.UndefOr[Callback] = js.undefined
+    // innerRef:             MyUndefOr[Ref]                     = MyUndefOr.undefined,
+    onMountE:   MyUndefOr[OnMount] = MyUndefOr.undefined,
+    onMount:    MyUndefOr[Callback] = MyUndefOr.undefined,
+    onUnmountE: MyUndefOr[OnUnmount] = MyUndefOr.undefined,
+    onUnmount:  MyUndefOr[Callback] = MyUndefOr.undefined
   ): PortalInnerProps = {
     val p = (new js.Object).asInstanceOf[PortalInnerProps]
     // p.innerRef = innerRef

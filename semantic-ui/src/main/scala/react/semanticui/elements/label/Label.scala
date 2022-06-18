@@ -18,32 +18,32 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 
 final case class Label(
-  as:                     js.UndefOr[AsC] = js.undefined,
-  active:                 js.UndefOr[Boolean] = js.undefined,
-  attached:               js.UndefOr[LabelAttached] = js.undefined,
-  basic:                  js.UndefOr[Boolean] = js.undefined,
-  child:                  js.UndefOr[React.Node] = js.undefined,
-  circular:               js.UndefOr[Boolean] = js.undefined,
-  className:              js.UndefOr[String] = js.undefined,
-  clazz:                  js.UndefOr[Css] = js.undefined,
-  color:                  js.UndefOr[SemanticColor] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
-  corner:                 js.UndefOr[LabelCorner] = js.undefined,
-  detail:                 js.UndefOr[LabelDetail] = js.undefined,
-  empty:                  js.UndefOr[Boolean] = js.undefined,
-  floating:               js.UndefOr[Boolean] = js.undefined,
-  horizontal:             js.UndefOr[Boolean] = js.undefined,
-  icon:                   js.UndefOr[ShorthandS[Icon]] = js.undefined,
-  image:                  js.UndefOr[Boolean] = js.undefined,
-  onClickE:               js.UndefOr[Label.OnClick] = js.undefined,
-  onClick:                js.UndefOr[Callback] = js.undefined,
-  onRemove:               js.UndefOr[Label.OnClick] = js.undefined,
-  pointing:               js.UndefOr[LabelPointing] = js.undefined,
-  prompt:                 js.UndefOr[Boolean] = js.undefined,
-  removeIcon:             js.UndefOr[ShorthandS[Icon]] = js.undefined,
-  ribbon:                 js.UndefOr[LabelRibbon] = js.undefined,
-  size:                   js.UndefOr[SemanticSize] = js.undefined,
-  tag:                    js.UndefOr[Boolean] = js.undefined,
+  as:                     MyUndefOr[AsC] = MyUndefOr.undefined,
+  active:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  attached:               MyUndefOr[LabelAttached] = MyUndefOr.undefined,
+  basic:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  child:                  MyUndefOr[React.Node] = MyUndefOr.undefined,
+  circular:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  className:              MyUndefOr[String] = MyUndefOr.undefined,
+  clazz:                  MyUndefOr[Css] = MyUndefOr.undefined,
+  color:                  MyUndefOr[SemanticColor] = MyUndefOr.undefined,
+  content:                MyUndefOr[ShorthandS[VdomNode]] = MyUndefOr.undefined,
+  corner:                 MyUndefOr[LabelCorner] = MyUndefOr.undefined,
+  detail:                 MyUndefOr[LabelDetail] = MyUndefOr.undefined,
+  empty:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  floating:               MyUndefOr[Boolean] = MyUndefOr.undefined,
+  horizontal:             MyUndefOr[Boolean] = MyUndefOr.undefined,
+  icon:                   MyUndefOr[ShorthandS[Icon]] = MyUndefOr.undefined,
+  image:                  MyUndefOr[Boolean] = MyUndefOr.undefined,
+  onClickE:               MyUndefOr[Label.OnClick] = MyUndefOr.undefined,
+  onClick:                MyUndefOr[Callback] = MyUndefOr.undefined,
+  onRemove:               MyUndefOr[Label.OnClick] = MyUndefOr.undefined,
+  pointing:               MyUndefOr[LabelPointing] = MyUndefOr.undefined,
+  prompt:                 MyUndefOr[Boolean] = MyUndefOr.undefined,
+  removeIcon:             MyUndefOr[ShorthandS[Icon]] = MyUndefOr.undefined,
+  ribbon:                 MyUndefOr[LabelRibbon] = MyUndefOr.undefined,
+  size:                   MyUndefOr[SemanticSize] = MyUndefOr.undefined,
+  tag:                    MyUndefOr[Boolean] = MyUndefOr.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Label.LabelProps, Label] {
   override protected def cprops                     = Label.props(this)
@@ -66,37 +66,37 @@ object Label {
     @JSBracketAccess
     def update(key: String, v: js.Any): Unit = js.native
 
-    var as: js.UndefOr[AsT]                                                             = js.native
-    var active: js.UndefOr[Boolean]                                                     = js.native
-    var attached: js.UndefOr[String]                                                    = js.native
-    var basic: js.UndefOr[Boolean]                                                      = js.native
-    var children: js.UndefOr[React.Node]                                                = js.native
-    var circular: js.UndefOr[Boolean]                                                   = js.native
-    var className: js.UndefOr[String]                                                   = js.native
-    var color: js.UndefOr[suiraw.SemanticCOLORS]                                        = js.native
-    var content: js.UndefOr[suiraw.SemanticShorthandContent]                            = js.native
-    var corner: js.UndefOr[Boolean | String]                                            = js.native
-    var detail: js.UndefOr[suiraw.SemanticShorthandItemS[LabelDetail.LabelDetailProps]] =
+    var as: MyUndefOr[AsT]                                                             = js.native
+    var active: MyUndefOr[Boolean]                                                     = js.native
+    var attached: MyUndefOr[String]                                                    = js.native
+    var basic: MyUndefOr[Boolean]                                                      = js.native
+    var children: MyUndefOr[React.Node]                                                = js.native
+    var circular: MyUndefOr[Boolean]                                                   = js.native
+    var className: MyUndefOr[String]                                                   = js.native
+    var color: MyUndefOr[suiraw.SemanticCOLORS]                                        = js.native
+    var content: MyUndefOr[suiraw.SemanticShorthandContent]                            = js.native
+    var corner: MyUndefOr[Boolean | String]                                            = js.native
+    var detail: MyUndefOr[suiraw.SemanticShorthandItemS[LabelDetail.LabelDetailProps]] =
       js.native
-    var empty: js.UndefOr[js.Any]                                                       = js.native
-    var floating: js.UndefOr[Boolean]                                                   = js.native
-    var horizontal: js.UndefOr[Boolean]                                                 = js.native
-    var icon: js.UndefOr[suiraw.SemanticShorthandItemS[IconProps]]                      =
+    var empty: MyUndefOr[js.Any]                                                       = js.native
+    var floating: MyUndefOr[Boolean]                                                   = js.native
+    var horizontal: MyUndefOr[Boolean]                                                 = js.native
+    var icon: MyUndefOr[suiraw.SemanticShorthandItemS[IconProps]]                      =
       js.native
-    var image: js.UndefOr[js.Any]                                                       = js.native
-    var onClick: js.UndefOr[js.Function2[ReactMouseEvent, LabelProps, Unit]]            =
+    var image: MyUndefOr[js.Any]                                                       = js.native
+    var onClick: MyUndefOr[js.Function2[ReactMouseEvent, LabelProps, Unit]]            =
       js.native
-    var onRemove: js.UndefOr[js.Function2[ReactMouseEvent, LabelProps, Unit]]           =
+    var onRemove: MyUndefOr[js.Function2[ReactMouseEvent, LabelProps, Unit]]           =
       js.native
-    var pointing: js.UndefOr[Boolean | String]                                          = js.native
+    var pointing: MyUndefOr[Boolean | String]                                          = js.native
 
     /** A label can prompt for an error in your forms. */
-    var prompt: js.UndefOr[Boolean]
-    var removeIcon: js.UndefOr[suiraw.SemanticShorthandItemS[IconProps]] =
+    var prompt: MyUndefOr[Boolean]
+    var removeIcon: MyUndefOr[suiraw.SemanticShorthandItemS[IconProps]] =
       js.native
-    var ribbon: js.UndefOr[Boolean | String]                             = js.native
-    var size: js.UndefOr[suiraw.SemanticSIZES]                           = js.native
-    var tag: js.UndefOr[Boolean]                                         = js.native
+    var ribbon: MyUndefOr[Boolean | String]                             = js.native
+    var size: MyUndefOr[suiraw.SemanticSIZES]                           = js.native
+    var tag: MyUndefOr[Boolean]                                         = js.native
   }
 
   def props(
