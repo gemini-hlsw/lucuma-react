@@ -126,7 +126,9 @@ lazy val root = project
     beautifulDnd,
     beautifulDndDemo,
     tree,
-    treeDemo
+    treeDemo,
+    semanticUI,
+    semanticUIDemo
   )
 
 lazy val rootCore         = project.aggregate(common, cats, test).enablePlugins(NoPublishPlugin)
@@ -150,6 +152,8 @@ lazy val rootBeautifulDnd =
   project.aggregate(beautifulDnd, beautifulDndDemo).enablePlugins(NoPublishPlugin)
 lazy val rootTree         =
   project.aggregate(tree, treeDemo).enablePlugins(NoPublishPlugin)
+lazy val rootSemanticUI   =
+  project.aggregate(semanticUI, semanticUIDemo).enablePlugins(NoPublishPlugin)
 
 val projects = List(rootCore,
                     rootGridLayout,
@@ -392,5 +396,23 @@ lazy val treeDemo = project
   .dependsOn(tree)
   .settings(
     Compile / scalacOptions += "-language:implicitConversions",
+    demoSettings
+  )
+
+lazy val semanticUI = project
+  .in(file("semantic-ui"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-semantic-ui",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val semanticUIDemo = project
+  .in(file("semantic-ui-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(semanticUI)
+  .settings(
     demoSettings
   )

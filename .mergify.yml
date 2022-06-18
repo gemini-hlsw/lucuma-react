@@ -177,6 +177,14 @@ pull_request_rules:
       add:
       - rootHighcharts
       remove: []
+- name: Label rootSemanticUI PRs
+  conditions:
+  - files~=^rootSemanticUI/
+  actions:
+    label:
+      add:
+      - rootSemanticUI
+      remove: []
 - name: Label rootSvgdotjs PRs
   conditions:
   - files~=^rootSvgdotjs/
@@ -208,6 +216,22 @@ pull_request_rules:
     label:
       add:
       - rootVirtuoso
+      remove: []
+- name: Label semantic-ui PRs
+  conditions:
+  - files~=^semantic-ui/
+  actions:
+    label:
+      add:
+      - semantic-ui
+      remove: []
+- name: Label semantic-ui-demo PRs
+  conditions:
+  - files~=^semantic-ui-demo/
+  actions:
+    label:
+      add:
+      - semantic-ui-demo
       remove: []
 - name: Label svgdotjs PRs
   conditions:
