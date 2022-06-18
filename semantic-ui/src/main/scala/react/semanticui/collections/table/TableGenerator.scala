@@ -10,7 +10,7 @@ import js.JSConverters._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common._
-import react.semanticui.{ raw => suiraw }
+import react.semanticui.{raw => suiraw}
 import react.semanticui._
 import react.semanticui.collections.table.TableRow.TableRowProps
 

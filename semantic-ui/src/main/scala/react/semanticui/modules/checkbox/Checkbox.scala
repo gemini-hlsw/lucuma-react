@@ -9,7 +9,7 @@ import js.|
 import japgolly.scalajs.react._
 import react.common._
 import react.semanticui._
-import react.semanticui.{ raw => suiraw }
+import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 import react.semanticui.elements.label.Label
 

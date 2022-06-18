@@ -11,7 +11,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
 import react.semanticui._
-import react.semanticui.{ raw => suiraw }
+import react.semanticui.{raw => suiraw}
 
 final case class TableHeader(
   as:                     js.UndefOr[AsC] = js.undefined,

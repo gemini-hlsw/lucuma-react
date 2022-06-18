@@ -14,7 +14,7 @@ import react.common._
 import react.semanticui._
 import react.semanticui.elements.icon.Icon
 import react.semanticui.elements.icon.Icon.IconProps
-import react.semanticui.{ raw => suiraw }
+import react.semanticui.{raw => suiraw}
 import react.semanticui.elements.button.Button
 
 final case class Modal(

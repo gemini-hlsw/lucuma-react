@@ -6,7 +6,7 @@ package react.semanticui.elements.icon
 import japgolly.scalajs.react._
 import react.common._
 import react.semanticui._
-import react.semanticui.{ raw => suiraw }
+import react.semanticui.{raw => suiraw}
 import scala.scalajs.js
 import scala.scalajs.js.|
 import js.annotation._

@@ -14,7 +14,7 @@ import react.semanticui.elements.label.Label
 import react.semanticui.elements.button._
 import react.semanticui.elements.icon.Icon
 import react.semanticui.elements.icon.Icon.IconProps
-import react.semanticui.{ raw => suiraw }
+import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 

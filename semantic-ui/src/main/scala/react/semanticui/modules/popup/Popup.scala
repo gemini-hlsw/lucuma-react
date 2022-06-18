@@ -13,7 +13,7 @@ import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
 import react.semanticui._
 import react.semanticui.sizes._
-import react.semanticui.{ raw => suiraw }
+import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 
 final case class Popup(

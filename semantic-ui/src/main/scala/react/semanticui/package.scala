@@ -20,23 +20,23 @@ package semanticui {
   }
 
   object As               {
-    import elements.segment.{ Segment => SUISegment }
-    import collections.menu.{ Menu => SUIMenu }
-    import collections.grid.{ Grid => SUIGrid }
-    import collections.form.{ Form => SUIForm }
-    import modules.sidebar.{ SidebarPushable => SUISidebarPushable }
-    import modules.sidebar.{ SidebarPusher => SUISidebarPusher }
-    import modules.checkbox.{ Checkbox => SUICheckbox }
-    import elements.header.{ Header => SUIHeader }
-    import elements.image.{ Image => SUIImage }
-    import elements.divider.{ Divider => SUIDivider }
-    import elements.loader.{ Loader => SUILoader }
-    import elements.container.{ Container => SUIContainer }
-    import elements.placeholder.{ Placeholder => SUIPlaceholder }
-    import elements.placeholder.{ PlaceholderParagraph => SUIPlaceholderParagraph }
-    import elements.placeholder.{ PlaceholderImage => SUIPlaceholderImage }
-    import elements.placeholder.{ PlaceholderLine => SUIPlaceholderLine }
-    import elements.placeholder.{ PlaceholderHeader => SUIPlaceholderHeader }
+    import elements.segment.{Segment => SUISegment}
+    import collections.menu.{Menu => SUIMenu}
+    import collections.grid.{Grid => SUIGrid}
+    import collections.form.{Form => SUIForm}
+    import modules.sidebar.{SidebarPushable => SUISidebarPushable}
+    import modules.sidebar.{SidebarPusher => SUISidebarPusher}
+    import modules.checkbox.{Checkbox => SUICheckbox}
+    import elements.header.{Header => SUIHeader}
+    import elements.image.{Image => SUIImage}
+    import elements.divider.{Divider => SUIDivider}
+    import elements.loader.{Loader => SUILoader}
+    import elements.container.{Container => SUIContainer}
+    import elements.placeholder.{Placeholder => SUIPlaceholder}
+    import elements.placeholder.{PlaceholderParagraph => SUIPlaceholderParagraph}
+    import elements.placeholder.{PlaceholderImage => SUIPlaceholderImage}
+    import elements.placeholder.{PlaceholderLine => SUIPlaceholderLine}
+    import elements.placeholder.{PlaceholderHeader => SUIPlaceholderHeader}
 
     protected def removeAs[P <: js.Object](p: P): P =
       filterProps(p, "as")

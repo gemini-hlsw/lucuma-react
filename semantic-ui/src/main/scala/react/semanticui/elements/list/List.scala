@@ -12,7 +12,7 @@ import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common._
-import react.semanticui.{ raw => suiraw }
+import react.semanticui.{raw => suiraw}
 import react.semanticui.raw._
 import react.semanticui._
 

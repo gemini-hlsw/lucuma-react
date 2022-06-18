@@ -9,7 +9,7 @@ import js.|
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import react.common._
-import react.semanticui.{ raw => suiraw }
+import react.semanticui.{raw => suiraw}
 import react.semanticui._
 
 import react.semanticui.elements.icon.Icon

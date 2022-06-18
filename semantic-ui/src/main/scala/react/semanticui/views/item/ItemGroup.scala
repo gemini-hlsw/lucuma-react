@@ -13,7 +13,7 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.facade.React
 import react.common._
 import react.semanticui._
-import react.semanticui.{ raw => suiraw }
+import react.semanticui.{raw => suiraw}
 
 final case class ItemGroup(
   as:                     js.UndefOr[AsC] = js.undefined,
