@@ -206,7 +206,7 @@ object Message {
     list
       .map[RawList](v =>
         (v: Any) match {
-          case s: Seq[_]      =>
+          case s: Seq[?]      =>
             s.map(item => compToPropS(item.asInstanceOf[ShorthandS[MessageItem]])).toJSArray
           // .asInstanceOf[raw.SemanticShorthandOrArray[T]]
           case l: MessageList => l.props

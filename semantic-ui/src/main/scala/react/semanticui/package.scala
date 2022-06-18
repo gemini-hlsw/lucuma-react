@@ -164,7 +164,7 @@ package object semanticui {
   type ShorthandB[C]  = Boolean | VdomNode | C
   type ShorthandSB[C] = String | Boolean | VdomNode | C
 
-  protected def shorthandObject[P <: js.Object](c: Generic.UnmountedSimple[P, _]): c.Props = {
+  protected def shorthandObject[P <: js.Object](c: Generic.UnmountedSimple[P, ?]): c.Props = {
     // We need a copy, since original c.props is unmodifiable.
     val p = js.Object.assign(js.Object(), c.props).asInstanceOf[js.Dynamic]
     c.key.foreach(key => p.updateDynamic("key")(key.asInstanceOf[js.Any]))
@@ -228,17 +228,17 @@ package object semanticui {
       p.render: VdomNode
 
     implicit def shorthandBSFnProps2VdomNodePC[P <: js.Object, C](
-      p: GenericFnComponentPC[P, _]
+      p: GenericFnComponentPC[P, ?]
     ): js.UndefOr[ShorthandSB[C]] =
       p.render: VdomNode
 
     implicit def shorthandBSProps2VdomNodePA[P <: js.Object, C](
-      p: GenericFnComponentPA[P, _]
+      p: GenericFnComponentPA[P, ?]
     ): js.UndefOr[ShorthandSB[C]] =
       p.render: VdomNode
 
     implicit def shorthandBSFnProps2VdomNodePAC[P <: js.Object, C](
-      p: GenericFnComponentPAC[P, _]
+      p: GenericFnComponentPAC[P, ?]
     ): js.UndefOr[ShorthandSB[C]] =
       p.render: VdomNode
 
@@ -248,17 +248,17 @@ package object semanticui {
       p.render: VdomNode
 
     implicit def shorthandBSProps2VdomNodePC[P <: js.Object, C](
-      p: GenericComponentPC[P, _]
+      p: GenericComponentPC[P, ?]
     ): js.UndefOr[ShorthandSB[C]] =
       p.render: VdomNode
 
     implicit def shorthandBSProps2VdomNodePA[P <: js.Object, C](
-      p: GenericComponentPA[P, _]
+      p: GenericComponentPA[P, ?]
     ): js.UndefOr[ShorthandSB[C]] =
       p.render: VdomNode
 
     implicit def shorthandBSProps2VdomNodePAC[P <: js.Object, C](
-      p: GenericComponentPAC[P, _]
+      p: GenericComponentPAC[P, ?]
     ): js.UndefOr[ShorthandSB[C]] =
       p.render: VdomNode
 
@@ -268,17 +268,17 @@ package object semanticui {
       p.render: VdomNode
 
     implicit def shorthandBFnProps2VdomNodePC[P <: js.Object, C](
-      p: GenericFnComponentPC[P, _]
+      p: GenericFnComponentPC[P, ?]
     ): js.UndefOr[ShorthandB[C]] =
       p.render: VdomNode
 
     implicit def shorthandBProps2VdomNodePA[P <: js.Object, C](
-      p: GenericFnComponentPA[P, _]
+      p: GenericFnComponentPA[P, ?]
     ): js.UndefOr[ShorthandB[C]] =
       p.render: VdomNode
 
     implicit def shorthandBFnProps2VdomNodePAC[P <: js.Object, C](
-      p: GenericFnComponentPAC[P, _]
+      p: GenericFnComponentPAC[P, ?]
     ): js.UndefOr[ShorthandB[C]] =
       p.render: VdomNode
 
@@ -288,17 +288,17 @@ package object semanticui {
       p.render: VdomNode
 
     implicit def shorthandBProps2VdomNodePC[P <: js.Object, C](
-      p: GenericComponentPC[P, _]
+      p: GenericComponentPC[P, ?]
     ): js.UndefOr[ShorthandB[C]] =
       p.render: VdomNode
 
     implicit def shorthandBProps2VdomNodePA[P <: js.Object, C](
-      p: GenericComponentPA[P, _]
+      p: GenericComponentPA[P, ?]
     ): js.UndefOr[ShorthandB[C]] =
       p.render: VdomNode
 
     implicit def shorthandBProps2VdomNodePAC[P <: js.Object, C](
-      p: GenericComponentPAC[P, _]
+      p: GenericComponentPAC[P, ?]
     ): js.UndefOr[ShorthandB[C]] =
       p.render: VdomNode
 
@@ -308,17 +308,17 @@ package object semanticui {
       p.render: VdomNode
 
     implicit def shorthandFnProps2VdomNodePC[P <: js.Object, C](
-      p: GenericFnComponentPC[P, _]
+      p: GenericFnComponentPC[P, ?]
     ): js.UndefOr[ShorthandS[C]] =
       p.render: VdomNode
 
     implicit def shorthandProps2VdomNodePA[P <: js.Object, C](
-      p: GenericFnComponentPA[P, _]
+      p: GenericFnComponentPA[P, ?]
     ): js.UndefOr[ShorthandS[C]] =
       p.render: VdomNode
 
     implicit def shorthandFnProps2VdomNodePAC[P <: js.Object, C](
-      p: GenericFnComponentPAC[P, _]
+      p: GenericFnComponentPAC[P, ?]
     ): js.UndefOr[ShorthandS[C]] =
       p.render: VdomNode
 
@@ -328,17 +328,17 @@ package object semanticui {
       p.render: VdomNode
 
     implicit def shorthandProps2VdomNodePC[P <: js.Object, C](
-      p: GenericComponentPC[P, _]
+      p: GenericComponentPC[P, ?]
     ): js.UndefOr[ShorthandS[C]] =
       p.render: VdomNode
 
     implicit def shorthandProps2VdomNodePA[P <: js.Object, C](
-      p: GenericComponentPA[P, _]
+      p: GenericComponentPA[P, ?]
     ): js.UndefOr[ShorthandS[C]] =
       p.render: VdomNode
 
     implicit def shorthandProps2VdomNodePAC[P <: js.Object, C](
-      p: GenericComponentPAC[P, _]
+      p: GenericComponentPAC[P, ?]
     ): js.UndefOr[ShorthandS[C]] =
       p.render: VdomNode
   }
