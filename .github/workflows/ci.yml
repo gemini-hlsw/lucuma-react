@@ -30,7 +30,7 @@ jobs:
         os: [ubuntu-latest]
         scala: [3.1.2]
         java: [temurin@17]
-        project: [rootCore, rootGridLayout, rootDraggable, rootClipboard, rootSvgdotjs, rootVirtuoso, rootTable, rootHighcharts, rootDatepicker, rootBeautifulDnd, rootTree]
+        project: [rootCore, rootGridLayout, rootDraggable, rootClipboard, rootSvgdotjs, rootVirtuoso, rootTable, rootHighcharts, rootDatepicker, rootBeautifulDnd, rootTree, rootSemanticUI]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)

@@ -155,17 +155,19 @@ lazy val rootTree         =
 lazy val rootSemanticUI   =
   project.aggregate(semanticUI, semanticUIDemo).enablePlugins(NoPublishPlugin)
 
-val projects = List(rootCore,
-                    rootGridLayout,
-                    rootDraggable,
-                    rootClipboard,
-                    rootSvgdotjs,
-                    rootVirtuoso,
-                    rootTable,
-                    rootHighcharts,
-                    rootDatepicker,
-                    rootBeautifulDnd,
-                    rootTree
+val projects = List(
+  rootCore,
+  rootGridLayout,
+  rootDraggable,
+  rootClipboard,
+  rootSvgdotjs,
+  rootVirtuoso,
+  rootTable,
+  rootHighcharts,
+  rootDatepicker,
+  rootBeautifulDnd,
+  rootTree,
+  rootSemanticUI
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
 ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
