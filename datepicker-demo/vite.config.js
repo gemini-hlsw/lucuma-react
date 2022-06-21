@@ -5,8 +5,8 @@ import path from "path";
 export default ({ command, mode }) => {
   const sjs =
     mode == "production"
-      ? path.resolve(__dirname, "target/scala-3.1.2-RC2/datepickerdemo-opt/")
-      : path.resolve(__dirname, "target/scala-3.1.2-RC2/datepickerdemo-fastopt/");
+      ? path.resolve(__dirname, "target/scala-3.1.3/datepickerdemo-opt/")
+      : path.resolve(__dirname, "target/scala-3.1.3/datepickerdemo-fastopt/");
   return {
     root: "datepicker-demo/src/main/webapp",
     resolve: {

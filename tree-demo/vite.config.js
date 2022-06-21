@@ -5,8 +5,8 @@ import path from "path";
 export default ({ command, mode }) => {
   const sjs =
     mode == "production"
-      ? path.resolve(__dirname, "target/scala-3.1.2-RC2/treedemo-opt/")
-      : path.resolve(__dirname, "target/scala-3.1.2-RC2/treedemo-fastopt/");
+      ? path.resolve(__dirname, "target/scala-3.1.3/treedemo-opt/")
+      : path.resolve(__dirname, "target/scala-3.1.3/treedemo-fastopt/");
   return {
     root: "tree-demo/src/main/webapp",
     resolve: {
