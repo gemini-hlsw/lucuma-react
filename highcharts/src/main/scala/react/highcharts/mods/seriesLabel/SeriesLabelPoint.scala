@@ -19,6 +19,4 @@ trait SeriesLabelPoint extends Point {
   val chartCenterY: js.UndefOr[Double] = js.native
   val chartX: js.UndefOr[Double]       = js.native
   val chartY: js.UndefOr[Double]       = js.native
-  override val plotX: Double           = js.native // I can't find where this is actually defined
-  override val plotY: Double           = js.native // I can't find where this is actually defined
 }

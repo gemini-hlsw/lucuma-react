@@ -81,9 +81,9 @@ object Demo {
         val series   = chart.series.asInstanceOf[js.Array[SeriesLabelSeries]]
 
         series.foreach { s =>
-          val left        = s.data(0).asInstanceOf[SeriesLabelPoint].plotX
+          val left        = s.data(0).asInstanceOf[SeriesLabelPoint].plotX.toOption.get
           val right       =
-            s.data(s.data.length - 1).asInstanceOf[SeriesLabelPoint].plotX
+            s.data(s.data.length - 1).asInstanceOf[SeriesLabelPoint].plotX.toOption.get
           val center      = (right - left) / 2
           val labelHeight = s.labelBySeries
             .map(_.attr("height").asInstanceOf[Double] / 2)
@@ -111,15 +111,17 @@ object Demo {
         Option(tooltip.chart.hoverPoint.asInstanceOf[Point]).map { point =>
           val s = point.series
 
-          val left   = s.data(0).asInstanceOf[SeriesLabelPoint].plotX
+          val left   = s.data(0).asInstanceOf[SeriesLabelPoint].plotX.toOption.get
           val right  =
-            s.data(s.data.length - 1).asInstanceOf[SeriesLabelPoint].plotX
+            s.data(s.data.length - 1).asInstanceOf[SeriesLabelPoint].plotX.toOption.get
           val center = (right - left) / 2
           // Assumes even X spacing (and odd number of points)
           val y      = s
             .data((s.data.length / 2).toInt)
             .asInstanceOf[SeriesLabelPoint]
-            .plotY - labelHeight
+            .plotY
+            .toOption
+            .get - labelHeight
 
           PositionObject(left + center, y)
         }.get
