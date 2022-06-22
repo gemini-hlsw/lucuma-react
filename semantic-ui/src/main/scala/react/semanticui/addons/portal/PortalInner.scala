@@ -10,6 +10,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import react.common._
 import japgolly.scalajs.react.vdom.TagMod
+import react.semanticui.MyUndefOr
 
 final case class PortalInner(
   // innerRef:             MyUndefOr[Ref[html.Element]]                     = MyUndefOr.undefined,
