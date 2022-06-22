@@ -5,8 +5,8 @@ import path from "path";
 export default ({ command, mode }) => {
   const sjs =
     mode == "production"
-      ? path.resolve(__dirname, "target/scala-3.1.2-RC2/virtuosodemo-opt/")
-      : path.resolve(__dirname, "target/scala-3.1.2-RC2/virtuosodemo-fastopt/");
+      ? path.resolve(__dirname, "target/scala-3.1.3/virtuosodemo-opt/")
+      : path.resolve(__dirname, "target/scala-3.1.3/virtuosodemo-fastopt/");
   return {
     root: "virtuoso-demo/src/main/webapp",
     resolve: {

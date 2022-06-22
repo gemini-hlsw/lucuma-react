@@ -9,7 +9,7 @@ val munitV           = "0.7.29"
 val disciplineMunitV = "1.0.9"
 val utestV           = "0.7.11"
 
-ThisBuild / crossScalaVersions := Seq("3.1.2")
+ThisBuild / crossScalaVersions := Seq("3.1.3")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(
