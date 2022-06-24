@@ -64,10 +64,10 @@ object AccordionPanel {
   def props(q: AccordionPanel): AccordionPanelProps = {
     val p = (new js.Object).asInstanceOf[AccordionPanelProps]
     q.active.foreach(v => p.active = v)
-    q.content.toJs.foreach(v => p.content = v)
-    q.index.foreach(v => p.index = v)
+    CompToPropsS(q.content).toJs.foreachUnchecked(v => p.content = v)
+    q.index.foreachUnchecked(v => p.index = v)
     (q.onTitleClickE, q.onTitleClick).toJs.foreach(v => p.onTitleClick = v)
-    q.title.toJs.foreach(v => p.title = v)
+    CompToPropsS(q.title).toJs.foreachUnchecked(v => p.title = v)
     p
   }
 

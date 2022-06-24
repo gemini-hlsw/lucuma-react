@@ -40,17 +40,17 @@ object MessageItem {
     def update(key: String, v: js.Any): Unit = js.native
 
     /** An element type to render as (string or function). */
-    var as: js.UndefOr[AsT] = js.undefined
+    var as: js.UndefOr[AsT] = js.native
 
     /** Primary content. */
-    var children: js.UndefOr[React.Node] = js.undefined
+    var children: js.UndefOr[React.Node] = js.native
 
     /** Additional classes. */
-    var className: js.UndefOr[String] = js.undefined
+    var className: js.UndefOr[String] = js.native
 
     /** Shorthand for primary content. */
     var content: js.UndefOr[suiraw.SemanticShorthandItemS[MessageItem.MessageItemProps]] =
-      js.undefined
+      js.native
   }
 
   def props(q: MessageItem): MessageItemProps =
@@ -68,9 +68,9 @@ object MessageItem {
     content:   js.UndefOr[ShorthandS[MessageItem]] = js.undefined
   ): MessageItemProps = {
     val p = as.toJsObject[MessageItemProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    CompToPropsS(content).toJs.foreachUnchecked(v => p.content = v)
     p
   }
 

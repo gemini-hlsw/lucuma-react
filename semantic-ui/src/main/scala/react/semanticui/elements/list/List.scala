@@ -131,7 +131,7 @@ object List {
     q: List
   ): ListProps = {
     val p = q.as.toJsObject[ListProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     q.animated.foreach(v => p.animated = v)
     q.bulleted.foreach(v => p.bulleted = v)
     q.celled.foreach(v => p.celled = v)

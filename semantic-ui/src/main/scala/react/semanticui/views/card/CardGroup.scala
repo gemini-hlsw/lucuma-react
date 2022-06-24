@@ -105,10 +105,10 @@ object CardGroup {
     textAlign:   js.UndefOr[SemanticTextAlignment] = js.undefined
   ): CardGroupProps = {
     val p = as.toJsObject[CardGroupProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     centered.foreach(v => p.centered = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     doubling.foreach(v => p.doubling = v)
     items.map(_.map(_.props).toJSArray).foreach(v => p.items = v)
     itemsPerRow.toJs.foreach(v => p.itemsPerRow = v)

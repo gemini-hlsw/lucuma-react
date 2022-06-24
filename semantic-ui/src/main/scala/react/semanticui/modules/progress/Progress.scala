@@ -8,6 +8,7 @@ import js.annotation._
 import js.|
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
+import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
 import react.semanticui.{raw => suiraw}
@@ -29,13 +30,13 @@ final case class Progress(
   indicating:             js.UndefOr[Boolean] = js.undefined,
   inverted:               js.UndefOr[Boolean] = js.undefined,
   label:                  js.UndefOr[ShorthandS[Label]] = js.undefined,
-  percent:                js.UndefOr[Double | String] = js.undefined,
-  precision:              js.UndefOr[Double] = js.undefined,
+  percent:                js.UndefOr[JsNumber | String] = js.undefined,
+  precision:              js.UndefOr[JsNumber] = js.undefined,
   progress:               js.UndefOr[Boolean | String] = js.undefined,
   size:                   js.UndefOr[SemanticSize] = js.undefined,
   success:                js.UndefOr[Boolean] = js.undefined,
-  total:                  js.UndefOr[Double | String] = js.undefined,
-  value:                  js.UndefOr[Double | String] = js.undefined,
+  total:                  js.UndefOr[JsNumber | String] = js.undefined,
+  value:                  js.UndefOr[JsNumber | String] = js.undefined,
   warning:                js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Progress.ProgressProps, Progress] {
@@ -101,10 +102,10 @@ object Progress {
     var label: js.UndefOr[suiraw.SemanticShorthandItemS[Label.LabelProps]] = js.native
 
     /** Current percent complete. */
-    var percent: js.UndefOr[Double | String] = js.native
+    var percent: js.UndefOr[JsNumber | String] = js.native
 
     /** Decimal point precision for calculated progress. */
-    var precision: js.UndefOr[Double] = js.native
+    var precision: js.UndefOr[JsNumber] = js.native
 
     /** A progress bar can contain a text value indicating current progress. */
     var progress: js.UndefOr[Boolean | String] = js.native
@@ -118,12 +119,12 @@ object Progress {
     /**
      * For use with value. Together, these will calculate the percent. Mutually excludes percent.
      */
-    var total: js.UndefOr[Double | String] = js.native
+    var total: js.UndefOr[JsNumber | String] = js.native
 
     /**
      * For use with total. Together, these will calculate the percent. Mutually excludes percent.
      */
-    var value: js.UndefOr[Double | String] = js.native
+    var value: js.UndefOr[JsNumber | String] = js.native
 
     /** A progress bar can show a warning state. */
     var warning: js.UndefOr[Boolean] = js.native
@@ -166,34 +167,34 @@ object Progress {
     indicating:  js.UndefOr[Boolean] = js.undefined,
     inverted:    js.UndefOr[Boolean] = js.undefined,
     label:       js.UndefOr[ShorthandS[Label]] = js.undefined,
-    percent:     js.UndefOr[Double | String] = js.undefined,
-    precision:   js.UndefOr[Double] = js.undefined,
+    percent:     js.UndefOr[JsNumber | String] = js.undefined,
+    precision:   js.UndefOr[JsNumber] = js.undefined,
     progress:    js.UndefOr[Boolean | String] = js.undefined,
     size:        js.UndefOr[SemanticSize] = js.undefined,
     success:     js.UndefOr[Boolean] = js.undefined,
-    total:       js.UndefOr[Double | String] = js.undefined,
-    value:       js.UndefOr[Double | String] = js.undefined,
+    total:       js.UndefOr[JsNumber | String] = js.undefined,
+    value:       js.UndefOr[JsNumber | String] = js.undefined,
     warning:     js.UndefOr[Boolean] = js.undefined
   ): ProgressProps = {
     val p = as.toJsObject[ProgressProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     active.foreach(v => p.active = v)
     attached.foreach(v => p.attached = v)
     autoSuccess.foreach(v => p.autoSuccess = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     error.foreach(v => p.error = v)
     indicating.foreach(v => p.indicating = v)
     inverted.foreach(v => p.inverted = v)
-    label.toJs.foreach(v => p.label = v)
-    percent.foreach(v => p.percent = v)
-    precision.foreach(v => p.precision = v)
-    progress.foreach(v => p.progress = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
+    percent.foreachUnchecked(v => p.percent = v)
+    precision.foreachUnchecked(v => p.precision = v)
+    progress.foreachUnchecked(v => p.progress = v)
     size.toJs.foreach(v => p.size = v)
     success.foreach(v => p.success = v)
-    total.foreach(v => p.total = v)
-    value.foreach(v => p.value = v)
+    total.foreachUnchecked(v => p.total = v)
+    value.foreachUnchecked(v => p.value = v)
     warning.foreach(v => p.warning = v)
     p
   }

@@ -56,7 +56,7 @@ object FormField {
 
     /** Shorthand for primary content. */
     var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+      js.native
 
     /**
      * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input'). Extra FormField
@@ -123,15 +123,15 @@ object FormField {
     width:     js.UndefOr[SemanticWidth] = js.undefined
   ): FormFieldProps = {
     val p = as.toJsObject[FormFieldProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     control.foreach(v => p.control = v)
     disabled.foreach(v => p.disabled = v)
-    error.toJs.foreach(v => p.error = v)
+    CompToPropsB(error).toJs.foreachUnchecked(v => p.error = v)
     id.foreach(v => p.id = v)
     inline.foreach(v => p.inline = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     required.foreach(v => p.required = v)
     p.`type` = tpe
     width.toJs.foreach(v => p.width = v)

@@ -151,15 +151,15 @@ object MenuItem {
     position:  js.UndefOr[MenuItemPosition] = js.undefined
   ): MenuItemProps = {
     val p = as.toJsObject[MenuItemProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     active.foreach(v => p.active = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     disabled.foreach(v => p.disabled = v)
-    fitted.toJs.foreach(v => p.fitted = v)
+    fitted.toJs.foreachUnchecked(v => p.fitted = v)
     header.foreach(v => p.header = v)
-    icon.toJs.foreach(v => p.icon = v)
+    icon.toJs.foreachUnchecked(v => p.icon = v)
     index.foreach(v => p.index = v)
     link.foreach(v => p.link = v)
     name.foreach(v => p.name = v)

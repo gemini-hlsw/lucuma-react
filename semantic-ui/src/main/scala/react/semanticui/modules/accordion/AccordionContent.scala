@@ -57,10 +57,10 @@ object AccordionContent {
 
   def props(q: AccordionContent): AccordionContentProps = {
     val p = q.as.toJsObject[AccordionContentProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     q.active.foreach(v => p.active = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     p
   }
 

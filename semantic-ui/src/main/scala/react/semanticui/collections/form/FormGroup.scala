@@ -9,6 +9,7 @@ import js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import react.common._
+import react.common.syntax._
 import react.semanticui._
 import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
@@ -55,7 +56,7 @@ object FormGroup {
 
     /** Shorthand for primary content. */
     var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+      js.native
 
     var grouped: js.UndefOr[Boolean] = js.native
 
@@ -95,20 +96,20 @@ object FormGroup {
     widths:      js.UndefOr[SemanticWidth | FormWidths] = js.undefined
   ): FormGroupProps = {
     val p = as.toJsObject[FormGroupProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     grouped.foreach(v => p.grouped = v)
     inline.foreach(v => p.inline = v)
     unstackable.foreach(v => p.unstackable = v)
     widths
       .map {
         (_: Any) match {
-          case w: FormWidths => w.toJs
-          case w             => w.asInstanceOf[SemanticWidth].toJs
+          case w: FormWidths => EnumValueOps(w).toJs
+          case w             => EnumValueOps(w.asInstanceOf[SemanticWidth]).toJs
         }
       }
-      .foreach(v => p.widths = v)
+      .foreachUnchecked(v => p.widths = v)
     p
   }
 

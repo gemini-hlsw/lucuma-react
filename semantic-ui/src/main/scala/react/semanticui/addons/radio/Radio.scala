@@ -221,14 +221,14 @@ object Radio {
     value:                js.UndefOr[String | Double] = js.undefined
   ): RadioProps = {
     val p = as.toJsObject[RadioProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     checked.foreach(v => p.checked = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     defaultChecked.foreach(v => p.defaultChecked = v)
     defaultIndeterminate.foreach(v => p.defaultIndeterminate = v)
     disabled.foreach(v => p.disabled = v)
     fitted.foreach(v => p.fitted = v)
-    id.foreach(v => p.id = v)
+    id.foreachUnchecked(v => p.id = v)
     indeterminate.foreach(v => p.indeterminate = v)
     label.foreach(v => p.label = v)
     name.foreach(v => p.name = v)
@@ -239,10 +239,10 @@ object Radio {
     radio.foreach(v => p.radio = v)
     readOnly.foreach(v => p.readOnly = v)
     slider.foreach(v => p.slider = v)
-    tabIndex.foreach(v => p.tabIndex = v)
+    tabIndex.foreachUnchecked(v => p.tabIndex = v)
     toggle.foreach(v => p.toggle = v)
     p.`type` = `type`.toJs
-    value.foreach(v => p.value = v)
+    value.foreachUnchecked(v => p.value = v)
     p
   }
 

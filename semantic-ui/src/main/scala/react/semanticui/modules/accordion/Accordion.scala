@@ -8,6 +8,7 @@ import js.annotation._
 import js.|
 import js.JSConverters._
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.facade.React
 import react.common._
 import react.semanticui._
@@ -15,7 +16,7 @@ import japgolly.scalajs.react.vdom.TagMod
 
 final case class Accordion(
   as:                     js.UndefOr[AsC] = js.undefined,
-  activeIndex:            js.UndefOr[Double | js.Array[Double]] = js.undefined,
+  activeIndex:            js.UndefOr[JsNumber | js.Array[JsNumber]] = js.undefined,
   className:              js.UndefOr[String] = js.undefined,
   clazz:                  js.UndefOr[Css] = js.undefined,
   defaultActiveIndex:     js.UndefOr[Int | Seq[Int]] = js.undefined,
@@ -50,7 +51,7 @@ object Accordion {
     var as: js.UndefOr[AsT] = js.native
 
     /** Index of the currently active panel. */
-    var activeIndex: js.UndefOr[Double | js.Array[Double]] = js.native
+    var activeIndex: js.UndefOr[JsNumber | js.Array[JsNumber]] = js.native
 
     /** Primary content. */
     var children: js.UndefOr[React.Node] = js.native
@@ -59,7 +60,7 @@ object Accordion {
     var className: js.UndefOr[String] = js.native
 
     /** Initial activeIndex value. */
-    var defaultActiveIndex: js.UndefOr[Double | js.Array[Double]] = js.native
+    var defaultActiveIndex: js.UndefOr[JsNumber | js.Array[JsNumber]] = js.native
 
     /** Only allow one panel open at a time. */
     var exclusive: js.UndefOr[Boolean] = js.native
@@ -90,17 +91,17 @@ object Accordion {
 
   def props(q: Accordion): AccordionProps = {
     val p = q.as.toJsObject[AccordionProps]
-    q.as.toJs.foreach(v => p.as = v)
-    q.activeIndex.foreach(v => p.activeIndex = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
+    q.activeIndex.foreachUnchecked(v => p.activeIndex = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
     q.defaultActiveIndex
-      .map[Double | js.Array[Double]] { x =>
+      .map[JsNumber | js.Array[JsNumber]] { x =>
         (x: Any) match {
           case p: Int => p
-          case p      => p.asInstanceOf[Seq[Double]].toJSArray
+          case p      => p.asInstanceOf[Seq[JsNumber]].toJSArray
         }
       }
-      .foreach(v => p.defaultActiveIndex = v)
+      .foreachUnchecked(v => p.defaultActiveIndex = v)
     q.exclusive.foreach(v => p.exclusive = v)
     q.fluid.foreach(v => p.fluid = v)
     q.inverted.foreach(v => p.inverted = v)

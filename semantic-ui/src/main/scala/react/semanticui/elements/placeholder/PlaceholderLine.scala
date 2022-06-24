@@ -58,7 +58,7 @@ object PlaceholderLine {
     q: PlaceholderLine
   ): PlaceholderLineProps = {
     val p = q.as.toJsObject[PlaceholderLineProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
     q.length.toJs.foreach(v => p.length = v)
     p

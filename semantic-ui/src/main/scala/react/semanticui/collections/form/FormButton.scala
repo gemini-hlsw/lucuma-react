@@ -110,7 +110,7 @@ object FormButton {
 
     /** Shorthand for primary content. */
     var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+      js.native
 
     /**
      * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input'). Extra FormField
@@ -221,23 +221,23 @@ object FormButton {
     (className, clazz).toJs.foreach(v => p.className = v)
     (onClickE, onClick).toJs.foreach(v => p.onClick = v)
     active.foreach(v => p.active = v)
-    animated.toJs.foreach(v => p.animated = v)
-    as.toJs.foreach(v => p.as = v)
-    attached.toJs.foreach(v => p.attached = v)
+    animated.toJs.foreachUnchecked(v => p.animated = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
+    attached.toJs.foreachUnchecked(v => p.attached = v)
     basic.foreach(v => p.basic = v)
     circular.foreach(v => p.circular = v)
     color.toJs.foreach(v => p.color = v)
     compact.foreach(v => p.compact = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     control.foreach(v => p.control = v)
     disabled.foreach(v => p.disabled = v)
-    error.toJs.foreach(v => p.error = v)
+    CompToPropsB(error).toJs.foreachUnchecked(v => p.error = v)
     floated.toJs.foreach(v => p.floated = v)
     fluid.foreach(v => p.fluid = v)
-    icon.toJs.foreach(v => p.icon = v)
+    icon.toJs.foreachUnchecked(v => p.icon = v)
     inline.foreach(v => p.inline = v)
     inverted.foreach(v => p.inverted = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     labelPosition.toJs.foreach(v => p.labelPosition = v)
     loading.foreach(v => p.loading = v)
     negative.foreach(v => p.negative = v)
@@ -248,7 +248,7 @@ object FormButton {
     role.foreach(v => p.role = v)
     secondary.foreach(v => p.secondary = v)
     size.toJs.foreach(v => p.size = v)
-    tabIndex.foreach(v => p.tabIndex = v)
+    tabIndex.foreachUnchecked(v => p.tabIndex = v)
     toggle.foreach(v => p.toggle = v)
     width.toJs.foreach(v => p.width = v)
     p

@@ -40,9 +40,9 @@ object IconGroup {
     q: IconGroup
   ): IconGroupProps = {
     val p = q.as.toJsObject[IconGroupProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     q.size.toJs.foreach(v => p.size = v)
     p
   }

@@ -92,9 +92,9 @@ object TableRow {
 
   def props(q: TableRow): TableRowProps = {
     val p = q.as.toJsObject[TableRowProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     q.active.foreach(v => p.active = v)
-    q.cellAs.toJs.foreach(v => p.cellAs = v)
+    q.cellAs.toJs.foreachUnchecked(v => p.cellAs = v)
     q.cells
       .map(_.map[TableCell.TableCellProps | TableHeaderCell.TableHeaderCellProps] { x =>
         (x: Any) match {

@@ -75,7 +75,7 @@ object FormInput {
 
     /** Shorthand for primary content. */
     var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+      js.native
 
     /**
      * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input'). Extra FormInput
@@ -224,33 +224,33 @@ object FormInput {
     value:          js.UndefOr[String] = js.undefined
   ): FormInputProps = {
     val p = as.toJsObject[FormInputProps]
-    as.toJs.foreach(v => p.as = v)
-    action.toJs.foreach(v => p.action = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
+    action.toJs.foreachUnchecked(v => p.action = v)
     actionPosition.toJs.foreach(v => p.actionPosition = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     disabled.foreach(v => p.disabled = v)
-    error.toJs.foreach(v => p.error = v)
+    CompToPropsB(error).toJs.foreachUnchecked(v => p.error = v)
     fluid.foreach(v => p.fluid = v)
     focus.foreach(v => p.focus = v)
-    icon.toJs.foreach(v => p.icon = v)
+    icon.toJs.foreachUnchecked(v => p.icon = v)
     iconPosition.toJs.foreach(v => p.iconPosition = v)
-    input.toJs.foreach(v => p.input = v)
+    input.toJs.foreachUnchecked(v => p.input = v)
     inverted.foreach(v => p.inverted = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     labelPosition.toJs.foreach(v => p.labelPosition = v)
     loading.foreach(v => p.loading = v)
     (onChangeE, onChange).toJs.foreach(v => p.onChange = v)
     size.toJs.foreach(v => p.size = v)
-    tabIndex.foreach(v => p.tabIndex = v)
+    tabIndex.foreachUnchecked(v => p.tabIndex = v)
     transparent.foreach(v => p.transparent = v)
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     control.foreach(v => p.control = v)
     disabled.foreach(v => p.disabled = v)
-    error.toJs.foreach(v => p.error = v)
+    CompToPropsB(error).toJs.foreachUnchecked(v => p.error = v)
     inline.foreach(v => p.inline = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     required.foreach(v => p.required = v)
     p.`type` = tpe
     width.toJs.foreach(v => p.width = v)

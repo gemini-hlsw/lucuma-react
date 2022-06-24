@@ -64,9 +64,9 @@ object PlaceholderHeader {
     q: PlaceholderHeader
   ): PlaceholderHeaderProps = {
     val p = q.as.toJsObject[PlaceholderHeaderProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     q.image.foreach(v => p.image = v)
     p
   }

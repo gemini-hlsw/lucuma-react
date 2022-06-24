@@ -11,6 +11,7 @@ import japgolly.scalajs.react.vdom.VdomNode
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import react.common._
+import react.common.syntax._
 import react.semanticui._
 import react.semanticui.elements.icon.Icon
 import react.semanticui.elements.icon.Icon.IconProps
@@ -27,7 +28,6 @@ final case class Modal(
   closeIcon:              js.UndefOr[ShorthandS[Icon]] = js.undefined,
   closeOnDimmerClick:     js.UndefOr[Boolean] = js.undefined,
   closeOnDocumentClick:   js.UndefOr[Boolean] = js.undefined,
-  closeOnEscape:          js.UndefOr[Boolean] = js.undefined,
   content:                js.UndefOr[ShorthandS[ModalContent]] = js.undefined,
   defaultOpen:            js.UndefOr[Boolean] = js.undefined,
   dimmer:                 js.UndefOr[Dimmer | ModalDimmer] = js.undefined,
@@ -103,9 +103,6 @@ object Modal {
 
     /** Whether or not the Modal should close when the document is clicked. */
     var closeOnDocumentClick: js.UndefOr[Boolean] = js.native
-
-    /** Whether or not the Modal should close when escape is pressed. */
-    var closeOnEscape: js.UndefOr[Boolean] = js.native
 
     /** A Modal can be passed content via shorthand. */
     var content: js.UndefOr[suiraw.SemanticShorthandItemS[ModalContent.ModalContentProps]] =
@@ -201,7 +198,6 @@ object Modal {
       q.closeIcon,
       q.closeOnDimmerClick,
       q.closeOnDocumentClick,
-      q.closeOnEscape,
       q.content,
       q.defaultOpen,
       q.dimmer,
@@ -231,7 +227,6 @@ object Modal {
     closeIcon:            js.UndefOr[ShorthandS[Icon]] = js.undefined,
     closeOnDimmerClick:   js.UndefOr[Boolean] = js.undefined,
     closeOnDocumentClick: js.UndefOr[Boolean] = js.undefined,
-    closeOnEscape:        js.UndefOr[Boolean] = js.undefined,
     content:              js.UndefOr[ShorthandS[ModalContent]] = js.undefined,
     defaultOpen:          js.UndefOr[Boolean] = js.undefined,
     dimmer:               js.UndefOr[Dimmer | ModalDimmer] = js.undefined,
@@ -251,26 +246,25 @@ object Modal {
     trigger:              js.UndefOr[VdomNode] = js.undefined
   ): ModalProps = {
     val p = as.toJsObject[ModalProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     actions.toJs.foreach(v => p.actions = v)
     basic.foreach(v => p.basic = v)
     centered.foreach(v => p.centered = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    closeIcon.toJs.foreach(v => p.closeIcon = v)
+    CompToPropsS(closeIcon).toJs.foreachUnchecked(v => p.closeIcon = v)
     closeOnDimmerClick.foreach(v => p.closeOnDimmerClick = v)
     closeOnDocumentClick.foreach(v => p.closeOnDocumentClick = v)
-    closeOnEscape.foreach(v => p.closeOnEscape = v)
-    content.toJs.foreach(v => p.content = v)
+    CompFnToPropsS(content).toJs.foreachUnchecked(v => p.content = v)
     defaultOpen.foreach(v => p.defaultOpen = v)
     dimmer.foreach { v =>
       (v: Any) match {
-        case x: Dimmer => x.toJs
+        case x: Dimmer => EnumValueOpsB(x).toJs
         case x         => x
       }
     }
 
     eventPool.foreach(v => p.eventPool = v)
-    header.toJs.foreach(v => p.header = v)
+    CompFnToPropsS(header).toJs.foreachUnchecked(v => p.header = v)
     (onActionClickE, onActionClick).toJs.foreach(v => p.onActionClick = v)
     (onCloseE, onClose).toJs.foreach(v => p.onClose = v)
     (onMountE, onMount).toJs
@@ -279,7 +273,7 @@ object Modal {
     open.foreach(v => p.open = v)
     size.toJs.foreach(v => p.size = v)
     style.map(_.toJsObject).foreach(v => p.style = v)
-    trigger.toJs.foreach(v => p.trigger = v)
+    trigger.toJs.foreachUnchecked(v => p.trigger = v)
     p
   }
 

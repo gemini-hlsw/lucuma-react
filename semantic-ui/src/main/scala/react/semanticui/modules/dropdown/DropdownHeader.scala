@@ -72,10 +72,10 @@ object DropdownHeader {
     icon:      js.UndefOr[ShorthandS[Icon]] = js.undefined
   ): DropdownHeaderProps = {
     val p = as.toJsObject[DropdownHeaderProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
-    icon.toJs.foreach(v => p.icon = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
+    CompToPropsS(icon).toJs.foreachUnchecked(v => p.icon = v)
     p
   }
 

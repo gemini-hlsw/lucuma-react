@@ -133,7 +133,7 @@ object GridColumn {
     width:         js.UndefOr[SemanticWidth] = js.undefined
   ): GridColumnProps = {
     val p = as.toJsObject[GridColumnProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     computer.toJs.foreach(v => p.computer = v)

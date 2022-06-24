@@ -63,7 +63,7 @@ object FormTextArea {
 
     /** Shorthand for primary content. */
     var content: js.UndefOr[suiraw.SemanticShorthandContent] =
-      js.undefined
+      js.native
 
     /**
      * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input'). Extra FormTextArea
@@ -100,7 +100,7 @@ object FormTextArea {
      * @param {object}
      *   data - All props and the event value.
      */
-    var onChange: js.UndefOr[TextArea.RawEvent] = js.undefined
+    var onChange: js.UndefOr[TextArea.RawEvent] = js.native
 
     /**
      * Called on input.
@@ -110,13 +110,13 @@ object FormTextArea {
      * @param {object}
      *   data - All props and the event value.
      */
-    var onInput: js.UndefOr[TextArea.RawEvent] = js.undefined
+    var onInput: js.UndefOr[TextArea.RawEvent] = js.native
 
     /** Indicates row count for a TextArea. */
-    var rows: js.UndefOr[Double | String] = js.undefined
+    var rows: js.UndefOr[Double | String] = js.native
 
     /** The value of the textarea. */
-    var value: js.UndefOr[Double | String] = js.undefined
+    var value: js.UndefOr[Double | String] = js.native
   }
 
   def props(q: FormTextArea): FormFieldProps =
@@ -162,21 +162,21 @@ object FormTextArea {
     width:     js.UndefOr[SemanticWidth] = js.undefined
   ): FormFieldProps = {
     val p = as.toJsObject[FormFieldProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     control.foreach(v => p.control = v)
     disabled.foreach(v => p.disabled = v)
-    error.toJs.foreach(v => p.error = v)
+    CompToPropsB(error).toJs.foreachUnchecked(v => p.error = v)
     inline.foreach(v => p.inline = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     required.foreach(v => p.required = v)
     p.`type` = tpe
     width.toJs.foreach(v => p.width = v)
     (onChangeE, onChange).toJs.foreach(v => p.onChange = v)
     (onInputE, onInput).toJs.foreach(v => p.onInput = v)
-    rows.foreach(v => p.rows = v)
-    value.foreach(v => p.value = v)
+    rows.foreachUnchecked(v => p.rows = v)
+    value.foreachUnchecked(v => p.value = v)
     p
   }
 

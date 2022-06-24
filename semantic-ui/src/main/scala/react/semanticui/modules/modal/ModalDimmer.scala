@@ -86,11 +86,11 @@ object ModalDimmer {
     scrolling: js.UndefOr[Boolean] = js.undefined
   ): ModalDimmerProps = {
     val p = as.toJsObject[ModalDimmerProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     blurring.foreach(v => p.blurring = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     centered.foreach(v => p.centered = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     inverted.foreach(v => p.inverted = v)
     scrolling.foreach(v => p.scrolling = v)
     p

@@ -73,9 +73,9 @@ object ModalContent {
     scrolling: js.UndefOr[Boolean] = js.undefined
   ): ModalContentProps = {
     val p = as.toJsObject[ModalContentProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     image.foreach(v => p.image = v)
     scrolling.foreach(v => p.scrolling = v)
     p

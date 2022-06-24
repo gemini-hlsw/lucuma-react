@@ -63,7 +63,7 @@ object Tab {
 
   object RawPane {
     def fromPane(q: Pane): RawPane = {
-      val p = (new js.Object).asInstanceOf[RawPane]
+      val p = (new js.Object()).asInstanceOf[RawPane]
       q.pane.map(_.props).foreach(v => p.pane = v)
       q.menuItem
         .map[String | MenuItem.MenuItemProps](d =>
@@ -73,7 +73,7 @@ object Tab {
             case _           => sys.error("Shouldn't happen")
           }
         )
-        .foreach(v => p.menuItem = v)
+        .foreachUnchecked(v => p.menuItem = v)
       q.render
         .map { f =>
           val r: js.Function0[React.Node] = f
@@ -144,10 +144,10 @@ object Tab {
     q: Tab
   ): TabProps = {
     val p = q.as.toJsObject[TabProps]
-    q.as.toJs.foreach(v => p.as = v)
-    q.defaultActiveIndex.foreach(v => p.defaultActiveIndex = v)
-    q.activeIndex.foreach(v => p.activeIndex = v)
-    q.menu.map(_.props).foreach(v => p.menu = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
+    q.defaultActiveIndex.foreachUnchecked(v => p.defaultActiveIndex = v)
+    q.activeIndex.foreachUnchecked(v => p.activeIndex = v)
+    q.menu.map(_.props).foreachUnchecked(v => p.menu = v)
     q.menuPosition.toJs.foreach(v => p.menuPosition = v)
     q.grid.map(_.props).foreach(v => p.grid = v)
     q.onTabChangeE.toJs

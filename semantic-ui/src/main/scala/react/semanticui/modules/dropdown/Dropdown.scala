@@ -297,7 +297,7 @@ object Dropdown {
      * @param {object}
      *   data - All props and proposed value.
      */
-    var onChange: js.UndefOr[RawOnChange] = js.undefined
+    var onChange: js.UndefOr[RawOnChange] = js.native
 
     /**
      * Called on click.
@@ -317,7 +317,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onClose: js.UndefOr[RawOnClose] = js.undefined
+    var onClose: js.UndefOr[RawOnClose] = js.native
 
     /**
      * Called on focus.
@@ -327,7 +327,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onFocus: js.UndefOr[RawOnFocus] = js.undefined
+    var onFocus: js.UndefOr[RawOnFocus] = js.native
 
     /**
      * Called when a multi-select label is clicked.
@@ -337,7 +337,7 @@ object Dropdown {
      * @param {object}
      *   data - All label props.
      */
-    var onLabelClick: js.UndefOr[RawOnLabelClick] = js.undefined
+    var onLabelClick: js.UndefOr[RawOnLabelClick] = js.native
 
     /**
      * Called on mousedown.
@@ -347,7 +347,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onMouseDown: js.UndefOr[RawOnMouseDown] = js.undefined
+    var onMouseDown: js.UndefOr[RawOnMouseDown] = js.native
 
     /**
      * Called when an open event happens.
@@ -357,7 +357,7 @@ object Dropdown {
      * @param {object}
      *   data - All props.
      */
-    var onOpen: js.UndefOr[RawOnOpen] = js.undefined
+    var onOpen: js.UndefOr[RawOnOpen] = js.native
 
     /**
      * Called on search input change.
@@ -367,7 +367,7 @@ object Dropdown {
      * @param {object}
      *   data - All props, includes current value of searchQuery.
      */
-    var onSearchChange: js.UndefOr[RawOnSearchChange] = js.undefined
+    var onSearchChange: js.UndefOr[RawOnSearchChange] = js.native
 
     /** Controls whether or not the dropdown menu is displayed. */
     var open: js.UndefOr[Boolean] = js.native
@@ -609,7 +609,7 @@ object Dropdown {
     wrapSelection:        js.UndefOr[Boolean] = js.undefined
   ): DropdownProps = {
     val p = as.toJsObject[DropdownProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     additionLabel
       .map[Double | String | SemanticShorthandContent] {
         (_: Any) match {
@@ -624,7 +624,7 @@ object Dropdown {
           case _           => sys.error("Shouldn't happen")
         }
       }
-      .foreach(v => p.additionLabel = v)
+      .foreachUnchecked(v => p.additionLabel = v)
     additionPosition.toJs.foreach(v => p.additionPosition = v)
     allowAdditions.foreach(v => p.allowAdditions = v)
     basic.foreach(v => p.basic = v)
@@ -638,24 +638,24 @@ object Dropdown {
     deburr.foreach(v => p.deburr = v)
     defaultOpen.foreach(v => p.defaultOpen = v)
     defaultSearchQuery.foreach(v => p.defaultSearchQuery = v)
-    defaultSelectedLabel.foreach(v => p.defaultSelectedLabel = v)
+    defaultSelectedLabel.foreachUnchecked(v => p.defaultSelectedLabel = v)
     defaultUpward.foreach(v => p.defaultUpward = v)
-    defaultValue.foreach(v => p.defaultValue = v)
+    defaultValue.foreachUnchecked(v => p.defaultValue = v)
     direction.toJs.foreach(v => p.direction = v)
     disabled.foreach(v => p.disabled = v)
     error.foreach(v => p.error = v)
     floating.foreach(v => p.floating = v)
     fluid.foreach(v => p.fluid = v)
-    header.toJs.foreach(v => p.header = v)
-    icon.toJs.foreach(v => p.icon = v)
+    header.toJs.foreachUnchecked(v => p.header = v)
+    CompToPropsS(icon).toJs.foreachUnchecked(v => p.icon = v)
     inline.foreach(v => p.inline = v)
     item.foreach(v => p.item = v)
     labeled.foreach(v => p.labeled = v)
     lazyLoad.foreach(v => p.lazyLoad = v)
     loading.foreach(v => p.loading = v)
-    minCharacters.foreach(v => p.minCharacters = v)
+    minCharacters.foreachUnchecked(v => p.minCharacters = v)
     multiple.foreach(v => p.multiple = v)
-    noResultsMessage.toJs.foreach(v => p.noResultsMessage = v)
+    noResultsMessage.toJs.foreachUnchecked(v => p.noResultsMessage = v)
     onAddItem.toJs.foreach(v => p.onAddItem = v)
     (onBlurE, onBlur).toJs.foreach(v => p.onBlur = v)
     onChangeE.toJs
@@ -679,7 +679,7 @@ object Dropdown {
     openOnFocus.foreach(v => p.openOnFocus = v)
     options.map(_.map(_.props).toJSArray).foreach(v => p.options = v)
     placeholder.foreach(v => p.placeholder = v)
-    pointing.toJs.foreach(v => p.pointing = v)
+    pointing.toJs.foreachUnchecked(v => p.pointing = v)
     renderLabel
       .map[RawRenderLabel] {
         b => (item: DropdownItem.DropdownItemProps, index: Int, defaultProps: Label.LabelProps) =>
@@ -698,18 +698,18 @@ object Dropdown {
             rsf
         }
       }
-      .foreach(v => p.search = v)
-    searchInput.toJs.foreach(v => p.searchInput = v)
+      .foreachUnchecked(v => p.search = v)
+    searchInput.toJs.foreachUnchecked(v => p.searchInput = v)
     searchQuery.foreach(v => p.searchQuery = v)
     selectOnBlur.foreach(v => p.selectOnBlur = v)
     selectOnNavigation.foreach(v => p.selectOnNavigation = v)
-    selectedLabel.foreach(v => p.selectedLabel = v)
+    selectedLabel.foreachUnchecked(v => p.selectedLabel = v)
     selection.foreach(v => p.selection = v)
     simple.foreach(v => p.simple = v)
-    tabIndex.foreach(v => p.tabIndex = v)
+    tabIndex.foreachUnchecked(v => p.tabIndex = v)
     text.foreach(v => p.text = v)
-    trigger.toJs.foreach(v => p.trigger = v)
-    value.foreach(v => p.value = v)
+    trigger.toJs.foreachUnchecked(v => p.trigger = v)
+    value.foreachUnchecked(v => p.value = v)
     upward.foreach(v => p.upward = v)
     wrapSelection.foreach(v => p.wrapSelection = v)
     p

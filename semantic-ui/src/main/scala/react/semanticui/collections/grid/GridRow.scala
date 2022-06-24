@@ -9,6 +9,7 @@ import js.|
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import react.common._
+import react.common.syntax._
 import react.semanticui._
 import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
@@ -115,16 +116,16 @@ object GridRow {
     verticalAlign: js.UndefOr[SemanticVerticalAlignment] = js.undefined
   ): GridRowProps = {
     val p = as.toJsObject[GridRowProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     centered.foreach(v => p.centered = v)
     (className, clazz).toJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     columns
       .map((_: Any) match {
-        case s: GridColumns => s.toJs
-        case s              => s.asInstanceOf[SemanticWidth].toJs
+        case s: GridColumns => EnumValueOps(s).toJs
+        case s              => EnumValueOps(s.asInstanceOf[SemanticWidth]).toJs
       })
-      .foreach(v => p.columns = v)
+      .foreachUnchecked(v => p.columns = v)
     divided.foreach(v => p.divided = v)
     only.toJs.foreach(v => p.only = v)
     reversed.toJs.foreach(v => p.reversed = v)

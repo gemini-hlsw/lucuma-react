@@ -71,12 +71,12 @@ object Icon {
     q: Icon
   ): IconProps = {
     val p = q.as.toJsObject[IconProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     q.bordered.foreach(v => p.bordered = v)
     q.circular.foreach(v => p.circular = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
     q.color.toJs.foreach(v => p.color = v)
-    q.corner.toJs.foreach(v => p.corner = v)
+    q.corner.toJs.foreachUnchecked(v => p.corner = v)
     q.disabled.foreach(v => p.disabled = v)
     q.fitted.foreach(v => p.fitted = v)
     q.flipped.toJs.foreach(v => p.flipped = v)

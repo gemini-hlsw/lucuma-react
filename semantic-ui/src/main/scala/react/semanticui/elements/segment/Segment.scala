@@ -92,15 +92,15 @@ object Segment {
     q: Segment
   ): SegmentProps = {
     val p = q.as.toJsObject[SegmentProps]
-    q.as.toJs.foreach(v => p.as = v)
-    q.attached.toJs.foreach(v => p.attached = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
+    q.attached.toJs.foreachUnchecked(v => p.attached = v)
     q.basic.foreach(v => p.basic = v)
     q.circular.foreach(v => p.circular = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
     q.clearing.foreach(v => p.clearing = v)
     q.color.toJs.foreach(v => p.color = v)
     q.compact.foreach(v => p.compact = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     q.disabled.foreach(v => p.disabled = v)
     q.floated.toJs.foreach(v => p.floated = v)
     q.inverted.foreach(v => p.inverted = v)

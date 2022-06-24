@@ -110,14 +110,14 @@ object TableHeaderCell {
 
   def props(q: TableHeaderCell): TableHeaderCellProps = {
     val p = q.as.toJsObject[TableHeaderCellProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     q.active.foreach(v => p.active = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
     q.collapsing.foreach(v => p.collapsing = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     q.disabled.foreach(v => p.disabled = v)
     q.error.foreach(v => p.error = v)
-    q.icon.toJs.foreach(v => p.icon = v)
+    CompToPropsS(q.icon).toJs.foreachUnchecked(v => p.icon = v)
     q.negative.foreach(v => p.negative = v)
     q.positive.foreach(v => p.positive = v)
     q.selectable.foreach(v => p.selectable = v)

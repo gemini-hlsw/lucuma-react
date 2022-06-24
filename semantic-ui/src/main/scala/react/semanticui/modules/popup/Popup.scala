@@ -11,6 +11,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
+import react.common.syntax._
 import react.semanticui._
 import react.semanticui.sizes._
 import react.semanticui.{raw => suiraw}
@@ -262,14 +263,14 @@ object Popup {
     wide:            js.UndefOr[PopupWide] = js.undefined
   ): PopupProps = {
     val p = as.toJsObject[PopupProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     basic.foreach(v => p.basic = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
+    CompFnToPropsS(content).toJs.foreachUnchecked(v => p.content = v)
     disabled.foreach(v => p.disabled = v)
     eventsEnabled.foreach(v => p.eventsEnabled = v)
     flowing.foreach(v => p.flowing = v)
-    header.toJs.foreach(v => p.header = v)
+    CompFnToPropsS(header).toJs.foreachUnchecked(v => p.header = v)
     hideOnScroll.foreach(v => p.hideOnScroll = v)
     hoverable.foreach(v => p.hoverable = v)
     inverted.foreach(v => p.inverted = v)
@@ -277,20 +278,20 @@ object Popup {
     on.map[String | js.Array[String]] { x =>
       (x: Any) match {
         case p: PopupOn => p.toJs
-        case p          => p.asInstanceOf[List[PopupOn]].map(_.toJs).toJSArray
+        case p          => p.asInstanceOf[List[PopupOn]].map(EnumValueOps(_).toJs).toJSArray
       }
-    }.foreach(v => p.on = v)
+    }.foreachUnchecked(v => p.on = v)
     (onCloseE, onClose).toJs.foreach(v => p.onClose = v)
     (onOpenE, onOpen).toJs.foreach(v => p.onOpen = v)
     pinned.foreach(v => p.pinned = v)
     position.toJs.foreach(v => p.position = v)
     positionFixed.foreach(v => p.positionFixed = v)
-    popper.toJs.foreach(v => p.popper = v)
+    popper.toJs.foreachUnchecked(v => p.popper = v)
     popperModifiers.foreach(v => p.popperModifiers = v)
     size.toJs.foreach(v => p.size = v)
     style.map(_.toJsObject).foreach(v => p.style = v)
-    trigger.toJs.foreach(v => p.trigger = v)
-    wide.toJs.foreach(v => p.wide = v)
+    trigger.toJs.foreachUnchecked(v => p.trigger = v)
+    wide.toJs.foreachUnchecked(v => p.wide = v)
     p
   }
 

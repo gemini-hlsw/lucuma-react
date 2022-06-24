@@ -60,9 +60,9 @@ object TableFooter {
 
   def props(q: TableFooter): TableFooterProps = {
     val p = q.as.toJsObject[TableFooterProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     q.fullWidth.foreach(v => p.fullWidth = v)
     p
   }

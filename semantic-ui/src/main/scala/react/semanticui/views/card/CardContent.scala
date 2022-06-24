@@ -98,13 +98,13 @@ object CardContent {
     textAlign:   js.UndefOr[SemanticTextAlignment] = js.undefined
   ): CardContentProps = {
     val p = as.toJsObject[CardContentProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    content.toJs.foreach(v => p.content = v)
-    description.toJs.foreach(v => p.description = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
+    CompFnToPropsS(description).toJs.foreachUnchecked(v => p.description = v)
     extra.foreach(v => p.extra = v)
-    header.toJs.foreach(v => p.header = v)
-    meta.toJs.foreach(v => p.meta = v)
+    CompFnToPropsS(header).toJs.foreachUnchecked(v => p.header = v)
+    CompFnToPropsS(meta).toJs.foreachUnchecked(v => p.meta = v)
     textAlign.toJs.foreach(v => p.textAlign = v)
     p
   }

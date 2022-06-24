@@ -51,7 +51,7 @@ object Flag {
     q: Flag
   ): FlagProps = {
     val p = q.as.toJsObject[FlagProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
     q.name.foreach(v => p.name = v)
     p

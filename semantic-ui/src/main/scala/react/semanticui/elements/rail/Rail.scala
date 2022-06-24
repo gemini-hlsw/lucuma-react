@@ -109,8 +109,8 @@ object Rail {
     val p = as.toJsObject[RailProps]
     attached.foreach(v => p.attached = v)
     (className, clazz).toJs.foreach(v => p.className = v)
-    close.toJs.foreach(v => p.close = v)
-    content.toJs.foreach(v => p.content = v)
+    close.toJs.foreachUnchecked(v => p.close = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     dividing.foreach(v => p.dividing = v)
     internal.foreach(v => p.internal = v)
     position.toJs.foreach(v => p.position = v)

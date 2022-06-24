@@ -50,9 +50,9 @@ object SegmentInline {
     q: SegmentInline
   ): SegmentInlineProps = {
     val p = q.as.toJsObject[SegmentInlineProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     p
   }
 

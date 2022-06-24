@@ -283,7 +283,7 @@ object FormSelect {
     wrapSelection:        js.UndefOr[Boolean] = js.undefined
   ): FormSelectProps = {
     val p = as.toJsObject[FormSelectProps]
-    as.toJs.foreach(v => p.as = v)
+    as.toJs.foreachUnchecked(v => p.as = v)
     additionLabel
       .map[Double | String | suiraw.SemanticShorthandContent] {
         (_: Any) match {
@@ -298,7 +298,7 @@ object FormSelect {
           case _           => sys.error("Shouldn't happen")
         }
       }
-      .foreach(v => p.additionLabel = v)
+      .foreachUnchecked(v => p.additionLabel = v)
     additionPosition.toJs.foreach(v => p.additionPosition = v)
     allowAdditions.foreach(v => p.allowAdditions = v)
     basic.foreach(v => p.basic = v)
@@ -312,21 +312,21 @@ object FormSelect {
     deburr.foreach(v => p.deburr = v)
     defaultOpen.foreach(v => p.defaultOpen = v)
     defaultSearchQuery.foreach(v => p.defaultSearchQuery = v)
-    defaultSelectedLabel.foreach(v => p.defaultSelectedLabel = v)
+    defaultSelectedLabel.foreachUnchecked(v => p.defaultSelectedLabel = v)
     defaultUpward.foreach(v => p.defaultUpward = v)
-    defaultValue.foreach(v => p.defaultValue = v)
+    defaultValue.foreachUnchecked(v => p.defaultValue = v)
     direction.toJs.foreach(v => p.direction = v)
     floating.foreach(v => p.floating = v)
     fluid.foreach(v => p.fluid = v)
-    header.toJs.foreach(v => p.header = v)
-    icon.toJs.foreach(v => p.icon = v)
+    header.toJs.foreachUnchecked(v => p.header = v)
+    CompToPropsS(icon).toJs.foreachUnchecked(v => p.icon = v)
     item.foreach(v => p.item = v)
     labeled.foreach(v => p.labeled = v)
     lazyLoad.foreach(v => p.lazyLoad = v)
     loading.foreach(v => p.loading = v)
     minCharacters.foreach(v => p.minCharacters = v)
     multiple.foreach(v => p.multiple = v)
-    noResultsMessage.toJs.foreach(v => p.noResultsMessage = v)
+    noResultsMessage.toJs.foreachUnchecked(v => p.noResultsMessage = v)
     onAddItem.toJs.foreach(v => p.onAddItem = v)
     (onBlurE, onBlur).toJs.foreach(v => p.onBlur = v)
     onChangeE.toJs
@@ -351,7 +351,7 @@ object FormSelect {
     openOnFocus.foreach(v => p.openOnFocus = v)
     options.map(_.map(_.props).toJSArray).foreach(v => p.options = v)
     placeholder.foreach(v => p.placeholder = v)
-    pointing.toJs.foreach(v => p.pointing = v)
+    pointing.toJs.foreachUnchecked(v => p.pointing = v)
     renderLabel
       .map[RawRenderLabel] {
         b => (item: DropdownItem.DropdownItemProps, index: Int, defaultProps: Label.LabelProps) =>
@@ -371,25 +371,25 @@ object FormSelect {
             rsf
         }
       }
-      .foreach(v => p.search = v)
-    searchInput.toJs.foreach(v => p.searchInput = v)
+      .foreachUnchecked(v => p.search = v)
+    searchInput.toJs.foreachUnchecked(v => p.searchInput = v)
     searchQuery.foreach(v => p.searchQuery = v)
     selectOnBlur.foreach(v => p.selectOnBlur = v)
     selectOnNavigation.foreach(v => p.selectOnNavigation = v)
-    selectedLabel.foreach(v => p.selectedLabel = v)
+    selectedLabel.foreachUnchecked(v => p.selectedLabel = v)
     simple.foreach(v => p.simple = v)
-    tabIndex.foreach(v => p.tabIndex = v)
+    tabIndex.foreachUnchecked(v => p.tabIndex = v)
     text.foreach(v => p.text = v)
-    trigger.toJs.foreach(v => p.trigger = v)
-    value.foreach(v => p.value = v)
+    trigger.toJs.foreachUnchecked(v => p.trigger = v)
+    value.foreachUnchecked(v => p.value = v)
     upward.foreach(v => p.upward = v)
     wrapSelection.foreach(v => p.wrapSelection = v)
-    content.toJs.foreach(v => p.content = v)
+    content.toJs.foreachUnchecked(v => p.content = v)
     control.foreach(v => p.control = v)
     disabled.foreach(v => p.disabled = v)
-    error.toJs.foreach(v => p.error = v)
+    CompToPropsB(error).toJs.foreachUnchecked(v => p.error = v)
     inline.foreach(v => p.inline = v)
-    label.toJs.foreach(v => p.label = v)
+    CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
     required.foreach(v => p.required = v)
     p.`type` = tpe
     width.toJs.foreach(v => p.width = v)

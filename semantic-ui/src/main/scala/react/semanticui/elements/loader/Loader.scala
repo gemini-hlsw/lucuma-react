@@ -82,13 +82,13 @@ object Loader {
     q: Loader
   ): LoaderProps = {
     val p = q.as.toJsObject[LoaderProps]
-    q.as.toJs.foreach(v => p.as = v)
+    q.as.toJs.foreachUnchecked(v => p.as = v)
     q.active.foreach(v => p.active = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
-    q.content.toJs.foreach(v => p.content = v)
+    q.content.toJs.foreachUnchecked(v => p.content = v)
     q.disabled.foreach(v => p.disabled = v)
     q.indeterminate.foreach(v => p.indeterminate = v)
-    q.inline.toJs.foreach(v => p.inline = v)
+    q.inline.toJs.foreachUnchecked(v => p.inline = v)
     q.inverted.foreach(v => p.inverted = v)
     q.size.toJs.foreach(v => p.size = v)
     p
