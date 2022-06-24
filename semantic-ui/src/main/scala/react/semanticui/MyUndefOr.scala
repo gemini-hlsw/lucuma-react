@@ -3,6 +3,8 @@
 
 package react.semanticui
 
+import scala.scalajs.js
+
 opaque type MyUndefOr[+A] = A | Unit
 
 object MyUndefOr:
@@ -11,7 +13,9 @@ object MyUndefOr:
   extension [A](myUndefOr: MyUndefOr[A])
     def foreach(f: A => Unit): Unit =
       myUndefOr match
-        case Unit => ()
+        case Unit            => ()
         case a: A @unchecked => f(a)
+
+    def toJsUndefOr: js.UndefOr[A] = myUndefOr
 
   implicit def fromAny[A](a: A): MyUndefOr[A] = a

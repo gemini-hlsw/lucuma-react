@@ -159,10 +159,10 @@ package object semanticui {
   type SemanticTextAlignment     = textalignment.SemanticTextAlignment
   type SemanticTransition        = transitions.SemanticTransition
 
-  type TabIndex       = Double | String
-  type ShorthandS[C]  = String | VdomNode | C
-  type ShorthandB[C]  = Boolean | VdomNode | C
-  type ShorthandSB[C] = String | Boolean | VdomNode | C
+  type TabIndex             = Double | String
+  opaque type ShorthandS[C] = String | VdomNode | C
+  type ShorthandB[C]        = Boolean | VdomNode | C
+  type ShorthandSB[C]       = String | Boolean | VdomNode | C
 
   protected def shorthandObject[P <: js.Object](c: Generic.UnmountedSimple[P, ?]): c.Props = {
     // We need a copy, since original c.props is unmodifiable.

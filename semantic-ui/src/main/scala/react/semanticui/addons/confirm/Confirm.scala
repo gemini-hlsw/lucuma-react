@@ -168,7 +168,7 @@ object Confirm {
     basic.foreach(v => p.basic = v)
     cancelButton.toJs.foreach(v => p.cancelButton = v)
     centered.foreach(v => p.centered = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className.toJsUndefOr, clazz.toJsUndefOr).toJs.foreach(v => p.className = v)
     closeIcon.map(_.props).foreach(v => p.closeIcon = v)
     closeOnDimmerClick.foreach(v => p.closeOnDimmerClick = v)
     closeOnDocumentClick.foreach(v => p.closeOnDocumentClick = v)
