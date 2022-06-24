@@ -3,14 +3,16 @@
 
 package react.semanticui.addons.textarea
 
-import scala.scalajs.js
-import js.annotation._
-import js.|
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.TagMod
+import org.scalajs.dom
 import react.common._
 import react.semanticui._
-import org.scalajs.dom
+
+import scala.scalajs.js
+
+import js.annotation._
+import js.|
 
 final case class TextArea(
   as:                     js.UndefOr[AsC] = js.undefined,

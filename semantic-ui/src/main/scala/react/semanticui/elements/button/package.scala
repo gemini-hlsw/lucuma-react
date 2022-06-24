@@ -3,8 +3,8 @@
 
 package react.semanticui.elements
 
-import react.common.EnumValueB
 import react.common.EnumValue
+import react.common.EnumValueB
 
 package button {
   sealed trait ButtonAnimated extends Product with Serializable

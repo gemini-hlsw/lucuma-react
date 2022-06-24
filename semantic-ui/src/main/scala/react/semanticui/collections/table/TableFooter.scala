@@ -3,15 +3,17 @@
 
 package react.semanticui.collections.table
 
-import scala.scalajs.js
-import js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
-import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.vdom.VdomNode
+import japgolly.scalajs.react.vdom.html_<^._
 import react.common._
 import react.semanticui._
 import react.semanticui.{raw => suiraw}
+
+import scala.scalajs.js
+
+import js.annotation._
 
 final case class TableFooter(
   as:                     js.UndefOr[AsC] = js.undefined,

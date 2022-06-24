@@ -3,17 +3,19 @@
 
 package react.semanticui.views.item
 
-import scala.scalajs.js
-import js.annotation._
-import js.|
-import js.JSConverters._
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.VdomNode
-import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.facade.React
+import japgolly.scalajs.react.vdom.TagMod
+import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
 import react.semanticui._
 import react.semanticui.{raw => suiraw}
+
+import scala.scalajs.js
+
+import js.annotation._
+import js.|
+import js.JSConverters._
 
 final case class ItemGroup(
   as:                     js.UndefOr[AsC] = js.undefined,

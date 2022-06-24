@@ -6,17 +6,19 @@ package react.semanticui.addons.select
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
+import react.common._
+import react.semanticui._
+import react.semanticui.elements.icon.Icon
+import react.semanticui.elements.label.Label
+import react.semanticui.modules.dropdown.Dropdown._
+import react.semanticui.modules.dropdown._
+import react.semanticui.raw._
+
 import scala.scalajs.js
+
 import js.annotation._
 import js.|
 import js.JSConverters._
-import react.common._
-import react.semanticui._
-import react.semanticui.raw._
-import react.semanticui.elements.icon.Icon
-import react.semanticui.elements.label.Label
-import react.semanticui.modules.dropdown._
-import react.semanticui.modules.dropdown.Dropdown._
 
 final case class Select(
   as:                     js.UndefOr[AsC] = js.undefined,

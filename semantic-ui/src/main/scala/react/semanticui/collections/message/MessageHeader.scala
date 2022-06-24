@@ -3,15 +3,17 @@
 
 package react.semanticui.collections.message
 
-import scala.scalajs.js
-import js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
+import japgolly.scalajs.react.vdom.TagMod
+import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
 import react.semanticui._
 import react.semanticui.{raw => suiraw}
-import japgolly.scalajs.react.vdom.TagMod
-import japgolly.scalajs.react.vdom.VdomNode
+
+import scala.scalajs.js
+
+import js.annotation._
 
 final case class MessageHeader(
   as:                     js.UndefOr[AsC] = js.undefined,

@@ -3,13 +3,15 @@
 
 package react.semanticui.modules.dropdown
 
-import scala.scalajs.js
-import js.annotation._
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.JsFnComponent
-import react.semanticui._
-import react.common._
+import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.TagMod
+import react.common._
+import react.semanticui._
+
+import scala.scalajs.js
+
+import js.annotation._
 
 final case class DropdownDivider(
   as:                     js.UndefOr[AsC] = js.undefined,

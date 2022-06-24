@@ -3,16 +3,18 @@
 
 package react.semanticui.modules.accordion
 
-import scala.scalajs.js
-import js.annotation._
-import js.|
-import js.JSConverters._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.facade.React
+import japgolly.scalajs.react.vdom.TagMod
 import react.common._
 import react.semanticui._
-import japgolly.scalajs.react.vdom.TagMod
+
+import scala.scalajs.js
+
+import js.annotation._
+import js.|
+import js.JSConverters._
 
 final case class Accordion(
   as:                     js.UndefOr[AsC] = js.undefined,

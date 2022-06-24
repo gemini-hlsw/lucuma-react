@@ -3,13 +3,14 @@
 
 package react.semanticui.addons.portal
 
-import scala.scalajs.js
-import js.annotation._
 import japgolly.scalajs.react._
-// import japgolly.scalajs.react.Ref
 import japgolly.scalajs.react.facade.React
-import react.common._
 import japgolly.scalajs.react.vdom.TagMod
+import react.common._
+
+import scala.scalajs.js
+
+import js.annotation._
 
 final case class PortalInner(
   // innerRef:             js.UndefOr[Ref[html.Element]]                     = js.undefined,

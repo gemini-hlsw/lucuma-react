@@ -3,14 +3,16 @@
 
 package react.semanticui.addons.radio
 
-import scala.scalajs.js
-import js.annotation._
-import js.|
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.TagMod
 import react.common._
 import react.semanticui._
 import react.semanticui.modules.checkbox._
-import japgolly.scalajs.react.vdom.TagMod
+
+import scala.scalajs.js
+
+import js.annotation._
+import js.|
 
 final case class Radio(
   as:                     js.UndefOr[AsC] = js.undefined,

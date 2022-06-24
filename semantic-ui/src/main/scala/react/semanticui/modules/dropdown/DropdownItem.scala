@@ -3,25 +3,26 @@
 
 package react.semanticui.modules.dropdown
 
-import scala.scalajs.js
-import js.annotation._
-import js.|
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common._
-import react.semanticui.{raw => suiraw}
-import react.semanticui.raw._
+import react.semanticui._
+import react.semanticui.elements.flag.Flag
+import react.semanticui.elements.flag.Flag.FlagProps
 import react.semanticui.elements.icon.Icon
 import react.semanticui.elements.icon.Icon.IconProps
-
-import react.semanticui.elements.flag.Flag.FlagProps
-import react.semanticui.elements.flag.Flag
-import react.semanticui.elements.label.Label.LabelProps
-import react.semanticui.elements.label.Label
-import react.semanticui.elements.image.Image.ImageProps
 import react.semanticui.elements.image.Image
-import react.semanticui._
+import react.semanticui.elements.image.Image.ImageProps
+import react.semanticui.elements.label.Label
+import react.semanticui.elements.label.Label.LabelProps
+import react.semanticui.raw._
+import react.semanticui.{raw => suiraw}
+
+import scala.scalajs.js
+
+import js.annotation._
+import js.|
 
 final case class DropdownItem(
   as:                     js.UndefOr[AsC] = js.undefined,

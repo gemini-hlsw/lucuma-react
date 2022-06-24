@@ -3,16 +3,18 @@
 
 package react.semanticui.collections.table
 
-import scala.scalajs.js
-import js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common._
+import react.semanticui._
 import react.semanticui.elements.icon.Icon
 import react.semanticui.elements.icon.Icon.IconProps
 import react.semanticui.{raw => suiraw}
-import react.semanticui._
+
+import scala.scalajs.js
+
+import js.annotation._
 
 final case class TableCell(
   as:                     js.UndefOr[AsC] = js.undefined,

@@ -3,9 +3,11 @@
 
 package react.semanticui
 
-import scala.scalajs.js
-import js.JSConverters._
 import react.common.EnumValue
+
+import scala.scalajs.js
+
+import js.JSConverters._
 
 object widths {
   sealed trait SemanticWidth extends Product with Serializable

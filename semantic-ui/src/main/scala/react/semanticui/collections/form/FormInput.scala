@@ -3,19 +3,21 @@
 
 package react.semanticui.collections.form
 
-import scala.scalajs.js
-import scala.scalajs.js.|
-import js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
-import react.common._
-import react.semanticui._
-import react.semanticui.elements.label.Label
-import react.semanticui.elements.icon._
-import react.semanticui.elements.input._
-import react.semanticui.{raw => suiraw}
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
+import react.common._
+import react.semanticui._
+import react.semanticui.elements.icon._
+import react.semanticui.elements.input._
+import react.semanticui.elements.label.Label
+import react.semanticui.{raw => suiraw}
+
+import scala.scalajs.js
+import scala.scalajs.js.|
+
+import js.annotation._
 
 final case class FormInput(
   action:                 js.UndefOr[ShorthandSB[VdomNode]] = js.undefined,

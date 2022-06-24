@@ -3,15 +3,17 @@
 
 package react.semanticui.collections.form
 
-import scala.scalajs.js
-import js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
+import japgolly.scalajs.react.vdom.TagMod
+import org.scalajs.dom
 import react.common._
 import react.semanticui._
 import react.semanticui.{raw => suiraw}
-import org.scalajs.dom
-import japgolly.scalajs.react.vdom.TagMod
+
+import scala.scalajs.js
+
+import js.annotation._
 
 final case class Form(
   as:                     js.UndefOr[AsC] = js.undefined,

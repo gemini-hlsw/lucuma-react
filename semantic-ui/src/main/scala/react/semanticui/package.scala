@@ -3,16 +3,17 @@
 
 package react
 
-import scala.scalajs.js
-import js.annotation.JSImport
-import js.|
-import js.JSConverters._
 import japgolly.scalajs.react.component.Generic
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom._
 import react.common._
 
 import scala.language.implicitConversions
+import scala.scalajs.js
+
+import js.annotation.JSImport
+import js.|
+import js.JSConverters._
 
 package semanticui {
 

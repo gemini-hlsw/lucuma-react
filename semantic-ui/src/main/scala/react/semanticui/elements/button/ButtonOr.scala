@@ -3,14 +3,16 @@
 
 package react.semanticui.elements.button
 
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.facade.JsNumber
+import japgolly.scalajs.react.vdom.TagMod
+import react.common._
+import react.semanticui._
+
 import scala.scalajs.js
+
 import js.annotation._
 import js.|
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.TagMod
-import japgolly.scalajs.react.facade.JsNumber
-import react.semanticui._
-import react.common._
 
 final case class ButtonOr(
   as:                     js.UndefOr[AsC] = js.undefined,

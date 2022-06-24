@@ -3,15 +3,17 @@
 
 package react.semanticui.modules.checkbox
 
-import scala.scalajs.js
-import js.annotation._
-import js.|
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.TagMod
 import react.common._
 import react.semanticui._
-import react.semanticui.{raw => suiraw}
-import japgolly.scalajs.react.vdom.TagMod
 import react.semanticui.elements.label.Label
+import react.semanticui.{raw => suiraw}
+
+import scala.scalajs.js
+
+import js.annotation._
+import js.|
 
 final case class Checkbox(
   as:                     js.UndefOr[AsC] = js.undefined,

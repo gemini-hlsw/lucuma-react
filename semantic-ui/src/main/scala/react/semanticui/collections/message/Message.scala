@@ -3,18 +3,20 @@
 
 package react.semanticui.collections.message
 
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.facade.React
+import japgolly.scalajs.react.vdom.TagMod
+import react.common._
+import react.semanticui._
+import react.semanticui.elements.icon.Icon
+import react.semanticui.elements.icon.Icon.IconProps
+import react.semanticui.{raw => suiraw}
+
 import scala.scalajs.js
+
 import js.|
 import js.annotation._
 import js.JSConverters._
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.facade.React
-import react.common._
-import react.semanticui._
-import react.semanticui.{raw => suiraw}
-import react.semanticui.elements.icon.Icon
-import react.semanticui.elements.icon.Icon.IconProps
-import japgolly.scalajs.react.vdom.TagMod
 
 final case class Message(
   as:                     js.UndefOr[AsC] = js.undefined,

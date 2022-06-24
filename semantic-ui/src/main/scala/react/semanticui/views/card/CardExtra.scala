@@ -3,11 +3,12 @@
 
 package react.semanticui.views.card
 
-import scalajs.js
+import japgolly.scalajs.react.vdom.TagMod
+import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
 import react.semanticui._
-import japgolly.scalajs.react.vdom.VdomNode
-import japgolly.scalajs.react.vdom.TagMod
+
+import scalajs.js
 
 case class CardExtra(
   as:                     js.UndefOr[AsC] = js.undefined,

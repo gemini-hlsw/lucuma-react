@@ -3,18 +3,20 @@
 
 package react.semanticui.views.item
 
-import scala.scalajs.js
-import js.annotation._
-import js.|
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
 import react.semanticui._
-import react.semanticui.elements.image._
 import react.semanticui.elements.image.Image._
-import japgolly.scalajs.react.vdom.TagMod
-import react.semanticui.modules.dimmer.Dimmer
+import react.semanticui.elements.image._
 import react.semanticui.elements.label.Label
+import react.semanticui.modules.dimmer.Dimmer
+
+import scala.scalajs.js
+
+import js.annotation._
+import js.|
 
 final case class ItemImage(
   as:                     js.UndefOr[AsC] = js.undefined,

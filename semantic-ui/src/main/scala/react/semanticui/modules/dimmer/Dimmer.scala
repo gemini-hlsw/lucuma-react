@@ -3,11 +3,13 @@
 
 package react.semanticui.modules.dimmer
 
-import scala.scalajs.js
-import js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.TagMod
 import react.common._
+
+import scala.scalajs.js
+
+import js.annotation._
 
 final case class Dimmer(
   active:                 js.UndefOr[Boolean] = js.undefined,

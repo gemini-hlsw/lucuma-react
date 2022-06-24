@@ -3,19 +3,20 @@
 
 package react.semanticui.collections.menu
 
-import scala.scalajs.js
-import scala.scalajs.js.|
-import js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
-import react.common._
-import react.semanticui._
-import react.semanticui.{raw => suiraw}
-
-import react.semanticui.elements.icon.Icon
-import react.semanticui.elements.icon.Icon.IconProps
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
+import react.common._
+import react.semanticui._
+import react.semanticui.elements.icon.Icon
+import react.semanticui.elements.icon.Icon.IconProps
+import react.semanticui.{raw => suiraw}
+
+import scala.scalajs.js
+import scala.scalajs.js.|
+
+import js.annotation._
 
 final case class MenuItem(
   as:                     js.UndefOr[AsC] = js.undefined,
