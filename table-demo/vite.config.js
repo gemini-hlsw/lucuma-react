@@ -5,8 +5,8 @@ import path from "path";
 export default ({ command, mode }) => {
   const sjs =
     mode == "production"
-      ? path.resolve(__dirname, "target/scala-3.1.2-RC2/tabledemo-opt/")
-      : path.resolve(__dirname, "target/scala-3.1.2-RC2/tabledemo-fastopt/");
+      ? path.resolve(__dirname, "target/scala-3.1.3/tabledemo-opt/")
+      : path.resolve(__dirname, "target/scala-3.1.3/tabledemo-fastopt/");
   return {
     root: "table-demo/src/main/webapp",
     resolve: {

@@ -5,8 +5,8 @@ import path from "path";
 export default ({ command, mode }) => {
   const sjs =
     mode == "production"
-      ? path.resolve(__dirname, "target/scala-3.1.2-RC2/highchartsdemo-opt/")
-      : path.resolve(__dirname, "target/scala-3.1.2-RC2/highchartsdemo-fastopt/");
+      ? path.resolve(__dirname, "target/scala-3.1.3/highchartsdemo-opt/")
+      : path.resolve(__dirname, "target/scala-3.1.3/highchartsdemo-fastopt/");
   return {
     root: "highcharts-demo/src/main/webapp",
     resolve: {

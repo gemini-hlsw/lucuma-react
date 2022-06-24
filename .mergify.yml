@@ -8,22 +8,22 @@
 pull_request_rules:
 - name: merge scala-steward's PRs
   conditions:
-  - author=lucuma-steward
+  - author=lucuma-steward[bot]
   - or:
     - body~=labels:.*early-semver-patch
     - body~=labels:.*early-semver-minor
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootCore)
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootGridLayout)
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootDraggable)
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootClipboard)
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootSvgdotjs)
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootVirtuoso)
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootTable)
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootHighcharts)
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootDatepicker)
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootBeautifulDnd)
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootTree)
-  - status-success=Build and Test (ubuntu-latest, 3.1.2, temurin@17, rootSemanticUI)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootCore)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootGridLayout)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootDraggable)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootClipboard)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootSvgdotjs)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootVirtuoso)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootTable)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootHighcharts)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootDatepicker)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootBeautifulDnd)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootTree)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootSemanticUI)
   actions:
     merge: {}
 - name: Label beautiful-dnd PRs
