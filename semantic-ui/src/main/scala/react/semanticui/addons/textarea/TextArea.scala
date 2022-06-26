@@ -70,7 +70,7 @@ object TextArea {
     var onInput: js.UndefOr[RawEvent] = js.native
 
     /** Indicates row count for a TextArea. */
-    var rows: js.UndefOr[Double | String] = js.native
+    var rows: js.UndefOr[Int | String] = js.native
 
     /** The value of the textarea. */
     var value: js.UndefOr[Double | String] = js.native
