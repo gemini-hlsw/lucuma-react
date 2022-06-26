@@ -114,7 +114,6 @@ lazy val root = project
     gridLayoutDemo,
     draggable,
     clipboard,
-    svgdotjs,
     virtuoso,
     virtuosoDemo,
     table,
@@ -138,8 +137,6 @@ lazy val rootDraggable    =
   project.aggregate(draggable).enablePlugins(NoPublishPlugin)
 lazy val rootClipboard    =
   project.aggregate(clipboard).enablePlugins(NoPublishPlugin)
-lazy val rootSvgdotjs     =
-  project.aggregate(svgdotjs).enablePlugins(NoPublishPlugin)
 lazy val rootVirtuoso     =
   project.aggregate(virtuoso, virtuosoDemo).enablePlugins(NoPublishPlugin)
 lazy val rootTable        =
@@ -160,7 +157,6 @@ val projects = List(
   rootGridLayout,
   rootDraggable,
   rootClipboard,
-  rootSvgdotjs,
   rootVirtuoso,
   rootTable,
   rootHighcharts,
@@ -250,21 +246,6 @@ lazy val clipboard = project
   .settings(
     name := "lucuma-react-clipboard",
     facadeSettings,
-    yarnSettings
-  )
-
-lazy val svgdotjs = project
-  .in(file("svgdotjs"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
-  .settings(
-    name                    := "lucuma-svgdotjs",
-    stOutputPackage         := "lucuma.svgdotjs",
-    stSourceGenMode         := SourceGenMode.ResourceGenerator,
-    stUseScalaJsDom         := true,
-    stMinimize              := Selection.AllExcept("@svgdotjs/svg.js"),
-    scalaJSLinkerConfig ~= (_.withSourceMap(false)),
-    tlFatalWarnings         := false,
-    Compile / doc / sources := Seq(),
     yarnSettings
   )
 

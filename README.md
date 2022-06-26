@@ -19,4 +19,3 @@ Common utilities and facades for React and Scala.js
 - lucuma-react-table
 - lucuma-react-tree
 - lucuma-react-virtuoso
-- lucuma-svgdotjs
