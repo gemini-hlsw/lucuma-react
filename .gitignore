@@ -12,3 +12,4 @@ travis/secrets.tar
 .hydra/
 .bsp/
 .vscode/
+.direnv/
