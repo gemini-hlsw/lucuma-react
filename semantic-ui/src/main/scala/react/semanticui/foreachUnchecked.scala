@@ -3,8 +3,17 @@
 
 package react.semanticui
 
+import scala.quoted.*
 import scala.scalajs.js
 
-extension [A](undefOr: js.UndefOr[A])
-  def foreachUnchecked[U](f: Nothing => U): Unit =
-    undefOr.foreach(a => f.asInstanceOf[(A) => U](a))
+extension [A](inline undefOr: js.UndefOr[A])
+  inline def foreachUnchecked(inline f: Nothing => Unit): Unit =
+    if undefOr.isDefined then foreachUncheckedIfDefined(f) else ()
+
+  private inline def foreachUncheckedIfDefined(inline f: Nothing => Unit): Unit =
+    ${ foreachUncheckedMacro('undefOr, 'f) }
+
+private def foreachUncheckedMacro[A](undefOr: Expr[js.UndefOr[A]], f: Expr[Nothing => Unit])(using
+  Quotes
+): Expr[Unit] =
+  Expr.betaReduce('{ ($f)(${ undefOr.asInstanceOf[Expr[Nothing]] }) })
