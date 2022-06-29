@@ -13,6 +13,7 @@ import react.semanticui.sizes._
 import react.semanticui.floats._
 import react.semanticui._
 import react.common.syntax.vdom._
+import react.common.GenericComponentPACOps
 
 class ButtonSuite extends munit.FunSuite {
   test("render") {
@@ -133,7 +134,7 @@ class ButtonSuite extends munit.FunSuite {
     }
   }
   test("iconAndText") {
-    val button = Button()(Icon(name = "comment"), "23")
+    val button = new Button().apply(Icon(name = "comment"), "23")
     ReactTestUtils.withNewBodyElement { mountNode =>
       button.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML
@@ -222,7 +223,7 @@ class ButtonSuite extends munit.FunSuite {
     }
   }
   test("withTwoContents") {
-    val button = Button(^.tpe := "button")("Submit")
+    val button = Button(^.tpe := "button").apply("Submit")
     ReactTestUtils.withNewBodyElement { mountNode =>
       button.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML
@@ -238,7 +239,7 @@ class ButtonSuite extends munit.FunSuite {
     }
   }
   test("withPropsAndContent") {
-    val button = Button(color = Blue)(^.tpe := "submit")
+    val button = Button(color = Blue).apply(^.tpe := "submit")
     ReactTestUtils.withNewBodyElement { mountNode =>
       button.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML

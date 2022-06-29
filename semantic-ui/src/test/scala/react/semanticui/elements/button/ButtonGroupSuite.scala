@@ -7,6 +7,7 @@ import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.semanticui.widths.widthOf
 import react.common.syntax.vdom._
+import react.common.GenericComponentPACOps
 
 class ButtonGroupSuite extends munit.FunSuite {
   test("render") {
@@ -18,7 +19,7 @@ class ButtonGroupSuite extends munit.FunSuite {
   }
   test("widths") {
     val buttonGroup =
-      ButtonGroup(widths = widthOf(2))(Button("1"), Button("2"))
+      ButtonGroup(widths = widthOf(2)).apply(Button("1"), Button("2"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       buttonGroup.renderIntoDOM(mountNode)
       assertEquals(
@@ -29,7 +30,7 @@ class ButtonGroupSuite extends munit.FunSuite {
   }
   test("buttons") {
     val buttonGroup =
-      ButtonGroup()(Button("1"), Button("2"))
+      new ButtonGroup().apply(Button("1"), Button("2"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       buttonGroup.renderIntoDOM(mountNode)
       assertEquals(
