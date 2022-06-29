@@ -5,8 +5,8 @@ ThisBuild / tlCiReleaseBranches := Seq("main")
 
 val scalaJsReactV    = "2.1.1"
 val catsV            = "2.8.0"
-val munitV           = "0.7.29"
-val disciplineMunitV = "1.0.9"
+val munitV           = "1.0.0-M6"
+val disciplineMunitV = "2.0.0-M3"
 val utestV           = "0.7.11"
 
 ThisBuild / crossScalaVersions := Seq("3.1.3")
