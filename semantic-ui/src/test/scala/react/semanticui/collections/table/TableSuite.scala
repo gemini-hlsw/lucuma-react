@@ -5,6 +5,7 @@ package react.semanticui.collections.table
 
 import japgolly.scalajs.react.test._
 import react.common.syntax.vdom._
+import react.common.GenericComponentPACOps
 
 class TableSuite extends munit.FunSuite {
   test("Table") {
@@ -24,7 +25,7 @@ class TableSuite extends munit.FunSuite {
     val header = TableHeader(TableRow(TableHeaderCell("header")))
     val body   = TableBody(TableRow(TableCell("A cell")))
     val footer = TableFooter(TableRow(TableCell("footer")))
-    val table  = Table(attached = TableAttached.Attached)(header, body, footer)
+    val table  = Table(attached = TableAttached.Attached).apply(header, body, footer)
     ReactTestUtils.withNewBodyElement { mountNode =>
       table.renderIntoDOM(mountNode)
       assertEquals(

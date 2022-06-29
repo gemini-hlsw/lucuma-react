@@ -8,6 +8,8 @@ import japgolly.scalajs.react.vdom.html_<^._
 import react.semanticui.elements.icon._
 import react.common.style.Css
 import react.common.syntax.vdom._
+import react.semanticui.tagOf2AsC
+import react.common.GenericComponentPACOps
 
 class MenuItemSuite extends munit.FunSuite {
   test("render") {
@@ -25,7 +27,7 @@ class MenuItemSuite extends munit.FunSuite {
     }
   }
   test("renderAsTag") {
-    val menuItem = MenuItem(as = <.a, icon = Icon(name = "comment"))
+    val menuItem = new MenuItem(as = <.a, icon = Icon(name = "comment"))
     ReactTestUtils.withNewBodyElement { m =>
       menuItem.renderIntoDOM(m)
       assertEquals(
@@ -35,7 +37,7 @@ class MenuItemSuite extends munit.FunSuite {
     }
   }
   test("apply") {
-    val menuItem = MenuItem(clazz = Css("my-class"))(<.div, <.span)
+    val menuItem = new MenuItem(clazz = Css("my-class")).apply(<.div, <.span)
     ReactTestUtils.withNewBodyElement { m =>
       menuItem.renderIntoDOM(m)
       val html = m.innerHTML

@@ -6,6 +6,7 @@ package react.semanticui.collections.table
 import japgolly.scalajs.react.test._
 import react.semanticui.verticalalignment
 import react.common.syntax.vdom._
+import react.common.GenericComponentPACOps
 
 class TableRowSuite extends munit.FunSuite {
   test("No cells") {
@@ -86,7 +87,7 @@ class TableRowSuite extends munit.FunSuite {
   test("active") {
     val cell1 = TableCell(content = "High")
     val cell2 = TableCell(content = "Low")
-    val row   = TableRow(active = true)(cell1, cell2)
+    val row   = TableRow(active = true).apply(cell1, cell2)
     ReactTestUtils.withNewBodyElement { mountNode =>
       row.renderIntoDOM(mountNode)
       assertEquals(
@@ -98,7 +99,7 @@ class TableRowSuite extends munit.FunSuite {
   test("disabled") {
     val cell1 = TableCell(content = "High")
     val cell2 = TableCell(content = "Low")
-    val row   = TableRow(disabled = true)(cell1, cell2)
+    val row   = TableRow(disabled = true).apply(cell1, cell2)
     ReactTestUtils.withNewBodyElement { mountNode =>
       row.renderIntoDOM(mountNode)
       assertEquals(
@@ -110,7 +111,7 @@ class TableRowSuite extends munit.FunSuite {
   test("error") {
     val cell1 = TableCell(content = "High")
     val cell2 = TableCell(content = "Low")
-    val row   = TableRow(error = true)(cell1, cell2)
+    val row   = TableRow(error = true).apply(cell1, cell2)
     ReactTestUtils.withNewBodyElement { mountNode =>
       row.renderIntoDOM(mountNode)
       assertEquals(
@@ -122,7 +123,7 @@ class TableRowSuite extends munit.FunSuite {
   test("negative") {
     val cell1 = TableCell(content = "High")
     val cell2 = TableCell(content = "Low")
-    val row   = TableRow(negative = true)(cell1, cell2)
+    val row   = TableRow(negative = true).apply(cell1, cell2)
     ReactTestUtils.withNewBodyElement { mountNode =>
       row.renderIntoDOM(mountNode)
       assertEquals(
@@ -134,7 +135,7 @@ class TableRowSuite extends munit.FunSuite {
   test("positive") {
     val cell1 = TableCell(content = "High")
     val cell2 = TableCell(content = "Low")
-    val row   = TableRow(positive = true)(cell1, cell2)
+    val row   = TableRow(positive = true).apply(cell1, cell2)
     ReactTestUtils.withNewBodyElement { mountNode =>
       row.renderIntoDOM(mountNode)
       assertEquals(
@@ -146,7 +147,7 @@ class TableRowSuite extends munit.FunSuite {
   test("textAlign") {
     val cell1 = TableCell(content = "High")
     val cell2 = TableCell(content = "Low")
-    val row   = TableRow(textAlign = TableTextAlign.Right)(cell1, cell2)
+    val row   = TableRow(textAlign = TableTextAlign.Right).apply(cell1, cell2)
     ReactTestUtils.withNewBodyElement { mountNode =>
       row.renderIntoDOM(mountNode)
       assertEquals(
@@ -158,7 +159,7 @@ class TableRowSuite extends munit.FunSuite {
   test("verticalAlign") {
     val cell1 = TableCell(content = "High")
     val cell2 = TableCell(content = "Low")
-    val row   = TableRow(verticalAlign = verticalalignment.Bottom)(cell1, cell2)
+    val row   = TableRow(verticalAlign = verticalalignment.Bottom).apply(cell1, cell2)
     ReactTestUtils.withNewBodyElement { mountNode =>
       row.renderIntoDOM(mountNode)
       assertEquals(
@@ -170,7 +171,7 @@ class TableRowSuite extends munit.FunSuite {
   test("warning") {
     val cell1 = TableCell(content = "High")
     val cell2 = TableCell(content = "Low")
-    val row   = TableRow(warning = true)(cell1, cell2)
+    val row   = TableRow(warning = true).apply(cell1, cell2)
     ReactTestUtils.withNewBodyElement { mountNode =>
       row.renderIntoDOM(mountNode)
       assertEquals(

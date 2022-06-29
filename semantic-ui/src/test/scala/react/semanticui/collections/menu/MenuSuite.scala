@@ -7,6 +7,8 @@ import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.style.Css
 import react.common.syntax.vdom._
+import react.common.GenericComponentPACOps
+import react.semanticui.tagOf2AsC
 
 class MenuSuite extends munit.FunSuite {
   test("render") {
@@ -17,7 +19,7 @@ class MenuSuite extends munit.FunSuite {
     }
   }
   test("renderAs") {
-    val menu = Menu(as = <.a)
+    val menu = new Menu(as = <.a)
     ReactTestUtils.withNewBodyElement { m =>
       menu.renderIntoDOM(m)
       assertEquals(m.innerHTML, """<a class="ui menu"></a>""")
@@ -26,7 +28,7 @@ class MenuSuite extends munit.FunSuite {
   test("applyItems") {
     val menu = Menu(
       MenuHeader(),
-      MenuItem(clazz = Css("my-class"))(<.div, <.span)
+      MenuItem(clazz = Css("my-class")).apply(<.div, <.span)
     )
     ReactTestUtils.withNewBodyElement { m =>
       menu.renderIntoDOM(m)

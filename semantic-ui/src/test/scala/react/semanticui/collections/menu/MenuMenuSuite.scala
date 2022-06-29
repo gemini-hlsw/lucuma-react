@@ -6,6 +6,7 @@ package react.semanticui.collections.menu
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.syntax.vdom._
+import react.semanticui.tagOf2AsC
 
 class MenuMenuSuite extends munit.FunSuite {
   test("render") {
@@ -16,7 +17,7 @@ class MenuMenuSuite extends munit.FunSuite {
     }
   }
   test("renderAs") {
-    val menumenu = MenuMenu(as = <.a)
+    val menumenu = new MenuMenu(as = <.a)
     ReactTestUtils.withNewBodyElement { mountNode =>
       menumenu.renderIntoDOM(mountNode)
       assertEquals(mountNode.innerHTML, """<a class="menu"></a>""")

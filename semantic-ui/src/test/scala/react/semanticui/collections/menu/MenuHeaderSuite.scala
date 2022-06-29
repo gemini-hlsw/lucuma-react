@@ -6,6 +6,7 @@ package react.semanticui.collections.menu
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.syntax.vdom._
+import react.semanticui.tagOf2AsC
 
 class MenuHeaderSuite extends munit.FunSuite {
   test("render") {
@@ -16,14 +17,14 @@ class MenuHeaderSuite extends munit.FunSuite {
     }
   }
   test("renderAsTag") {
-    val menuHeader = MenuHeader(as = <.a)
+    val menuHeader = new MenuHeader(as = <.a)
     ReactTestUtils.withNewBodyElement { mountNode =>
       menuHeader.renderIntoDOM(mountNode)
       assertEquals(mountNode.innerHTML, """<a class="header"></a>""")
     }
   }
   test("renderAsHTMLTag") {
-    val menuHeader = MenuHeader(as = <.div)
+    val menuHeader = new MenuHeader(as = <.div)
     ReactTestUtils.withNewBodyElement { mountNode =>
       menuHeader.renderIntoDOM(mountNode)
       assertEquals(mountNode.innerHTML, """<div class="header"></div>""")

@@ -5,29 +5,30 @@ package react.semanticui.collections.table
 
 import japgolly.scalajs.react.test._
 import react.common.syntax.vdom._
+import react.common.GenericComponentPACOps
 
-class TableHeaderSuite extends munit.FunSuite {
-  test("TableHeader") {
-    val row1 = TableRow(TableHeaderCell("one"))
-    val row2 = TableRow(TableHeaderCell("two"))
-    val body = TableHeader(row1, row2)
+class TableFooterSuite extends munit.FunSuite {
+  test("TableFooter") {
+    val row1 = TableRow(TableCell("one"))
+    val row2 = TableRow(TableCell("two"))
+    val body = TableFooter(row1, row2)
     ReactTestUtils.withNewBodyElement { mountNode =>
       body.renderIntoDOM(mountNode)
       assertEquals(
         mountNode.innerHTML,
-        """<thead class=""><tr class=""><th class="">one</th></tr><tr class=""><th class="">two</th></tr></thead>"""
+        """<tfoot class=""><tr class=""><td class="">one</td></tr><tr class=""><td class="">two</td></tr></tfoot>"""
       )
     }
   }
   test("fullWidth") {
-    val row1 = TableRow(TableHeaderCell("one"))
-    val row2 = TableRow(TableHeaderCell("two"))
-    val body = TableHeader(fullWidth = true)(row1, row2)
+    val row1 = TableRow(TableCell("one"))
+    val row2 = TableRow(TableCell("two"))
+    val body = TableFooter(fullWidth = true).apply(row1, row2)
     ReactTestUtils.withNewBodyElement { mountNode =>
       body.renderIntoDOM(mountNode)
       assertEquals(
         mountNode.innerHTML,
-        """<thead class="full-width"><tr class=""><th class="">one</th></tr><tr class=""><th class="">two</th></tr></thead>"""
+        """<tfoot class="full-width"><tr class=""><td class="">one</td></tr><tr class=""><td class="">two</td></tr></tfoot>"""
       )
     }
   }
