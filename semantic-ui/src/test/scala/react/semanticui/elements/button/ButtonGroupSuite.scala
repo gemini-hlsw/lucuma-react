@@ -5,9 +5,9 @@ package react.semanticui.elements.button
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.semanticui.widths.widthOf
-import react.common.syntax.vdom._
 import react.common.GenericComponentPACOps
+import react.common.syntax.vdom._
+import react.semanticui.widths.widthOf
 
 class ButtonGroupSuite extends munit.FunSuite {
   test("render") {

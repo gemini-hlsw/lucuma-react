@@ -5,9 +5,9 @@ package react.semanticui.elements.rail
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.semanticui.floats._
-import react.common.syntax.vdom._
 import react.common.GenericFnComponentPACOps
+import react.common.syntax.vdom._
+import react.semanticui.floats._
 
 class RailSuite extends munit.FunSuite {
   test("render") {

@@ -4,8 +4,8 @@
 package react.semanticui.modules.accordion
 
 import japgolly.scalajs.react.test._
-import react.semanticui.elements.icon._
 import react.common.syntax.vdom._
+import react.semanticui.elements.icon._
 
 class AccordionTitleSuite extends munit.FunSuite {
   test("content") {

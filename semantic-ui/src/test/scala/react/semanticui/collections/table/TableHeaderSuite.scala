@@ -4,8 +4,8 @@
 package react.semanticui.collections.table
 
 import japgolly.scalajs.react.test._
-import react.common.syntax.vdom._
 import react.common.GenericComponentPACOps
+import react.common.syntax.vdom._
 
 class TableHeaderSuite extends munit.FunSuite {
   test("TableHeader") {

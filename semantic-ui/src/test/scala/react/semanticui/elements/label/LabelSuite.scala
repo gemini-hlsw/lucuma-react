@@ -5,11 +5,11 @@ package react.semanticui.elements.label
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.semanticui.elements.icon._
-import react.semanticui.colors._
-import react.semanticui.sizes._
-import react.common.syntax.vdom._
 import react.common.GenericComponentPACOps
+import react.common.syntax.vdom._
+import react.semanticui.colors._
+import react.semanticui.elements.icon._
+import react.semanticui.sizes._
 
 class LabelSuite extends munit.FunSuite {
   test("render") {

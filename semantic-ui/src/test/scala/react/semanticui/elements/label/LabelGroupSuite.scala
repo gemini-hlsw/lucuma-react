@@ -3,8 +3,8 @@
 
 package react.semanticui.elements.label
 
-import munit._
 import japgolly.scalajs.react.test._
+import munit._
 import react.common.syntax.vdom._
 
 class LabelGroupSuite extends FunSuite {

@@ -4,9 +4,9 @@
 package react.semanticui.collections.form
 
 import japgolly.scalajs.react.test._
+import react.common.syntax.vdom._
 import react.semanticui.modules.dropdown.DropdownItem
 import react.semanticui.widths._
-import react.common.syntax.vdom._
 
 class FormSelectSuite extends munit.FunSuite {
   test("options") {

@@ -4,8 +4,8 @@
 package react.semanticui.addons.select
 
 import japgolly.scalajs.react.test._
-import react.semanticui.modules.dropdown.DropdownItem
 import react.common.syntax.render._
+import react.semanticui.modules.dropdown.DropdownItem
 
 class SelectSuite extends munit.FunSuite {
   test("options") {

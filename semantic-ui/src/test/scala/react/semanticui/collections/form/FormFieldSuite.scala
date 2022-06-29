@@ -4,8 +4,8 @@
 package react.semanticui.collections.form
 
 import japgolly.scalajs.react.test._
-import react.semanticui.widths._
 import react.common.syntax.vdom._
+import react.semanticui.widths._
 
 class FormFieldSuite extends munit.FunSuite {
   test("render") {

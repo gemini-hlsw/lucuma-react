@@ -5,8 +5,8 @@ package react.semanticui.elements.segment
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.common.syntax.vdom._
 import react.common.GenericFnComponentPACOps
+import react.common.syntax.vdom._
 
 class SegmentSuite extends munit.FunSuite {
   test("segment") {

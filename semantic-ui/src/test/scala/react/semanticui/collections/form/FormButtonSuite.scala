@@ -5,11 +5,11 @@ package react.semanticui.collections.form
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.semanticui.widths._
-import react.semanticui.elements.label.Label
-import react.semanticui.elements.button.LabelPosition
-import react.common.syntax.vdom._
 import react.common.GenericComponentPACOps
+import react.common.syntax.vdom._
+import react.semanticui.elements.button.LabelPosition
+import react.semanticui.elements.label.Label
+import react.semanticui.widths._
 
 class FormButtonSuite extends munit.FunSuite {
   test("render") {
@@ -34,9 +34,10 @@ class FormButtonSuite extends munit.FunSuite {
   }
   test("label") {
     val form =
-      FormButton(width = Two, label = Label(content = "label"), labelPosition = LabelPosition.Left).apply(
-        "Press"
-      )
+      FormButton(width = Two, label = Label(content = "label"), labelPosition = LabelPosition.Left)
+        .apply(
+          "Press"
+        )
     ReactTestUtils.withNewBodyElement { mountNode =>
       form.renderIntoDOM(mountNode)
       assertEquals(

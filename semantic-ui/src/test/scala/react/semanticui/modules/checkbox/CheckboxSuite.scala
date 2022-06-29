@@ -3,8 +3,8 @@
 
 package react.semanticui.modules.checkbox
 
-import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.Callback
+import japgolly.scalajs.react.test._
 import react.common.syntax.vdom._
 
 class CheckboxSuite extends munit.FunSuite {

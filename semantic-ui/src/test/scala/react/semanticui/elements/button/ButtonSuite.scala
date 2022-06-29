@@ -5,15 +5,15 @@ package react.semanticui.elements.button
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.semanticui.elements.icon._
-import react.semanticui.elements.label.Label
+import react.common.GenericComponentPACOps
+import react.common.syntax.vdom._
+import react.semanticui._
 import react.semanticui.collections.form.Form
 import react.semanticui.colors._
-import react.semanticui.sizes._
+import react.semanticui.elements.icon._
+import react.semanticui.elements.label.Label
 import react.semanticui.floats._
-import react.semanticui._
-import react.common.syntax.vdom._
-import react.common.GenericComponentPACOps
+import react.semanticui.sizes._
 
 class ButtonSuite extends munit.FunSuite {
   test("render") {

@@ -5,11 +5,11 @@ package react.semanticui.collections.table
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
+import react.common.GenericComponentPACOps
+import react.common.syntax.vdom._
 import react.semanticui.elements.icon._
 import react.semanticui.verticalalignment
 import react.semanticui.widths
-import react.common.syntax.vdom._
-import react.common.GenericComponentPACOps
 
 class TableCellSuite extends munit.FunSuite {
   test("default") {

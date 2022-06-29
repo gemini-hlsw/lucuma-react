@@ -5,12 +5,12 @@ package react.semanticui.modules.dropdown
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.semanticui.elements.icon._
+import react.common.GenericComponentPACOps
+import react.common.syntax.vdom._
 import react.semanticui.elements.flag.Flag
+import react.semanticui.elements.icon._
 import react.semanticui.elements.image.Image
 import react.semanticui.elements.label.Label
-import react.common.syntax.vdom._
-import react.common.GenericComponentPACOps
 
 class DropdownItemSuite extends munit.FunSuite {
   test("item") {

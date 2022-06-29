@@ -5,11 +5,11 @@ package react.semanticui.collections.table
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
+import react.common.GenericComponentPACOps
+import react.common.syntax.vdom._
 import react.semanticui.elements.icon._
 import react.semanticui.verticalalignment
 import react.semanticui.widths
-import react.common.syntax.vdom._
-import react.common.GenericComponentPACOps
 
 class TableHeaderCellSuite extends munit.FunSuite {
   test("default") {
@@ -136,9 +136,10 @@ class TableHeaderCellSuite extends munit.FunSuite {
   }
   test("aligned both") {
     val cell =
-      TableHeaderCell(textAlign = TableTextAlign.Center, verticalAlign = verticalalignment.Middle).apply(
-        "Some Content"
-      )
+      TableHeaderCell(textAlign = TableTextAlign.Center, verticalAlign = verticalalignment.Middle)
+        .apply(
+          "Some Content"
+        )
     ReactTestUtils.withNewBodyElement { mountNode =>
       cell.renderIntoDOM(mountNode)
       assertEquals(

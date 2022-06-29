@@ -5,8 +5,8 @@ package react.semanticui.collections.form
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.semanticui.widths._
 import react.common.syntax.vdom._
+import react.semanticui.widths._
 
 class FormTextAreaSuite extends munit.FunSuite {
   test("render") {

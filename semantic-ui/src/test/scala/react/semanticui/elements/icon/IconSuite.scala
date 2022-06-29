@@ -5,10 +5,10 @@ package react.semanticui.elements.icon
 
 import japgolly.scalajs.react.test._
 import react.common.Css
+import react.common.syntax.vdom._
+import react.semanticui.colors._
 import react.semanticui.elements.icon.IconRotated._
 import react.semanticui.sizes._
-import react.semanticui.colors._
-import react.common.syntax.vdom._
 
 class IconSuite extends munit.FunSuite {
   test("render") {

@@ -4,9 +4,9 @@
 package react.semanticui.collections.table
 
 import japgolly.scalajs.react.test._
-import react.semanticui.verticalalignment
-import react.common.syntax.vdom._
 import react.common.GenericComponentPACOps
+import react.common.syntax.vdom._
+import react.semanticui.verticalalignment
 
 class TableRowSuite extends munit.FunSuite {
   test("No cells") {

@@ -5,9 +5,9 @@ package react.semanticui.elements.loader
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.semanticui.elements.label.Label
-import react.common.syntax.vdom._
 import react.common.GenericFnComponentPACOps
+import react.common.syntax.vdom._
+import react.semanticui.elements.label.Label
 import react.semanticui.tagOf2AsC
 
 class LoaderSuite extends munit.FunSuite {

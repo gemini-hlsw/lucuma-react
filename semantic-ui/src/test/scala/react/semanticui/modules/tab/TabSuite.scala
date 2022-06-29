@@ -5,8 +5,8 @@ package react.semanticui.modules.tab
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.semanticui.collections.menu.Menu
 import react.common.syntax.vdom._
+import react.semanticui.collections.menu.Menu
 
 class TabSuite extends munit.FunSuite {
   test("basic") {

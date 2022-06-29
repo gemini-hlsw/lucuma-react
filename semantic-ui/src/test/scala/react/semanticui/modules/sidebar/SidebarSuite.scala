@@ -3,15 +3,15 @@
 
 package react.semanticui.modules.sidebar
 
+import japgolly.scalajs.react.ScalaComponent
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import japgolly.scalajs.react.ScalaComponent
-import react.semanticui.collections.menu._
-import react.semanticui.elements.icon._
-import react.semanticui.As
-import react.common.syntax.vdom._
 import react.common.GenericComponentPACOps
 import react.common.GenericFnComponentPACOps
+import react.common.syntax.vdom._
+import react.semanticui.As
+import react.semanticui.collections.menu._
+import react.semanticui.elements.icon._
 
 class SidebarSuite extends munit.FunSuite {
   val DoubleComp = ScalaComponent
