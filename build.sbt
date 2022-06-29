@@ -388,6 +388,7 @@ lazy val semanticUI = project
   .dependsOn(common)
   .settings(
     name := "lucuma-react-semantic-ui",
+    Compile / scalacOptions += "-language:implicitConversions",
     facadeSettings,
     yarnSettings
   )

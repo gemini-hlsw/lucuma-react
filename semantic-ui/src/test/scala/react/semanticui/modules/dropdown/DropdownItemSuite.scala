@@ -10,6 +10,7 @@ import react.semanticui.elements.flag.Flag
 import react.semanticui.elements.image.Image
 import react.semanticui.elements.label.Label
 import react.common.syntax.vdom._
+import react.common.GenericComponentPACOps
 
 class DropdownItemSuite extends munit.FunSuite {
   test("item") {

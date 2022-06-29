@@ -10,6 +10,8 @@ import react.semanticui.collections.menu._
 import react.semanticui.elements.icon._
 import react.semanticui.As
 import react.common.syntax.vdom._
+import react.common.GenericComponentPACOps
+import react.common.GenericFnComponentPACOps
 
 class SidebarSuite extends munit.FunSuite {
   val DoubleComp = ScalaComponent
