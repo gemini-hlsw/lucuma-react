@@ -15,6 +15,7 @@
     "react-resize-detector": "^7.0.0",
     "react-table": "^7.7.0",
     "react-virtuoso": "^2.8.3",
+    "semantic-ui-react": "^2.0.3",
     "vite": "^2.8.6"
   },
   "dependencies": {
