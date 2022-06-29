@@ -5,6 +5,7 @@ package react.semanticui.modules.dropdown
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
+import react.common.GenericFnComponentPACOps
 import react.common.syntax.vdom._
 
 class DropdownTextSuite extends munit.FunSuite {
@@ -19,7 +20,7 @@ class DropdownTextSuite extends munit.FunSuite {
     }
   }
   test("textContent") {
-    val header = DropdownText("content")
+    val header = new DropdownText().apply("content")
     ReactTestUtils.withNewBodyElement { mountNode =>
       header.renderIntoDOM(mountNode)
       assertEquals(

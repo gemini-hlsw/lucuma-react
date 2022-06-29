@@ -5,6 +5,7 @@ package react.semanticui.elements.header
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
+import react.common.GenericFnComponentPACOps
 import react.common.syntax.vdom._
 import react.semanticui.tagOf2AsC
 
@@ -25,7 +26,7 @@ class HeaderSuite extends munit.FunSuite {
   }
   test("subheader") {
     val header =
-      Header(subheader = HeaderSubheader("abc"))
+      Header(subheader = new HeaderSubheader().apply("abc"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       header.renderIntoDOM(mountNode)
       assertEquals(

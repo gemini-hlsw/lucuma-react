@@ -11,7 +11,7 @@ import react.semanticui.widths.widthOf
 
 class ButtonGroupSuite extends munit.FunSuite {
   test("render") {
-    val buttonGroup = ButtonGroup("abc")
+    val buttonGroup = new ButtonGroup().apply("abc")
     ReactTestUtils.withNewBodyElement { mountNode =>
       buttonGroup.renderIntoDOM(mountNode)
       assertEquals(mountNode.innerHTML, """<div class="ui buttons">abc</div>""")
@@ -19,7 +19,7 @@ class ButtonGroupSuite extends munit.FunSuite {
   }
   test("widths") {
     val buttonGroup =
-      ButtonGroup(widths = widthOf(2)).apply(Button("1"), Button("2"))
+      ButtonGroup(widths = widthOf(2)).apply(new Button().apply("1"), new Button().apply("2"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       buttonGroup.renderIntoDOM(mountNode)
       assertEquals(
@@ -30,7 +30,7 @@ class ButtonGroupSuite extends munit.FunSuite {
   }
   test("buttons") {
     val buttonGroup =
-      new ButtonGroup().apply(Button("1"), Button("2"))
+      new ButtonGroup().apply(new Button().apply("1"), new Button().apply("2"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       buttonGroup.renderIntoDOM(mountNode)
       assertEquals(

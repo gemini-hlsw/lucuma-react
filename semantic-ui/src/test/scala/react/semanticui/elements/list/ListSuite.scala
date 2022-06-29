@@ -6,6 +6,8 @@ package react.semanticui.elements.list
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.GenericComponentPACOps
+import react.common.GenericComponentPAOps
+import react.common.GenericFnComponentPACOps
 import react.common.syntax.vdom._
 import react.semanticui.tagOf2AsC
 
@@ -52,7 +54,7 @@ class ListSuite extends munit.FunSuite {
     }
   }
   test("header") {
-    val item = ListItem(header = ListHeader("value"))
+    val item = ListItem(header = new ListHeader().apply("value"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       item.renderIntoDOM(mountNode)
       assertEquals(

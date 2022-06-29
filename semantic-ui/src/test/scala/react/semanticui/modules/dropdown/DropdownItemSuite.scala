@@ -6,6 +6,7 @@ package react.semanticui.modules.dropdown
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.GenericComponentPACOps
+import react.common.GenericComponentPAOps
 import react.common.syntax.vdom._
 import react.semanticui.elements.flag.Flag
 import react.semanticui.elements.icon._
@@ -55,7 +56,7 @@ class DropdownItemSuite extends munit.FunSuite {
     }
   }
   test("icon") {
-    val item = DropdownItem(value = 1, icon = Icon("edit"))
+    val item = DropdownItem(value = 1, icon = Icon(name = "edit"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       item.renderIntoDOM(mountNode)
       assertEquals(
@@ -85,7 +86,7 @@ class DropdownItemSuite extends munit.FunSuite {
     }
   }
   test("label") {
-    val item = DropdownItem(value = 1, label = Label("image"))
+    val item = DropdownItem(value = 1, label = new Label().apply("image"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       item.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML

@@ -5,6 +5,7 @@ package react.semanticui.elements.loader
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
+import react.common.GenericComponentPACOps
 import react.common.GenericFnComponentPACOps
 import react.common.syntax.vdom._
 import react.semanticui.elements.label.Label
@@ -26,7 +27,7 @@ class LoaderSuite extends munit.FunSuite {
     }
   }
   test("renderChild2") {
-    val loader = new Loader().apply(Label("abc"))
+    val loader = new Loader().apply(new Label().apply("abc"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       loader.renderIntoDOM(mountNode)
       assertEquals(

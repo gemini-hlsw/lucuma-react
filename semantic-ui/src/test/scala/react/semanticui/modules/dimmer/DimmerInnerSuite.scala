@@ -5,11 +5,12 @@ package react.semanticui.modules.dimmer
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
+import react.common.GenericComponentPACOps
 import react.common.syntax.vdom._
 
 class DimmerInnerSuite extends munit.FunSuite {
   test("render") {
-    val dimmerInner = DimmerInner("Abc")
+    val dimmerInner = new DimmerInner().apply("Abc")
     ReactTestUtils.withNewBodyElement { mountNode =>
       dimmerInner.renderIntoDOM(mountNode)
       assertEquals(

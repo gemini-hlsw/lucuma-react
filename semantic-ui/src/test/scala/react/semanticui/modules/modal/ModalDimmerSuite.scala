@@ -5,11 +5,12 @@ package react.semanticui.modules.modal
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
+import react.common.GenericFnComponentPACOps
 import react.common.syntax.vdom._
 
 class ModalDimmerSuite extends munit.FunSuite {
   test("render") {
-    val modal = ModalDimmer("Abc")
+    val modal = new ModalDimmer().apply("Abc")
     ReactTestUtils.withNewBodyElement { mountNode =>
       modal.renderIntoDOM(mountNode)
       assertEquals(

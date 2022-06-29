@@ -6,6 +6,7 @@ package react.semanticui.elements.label
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.GenericComponentPACOps
+import react.common.GenericComponentPAOps
 import react.common.syntax.vdom._
 import react.semanticui.colors._
 import react.semanticui.elements.icon._
@@ -55,7 +56,7 @@ class LabelSuite extends munit.FunSuite {
     }
   }
   test("detailVdom") {
-    val labelDetail = LabelDetail("Detail")
+    val labelDetail = new LabelDetail().apply("Detail")
     val label       = Label(detail = labelDetail)
     ReactTestUtils.withNewBodyElement { m =>
       label.renderIntoDOM(m)

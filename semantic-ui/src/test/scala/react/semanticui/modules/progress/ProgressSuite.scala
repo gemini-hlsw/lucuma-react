@@ -5,11 +5,12 @@ package react.semanticui.modules.progress
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
+import react.common.GenericComponentPACOps
 import react.common.syntax.vdom._
 
 class ProgressSuite extends munit.FunSuite {
   test("progress") {
-    val progress = Progress("Abc")
+    val progress = new Progress().apply("Abc")
     ReactTestUtils.withNewBodyElement { mountNode =>
       progress.renderIntoDOM(mountNode)
       assertEquals(

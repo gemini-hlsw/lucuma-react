@@ -10,7 +10,7 @@ import react.common.syntax.vdom._
 
 class SegmentInlineSuite extends munit.FunSuite {
   test("segment-inline") {
-    val segment = Segment(placeholder = true).apply("Abc", SegmentInline("Def"))
+    val segment = Segment(placeholder = true).apply("Abc", new SegmentInline().apply("Def"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       segment.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML

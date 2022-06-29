@@ -10,7 +10,7 @@ import react.common.syntax.vdom._
 
 class SegmentSuite extends munit.FunSuite {
   test("segment") {
-    val segment = Segment("Abc")
+    val segment = new Segment().apply("Abc")
     ReactTestUtils.withNewBodyElement { mountNode =>
       segment.renderIntoDOM(mountNode)
       assertEquals(mountNode.innerHTML, """<div class="ui segment">Abc</div>""")

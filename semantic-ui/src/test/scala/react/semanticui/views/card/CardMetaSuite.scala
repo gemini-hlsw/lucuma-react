@@ -5,11 +5,12 @@ package react.semanticui.views.card
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
+import react.common.GenericFnComponentPACOps
 import react.common.syntax.vdom._
 
 class CardMetaSuite extends munit.FunSuite {
   test("render") {
-    val cardMeta = CardMeta("Abc")
+    val cardMeta = new CardMeta().apply("Abc")
     ReactTestUtils.withNewBodyElement { mountNode =>
       cardMeta.renderIntoDOM(mountNode)
       assertEquals(mountNode.innerHTML, """<div class="meta">Abc</div>""")

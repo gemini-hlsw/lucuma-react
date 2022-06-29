@@ -10,7 +10,7 @@ import react.common.syntax.vdom._
 
 class SegmentGroupSuite extends munit.FunSuite {
   test("segment-group") {
-    val segments = SegmentGroup(Segment("Abc"))
+    val segments = SegmentGroup(new Segment().apply("Abc"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       segments.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML
@@ -19,7 +19,9 @@ class SegmentGroupSuite extends munit.FunSuite {
   }
   test("segment-group with content") {
     val segments =
-      SegmentGroup(horizontal = true).apply(Segment("Abc"), Segment(secondary = true)(<.div("abc")))
+      SegmentGroup(horizontal = true).apply(new Segment().apply("Abc"),
+                                            Segment(secondary = true)(<.div("abc"))
+      )
     ReactTestUtils.withNewBodyElement { mountNode =>
       segments.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML

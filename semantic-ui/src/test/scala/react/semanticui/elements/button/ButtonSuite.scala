@@ -112,7 +112,7 @@ class ButtonSuite extends munit.FunSuite {
     }
   }
   test("label") {
-    val button = Button(label = Label("Label"))
+    val button = Button(label = new Label().apply("Label"))
     ReactTestUtils.withNewBodyElement { mountNode =>
       button.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML
@@ -219,7 +219,7 @@ class ButtonSuite extends munit.FunSuite {
     ReactTestUtils.withNewBodyElement { mountNode =>
       button.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML
-      assertEquals(html, """<button type="submit" class="ui button"></button>""")
+      assertEquals(html, """<button class="ui button" type="submit"></button>""")
     }
   }
   test("withTwoContents") {
@@ -227,7 +227,7 @@ class ButtonSuite extends munit.FunSuite {
     ReactTestUtils.withNewBodyElement { mountNode =>
       button.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML
-      assertEquals(html, """<button type="button" class="ui button">Submit</button>""")
+      assertEquals(html, """<button class="ui button" type="button">Submit</button>""")
     }
   }
   test("withMixedContent") {
@@ -235,7 +235,7 @@ class ButtonSuite extends munit.FunSuite {
     ReactTestUtils.withNewBodyElement { mountNode =>
       button.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML
-      assertEquals(html, """<button type="button" class="ui button">Submit</button>""")
+      assertEquals(html, """<button class="ui button" type="button">Submit</button>""")
     }
   }
   test("withPropsAndContent") {
@@ -243,7 +243,7 @@ class ButtonSuite extends munit.FunSuite {
     ReactTestUtils.withNewBodyElement { mountNode =>
       button.renderIntoDOM(mountNode)
       val html = mountNode.innerHTML
-      assertEquals(html, """<button type="submit" class="ui blue button"></button>""")
+      assertEquals(html, """<button class="ui blue button" type="submit"></button>""")
     }
   }
 }

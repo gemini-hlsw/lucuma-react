@@ -10,7 +10,7 @@ import react.common.syntax.vdom._
 
 class TabPaneSuite extends munit.FunSuite {
   test("basic") {
-    val basic = TabPane("Abc")
+    val basic = new TabPane().apply("Abc")
     ReactTestUtils.withNewBodyElement { mountNode =>
       basic.renderIntoDOM(mountNode)
       assertEquals(

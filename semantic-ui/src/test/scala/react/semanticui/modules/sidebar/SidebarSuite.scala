@@ -20,14 +20,14 @@ class SidebarSuite extends munit.FunSuite {
     .build
 
   test("pusher") {
-    val pusher = SidebarPusher("Abc")
+    val pusher = new SidebarPusher().apply("Abc")
     ReactTestUtils.withNewBodyElement { mountNode =>
       pusher.renderIntoDOM(mountNode)
       assertEquals(mountNode.innerHTML, """<div class="pusher">Abc</div>""")
     }
   }
   test("pushable") {
-    val pushable = SidebarPushable("Abc")
+    val pushable = new SidebarPushable().apply("Abc")
     ReactTestUtils.withNewBodyElement { mountNode =>
       pushable.renderIntoDOM(mountNode)
       assertEquals(mountNode.innerHTML, """<div class="pushable">Abc</div>""")

@@ -18,7 +18,7 @@ class ContainerSuite extends munit.FunSuite {
     }
   }
   test("renderWithChildren") {
-    val container = Container("Abc")
+    val container = new Container().apply("Abc")
     ReactTestUtils.withNewBodyElement { mountNode =>
       container.renderIntoDOM(mountNode)
       assertEquals(mountNode.innerHTML, """<div class="ui container">Abc</div>""")
