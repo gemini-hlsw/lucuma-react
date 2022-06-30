@@ -94,7 +94,7 @@ object IconsComponent {
                 IconFeed.size(s),
                 <.p(
                   ^.cls := "name",
-                  s.toJs
+                  syntaxEnumValue(s).toJs
                 )
               )
             }.toTagMod
@@ -118,7 +118,7 @@ object IconsComponent {
                 IconEdit.color(o),
                 <.p(
                   ^.cls := "name",
-                  o.toJs
+                  syntaxEnumValue(o).toJs
                 )
               )
             }.toTagMod

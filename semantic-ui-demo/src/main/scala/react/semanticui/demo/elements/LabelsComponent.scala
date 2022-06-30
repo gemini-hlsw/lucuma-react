@@ -10,6 +10,7 @@ import react.semanticui.elements.icon._
 import react.semanticui.elements.label.Label
 import react.semanticui.elements.label.LabelDetail
 import react.semanticui.colors._
+import react.common.GenericComponentPACOps
 
 object LabelsComponent {
   private val IconNewspaper                                              = Icon(name = "newspaper")
@@ -60,14 +61,14 @@ object LabelsComponent {
           section("Samples", "A label") {
             <.div(
               ^.cls := "column docs-icon-set-column",
-              Label()(IconNewspaper, "23")
+              new Label().apply(IconNewspaper, "23")
             )
           },
           section("Image", "As a link and an image") {
             List(
               <.div(
                 ^.cls := "column docs-icon-set-column",
-                Label(as = "a", image = true)(<.img(
+                Label(as = "a", image = true).apply(<.img(
                                                 ^.src := WebpackResources.AdaAvatar.resource
                                               ),
                                               "Ade"
@@ -75,7 +76,7 @@ object LabelsComponent {
               ),
               <.div(
                 ^.cls := "column docs-icon-set-column",
-                Label(as = "a", image = true, color = Blue)(
+                Label(as = "a", image = true, color = Blue).apply(
                   <.img(
                     ^.src := WebpackResources.AdaAvatar.resource
                   ),
@@ -85,7 +86,7 @@ object LabelsComponent {
               ),
               <.div(
                 ^.cls := "column docs-icon-set-column",
-                Label(as = "a", image = true)(<.img(
+                Label(as = "a", image = true).apply(<.img(
                                                 ^.src := WebpackResources.AdaAvatar.resource
                                               ),
                                               "Ade",
@@ -98,15 +99,15 @@ object LabelsComponent {
             List(
               <.div(
                 ^.cls := "column docs-icon-set-column",
-                Label(as = "a", tag = true)("New")
+                Label(as = "a", tag = true).apply("New")
               ),
               <.div(
                 ^.cls := "column docs-icon-set-column",
-                Label(color = Red, as = "a", tag = true)("Upcoming")
+                Label(color = Red, as = "a", tag = true).apply("Upcoming")
               ),
               <.div(
                 ^.cls := "column docs-icon-set-column",
-                Label(color = Teal, as = "a", tag = true)("Featured")
+                Label(color = Teal, as = "a", tag = true).apply("Featured")
               )
             ).toTagMod
           },
@@ -117,7 +118,7 @@ object LabelsComponent {
                 Label(as = "a",
                       onClickE = (e: ReactMouseEvent, p: Label.LabelProps) =>
                         Callback.log(s"${e.screenX} $p")
-                )("Callback")
+                ).apply("Callback")
               )
             ).toTagMod
           },
@@ -125,11 +126,11 @@ object LabelsComponent {
             List(
               <.div(
                 ^.cls := "column docs-icon-set-column",
-                Label(as = "a")(IconNewspaper, "Icon")
+                Label(as = "a").apply(IconNewspaper, "Icon")
               ),
               <.div(
                 ^.cls := "column docs-icon-set-column",
-                Label(as = "a")("Icon2", IconDelete.color(Red))
+                Label(as = "a").apply("Icon2", IconDelete.color(Red))
               )
             ).toTagMod
           }

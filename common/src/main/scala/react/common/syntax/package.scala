@@ -16,13 +16,13 @@ package syntax {
     implicit def syntaxEnumValue[A: EnumValue](a: A): EnumValueOps[A] =
       new EnumValueOps(a)
 
-    implicit def syntaxEnumValue[A: EnumValue](a: js.UndefOr[A]): EnumValueUndefOps[A] =
+    implicit def syntaxEnumValueUndef[A: EnumValue](a: js.UndefOr[A]): EnumValueUndefOps[A] =
       new EnumValueUndefOps(a)
 
     implicit def syntaxEnumValueB[A: EnumValueB](a: A): EnumValueOpsB[A] =
       new EnumValueOpsB(a)
 
-    implicit def syntaxEnumValueB[A: EnumValueB](a: js.UndefOr[A]): EnumValueUndefOpsB[A] =
+    implicit def syntaxEnumValueUndefB[A: EnumValueB](a: js.UndefOr[A]): EnumValueUndefOpsB[A] =
       new EnumValueUndefOpsB(a)
   }
 

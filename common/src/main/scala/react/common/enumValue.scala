@@ -6,7 +6,8 @@ package react.common
 import scala.scalajs.js.|
 
 trait EnumValue[A] {
-  def value(a: A): String
+  def value(a:  A): String
+  extension (a: A) inline final def toJs: String = value(a)
 }
 
 object EnumValue {

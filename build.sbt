@@ -398,5 +398,6 @@ lazy val semanticUIDemo = project
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(semanticUI)
   .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
     demoSettings
   )
