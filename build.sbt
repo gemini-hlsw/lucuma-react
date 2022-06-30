@@ -5,8 +5,8 @@ ThisBuild / tlCiReleaseBranches := Seq("main")
 
 val scalaJsReactV    = "2.1.1"
 val catsV            = "2.8.0"
-val munitV           = "0.7.29"
-val disciplineMunitV = "1.0.9"
+val munitV           = "1.0.0-M6"
+val disciplineMunitV = "2.0.0-M3"
 val utestV           = "0.7.11"
 
 ThisBuild / crossScalaVersions := Seq("3.1.3")
@@ -63,6 +63,9 @@ lazy val demoSettings       = Seq(
           |    mode == "production"
           |      ? path.resolve(__dirname, "$prodTarget/")
           |      : path.resolve(__dirname, "$devTarget/");
+          |  const webapp = path.resolve(__dirname, "src/main/webapp/");
+          |  const themeConfig = path.resolve(webapp, "theme/theme.config");
+          |  const themeSite = path.resolve(webapp, "theme/site");
           |  return {
           |    root: "${baseDirectory.value.getName}/src/main/webapp",
           |    resolve: {
@@ -70,6 +73,14 @@ lazy val demoSettings       = Seq(
           |        {
           |          find: "@sjs",
           |          replacement: sjs,
+          |        },
+          |        {
+          |          find: "../../theme.config",
+          |          replacement: themeConfig,
+          |        },
+          |        {
+          |          find: "theme/site",
+          |          replacement: themeSite,
           |        },
           |      ],
           |    },
@@ -388,6 +399,7 @@ lazy val semanticUI = project
   .dependsOn(common)
   .settings(
     name := "lucuma-react-semantic-ui",
+    Compile / scalacOptions += "-language:implicitConversions",
     facadeSettings,
     yarnSettings
   )
@@ -397,5 +409,6 @@ lazy val semanticUIDemo = project
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(semanticUI)
   .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
     demoSettings
   )

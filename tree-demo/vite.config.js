@@ -7,6 +7,9 @@ export default ({ command, mode }) => {
     mode == "production"
       ? path.resolve(__dirname, "target/scala-3.1.3/treedemo-opt/")
       : path.resolve(__dirname, "target/scala-3.1.3/treedemo-fastopt/");
+  const webapp = path.resolve(__dirname, "src/main/webapp/");
+  const themeConfig = path.resolve(webapp, "theme/theme.config");
+  const themeSite = path.resolve(webapp, "theme/site");
   return {
     root: "tree-demo/src/main/webapp",
     resolve: {
@@ -14,6 +17,14 @@ export default ({ command, mode }) => {
         {
           find: "@sjs",
           replacement: sjs,
+        },
+        {
+          find: "../../theme.config",
+          replacement: themeConfig,
+        },
+        {
+          find: "theme/site",
+          replacement: themeSite,
         },
       ],
     },
