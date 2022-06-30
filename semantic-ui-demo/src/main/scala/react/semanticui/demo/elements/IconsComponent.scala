@@ -6,13 +6,13 @@ package react.semanticui.demo
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common._
+import react.semanticui._
+import react.semanticui.colors._
+import react.semanticui.elements.icon.IconCorner
 import react.semanticui.elements.icon.IconFlip._
 import react.semanticui.elements.icon.IconRotated._
-import react.semanticui.elements.icon.IconCorner
 import react.semanticui.elements.icon._
 import react.semanticui.sizes._
-import react.semanticui.colors._
-import react.semanticui._
 
 object IconsComponent {
   val IconMailOutline                = Icon(name = "mail outline")

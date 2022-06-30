@@ -4,9 +4,11 @@
 package react.semanticui.demo
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.extra.router._
+import japgolly.scalajs.react.vdom.html_<^._
+
 import scala.scalajs.js
+
 import js.annotation._
 
 @JSImport("/images/logo.png", JSImport.Default)

@@ -3,10 +3,12 @@
 
 package react.semanticui.demo
 
-import org.scalajs.dom
-import scala.scalajs.js
-import js.annotation._
 import japgolly.scalajs.react._
+import org.scalajs.dom
+
+import scala.scalajs.js
+
+import js.annotation._
 import extra.router._
 
 @JSExportTopLevel("SUIMain")

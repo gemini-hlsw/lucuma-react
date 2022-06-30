@@ -5,12 +5,12 @@ package react.semanticui.demo
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
+import react.common.GenericComponentPACOps
 import react.common.syntax.all._
+import react.semanticui.colors._
 import react.semanticui.elements.icon._
 import react.semanticui.elements.label.Label
 import react.semanticui.elements.label.LabelDetail
-import react.semanticui.colors._
-import react.common.GenericComponentPACOps
 
 object LabelsComponent {
   private val IconNewspaper                                              = Icon(name = "newspaper")
@@ -69,9 +69,9 @@ object LabelsComponent {
               <.div(
                 ^.cls := "column docs-icon-set-column",
                 Label(as = "a", image = true).apply(<.img(
-                                                ^.src := WebpackResources.AdaAvatar.resource
-                                              ),
-                                              "Ade"
+                                                      ^.src := WebpackResources.AdaAvatar.resource
+                                                    ),
+                                                    "Ade"
                 )
               ),
               <.div(
@@ -87,10 +87,10 @@ object LabelsComponent {
               <.div(
                 ^.cls := "column docs-icon-set-column",
                 Label(as = "a", image = true).apply(<.img(
-                                                ^.src := WebpackResources.AdaAvatar.resource
-                                              ),
-                                              "Ade",
-                                              IconDelete
+                                                      ^.src := WebpackResources.AdaAvatar.resource
+                                                    ),
+                                                    "Ade",
+                                                    IconDelete
                 )
               )
             ).toTagMod
