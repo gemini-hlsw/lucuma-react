@@ -63,6 +63,9 @@ lazy val demoSettings       = Seq(
           |    mode == "production"
           |      ? path.resolve(__dirname, "$prodTarget/")
           |      : path.resolve(__dirname, "$devTarget/");
+          |  const webapp = path.resolve(__dirname, "src/main/webapp/");
+          |  const themeConfig = path.resolve(webapp, "theme/theme.config");
+          |  const themeSite = path.resolve(webapp, "theme/site");
           |  return {
           |    root: "${baseDirectory.value.getName}/src/main/webapp",
           |    resolve: {
@@ -70,6 +73,14 @@ lazy val demoSettings       = Seq(
           |        {
           |          find: "@sjs",
           |          replacement: sjs,
+          |        },
+          |        {
+          |          find: "../../theme.config",
+          |          replacement: themeConfig,
+          |        },
+          |        {
+          |          find: "theme/site",
+          |          replacement: themeSite,
           |        },
           |      ],
           |    },

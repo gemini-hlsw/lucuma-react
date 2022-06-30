@@ -5,13 +5,13 @@ import path from "path";
 export default ({ command, mode }) => {
   const sjs =
     mode == "production"
-      ? path.resolve(__dirname, "target/scala-3.1.3/highchartsdemo-opt/")
-      : path.resolve(__dirname, "target/scala-3.1.3/highchartsdemo-fastopt/");
+      ? path.resolve(__dirname, "target/scala-3.1.3/semanticuidemo-opt/")
+      : path.resolve(__dirname, "target/scala-3.1.3/semanticuidemo-fastopt/");
   const webapp = path.resolve(__dirname, "src/main/webapp/");
   const themeConfig = path.resolve(webapp, "theme/theme.config");
   const themeSite = path.resolve(webapp, "theme/site");
   return {
-    root: "highcharts-demo/src/main/webapp",
+    root: "semantic-ui-demo/src/main/webapp",
     resolve: {
       alias: [
         {
