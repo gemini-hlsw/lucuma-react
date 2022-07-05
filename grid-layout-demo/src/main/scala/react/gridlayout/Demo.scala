@@ -21,8 +21,6 @@ object RGLDemo {
     .useCallback((x: Int, y: Int) => Callback.log(s"$x $y"))
     .useResizeDetectorBy((_, f) => UseResizeDetectorProps(onResize = f.value))
     .renderWithReuse { (_, _, useResize) =>
-      org.scalajs.dom.window.console.log(useResize.width)
-
       val layout                                           = Layout(
         List(
           LayoutItem(x = 0, y = 0, w = 6, h = 2, i = "a", static = true),
@@ -37,12 +35,19 @@ object RGLDemo {
           (BreakpointName.sm, (768, 8, layout)),
           (BreakpointName.xs, (480, 6, layout))
         )
+
+      println(
+        getBreakpointFromWidth(layouts.map { case (x, (w, _, _)) => (x -> w) },
+                               useResize.width.orEmpty
+        )
+      )
+
       <.div(
         ^.width  := "80%",
         ^.border := "red solid 1px",
         <.div(
           ResponsiveReactGridLayout(
-            useResize.width,
+            useResize.width.orEmpty.toDouble,
             // onLayoutChange = (_, b) => Callback.log(pprint.apply(b).toString),
             margin = (10, 10),
             containerPadding = (10, 10),
