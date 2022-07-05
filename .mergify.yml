@@ -121,6 +121,14 @@ pull_request_rules:
       add:
       - highcharts-demo
       remove: []
+- name: Label resize-detector PRs
+  conditions:
+  - files~=^resize-detector/
+  actions:
+    label:
+      add:
+      - resize-detector
+      remove: []
 - name: Label rootBeautifulDnd PRs
   conditions:
   - files~=^rootBeautifulDnd/
