@@ -139,7 +139,8 @@ lazy val root = project
     treeDemo,
     semanticUI,
     semanticUIDemo,
-    resizeDetector
+    resizeDetector,
+    fontAwesome
   )
 
 lazy val rootCore         = project.aggregate(common, cats, test).enablePlugins(NoPublishPlugin)
@@ -175,7 +176,8 @@ val projects = List(
   rootDatepicker,
   rootBeautifulDnd,
   rootTree,
-  rootSemanticUI
+  rootSemanticUI,
+  fontAwesome
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
 ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
@@ -420,5 +422,14 @@ lazy val resizeDetector = project
   .dependsOn(common)
   .settings(
     name := "lucuma-react-resize-detector",
+    facadeSettings
+  )
+
+lazy val fontAwesome = project
+  .in(file("font-awesome"))
+  .enablePlugins(ScalaJSPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-font-awesome",
     facadeSettings
   )
