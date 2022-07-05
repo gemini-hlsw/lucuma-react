@@ -24,7 +24,7 @@ package implicits {
     implicit val jsObjEq: Eq[js.Object] = Eq.instance { (a, b) =>
       val aDict = a.asInstanceOf[js.Dictionary[js.Any]]
       val bDict = b.asInstanceOf[js.Dictionary[js.Any]]
-      (aDict.keySet == bDict.keySet) &&
+      aDict.keySet == bDict.keySet &&
       aDict.keySet.forall(key => aDict(key) === bDict(key))
     }
 
@@ -46,7 +46,7 @@ package implicits {
               b.asInstanceOf[js.Dynamic].constructor == js.constructorOf[js.Object] =>
           val aDict = a.asInstanceOf[js.Dictionary[js.Any]]
           val bDict = b.asInstanceOf[js.Dictionary[js.Any]]
-          (aDict.keySet == bDict.keySet) &&
+          aDict.keySet == bDict.keySet &&
           aDict.keySet.forall(key => aDict(key) === bDict(key))
 
         case _ =>
@@ -70,7 +70,8 @@ package implicits {
         Style(a.styles ++ b.styles)
     }
 
-    implicit val cssEq: Eq[Css]     = Eq.by(_.htmlClass)
+    implicit val cssOrder: Order[Css] = Order.by(_.htmlClass)
+
     implicit val cssShow: Show[Css] =
       Show.show(_.htmlClass)
 
