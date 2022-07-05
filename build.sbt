@@ -138,12 +138,13 @@ lazy val root = project
     tree,
     treeDemo,
     semanticUI,
-    semanticUIDemo
+    semanticUIDemo,
+    resizeDetector
   )
 
 lazy val rootCore         = project.aggregate(common, cats, test).enablePlugins(NoPublishPlugin)
 lazy val rootGridLayout   =
-  project.aggregate(gridLayout, gridLayoutDemo).enablePlugins(NoPublishPlugin)
+  project.aggregate(resizeDetector, gridLayout, gridLayoutDemo).enablePlugins(NoPublishPlugin)
 lazy val rootDraggable    =
   project.aggregate(draggable).enablePlugins(NoPublishPlugin)
 lazy val rootClipboard    =
@@ -234,7 +235,7 @@ lazy val gridLayout = project
 lazy val gridLayoutDemo = project
   .in(file("grid-layout-demo"))
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
-  .dependsOn(gridLayout)
+  .dependsOn(gridLayout, resizeDetector)
   .settings(
     libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.3",
     demoSettings
@@ -411,4 +412,13 @@ lazy val semanticUIDemo = project
   .settings(
     Compile / scalacOptions += "-language:implicitConversions",
     demoSettings
+  )
+
+lazy val resizeDetector = project
+  .in(file("resize-detector"))
+  .enablePlugins(ScalaJSPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-resize-detector",
+    facadeSettings
   )
