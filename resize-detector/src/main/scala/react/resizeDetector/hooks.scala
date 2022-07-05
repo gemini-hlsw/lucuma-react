@@ -108,7 +108,7 @@ object HooksApiExt {
   object mod {
     @JSImport("react-resize-detector", JSImport.Namespace)
     @js.native
-    val base: js.Any = js.native
+    private object base extends js.Object
 
     @scala.inline
     def useResizeDetector(): UseResizeDetectorReturn                              = UseResizeDetectorReturn.fromJS(
