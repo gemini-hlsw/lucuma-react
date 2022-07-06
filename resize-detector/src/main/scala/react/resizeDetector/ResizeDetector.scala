@@ -5,7 +5,6 @@ package react.resizeDetector
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import japgolly.scalajs.react.{facade => Raw}
 import org.scalajs.dom.html
 import react.common._
 
@@ -21,20 +20,21 @@ object ResizeDetector {
   private object RawComponent extends js.Object
 
   @js.native
-  protected trait DimensionsJS extends js.Object {
+  trait DimensionsJS extends js.Object {
     val height: js.UndefOr[Double]
     val width: js.UndefOr[Double]
   }
 
   @js.native
-  protected trait RenderPropsJS extends DimensionsJS {
-    val targetRef: Raw.React.RefFn[html.Element]
+  trait RenderPropsJS extends DimensionsJS {
+    val targetRef: facade.React.RefFn[html.Element]
   }
 
-  trait Dimensions  {
+  trait Dimensions {
     val height: Option[Int]
     val width: Option[Int]
   }
+
   object Dimensions {
     implicit val dimensionsReuse: Reusability[Dimensions] = Reusability.by(d => (d.height, d.width))
   }
@@ -44,14 +44,14 @@ object ResizeDetector {
   object RenderProps {
     def apply(renderPropsJS: RenderPropsJS): RenderProps =
       RenderProps(
-        renderPropsJS.height.toOption.map(_.asInstanceOf[Int]),
-        renderPropsJS.width.toOption.map(_.asInstanceOf[Int]),
+        renderPropsJS.height.toOption.map(_.toInt),
+        renderPropsJS.width.toOption.map(_.toInt),
         TagMod.fn(_.addRefFn(renderPropsJS.targetRef))
       )
 
   }
 
-  protected type RenderJS = js.Function1[RenderPropsJS, Raw.React.Node | Null]
+  protected type RenderJS = js.Function1[RenderPropsJS, facade.React.Node | Null]
 
   type Render = RenderProps => VdomNode
 
@@ -137,13 +137,8 @@ object ResizeDetector {
       val p = (new js.Object).asInstanceOf[Props]
       p.children = renderPropsJS => children(RenderProps(renderPropsJS)).rawNode
       onResize.foreach(v =>
-        p.onResize = { case (x: Double, y: Double) =>
-          v(x.toInt, y.toInt)
-        }: js.Function2[
-          Double,
-          Double,
-          Unit
-        ]
+        p.onResize =
+          ((x: Double, y: Double) => v(x.toInt, y.toInt)): js.Function2[Double, Double, Unit]
       )
       handleHeight.foreach(v => p.handleHeight = v)
       handleWidth.foreach(v => p.handleWidth = v)

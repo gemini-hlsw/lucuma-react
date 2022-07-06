@@ -4,59 +4,32 @@
 package react.resizeDetector
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.{facade => Raw}
 import org.scalajs.dom.html
 import react.common._
 import react.resizeDetector.ResizeDetector._
 
-import scala.language.implicitConversions
+import scala.annotation.nowarn
 import scala.scalajs.js
 import scala.scalajs.js.annotation._
 import scala.scalajs.js.|
 
 @js.native
-protected trait ReactResizeDetectorDimensions extends js.Object {
-  val height: js.UndefOr[Double]
-  val width: js.UndefOr[Double]
+trait UseResizeDetectorReturnJS extends DimensionsJS {
+  val ref: facade.React.RefFn[html.Element]
 }
 
-@js.native
-trait UseResizeDetectorReturnJS extends ReactResizeDetectorDimensions {
-  val ref: Raw.React.RefFn[html.Element]
-}
-
-sealed trait UseResizeDetectorReturn {
-  val height: Int
-  val width: Int
+sealed trait UseResizeDetectorReturn extends Dimensions {
   val ref: Ref.Simple[html.Element]
+
+  def isReady: Boolean = width.isDefined && height.isDefined
+
+  override def toString(): String = s"Resize($width, $height)"
 }
 
 object UseResizeDetectorReturn {
   def fromJS(r: UseResizeDetectorReturnJS): UseResizeDetectorReturn = new UseResizeDetectorReturn {
-    val height = r.height.toOption match {
-      case Some(s) =>
-        (s: Any) match {
-          case s: Byte   => s.toInt
-          case s: Short  => s.toInt
-          case s: Int    => s
-          case s: Float  => s.toInt
-          case s: Double => s.toInt
-          case _         => 1
-        }
-      case _       => 1
-    }
-    val width  = r.width.toOption match {
-      case Some(s) =>
-        (s: Any) match {
-          case s: Byte   => s.toInt
-          case s: Short  => s.toInt
-          case s: Int    => s
-          case s: Float  => s.toInt
-          case s: Double => s.toInt
-          case _         => 1
-        }
-      case _       => 1
-    }
+    val height = r.height.toOption.map(_.toInt)
+    val width  = r.width.toOption.map(_.toInt)
     val ref    =
       Ref.fromJs(r.ref.asInstanceOf[facade.React.RefHandle[html.Element | Null]])
   }
@@ -67,7 +40,7 @@ object UseResizeDetectorReturn {
 
 @js.native
 protected trait UseResizeDetectorProps extends Props {
-  var targetRef: Raw.React.RefFn[html.Element]
+  var targetRef: facade.React.RefFn[html.Element]
 }
 
 object UseResizeDetectorProps {
@@ -86,11 +59,7 @@ object UseResizeDetectorProps {
     onResize.foreach(v =>
       p.onResize = { case (x: Double, y: Double) =>
         v(x.toInt, y.toInt).runNow()
-      }: js.Function2[
-        Double,
-        Double,
-        Unit
-      ]
+      }: js.Function2[Double, Double, Unit]
     )
     handleHeight.foreach(v => p.handleHeight = v)
     handleWidth.foreach(v => p.handleWidth = v)
@@ -106,17 +75,19 @@ object UseResizeDetectorProps {
 object HooksApiExt {
 
   object mod {
-    @JSImport("react-resize-detector", JSImport.Namespace)
     @js.native
+    @JSImport("react-resize-detector", JSImport.Namespace)
+    @nowarn
     private object base extends js.Object
 
     @scala.inline
-    def useResizeDetector(): UseResizeDetectorReturn                              = UseResizeDetectorReturn.fromJS(
+    def useResizeDetector(): UseResizeDetectorReturn = UseResizeDetectorReturn.fromJS(
       base
         .asInstanceOf[js.Dynamic]
         .applyDynamic("useResizeDetector")()
         .asInstanceOf[UseResizeDetectorReturnJS]
     )
+
     @scala.inline
     def useResizeDetector(props: UseResizeDetectorProps): UseResizeDetectorReturn =
       UseResizeDetectorReturn.fromJS(
@@ -135,15 +106,15 @@ object HooksApiExt {
 
   sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]) {
 
-    final def useResizeDetector(pos: UseResizeDetectorProps)(implicit
-      step:                          Step
-    ): step.Next[UseResizeDetectorReturn] =
-      useResizeDetectorBy(_ => pos)
-
-    final def useResizeDetectorBy(pos: Ctx => UseResizeDetectorProps)(implicit
+    final def useResizeDetector(props: UseResizeDetectorProps = UseResizeDetectorProps())(implicit
       step:                            Step
     ): step.Next[UseResizeDetectorReturn] =
-      api.customBy(ctx => hook(pos(ctx)))
+      useResizeDetectorBy(_ => props)
+
+    final def useResizeDetectorBy(props: Ctx => UseResizeDetectorProps)(implicit
+      step:                              Step
+    ): step.Next[UseResizeDetectorReturn] =
+      api.customBy(ctx => hook(props(ctx)))
   }
 
   final class Secondary[Ctx, CtxFn[_], Step <: HooksApi.SubsequentStep[Ctx, CtxFn]](

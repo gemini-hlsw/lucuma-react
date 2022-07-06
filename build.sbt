@@ -422,6 +422,7 @@ lazy val resizeDetector = project
   .dependsOn(common)
   .settings(
     name := "lucuma-react-resize-detector",
+    Compile / scalacOptions += "-language:implicitConversions",
     facadeSettings
   )
 

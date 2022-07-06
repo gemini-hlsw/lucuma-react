@@ -17,7 +17,7 @@ import scala.scalajs.js
 import js.annotation.JSImport
 
 final case class ResponsiveReactGridLayout(
-  width:                  Int,
+  width:                  Double,
   layouts:                Map[BreakpointName, (Int, Int, Layout)],
   className:              js.UndefOr[String] = js.undefined,
   style:                  js.UndefOr[Style] = js.undefined,
@@ -128,7 +128,7 @@ object ResponsiveReactGridLayout {
     )
 
   def rawprops(
-    width:              Int,
+    width:              Double,
     layouts:            Map[BreakpointName, (Int, Int, Layout)],
     className:          js.UndefOr[String] = js.undefined,
     style:              js.UndefOr[Style] = js.undefined,
@@ -233,7 +233,7 @@ object ResponsiveReactGridLayout {
   val component = JsComponent[ResponsiveReactGridLayoutProps, Children.Varargs, Null](RawComponent)
 
   def apply(
-    width:   Int,
+    width:   Double,
     layouts: Map[BreakpointName, (Int, Int, Layout)],
     content: TagMod*
   ): ResponsiveReactGridLayout =

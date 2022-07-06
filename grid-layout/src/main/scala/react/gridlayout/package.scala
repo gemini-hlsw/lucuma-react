@@ -11,8 +11,10 @@ import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.html.{Element => HTMLElement}
 import react.common._
 
+import scala.annotation.nowarn
 import scala.scalajs.js
 
+import js.annotation.JSImport
 import js.JSConverters._
 
 package object gridlayout {
@@ -28,10 +30,33 @@ package object gridlayout {
     (Layout, LayoutItem, LayoutItem, Option[LayoutItem], MouseEvent, HTMLElement) => Callback
   type DropCallback       =
     (Layout, LayoutItem, Event) => Callback
+
+  def getBreakpointFromWidth(breakpoints: Map[BreakpointName, Int], width: Int): BreakpointName = {
+    val currentBreakpoints: scala.collection.mutable.Map[String, Int] =
+      scala.collection.mutable.Map.from(
+        breakpoints
+          .map { case (x, w) => x.name -> w }
+      )
+    BreakpointName(
+      ResponsiveUtils.getBreakpointFromWidth(currentBreakpoints.toJSDictionary, width.toDouble)
+    )
+  }
+
 }
 
 package gridlayout {
-  trait BreakpointName    {
+
+  /**
+   * Facade for ResponsiveUtils
+   */
+  @js.native
+  @JSImport("react-grid-layout", "Responsive.utils")
+  object ResponsiveUtils extends js.Object {
+    @nowarn
+    def getBreakpointFromWidth(breakpoints: js.Dictionary[Int], width: Double): String = js.native
+  }
+
+  trait BreakpointName {
     val name: String
   }
 

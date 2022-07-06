@@ -129,8 +129,8 @@ object BaseProps {
     p.draggableHandle = draggableHandle
     p.verticalCompact = verticalCompact
     p.compactType = compactType.toJs
-    p.margin = margin.map(x => js.Array(x._1, x._2))
-    p.containerPadding = containerPadding.map(x => js.Array(x._1, x._2))
+    p.margin = margin.map(x => js.Array(x._1.toDouble, x._2.toDouble))
+    p.containerPadding = containerPadding.map(x => js.Array(x._1.toDouble, x._2.toDouble))
     p.rowHeight = rowHeight
     p.maxRows = maxRows
     p.isDraggable = isDraggable
