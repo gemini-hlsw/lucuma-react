@@ -23,6 +23,7 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootBeautifulDnd)
   - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootTree)
   - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootSemanticUI)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, fontAwesome)
   actions:
     merge: {}
 - name: Label beautiful-dnd PRs
@@ -89,6 +90,14 @@ pull_request_rules:
       add:
       - draggable
       remove: []
+- name: Label font-awesome PRs
+  conditions:
+  - files~=^font-awesome/
+  actions:
+    label:
+      add:
+      - font-awesome
+      remove: []
 - name: Label grid-layout PRs
   conditions:
   - files~=^grid-layout/
@@ -120,6 +129,14 @@ pull_request_rules:
     label:
       add:
       - highcharts-demo
+      remove: []
+- name: Label resize-detector PRs
+  conditions:
+  - files~=^resize-detector/
+  actions:
+    label:
+      add:
+      - resize-detector
       remove: []
 - name: Label rootBeautifulDnd PRs
   conditions:

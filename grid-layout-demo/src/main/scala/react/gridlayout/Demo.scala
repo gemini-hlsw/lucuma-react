@@ -3,6 +3,7 @@
 
 package react.gridlayout.demo
 
+import cats.syntax.all._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom

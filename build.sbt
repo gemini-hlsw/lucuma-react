@@ -138,12 +138,14 @@ lazy val root = project
     tree,
     treeDemo,
     semanticUI,
-    semanticUIDemo
+    semanticUIDemo,
+    resizeDetector,
+    fontAwesome
   )
 
 lazy val rootCore         = project.aggregate(common, cats, test).enablePlugins(NoPublishPlugin)
 lazy val rootGridLayout   =
-  project.aggregate(gridLayout, gridLayoutDemo).enablePlugins(NoPublishPlugin)
+  project.aggregate(resizeDetector, gridLayout, gridLayoutDemo).enablePlugins(NoPublishPlugin)
 lazy val rootDraggable    =
   project.aggregate(draggable).enablePlugins(NoPublishPlugin)
 lazy val rootClipboard    =
@@ -174,7 +176,8 @@ val projects = List(
   rootDatepicker,
   rootBeautifulDnd,
   rootTree,
-  rootSemanticUI
+  rootSemanticUI,
+  fontAwesome
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
 ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
@@ -234,7 +237,7 @@ lazy val gridLayout = project
 lazy val gridLayoutDemo = project
   .in(file("grid-layout-demo"))
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
-  .dependsOn(gridLayout)
+  .dependsOn(gridLayout, resizeDetector)
   .settings(
     libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.7.3",
     demoSettings
@@ -411,4 +414,23 @@ lazy val semanticUIDemo = project
   .settings(
     Compile / scalacOptions += "-language:implicitConversions",
     demoSettings
+  )
+
+lazy val resizeDetector = project
+  .in(file("resize-detector"))
+  .enablePlugins(ScalaJSPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-resize-detector",
+    Compile / scalacOptions += "-language:implicitConversions",
+    facadeSettings
+  )
+
+lazy val fontAwesome = project
+  .in(file("font-awesome"))
+  .enablePlugins(ScalaJSPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-font-awesome",
+    facadeSettings
   )
