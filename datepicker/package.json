@@ -3,6 +3,6 @@
     "@types/react-datepicker": "^4.3.4"
   },
   "devDependencies": {
-    "jsdom": "9.9.0"
+    "jsdom": "20.0.0"
   }
 }
