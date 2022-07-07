@@ -8,6 +8,7 @@ val catsV            = "2.8.0"
 val munitV           = "1.0.0-M6"
 val disciplineMunitV = "2.0.0-M3"
 val utestV           = "0.8.0"
+val jsdomV           = "20.0.0"
 
 ThisBuild / crossScalaVersions := Seq("3.1.3")
 
@@ -24,6 +25,7 @@ lazy val facadeSettings = Seq(
     baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
   ),
   Test / requireJsDomEnv   := true,
+  installJsdom / version   := jsdomV,
   testFrameworks += new TestFramework("utest.runner.Framework")
 )
 
@@ -213,6 +215,7 @@ lazy val test = project
     name                     := "lucuma-react-test",
     yarnSettings,
     Test / requireJsDomEnv   := true,
+    installJsdom / version   := jsdomV,
     libraryDependencies ++= Seq(
       "org.scalameta"                     %%% "munit"            % munitV,
       "org.typelevel"                     %%% "discipline-munit" % disciplineMunitV % Test,
