@@ -9,7 +9,7 @@ val reactHotkeys = "2.0.0"
 
 val scalaJsReact       = "2.1.1"
 val scalaJSReactCommon = "0.17.0"
-val utest              = "0.7.11"
+val utest              = "0.8.0"
 
 addCommandAlias(
   "restartWDS",
