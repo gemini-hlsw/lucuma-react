@@ -4178,10 +4178,10 @@ react-table@^7.8.0:
   resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.8.0.tgz#07858c01c1718c09f7f1aed7034fcfd7bda907d2"
   integrity sha512-hNaz4ygkZO4bESeFfnfOft73iBUj8K5oKi1EcSHPAibEydfsX2MyU6Z8KCr3mv3C9Kqqh71U+DhZkFvibbnPbA==
 
-react-virtuoso@^2.8.3:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-2.8.4.tgz#5d2c92c0159e963d70430f188344c7431cb094cb"
-  integrity sha512-Lj2Ee2UOEx7lVFlT+i50GlxDlHpLrZioF52yN3Pk9G72l4oy+izFFzqdb4ySDZOQcIO/vUB8bIKcxI6IPGDhdg==
+react-virtuoso@^2.16.1:
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-2.16.1.tgz#0242ca410c4fb6be802e054b7ebd3f799d42efc5"
+  integrity sha512-WpcHZedUe00XYSQ56KcdYmWy/oaiPPuweTYemC9gl8CbjchLTKqLPCJa51Yv32U9oj1XPAEMfxuaXM7NTtjOiw==
   dependencies:
     "@virtuoso.dev/react-urx" "^0.2.12"
     "@virtuoso.dev/urx" "^0.2.12"
