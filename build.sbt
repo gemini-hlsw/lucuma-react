@@ -32,7 +32,7 @@ lazy val facadeSettings = Seq(
 lazy val yarnSettings = Seq(
   useYarn := true,
   yarnExtraArgs ++= {
-    if (githubIsWorkflowBuild.value)
+    if (githubIsWorkflowBuild.value && !githubWorkflowName.?.value.contains("Update lockfiles"))
       List("--frozen-lockfile")
     else Nil
   }
