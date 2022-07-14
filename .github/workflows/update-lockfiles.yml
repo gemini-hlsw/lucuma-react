@@ -21,9 +21,18 @@ jobs:
       - name: Update sbt-managed lockfiles
         run: sbt npmInstallDependencies
 
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: 206840
+          private_key: ${{ secrets.LUCUMA_STEWARD_PRIVATE_KEY }}
+
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
+          token: ${{ steps.generate-token.outputs.token }}
           commit_message: Update lockfiles
           commit_user_name: lucuma-steward[bot]
           commit_user_email: 106720676+lucuma-steward[bot]@users.noreply.github.com
+          commit_author: '"lucuma-steward[bot]" <106720676+lucuma-steward[bot]@users.noreply.github.com>'
