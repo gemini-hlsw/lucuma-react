@@ -18,7 +18,7 @@
     "react-table": "^7.8.0",
     "react-virtuoso": "^2.16.4",
     "semantic-ui-react": "^2.0.3",
-    "vite": "^2.9.13"
+    "vite": "^3.0.2"
   },
   "dependencies": {
     "typescript": "4.7"
