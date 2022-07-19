@@ -41,6 +41,9 @@ package semanticui {
     import elements.placeholder.{PlaceholderLine => SUIPlaceholderLine}
     import elements.placeholder.{PlaceholderHeader => SUIPlaceholderHeader}
 
+    implicit def tagOf2AsC[T, N <: TopNode](tagOf: T)(implicit ev: T => TagOf[N]): js.UndefOr[AsC] =
+      As.AsTag(ev(tagOf))
+
     protected def removeAs[P <: js.Object](p: P): P =
       filterProps(p, "as")
 
@@ -413,9 +416,6 @@ package object semanticui {
   type AsObj = js.Object
   type AsT   = String | AsFn | AsObj
   type AsC   = String | As
-
-  implicit def tagOf2AsC[T, N <: TopNode](tagOf: T)(implicit ev: T => TagOf[N]): js.UndefOr[AsC] =
-    As.AsTag(ev(tagOf))
 
   implicit class AsCUndef[T](val c: js.UndefOr[AsC]) extends AnyVal {
     def toJs: js.UndefOr[AsT] =

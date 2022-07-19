@@ -68,29 +68,25 @@ object LabelsComponent {
             List(
               <.div(
                 ^.cls := "column docs-icon-set-column",
-                Label(as = "a", image = true).apply(<.img(
-                                                      ^.src := WebpackResources.AdaAvatar.resource
-                                                    ),
-                                                    "Ade"
+                Label(as = <.a, image = true)(
+                  <.img(^.src := WebpackResources.AdaAvatar.resource),
+                  "Ade"
                 )
               ),
               <.div(
                 ^.cls := "column docs-icon-set-column",
-                Label(as = "a", image = true, color = Blue).apply(
-                  <.img(
-                    ^.src := WebpackResources.AdaAvatar.resource
-                  ),
+                Label(as = "a", image = true, color = Blue)(
+                  <.img(^.src := WebpackResources.AdaAvatar.resource),
                   "Ade",
                   LabelDetail("Friend")
                 )
               ),
               <.div(
                 ^.cls := "column docs-icon-set-column",
-                Label(as = "a", image = true).apply(<.img(
-                                                      ^.src := WebpackResources.AdaAvatar.resource
-                                                    ),
-                                                    "Ade",
-                                                    IconDelete
+                Label(as = "a", image = true)(
+                  <.img(^.src := WebpackResources.AdaAvatar.resource),
+                  "Ade",
+                  IconDelete
                 )
               )
             ).toTagMod

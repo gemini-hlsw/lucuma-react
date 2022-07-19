@@ -19,13 +19,13 @@ import js.annotation._
 import js.|
 
 final case class Header(
+  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
   as:                     js.UndefOr[AsC] = js.undefined,
   attached:               js.UndefOr[HeaderAttached] = js.undefined,
   block:                  js.UndefOr[Boolean] = js.undefined,
   className:              js.UndefOr[String] = js.undefined,
   clazz:                  js.UndefOr[Css] = js.undefined,
   color:                  js.UndefOr[SemanticColor] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
   disabled:               js.UndefOr[Boolean] = js.undefined,
   dividing:               js.UndefOr[Boolean] = js.undefined,
   floated:                js.UndefOr[SemanticFloat] = js.undefined,
@@ -173,7 +173,4 @@ object Header {
 
   private val component =
     JsFnComponent[HeaderProps, Children.Varargs](RawComponent)
-
-  def apply(modifiers: TagMod*): Header =
-    Header(modifiers = modifiers)
 }
