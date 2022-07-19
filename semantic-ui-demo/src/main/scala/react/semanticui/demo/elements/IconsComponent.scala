@@ -27,7 +27,7 @@ object IconsComponent {
   val IconAdd                        = Icon(name = "add")
   val IconCircleThin                 = Icon(name = "circle thin")
   val IconUser                       = Icon(name = "user")
-  val AllSizes: List[SemanticSize]   = List(Mini, Tiny, Small, Medium, Large, Big, Huge, Massive)
+  val AllSizes: List[SemanticSize]   = List(Mini, Tiny, Small, Large, Big, Huge, Massive)
   val AllColors: List[SemanticColor] =
     List(Red, Orange, Yellow, Olive, Green, Teal, Blue, Violet, Purple, Pink, Brown, Grey, Black)
   private val sampleIcons            = Map("mail outline" -> IconMailOutline, "search" -> IconSearch)

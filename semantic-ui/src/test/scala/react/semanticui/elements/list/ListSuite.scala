@@ -9,7 +9,6 @@ import react.common.GenericComponentPACOps
 import react.common.GenericComponentPAOps
 import react.common.GenericFnComponentPACOps
 import react.common.syntax.vdom._
-import react.semanticui.tagOf2AsC
 
 class ListSuite extends munit.FunSuite {
   test("render") {

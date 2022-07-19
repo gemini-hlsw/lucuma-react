@@ -6,7 +6,6 @@ package react.semanticui.collections.menu
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.syntax.vdom._
-import react.semanticui.tagOf2AsC
 
 class MenuHeaderSuite extends munit.FunSuite {
   test("render") {

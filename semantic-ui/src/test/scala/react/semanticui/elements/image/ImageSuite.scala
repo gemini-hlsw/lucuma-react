@@ -8,7 +8,6 @@ import japgolly.scalajs.react.vdom.html_<^._
 import react.common.GenericFnComponentPACOps
 import react.common.syntax.vdom._
 import react.semanticui.elements.icon._
-import react.semanticui.tagOf2AsC
 
 class ImageSuite extends munit.FunSuite {
   test("render") {

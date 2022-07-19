@@ -16,10 +16,10 @@ import scala.scalajs.js
 import js.annotation._
 
 final case class LabelDetail(
+  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
   as:                     js.UndefOr[AsC] = js.undefined,
   className:              js.UndefOr[String] = js.undefined,
   clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[LabelDetail.LabelDetailProps, LabelDetail] {
   override protected def cprops                     = LabelDetail.props(this)
@@ -45,9 +45,7 @@ object LabelDetail {
     var content: js.UndefOr[SemanticShorthandContent] = js.native
   }
 
-  def props(
-    q: LabelDetail
-  ): LabelDetailProps = {
+  def props(q: LabelDetail): LabelDetailProps = {
     val p = q.as.toJsObject[LabelDetailProps]
     q.as.toJs.foreachUnchecked(v => p.as = v)
     (q.className, q.clazz).toJs.foreach(v => p.className = v)
@@ -57,7 +55,4 @@ object LabelDetail {
 
   private val component =
     JsComponent[LabelDetailProps, Children.Varargs, Null](RawComponent)
-
-  def apply(modifiers: TagMod*): LabelDetail =
-    new LabelDetail(modifiers = modifiers)
 }
