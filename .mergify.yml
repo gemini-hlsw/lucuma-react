@@ -25,6 +25,7 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootSemanticUI)
   - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, fontAwesome)
   - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootHotkeys)
+  - status-success=Build and Test (ubuntu-latest, 3.1.3, temurin@17, rootResizable)
   actions:
     merge: {}
 - name: Label beautiful-dnd PRs
@@ -147,6 +148,22 @@ pull_request_rules:
       add:
       - hotkeys-demo
       remove: []
+- name: Label resizable PRs
+  conditions:
+  - files~=^resizable/
+  actions:
+    label:
+      add:
+      - resizable
+      remove: []
+- name: Label resizable-demo PRs
+  conditions:
+  - files~=^resizable-demo/
+  actions:
+    label:
+      add:
+      - resizable-demo
+      remove: []
 - name: Label resize-detector PRs
   conditions:
   - files~=^resize-detector/
@@ -218,6 +235,14 @@ pull_request_rules:
     label:
       add:
       - rootHotkeys
+      remove: []
+- name: Label rootResizable PRs
+  conditions:
+  - files~=^rootResizable/
+  actions:
+    label:
+      add:
+      - rootResizable
       remove: []
 - name: Label rootSemanticUI PRs
   conditions:

@@ -1,12 +1,16 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.draggable.demo
 
-import scala.scalajs.js
-import scala.scalajs.js.annotation._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
-import react.resizable._
 import react.common._
+import react.resizable._
+
+import scala.scalajs.js
+import scala.scalajs.js.annotation._
 
 @JSExportTopLevel("Demo")
 object Demo {

@@ -1,9 +1,8 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.resizable
 
-import scala.scalajs.js
-import scala.scalajs.js.|
-import scala.scalajs.js.JSConverters._
-import js.annotation.JSImport
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.Children
 import japgolly.scalajs.react.JsComponent
@@ -12,8 +11,14 @@ import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common._
-import react.draggable.Draggable.{ Props => DraggableProps }
 import react.draggable.Axis
+import react.draggable.Draggable.{Props => DraggableProps}
+
+import scala.scalajs.js
+import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.|
+
+import js.annotation.JSImport
 
 final case class Resizable(
   axis:                   js.UndefOr[Axis] = js.undefined,
@@ -170,7 +175,7 @@ object Resizable {
     width:           Double
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
-    axis.foreach(v => p.axis = v.toJs)
+    axis.foreach((v: Axis) => p.axis = syntaxEnumValue(v).toJs)
     (className, clazz).toJs.foreach(v => p.className = v)
     p.children = content.rawNode
     draggableOpts.foreach(v => p.draggableOpts = v)
@@ -190,7 +195,7 @@ object Resizable {
     onResize.foreach(cb =>
       p.onResize = ((e: ReactEvent, d: ResizeCallbackData) => cb(e, d).runNow()): RawOnResize
     )
-    resizeHandles.foreach(v => p.resizeHandles = v.map(_.toJs).toJSArray)
+    resizeHandles.foreach(v => p.resizeHandles = v.map(syntaxEnumValue(_).toJs).toJSArray)
     transformScale.foreach(v => p.transformScale = v)
     p.width = width
     p
