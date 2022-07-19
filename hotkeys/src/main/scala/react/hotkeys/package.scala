@@ -1,9 +1,13 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react
+
+import japgolly.scalajs.react._
 
 import scalajs.js
 import js.|
 import js.JSConverters._
-import japgolly.scalajs.react._
 
 package hotkeys {
   sealed abstract class LogLevel(val name: String)
@@ -22,16 +26,16 @@ package hotkeys {
   final case object KeyUp    extends KeyInstance("keyup")
 
   @js.native
-  trait KeyEvent extends js.Object {
+  trait KeyEvent    extends js.Object {
     val sequence: js.UndefOr[String] = js.native
     val action: js.UndefOr[String]   = js.native
   }
-  object KeyEvent    {
+  object KeyEvent {
     def apply(sequence: String, instance: KeyInstance): KeyEvent =
       js.Dynamic.literal(sequence = sequence, action = instance.action).asInstanceOf[KeyEvent]
   }
   @js.native
-  trait KeySequence extends KeyEvent {
+  trait KeySequence extends KeyEvent  {
     val name: js.UndefOr[String]                = js.native
     val sequences: js.UndefOr[js.Array[KeySeq]] = js.native
   }

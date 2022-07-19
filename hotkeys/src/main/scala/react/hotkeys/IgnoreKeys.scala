@@ -1,10 +1,14 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.hotkeys
+
+import japgolly.scalajs.react._
+import react.common._
 
 import scalajs.js
 import js.|
 import js.annotation.JSImport
-import japgolly.scalajs.react._
-import react.common._
 
 // This is not working if "only" or "except" are specified, resulting in a runtime exception.
 // Haven't figured out the internals in order to pass properties another way.
@@ -31,8 +35,8 @@ object IgnoreKeys {
     q: IgnoreKeys
   ): IgnoreKeysProps = {
     val p = (new js.Object).asInstanceOf[IgnoreKeysProps]
-    q.only.foreach(v => p.only = v)
-    q.except.foreach(v => p.except = v)
+    q.only.foreach((v: String | js.Array[String]) => p.only = v)
+    q.except.foreach((v: String | js.Array[String]) => p.except = v)
     p
   }
 

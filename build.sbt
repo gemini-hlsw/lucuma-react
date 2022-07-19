@@ -143,7 +143,9 @@ lazy val root = project
     semanticUI,
     semanticUIDemo,
     resizeDetector,
-    fontAwesome
+    fontAwesome,
+    hotkeys,
+    hotkeysDemo
   )
 
 lazy val rootCore         = project.aggregate(common, cats, test).enablePlugins(NoPublishPlugin)
@@ -167,6 +169,8 @@ lazy val rootTree         =
   project.aggregate(tree, treeDemo).enablePlugins(NoPublishPlugin)
 lazy val rootSemanticUI   =
   project.aggregate(semanticUI, semanticUIDemo).enablePlugins(NoPublishPlugin)
+lazy val rootHotkeys      =
+  project.aggregate(hotkeys, hotkeysDemo).enablePlugins(NoPublishPlugin)
 
 val projects = List(
   rootCore,
@@ -180,7 +184,8 @@ val projects = List(
   rootBeautifulDnd,
   rootTree,
   rootSemanticUI,
-  fontAwesome
+  fontAwesome,
+  rootHotkeys
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
 ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
@@ -437,4 +442,24 @@ lazy val fontAwesome = project
   .settings(
     name := "lucuma-react-font-awesome",
     facadeSettings
+  )
+
+lazy val hotkeys = project
+  .in(file("hotkeys"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-hotkeys",
+    Compile / scalacOptions += "-language:implicitConversions",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val hotkeysDemo = project
+  .in(file("hotkeys-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(hotkeys)
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
+    demoSettings
   )

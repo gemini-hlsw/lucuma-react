@@ -1,21 +1,28 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.hotkeys.demo
 
-import org.scalajs.dom
-import scalajs.js
-import js.annotation._
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom._
 import japgolly.scalajs.react.vdom.html_<^._
+import org.scalajs.dom
+import org.scalajs.dom.html
+import react.common.GenericComponentPC2VdomNode
+import react.common.GenericComponentPCOps
 import react.hotkeys.HotKeys
 import react.hotkeys._
-import org.scalajs.dom.html
 
-@JSExportTopLevel("DemoMain")
+import scalajs.js
+import js.annotation._
+
+@JSExportTopLevel("Demo")
 object DemoMain {
   @JSExport
   def main(): Unit = {
     HotKeysConfiguration(
       logLevel = LogLevel.Info,
-      ignoreTags = List.empty[HtmlTagOf[_]],
+      ignoreTags = List.empty[HtmlTagOf[HtmlTopNode]],
       ignoreRepeatedEventsWhenKeyHeldDown = false
     ).apply()
 
@@ -63,13 +70,13 @@ object DemoMain {
         .render(_ =>
           GlobalHotKeys(keyMap = KeyMap("HELP" -> "shift+?"),
                         handlers = Handlers("HELP" -> Callback(dom.window.alert("HELP!")))
-          )(
+          ).apply(
             HotKeys(keyMap = keyMap,
                     handlers = handlers,
                     tag = <.span,
                     tabIndex = 1,
                     innerRef = ref
-            )(
+            ).apply(
               // IgnoreKeys(only = "shift+1")(
               "WITH HOTKEYS:",
               renderSection(0)

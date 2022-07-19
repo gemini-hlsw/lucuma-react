@@ -1,17 +1,21 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package react.hotkeys
+
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom._
 
 import scalajs.js
 import js.annotation.JSImport
 import js.JSConverters._
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.HtmlTagOf
 
 final case class HotKeysConfiguration(
   logLevel:                               js.UndefOr[LogLevel] = js.undefined,
   defaultKeyEvent:                        js.UndefOr[KeyInstance] = js.undefined,
-  defaultComponent:                       js.UndefOr[HtmlTagOf[_]] = js.undefined,
+  defaultComponent:                       js.UndefOr[HtmlTagOf[HtmlTopNode]] = js.undefined,
   defaultTabIndex:                        js.UndefOr[Int] = js.undefined,
-  ignoreTags:                             js.UndefOr[Seq[HtmlTagOf[_]]] = js.undefined,
+  ignoreTags:                             js.UndefOr[Seq[HtmlTagOf[HtmlTopNode]]] = js.undefined,
   ignoreEventsCondition:                  js.UndefOr[ReactKeyboardEvent => Boolean] = js.undefined,
   ignoreKeymapAndHandlerChangesByDefault: js.UndefOr[Boolean] = js.undefined,
   ignoreRepeatedEventsWhenKeyHeldDown:    js.UndefOr[Boolean] = js.undefined,
