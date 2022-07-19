@@ -12,18 +12,18 @@ import js.JSConverters._
 package hotkeys {
   sealed abstract class LogLevel(val name: String)
   object LogLevel {
-    final case object Verbose extends LogLevel("verbose")
-    final case object Debug   extends LogLevel("debug")
-    final case object Info    extends LogLevel("info")
-    final case object Warn    extends LogLevel("warn")
-    final case object Error   extends LogLevel("error")
-    final case object None    extends LogLevel("none")
+    case object Verbose extends LogLevel("verbose")
+    case object Debug   extends LogLevel("debug")
+    case object Info    extends LogLevel("info")
+    case object Warn    extends LogLevel("warn")
+    case object Error   extends LogLevel("error")
+    case object None    extends LogLevel("none")
   }
 
   sealed abstract class KeyInstance(val action: String)
-  final case object KeyPress extends KeyInstance("keypress")
-  final case object KeyDown  extends KeyInstance("keydown")
-  final case object KeyUp    extends KeyInstance("keyup")
+  case object KeyPress extends KeyInstance("keypress")
+  case object KeyDown  extends KeyInstance("keydown")
+  case object KeyUp    extends KeyInstance("keyup")
 
   @js.native
   trait KeyEvent    extends js.Object {
