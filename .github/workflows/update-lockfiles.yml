@@ -3,12 +3,13 @@ name: Update Lockfiles
 on:
   pull_request:
     types: [labeled]
+  workflow_dispatch:
 
 jobs:
   update-lockfiles:
     name: Update Lockfiles
     runs-on: ubuntu-latest
-    if: ${{ github.event.label.name == 'npm dependencies' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.label.name == 'npm dependencies' }}
     steps:
       - name: Generate token
         id: generate-token
