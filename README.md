@@ -2,6 +2,12 @@
 
 Common utilities and facades for React and Scala.js
 
+Example running a demo:
+```sh
+sbt semanticUIDemo/fastLinkJS
+vite -c semantic-ui-demo/vite.config.js
+```
+
 ## Modules
 
 - lucuma-react-common
