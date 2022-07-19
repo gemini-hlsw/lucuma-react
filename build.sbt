@@ -145,7 +145,9 @@ lazy val root = project
     resizeDetector,
     fontAwesome,
     hotkeys,
-    hotkeysDemo
+    hotkeysDemo,
+    resizable,
+    resizableDemo
   )
 
 lazy val rootCore         = project.aggregate(common, cats, test).enablePlugins(NoPublishPlugin)
@@ -171,6 +173,8 @@ lazy val rootSemanticUI   =
   project.aggregate(semanticUI, semanticUIDemo).enablePlugins(NoPublishPlugin)
 lazy val rootHotkeys      =
   project.aggregate(hotkeys, hotkeysDemo).enablePlugins(NoPublishPlugin)
+lazy val rootResizable    =
+  project.aggregate(resizable, resizableDemo).enablePlugins(NoPublishPlugin)
 
 val projects = List(
   rootCore,
@@ -185,7 +189,8 @@ val projects = List(
   rootTree,
   rootSemanticUI,
   fontAwesome,
-  rootHotkeys
+  rootHotkeys,
+  rootResizable
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
 ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
@@ -459,6 +464,26 @@ lazy val hotkeysDemo = project
   .in(file("hotkeys-demo"))
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(hotkeys)
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
+    demoSettings
+  )
+
+lazy val resizable = project
+  .in(file("resizable"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common, draggable)
+  .settings(
+    name := "lucuma-react-resizable",
+    Compile / scalacOptions += "-language:implicitConversions",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val resizableDemo = project
+  .in(file("resizable-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(resizable)
   .settings(
     Compile / scalacOptions += "-language:implicitConversions",
     demoSettings
