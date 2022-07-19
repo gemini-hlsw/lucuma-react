@@ -6,7 +6,6 @@ package react.semanticui.elements.list
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.syntax.vdom._
-import react.semanticui.As.tagOf2AsC
 
 class ListDescriptionSuite extends munit.FunSuite {
   test("render") {
