@@ -9,7 +9,7 @@ import react.common.GenericComponentPACOps
 import react.common.GenericFnComponentPACOps
 import react.common.syntax.vdom._
 import react.semanticui.elements.label.Label
-import react.semanticui.tagOf2AsC
+import react.semanticui.As.tagOf2AsC
 
 class LoaderSuite extends munit.FunSuite {
   test("render") {

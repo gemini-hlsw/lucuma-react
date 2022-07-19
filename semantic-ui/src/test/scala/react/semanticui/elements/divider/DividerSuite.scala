@@ -8,7 +8,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import react.common.GenericComponentPACOps
 import react.common.syntax.vdom._
 import react.semanticui.elements.image.Image
-import react.semanticui.tagOf2AsC
+import react.semanticui.As.tagOf2AsC
 
 class DividerSuite extends munit.FunSuite {
   test("render") {

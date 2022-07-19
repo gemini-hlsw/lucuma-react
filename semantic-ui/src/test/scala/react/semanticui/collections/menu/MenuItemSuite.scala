@@ -9,7 +9,7 @@ import react.common.GenericComponentPACOps
 import react.common.style.Css
 import react.common.syntax.vdom._
 import react.semanticui.elements.icon._
-import react.semanticui.tagOf2AsC
+import react.semanticui.As.tagOf2AsC
 
 class MenuItemSuite extends munit.FunSuite {
   test("render") {

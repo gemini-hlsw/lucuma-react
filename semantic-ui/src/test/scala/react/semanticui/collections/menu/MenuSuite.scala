@@ -8,7 +8,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import react.common.GenericComponentPACOps
 import react.common.style.Css
 import react.common.syntax.vdom._
-import react.semanticui.tagOf2AsC
+import react.semanticui.As.tagOf2AsC
 
 class MenuSuite extends munit.FunSuite {
   test("render") {
