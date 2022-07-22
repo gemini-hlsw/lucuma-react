@@ -16,10 +16,10 @@ import scala.scalajs.js
 import js.annotation._
 
 final case class DropdownMenu(
+  content:                js.UndefOr[VdomNode] = js.undefined,
   as:                     js.UndefOr[AsC] = js.undefined,
   className:              js.UndefOr[String] = js.undefined,
   clazz:                  js.UndefOr[Css] = js.undefined,
-  content:                js.UndefOr[VdomNode] = js.undefined,
   direction:              js.UndefOr[MenuDirection] = js.undefined,
   open:                   js.UndefOr[Boolean] = js.undefined,
   scrolling:              js.UndefOr[Boolean] = js.undefined,
