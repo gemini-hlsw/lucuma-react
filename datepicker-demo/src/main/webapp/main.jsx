@@ -1,3 +1,4 @@
+import "react-datepicker/dist/react-datepicker.min.css";
 import "./styles.css";
 
 import { Demo } from "@sjs/main.js";
