@@ -147,7 +147,8 @@ lazy val root = project
     hotkeys,
     hotkeysDemo,
     resizable,
-    resizableDemo
+    resizableDemo,
+    primeReact
   )
 
 lazy val rootCore         = project.aggregate(common, cats, test).enablePlugins(NoPublishPlugin)
@@ -190,7 +191,8 @@ val projects = List(
   rootSemanticUI,
   fontAwesome,
   rootHotkeys,
-  rootResizable
+  rootResizable,
+  primeReact
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
 ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
@@ -487,4 +489,19 @@ lazy val resizableDemo = project
   .settings(
     Compile / scalacOptions += "-language:implicitConversions",
     demoSettings
+  )
+
+lazy val primeReact = project
+  .in(file("prime-react"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .settings(
+    name                     := "lucuma-react-prime-react",
+    stOutputPackage          := "reactST",
+    stUseScalaJsDom          := true,
+    stFlavour                := Flavour.ScalajsReact,
+    stReactEnableTreeShaking := Selection.All,
+    stMinimize               := Selection.AllExcept("primereact"),
+    Compile / doc / sources  := Seq(),
+    Compile / scalacOptions += "-language:implicitConversions",
+    yarnSettings
   )
