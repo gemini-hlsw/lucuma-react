@@ -4,6 +4,13 @@ ThisBuild / tlBaseVersion       := "1.0"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
+ThisBuild / mergifyPrRules +=
+  MergifyPrRule(
+    "merge dependabot PRs",
+    MergifyCondition.Custom("author=dependabot[bot]") :: mergifySuccessConditions.value.toList,
+    List(MergifyAction.Merge())
+  )
+
 val scalaJsReactV    = "2.1.1"
 val catsV            = "2.8.0"
 val munitV           = "1.0.0-M6"
