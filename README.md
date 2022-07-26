@@ -32,10 +32,10 @@ Note that vite should be run from the root directory, but point at the config fi
 ## Contributing
 
 To add a new module follow roughly these steps:
-1. Add the module(s) to the build, and add them to the root aggregate prjoect.
-2. If there is more than one module (e.g. facade+demo), create a root project to aggregate them.
+1. Add the module(s) to the build, and add them to the root aggregate project.
+2. If there is more than one module (e.g. facade+demo), create an aggregate project for them.
 3. Add the aggregate (or the sole module) to the projects list. This adds a separate CI job.
-4. Use `yarn add --dev` to add the npm dep to the `package.json` in the root. Except for any type-related dependencies for ScalablyTyped, see the next step.
+4. Use `yarn add --dev whatever` to add the npm dep to the `package.json` in the root. Except for any type-related dependencies for ScalablyTyped, see the next step.
 5. Type-related dependencies should be put in a `package.json` specific for that module as a normal dep (not a dev dep). This helps to focus ScalablyTyped on generating facades specifically for that dep. Also, make sure to register that `package.json` with the dependabot config
 
 This repo uses a single `package.json` at the root that is used by all the modules. This ensures that the version of shared dependencies are kept in sync. However, each module has its own `yarn.lock`, mostly because this is how ScalaJS Bundler wants it. Unfortunately, this means that all the lockfiles must be kept synchronized.
