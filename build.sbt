@@ -155,7 +155,8 @@ lazy val root = project
     hotkeysDemo,
     resizable,
     resizableDemo,
-    primeReact
+    primeReact,
+    primeReactDemo
   )
 
 lazy val rootCore         = project.aggregate(common, cats, test).enablePlugins(NoPublishPlugin)
@@ -183,6 +184,8 @@ lazy val rootHotkeys      =
   project.aggregate(hotkeys, hotkeysDemo).enablePlugins(NoPublishPlugin)
 lazy val rootResizable    =
   project.aggregate(resizable, resizableDemo).enablePlugins(NoPublishPlugin)
+lazy val rootPrimeReact   =
+  project.aggregate(primeReact, primeReactDemo).enablePlugins(NoPublishPlugin)
 
 val projects = List(
   rootCore,
@@ -199,7 +202,7 @@ val projects = List(
   fontAwesome,
   rootHotkeys,
   rootResizable,
-  primeReact
+  rootPrimeReact
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
 ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
@@ -511,4 +514,13 @@ lazy val primeReact = project
     Compile / doc / sources  := Seq(),
     Compile / scalacOptions += "-language:implicitConversions",
     yarnSettings
+  )
+
+lazy val primeReactDemo = project
+  .in(file("prime-react-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(primeReact)
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
+    demoSettings
   )
