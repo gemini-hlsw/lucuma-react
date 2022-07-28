@@ -41,6 +41,7 @@ final case class FormInput(
   loading:                js.UndefOr[Boolean] = js.undefined,
   onChange:               js.UndefOr[Callback] = js.undefined,
   onChangeE:              js.UndefOr[Input.OnChange] = js.undefined,
+  placeholder:            js.UndefOr[String] = js.undefined,
   required:               js.UndefOr[Boolean] = js.undefined,
   size:                   js.UndefOr[SemanticSize] = js.undefined,
   tabIndex:               js.UndefOr[String | Double] = js.undefined,
@@ -150,6 +151,9 @@ object FormInput {
      */
     var onChange: js.UndefOr[js.Function1[ReactEventFromInput, Unit]]
 
+    /** Placeholder text. */
+    var placeholder: js.UndefOr[String] = js.native
+
     /** An Input can vary in size. */
     var size: js.UndefOr[suiraw.SemanticSIZES] = js.native
 
@@ -186,6 +190,7 @@ object FormInput {
       q.loading,
       q.onChange,
       q.onChangeE,
+      q.placeholder,
       q.required,
       q.size,
       q.tabIndex,
@@ -217,6 +222,7 @@ object FormInput {
     loading:        js.UndefOr[Boolean] = js.undefined,
     onChange:       js.UndefOr[Callback] = js.undefined,
     onChangeE:      js.UndefOr[Input.OnChange] = js.undefined,
+    placeholder:    js.UndefOr[String] = js.undefined,
     required:       js.UndefOr[Boolean] = js.undefined,
     size:           js.UndefOr[SemanticSize] = js.undefined,
     tabIndex:       js.UndefOr[String | Double] = js.undefined,
@@ -253,6 +259,7 @@ object FormInput {
     CompToPropsB(error).toJs.foreachUnchecked(v => p.error = v)
     inline.foreach(v => p.inline = v)
     CompToPropsS(label).toJs.foreachUnchecked(v => p.label = v)
+    placeholder.foreach(v => p.placeholder = v)
     required.foreach(v => p.required = v)
     p.`type` = tpe
     width.toJs.foreach(v => p.width = v)
