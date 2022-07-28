@@ -3,6 +3,8 @@
 
 package react.common
 
+import cats._
+
 import scala.scalajs.js
 
 @js.native
@@ -18,4 +20,7 @@ object Size {
     p.width = width
     p
   }
+
+  given Eq[Size] = Eq.by(x => (x.width, x.height))
+
 }

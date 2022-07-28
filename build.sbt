@@ -129,7 +129,6 @@ lazy val root = project
   .enablePlugins(NoPublishPlugin)
   .aggregate(
     common,
-    cats,
     test,
     gridLayout,
     gridLayoutDemo,
@@ -159,7 +158,7 @@ lazy val root = project
     primeReactDemo
   )
 
-lazy val rootCore         = project.aggregate(common, cats, test).enablePlugins(NoPublishPlugin)
+lazy val rootCore         = project.aggregate(common, test).enablePlugins(NoPublishPlugin)
 lazy val rootGridLayout   =
   project.aggregate(resizeDetector, gridLayout, gridLayoutDemo).enablePlugins(NoPublishPlugin)
 lazy val rootDraggable    =
@@ -213,23 +212,13 @@ lazy val common = project
   .settings(
     name := "lucuma-react-common",
     libraryDependencies ++= Seq(
-      "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReactV
+      "com.github.japgolly.scalajs-react" %%% "core"             % scalaJsReactV,
+      "org.typelevel"                     %%% "cats-core"        % catsV,
+      "org.typelevel"                     %%% "cats-laws"        % catsV            % Test,
+      "org.scalameta"                     %%% "munit-scalacheck" % munitV           % Test,
+      "org.typelevel"                     %%% "discipline-munit" % disciplineMunitV % Test
     )
   )
-
-lazy val cats = project
-  .in(file("cats"))
-  .enablePlugins(ScalaJSPlugin)
-  .settings(
-    name := "lucuma-react-cats",
-    libraryDependencies ++= Seq(
-      "org.typelevel" %%% "cats-core"        % catsV,
-      "org.typelevel" %%% "cats-laws"        % catsV            % Test,
-      "org.scalameta" %%% "munit-scalacheck" % munitV           % Test,
-      "org.typelevel" %%% "discipline-munit" % disciplineMunitV % Test
-    )
-  )
-  .dependsOn(common)
 
 lazy val test = project
   .in(file("test"))
@@ -248,7 +237,7 @@ lazy val test = project
       baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
     )
   )
-  .dependsOn(cats, common)
+  .dependsOn(common)
 
 lazy val gridLayout = project
   .in(file("grid-layout"))
