@@ -5,6 +5,8 @@ package react
 
 package common
 
+import cats._
+import cats.syntax.all._
 import japgolly.scalajs.react.Reusability
 import japgolly.scalajs.react.vdom.html_<^._
 
@@ -95,7 +97,8 @@ package style {
 
   }
 
-  object Style                                    {
+  object Style {
+
     def toJsObject(style: Style): js.Object =
       style.styles.toJSDictionary.asInstanceOf[js.Object]
 
@@ -106,6 +109,21 @@ package style {
     }
 
     val Empty: Style = Style(Map.empty)
+
+    given Eq[String | Int] = Eq.instance { (a, b) =>
+      (a: Any, b: Any) match {
+        case (a: String, b: String) => a === b
+        case (a: Int, b: Int)       => a === b
+        case _                      => false
+      }
+    }
+
+    given Eq[Style]     = Eq.by(_.styles)
+    given Monoid[Style] = new Monoid[Style] {
+      override val empty: Style                       = Style(Map.empty)
+      override def combine(a: Style, b: Style): Style =
+        Style(a.styles ++ b.styles)
+    }
   }
 
   /**
@@ -136,6 +154,9 @@ package style {
 
     val Empty: Css = Css(Nil)
 
-    implicit val cssReuse: Reusability[Css] = Reusability.by(_.htmlClass)
+    given Order[Css]       = Order.by(_.htmlClass)
+    given Reusability[Css] = Reusability.by(_.htmlClass)
+    given Monoid[Css]      =
+      Monoid[List[String]].imap(Css.apply)(_.htmlClasses)
   }
 }

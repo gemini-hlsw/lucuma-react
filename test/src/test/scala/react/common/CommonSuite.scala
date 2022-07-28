@@ -4,7 +4,7 @@
 package react.common
 
 import cats.syntax.all._
-import react.common.implicits._
+import react.common.implicits.given
 
 import scala.scalajs.js
 
