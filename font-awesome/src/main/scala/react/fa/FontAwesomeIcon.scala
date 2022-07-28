@@ -5,6 +5,7 @@ package react.fa
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
+import lucuma.ui.implicits._
 import react.common._
 
 import scala.annotation.nowarn
