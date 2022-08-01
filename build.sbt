@@ -494,15 +494,29 @@ lazy val primeReact = project
   .in(file("prime-react"))
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
   .settings(
-    name                     := "lucuma-react-prime-react",
-    stOutputPackage          := "reactST",
-    stUseScalaJsDom          := true,
-    stFlavour                := Flavour.ScalajsReact,
-    stReactEnableTreeShaking := Selection.All,
-    stMinimize               := Selection.AllExcept("primereact"),
-    Compile / doc / sources  := Seq(),
+    name                                                      := "lucuma-react-prime-react",
+    stOutputPackage                                           := "reactST",
+    stUseScalaJsDom                                           := true,
+    stFlavour                                                 := Flavour.ScalajsReact,
+    stReactEnableTreeShaking                                  := Selection.All,
+    stMinimize                                                := Selection.AllExcept("primereact"),
+    Compile / doc / sources                                   := Seq(),
     Compile / scalacOptions += "-language:implicitConversions",
-    yarnSettings
+    yarnSettings,
+    ScalablyTypedConverterGenSourcePlugin.autoImport.stImport := {
+      val rtn     = ScalablyTypedConverterGenSourcePlugin.autoImport.stImport.value
+      val sources = (Compile / sourceManaged).value / "scalablytyped" ** "*.scala"
+      sources.get().foreach { f =>
+        val content     = IO.read(f)
+        // use the ESM-style sources in imports
+        val transformed = content.replaceAll(
+          """@JSImport\("primereact\/(.+?)",""",
+          """@JSImport("primereact/$1.esm","""
+        )
+        IO.write(f, transformed)
+      }
+      rtn
+    }
   )
 
 lazy val primeReactDemo = project
