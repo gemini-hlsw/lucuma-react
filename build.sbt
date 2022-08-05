@@ -536,7 +536,8 @@ lazy val circularProgressbar = project
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common, test % Test)
   .settings(
-    name := "lucuma-react-circular-progressbar",
+    name                := "lucuma-react-circular-progressbar",
     facadeSettings,
-    yarnSettings
+    yarnSettings,
+    tlVersionIntroduced := Map("3" -> "0.1.1")
   )
