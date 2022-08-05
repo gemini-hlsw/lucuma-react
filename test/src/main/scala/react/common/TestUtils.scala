@@ -18,7 +18,7 @@ trait TestUtils {
 
   def assertRender(e: React.Element, expected: String): Unit = {
     val rendered: String = ReactDOMServer.raw.renderToStaticMarkup(e)
-    assertEquals(rendered, expected.trim.replaceAll("\n", ""))
+    assertEquals(rendered.trim.replaceAll("\n", ""), expected.trim.replaceAll("\n", ""))
   }
 
   def assertRender(e: React.Node, expected: String): Unit =
