@@ -512,7 +512,7 @@ lazy val primeReact = project
         val content     = IO.read(f)
         // use the ESM-style sources in imports
         val transformed = content.replaceAll(
-          """@JSImport\("primereact\/(.+?)[^\.][^e][^s][^m]",""",
+          """@JSImport\("primereact\/((.+?)(?<!\.esm))",""",
           """@JSImport("primereact/$1.esm","""
         )
         if (transformed != content)
