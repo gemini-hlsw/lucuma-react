@@ -156,7 +156,8 @@ lazy val root = project
     resizableDemo,
     primeReact,
     primeReactDemo,
-    circularProgressbar
+    circularProgressbar,
+    moon
   )
 
 lazy val rootCore         = project.aggregate(common, test).enablePlugins(NoPublishPlugin)
@@ -203,7 +204,8 @@ val projects = List(
   rootHotkeys,
   rootResizable,
   rootPrimeReact,
-  circularProgressbar
+  circularProgressbar,
+  moon
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
 ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
@@ -537,6 +539,17 @@ lazy val circularProgressbar = project
   .dependsOn(common, test % Test)
   .settings(
     name                := "lucuma-react-circular-progressbar",
+    facadeSettings,
+    yarnSettings,
+    tlVersionIntroduced := Map("3" -> "0.1.1")
+  )
+
+lazy val moon = project
+  .in(file("moon"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common, test % Test)
+  .settings(
+    name                := "lucuma-react-moon",
     facadeSettings,
     yarnSettings,
     tlVersionIntroduced := Map("3" -> "0.1.1")
