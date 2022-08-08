@@ -157,7 +157,8 @@ lazy val root = project
     primeReact,
     primeReactDemo,
     circularProgressbar,
-    moon
+    moon,
+    toastify
   )
 
 lazy val rootCore         = project.aggregate(common, test).enablePlugins(NoPublishPlugin)
@@ -205,7 +206,8 @@ val projects = List(
   rootResizable,
   rootPrimeReact,
   circularProgressbar,
-  moon
+  moon,
+  toastify
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
 ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
@@ -550,6 +552,17 @@ lazy val moon = project
   .dependsOn(common, test % Test)
   .settings(
     name                := "lucuma-react-moon",
+    facadeSettings,
+    yarnSettings,
+    tlVersionIntroduced := Map("3" -> "0.1.1")
+  )
+
+lazy val toastify = project
+  .in(file("toastify"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common, test % Test)
+  .settings(
+    name                := "lucuma-react-toastify",
     facadeSettings,
     yarnSettings,
     tlVersionIntroduced := Map("3" -> "0.1.1")
