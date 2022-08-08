@@ -3,7 +3,6 @@ addSbtPlugin("edu.gemini"                  % "sbt-lucuma-lib"         % sbtLucum
 addSbtPlugin("edu.gemini"                  % "sbt-lucuma-sjs-bundler" % sbtLucumaVersion)
 addSbtPlugin("org.scalablytyped.converter" % "sbt-converter"          % "1.0.0-beta39")
 
-resolvers += MavenRepository(
-  "sonatype-s01-snapshots",
-  "https://s01.oss.sonatype.org/content/repositories/snapshots"
+libraryDependencySchemes ++= Seq(
+  "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always
 )
