@@ -24,7 +24,7 @@
     "react-virtuoso": "^2.16.6",
     "semantic-ui-react": "^2.0.3",
     "styled-components": "^5.3.5",
-    "vite": "^3.0.7"
+    "vite": "^3.0.8"
   },
   "dependencies": {
     "typescript": "4.7"
