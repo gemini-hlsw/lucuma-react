@@ -80,23 +80,24 @@ object ListIcon {
     JsComponent[ListIconProps, Children.None, Null](RawComponent)
 
   def apply(name: String): ListIcon =
-    new ListIcon(as = js.undefined,
-                 bordered = js.undefined,
-                 circular = js.undefined,
-                 className = js.undefined,
-                 clazz = js.undefined,
-                 color = js.undefined,
-                 corner = js.undefined,
-                 disabled = js.undefined,
-                 fitted = js.undefined,
-                 flipped = js.undefined,
-                 inverted = js.undefined,
-                 link = js.undefined,
-                 loading = js.undefined,
-                 name = name,
-                 rotated = js.undefined,
-                 size = js.undefined,
-                 ariaLabel = js.undefined,
-                 verticalAlign = js.undefined
+    new ListIcon(
+      as = js.undefined,
+      bordered = js.undefined,
+      circular = js.undefined,
+      className = js.undefined,
+      clazz = js.undefined,
+      color = js.undefined,
+      corner = js.undefined,
+      disabled = js.undefined,
+      fitted = js.undefined,
+      flipped = js.undefined,
+      inverted = js.undefined,
+      link = js.undefined,
+      loading = js.undefined,
+      name = name,
+      rotated = js.undefined,
+      size = js.undefined,
+      ariaLabel = js.undefined,
+      verticalAlign = js.undefined
     )
 }
