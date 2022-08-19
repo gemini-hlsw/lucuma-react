@@ -215,43 +215,45 @@ package gridlayout {
     )
 
     private[gridlayout] def fromRaw(l: raw.LayoutItem): LayoutItem =
-      new LayoutItem(l.w,
-                     l.h,
-                     l.x,
-                     l.y,
-                     l.i,
-                     l.minW,
-                     l.minH,
-                     l.maxW,
-                     l.maxH,
-                     l.static,
-                     l.isDraggable,
-                     l.isResizable,
-                     l.resizeHandles.map(_.toList.map(ResizeHandle.fromRaw).collect {
-                       case Some(x) => x
-                     }),
-                     l.isBounded
+      new LayoutItem(
+        l.w,
+        l.h,
+        l.x,
+        l.y,
+        l.i,
+        l.minW,
+        l.minH,
+        l.maxW,
+        l.maxH,
+        l.static,
+        l.isDraggable,
+        l.isResizable,
+        l.resizeHandles.map(_.toList.map(ResizeHandle.fromRaw).collect { case Some(x) =>
+          x
+        }),
+        l.isBounded
       )
 
     private[gridlayout] def fromRawO(l: raw.LayoutItem): Option[LayoutItem] =
       if (l != null)
         Some(
-          new LayoutItem(l.w,
-                         l.h,
-                         l.x,
-                         l.y,
-                         l.i,
-                         l.minW,
-                         l.minH,
-                         l.maxW,
-                         l.maxH,
-                         l.static,
-                         l.isDraggable,
-                         l.isResizable,
-                         l.resizeHandles.map(_.toList.map(ResizeHandle.fromRaw).collect {
-                           case Some(x) => x
-                         }),
-                         l.isBounded
+          new LayoutItem(
+            l.w,
+            l.h,
+            l.x,
+            l.y,
+            l.i,
+            l.minW,
+            l.minH,
+            l.maxW,
+            l.maxH,
+            l.static,
+            l.isDraggable,
+            l.isResizable,
+            l.resizeHandles.map(_.toList.map(ResizeHandle.fromRaw).collect { case Some(x) =>
+              x
+            }),
+            l.isBounded
           )
         )
       else
