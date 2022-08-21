@@ -24,6 +24,7 @@ final case class FontAwesomeIcon(
   color:                  js.UndefOr[String],
   pulse:                  js.UndefOr[Boolean],
   beat:                   js.UndefOr[Boolean],
+  beatFade:               js.UndefOr[Boolean],
   border:                 js.UndefOr[Boolean],
   fade:                   js.UndefOr[Boolean],
   flash:                  js.UndefOr[Boolean],
@@ -55,6 +56,8 @@ final case class FontAwesomeIcon(
   def pulse(pulse: Boolean = true): FontAwesomeIcon = copy(pulse = pulse)
 
   def beat(beat: Boolean = true): FontAwesomeIcon = copy(beat = beat)
+
+  def beatFade(beat: Boolean = true): FontAwesomeIcon = copy(beatFade = beatFade)
 
   def border(border: Boolean = true): FontAwesomeIcon = copy(border = border)
 
@@ -147,6 +150,7 @@ object FontAwesomeIcon {
     color:       js.UndefOr[String] = js.undefined,
     pulse:       js.UndefOr[Boolean] = js.undefined,
     beat:        js.UndefOr[Boolean] = js.undefined,
+    beatFade:    js.UndefOr[Boolean] = js.undefined,
     border:      js.UndefOr[Boolean] = js.undefined,
     fade:        js.UndefOr[Boolean] = js.undefined,
     flash:       js.UndefOr[Boolean] = js.undefined,
@@ -173,6 +177,7 @@ object FontAwesomeIcon {
     color,
     pulse,
     beat,
+    beatFade,
     border,
     fade,
     flash,
@@ -213,6 +218,7 @@ object FontAwesomeIcon {
     var color: js.UndefOr[String]
     var pulse: js.UndefOr[Boolean]
     var beat: js.UndefOr[Boolean]
+    var beatFade: js.UndefOr[Boolean]
     var border: js.UndefOr[Boolean]
     var fade: js.UndefOr[Boolean]
     var flash: js.UndefOr[Boolean]
@@ -242,6 +248,7 @@ object FontAwesomeIcon {
       p.color,
       p.pulse,
       p.beat,
+      p.beatFade,
       p.border,
       p.fade,
       p.flash,
@@ -269,6 +276,7 @@ object FontAwesomeIcon {
     color:       js.UndefOr[String],
     pulse:       js.UndefOr[Boolean],
     beat:        js.UndefOr[Boolean],
+    beatFade:    js.UndefOr[Boolean],
     border:      js.UndefOr[Boolean],
     fade:        js.UndefOr[Boolean],
     flash:       js.UndefOr[Boolean],
@@ -299,6 +307,7 @@ object FontAwesomeIcon {
     color.foreach(v => p.color = v)
     pulse.foreach(v => p.pulse = v)
     beat.foreach(v => p.beat = v)
+    beatFade.foreach(v => p.beatFade = v)
     border.foreach(v => p.border = v)
     fade.foreach(v => p.fade = v)
     flash.foreach(v => p.flash = v)
