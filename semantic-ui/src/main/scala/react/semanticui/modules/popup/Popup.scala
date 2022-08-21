@@ -7,8 +7,13 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
-import react.common._
-import react.common.syntax._
+import react.common.GenericComponentPAC
+import react.common.Css
+import react.common.Style
+import react.common.syntax.enumValue.*
+import react.common.syntax.style.*
+import react.common.syntax.callback.*
+import react.common.syntax.render.*
 import react.semanticui._
 import react.semanticui.sizes._
 import react.semanticui.{raw => suiraw}
@@ -280,7 +285,7 @@ object Popup {
     on.map[String | js.Array[String]] { x =>
       (x: Any) match {
         case p: PopupOn => p.toJs
-        case p          => p.asInstanceOf[List[PopupOn]].map(EnumValueOps(_).toJs).toJSArray
+        case p          => p.asInstanceOf[List[PopupOn]].map(_.toJs).toJSArray
       }
     }.foreachUnchecked(v => p.on = v)
     (onCloseE, onClose).toJs.foreach(v => p.onClose = v)

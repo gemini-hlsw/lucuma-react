@@ -175,7 +175,7 @@ object Resizable {
     width:           Double
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
-    axis.foreach((v: Axis) => p.axis = syntaxEnumValue(v).toJs)
+    axis.foreach((v: Axis) => p.axis = v.toJs)
     (className, clazz).toJs.foreach(v => p.className = v)
     p.children = content.rawNode
     draggableOpts.foreach(v => p.draggableOpts = v)
@@ -195,7 +195,7 @@ object Resizable {
     onResize.foreach(cb =>
       p.onResize = ((e: ReactEvent, d: ResizeCallbackData) => cb(e, d).runNow()): RawOnResize
     )
-    resizeHandles.foreach(v => p.resizeHandles = v.map(syntaxEnumValue(_).toJs).toJSArray)
+    resizeHandles.foreach(v => p.resizeHandles = v.map(_.toJs).toJSArray)
     transformScale.foreach(v => p.transformScale = v)
     p.width = width
     p
