@@ -199,7 +199,7 @@ object FontAwesomeIcon {
     modifiers
   )
 
-  def layered(icons: FontAwesomeIcon*): TagMod = {
+  inline def layered(icons: FontAwesomeIcon*): TagMod = {
     val attrs: Seq[TagMod] = (^.cls := "fa-layers fa-fw") +: icons.map(x => x: TagMod)
     <.span(attrs: _*)
   }
@@ -314,9 +314,9 @@ object FontAwesomeIcon {
     fixedWidth.foreach(v => p.fixedWidth = v)
     inverse.foreach(v => p.inverse = v)
     listItem.foreach(v => p.listItem = v)
-    flip.foreach(v => p.flip = syntaxEnumValue(v).toJs)
-    size.foreach(v => p.size = syntaxEnumValue(v).toJs)
-    pull.foreach(v => p.pull = syntaxEnumValue(v).toJs)
+    flip.foreach(v => p.flip = v.toJs)
+    size.foreach(v => p.size = v.toJs)
+    pull.foreach(v => p.pull = v.toJs)
     rotation.foreach(v =>
       p.rotation = v match {
         case Rotation.Rotate90  => 90

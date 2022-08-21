@@ -5,7 +5,10 @@ package react.semanticui.demo
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.common._
+import react.common.GenericComponentPACOps
+import react.common.syntax.enumValue.*
+import react.common.syntax.render.*
+import react.common.syntax.vdom.*
 import react.semanticui._
 import react.semanticui.colors._
 import react.semanticui.elements.icon.IconCorner
@@ -94,7 +97,7 @@ object IconsComponent {
                 IconFeed.size(s),
                 <.p(
                   ^.cls := "name",
-                  syntaxEnumValue(s).toJs
+                  s.toJs
                 )
               )
             }.toTagMod
@@ -118,7 +121,7 @@ object IconsComponent {
                 IconEdit.color(o),
                 <.p(
                   ^.cls := "name",
-                  syntaxEnumValue(o).toJs
+                  o.toJs
                 )
               )
             }.toTagMod

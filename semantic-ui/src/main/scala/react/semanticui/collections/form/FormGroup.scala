@@ -7,8 +7,10 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
-import react.common._
-import react.common.syntax._
+import react.common.Css
+import react.common.GenericComponentPAC
+import react.common.syntax.enumValue.*
+import react.common.syntax.style.*
 import react.semanticui._
 import react.semanticui.{raw => suiraw}
 
@@ -107,8 +109,8 @@ object FormGroup {
     widths
       .map {
         (_: Any) match {
-          case w: FormWidths => EnumValueOps(w).toJs
-          case w             => EnumValueOps(w.asInstanceOf[SemanticWidth]).toJs
+          case w: FormWidths => w.toJs
+          case w             => w.asInstanceOf[SemanticWidth].toJs
         }
       }
       .foreachUnchecked(v => p.widths = v)
