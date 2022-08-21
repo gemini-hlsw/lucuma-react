@@ -7,13 +7,13 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
-import react.common.GenericComponentPAC
 import react.common.Css
+import react.common.GenericComponentPAC
 import react.common.Style
-import react.common.syntax.enumValue.*
-import react.common.syntax.style.*
 import react.common.syntax.callback.*
+import react.common.syntax.enumValue.*
 import react.common.syntax.render.*
+import react.common.syntax.style.*
 import react.semanticui._
 import react.semanticui.sizes._
 import react.semanticui.{raw => suiraw}

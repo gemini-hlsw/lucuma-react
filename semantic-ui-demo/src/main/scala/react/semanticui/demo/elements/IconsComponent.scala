@@ -7,8 +7,8 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.common.GenericComponentPACOps
 import react.common.syntax.enumValue.*
-import react.common.syntax.vdom.*
 import react.common.syntax.render.*
+import react.common.syntax.vdom.*
 import react.semanticui._
 import react.semanticui.colors._
 import react.semanticui.elements.icon.IconCorner

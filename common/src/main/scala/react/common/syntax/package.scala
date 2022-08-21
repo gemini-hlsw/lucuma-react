@@ -6,11 +6,11 @@ package react.common.syntax
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.VdomNode
+import react.common.*
 
 import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.|
-import react.common.*
 
 trait EnumValueSyntax {
   extension [A](a: A)(using ev: EnumValue[A]) inline def toJs: String = ev.value(a)
@@ -49,14 +49,6 @@ trait CallbackPairSyntax extends CallbackSyntax {
     a: (js.UndefOr[(A, B) => Callback], js.UndefOr[Callback])
   ): CallbackPairOps2[A, B] =
     new CallbackPairOps2(a._1, a._2)
-}
-
-final class VdomOps(val node: VdomNode) extends AnyVal {
-  def toRaw: React.Node = node.rawNode
-}
-
-final class VdomUndefOps(val c: js.UndefOr[VdomNode]) extends AnyVal {
-  def toJs: js.UndefOr[React.Node] = c.map(_.rawNode)
 }
 
 // Some useful conversions
@@ -279,11 +271,4 @@ trait AllSyntax
     with CallbackPairSyntax
     with react.common.style.StyleSyntax
     with RenderSyntax
-    with VdomSyntax {
-  implicit def vdomOps(node: VdomNode): VdomOps =
-    new VdomOps(node)
-
-  implicit def vdomUndefOps(node: js.UndefOr[VdomNode]): VdomUndefOps =
-    new VdomUndefOps(node)
-
-}
+    with VdomSyntax
