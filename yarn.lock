@@ -1318,10 +1318,10 @@ prelude-ls@~1.1.2:
   resolved "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.1.2.tgz"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
 
-primereact@^8.3.0:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/primereact/-/primereact-8.3.0.tgz#78c00a043a4629e135f66f975021414ea3913c46"
-  integrity sha512-Y/8hlTnKsmgbTLlw6LWwMoA78rDMdA2PUcrJqm7wHgBUVxSPQ8l4f3JkbpVKVqESb5nuay9l+0BE4dx1zSBTAg==
+primereact@^8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/primereact/-/primereact-8.4.0.tgz#15c48f4565da7bf789d3adc12f870cd457a6bf71"
+  integrity sha512-5zDXjB3qPQNEn3q0wbsUdYO/3E/ugaQ1azNr/JrJWpCg5bSz7PIOy5FN7Gdomm/h3hSATGVJKGPuJraX/S7gkA==
   dependencies:
     "@types/react-transition-group" "^4.4.1"
     react-transition-group "^4.4.1"
