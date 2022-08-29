@@ -33,7 +33,11 @@ object Highcharts extends TypeofHighchartsAST {
   ): Unit = js.native
 }
 
-final case class Chart(
+@js.native
+@JSImport("highcharts/es-modules/masters/modules/accessibility.src.js", JSImport.Default)
+object HighchartsAccesibility extends js.Object
+
+case class Chart(
   options:    Options,
   onCreate:   Chart_ => Callback = _ => Callback.empty,
   highcharts: TypeofHighchartsAST = Highcharts
@@ -51,16 +55,20 @@ object Chart {
 
   class Backend($ : BackendScope[Props, Unit]) {
     private val containerRef = Ref[html.Element]
+    private val graphRef     = Ref[Chart_]
 
     def render(props: Props) =
       <.div.withRef(containerRef)
+
+    def destroy(): Callback =
+      graphRef.foreach(_.destroy())
 
     def refresh(props: Props): Callback =
       containerRef.foreach { element =>
         props.highcharts.chart(
           element.asInstanceOf[HTMLDOMElement],
           props.options,
-          props.onCreate.andThen(_.runNow())
+          c => (props.onCreate(c) *> graphRef.set(Some(c))).runNow()
         )
         ()
       }
@@ -75,6 +83,7 @@ object Chart {
       .builder[Props]
       .renderBackend[Backend]
       .componentDidMount($ => $.backend.refresh($.props))
+      .componentWillUnmount($ => $.backend.destroy())
       // .componentDidUpdate($ => $.backend.init($.currentProps))
       .build
 }
