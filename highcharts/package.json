@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "highcharts": "^10.2.0"
+    "highcharts": "^10.2.1"
   },
   "devDependencies": {
     "jsdom": "20.0.0"
