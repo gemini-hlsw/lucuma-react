@@ -327,7 +327,7 @@ lazy val tableDemo = project
 lazy val highcharts = project
   .in(file("highcharts"))
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
-  .dependsOn(common)
+  .dependsOn(common, resizeDetector)
   .settings(
     name                    := "lucuma-react-highcharts",
     stIgnore ++= List("react", "react-dom"),
