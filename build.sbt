@@ -18,7 +18,7 @@ val disciplineMunitV = "2.0.0-M3"
 val utestV           = "0.8.0"
 val jsdomV           = "20.0.0"
 
-ThisBuild / crossScalaVersions := Seq("3.1.3")
+ThisBuild / crossScalaVersions := Seq("3.2.0")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(

@@ -28,7 +28,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        scala: [3.1.3]
+        scala: [3.2.0]
         java: [temurin@17]
         project: [rootCore, rootGridLayout, rootDraggable, rootClipboard, rootVirtuoso, rootTable, rootHighcharts, rootDatepicker, rootBeautifulDnd, rootTree, rootSemanticUI, fontAwesome, rootHotkeys, rootResizable, rootPrimeReact, circularProgressbar, moon]
     runs-on: ${{ matrix.os }}
@@ -97,7 +97,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        scala: [3.1.3]
+        scala: [3.2.0]
         java: [temurin@17]
     runs-on: ${{ matrix.os }}
     steps:
