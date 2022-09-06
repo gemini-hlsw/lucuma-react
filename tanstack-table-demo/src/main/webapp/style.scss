@@ -1,0 +1,91 @@
+table.guitars {
+  border-spacing: 0;
+  border: 1px solid black;
+}
+
+.container {
+  border: 1px solid lightgray;
+  height: 400px;
+  width: min-content;
+  max-width: 900px !important;
+  overflow: auto;
+}
+
+.react-table {
+  @at-root {
+    table#{&} {
+      border-collapse: collapse;
+      border-spacing: 0;
+      font-family: arial, sans-serif;
+      table-layout: fixed;
+      width: 100%;
+    }
+  }
+
+  thead {
+    background: lightgray;
+    margin: 0;
+    position: sticky;
+    top: 0;
+  }
+
+  th {
+    border-bottom: 1px solid lightgray;
+    border-right: 1px solid rgb(243, 243, 243);
+    padding: 2px 4px;
+    text-align: left;
+    position: relative;
+    height: 30px;
+  }
+
+  td {
+    padding: 6px;
+  }
+
+  tr {
+    &.odd {
+      background-color: antiquewhite;
+    }
+  }
+
+  .sortableCol {
+    user-select: none;
+  }
+
+  thead:not(.isResizing) {
+    .sortableCol {
+      cursor: pointer;
+    }
+  }
+
+  thead.isResizing {
+    cursor: col-resize;
+  }
+
+  .resizer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: col-resize;
+    user-select: none;
+    touch-action: none;
+  }
+
+  .resizer.isResizingCol {
+    background: blue;
+    opacity: 1;
+  }
+
+  @media (hover: hover) {
+    .resizer {
+      opacity: 0;
+    }
+
+    thead:not(.isResizing) *:hover>.resizer {
+      opacity: 1;
+    }
+  }
+}

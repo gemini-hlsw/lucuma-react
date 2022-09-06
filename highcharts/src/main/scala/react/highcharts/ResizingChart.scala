@@ -4,11 +4,6 @@
 package react.highcharts
 
 import cats.syntax.all.*
-import gpp.highcharts.anon.TypeofHighchartsAST
-import gpp.highcharts.mod.Chart_
-import gpp.highcharts.mod.HTMLDOMElement
-import gpp.highcharts.mod.Options
-import gpp.highcharts.mod.PointOptionsObject
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.html
@@ -18,6 +13,11 @@ import react.common.syntax.style.*
 import react.highcharts.Highcharts
 import react.resizeDetector.UseResizeDetectorProps
 import react.resizeDetector.hooks.*
+import reactST.highcharts.anon.TypeofHighchartsAST
+import reactST.highcharts.mod.Chart_
+import reactST.highcharts.mod.HTMLDOMElement
+import reactST.highcharts.mod.Options
+import reactST.highcharts.mod.PointOptionsObject
 
 case class ResizingChart(
   options:    Options,

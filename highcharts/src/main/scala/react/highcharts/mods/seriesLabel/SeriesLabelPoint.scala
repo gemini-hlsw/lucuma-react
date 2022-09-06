@@ -3,11 +3,11 @@
 
 package react.highcharts.mods.seriesLabel
 
-import gpp.highcharts.mod.BBoxObject
-import gpp.highcharts.mod.Point
-import gpp.highcharts.mod.PositionObject
-import gpp.highcharts.mod.SVGElement
-import gpp.highcharts.mod.Series
+import reactST.highcharts.mod.BBoxObject
+import reactST.highcharts.mod.Point
+import reactST.highcharts.mod.PositionObject
+import reactST.highcharts.mod.SVGElement
+import reactST.highcharts.mod.Series
 
 import scalajs.js
 import js.|

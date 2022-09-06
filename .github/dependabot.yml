@@ -1,26 +1,32 @@
 version: 2
 updates:
-- package-ecosystem: "npm"
-  directory: "/"
-  schedule:
-    interval: "daily"
-  labels:
-    - "npm dependencies"
-- package-ecosystem: "npm"
-  directory: "/datepicker"
-  schedule:
-    interval: "daily"
-  labels:
-    - "npm dependencies"
-- package-ecosystem: "npm"
-  directory: "/highcharts"
-  schedule:
-    interval: "daily"
-  labels:
-    - "npm dependencies"
-- package-ecosystem: "npm"
-  directory: "/table"
-  schedule:
-    interval: "daily"
-  labels:
-    - "npm dependencies"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    labels:
+      - "npm dependencies"
+  - package-ecosystem: "npm"
+    directory: "/datepicker"
+    schedule:
+      interval: "daily"
+    labels:
+      - "npm dependencies"
+  - package-ecosystem: "npm"
+    directory: "/highcharts"
+    schedule:
+      interval: "daily"
+    labels:
+      - "npm dependencies"
+  - package-ecosystem: "npm"
+    directory: "/table"
+    schedule:
+      interval: "daily"
+    labels:
+      - "npm dependencies"
+  - package-ecosystem: "npm"
+    directory: "/tanstack-table"
+    schedule:
+      interval: "daily"
+    labels:
+      - "npm dependencies"

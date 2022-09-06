@@ -4,7 +4,7 @@
 package react
 
 import japgolly.scalajs.react.vdom.VdomElement
-import lucuma.StBuildingComponent
+import reactST.StBuildingComponent
 
 import java.time.LocalDate
 

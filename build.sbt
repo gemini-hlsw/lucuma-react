@@ -11,14 +11,14 @@ ThisBuild / mergifyPrRules +=
     List(MergifyAction.Merge())
   )
 
-val scalaJsReactV    = "2.1.1"
 val catsV            = "2.8.0"
-val munitV           = "1.0.0-M6"
 val disciplineMunitV = "2.0.0-M3"
-val utestV           = "0.8.1"
 val jsdomV           = "20.0.0"
+val munitV           = "1.0.0-M6"
+val scalaJsReactV    = "2.1.1"
+val utestV           = "0.8.1"
 
-ThisBuild / crossScalaVersions := Seq("3.2.0")
+ThisBuild / crossScalaVersions := Seq("3.2.1-RC1")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(
@@ -139,6 +139,8 @@ lazy val root = project
     virtuosoDemo,
     table,
     tableDemo,
+    tanstackTable,
+    tanstackTableDemo,
     highcharts,
     highchartsDemo,
     datepicker,
@@ -161,34 +163,36 @@ lazy val root = project
     moon
   )
 
-lazy val rootCore         = project.aggregate(common, test).enablePlugins(NoPublishPlugin)
-lazy val rootGridLayout   =
+lazy val rootCore          = project.aggregate(common, test).enablePlugins(NoPublishPlugin)
+lazy val rootGridLayout    =
   project.aggregate(resizeDetector, gridLayout, gridLayoutDemo).enablePlugins(NoPublishPlugin)
-lazy val rootDraggable    =
+lazy val rootDraggable     =
   project.aggregate(draggable).enablePlugins(NoPublishPlugin)
-lazy val rootFloatingui   =
+lazy val rootFloatingui    =
   project.aggregate(floatingui).enablePlugins(NoPublishPlugin)
-lazy val rootClipboard    =
+lazy val rootClipboard     =
   project.aggregate(clipboard).enablePlugins(NoPublishPlugin)
-lazy val rootVirtuoso     =
+lazy val rootVirtuoso      =
   project.aggregate(virtuoso, virtuosoDemo).enablePlugins(NoPublishPlugin)
-lazy val rootTable        =
+lazy val rootTable         =
   project.aggregate(table, tableDemo).enablePlugins(NoPublishPlugin)
-lazy val rootHighcharts   =
+lazy val rootTanstackTable =
+  project.aggregate(tanstackTable, tanstackTableDemo).enablePlugins(NoPublishPlugin)
+lazy val rootHighcharts    =
   project.aggregate(highcharts, highchartsDemo).enablePlugins(NoPublishPlugin)
-lazy val rootDatepicker   =
+lazy val rootDatepicker    =
   project.aggregate(datepicker, datepickerDemo).enablePlugins(NoPublishPlugin)
-lazy val rootBeautifulDnd =
+lazy val rootBeautifulDnd  =
   project.aggregate(beautifulDnd, beautifulDndDemo).enablePlugins(NoPublishPlugin)
-lazy val rootTree         =
+lazy val rootTree          =
   project.aggregate(tree, treeDemo).enablePlugins(NoPublishPlugin)
-lazy val rootSemanticUI   =
+lazy val rootSemanticUI    =
   project.aggregate(semanticUI, semanticUIDemo).enablePlugins(NoPublishPlugin)
-lazy val rootHotkeys      =
+lazy val rootHotkeys       =
   project.aggregate(hotkeys, hotkeysDemo).enablePlugins(NoPublishPlugin)
-lazy val rootResizable    =
+lazy val rootResizable     =
   project.aggregate(resizable, resizableDemo).enablePlugins(NoPublishPlugin)
-lazy val rootPrimeReact   =
+lazy val rootPrimeReact    =
   project.aggregate(primeReact, primeReactDemo).enablePlugins(NoPublishPlugin)
 
 val projects = List(
@@ -199,6 +203,7 @@ val projects = List(
   rootClipboard,
   rootVirtuoso,
   rootTable,
+  rootTanstackTable,
   rootHighcharts,
   rootDatepicker,
   rootBeautifulDnd,
@@ -339,6 +344,30 @@ lazy val tableDemo = project
     demoSettings
   )
 
+lazy val tanstackTable = project
+  .in(file("tanstack-table"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .dependsOn(common)
+  .settings(
+    name                     := "lucuma-react-tanstack-table",
+    stOutputPackage          := "reactST",
+    stUseScalaJsDom          := true,
+    stFlavour                := Flavour.ScalajsReact,
+    stReactEnableTreeShaking := Selection.All,
+    stMinimize               := Selection.AllExcept("@tanstack/react-table", "@tanstack/react-virtual"),
+    Compile / doc / sources  := Seq(),
+    Compile / scalacOptions += "-language:implicitConversions",
+    yarnSettings
+  )
+
+lazy val tanstackTableDemo = project
+  .in(file("tanstack-table-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(tanstackTable)
+  .settings(
+    demoSettings
+  )
+
 lazy val highcharts = project
   .in(file("highcharts"))
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
@@ -347,7 +376,7 @@ lazy val highcharts = project
     name                    := "lucuma-react-highcharts",
     stIgnore ++= List("react", "react-dom"),
     stUseScalaJsDom         := true,
-    stOutputPackage         := "gpp",
+    stOutputPackage         := "reactST",
     stMinimize              := Selection.AllExcept("highcharts"),
     Compile / doc / sources := Seq(),
     Compile / scalacOptions += "-language:implicitConversions",
@@ -371,7 +400,7 @@ lazy val datepicker = project
     name                    := "lucuma-react-datepicker",
     stIgnore ++= List("react-dom"),
     stUseScalaJsDom         := true,
-    stOutputPackage         := "lucuma",
+    stOutputPackage         := "reactST",
     stFlavour               := Flavour.ScalajsReact,
     stMinimize              := Selection.AllExcept("@types/react-datepicker"),
     Compile / doc / sources := Seq(),
