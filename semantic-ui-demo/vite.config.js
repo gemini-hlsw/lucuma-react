@@ -5,8 +5,8 @@ import path from "path";
 export default ({ command, mode }) => {
   const sjs =
     mode == "production"
-      ? path.resolve(__dirname, "target/scala-3.1.3/semanticuidemo-opt/")
-      : path.resolve(__dirname, "target/scala-3.1.3/semanticuidemo-fastopt/");
+      ? path.resolve(__dirname, "target/scala-3.2.0/semanticuidemo-opt/")
+      : path.resolve(__dirname, "target/scala-3.2.0/semanticuidemo-fastopt/");
   const webapp = path.resolve(__dirname, "src/main/webapp/");
   const themeConfig = path.resolve(webapp, "theme/theme.config");
   const themeSite = path.resolve(webapp, "theme/site");
