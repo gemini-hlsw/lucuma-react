@@ -15,7 +15,7 @@ val scalaJsReactV    = "2.1.1"
 val catsV            = "2.8.0"
 val munitV           = "1.0.0-M6"
 val disciplineMunitV = "2.0.0-M3"
-val utestV           = "0.8.0"
+val utestV           = "0.8.1"
 val jsdomV           = "20.0.0"
 
 ThisBuild / crossScalaVersions := Seq("3.2.0")
