@@ -5,6 +5,7 @@ Common utilities and facades for React and Scala.js
 Example running a demo:
 ```sh
 sbt semanticUIDemo/fastLinkJS
+npm install --force
 vite -c semantic-ui-demo/vite.config.js
 ```
 
