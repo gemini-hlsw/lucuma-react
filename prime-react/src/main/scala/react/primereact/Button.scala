@@ -7,7 +7,6 @@ import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
-// import react.common.implicits.*
 import reactST.primereact.components.{Button => CButton}
 import reactST.primereact.primereactStrings.button
 import reactST.primereact.primereactStrings.reset
