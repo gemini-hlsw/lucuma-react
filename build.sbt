@@ -133,6 +133,7 @@ lazy val root = project
     gridLayout,
     gridLayoutDemo,
     draggable,
+    floatingui,
     clipboard,
     virtuoso,
     virtuosoDemo,
@@ -165,6 +166,8 @@ lazy val rootGridLayout   =
   project.aggregate(resizeDetector, gridLayout, gridLayoutDemo).enablePlugins(NoPublishPlugin)
 lazy val rootDraggable    =
   project.aggregate(draggable).enablePlugins(NoPublishPlugin)
+lazy val rootFloatingui   =
+  project.aggregate(floatingui).enablePlugins(NoPublishPlugin)
 lazy val rootClipboard    =
   project.aggregate(clipboard).enablePlugins(NoPublishPlugin)
 lazy val rootVirtuoso     =
@@ -192,6 +195,7 @@ val projects = List(
   rootCore,
   rootGridLayout,
   rootDraggable,
+  rootFloatingui,
   rootClipboard,
   rootVirtuoso,
   rootTable,
@@ -268,6 +272,16 @@ lazy val draggable = project
   .dependsOn(common)
   .settings(
     name := "lucuma-react-draggable",
+    facadeSettings,
+    yarnSettings
+  )
+
+lazy val floatingui = project
+  .in(file("floatingui"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-floatingui",
     facadeSettings,
     yarnSettings
   )
