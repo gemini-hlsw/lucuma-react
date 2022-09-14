@@ -281,9 +281,10 @@ lazy val floatingui = project
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common)
   .settings(
-    name := "lucuma-react-floatingui",
+    name                := "lucuma-react-floatingui",
     facadeSettings,
-    yarnSettings
+    yarnSettings,
+    tlVersionIntroduced := Map("3" -> "0.3.1")
   )
 
 lazy val clipboard = project
