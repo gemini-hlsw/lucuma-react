@@ -279,7 +279,7 @@ lazy val draggable = project
 lazy val floatingui = project
   .in(file("floatingui"))
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
-  .dependsOn(common)
+  .dependsOn(common, test % Test)
   .settings(
     name                := "lucuma-react-floatingui",
     facadeSettings,
