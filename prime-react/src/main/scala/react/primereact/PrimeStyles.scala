@@ -3,21 +3,11 @@
 
 package react.primereact
 
-import cats.syntax.all._
 import react.common._
 
-object PrimeStyles {
-  // These are not prime react specific. Perhaps should be moved to wherever our
-  // "higher level" components live. (Components that use Views and Enumerations)
+trait PrimeStyles {
   val Compact: Css     = Css("compact")
   val VeryCompact: Css = Css("very-compact")
-
-  val FormColumn: Css            = Css("form-column")
-  val FormColumnCompact: Css     = FormColumn |+| Compact
-  val FormColumnVeryCompact: Css = FormColumn |+| VeryCompact
-
-  val FormField: Css      = Css("form-field")
-  val FormFieldLabel: Css = Css("form-field-label")
 
   // wrappers for primereact classes
   val Invalid: Css = Css("p-invalid")
@@ -39,3 +29,5 @@ object PrimeStyles {
   val ButtonHelp: Css      = Css("p-button-help")
   val ButtonDanger: Css    = Css("p-button-danger")
 }
+
+object PrimeStyles extends PrimeStyles
