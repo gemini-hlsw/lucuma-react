@@ -11,6 +11,3 @@ const Test = {
 };
 
 module.exports = Test;
-module.exports.node = {
-  fs: "empty"
-};
