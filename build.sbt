@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.3"
+ThisBuild / tlBaseVersion       := "0.4"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
@@ -133,6 +133,7 @@ lazy val root = project
     gridLayout,
     gridLayoutDemo,
     draggable,
+    floatingui,
     clipboard,
     virtuoso,
     virtuosoDemo,
@@ -165,6 +166,8 @@ lazy val rootGridLayout   =
   project.aggregate(resizeDetector, gridLayout, gridLayoutDemo).enablePlugins(NoPublishPlugin)
 lazy val rootDraggable    =
   project.aggregate(draggable).enablePlugins(NoPublishPlugin)
+lazy val rootFloatingui   =
+  project.aggregate(floatingui).enablePlugins(NoPublishPlugin)
 lazy val rootClipboard    =
   project.aggregate(clipboard).enablePlugins(NoPublishPlugin)
 lazy val rootVirtuoso     =
@@ -192,6 +195,7 @@ val projects = List(
   rootCore,
   rootGridLayout,
   rootDraggable,
+  rootFloatingui,
   rootClipboard,
   rootVirtuoso,
   rootTable,
@@ -270,6 +274,17 @@ lazy val draggable = project
     name := "lucuma-react-draggable",
     facadeSettings,
     yarnSettings
+  )
+
+lazy val floatingui = project
+  .in(file("floatingui"))
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .dependsOn(common, test % Test)
+  .settings(
+    name                := "lucuma-react-floatingui",
+    facadeSettings,
+    yarnSettings,
+    tlVersionIntroduced := Map("3" -> "0.3.1")
   )
 
 lazy val clipboard = project
