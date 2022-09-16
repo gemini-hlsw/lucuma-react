@@ -9,9 +9,9 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: ["**", "!update/**", "!pr/**", "!dependabot/**"]
+    branches: ['**', '!update/**', '!pr/**', '!dependabot/**']
   push:
-    branches: ["**", "!update/**", "!pr/**", "!dependabot/**"]
+    branches: ['**', '!update/**', '!pr/**', '!dependabot/**']
     tags: [v*]
 
 env:
@@ -30,28 +30,7 @@ jobs:
         os: [ubuntu-latest]
         scala: [3.2.1-RC1]
         java: [temurin@17]
-        project:
-          [
-            rootCore,
-            rootGridLayout,
-            rootDraggable,
-            rootFloatingui,
-            rootClipboard,
-            rootVirtuoso,
-            rootTable,
-            rootTanstackTable,
-            rootHighcharts,
-            rootDatepicker,
-            rootBeautifulDnd,
-            rootTree,
-            rootSemanticUI,
-            fontAwesome,
-            rootHotkeys,
-            rootResizable,
-            rootPrimeReact,
-            circularProgressbar,
-            moon,
-          ]
+        project: [rootCore, rootGridLayout, rootDraggable, rootFloatingui, rootClipboard, rootVirtuoso, rootTable, rootTanstackTable, rootHighcharts, rootDatepicker, rootBeautifulDnd, rootTree, rootSemanticUI, fontAwesome, rootHotkeys, rootResizable, rootPrimeReact, circularProgressbar, moon]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)
@@ -109,7 +88,7 @@ jobs:
         run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' coverageReport coverageAggregate
 
       - name: Upload code coverage data
-        run: "bash <(curl -s https://codecov.io/bash)"
+        run: 'bash <(curl -s https://codecov.io/bash)'
 
   publish:
     name: Publish Artifacts
