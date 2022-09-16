@@ -1,4 +1,4 @@
-val sbtLucumaVersion = "0.10.0"
+val sbtLucumaVersion = "0.10.1"
 addSbtPlugin("edu.gemini"                  % "sbt-lucuma-lib"         % sbtLucumaVersion)
 addSbtPlugin("edu.gemini"                  % "sbt-lucuma-sjs-bundler" % sbtLucumaVersion)
 addSbtPlugin("org.scalablytyped.converter" % "sbt-converter"          % "1.0.0-beta39")
