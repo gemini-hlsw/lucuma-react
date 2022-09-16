@@ -6,446 +6,428 @@
 # to meet your needs, then regenerate this file.
 
 pull_request_rules:
-  - name: merge scala-steward's PRs
-    conditions:
-      - author=lucuma-steward[bot]
-      - or:
-          - body~=labels:.*early-semver-patch
-          - body~=labels:.*early-semver-minor
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootCore)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootGridLayout)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootDraggable)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootFloatingui)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootClipboard)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootVirtuoso)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTable)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTanstackTable)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootHighcharts)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootDatepicker)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootBeautifulDnd)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTree)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootSemanticUI)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, fontAwesome)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootHotkeys)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootResizable)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootPrimeReact)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, circularProgressbar)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, moon)
-    actions:
-      merge: {}
-  - name: Label beautiful-dnd PRs
-    conditions:
-      - files~=^beautiful-dnd/
-    actions:
-      label:
-        add:
-          - beautiful-dnd
-        remove: []
-  - name: Label beautiful-dnd-demo PRs
-    conditions:
-      - files~=^beautiful-dnd-demo/
-    actions:
-      label:
-        add:
-          - beautiful-dnd-demo
-        remove: []
-  - name: Label circular-progressbar PRs
-    conditions:
-      - files~=^circular-progressbar/
-    actions:
-      label:
-        add:
-          - circular-progressbar
-        remove: []
-  - name: Label clipboard PRs
-    conditions:
-      - files~=^clipboard/
-    actions:
-      label:
-        add:
-          - clipboard
-        remove: []
-  - name: Label common PRs
-    conditions:
-      - files~=^common/
-    actions:
-      label:
-        add:
-          - common
-        remove: []
-  - name: Label datepicker PRs
-    conditions:
-      - files~=^datepicker/
-    actions:
-      label:
-        add:
-          - datepicker
-        remove: []
-  - name: Label datepicker-demo PRs
-    conditions:
-      - files~=^datepicker-demo/
-    actions:
-      label:
-        add:
-          - datepicker-demo
-        remove: []
-  - name: Label draggable PRs
-    conditions:
-      - files~=^draggable/
-    actions:
-      label:
-        add:
-          - draggable
-        remove: []
-  - name: Label floatingui PRs
-    conditions:
-      - files~=^floatingui/
-    actions:
-      label:
-        add:
-          - floatingui
-        remove: []
-  - name: Label font-awesome PRs
-    conditions:
-      - files~=^font-awesome/
-    actions:
-      label:
-        add:
-          - font-awesome
-        remove: []
-  - name: Label grid-layout PRs
-    conditions:
-      - files~=^grid-layout/
-    actions:
-      label:
-        add:
-          - grid-layout
-        remove: []
-  - name: Label grid-layout-demo PRs
-    conditions:
-      - files~=^grid-layout-demo/
-    actions:
-      label:
-        add:
-          - grid-layout-demo
-        remove: []
-  - name: Label highcharts PRs
-    conditions:
-      - files~=^highcharts/
-    actions:
-      label:
-        add:
-          - highcharts
-        remove: []
-  - name: Label highcharts-demo PRs
-    conditions:
-      - files~=^highcharts-demo/
-    actions:
-      label:
-        add:
-          - highcharts-demo
-        remove: []
-  - name: Label hotkeys PRs
-    conditions:
-      - files~=^hotkeys/
-    actions:
-      label:
-        add:
-          - hotkeys
-        remove: []
-  - name: Label hotkeys-demo PRs
-    conditions:
-      - files~=^hotkeys-demo/
-    actions:
-      label:
-        add:
-          - hotkeys-demo
-        remove: []
-  - name: Label moon PRs
-    conditions:
-      - files~=^moon/
-    actions:
-      label:
-        add:
-          - moon
-        remove: []
-  - name: Label prime-react PRs
-    conditions:
-      - files~=^prime-react/
-    actions:
-      label:
-        add:
-          - prime-react
-        remove: []
-  - name: Label prime-react-demo PRs
-    conditions:
-      - files~=^prime-react-demo/
-    actions:
-      label:
-        add:
-          - prime-react-demo
-        remove: []
-  - name: Label resizable PRs
-    conditions:
-      - files~=^resizable/
-    actions:
-      label:
-        add:
-          - resizable
-        remove: []
-  - name: Label resizable-demo PRs
-    conditions:
-      - files~=^resizable-demo/
-    actions:
-      label:
-        add:
-          - resizable-demo
-        remove: []
-  - name: Label resize-detector PRs
-    conditions:
-      - files~=^resize-detector/
-    actions:
-      label:
-        add:
-          - resize-detector
-        remove: []
-  - name: Label rootBeautifulDnd PRs
-    conditions:
-      - files~=^rootBeautifulDnd/
-    actions:
-      label:
-        add:
-          - rootBeautifulDnd
-        remove: []
-  - name: Label rootClipboard PRs
-    conditions:
-      - files~=^rootClipboard/
-    actions:
-      label:
-        add:
-          - rootClipboard
-        remove: []
-  - name: Label rootCore PRs
-    conditions:
-      - files~=^rootCore/
-    actions:
-      label:
-        add:
-          - rootCore
-        remove: []
-  - name: Label rootDatepicker PRs
-    conditions:
-      - files~=^rootDatepicker/
-    actions:
-      label:
-        add:
-          - rootDatepicker
-        remove: []
-  - name: Label rootDraggable PRs
-    conditions:
-      - files~=^rootDraggable/
-    actions:
-      label:
-        add:
-          - rootDraggable
-        remove: []
-  - name: Label rootFloatingui PRs
-    conditions:
-      - files~=^rootFloatingui/
-    actions:
-      label:
-        add:
-          - rootFloatingui
-        remove: []
-  - name: Label rootGridLayout PRs
-    conditions:
-      - files~=^rootGridLayout/
-    actions:
-      label:
-        add:
-          - rootGridLayout
-        remove: []
-  - name: Label rootHighcharts PRs
-    conditions:
-      - files~=^rootHighcharts/
-    actions:
-      label:
-        add:
-          - rootHighcharts
-        remove: []
-  - name: Label rootHotkeys PRs
-    conditions:
-      - files~=^rootHotkeys/
-    actions:
-      label:
-        add:
-          - rootHotkeys
-        remove: []
-  - name: Label rootPrimeReact PRs
-    conditions:
-      - files~=^rootPrimeReact/
-    actions:
-      label:
-        add:
-          - rootPrimeReact
-        remove: []
-  - name: Label rootResizable PRs
-    conditions:
-      - files~=^rootResizable/
-    actions:
-      label:
-        add:
-          - rootResizable
-        remove: []
-  - name: Label rootSemanticUI PRs
-    conditions:
-      - files~=^rootSemanticUI/
-    actions:
-      label:
-        add:
-          - rootSemanticUI
-        remove: []
-  - name: Label rootTable PRs
-    conditions:
-      - files~=^rootTable/
-    actions:
-      label:
-        add:
-          - rootTable
-        remove: []
-  - name: Label rootTanstackTable PRs
-    conditions:
-      - files~=^rootTanstackTable/
-    actions:
-      label:
-        add:
-          - rootTanstackTable
-        remove: []
-  - name: Label rootTree PRs
-    conditions:
-      - files~=^rootTree/
-    actions:
-      label:
-        add:
-          - rootTree
-        remove: []
-  - name: Label rootVirtuoso PRs
-    conditions:
-      - files~=^rootVirtuoso/
-    actions:
-      label:
-        add:
-          - rootVirtuoso
-        remove: []
-  - name: Label semantic-ui PRs
-    conditions:
-      - files~=^semantic-ui/
-    actions:
-      label:
-        add:
-          - semantic-ui
-        remove: []
-  - name: Label semantic-ui-demo PRs
-    conditions:
-      - files~=^semantic-ui-demo/
-    actions:
-      label:
-        add:
-          - semantic-ui-demo
-        remove: []
-  - name: Label table PRs
-    conditions:
-      - files~=^table/
-    actions:
-      label:
-        add:
-          - table
-        remove: []
-  - name: Label table-demo PRs
-    conditions:
-      - files~=^table-demo/
-    actions:
-      label:
-        add:
-          - table-demo
-        remove: []
-  - name: Label tanstack-table PRs
-    conditions:
-      - files~=^tanstack-table/
-    actions:
-      label:
-        add:
-          - tanstack-table
-        remove: []
-  - name: Label tanstack-table-demo PRs
-    conditions:
-      - files~=^tanstack-table-demo/
-    actions:
-      label:
-        add:
-          - tanstack-table-demo
-        remove: []
-  - name: Label test PRs
-    conditions:
-      - files~=^test/
-    actions:
-      label:
-        add:
-          - test
-        remove: []
-  - name: Label tree PRs
-    conditions:
-      - files~=^tree/
-    actions:
-      label:
-        add:
-          - tree
-        remove: []
-  - name: Label tree-demo PRs
-    conditions:
-      - files~=^tree-demo/
-    actions:
-      label:
-        add:
-          - tree-demo
-        remove: []
-  - name: Label virtuoso PRs
-    conditions:
-      - files~=^virtuoso/
-    actions:
-      label:
-        add:
-          - virtuoso
-        remove: []
-  - name: Label virtuoso-demo PRs
-    conditions:
-      - files~=^virtuoso-demo/
-    actions:
-      label:
-        add:
-          - virtuoso-demo
-        remove: []
-  - name: merge dependabot PRs
-    conditions:
-      - author=dependabot[bot]
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootCore)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootGridLayout)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootDraggable)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootFloatingui)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootClipboard)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootVirtuoso)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTable)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTanstackTable)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootHighcharts)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootDatepicker)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootBeautifulDnd)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTree)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootSemanticUI)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, fontAwesome)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootHotkeys)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootResizable)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootPrimeReact)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, circularProgressbar)
-      - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, moon)
-    actions:
-      merge: {}
+- name: merge scala-steward's PRs
+  conditions:
+  - author=lucuma-steward[bot]
+  - or:
+    - body~=labels:.*early-semver-patch
+    - body~=labels:.*early-semver-minor
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootCore)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootGridLayout)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootDraggable)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootClipboard)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootVirtuoso)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTable)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTanstackTable)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootHighcharts)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootDatepicker)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootBeautifulDnd)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTree)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootSemanticUI)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, fontAwesome)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootHotkeys)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootResizable)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootPrimeReact)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, circularProgressbar)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, moon)
+  actions:
+    merge: {}
+- name: Label beautiful-dnd PRs
+  conditions:
+  - files~=^beautiful-dnd/
+  actions:
+    label:
+      add:
+      - beautiful-dnd
+      remove: []
+- name: Label beautiful-dnd-demo PRs
+  conditions:
+  - files~=^beautiful-dnd-demo/
+  actions:
+    label:
+      add:
+      - beautiful-dnd-demo
+      remove: []
+- name: Label circular-progressbar PRs
+  conditions:
+  - files~=^circular-progressbar/
+  actions:
+    label:
+      add:
+      - circular-progressbar
+      remove: []
+- name: Label clipboard PRs
+  conditions:
+  - files~=^clipboard/
+  actions:
+    label:
+      add:
+      - clipboard
+      remove: []
+- name: Label common PRs
+  conditions:
+  - files~=^common/
+  actions:
+    label:
+      add:
+      - common
+      remove: []
+- name: Label datepicker PRs
+  conditions:
+  - files~=^datepicker/
+  actions:
+    label:
+      add:
+      - datepicker
+      remove: []
+- name: Label datepicker-demo PRs
+  conditions:
+  - files~=^datepicker-demo/
+  actions:
+    label:
+      add:
+      - datepicker-demo
+      remove: []
+- name: Label draggable PRs
+  conditions:
+  - files~=^draggable/
+  actions:
+    label:
+      add:
+      - draggable
+      remove: []
+- name: Label font-awesome PRs
+  conditions:
+  - files~=^font-awesome/
+  actions:
+    label:
+      add:
+      - font-awesome
+      remove: []
+- name: Label grid-layout PRs
+  conditions:
+  - files~=^grid-layout/
+  actions:
+    label:
+      add:
+      - grid-layout
+      remove: []
+- name: Label grid-layout-demo PRs
+  conditions:
+  - files~=^grid-layout-demo/
+  actions:
+    label:
+      add:
+      - grid-layout-demo
+      remove: []
+- name: Label highcharts PRs
+  conditions:
+  - files~=^highcharts/
+  actions:
+    label:
+      add:
+      - highcharts
+      remove: []
+- name: Label highcharts-demo PRs
+  conditions:
+  - files~=^highcharts-demo/
+  actions:
+    label:
+      add:
+      - highcharts-demo
+      remove: []
+- name: Label hotkeys PRs
+  conditions:
+  - files~=^hotkeys/
+  actions:
+    label:
+      add:
+      - hotkeys
+      remove: []
+- name: Label hotkeys-demo PRs
+  conditions:
+  - files~=^hotkeys-demo/
+  actions:
+    label:
+      add:
+      - hotkeys-demo
+      remove: []
+- name: Label moon PRs
+  conditions:
+  - files~=^moon/
+  actions:
+    label:
+      add:
+      - moon
+      remove: []
+- name: Label prime-react PRs
+  conditions:
+  - files~=^prime-react/
+  actions:
+    label:
+      add:
+      - prime-react
+      remove: []
+- name: Label prime-react-demo PRs
+  conditions:
+  - files~=^prime-react-demo/
+  actions:
+    label:
+      add:
+      - prime-react-demo
+      remove: []
+- name: Label resizable PRs
+  conditions:
+  - files~=^resizable/
+  actions:
+    label:
+      add:
+      - resizable
+      remove: []
+- name: Label resizable-demo PRs
+  conditions:
+  - files~=^resizable-demo/
+  actions:
+    label:
+      add:
+      - resizable-demo
+      remove: []
+- name: Label resize-detector PRs
+  conditions:
+  - files~=^resize-detector/
+  actions:
+    label:
+      add:
+      - resize-detector
+      remove: []
+- name: Label rootBeautifulDnd PRs
+  conditions:
+  - files~=^rootBeautifulDnd/
+  actions:
+    label:
+      add:
+      - rootBeautifulDnd
+      remove: []
+- name: Label rootClipboard PRs
+  conditions:
+  - files~=^rootClipboard/
+  actions:
+    label:
+      add:
+      - rootClipboard
+      remove: []
+- name: Label rootCore PRs
+  conditions:
+  - files~=^rootCore/
+  actions:
+    label:
+      add:
+      - rootCore
+      remove: []
+- name: Label rootDatepicker PRs
+  conditions:
+  - files~=^rootDatepicker/
+  actions:
+    label:
+      add:
+      - rootDatepicker
+      remove: []
+- name: Label rootDraggable PRs
+  conditions:
+  - files~=^rootDraggable/
+  actions:
+    label:
+      add:
+      - rootDraggable
+      remove: []
+- name: Label rootGridLayout PRs
+  conditions:
+  - files~=^rootGridLayout/
+  actions:
+    label:
+      add:
+      - rootGridLayout
+      remove: []
+- name: Label rootHighcharts PRs
+  conditions:
+  - files~=^rootHighcharts/
+  actions:
+    label:
+      add:
+      - rootHighcharts
+      remove: []
+- name: Label rootHotkeys PRs
+  conditions:
+  - files~=^rootHotkeys/
+  actions:
+    label:
+      add:
+      - rootHotkeys
+      remove: []
+- name: Label rootPrimeReact PRs
+  conditions:
+  - files~=^rootPrimeReact/
+  actions:
+    label:
+      add:
+      - rootPrimeReact
+      remove: []
+- name: Label rootResizable PRs
+  conditions:
+  - files~=^rootResizable/
+  actions:
+    label:
+      add:
+      - rootResizable
+      remove: []
+- name: Label rootSemanticUI PRs
+  conditions:
+  - files~=^rootSemanticUI/
+  actions:
+    label:
+      add:
+      - rootSemanticUI
+      remove: []
+- name: Label rootTable PRs
+  conditions:
+  - files~=^rootTable/
+  actions:
+    label:
+      add:
+      - rootTable
+      remove: []
+- name: Label rootTanstackTable PRs
+  conditions:
+  - files~=^rootTanstackTable/
+  actions:
+    label:
+      add:
+      - rootTanstackTable
+      remove: []
+- name: Label rootTree PRs
+  conditions:
+  - files~=^rootTree/
+  actions:
+    label:
+      add:
+      - rootTree
+      remove: []
+- name: Label rootVirtuoso PRs
+  conditions:
+  - files~=^rootVirtuoso/
+  actions:
+    label:
+      add:
+      - rootVirtuoso
+      remove: []
+- name: Label semantic-ui PRs
+  conditions:
+  - files~=^semantic-ui/
+  actions:
+    label:
+      add:
+      - semantic-ui
+      remove: []
+- name: Label semantic-ui-demo PRs
+  conditions:
+  - files~=^semantic-ui-demo/
+  actions:
+    label:
+      add:
+      - semantic-ui-demo
+      remove: []
+- name: Label table PRs
+  conditions:
+  - files~=^table/
+  actions:
+    label:
+      add:
+      - table
+      remove: []
+- name: Label table-demo PRs
+  conditions:
+  - files~=^table-demo/
+  actions:
+    label:
+      add:
+      - table-demo
+      remove: []
+- name: Label tanstack-table PRs
+  conditions:
+  - files~=^tanstack-table/
+  actions:
+    label:
+      add:
+      - tanstack-table
+      remove: []
+- name: Label tanstack-table-demo PRs
+  conditions:
+  - files~=^tanstack-table-demo/
+  actions:
+    label:
+      add:
+      - tanstack-table-demo
+      remove: []
+- name: Label test PRs
+  conditions:
+  - files~=^test/
+  actions:
+    label:
+      add:
+      - test
+      remove: []
+- name: Label tree PRs
+  conditions:
+  - files~=^tree/
+  actions:
+    label:
+      add:
+      - tree
+      remove: []
+- name: Label tree-demo PRs
+  conditions:
+  - files~=^tree-demo/
+  actions:
+    label:
+      add:
+      - tree-demo
+      remove: []
+- name: Label virtuoso PRs
+  conditions:
+  - files~=^virtuoso/
+  actions:
+    label:
+      add:
+      - virtuoso
+      remove: []
+- name: Label virtuoso-demo PRs
+  conditions:
+  - files~=^virtuoso-demo/
+  actions:
+    label:
+      add:
+      - virtuoso-demo
+      remove: []
+- name: merge dependabot PRs
+  conditions:
+  - author=dependabot[bot]
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootCore)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootGridLayout)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootDraggable)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootClipboard)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootVirtuoso)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTable)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTanstackTable)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootHighcharts)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootDatepicker)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootBeautifulDnd)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTree)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootSemanticUI)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, fontAwesome)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootHotkeys)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootResizable)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootPrimeReact)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, circularProgressbar)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, moon)
+  actions:
+    merge: {}
