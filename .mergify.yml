@@ -15,6 +15,7 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootCore)
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootGridLayout)
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootDraggable)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootFloatingui)
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootClipboard)
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootVirtuoso)
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTable)
@@ -95,6 +96,14 @@ pull_request_rules:
     label:
       add:
       - draggable
+      remove: []
+- name: Label floatingui PRs
+  conditions:
+  - files~=^floatingui/
+  actions:
+    label:
+      add:
+      - floatingui
       remove: []
 - name: Label font-awesome PRs
   conditions:
@@ -239,6 +248,14 @@ pull_request_rules:
     label:
       add:
       - rootDraggable
+      remove: []
+- name: Label rootFloatingui PRs
+  conditions:
+  - files~=^rootFloatingui/
+  actions:
+    label:
+      add:
+      - rootFloatingui
       remove: []
 - name: Label rootGridLayout PRs
   conditions:
@@ -414,6 +431,7 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootCore)
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootGridLayout)
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootDraggable)
+  - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootFloatingui)
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootClipboard)
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootVirtuoso)
   - status-success=Build and Test (ubuntu-latest, 3.2.1-RC1, temurin@17, rootTable)
