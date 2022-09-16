@@ -28,9 +28,9 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        scala: [3.2.0]
+        scala: [3.2.1-RC1]
         java: [temurin@17]
-        project: [rootCore, rootGridLayout, rootDraggable, rootFloatingui, rootClipboard, rootVirtuoso, rootTable, rootHighcharts, rootDatepicker, rootBeautifulDnd, rootTree, rootSemanticUI, fontAwesome, rootHotkeys, rootResizable, rootPrimeReact, circularProgressbar, moon]
+        project: [rootCore, rootGridLayout, rootDraggable, rootFloatingui, rootClipboard, rootVirtuoso, rootTable, rootTanstackTable, rootHighcharts, rootDatepicker, rootBeautifulDnd, rootTree, rootSemanticUI, fontAwesome, rootHotkeys, rootResizable, rootPrimeReact, circularProgressbar, moon]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)
@@ -97,7 +97,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        scala: [3.2.0]
+        scala: [3.2.1-RC1]
         java: [temurin@17]
     runs-on: ${{ matrix.os }}
     steps:

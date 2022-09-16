@@ -3,16 +3,16 @@
 
 package react.highcharts
 
-import gpp.highcharts.anon.TypeofHighcharts
-import gpp.highcharts.anon.TypeofHighchartsAST
-import gpp.highcharts.mod.Chart_
-import gpp.highcharts.mod.HTMLDOMElement
-import gpp.highcharts.mod.Options
-import gpp.highcharts.mod.PointOptionsObject
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.html
 import react.common.ReactProps
+import reactST.highcharts.anon.TypeofHighcharts
+import reactST.highcharts.anon.TypeofHighchartsAST
+import reactST.highcharts.mod.Chart_
+import reactST.highcharts.mod.HTMLDOMElement
+import reactST.highcharts.mod.Options
+import reactST.highcharts.mod.PointOptionsObject
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
