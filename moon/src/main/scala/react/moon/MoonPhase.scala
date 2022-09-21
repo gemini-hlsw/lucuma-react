@@ -27,7 +27,7 @@ final case class MoonPhase(
 object MoonPhase {
 
   @js.native
-  @JSImport("react-moon", JSImport.Default)
+  @JSImport("@cquiroz/react-moon", JSImport.Default)
   object RawComponent extends js.Function1[js.Any, js.Any] {
     def apply(i: js.Any): js.Any = js.native
   }

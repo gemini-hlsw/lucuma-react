@@ -19,7 +19,7 @@
     "react-draggable": "^4.4.5",
     "react-grid-layout": "^1.3.0",
     "react-hotkeys": "^2.0.0",
-    "react-moon": "^2.0.2",
+    "@cquiroz/react-moon": "^2.0.2",
     "react-resizable": "^3.0.4",
     "react-resize-detector": "^7.1.2",
     "react-semantic-toasts": "^0.6.5",
