@@ -11,29 +11,32 @@ import reactST.primereact.selectitemMod.SelectItem
 import scalajs.js
 import scalajs.js.JSConverters.*
 
+final case class Dropdown(
+  value:           Any,
+  options:         List[SelectItem],
+  id:              js.UndefOr[String] = js.undefined,
+  className:       js.UndefOr[String] = js.undefined,
+  clazz:           js.UndefOr[Css] = js.undefined,
+  showClear:       js.UndefOr[Boolean] = js.undefined,
+  filter:          js.UndefOr[Boolean] = js.undefined,
+  showFilterClear: js.UndefOr[Boolean] = js.undefined,
+  placeholder:     js.UndefOr[String] = js.undefined,
+  disabled:        js.UndefOr[Boolean] = js.undefined,
+  onChange:        js.UndefOr[Any => Callback] = js.undefined
+) extends ReactFnProps[Dropdown](Dropdown.component)
+
 object Dropdown {
-  def apply(
-    value:           Any,
-    options:         List[SelectItem],
-    id:              js.UndefOr[String] = js.undefined,
-    className:       js.UndefOr[String] = js.undefined,
-    clazz:           js.UndefOr[Css] = js.undefined,
-    showClear:       js.UndefOr[Boolean] = js.undefined,
-    filter:          js.UndefOr[Boolean] = js.undefined,
-    showFilterClear: js.UndefOr[Boolean] = js.undefined,
-    placeholder:     js.UndefOr[String] = js.undefined,
-    disabled:        js.UndefOr[Boolean] = js.undefined,
-    onChange:        js.UndefOr[Any => Callback] = js.undefined
-  ): CDropdown.Builder =
+  private val component = ScalaFnComponent[Dropdown] { props =>
     CDropdown
-      .value(value)
-      .options(options.toJSArray)
-      .applyOrNot(id, _.id(_))
-      .applyOrNot((className, clazz).toJs, _.className(_))
-      .applyOrNot(showClear, _.showClear(_))
-      .applyOrNot(filter, _.filter(_))
-      .applyOrNot(showFilterClear, _.showFilterClear(_))
-      .applyOrNot(placeholder, _.placeholder(_))
-      .applyOrNot(disabled, _.disabled(_))
-      .applyOrNot(onChange, (b, a) => b.onChange(e => a(e.value)))
+      .value(props.value)
+      .options(props.options.toJSArray)
+      .applyOrNot(props.id, _.id(_))
+      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot(props.showClear, _.showClear(_))
+      .applyOrNot(props.filter, _.filter(_))
+      .applyOrNot(props.showFilterClear, _.showFilterClear(_))
+      .applyOrNot(props.placeholder, _.placeholder(_))
+      .applyOrNot(props.disabled, _.disabled(_))
+      .applyOrNot(props.onChange, (b, a) => b.onChange(e => a(e.value)))
+  }
 }

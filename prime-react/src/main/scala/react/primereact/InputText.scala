@@ -9,25 +9,28 @@ import reactST.primereact.components.{InputText => CInputText}
 
 import scalajs.js
 
+final case class InputText(
+  id:          String,
+  className:   js.UndefOr[String] = js.undefined,
+  clazz:       js.UndefOr[Css] = js.undefined,
+  value:       js.UndefOr[String] = js.undefined,
+  disabled:    js.UndefOr[Boolean] = js.undefined,
+  placeholder: js.UndefOr[String] = js.undefined,
+  onBlur:      js.UndefOr[ReactFocusEventFromInput => Callback] = js.undefined,
+  onChange:    js.UndefOr[ReactEventFromInput => Callback] = js.undefined,
+  onKeyDown:   js.UndefOr[ReactKeyboardEventFromInput => Callback] = js.undefined
+) extends ReactFnProps[InputText](InputText.component)
+
 object InputText {
-  def apply(
-    id:          String,
-    className:   js.UndefOr[String] = js.undefined,
-    clazz:       js.UndefOr[Css] = js.undefined,
-    value:       js.UndefOr[String] = js.undefined,
-    disabled:    js.UndefOr[Boolean] = js.undefined,
-    placeholder: js.UndefOr[String] = js.undefined,
-    onBlur:      js.UndefOr[ReactFocusEventFromInput => Callback] = js.undefined,
-    onChange:    js.UndefOr[ReactEventFromInput => Callback] = js.undefined,
-    onKeyDown:   js.UndefOr[ReactKeyboardEventFromInput => Callback] = js.undefined
-  ): CInputText.Builder =
+  private val component = ScalaFnComponent[InputText] { props =>
     CInputText
-      .id(id)
-      .applyOrNot(value, _.value(_))
-      .applyOrNot((className, clazz).toJs, _.className(_))
-      .applyOrNot(disabled, _.disabled(_))
-      .applyOrNot(placeholder, _.placeholder(_))
-      .applyOrNot(onBlur, _.onBlur(_))
-      .applyOrNot(onChange, _.onChange(_))
-      .applyOrNot(onKeyDown, _.onKeyDown(_))
+      .id(props.id)
+      .applyOrNot(props.value, _.value(_))
+      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot(props.disabled, _.disabled(_))
+      .applyOrNot(props.placeholder, _.placeholder(_))
+      .applyOrNot(props.onBlur, _.onBlur(_))
+      .applyOrNot(props.onChange, _.onChange(_))
+      .applyOrNot(props.onKeyDown, _.onKeyDown(_))
+  }
 }

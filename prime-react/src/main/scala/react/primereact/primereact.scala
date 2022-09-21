@@ -10,8 +10,3 @@ import scalajs.js
 
 extension [C <: js.Object, B <: StBuildingComponent[C]](b: B)
   def applyOrNot[A](a: js.UndefOr[A], f: (B, A) => B): B = a.fold(b)(a => f(b, a))
-
-enum Padding(val cls: Css):
-  case Normal      extends Padding(Css.Empty)
-  case Compact     extends Padding(PrimeStyles.Compact)
-  case VeryCompact extends Padding(PrimeStyles.VeryCompact)

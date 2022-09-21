@@ -7,6 +7,7 @@ import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
+import react.primereact.PrimeStyles
 import reactST.primereact.components.{Button => CButton}
 import reactST.primereact.primereactStrings.button
 import reactST.primereact.primereactStrings.reset
@@ -14,6 +15,19 @@ import reactST.primereact.primereactStrings.submit
 
 import scalajs.js
 import scalajs.js.JSConverters.*
+
+final case class Button(
+  className: js.UndefOr[String] = js.undefined,
+  clazz:     js.UndefOr[Css] = js.undefined,
+  onClick:   Callback = Callback.empty,
+  size:      Button.Size = Button.Size.Normal,
+  tpe:       Button.Type = Button.Type.Button,
+  severity:  Button.Severity = Button.Severity.Primary,
+  outlined:  Boolean = false,
+  raised:    Boolean = false,
+  rounded:   Boolean = false,
+  text:      Boolean = false
+) extends ReactFnPropsWithChildren[Button](Button.component)
 
 object Button {
   enum Size(val cls: Css):
@@ -35,19 +49,25 @@ object Button {
     case Submit extends Type(submit)
     case Reset  extends Type(reset)
 
-  def apply(
-    className: js.UndefOr[String] = js.undefined,
-    clazz:     js.UndefOr[Css] = js.undefined,
-    onClick:   Callback = Callback.empty,
-    size:      Size = Size.Normal,
-    tpe:       Type = Type.Button,
-    severity:  Severity = Severity.Primary,
-    padding:   Padding = Padding.Normal
-  ): CButton.Builder = {
-    val fullCss = clazz.toOption.orEmpty |+| size.cls |+| severity.cls |+| padding.cls
-    CButton
-      .onClick(_ => onClick)
-      .`type`(tpe.value)
-      .applyOrNot((className, fullCss).toJs, _.className(_))
-  }
+  private val component =
+    ScalaFnComponent
+      .withHooks[Button]
+      .withPropsChildren
+      .render { (props, children) =>
+        extension (b: Boolean) def cssOrEmpty(css: Css): Css = if b then css else Css.Empty
+
+        val fullCss =
+          props.clazz.toOption.orEmpty |+|
+            props.size.cls |+|
+            props.severity.cls |+|
+            props.outlined.cssOrEmpty(PrimeStyles.ButtonOutlined) |+|
+            props.raised.cssOrEmpty(PrimeStyles.ButtonRaised) |+|
+            props.rounded.cssOrEmpty(PrimeStyles.ButtonRounded) |+|
+            props.text.cssOrEmpty(PrimeStyles.ButtonText)
+
+        CButton
+          .onClick(_ => props.onClick)
+          .`type`(props.tpe.value)
+          .applyOrNot((props.className, fullCss).toJs, _.className(_))(children)
+      }
 }

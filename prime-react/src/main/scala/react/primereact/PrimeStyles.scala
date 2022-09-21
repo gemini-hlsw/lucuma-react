@@ -6,8 +6,6 @@ package react.primereact
 import react.common._
 
 trait PrimeStyles {
-  val Compact: Css     = Css("compact")
-  val VeryCompact: Css = Css("very-compact")
 
   // wrappers for primereact classes
   val Invalid: Css = Css("p-invalid")
@@ -28,6 +26,11 @@ trait PrimeStyles {
   val ButtonWarning: Css   = Css("p-button-warning")
   val ButtonHelp: Css      = Css("p-button-help")
   val ButtonDanger: Css    = Css("p-button-danger")
+
+  val ButtonOutlined: Css = Css("p-button-outlined")
+  val ButtonRaised: Css   = Css("p-button-raised")
+  val ButtonRounded: Css  = Css("p-button-rounded")
+  val ButtonText: Css     = Css("p-button-text")
 }
 
 object PrimeStyles extends PrimeStyles
