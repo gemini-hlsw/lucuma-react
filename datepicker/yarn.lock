@@ -3937,10 +3937,10 @@ react-transition-group@^4.4.1:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-virtuoso@^2.18.0:
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-2.18.0.tgz#42f8a7cb632aaf0bb2812bbbd4b5f2583d3d53ec"
-  integrity sha512-BxMW9as2dPOP4YFkry/oNjQMEn3cOgEjHLb7Fg8oubOgRAfiukp1Co41QFD9ZMXZBNBZNTI2E5BwC5pol31mTg==
+react-virtuoso@^2.19.0:
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-2.19.0.tgz#d815763c5b31742dbaf15b0c27fca961adf1896a"
+  integrity sha512-GeCleV9cmpYGh1Ldfgdu+4gADLzdWJ48qc4tWguFzYz7FvUSAoELe8268rR8zfIb5FcV3tqpsdvFS5i51c8jyA==
   dependencies:
     "@virtuoso.dev/react-urx" "^0.2.12"
     "@virtuoso.dev/urx" "^0.2.12"
