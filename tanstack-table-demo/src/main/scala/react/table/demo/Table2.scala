@@ -37,7 +37,8 @@ object Table2:
           HTMLVirtualizedTable(
             table,
             containerClass = Css("container"),
-            rowClassFn = rowClassEvenOdd
+            rowClassFn = rowClassEvenOdd,
+            estimateSize = _ => 24
           )
         )
       )

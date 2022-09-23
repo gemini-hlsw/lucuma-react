@@ -55,6 +55,6 @@ object Table3:
       .render((_, _, _, table) =>
         React.Fragment(
           <.h2("Table with Expanding Rows"),
-          HTMLVirtualizedTable(table, containerClass = Css("container"))
+          HTMLVirtualizedTable(table, containerClass = Css("container"), estimateSize = _ => 24)
         )
       )
