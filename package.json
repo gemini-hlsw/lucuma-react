@@ -10,7 +10,7 @@
     "highcharts": "^10.2.1",
     "jsdom": "20.0.0",
     "less": "^4.1.3",
-    "primereact": "^8.5.0",
+    "primereact": "^8.6.0",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.1",
     "react-circular-progressbar": "^2.1.0",
