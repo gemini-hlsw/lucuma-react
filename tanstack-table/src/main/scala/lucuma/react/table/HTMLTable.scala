@@ -23,15 +23,15 @@ final case class HTMLTable[T](
     with HTMLTableProps[T]
 
 final case class HTMLVirtualizedTable[T](
-  table:          raw.mod.Table[T],
-  estimateSize:   Int => Int,
+  table:               raw.mod.Table[T],
+  estimateRowHeightPx: Int => Int,
   // Table options
-  containerClass: Css = Css.Empty,
-  tableClass:     Css = Css.Empty,
-  rowClassFn:     (Int, T) => Css = (_, _: T) => Css.Empty,
+  containerClass:      Css = Css.Empty,
+  tableClass:          Css = Css.Empty,
+  rowClassFn:          (Int, T) => Css = (_, _: T) => Css.Empty,
   // Virtual options
-  overscan:       js.UndefOr[Int] = js.undefined,
-  getItemKey:     js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined
+  overscan:            js.UndefOr[Int] = js.undefined,
+  getItemKey:          js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined
 ) extends ReactFnProps(HTMLVirtualizedTable.component)
     with HTMLVirtualizedTableProps[T]
 

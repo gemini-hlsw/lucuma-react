@@ -38,7 +38,7 @@ object Table2:
             table,
             containerClass = Css("container"),
             rowClassFn = rowClassEvenOdd,
-            estimateSize = _ => 24
+            estimateRowHeightPx = _ => 24
           )
         )
       )

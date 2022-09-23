@@ -204,7 +204,7 @@ object HTMLTableRenderer:
       .useVirtualizerBy((props, ref) =>
         VirtualOptions(
           count = props.table.getRowModel().rows.length,
-          estimateSize = props.estimateSize,
+          estimateSize = props.estimateRowHeightPx,
           getScrollElement = ref.get,
           overscan = props.overscan,
           getItemKey = props.getItemKey

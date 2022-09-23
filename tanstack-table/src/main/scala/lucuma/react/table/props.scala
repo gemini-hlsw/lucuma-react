@@ -16,7 +16,7 @@ trait HTMLTableProps[T]:
 
 trait HTMLVirtualizedTableProps[T]:
   val table: raw.mod.Table[T]
-  val estimateSize: Int => Int
+  val estimateRowHeightPx: Int => Int
   // Table options
   val containerClass: Css
   val tableClass: Css
