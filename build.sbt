@@ -541,6 +541,7 @@ lazy val resizableDemo = project
 lazy val primeReact = project
   .in(file("prime-react"))
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .dependsOn(common)
   .settings(
     name                                                      := "lucuma-react-prime-react",
     stOutputPackage                                           := "reactST",
