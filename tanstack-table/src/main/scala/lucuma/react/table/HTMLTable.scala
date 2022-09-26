@@ -9,6 +9,7 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import react.common.style.Css
 import reactST.{tanstackTableCore => raw}
+import reactST.{tanstackVirtualCore => rawVirtual}
 
 import javax.swing.text.html.HTML
 
@@ -22,10 +23,15 @@ final case class HTMLTable[T](
     with HTMLTableProps[T]
 
 final case class HTMLVirtualizedTable[T](
-  table:          raw.mod.Table[T],
-  containerClass: Css = Css.Empty,
-  tableClass:     Css = Css.Empty,
-  rowClassFn:     (Int, T) => Css = (_, _: T) => Css.Empty
+  table:               raw.mod.Table[T],
+  estimateRowHeightPx: Int => Int,
+  // Table options
+  containerClass:      Css = Css.Empty,
+  tableClass:          Css = Css.Empty,
+  rowClassFn:          (Int, T) => Css = (_, _: T) => Css.Empty,
+  // Virtual options
+  overscan:            js.UndefOr[Int] = js.undefined,
+  getItemKey:          js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined
 ) extends ReactFnProps(HTMLVirtualizedTable.component)
     with HTMLVirtualizedTableProps[T]
 
