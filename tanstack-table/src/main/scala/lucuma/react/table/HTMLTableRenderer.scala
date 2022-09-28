@@ -33,6 +33,7 @@ trait HTMLTableRenderer[T]:
   protected val ResizerContent: VdomNode  = EmptyVdom
 
   protected val SortableColClass: Css       = Css("sortableCol")
+  protected val SortableIndicator: VdomNode = "⇅"
   protected val SortAscIndicator: VdomNode  = "↑"
   protected val SortDescIndicator: VdomNode = "↓"
 
@@ -42,7 +43,8 @@ trait HTMLTableRenderer[T]:
         val index   = if (col.getSortIndex() > 0) (col.getSortIndex() + 1).toInt.toString else ""
         val ascDesc = if (sorted == "desc") SortDescIndicator else SortAscIndicator
         <.span(s" $index", ascDesc)
-      case _              => EmptyVdom
+      case _              =>
+        if (col.getCanSort()) SortableIndicator else EmptyVdom
 
   protected def resizer[T](
     header:     raw.mod.Header[T, ?],
