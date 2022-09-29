@@ -3,13 +3,13 @@
 
 package lucuma.react.virtual
 
-import japgolly.scalajs.react.callback.CallbackTo
+import japgolly.scalajs.react.callback.*
 import lucuma.react.virtual.facade.VirtualOptionsJS
+import lucuma.react.virtual.facade.Virtualizer
 import org.scalajs.dom.Element
 import reactST.tanstackVirtualCore.mod.Key
 import reactST.tanstackVirtualCore.mod.Range
 import reactST.tanstackVirtualCore.mod.Rect
-import reactST.tanstackVirtualCore.mod.Virtualizer
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -41,7 +41,7 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
    * A callback function that fires when the virtualizer's internal state changes. It's passed the
    * virtualizer instance.
    */
-  onChange:             js.UndefOr[Virtualizer[TScrollElement, TItemElement] => Unit] = js.undefined,
+  onChange:             js.UndefOr[Virtualizer[TScrollElement, TItemElement] => Callback] = js.undefined,
   /**
    * The number of items to render above and below the visible area. Increasing this number will
    * increase the amount of time it takes to render the virtualizer, but might decrease the
@@ -105,7 +105,7 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
    *
    * Attempting to use smoothScroll with dynamically measured elements will not work.
    */
-  scrollToFn:           js.UndefOr[(Int, Boolean, Virtualizer[TScrollElement, TItemElement]) => Unit] =
+  scrollToFn:           js.UndefOr[(Int, Boolean, Virtualizer[TScrollElement, TItemElement]) => Callback] =
     js.undefined,
   /**
    * An optional function that if provided is called when the scrollElement changes and should
@@ -116,7 +116,7 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
    * framework adapter's exported functions like useVirtualizer or createWindowVirtualizer.
    */
   observeElementRect:   js.UndefOr[
-    ((Virtualizer[TScrollElement, TItemElement], Rect) => Unit) | (() => Unit)
+    ((Virtualizer[TScrollElement, TItemElement], Rect => Callback) => Callback)
   ] = js.undefined,
   /**
    * An optional function that if provided is called when the scrollElement changes and should
@@ -127,7 +127,7 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
    * framework adapter's exported functions like useVirtualizer or createWindowVirtualizer.
    */
   observeElementOffset: js.UndefOr[
-    ((Virtualizer[TScrollElement, TItemElement], Int) => Unit) | (() => Unit)
+    ((Virtualizer[TScrollElement, TItemElement], Int => Callback) => Callback)
   ] = js.undefined,
   /**
    * This optional function is called when the virtualizer needs to dynamically measure the size
@@ -139,7 +139,7 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
    * be measured.
    */
   measureElement:       js.UndefOr[
-    (TItemElement, Virtualizer[TScrollElement, TItemElement]) => Int
+    (TItemElement, Virtualizer[TScrollElement, TItemElement]) => CallbackTo[Int]
   ] = js.undefined
 ):
   def toJS: VirtualOptionsJS[TScrollElement, TItemElement] = {
@@ -148,22 +148,34 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
     p.count = count
     p.getScrollElement = () => getScrollElement.map(_.orUndefined).runNow()
     p.estimateSize = estimateSize
-    p.debug.foreach(v => p.debug = v)
-    p.initialRect.foreach(v => p.initialRect = v)
-    p.onChange.foreach(v => p.onChange = v)
-    p.overscan.foreach(v => p.overscan = v)
-    p.horizontal.foreach(v => p.horizontal = v)
-    p.paddingStart.foreach(v => p.paddingStart = v)
-    p.paddingEnd.foreach(v => p.paddingEnd = v)
-    p.scrollPaddingStart.foreach(v => p.scrollPaddingStart = v)
-    p.scrollPaddingEnd.foreach(v => p.scrollPaddingEnd = v)
-    p.initialOffset.foreach(v => p.initialOffset = v)
-    p.getItemKey.foreach(v => p.getItemKey = v)
-    p.rangeExtractor.foreach(v => p.rangeExtractor = v)
-    p.enableSmoothScroll.foreach(v => p.enableSmoothScroll = v)
-    p.scrollToFn.foreach(v => p.scrollToFn = v)
-    p.observeElementRect.foreach(v => p.observeElementRect = v)
-    p.observeElementOffset.foreach(v => p.observeElementOffset = v)
-    p.measureElement.foreach(v => p.measureElement = v)
+    debug.foreach(v => p.debug = v)
+    initialRect.foreach(v => p.initialRect = v)
+    onChange.foreach(v => p.onChange = v.andThen(_.runNow()))
+    overscan.foreach(v => p.overscan = v)
+    horizontal.foreach(v => p.horizontal = v)
+    paddingStart.foreach(v => p.paddingStart = v)
+    paddingEnd.foreach(v => p.paddingEnd = v)
+    scrollPaddingStart.foreach(v => p.scrollPaddingStart = v)
+    scrollPaddingEnd.foreach(v => p.scrollPaddingEnd = v)
+    initialOffset.foreach(v => p.initialOffset = v)
+    getItemKey.foreach(v => p.getItemKey = v)
+    rangeExtractor.foreach(v => p.rangeExtractor = v.andThen(_.toJSArray))
+    enableSmoothScroll.foreach(v => p.enableSmoothScroll = v)
+    scrollToFn.foreach(v =>
+      (offset: Int, canSmooth: Boolean, instance: Virtualizer[TScrollElement, TItemElement]) =>
+        p.scrollToFn = v(offset, canSmooth, instance).runNow()
+    )
+    observeElementRect.foreach(v =>
+      (instance: Virtualizer[TScrollElement, TItemElement], cb: Rect => Unit) =>
+        p.observeElementRect = v(instance, rect => Callback(cb(rect))).runNow()
+    )
+    observeElementOffset.foreach(v =>
+      (instance: Virtualizer[TScrollElement, TItemElement], cb: Int => Unit) =>
+        p.observeElementOffset = v(instance, rect => Callback(cb(rect))).runNow()
+    )
+    measureElement.foreach(v =>
+      p.measureElement = (el: TItemElement, instance: Virtualizer[TScrollElement, TItemElement]) =>
+        v(el, instance).runNow()
+    )
     p
   }

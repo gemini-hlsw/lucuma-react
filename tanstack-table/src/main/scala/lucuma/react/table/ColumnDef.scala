@@ -42,20 +42,14 @@ object ColumnDef:
     // sortUndefined:   js.UndefOr[false | -1 | 1] = js.undefined,
     sortingFn:       js.UndefOr[raw.mod.SortingFn[A]] = js.undefined
   ) extends ColumnDef[T, A]:
-    def sortBy[B](f: A => B, inverted: Boolean)(using ordering: Ordering[B]): ColumnDef[T, A] =
+    def sortableBy[B](f: A => B)(using ordering: Ordering[B]): ColumnDef[T, A] =
       val sbfn: raw.mod.SortingFn[A] = (r1, r2, col) =>
         ordering
           .compare(f(r1.getValue[A](col)), f(r2.getValue[A](col)))
           .toDouble
-      copy(sortingFn = sbfn, enableSorting = true, invertSorting = inverted)
+      copy(sortingFn = sbfn, enableSorting = true)
 
-    def sortAscBy[B](f: A => B)(using ordering: Ordering[B]): ColumnDef[T, A] = sortBy(f, false)
-
-    def sortDescBy[B](f: A => B)(using ordering: Ordering[B]): ColumnDef[T, A] = sortBy(f, true)
-
-    def sortAsc(using Ordering[A]) = sortAscBy(identity)
-
-    def sortDesc(using Ordering[A]) = sortDescBy(identity)
+    def sortable(using Ordering[A]) = sortableBy(identity)
 
     def toJS: ColumnDefJS[T, A] = {
       val p: ColumnDefJS[T, A] = new js.Object().asInstanceOf[ColumnDefJS[T, A]]

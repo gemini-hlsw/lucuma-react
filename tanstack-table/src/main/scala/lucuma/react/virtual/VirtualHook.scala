@@ -7,11 +7,8 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.hooks.CustomHook
 import lucuma.react.table.facade.*
 import lucuma.react.virtual.facade.VirtualOptionsJS
+import lucuma.react.virtual.facade.Virtualizer
 import org.scalajs.dom.Element
-import reactST.tanstackReactTable.mod.useReactTable
-import reactST.tanstackTableCore.tanstackTableCoreStrings.renderFallbackValue
-import reactST.{tanstackTableCore => raw}
-import reactST.{tanstackVirtualCore => rawVirtual}
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
@@ -22,13 +19,13 @@ object VirtualHook:
   @js.native
   private def useVirtualizerJS[TScrollElement <: Element, TItemElement <: Element](
     options: VirtualOptionsJS[TScrollElement, TItemElement]
-  ): rawVirtual.mod.Virtualizer[TScrollElement, TItemElement] =
+  ): Virtualizer[TScrollElement, TItemElement] =
     js.native
 
   def useVirtualizerHook[TScrollElement <: Element, TItemElement <: Element] =
     CustomHook.unchecked[
       VirtualOptions[TScrollElement, TItemElement],
-      rawVirtual.mod.Virtualizer[TScrollElement, TItemElement]
+      Virtualizer[TScrollElement, TItemElement]
     ](i => useVirtualizerJS(i.toJS))
 
   // TODO Specify 'observeElementRect' | 'observeElementOffset' | 'scrollToFn'

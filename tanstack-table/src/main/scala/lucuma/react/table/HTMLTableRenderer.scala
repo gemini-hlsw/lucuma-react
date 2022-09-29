@@ -7,6 +7,7 @@ import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.virtual.*
+import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLDivElement
 import react.common.*
 import react.common.style.Css
@@ -15,17 +16,23 @@ import reactST.{tanstackTableCore => raw}
 
 import scalajs.js
 
+/**
+ * Customizable renderer for tables.
+ *
+ * Allows intermediate customization via constant overriding as well as via properties.
+ */
 trait HTMLTableRenderer[T]:
-  protected val TableClass: Css   = Css("react-table")
-  protected val TheadClass: Css   = Css.Empty
-  protected val TheadTrClass: Css = Css.Empty
-  protected val TheadThClass: Css = Css.Empty
-  protected val TbodyClass: Css   = Css.Empty
-  protected val TbodyTrClass: Css = Css.Empty
-  protected val TbodyTdClass: Css = Css.Empty
-  protected val TfootClass: Css   = Css.Empty
-  protected val TfootTrClass: Css = Css.Empty
-  protected val TfootThClass: Css = Css.Empty
+  protected val TableClass: Css       = Css("react-table")
+  protected val TheadClass: Css       = Css.Empty
+  protected val TheadTrClass: Css     = Css.Empty
+  protected val TheadThClass: Css     = Css.Empty
+  protected val TbodyClass: Css       = Css.Empty
+  protected val TbodyTrClass: Css     = Css.Empty
+  protected val TbodyTrEvenClass: Css = Css("row-even")
+  protected val TbodyTdClass: Css     = Css.Empty
+  protected val TfootClass: Css       = Css.Empty
+  protected val TfootTrClass: Css     = Css.Empty
+  protected val TfootThClass: Css     = Css.Empty
 
   protected val ResizerClass: Css         = Css("resizer")
   protected val IsResizingTHeadClass: Css = Css("isResizing")
@@ -42,7 +49,7 @@ trait HTMLTableRenderer[T]:
       case sorted: String =>
         val index   = if (col.getSortIndex() > 0) (col.getSortIndex() + 1).toInt.toString else ""
         val ascDesc = if (sorted == "desc") SortDescIndicator else SortAscIndicator
-        <.span(s" $index", ascDesc)
+        <.span(ascDesc, <.small(index))
       case _              =>
         if (col.getCanSort()) SortableIndicator else EmptyVdom
 
@@ -69,14 +76,26 @@ trait HTMLTableRenderer[T]:
   def render[T](
     table:         raw.mod.Table[T],
     rows:          js.Array[raw.mod.Row[T]],
-    tableClass:    Css = Css.Empty,
-    rowClassFn:    (Int, T) => Css = (_, _: T) => Css.Empty,
+    tableMod:      TagMod = TagMod.empty,
+    headerMod:     TagMod = TagMod.empty,
+    headerRowMod:  raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+      TagMod.empty,
+    headerCellMod: raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+    bodyMod:       TagMod = TagMod.empty,
+    rowMod:        raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
+    cellMod:       raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
+    footerMod:     TagMod = TagMod.empty,
+    footerRowMod:  raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+      TagMod.empty,
+    footerCellMod: raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
     paddingTop:    Option[Int] = none,
-    paddingBottom: Option[Int] = none
+    paddingBottom: Option[Int] = none,
+    emptyMessage:  VdomNode = EmptyVdom
   ) =
-    <.table(tableClass, TableClass)(
+    <.table(TableClass, tableMod)(
       <.thead(
         TheadClass,
+        headerMod,
         IsResizingTHeadClass.when(
           table.getHeaderGroups().exists(_.headers.exists(_.column.getIsResizing()))
         )
@@ -92,10 +111,10 @@ trait HTMLTableRenderer[T]:
                   ) != "undefined"
                 )
             )(
-              <.tr(TheadTrClass)(^.key := headerGroup.id)(
+              <.tr(TheadTrClass, headerRowMod(headerGroup))(^.key := headerGroup.id) {
                 headerGroup.headers
                   .map(header =>
-                    <.th(TheadThClass)(
+                    <.th(TheadThClass, headerCellMod(header))(
                       ^.key     := header.id,
                       ^.colSpan := header.colSpan.toInt,
                       ^.width   := s"${header.getSize().toInt}px",
@@ -121,30 +140,43 @@ trait HTMLTableRenderer[T]:
                               .asInstanceOf[raw.mod.TableOptionsResolved[T]]
                               .columnResizeMode
                               .toOption,
-                            // ColumnResizeMode.onEnd, // Can we get this from the table??
                             table.getState().columnSizingInfo
                           )
                         )
                       )
                     )
                   )
-              )
+              }
             )
           )
       ),
-      <.tbody(TbodyClass)(
+      <.tbody(TbodyClass, bodyMod)(
         paddingTop
           .filter(_ > 0)
           .map(p => <.tr(TbodyTrClass)(<.td(TbodyTdClass, ^.height := s"${p}px")))
           .whenDefined
       )(
+        TagMod.when(rows.isEmpty)(
+          <.tr(TbodyTrClass, ^.colSpan := table.getAllLeafColumns().length, ^.whiteSpace.nowrap)(
+            emptyMessage
+          )
+        ),
         rows
           .map(row =>
-            <.tr(TbodyTrClass)(^.key := row.id, rowClassFn(row.index.toInt, row.original))(
+            <.tr(
+              TbodyTrClass,
+              TbodyTrEvenClass.when(row.index.toInt % 2 =!= 0), // Index starts at 0
+              rowMod(row),
+              ^.key := row.id
+            )(
               row
                 .getVisibleCells()
                 .map(cell =>
-                  <.td(TbodyTdClass)(^.key := cell.id)(
+                  <.td(
+                    TbodyTdClass,
+                    cellMod(cell),
+                    ^.key := cell.id
+                  )(
                     rawReact.mod.flexRender(
                       cell.column.columnDef.cell
                         .asInstanceOf[rawReact.mod.Renderable[raw.mod.CellContext[T, Any]]],
@@ -160,7 +192,7 @@ trait HTMLTableRenderer[T]:
           .map(p => <.tr(TbodyTrClass)(<.td(TbodyTdClass, ^.height := s"${p}px")))
           .whenDefined
       ),
-      <.tfoot(TfootClass)(
+      <.tfoot(TfootClass, footerMod)(
         table
           .getFooterGroups()
           .map(footerGroup =>
@@ -168,9 +200,12 @@ trait HTMLTableRenderer[T]:
               footerGroup.headers
                 .exists(footer => js.typeOf(footer.column.columnDef.footer) != "undefined")
             )(
-              <.tr(TfootTrClass)(^.key := footerGroup.id)(
+              <.tr(TfootTrClass, footerRowMod(footerGroup))(^.key := footerGroup.id)(
                 footerGroup.headers.map(footer =>
-                  <.th(TfootThClass)(^.key := footer.id, ^.colSpan := footer.colSpan.toInt)(
+                  <.th(TfootThClass, footerCellMod(footer))(
+                    ^.key     := footer.id,
+                    ^.colSpan := footer.colSpan.toInt
+                  )(
                     TagMod.unless(footer.isPlaceholder)(
                       rawReact.mod.flexRender(
                         footer.column.columnDef.footer
@@ -192,8 +227,17 @@ object HTMLTableRenderer:
       renderer.render(
         props.table,
         props.table.getRowModel().rows,
-        props.tableClass,
-        props.rowClassFn
+        TagMod(props.tableMod, props.extraTableClasses),
+        props.headerMod,
+        props.headerRowMod,
+        props.headerCellMod,
+        props.bodyMod,
+        props.rowMod,
+        props.cellMod,
+        props.footerMod,
+        props.footerRowMod,
+        props.footerCellMod,
+        emptyMessage = props.emptyMessage
       )
     )
 
@@ -209,21 +253,96 @@ object HTMLTableRenderer:
           estimateSize = props.estimateRowHeightPx,
           getScrollElement = ref.get,
           overscan = props.overscan,
-          getItemKey = props.getItemKey
+          getItemKey = props.getItemKey,
+          onChange = props.onChange
         )
+      )
+      .useEffectOnMountBy((props, _, virtualizer) => // Allow external access to Virtualizer
+        props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
       )
       .render { (props, ref, virtualizer) =>
         val rows                        = props.table.getRowModel().rows
         val (paddingTop, paddingBottom) = virtualVerticalPadding(virtualizer)
 
-        <.div.withRef(ref)(props.containerClass)(
+        // TODO Should we attempt to make the <table>  the container (scroll element) and <tbody> the virtualized element?
+        <.div.withRef(ref)(^.overflowY.auto, props.containerMod)(
           renderer.render(
             props.table,
             virtualizer.getVirtualItems().map(virtualItem => rows(virtualItem.index.toInt)),
-            props.tableClass,
-            props.rowClassFn,
+            TagMod(props.tableMod, props.extraTableClasses),
+            props.headerMod,
+            props.headerRowMod,
+            props.headerCellMod,
+            props.bodyMod,
+            props.rowMod,
+            props.cellMod,
+            props.footerMod,
+            props.footerRowMod,
+            props.footerCellMod,
             paddingTop.some,
-            paddingBottom.some
+            paddingBottom.some,
+            props.emptyMessage
+          )
+        )
+      }
+
+  def componentBuilderAutoHeightVirtualized[T, Props <: HTMLAutoHeightVirtualizedTableProps[_]](
+    renderer: HTMLTableRenderer[T]
+  ) =
+    ScalaFnComponent
+      .withHooks[Props[T]]
+      .useRefToVdom[HTMLDivElement]
+      .useVirtualizerBy((props, ref) =>
+        VirtualOptions(
+          count = props.table.getRowModel().rows.length,
+          estimateSize = props.estimateRowHeightPx,
+          getScrollElement = ref.get,
+          overscan = props.overscan,
+          getItemKey = props.getItemKey,
+          onChange = props.onChange
+        )
+      )
+      .useEffectOnMountBy((props, _, virtualizer) => // Allow external access to Virtualizer
+        props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
+      )
+      .render { (props, ref, virtualizer) =>
+        val rows                        = props.table.getRowModel().rows
+        val (paddingTop, paddingBottom) = virtualVerticalPadding(virtualizer)
+
+        // We use this trick to get a component whose height adjusts to the container.
+        // See https://stackoverflow.com/a/1230666
+        // We create 2 more containers: an outer one, with position: relative and height: 100%,
+        // and an inner one, with position: absolute, and top: 0, bottom: 0.
+        // The scrolling element has to be the outer one.
+        <.div.withRef(ref)(
+          ^.position.relative,
+          ^.height := "100%",
+          ^.overflow.auto,
+          props.containerMod
+        )(
+          <.div(
+            ^.position.absolute,
+            ^.top    := "0",
+            ^.bottom := "0",
+            props.innerContainerMod
+          )(
+            renderer.render(
+              props.table,
+              virtualizer.getVirtualItems().map(virtualItem => rows(virtualItem.index.toInt)),
+              TagMod(props.tableMod, props.extraTableClasses),
+              props.headerMod,
+              props.headerRowMod,
+              props.headerCellMod,
+              props.bodyMod,
+              props.rowMod,
+              props.cellMod,
+              props.footerMod,
+              props.footerRowMod,
+              props.footerCellMod,
+              paddingTop.some,
+              paddingBottom.some,
+              props.emptyMessage
+            )
           )
         )
       }

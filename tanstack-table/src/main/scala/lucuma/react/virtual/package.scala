@@ -4,13 +4,14 @@
 package lucuma.react
 
 import japgolly.scalajs.react.vdom.TagMod
-import reactST.{tanstackVirtualCore => rawVirtual}
+import lucuma.react.virtual.facade.Virtualizer
+import org.scalajs.dom.Element
 
 import scalajs.js
 
 package object virtual extends HooksApiExt:
-  def virtualVerticalPadding[TScrollElement, TItemElement](
-    virtualizer: rawVirtual.mod.Virtualizer[TScrollElement, TItemElement]
+  def virtualVerticalPadding[TScrollElement <: Element, TItemElement <: Element](
+    virtualizer: Virtualizer[TScrollElement, TItemElement]
   ): (Int, Int) =
     val virtualRows   = virtualizer.getVirtualItems()
     val totalSize     = virtualizer.getTotalSize().toInt
