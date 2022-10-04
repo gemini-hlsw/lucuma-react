@@ -3,6 +3,6 @@
     "highcharts": "^10.2.1"
   },
   "devDependencies": {
-    "jsdom": "20.0.0"
+    "jsdom": "20.0.1"
   }
 }
