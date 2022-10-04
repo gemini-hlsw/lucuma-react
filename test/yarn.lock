@@ -9,10 +9,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "^0.3.0"
 
-"@atlaskit/tree@^8.6.2":
-  version "8.6.2"
-  resolved "https://registry.yarnpkg.com/@atlaskit/tree/-/tree-8.6.2.tgz#ec5635107ba6b7dc8d83e918f16af27d16b910e6"
-  integrity sha512-geVyjCm108G35d+VCJaD3fm4DVMSw09l6v8u+v7oriCddYE5nQHYZ0b7ihyupxbryhpfTyUmaD8LcJgWt8WESQ==
+"@atlaskit/tree@^8.6.3":
+  version "8.6.3"
+  resolved "https://registry.yarnpkg.com/@atlaskit/tree/-/tree-8.6.3.tgz#5403c77128b4664c3609e37a44d61e1e8c878576"
+  integrity sha512-DZNVBj2I80dgF8IQvpxGZ+ek1jvuhRqC7jFrmpnk1RIPKaO9r/69DAeRpPjK+Nh5FQKNmkokYkAOmIobnxTrXg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     css-box-model "^1.2.0"
@@ -2658,6 +2658,8 @@ is-extendable@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/is-extendable/-/is-extendable-1.0.1.tgz#a7470f9e426733d81bd81e1155264e3a3507cab4"
   integrity sha512-arnXMxT1hhoKo9k1LZdmlNyJdDDfy2v0fXjFlmok4+i8ul/6WlbVge9bhM74OpNPQPMGUToDtz+KXa1PneJxOA==
+  dependencies:
+    is-plain-object "^2.0.4"
 
 is-extglob@^2.1.0, is-extglob@^2.1.1:
   version "2.1.1"
