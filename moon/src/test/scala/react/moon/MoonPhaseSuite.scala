@@ -10,7 +10,7 @@ class MoonPhaseSuite extends munit.FunSuite with TestUtils {
   test("render") {
     val progressbar = MoonPhase()
     val html        =
-      """<div size="80" class="sc-bczRLJ icCIVy"><div size="80" class="sc-gsnTZi iAyNTq"><div size="80" class="sc-hKMtZM ccZtLY"></div></div><div size="80" style="background:black;transform:translateX(-50%) rotateY(1.0053096491487339rad)" class="sc-dkzDqf hYNYzf"></div><div size="80" class="sc-gsnTZi jwXhOL"><div size="80" class="sc-hKMtZM ccZtLY"></div></div></div>""".stripMargin
+      """<div size="80" class="sc-bcXHqe diJwlr"><div size="80" class="sc-gswNZR rnezl"><div size="80" class="sc-hLBbgP GCBql"></div></div><div size="80" style="background:black;transform:translateX(-50%) rotateY(1.0053096491487339rad)" class="sc-dkrFOg lkPnHR"></div><div size="80" class="sc-gswNZR jUJDEM"><div size="80" class="sc-hLBbgP GCBql"></div></div></div>""".stripMargin
     assertRender(progressbar.render, html)
   }
 }
