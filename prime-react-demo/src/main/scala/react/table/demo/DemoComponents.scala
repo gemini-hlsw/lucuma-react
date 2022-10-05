@@ -77,8 +77,6 @@ object DemoComponents {
                 onClick = showDialog.setState(true),
                 Button.Size.Small,
                 label = "Show Dialog",
-                icon = Icons.DiceOne,
-                iconPos = Button.IconPosition.Bottom,
                 severity = Button.Severity.Warning
               )
             )("Card Contents"),
@@ -224,13 +222,9 @@ object DemoComponents {
                   <.div(
                     DemoStyles.FormField,
                     DemoStyles.HorizontalStack,
-                    Button(onClick = decreaseProgress,
-                           label = "Decrease Progress",
-                           icon = Icons.Plus
-                    ),
+                    Button(onClick = decreaseProgress, label = "Decrease Progress"),
                     Button(onClick = increaseProgress,
                            label = "Increase Progress",
-                           icon = Icons.Minus,
                            iconPos = Button.IconPosition.Right
                     )
                   ),
@@ -259,9 +253,7 @@ object DemoComponents {
                     Tag(value = "Well Rounded Danger",
                         severity = Tag.Severity.Danger,
                         rounded = true
-                    ),
-                    Tag(value = "One", icon = Icons.DiceOne),
-                    Tag(value = "Two", icon = Icons.DiceTwo, severity = Tag.Severity.Success)
+                    )
                   )
                 )
               )
