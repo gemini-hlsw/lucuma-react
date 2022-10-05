@@ -7,16 +7,21 @@ import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
+import react.fa.FontAwesomeIcon
 import react.primereact.PrimeStyles
 import reactST.primereact.components.{Button => CButton}
 import reactST.primereact.primereactStrings.button
 import reactST.primereact.primereactStrings.reset
 import reactST.primereact.primereactStrings.submit
+import reactST.primereact.primereactStrings.top
 
 import scalajs.js
 import scalajs.js.JSConverters.*
 
-final case class Button(
+case class Button(
+  label:     js.UndefOr[String] = js.undefined,
+  icon:      js.UndefOr[FontAwesomeIcon] = js.undefined,
+  iconPos:   Button.IconPosition = Button.IconPosition.Left,
   className: js.UndefOr[String] = js.undefined,
   clazz:     js.UndefOr[Css] = js.undefined,
   onClick:   Callback = Callback.empty,
@@ -49,6 +54,12 @@ object Button {
     case Submit extends Type(submit)
     case Reset  extends Type(reset)
 
+  enum IconPosition(val iconCls: Css, val buttonCls: Css):
+    case Left   extends IconPosition(PrimeStyles.ButtonIconLeft, Css.Empty)
+    case Right  extends IconPosition(PrimeStyles.ButtonIconRight, Css.Empty)
+    case Top    extends IconPosition(PrimeStyles.ButtonIconTop, PrimeStyles.ButtonVertical)
+    case Bottom extends IconPosition(PrimeStyles.ButtonIconBottom, PrimeStyles.ButtonVertical)
+
   private val component =
     ScalaFnComponent
       .withHooks[Button]
@@ -63,11 +74,17 @@ object Button {
             props.outlined.cssOrEmpty(PrimeStyles.ButtonOutlined) |+|
             props.raised.cssOrEmpty(PrimeStyles.ButtonRaised) |+|
             props.rounded.cssOrEmpty(PrimeStyles.ButtonRounded) |+|
-            props.text.cssOrEmpty(PrimeStyles.ButtonText)
+            props.text.cssOrEmpty(PrimeStyles.ButtonText) |+|
+            props.iconPos.buttonCls
+
+        val iconWithClass =
+          props.icon.map(_.clazz(PrimeStyles.ButtonIcon |+| props.iconPos.iconCls))
 
         CButton
           .onClick(_ => props.onClick)
           .`type`(props.tpe.value)
-          .applyOrNot((props.className, fullCss).cssToJs, _.className(_))(children)
+          .applyOrNot(props.label, _.label(_))
+          .applyOrNot(iconWithClass, (c, p) => c.icon(p.raw))
+          .applyOrNot((props.className, fullCss).toJs, _.className(_))(children)
       }
 }

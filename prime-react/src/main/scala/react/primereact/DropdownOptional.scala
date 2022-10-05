@@ -4,7 +4,6 @@
 package react.primereact
 
 import cats.Eq
-import cats.Id
 import cats.syntax.all._
 import japgolly.scalajs.react.*
 import react.common.*
@@ -12,29 +11,29 @@ import react.common.*
 import scalajs.js
 import scalajs.js.JSConverters.*
 
-case class Dropdown[A](
-  value:           A,
+case class DropdownOptional[A](
+  value:           Option[A],
   options:         List[SelectItem[A]],
   id:              js.UndefOr[String] = js.undefined,
   className:       js.UndefOr[String] = js.undefined,
   clazz:           js.UndefOr[Css] = js.undefined,
+  showClear:       js.UndefOr[Boolean] = js.undefined,
   filter:          js.UndefOr[Boolean] = js.undefined,
   showFilterClear: js.UndefOr[Boolean] = js.undefined,
   placeholder:     js.UndefOr[String] = js.undefined,
   disabled:        js.UndefOr[Boolean] = js.undefined,
   dropdownIcon:    js.UndefOr[String] = js.undefined,
-  onChange:        js.UndefOr[A => Callback] = js.undefined
+  onChange:        js.UndefOr[Option[A] => Callback] = js.undefined
 )(using val eqAA:  Eq[A])
     extends ReactFnProps[DropdownBase](DropdownBase.component)
     with DropdownBase {
   type AA    = A
-  type GG[X] = Id[X]
+  type GG[X] = Option[X]
 
-  override def getter: js.UndefOr[Int] = optionsWithIndex.indexOfOption(value).orUndefined
-  override def finder(i: Any): A       =
-    optionsWithIndex
-      .findByIndexOption(i.asInstanceOf[Int])
-      .getOrElse(options(0).value) // called by onChange, so should exist
-
-  override val showClear: js.UndefOr[Boolean] = false
+  override def getter: js.UndefOr[Int]   =
+    value.flatMap(v => optionsWithIndex.indexOfOption(v)).orUndefined
+  override def finder(i: Any): Option[A] =
+    if (js.isUndefined(i)) none
+    else
+      optionsWithIndex.findByIndexOption(i.asInstanceOf[Int])
 }

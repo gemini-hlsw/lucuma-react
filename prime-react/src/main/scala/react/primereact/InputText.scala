@@ -9,7 +9,7 @@ import reactST.primereact.components.{InputText => CInputText}
 
 import scalajs.js
 
-final case class InputText(
+case class InputText(
   id:          String,
   className:   js.UndefOr[String] = js.undefined,
   clazz:       js.UndefOr[Css] = js.undefined,
