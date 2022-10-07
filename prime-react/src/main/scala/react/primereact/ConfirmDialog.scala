@@ -24,6 +24,13 @@ case class ConfirmDialog(
 object ConfirmDialog {
 
   // To use this method, you need an empty `ConfirmDialog()` somewhere on the page.
+  // Big Note: According to the documentation and the typescript types, the
+  // `confirmDialog` function is supposed to work like the `confirmPopup` function
+  // and return an object with `show` and `hide` methods and you call `show`
+  // to open it. However.... If you do that, clicking on ANY button on the page,
+  // as well as many other controls will open the dialog, rendering it useless.
+  // However, just calling the `confirmDialog` function (wrapped in a callback)
+  // seems to work just fine.
   def confirmDialog(
     message:     js.UndefOr[VdomNode] = js.undefined,
     icon:        js.UndefOr[FontAwesomeIcon] = js.undefined,
@@ -41,30 +48,33 @@ object ConfirmDialog {
     onHide:      js.UndefOr[ConfirmDialogHideParm => Callback] = js.undefined,
     accept:      js.UndefOr[Callback] = js.undefined,
     reject:      js.UndefOr[Callback] = js.undefined
-  ): ConfirmDialogReturn = {
-    val props = ConfirmDialogProps()
-    message.foreach(v => props.setMessage(v.rawNode))
-    icon.foreach(v => props.setIcon(v.raw))
-    // header not in the ST facade
-    header.foreach(v => StObject.set(props, "header", v.rawNode))
-    footer.foreach(v => props.setFooter(v.rawNode))
-    acceptLabel.foreach(v => props.setAcceptLabel(v))
-    rejectLabel.foreach(v => props.setRejectLabel(v))
-    acceptIcon.foreach(v => props.setAcceptIcon(v.raw))
-    rejectIcon.foreach(v => props.setRejectIcon(v.raw))
-    acceptClass.foreach(v => props.setAcceptClassName(v.htmlClass))
-    rejectClass.foreach(v => props.setRejectClassName(v.htmlClass))
-    (className, clazz).toJs.foreach(v => props.setClassName(v))
+  ): Callback =
+    Callback {
+      val props = ConfirmDialogProps()
+      message.foreach(v => props.setMessage(v.rawNode))
+      icon.foreach(v => props.setIcon(v.raw))
+      // header not in the ST facade
+      header.foreach(v => StObject.set(props, "header", v.rawNode))
+      footer.foreach(v => props.setFooter(v.rawNode))
+      acceptLabel.foreach(v => props.setAcceptLabel(v))
+      rejectLabel.foreach(v => props.setRejectLabel(v))
+      acceptIcon.foreach(v => props.setAcceptIcon(v.raw))
+      rejectIcon.foreach(v => props.setRejectIcon(v.raw))
+      acceptClass.foreach(v => props.setAcceptClassName(v.htmlClass))
+      rejectClass.foreach(v => props.setRejectClassName(v.htmlClass))
+      (className, clazz).toJs.foreach(v => props.setClassName(v))
 
-    // position not in the ST facade, either
-    position.foreach(v => StObject.set(props, "position", v.value))
-    onHide.foreach(v => props.setOnHide(s => v(ConfirmDialogHideParm.fromString(s))))
-    accept.foreach(v => props.setAccept(v))
-    reject.foreach(v => props.setReject(v))
+      // position not in the ST facade, either
+      position.foreach(v => StObject.set(props, "position", v.value))
+      onHide.foreach(v => props.setOnHide(s => v(ConfirmDialogHideParm.fromString(s))))
+      accept.foreach(v => props.setAccept(v))
+      reject.foreach(v => props.setReject(v))
 
-    val rawReturn = rawConfirmDialog(props)
-    ConfirmDialogReturn(Callback(rawReturn.show()), Callback(rawReturn.hide()))
-  }
+      val rawReturn = rawConfirmDialog(props)
+    }
+    // In case this ever starts working as advertised, remove the Callback wrapper above
+    // and uncomment the line below.
+    // ConfirmDialogReturn(Callback(rawReturn.show()), Callback(rawReturn.hide()))
 
   private val component = ScalaFnComponent[ConfirmDialog] { props =>
     CConfirmDialog()

@@ -6,7 +6,6 @@ package react.primereact
 import japgolly.scalajs.react.*
 import react.common.*
 import reactST.primereact.components.{Slider => CSlider}
-import reactST.primereact.sliderMod.SliderValueType
 
 import scalajs.js
 

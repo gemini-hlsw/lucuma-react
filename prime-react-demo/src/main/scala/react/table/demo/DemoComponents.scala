@@ -24,6 +24,8 @@ object DemoComponents {
       .useState(false)                 // for Checkbox
       .useState((25.0, 75.0))          // for SliderRange
       .useState(0.0)                   // for Slider
+      .useState(10.0)                  // for Knob
+      .useState(11.0)                  // for Knob (readonly)
       .useState(1)                     // for SelectButton
       .useState(2.some)                // for SelectButtonOptional
       .useState(List(1, 3))            // for SelectButtonMultiple
@@ -41,6 +43,8 @@ object DemoComponents {
           checkbox,
           rangeSlider,
           slider,
+          knob,
+          knobProgress,
           selectButton,
           selectButtonOptional,
           selectButtonMultiple,
@@ -55,18 +59,30 @@ object DemoComponents {
               SelectItem(5, "Option 5")
             )
 
-          val decreaseProgress: Callback            = {
+          val decreaseProgress: Callback = {
             val current = progressBar.value
             if current > 0 then progressBar.setState(current - 1) else Callback.empty
           }
-          val increaseProgress: Callback            = {
+
+          val increaseProgress: Callback = {
             val current = progressBar.value
             if current < 100 then progressBar.setState(current + 1) else Callback.empty
           }
+
           def progressTemplate(v: Double): VdomNode =
             if (v < 50) "Less than half"
             else if (v > 50) "More than half"
             else "Half way"
+
+          def turnDownVolume: Callback = {
+            val current = knobProgress.value
+            if current > 0 then knobProgress.setState(current - 1) else Callback.empty
+          }
+
+          def turnUpVolume: Callback = {
+            val current = knobProgress.value
+            if current < 11 then knobProgress.setState(current + 1) else Callback.empty
+          }
 
           def showConfirmPopup(target: HTMLElement): Callback =
             ConfirmPopup
@@ -88,7 +104,6 @@ object DemoComponents {
                 header = <.h1("Big Header"),
                 position = DialogPosition.Bottom
               )
-              .show
 
           <.div(
             DemoStyles.VerticalStack,
@@ -229,6 +244,29 @@ object DemoComponents {
                                 onChange = t => rangeSlider.setState(t)
                     ),
                     s"[${rangeSlider.value._1}, ${rangeSlider.value._2}]"
+                  ),
+                  <.label("Knob", ^.htmlFor         := "knob", DemoStyles.FormFieldLabel),
+                  Knob(id = "knob",
+                       value = knob.value,
+                       step = 5,
+                       size = 75,
+                       onChange = knob.setState
+                  ),
+                  <.label("Knob for Progress",
+                          ^.htmlFor                 := "knob-progress",
+                          DemoStyles.FormFieldLabel
+                  ),
+                  <.div(
+                    DemoStyles.HorizontalStack,
+                    Button(label = "-", onClick = turnDownVolume),
+                    Knob(id = "knob-progress",
+                         value = knobProgress.value,
+                         max = 11,
+                         strokeWidth = 5,
+                         readOnly = true,
+                         valueTemplate = "Vol: {value}"
+                    ),
+                    Button(label = "+", onClick = turnUpVolume)
                   ),
                   <.label("SelectButton", ^.htmlFor := "select-button", DemoStyles.FormFieldLabel),
                   SelectButton(
