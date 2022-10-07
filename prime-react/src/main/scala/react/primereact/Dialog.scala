@@ -9,7 +9,6 @@ import org.scalajs.dom.HTMLElement
 import react.common.*
 import reactST.primereact.components.{Dialog => CDialog}
 import reactST.primereact.dialogMod.DialogAppendToType
-import reactST.primereact.dialogMod.DialogPositionType
 import reactST.primereact.primereactStrings
 
 import scalajs.js
@@ -20,7 +19,7 @@ case class Dialog(
   id:              js.UndefOr[String] = js.undefined,
   header:          js.UndefOr[VdomNode] = js.undefined,
   footer:          js.UndefOr[VdomNode] = js.undefined,
-  position:        js.UndefOr[Dialog.Position] = js.undefined,                   // default: center
+  position:        js.UndefOr[DialogPosition] = js.undefined,                    // default: center
   modal:           js.UndefOr[Boolean] = js.undefined,                           // default: false
   resizable:       js.UndefOr[Boolean] = js.undefined,                           // default: true
   draggable:       js.UndefOr[Boolean] = js.undefined,                           // default: true
@@ -43,17 +42,6 @@ case class Dialog(
 
 object Dialog {
   type SelfPosition = primereactStrings.self
-
-  enum Position(val value: DialogPositionType):
-    case Bottom      extends Position(DialogPositionType.bottom)
-    case BottomLeft  extends Position(DialogPositionType.`bottom-left`)
-    case BottomRight extends Position(DialogPositionType.`bottom-right`)
-    case Center      extends Position(DialogPositionType.center)
-    case Left        extends Position(DialogPositionType.left)
-    case Right       extends Position(DialogPositionType.right)
-    case Top         extends Position(DialogPositionType.top)
-    case TopLeft     extends Position(DialogPositionType.`top-left`)
-    case TopRight    extends Position(DialogPositionType.`top-right`)
 
   private val component =
     ScalaFnComponent

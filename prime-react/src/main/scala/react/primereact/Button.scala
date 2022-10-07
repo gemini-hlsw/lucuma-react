@@ -6,6 +6,7 @@ package react.primereact
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import org.scalajs.dom.*
 import react.common.*
 import react.fa.FontAwesomeIcon
 import react.primereact.PrimeStyles
@@ -25,6 +26,7 @@ case class Button(
   className: js.UndefOr[String] = js.undefined,
   clazz:     js.UndefOr[Css] = js.undefined,
   onClick:   Callback = Callback.empty,
+  onClickE:  ReactMouseEventFrom[HTMLButtonElement & Element] => Callback = _ => Callback.empty,
   size:      Button.Size = Button.Size.Normal,
   tpe:       Button.Type = Button.Type.Button,
   severity:  Button.Severity = Button.Severity.Primary,
@@ -81,7 +83,7 @@ object Button {
           props.icon.map(_.clazz(PrimeStyles.ButtonIcon |+| props.iconPos.iconCls))
 
         CButton
-          .onClick(_ => props.onClick)
+          .onClick(e => props.onClick >> props.onClickE(e))
           .`type`(props.tpe.value)
           .applyOrNot(props.label, _.label(_))
           .applyOrNot(iconWithClass, (c, p) => c.icon(p.raw))

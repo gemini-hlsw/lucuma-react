@@ -6,6 +6,7 @@ package react.table.demo
 import cats.syntax.all._
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import org.scalajs.dom.HTMLElement
 import react.common.*
 import react.primereact.*
 
@@ -67,17 +68,51 @@ object DemoComponents {
             else if (v > 50) "More than half"
             else "Half way"
 
+          def showConfirmPopup(target: HTMLElement): Callback =
+            ConfirmPopup
+              .confirmPopup(
+                target = target,
+                message = "Pops up relative to the target. See console for result of the dialog",
+                onHide = s => Callback.log(s"Hiding ConfirmPopup with: $s"),
+                dismissable = false
+              )
+              .show
+
+          def showConfirmDialog: Callback =
+            ConfirmDialog
+              .confirmDialog(
+                message = "Pops up where you tell it. See console for result of the dialog",
+                acceptLabel = "You bet",
+                rejectLabel = "NO way",
+                onHide = s => Callback.log(s"Hiding ConfirmDialog with: $s"),
+                header = <.h1("Big Header"),
+                position = DialogPosition.Bottom
+              )
+              .show
+
           <.div(
             DemoStyles.VerticalStack,
             Card(
               title = "I am a Card title",
               subTitle = "And subtitle",
               header = "The card header could be an image?",
-              footer = Button(
-                onClick = showDialog.setState(true),
-                Button.Size.Small,
-                label = "Show Dialog",
-                severity = Button.Severity.Warning
+              footer = <.div(
+                DemoStyles.HorizontalStack,
+                Button(
+                  onClick = showDialog.setState(true),
+                  size = Button.Size.Small,
+                  label = "Show Dialog",
+                  severity = Button.Severity.Warning
+                ),
+                Button(
+                  onClickE = e => showConfirmPopup(e.currentTarget),
+                  label = "Show ConfirmPopup"
+                ),
+                Button(onClick = showConfirmDialog,
+                       label = "Show ConfirmDialog",
+                       severity = Button.Severity.Help,
+                       outlined = true
+                )
               )
             )("Card Contents"),
             Panel(
@@ -99,6 +134,17 @@ object DemoComponents {
                 SplitterPanel(size = 70)(
                   "Splitter right side panel"
                 )
+              )
+            ),
+            Panel(header = "Panel containing an Accordion. There is also AccordionMultiple.")(
+              Accordion(activeIndex = 0)(
+                AccordionTab(header = "Polka")(
+                  "The polka is originally a Czech dance and genre of dance music familiar throughout all of Europe and the Americas. It originated in the middle of the nineteenth century in German and Austrian influenced Bohemia, now part of the Czech Republic. The polka remains a popular folk music genre in many western countries. [From Wikipedia]"
+                ),
+                AccordionTab(header = "Zydeco")(
+                  "Zydeco (/ˈzaɪdɪˌkoʊ/ ZY-dih-koh or /ˈzaɪdiˌkoʊ/ ZY-dee-koh, French: Zarico) is a music genre that evolved in southwest Louisiana by French Creole speakers which blends blues, rhythm and blues, and music indigenous to the Louisiana Creoles and the Native American people of Louisiana. Although it is distinct in origin from the Cajun music of Louisiana, the two forms influenced each other, forming a complex of genres native to the region. [From Wikipedia]"
+                ),
+                AccordionTab(header = "Weird Al")("Well, Weird Al. What else can we say?")
               )
             ),
             Panel(
@@ -263,14 +309,17 @@ object DemoComponents {
               visible = showDialog.value,
               header = "A Dialog",
               footer = Button(onClick = showDialog.setState(false),
+                              label = "Close Me",
                               size = Button.Size.Small,
                               rounded = true,
                               outlined = true
-              )("Close Me"),
-              position = Dialog.Position.Top,
+              ),
+              position = DialogPosition.Top,
               dismissableMask = true,
               draggable = true
-            )("You can drag me around!")
+            )("You can drag me around!"),
+            ConfirmPopup(),
+            ConfirmDialog()
           )
       }
 }
