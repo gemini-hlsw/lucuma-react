@@ -9,6 +9,8 @@ import reactST.{tanstackTableCore => raw}
 import scalajs.js
 
 package object table extends HooksApiExt:
+  type SortingFn[T] = (raw.mod.Row[T], raw.mod.Row[T], String) => Int
+
   extension [T, A](cellCtx: raw.mod.CellContext[T, A])
     def value: A = cellCtx.getValue().asInstanceOf[A]
 
