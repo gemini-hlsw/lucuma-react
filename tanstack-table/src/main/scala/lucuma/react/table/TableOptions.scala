@@ -15,6 +15,7 @@ import scalajs.js.JSConverters.*
 case class TableOptions[T](
   columns:                  Reusable[List[ColumnDef[T, ?]]],
   data:                     Reusable[List[T]],
+  getRowId:                 js.UndefOr[(T, Int, Option[T]) => String] = js.undefined,
   getCoreRowModel:          js.UndefOr[raw.mod.Table[T] => js.Function0[raw.mod.RowModel[T]]] = js.undefined,
   onStateChange:            js.UndefOr[raw.mod.Updater[raw.mod.TableState] => Callback] = js.undefined,
   renderFallbackValue:      js.UndefOr[Any] = js.undefined,
@@ -42,13 +43,15 @@ case class TableOptions[T](
   enableExpanding:          js.UndefOr[Boolean] = js.undefined,
   getExpandedRowModel:      js.UndefOr[raw.mod.Table[T] => js.Function0[raw.mod.RowModel[T]]] =
     js.undefined,
-  getSubRows:               js.UndefOr[T => List[T]] = js.undefined // Undocumented!
+  getSubRows:               js.UndefOr[(T, Int) => Option[List[T]]] = js.undefined
 ) {
   // Memoized columns and data must be passed.
   def toJS(cols: js.Array[ColumnDefJS[T, ?]], rows: js.Array[T]): TableOptionsJS[T] =
     TableOptionsJS(
       columns = cols,
       data = rows,
+      getRowId =
+        getRowId.map(fn => (originalRow, index, parent) => fn(originalRow, index, parent.toOption)),
       getCoreRowModel = getCoreRowModel.map(fn => fn), // Forces conversion to js.Function
       onStateChange = onStateChange,
       renderFallbackValue = renderFallbackValue,
@@ -66,6 +69,8 @@ case class TableOptions[T](
       // Expanding
       enableExpanding = enableExpanding,
       getExpandedRowModel = getExpandedRowModel.map(fn => fn),
-      getSubRows = getSubRows.map(fn => fn.andThen(_.toJSArray))
+      getSubRows = getSubRows.map(fn =>
+        (originalRow, index) => fn(originalRow, index).map(_.toJSArray).orUndefined
+      )
     )
 }

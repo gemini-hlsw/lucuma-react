@@ -49,7 +49,7 @@ object Table3:
           rows,
           enableExpanding = true,
           columnResizeMode = raw.mod.ColumnResizeMode.onChange,
-          getSubRows = _.subRows.toOption.map(_.toList).getOrElse(List.empty)
+          getSubRows = (row, _) => row.subRows.toOption.map(_.toList)
         )
       )
       .render((_, _, _, table) =>
@@ -57,7 +57,7 @@ object Table3:
           <.h2("Table with Expanding Rows"),
           HTMLVirtualizedTable(
             table,
-            containerClass = Css("container"),
+            containerMod = Css("container"),
             estimateRowHeightPx = _ => 24
           )
         )

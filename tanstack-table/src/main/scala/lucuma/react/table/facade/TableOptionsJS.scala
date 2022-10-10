@@ -13,6 +13,7 @@ import scalajs.js.JSConverters.*
 trait TableOptionsJS[T] extends js.Object:
   var columns: js.Array[ColumnDefJS[T, ?]]
   var data: js.Array[T]
+  var getRowId: js.UndefOr[js.Function3[T, Int, js.UndefOr[T], String]]          = js.undefined
   var getCoreRowModel: js.Function1[raw.mod.Table[T], js.Function0[raw.mod.RowModel[T]]]
   var onStateChange: js.UndefOr[raw.mod.Updater[raw.mod.TableState] => Callback] = js.undefined
   var renderFallbackValue: js.UndefOr[Any]                                       = js.undefined
@@ -43,16 +44,17 @@ trait TableOptionsJS[T] extends js.Object:
   var sortDescFirst: js.UndefOr[Boolean]                                    = js.undefined
 
   // Expanding
-  var enableExpanding: js.UndefOr[Boolean]                 = js.undefined
+  var enableExpanding: js.UndefOr[Boolean]                                  = js.undefined
   var getExpandedRowModel: js.UndefOr[
     js.Function1[raw.mod.Table[T], js.Function0[raw.mod.RowModel[T]]]
-  ]                                                        = js.undefined
-  var getSubRows: js.UndefOr[js.Function1[T, js.Array[T]]] = js.undefined // Undocumented!
+  ]                                                                         = js.undefined
+  var getSubRows: js.UndefOr[js.Function2[T, Int, js.UndefOr[js.Array[T]]]] = js.undefined
 
 object TableOptionsJS:
   def apply[T](
     columns:                  js.Array[ColumnDefJS[T, ?]],
     data:                     js.Array[T],
+    getRowId:                 js.UndefOr[js.Function3[T, Int, js.UndefOr[T], String]] = js.undefined,
     getCoreRowModel:          js.UndefOr[
       js.Function1[raw.mod.Table[T], js.Function0[raw.mod.RowModel[T]]]
     ] = js.undefined,
@@ -84,11 +86,12 @@ object TableOptionsJS:
     getExpandedRowModel:      js.UndefOr[
       js.Function1[raw.mod.Table[T], js.Function0[raw.mod.RowModel[T]]]
     ] = js.undefined,
-    getSubRows:               js.UndefOr[js.Function1[T, js.Array[T]]] = js.undefined // Undocumented!
+    getSubRows:               js.UndefOr[js.Function2[T, Int, js.UndefOr[js.Array[T]]]] = js.undefined
   ): TableOptionsJS[T] = {
     val p: TableOptionsJS[T] = new js.Object().asInstanceOf[TableOptionsJS[T]]
     p.columns = columns
     p.data = data
+    p.getRowId = getRowId.foreach(fn => p.getRowId = fn)
     p.getCoreRowModel = getCoreRowModel.getOrElse(rawReact.mod.getCoreRowModel())
     onStateChange.foreach(fn => p.onStateChange = fn)
     renderFallbackValue.foreach(v => p.renderFallbackValue = v)

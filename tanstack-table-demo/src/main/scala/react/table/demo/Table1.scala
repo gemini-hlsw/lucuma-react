@@ -21,9 +21,9 @@ object Table1:
       // cols
       .useMemo(())(_ =>
         List(
-          ColDef("id", _.id, "Id", ctx => s"g-${ctx.value}").sortAsc,
+          ColDef("id", _.id, "Id", ctx => s"g-${ctx.value}").sortable,
           ColDef("make", _.make, _ => "Make"),
-          ColDef("model", _.model, _ => "Model").sortAscBy(_.length),
+          ColDef("model", _.model, _ => "Model").sortableBy(_.length),
           ColDef.group(
             "details",
             _ => <.div(^.textAlign.center)("Details"),
@@ -51,7 +51,10 @@ object Table1:
       .render { (_, _, _, table) =>
         React.Fragment(
           <.h2("Sortable table"),
-          HTMLTable(table, Css("guitars")),
+          HTMLTable(
+            table,
+            Css("guitars")
+          ),
           "Click header to sort. Shift-Click for multi-sort."
         )
       }

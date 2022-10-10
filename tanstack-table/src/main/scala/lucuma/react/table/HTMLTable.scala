@@ -16,9 +16,20 @@ import javax.swing.text.html.HTML
 import scalajs.js
 
 final case class HTMLTable[T](
-  table:      raw.mod.Table[T],
-  tableClass: Css = Css.Empty,
-  rowClassFn: (Int, T) => Css = (_, _: T) => Css.Empty
+  table:         raw.mod.Table[T],
+  tableMod:      TagMod = TagMod.empty,
+  headerMod:     TagMod = TagMod.empty,
+  headerRowMod:  raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+    TagMod.empty,
+  headerCellMod: raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  bodyMod:       TagMod = TagMod.empty,
+  rowMod:        raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
+  cellMod:       raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
+  footerMod:     TagMod = TagMod.empty,
+  footerRowMod:  raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+    TagMod.empty,
+  footerCellMod: raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  emptyMessage:  VdomNode = EmptyVdom
 ) extends ReactFnProps(HTMLTable.component)
     with HTMLTableProps[T]
 
@@ -26,14 +37,54 @@ final case class HTMLVirtualizedTable[T](
   table:               raw.mod.Table[T],
   estimateRowHeightPx: Int => Int,
   // Table options
-  containerClass:      Css = Css.Empty,
-  tableClass:          Css = Css.Empty,
-  rowClassFn:          (Int, T) => Css = (_, _: T) => Css.Empty,
+  containerMod:        TagMod = TagMod.empty,
+  tableMod:            TagMod = TagMod.empty,
+  headerMod:           TagMod = TagMod.empty,
+  headerRowMod:        raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+    TagMod.empty,
+  headerCellMod:       raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  bodyMod:             TagMod = TagMod.empty,
+  rowMod:              raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
+  cellMod:             raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
+  footerMod:           TagMod = TagMod.empty,
+  footerRowMod:        raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+    TagMod.empty,
+  footerCellMod:       raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  emptyMessage:        VdomNode = EmptyVdom,
   // Virtual options
   overscan:            js.UndefOr[Int] = js.undefined,
-  getItemKey:          js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined
+  getItemKey:          js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined,
+  onChange:            js.UndefOr[HTMLTableVirtualizer => Callback] = js.undefined,
+  virtualizerRef:      js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]] = js.undefined
 ) extends ReactFnProps(HTMLVirtualizedTable.component)
     with HTMLVirtualizedTableProps[T]
+
+final case class HTMLAutoHeightVirtualizedTable[T](
+  table:               raw.mod.Table[T],
+  estimateRowHeightPx: Int => Int,
+  // Table options
+  containerMod:        TagMod = TagMod.empty,
+  innerContainerMod:   TagMod = TagMod.empty,
+  tableMod:            TagMod = TagMod.empty,
+  headerMod:           TagMod = TagMod.empty,
+  headerRowMod:        raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+    TagMod.empty,
+  headerCellMod:       raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  bodyMod:             TagMod = TagMod.empty,
+  rowMod:              raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
+  cellMod:             raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
+  footerMod:           TagMod = TagMod.empty,
+  footerRowMod:        raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+    TagMod.empty,
+  footerCellMod:       raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  emptyMessage:        VdomNode = EmptyVdom,
+  // Virtual options
+  overscan:            js.UndefOr[Int] = js.undefined,
+  getItemKey:          js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined,
+  onChange:            js.UndefOr[HTMLTableVirtualizer => Callback] = js.undefined,
+  virtualizerRef:      js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]] = js.undefined
+) extends ReactFnProps(HTMLAutoHeightVirtualizedTable.component)
+    with HTMLAutoHeightVirtualizedTableProps[T]
 
 private val baseHTMLRenderer: HTMLTableRenderer[Any] =
   new HTMLTableRenderer[Any] {}
@@ -44,3 +95,9 @@ object HTMLTable:
 object HTMLVirtualizedTable:
   private val component =
     HTMLTableRenderer.componentBuilderVirtualized[Any, HTMLVirtualizedTable](baseHTMLRenderer)
+
+object HTMLAutoHeightVirtualizedTable:
+  private val component =
+    HTMLTableRenderer.componentBuilderAutoHeightVirtualized[Any, HTMLAutoHeightVirtualizedTable](
+      baseHTMLRenderer
+    )

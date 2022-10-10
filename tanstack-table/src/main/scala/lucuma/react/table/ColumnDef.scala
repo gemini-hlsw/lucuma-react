@@ -39,23 +39,19 @@ object ColumnDef:
     enableMultiSort: js.UndefOr[Boolean] = js.undefined,
     invertSorting:   js.UndefOr[Boolean] = js.undefined,
     sortDescFirst:   js.UndefOr[Boolean] = js.undefined,
-    // sortUndefined:   js.UndefOr[false | -1 | 1] = js.undefined,
-    sortingFn:       js.UndefOr[raw.mod.SortingFn[A]] = js.undefined
+    sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T]] = js.undefined
   ) extends ColumnDef[T, A]:
-    def sortBy[B](f: A => B, inverted: Boolean)(using ordering: Ordering[B]): ColumnDef[T, A] =
-      val sbfn: raw.mod.SortingFn[A] = (r1, r2, col) =>
-        ordering
-          .compare(f(r1.getValue[A](col)), f(r2.getValue[A](col)))
-          .toDouble
-      copy(sortingFn = sbfn, enableSorting = true, invertSorting = inverted)
+    def sortableBuiltIn(builtIn: BuiltInSorting): ColumnDef[T, A] =
+      copy(sortingFn = builtIn, enableSorting = true)
 
-    def sortAscBy[B](f: A => B)(using ordering: Ordering[B]): ColumnDef[T, A] = sortBy(f, false)
+    def sortableWith[B](f: (A, A) => Int): ColumnDef[T, A] =
+      val sbfn: SortingFn[T] = (r1, r2, col) => f(r1.getValue[A](col), r2.getValue[A](col))
+      copy(sortingFn = sbfn, enableSorting = true)
 
-    def sortDescBy[B](f: A => B)(using ordering: Ordering[B]): ColumnDef[T, A] = sortBy(f, true)
+    def sortableBy[B](f: A => B)(using ordering: Ordering[B]): ColumnDef[T, A] =
+      sortableWith((a1, a2) => ordering.compare(f(a1), f(a2)))
 
-    def sortAsc(using Ordering[A]) = sortAscBy(identity)
-
-    def sortDesc(using Ordering[A]) = sortDescBy(identity)
+    def sortable(using Ordering[A]) = sortableBy(identity)
 
     def toJS: ColumnDefJS[T, A] = {
       val p: ColumnDefJS[T, A] = new js.Object().asInstanceOf[ColumnDefJS[T, A]]
@@ -83,8 +79,12 @@ object ColumnDef:
       enableMultiSort.foreach(v => p.enableMultiSort = v)
       invertSorting.foreach(v => p.invertSorting = v)
       sortDescFirst.foreach(v => p.sortDescFirst = v)
-      // sortUndefined.foreach(v => p.sortUndefined = v)
-      sortingFn.foreach(fn => p.sortingFn = fn)
+      sortingFn.foreach(v =>
+        p.sortingFn = v match
+          case builtIn: BuiltInSorting => builtIn.raw
+          case fn                      =>
+            (rowA, rowB, colId) => (fn.asInstanceOf[SortingFn[T]])(rowA, rowB, colId).toDouble
+      )
 
       p
     }
@@ -149,8 +149,7 @@ object ColumnDef:
       enableMultiSort: js.UndefOr[Boolean] = js.undefined,
       invertSorting:   js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:   js.UndefOr[Boolean] = js.undefined,
-      // sortUndefined:   js.UndefOr[false | -1 | 1] = js.undefined,
-      sortingFn:       js.UndefOr[raw.mod.SortingFn[A]] = js.undefined
+      sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T]] = js.undefined
     ): Single[T, A] =
       Single(
         id,
@@ -171,7 +170,6 @@ object ColumnDef:
         enableMultiSort,
         invertSorting,
         sortDescFirst,
-        //  sortUndefined,
         sortingFn
       )
 

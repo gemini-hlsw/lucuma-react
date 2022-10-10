@@ -28,9 +28,9 @@ trait ColumnDefJS[T, A] extends js.Object:
   var enableHiding: js.UndefOr[Boolean] = js.undefined
 
   // Sorting
-  var enableMultiSort: js.UndefOr[Boolean]        = js.undefined
-  var enableSorting: js.UndefOr[Boolean]          = js.undefined
-  var invertSorting: js.UndefOr[Boolean]          = js.undefined
-  var sortDescFirst: js.UndefOr[Boolean]          = js.undefined
-  var sortUndefined: js.UndefOr[false | -1 | 1]   = js.undefined
-  var sortingFn: js.UndefOr[raw.mod.SortingFn[A]] = js.undefined
+  var enableMultiSort: js.UndefOr[Boolean]                 = js.undefined
+  var enableSorting: js.UndefOr[Boolean]                   = js.undefined
+  var invertSorting: js.UndefOr[Boolean]                   = js.undefined
+  var sortDescFirst: js.UndefOr[Boolean]                   = js.undefined
+  // var sortUndefined: js.UndefOr[false | -1 | 1]   = js.undefined
+  var sortingFn: js.UndefOr[String | raw.mod.SortingFn[T]] = js.undefined

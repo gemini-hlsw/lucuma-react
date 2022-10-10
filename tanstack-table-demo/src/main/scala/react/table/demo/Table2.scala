@@ -12,8 +12,8 @@ import react.common.style.Css
 object Table2:
   private val ColDef = ColumnDef[Person]
 
-  private def rowClassEvenOdd[T]: (Int, T) => Css = (i, _) =>
-    if (i % 2 == 0) Css("even") else Css("odd")
+  private def rowClassEvenOdd[T](i: Int): TagMod =
+    if (i % 2 == 0) Css("odd") else Css("even")
 
   val component =
     ScalaFnComponent
@@ -36,8 +36,8 @@ object Table2:
           <.h2("Sortable Virtualized Table"),
           HTMLVirtualizedTable(
             table,
-            containerClass = Css("container"),
-            rowClassFn = rowClassEvenOdd,
+            containerMod = Css("container"),
+            rowMod = row => rowClassEvenOdd(row.index.toInt),
             estimateRowHeightPx = _ => 24
           )
         )

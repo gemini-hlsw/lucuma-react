@@ -7,7 +7,6 @@ import org.scalajs.dom.Element
 import reactST.tanstackVirtualCore.mod.Key
 import reactST.tanstackVirtualCore.mod.Range
 import reactST.tanstackVirtualCore.mod.Rect
-import reactST.tanstackVirtualCore.mod.Virtualizer
 
 import scalajs.js
 
@@ -132,7 +131,8 @@ trait VirtualOptionsJS[TScrollElement <: Element, TItemElement <: Element] exten
    * framework adapter's exported functions like useVirtualizer or createWindowVirtualizer.
    */
   var observeElementRect: js.UndefOr[
-    js.Function2[Virtualizer[TScrollElement, TItemElement], Rect, Unit] | js.Function0[Unit]
+    js.Function2[Virtualizer[TScrollElement, TItemElement], js.Function1[Rect, Unit], Unit] |
+      js.Function0[Unit]
   ] =
     js.undefined
 
@@ -145,7 +145,8 @@ trait VirtualOptionsJS[TScrollElement <: Element, TItemElement <: Element] exten
    * framework adapter's exported functions like useVirtualizer or createWindowVirtualizer.
    */
   var observeElementOffset: js.UndefOr[
-    js.Function2[Virtualizer[TScrollElement, TItemElement], Int, Unit] | js.Function0[Unit]
+    js.Function2[Virtualizer[TScrollElement, TItemElement], js.Function1[Int, Unit], Unit] |
+      js.Function0[Unit]
   ] =
     js.undefined
 
