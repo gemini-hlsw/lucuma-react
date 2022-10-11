@@ -95,7 +95,7 @@ object LabelGroup {
     val p = as.toJsObject[LabelGroupProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     circular.foreach(v => p.circular = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     content.map(_.map(_.rawNode).toJSArray).foreach(v => p.content = v)
     size.toJs.foreach(v => p.size = v)

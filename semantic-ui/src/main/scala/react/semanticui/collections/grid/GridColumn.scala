@@ -136,7 +136,7 @@ object GridColumn {
   ): GridColumnProps = {
     val p = as.toJsObject[GridColumnProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     computer.toJs.foreach(v => p.computer = v)
     floated.toJs.foreach(v => p.floated = v)

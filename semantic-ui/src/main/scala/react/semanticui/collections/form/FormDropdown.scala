@@ -629,7 +629,7 @@ object FormDropdown {
     allowAdditions.foreach(v => p.allowAdditions = v)
     basic.foreach(v => p.basic = v)
     button.foreach(v => p.button = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     clearable.foreach(v => p.clearable = v)
     closeOnBlur.foreach(v => p.closeOnBlur = v)
     closeOnEscape.foreach(v => p.closeOnEscape = v)

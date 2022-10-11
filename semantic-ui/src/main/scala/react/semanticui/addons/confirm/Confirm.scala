@@ -170,7 +170,7 @@ object Confirm {
     basic.foreach(v => p.basic = v)
     CompToPropsS(cancelButton).toJs.foreachUnchecked(v => p.cancelButton = v)
     centered.foreach(v => p.centered = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     closeIcon.map(_.props).foreach(v => p.closeIcon = v)
     closeOnDimmerClick.foreach(v => p.closeOnDimmerClick = v)
     closeOnDocumentClick.foreach(v => p.closeOnDocumentClick = v)

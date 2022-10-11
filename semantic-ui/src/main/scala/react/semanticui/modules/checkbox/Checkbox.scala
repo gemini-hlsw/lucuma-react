@@ -226,7 +226,7 @@ object Checkbox {
     val p = as.toJsObject[CheckboxProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     checked.foreach(v => p.checked = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     defaultChecked.foreach(v => p.defaultChecked = v)
     defaultIndeterminate.foreach(v => p.defaultIndeterminate = v)
     disabled.foreach(v => p.disabled = v)

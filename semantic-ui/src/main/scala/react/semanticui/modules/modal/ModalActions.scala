@@ -88,7 +88,7 @@ object ModalActions {
     val p = as.toJsObject[ModalActionsProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     actions.toJs.foreach(v => p.actions = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     (onActionClickE, onActionClick).toJs.foreach(v => p.onActionClick = v)
     p

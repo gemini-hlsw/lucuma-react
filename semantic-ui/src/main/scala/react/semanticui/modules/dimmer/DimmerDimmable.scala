@@ -77,7 +77,7 @@ object DimmerDimmable {
     val p = as.toJsObject[DimmerDimmableProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     blurring.foreachUnchecked(v => p.blurring = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     dimmed.foreach(v => p.dimmed = v)
     p

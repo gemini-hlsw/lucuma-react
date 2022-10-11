@@ -145,7 +145,7 @@ object Image {
     q.bordered.foreach(v => p.bordered = v)
     q.centered.foreach(v => p.centered = v)
     q.circular.foreach(v => p.circular = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.content.map(_.rawNode).foreachUnchecked(v => p.content = v)
     q.disabled.foreach(v => p.disabled = v)
     q.dimmer.map(_.props).foreach(v => p.dimmer = v)

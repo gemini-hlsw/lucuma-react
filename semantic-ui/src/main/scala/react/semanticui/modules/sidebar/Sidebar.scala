@@ -104,7 +104,7 @@ object Sidebar {
     val p = as.toJsObject[SidebarProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     animation.toJs.foreach(v => p.animation = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     direction.toJs.foreach(v => p.direction = v)
     (onHideE, onHide).toJs.foreach(v => p.onHide = v)

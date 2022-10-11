@@ -50,7 +50,7 @@ object TableBody {
   def props(q: TableBody): TableBodyProps = {
     val p = q.as.toJsObject[TableBodyProps]
     q.as.toJs.foreachUnchecked(v => p.as = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     p
   }
 

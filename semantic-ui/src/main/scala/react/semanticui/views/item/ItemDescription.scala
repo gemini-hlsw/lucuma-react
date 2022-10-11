@@ -66,7 +66,7 @@ object ItemDescription {
   ): ItemDescriptionProps = {
     val p = as.toJsObject[ItemDescriptionProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     p
   }

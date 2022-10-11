@@ -56,7 +56,7 @@ object DropdownDivider {
   ): DropdownDividerProps = {
     val p = as.toJsObject[DropdownDividerProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     p
   }
 

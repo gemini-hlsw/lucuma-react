@@ -63,7 +63,7 @@ object TableHeader {
   def props(q: TableHeader): TableHeaderProps = {
     val p = q.as.toJsObject[TableHeaderProps]
     q.as.toJs.foreachUnchecked(v => p.as = v)
-    (q.className, q.clazz).toJs.foreachUnchecked(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreachUnchecked(v => p.className = v)
     q.content.toJs.foreachUnchecked(v => p.content = v)
     q.fullWidth.foreach(v => p.fullWidth = v)
     p

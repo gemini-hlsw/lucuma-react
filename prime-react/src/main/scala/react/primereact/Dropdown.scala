@@ -31,7 +31,7 @@ object Dropdown {
       .value(props.value)
       .options(props.options.toJSArray)
       .applyOrNot(props.id, _.id(_))
-      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot((props.className, props.clazz).cssToJs, _.className(_))
       .applyOrNot(props.showClear, _.showClear(_))
       .applyOrNot(props.filter, _.filter(_))
       .applyOrNot(props.showFilterClear, _.showFilterClear(_))

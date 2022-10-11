@@ -142,7 +142,7 @@ object Table {
     q.attached.toJs.foreachUnchecked(v => p.attached = v)
     q.basic.toJs.foreachUnchecked(v => p.basic = v)
     q.celled.foreach(v => p.celled = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.collapsing.foreach(v => p.collapsing = v)
     q.color.toJs.foreach(v => p.color = v)
     q.columns.toJs.foreach(v => p.columns = v)

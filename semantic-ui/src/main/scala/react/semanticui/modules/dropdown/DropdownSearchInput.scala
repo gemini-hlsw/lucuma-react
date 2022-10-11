@@ -76,7 +76,7 @@ object DropdownSearchInput {
     val p = as.toJsObject[DropdownSearchInputProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     autoComplete.foreach(v => p.autoComplete = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     tabIndex.foreachUnchecked(v => p.tabIndex = v)
     p.`type` = `type`
     value.foreachUnchecked(v => p.value = v)

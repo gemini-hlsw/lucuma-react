@@ -176,7 +176,7 @@ object Resizable {
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     axis.foreach((v: Axis) => p.axis = v.toJs)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     p.children = content.rawNode
     draggableOpts.foreach(v => p.draggableOpts = v)
     p.height = height

@@ -195,7 +195,7 @@ object Message {
     val p = as.toJsObject[MessageProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     attached.toJs.foreachUnchecked(v => p.attached = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     compact.foreach(v => p.compact = v)
     CompToPropsS(content).toJs.foreachUnchecked(v => p.content = v)

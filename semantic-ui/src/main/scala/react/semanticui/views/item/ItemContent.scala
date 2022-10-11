@@ -101,7 +101,7 @@ object ItemContent {
   ): ItemContentProps = {
     val p = as.toJsObject[ItemContentProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreachUnchecked(v => p.className = v)
+    (className, clazz).cssToJs.foreachUnchecked(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     CompFnToPropsS(description).toJs.foreachUnchecked(v => p.description = v)
     CompFnToPropsS(extra).toJs.foreachUnchecked(v => p.extra = v)

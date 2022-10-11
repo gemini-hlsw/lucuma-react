@@ -68,6 +68,6 @@ object Button {
         CButton
           .onClick(_ => props.onClick)
           .`type`(props.tpe.value)
-          .applyOrNot((props.className, fullCss).toJs, _.className(_))(children)
+          .applyOrNot((props.className, fullCss).cssToJs, _.className(_))(children)
       }
 }

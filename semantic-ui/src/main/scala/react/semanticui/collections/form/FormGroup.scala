@@ -3,21 +3,21 @@
 
 package react.semanticui.collections.form
 
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common.Css
 import react.common.GenericComponentPAC
+import react.common.style.*
 import react.common.syntax.enumValue.*
-import react.common.syntax.style.*
-import react.semanticui._
+import react.semanticui.*
 import react.semanticui.{raw => suiraw}
 
 import scala.scalajs.js
 
 import js.|
-import js.annotation._
+import js.annotation.*
 
 final case class FormGroup(
   as:                     js.UndefOr[AsC] = js.undefined,
@@ -101,7 +101,7 @@ object FormGroup {
   ): FormGroupProps = {
     val p = as.toJsObject[FormGroupProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     grouped.foreach(v => p.grouped = v)
     inline.foreach(v => p.inline = v)

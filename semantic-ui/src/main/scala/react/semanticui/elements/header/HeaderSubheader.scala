@@ -60,7 +60,7 @@ object HeaderSubheader {
   ): HeaderSubheaderProps = {
     val p = q.as.toJsObject[HeaderSubheaderProps]
     q.as.toJs.foreachUnchecked(v => p.as = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.content.toJs.foreachUnchecked(v => p.content = v)
     p
   }

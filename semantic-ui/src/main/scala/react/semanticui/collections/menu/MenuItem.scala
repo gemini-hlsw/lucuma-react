@@ -154,7 +154,7 @@ object MenuItem {
     val p = as.toJsObject[MenuItemProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     active.foreach(v => p.active = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     disabled.foreach(v => p.disabled = v)

@@ -17,7 +17,7 @@ object SelectItem {
     clazz:     js.UndefOr[Css] = js.undefined
   ): CSelectItem = {
     val si = CSelectItem().setLabel(label).setValue(value)
-    (className, clazz).toJs.fold(si)(cls => si.setClassName(cls))
+    (className, clazz).cssToJs.fold(si)(cls => si.setClassName(cls))
   }
 
 }
