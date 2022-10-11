@@ -272,7 +272,7 @@ object Popup {
     val p = as.toJsObject[PopupProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     basic.foreach(v => p.basic = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     CompFnToPropsS(content).toJs.foreachUnchecked(v => p.content = v)
     disabled.foreach(v => p.disabled = v)
     eventsEnabled.foreach(v => p.eventsEnabled = v)

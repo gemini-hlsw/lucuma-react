@@ -151,7 +151,7 @@ object Grid {
     as.toJs.foreachUnchecked(v => p.as = v)
     celled.toJs.foreachUnchecked(v => p.celled = v)
     centered.foreach(v => p.centered = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     columns.toJs.foreach(v => p.columns = v)
     container.foreach(v => p.container = v)
     divided.toJs.foreachUnchecked(v => p.divided = v)

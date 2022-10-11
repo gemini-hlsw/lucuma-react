@@ -110,7 +110,7 @@ object Rail {
   ): RailProps = {
     val p = as.toJsObject[RailProps]
     attached.foreach(v => p.attached = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     close.toJs.foreachUnchecked(v => p.close = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     dividing.foreach(v => p.dividing = v)

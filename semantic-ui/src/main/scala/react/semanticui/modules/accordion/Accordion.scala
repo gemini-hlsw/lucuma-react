@@ -95,7 +95,7 @@ object Accordion {
     val p = q.as.toJsObject[AccordionProps]
     q.as.toJs.foreachUnchecked(v => p.as = v)
     q.activeIndex.foreachUnchecked(v => p.activeIndex = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.defaultActiveIndex
       .map[JsNumber | js.Array[JsNumber]] { x =>
         (x: Any) match {

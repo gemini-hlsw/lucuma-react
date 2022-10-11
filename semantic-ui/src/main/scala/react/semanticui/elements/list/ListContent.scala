@@ -99,7 +99,7 @@ object ListContent {
   ): ListContentProps = {
     val p = as.toJsObject[ListContentProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.map(_.map(_.rawNode).toJSArray).foreach(v => p.content = v)
     CompFnToPropsS(description).toJs.foreachUnchecked(v => p.description = v)
     floated.toJs.foreach(v => p.floated = v)

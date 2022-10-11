@@ -107,15 +107,15 @@ object Style {
 opaque type Css = List[String]
 
 object Css:
-  final class ClassnameCssOps(cn: (js.UndefOr[String], js.UndefOr[Css])) {
-    def toJs: js.UndefOr[String] =
+  extension (cn: (js.UndefOr[String], js.UndefOr[Css]))
+    def cssToJs: js.UndefOr[String] =
       (cn._1.toOption, cn._2.toOption) match {
         case (cn @ Some(_), None) => cn.orUndefined
         case (None, cz @ Some(_)) => cz.map(_.htmlClass).orUndefined
         case (Some(cs), Some(cz)) => s"$cs ${cz.htmlClass}"
         case _                    => js.undefined
       }
-  }
+
   extension (css: Css)
     inline def isEmpty: Boolean = css.isEmpty
 
@@ -134,9 +134,6 @@ object Css:
   inline def apply(css: List[String]): Css = css
 
   inline def apply(css: String): Css = List(css)
-
-  implicit def styePairU(a: (js.UndefOr[String], js.UndefOr[Css])): ClassnameCssOps =
-    new ClassnameCssOps(a)
 
   val Empty: Css = Nil
 

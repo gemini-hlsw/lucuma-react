@@ -48,7 +48,7 @@ object LabelDetail {
   def props(q: LabelDetail): LabelDetailProps = {
     val p = q.as.toJsObject[LabelDetailProps]
     q.as.toJs.foreachUnchecked(v => p.as = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.content.toJs.foreachUnchecked(v => p.content = v)
     p
   }

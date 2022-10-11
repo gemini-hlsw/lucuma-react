@@ -72,7 +72,7 @@ object MessageHeader {
   ): MessageHeaderProps = {
     val p = as.toJsObject[MessageHeaderProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     p
   }

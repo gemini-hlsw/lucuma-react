@@ -133,7 +133,7 @@ object ListItem {
     val p = as.toJsObject[ListItemProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     active.foreach(v => p.active = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     CompFnToPropsS(description).toJs.foreachUnchecked(v => p.description = v)
     disabled.foreach(v => p.disabled = v)

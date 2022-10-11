@@ -98,7 +98,7 @@ object Segment {
     q.attached.toJs.foreachUnchecked(v => p.attached = v)
     q.basic.foreach(v => p.basic = v)
     q.circular.foreach(v => p.circular = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.clearing.foreach(v => p.clearing = v)
     q.color.toJs.foreach(v => p.color = v)
     q.compact.foreach(v => p.compact = v)

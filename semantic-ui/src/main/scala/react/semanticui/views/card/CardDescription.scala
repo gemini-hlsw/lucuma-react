@@ -71,7 +71,7 @@ object CardDescription {
   ): CardDescriptionProps = {
     val p = as.toJsObject[CardDescriptionProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     textAlign.toJs.foreach(v => p.textAlign = v)
     p

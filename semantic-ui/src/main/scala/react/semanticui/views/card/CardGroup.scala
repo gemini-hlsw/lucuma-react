@@ -109,7 +109,7 @@ object CardGroup {
     val p = as.toJsObject[CardGroupProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     centered.foreach(v => p.centered = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     doubling.foreach(v => p.doubling = v)
     items.map(_.map(_.props).toJSArray).foreach(v => p.items = v)

@@ -106,7 +106,7 @@ object TableRow {
         }
       }.toJSArray)
       .foreach(v => p.cells = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.disabled.foreach(v => p.disabled = v)
     q.error.foreach(v => p.error = v)
     q.negative.foreach(v => p.negative = v)

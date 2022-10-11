@@ -220,7 +220,7 @@ object FormButton {
     width:         js.UndefOr[SemanticWidth] = js.undefined
   ): FormButtonProps = {
     val p = as.toJsObject[FormButtonProps]
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     (onClickE, onClick).toJs.foreach(v => p.onClick = v)
     active.foreach(v => p.active = v)
     animated.toJs.foreachUnchecked(v => p.animated = v)

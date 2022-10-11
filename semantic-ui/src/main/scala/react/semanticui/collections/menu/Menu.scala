@@ -210,7 +210,7 @@ object Menu {
     activeIndex.foreachUnchecked(v => p.activeIndex = v)
     attached.toJs.foreachUnchecked(v => p.attached = v)
     borderless.foreach(v => p.borderless = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     compact.foreach(v => p.compact = v)
     defaultActiveIndex.foreachUnchecked(v => p.defaultActiveIndex = v)
     fixed.toJs.foreach(v => p.fixed = v)

@@ -63,7 +63,7 @@ object ButtonOr {
   ): ButtonOrProps = {
     val p = as.toJsObject[ButtonOrProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     text.foreachUnchecked(v => p.text = v)
     p
   }

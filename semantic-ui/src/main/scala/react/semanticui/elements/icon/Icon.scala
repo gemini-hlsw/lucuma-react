@@ -76,7 +76,7 @@ object Icon {
     q.as.toJs.foreachUnchecked(v => p.as = v)
     q.bordered.foreach(v => p.bordered = v)
     q.circular.foreach(v => p.circular = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.color.toJs.foreach(v => p.color = v)
     q.corner.toJs.foreachUnchecked(v => p.corner = v)
     q.disabled.foreach(v => p.disabled = v)

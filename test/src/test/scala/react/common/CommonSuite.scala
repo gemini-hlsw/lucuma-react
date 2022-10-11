@@ -39,22 +39,22 @@ class CommonSuite extends munit.FunSuite with TestUtils {
     val clz                           = Css("abc")
     val clz2                          = Css(List("c1", "c2"))
     val clazz: js.UndefOr[Css]        = clz |+| clz2
-    assert((className, clazz).toJs === "header abc c1 c2")
+    assert((className, clazz).cssToJs === "header abc c1 c2")
   }
   test("cssMix1") {
     val className: js.UndefOr[String] = js.undefined
     val clazz: js.UndefOr[Css]        = js.undefined
-    assert(!(className, clazz).toJs.isDefined)
+    assert(!(className, clazz).cssToJs.isDefined)
   }
   test("cssMix2") {
     val className: js.UndefOr[String] = "header"
     val clazz: js.UndefOr[Css]        = js.undefined
-    assert((className, clazz).toJs === "header")
+    assert((className, clazz).cssToJs === "header")
   }
   test("cssMix3") {
     val className: js.UndefOr[String] = "header"
     val clz                           = Css("abc")
     val clz2                          = Css(List("c1", "c2"))
-    assert((className, (clz |+| clz2): js.UndefOr[Css]).toJs === "header abc c1 c2")
+    assert((className, (clz |+| clz2): js.UndefOr[Css]).cssToJs === "header abc c1 c2")
   }
 }

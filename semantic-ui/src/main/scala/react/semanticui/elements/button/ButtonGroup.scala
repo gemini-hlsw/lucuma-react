@@ -182,7 +182,7 @@ object ButtonGroup {
     attached.foreachUnchecked(v => p.attached = v)
     basic.foreach(v => p.basic = v)
     buttons.map(x => x.map(btn => btn.props).toJSArray).foreach(v => p.buttons = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     compact.foreach(v => p.compact = v)
     content.map(_.map(_.rawNode).toJSArray).foreach(v => p.content = v)

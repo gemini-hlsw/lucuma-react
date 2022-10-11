@@ -114,7 +114,7 @@ object TableHeaderCell {
     val p = q.as.toJsObject[TableHeaderCellProps]
     q.as.toJs.foreachUnchecked(v => p.as = v)
     q.active.foreach(v => p.active = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.collapsing.foreach(v => p.collapsing = v)
     q.content.toJs.foreachUnchecked(v => p.content = v)
     q.disabled.foreach(v => p.disabled = v)

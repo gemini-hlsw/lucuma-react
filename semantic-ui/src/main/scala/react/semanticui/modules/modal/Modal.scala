@@ -258,7 +258,7 @@ object Modal {
     actions.toJs.foreach(v => p.actions = v)
     basic.foreach(v => p.basic = v)
     centered.foreach(v => p.centered = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     CompToPropsS(closeIcon).toJs.foreachUnchecked(v => p.closeIcon = v)
     closeOnDimmerClick.foreach(v => p.closeOnDimmerClick = v)
     closeOnDocumentClick.foreach(v => p.closeOnDocumentClick = v)

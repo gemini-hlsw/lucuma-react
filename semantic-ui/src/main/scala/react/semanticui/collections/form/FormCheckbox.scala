@@ -269,7 +269,7 @@ object FormCheckbox {
     width:                js.UndefOr[SemanticWidth] = js.undefined
   ): FormCheckboxProps = {
     val p = as.toJsObject[FormCheckboxProps]
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     onChangeE.toJs
       .map(v => p.onChange = v)
       .orElse(

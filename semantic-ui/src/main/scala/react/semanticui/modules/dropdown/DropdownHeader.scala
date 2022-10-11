@@ -74,7 +74,7 @@ object DropdownHeader {
   ): DropdownHeaderProps = {
     val p = as.toJsObject[DropdownHeaderProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     CompToPropsS(icon).toJs.foreachUnchecked(v => p.icon = v)
     p

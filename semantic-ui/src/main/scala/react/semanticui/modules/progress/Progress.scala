@@ -183,7 +183,7 @@ object Progress {
     active.foreach(v => p.active = v)
     attached.foreach(v => p.attached = v)
     autoSuccess.foreach(v => p.autoSuccess = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     error.foreach(v => p.error = v)

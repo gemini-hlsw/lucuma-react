@@ -173,7 +173,7 @@ object Button {
     attached.toJs.foreachUnchecked(v => p.attached = v)
     basic.foreach(v => p.basic = v)
     circular.foreach(v => p.circular = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     compact.foreach(v => p.compact = v)
     content.toJs.foreachUnchecked(v => p.content = v)

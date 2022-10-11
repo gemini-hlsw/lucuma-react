@@ -145,7 +145,7 @@ object Input {
     q.as.toJs.foreachUnchecked(v => p.as = v)
     q.action.toJs.foreachUnchecked(v => p.action = v)
     q.actionPosition.toJs.foreach(v => p.actionPosition = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.disabled.foreach(v => p.disabled = v)
     q.error.foreach(v => p.error = v)
     q.fluid.foreach(v => p.fluid = v)

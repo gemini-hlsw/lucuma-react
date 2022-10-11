@@ -144,7 +144,7 @@ object DimmerInner {
     val p = as.toJsObject[DimmerInnerProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     active.foreach(v => p.active = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     disabled.foreach(v => p.disabled = v)
     (onClickE, onClick).toJs.foreach(v => p.onClick = v)
     (onClickOutsideE, onClickOutside).toJs.foreach(v => p.onClickOutside = v)

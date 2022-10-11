@@ -71,7 +71,7 @@ object MessageList {
   ): MessageListProps = {
     val p = as.toJsObject[MessageListProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     items.toJs.foreach(v => p.items = v)
     p
   }

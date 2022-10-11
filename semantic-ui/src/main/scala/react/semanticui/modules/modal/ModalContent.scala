@@ -76,7 +76,7 @@ object ModalContent {
   ): ModalContentProps = {
     val p = as.toJsObject[ModalContentProps]
     as.toJs.foreachUnchecked(v => p.as = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     content.toJs.foreachUnchecked(v => p.content = v)
     image.foreach(v => p.image = v)
     scrolling.foreach(v => p.scrolling = v)

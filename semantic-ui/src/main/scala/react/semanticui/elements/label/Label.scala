@@ -110,7 +110,7 @@ object Label {
     q.basic.foreach(v => p.basic = v)
     q.child.foreachUnchecked(v => p.children = v)
     q.circular.foreach(v => p.circular = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.color.toJs.foreach(v => p.color = v)
     q.content.toJs.foreachUnchecked(v => p.content = v)
     q.corner.toJs.foreachUnchecked(v => p.corner = v)

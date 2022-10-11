@@ -122,7 +122,7 @@ object GridRow {
     val p = as.toJsObject[GridRowProps]
     as.toJs.foreachUnchecked(v => p.as = v)
     centered.foreach(v => p.centered = v)
-    (className, clazz).toJs.foreach(v => p.className = v)
+    (className, clazz).cssToJs.foreach(v => p.className = v)
     color.toJs.foreach(v => p.color = v)
     columns
       .map((_: Any) match {

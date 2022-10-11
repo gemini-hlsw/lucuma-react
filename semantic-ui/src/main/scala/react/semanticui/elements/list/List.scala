@@ -137,7 +137,7 @@ object List {
     q.animated.foreach(v => p.animated = v)
     q.bulleted.foreach(v => p.bulleted = v)
     q.celled.foreach(v => p.celled = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    (q.className, q.clazz).cssToJs.foreach(v => p.className = v)
     q.content.map(_.map(_.rawNode).toJSArray).foreach(v => p.content = v)
     q.divided.foreach(v => p.divided = v)
     q.floated.toJs.foreach(v => p.floated = v)
