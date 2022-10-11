@@ -39,12 +39,6 @@ sealed trait StyleExtractor[A] {
   def extract(s: Style, key: String): Option[A]
 }
 
-// for backwards compatibility
-trait StyleSyntax:
-  implicit val intExtractor: StyleExtractor[Int] = given_StyleExtractor_Int
-
-  implicit val stringExtractor: StyleExtractor[String] = given_StyleExtractor_String
-
 /**
  * Simple class to represent styles
  */

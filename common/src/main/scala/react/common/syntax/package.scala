@@ -264,11 +264,5 @@ object vdom      extends VdomSyntax
 object render    extends RenderSyntax
 object enumValue extends EnumValueSyntax
 object callback  extends CallbackSyntax with CallbackPairSyntax
-object style     extends react.common.style.StyleSyntax
 
-trait AllSyntax
-    extends EnumValueSyntax
-    with CallbackPairSyntax
-    with react.common.style.StyleSyntax
-    with RenderSyntax
-    with VdomSyntax
+trait AllSyntax extends EnumValueSyntax with CallbackPairSyntax with RenderSyntax with VdomSyntax

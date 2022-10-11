@@ -3,7 +3,7 @@
 
 package react.semanticui.modules.popup
 
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
@@ -13,16 +13,16 @@ import react.common.Style
 import react.common.syntax.callback.*
 import react.common.syntax.enumValue.*
 import react.common.syntax.render.*
-import react.common.syntax.style.*
-import react.semanticui._
-import react.semanticui.sizes._
+import react.common.style.*
+import react.semanticui.*
+import react.semanticui.sizes.*
 import react.semanticui.{raw => suiraw}
 
 import scala.scalajs.js
 
-import js.annotation._
+import js.annotation.*
 import js.|
-import js.JSConverters._
+import js.JSConverters.*
 
 final case class Popup(
   as:                     js.UndefOr[AsC] = js.undefined,
