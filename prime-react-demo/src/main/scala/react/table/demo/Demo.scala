@@ -25,7 +25,6 @@ object Demo:
     }
 
     <.div(
-      <.h1("Demo for lucuma-prime-react"),
       DemoComponents.component()
     )
       .renderIntoDOM(container)
