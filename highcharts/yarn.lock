@@ -2080,10 +2080,10 @@ follow-redirects@^1.0.0:
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.1.tgz#0ca6a452306c9b276e4d3127483e29575e207ad5"
   integrity sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==
 
-fomantic-ui-less@^2.8.7:
-  version "2.8.8"
-  resolved "https://registry.yarnpkg.com/fomantic-ui-less/-/fomantic-ui-less-2.8.8.tgz#c82cdd0e6983c7ae60aafeb5ff7d14ef223787f0"
-  integrity sha512-wy8kuTmD9bmJ0WK8GgIBQKktMA86x4OsaMk7wQxCYK1rP/u9r1UURzXsk8Ok6BRLcqqsfMNd9BDGvIFdEf2k9g==
+fomantic-ui-less@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/fomantic-ui-less/-/fomantic-ui-less-2.9.0.tgz#f2d4595be8ae24f2f0446011494e1329aef3d163"
+  integrity sha512-fVjEpVhnw4u2XS35C8/PLBqpZrehDNRZAOD1eaHfNK/anbJCA3TwuqW4HyQjFD/XQXr/Wil8LLZ4i2fz6lHN4A==
   dependencies:
     jquery "^3.4.0"
 
