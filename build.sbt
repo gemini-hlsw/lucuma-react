@@ -14,6 +14,7 @@ ThisBuild / mergifyPrRules +=
 val catsV            = "2.8.0"
 val disciplineMunitV = "2.0.0-M3"
 val jsdomV           = "20.0.1"
+val kittensV         = "3.0.0"
 val munitV           = "1.0.0-M6"
 val scalaJsReactV    = "2.1.1"
 val utestV           = "0.8.1"
@@ -26,6 +27,7 @@ lazy val facadeSettings = Seq(
     "com.github.japgolly.scalajs-react" %%% "extra"     % scalaJsReactV,
     "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReactV % Test,
     "org.typelevel"                     %%% "cats-core" % catsV,
+    "org.typelevel"                     %%% "kittens"   % kittensV,
     "com.lihaoyi"                       %%% "utest"     % utestV        % Test,
     "org.scalameta"                     %%% "munit"     % munitV        % Test
   ),

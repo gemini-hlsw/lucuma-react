@@ -4,6 +4,7 @@
 package react.primereact
 
 import cats.Eq
+import cats.derived.*
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.JsNumber
@@ -14,20 +15,23 @@ import reactST.StBuildingComponent
 import reactST.primereact.dialogMod.DialogPositionType
 import reactST.primereact.primereactStrings.horizontal
 import reactST.primereact.primereactStrings.local
+import reactST.primereact.primereactStrings.self
 import reactST.primereact.primereactStrings.session
 import reactST.primereact.primereactStrings.vertical
 
 import scalajs.js
 
-enum Layout(val value: horizontal | vertical):
+type SelfPosition = self
+
+enum Layout(val value: horizontal | vertical) derives Eq:
   case Horizontal extends Layout(horizontal)
   case Vertical   extends Layout(vertical)
 
-enum StateStorage(val value: local | session):
+enum StateStorage(val value: local | session) derives Eq:
   case Local   extends StateStorage(local)
   case Session extends StateStorage(session)
 
-enum DialogPosition(val value: DialogPositionType):
+enum DialogPosition(val value: DialogPositionType) derives Eq:
   case Bottom      extends DialogPosition(DialogPositionType.bottom)
   case BottomLeft  extends DialogPosition(DialogPositionType.`bottom-left`)
   case BottomRight extends DialogPosition(DialogPositionType.`bottom-right`)

@@ -9,32 +9,59 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.HTMLElement
 import react.common.*
 import react.primereact.*
-
+import reactST.primereact.components.{Accordion => CAccordion}
+import reactST.primereact.components.{AccordionTab => CAccordionTab}
 object DemoComponents {
+  case class SidebarOptions(
+    position:      Sidebar.Position,
+    size:          Sidebar.Size,
+    dismissable:   Boolean,
+    closeOnEscape: Boolean,
+    modal:         Boolean,
+    fullScreen:    Boolean,
+    blockScroll:   Boolean,
+    showCloseIcon: Boolean
+  )
+
+  object SidebarOptions:
+    def default = SidebarOptions(Sidebar.Position.Right,
+                                 Sidebar.Size.Small,
+                                 true,
+                                 true,
+                                 true,
+                                 false,
+                                 false,
+                                 true
+    )
+
   val component =
     ScalaFnComponent
       .withHooks[Unit]
-      .useState(false)                 // show dialog
-      .useState(false)                 // panel collapsed
-      .useState("Text to edit")        // for InputText
-      .useState("Resizeable TextArea") // for InputTextarea
-      .useState(2)                     // for Dropdown
-      .useState(3.some)                // for DropdownOptional
-      .useState(false)                 // for InputSwitch
-      .useState(false)                 // for Checkbox
-      .useState((25.0, 75.0))          // for SliderRange
-      .useState(0.0)                   // for Slider
-      .useState(10.0)                  // for Knob
-      .useState(11.0)                  // for Knob (readonly)
-      .useState(1)                     // for SelectButton
-      .useState(2.some)                // for SelectButtonOptional
-      .useState(List(1, 3))            // for SelectButtonMultiple
-      .useState(50)                    // for ProgressBar
+      .useState(false)                  // show dialog
+      .useState(false)                  // panel collapsed
+      .useState(false)                  // sidebar
+      .useState(SidebarOptions.default) // sidebar options
+      .useState("Text to edit")         // for InputText
+      .useState("Resizeable TextArea")  // for InputTextarea
+      .useState(2)                      // for Dropdown
+      .useState(3.some)                 // for DropdownOptional
+      .useState(false)                  // for InputSwitch
+      .useState(false)                  // for Checkbox
+      .useState((25.0, 75.0))           // for SliderRange
+      .useState(0.0)                    // for Slider
+      .useState(10.0)                   // for Knob
+      .useState(11.0)                   // for Knob (readonly)
+      .useState(1)                      // for SelectButton
+      .useState(2.some)                 // for SelectButtonOptional
+      .useState(List(1, 3))             // for SelectButtonMultiple
+      .useState(50)                     // for ProgressBar
       .render {
         (
           _,
           showDialog,
           panelCollapsed,
+          sidebar,
+          sidebarOptions,
           inputText,
           inputTextarea,
           dropdown,
@@ -144,10 +171,93 @@ object DemoComponents {
                 (left, right) => Callback.log(s"Splitter onResizeEnd($left, $right)")
               )(
                 SplitterPanel(size = 30)(
-                  "Splitter left side panel"
+                  Button(label = "Open Sidebar", onClick = sidebar.setState(true))
                 ),
                 SplitterPanel(size = 70)(
-                  "Splitter right side panel"
+                  <.h2("Sidebar Options"),
+                  <.div(
+                    DemoStyles.FormColumn,
+                    <.label("Position", ^.htmlFor := "sidebar-position", DemoStyles.FormFieldLabel),
+                    SelectButton(
+                      id = "sidebar-position",
+                      value = sidebarOptions.value.position,
+                      options = SelectItem
+                        .fromTupleList[Sidebar.Position](
+                          List(
+                            (Sidebar.Position.Top, "Top"),
+                            (Sidebar.Position.Bottom, "Bottom"),
+                            (Sidebar.Position.Left, "Left"),
+                            (Sidebar.Position.Right, "Right")
+                          )
+                        ),
+                      onChange = v => sidebarOptions.modState(_.copy(position = v))
+                    ),
+                    <.label("Size", ^.htmlFor     := "sidebar-size", DemoStyles.FormFieldLabel),
+                    SelectButton(
+                      id = "sidebar-size",
+                      value = sidebarOptions.value.size,
+                      options = SelectItem
+                        .fromTupleList[Sidebar.Size](
+                          List(
+                            (Sidebar.Size.Small, "Small"),
+                            (Sidebar.Size.Medium, "Medium"),
+                            (Sidebar.Size.Large, "Large")
+                          )
+                        ),
+                      onChange = v => sidebarOptions.modState(_.copy(size = v))
+                    ),
+                    <.label("Close On Escape",
+                            ^.htmlFor             := "sidebar-closeonescape",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    InputSwitch(
+                      inputId = "sidebar-closeonescape",
+                      checked = sidebarOptions.value.closeOnEscape,
+                      onChange = v => sidebarOptions.modState(_.copy(closeOnEscape = v))
+                    ),
+                    <.label("Dismissable",
+                            ^.htmlFor             := "sidebar-dismissable",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    InputSwitch(
+                      inputId = "sidebar-dismissable",
+                      checked = sidebarOptions.value.dismissable,
+                      onChange = v => sidebarOptions.modState(_.copy(dismissable = v))
+                    ),
+                    <.label("Modal", ^.htmlFor    := "sidebar-modal", DemoStyles.FormFieldLabel),
+                    InputSwitch(
+                      inputId = "sidebar-modal",
+                      checked = sidebarOptions.value.modal,
+                      onChange = v => sidebarOptions.modState(_.copy(modal = v))
+                    ),
+                    <.label("Full Screen",
+                            ^.htmlFor             := "sidebar-fullscreen",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    InputSwitch(
+                      inputId = "sidebar-fullscreen",
+                      checked = sidebarOptions.value.fullScreen,
+                      onChange = v => sidebarOptions.modState(_.copy(fullScreen = v))
+                    ),
+                    <.label("Block Scroll",
+                            ^.htmlFor             := "sidebar-blockscroll",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    InputSwitch(
+                      inputId = "sidebar-blockscroll",
+                      checked = sidebarOptions.value.blockScroll,
+                      onChange = v => sidebarOptions.modState(_.copy(blockScroll = v))
+                    ),
+                    <.label("Show Close Icon",
+                            ^.htmlFor             := "sidebar-closeicon",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    InputSwitch(
+                      inputId = "sidebar-closeicon",
+                      checked = sidebarOptions.value.showCloseIcon,
+                      onChange = v => sidebarOptions.modState(_.copy(showCloseIcon = v))
+                    )
+                  )
                 )
               )
             ),
@@ -357,7 +467,19 @@ object DemoComponents {
               draggable = true
             )("You can drag me around!"),
             ConfirmPopup(),
-            ConfirmDialog()
+            ConfirmDialog(),
+            Sidebar(
+              visible = sidebar.value,
+              onHide = sidebar.setState(false),
+              position = sidebarOptions.value.position,
+              size = sidebarOptions.value.size,
+              dismissable = sidebarOptions.value.dismissable,
+              closeOnEscape = sidebarOptions.value.closeOnEscape,
+              modal = sidebarOptions.value.modal,
+              fullScreen = sidebarOptions.value.fullScreen,
+              blockScroll = sidebarOptions.value.blockScroll,
+              showCloseIcon = sidebarOptions.value.showCloseIcon
+            )("Sidebar Content")
           )
       }
 }

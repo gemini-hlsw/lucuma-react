@@ -26,18 +26,19 @@ private[primereact] trait AccordionBase {
 }
 
 object AccordionBase {
-  private[primereact] val component = ScalaFnComponent[AccordionBase] { props =>
-    CAccordion
-      .applyOrNot(props.id, _.id(_))
-      .applyOrNot(props.rawActiveIndex, _.activeIndex(_))
-      .applyOrNot(props.multiple, _.multiple(_))
-      .applyOrNot(props.expandIcon, _.expandIcon(_))
-      .applyOrNot(props.collapseIcon, _.collapseIcon(_))
-      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
-      .applyOrNot(props.onTabOpen, (c, p) => c.onTabOpen(e => p(e.index.toInt)))
-      .applyOrNot(props.onTabClose, (c, p) => c.onTabClose(e => p(e.index.toInt)))
-      .applyOrNot(props.onTabChange, (c, p) => c.onTabChange(e => p(e.index.toInt)))(
-        props.tabs.toReactFragment
-      )
-  }
+  private[primereact] val component =
+    ScalaFnComponent[AccordionBase] { props =>
+      CAccordion
+        .applyOrNot(props.id, _.id(_))
+        .applyOrNot(props.rawActiveIndex, _.activeIndex(_))
+        .applyOrNot(props.multiple, _.multiple(_))
+        .applyOrNot(props.expandIcon, _.expandIcon(_))
+        .applyOrNot(props.collapseIcon, _.collapseIcon(_))
+        .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+        .applyOrNot(props.onTabOpen, (c, p) => c.onTabOpen(e => p(e.index.toInt)))
+        .applyOrNot(props.onTabClose, (c, p) => c.onTabClose(e => p(e.index.toInt)))
+        .applyOrNot(props.onTabChange, (c, p) => c.onTabChange(e => p(e.index.toInt)))(
+          props.tabs.toTagMod
+        )
+    }
 }

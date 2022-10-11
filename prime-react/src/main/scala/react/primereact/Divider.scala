@@ -3,6 +3,8 @@
 
 package react.primereact
 
+import cats.Eq
+import cats.derived.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
@@ -28,7 +30,8 @@ case class Divider(
 ) extends ReactFnPropsWithChildren[Divider](Divider.component)
 
 object Divider {
-  enum Position(val layout: horizontal | vertical, val align: left | right | center | top | bottom):
+  enum Position(val layout: horizontal | vertical, val align: left | right | center | top | bottom)
+      derives Eq:
     case HorizontalLeft   extends Position(horizontal, left)
     case HorizontalCenter extends Position(horizontal, center)
     case HorizontalRight  extends Position(horizontal, right)
@@ -36,7 +39,7 @@ object Divider {
     case VerticalCenter   extends Position(vertical, center)
     case VerticalBottom   extends Position(vertical, bottom)
 
-  enum BorderType(val value: solid | dashed | dotted):
+  enum BorderType(val value: solid | dashed | dotted) derives Eq:
     case Solid  extends BorderType(solid)
     case Dashed extends BorderType(dashed)
     case Dotted extends BorderType(dotted)

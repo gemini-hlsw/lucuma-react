@@ -3,6 +3,8 @@
 
 package react.primereact
 
+import cats.Eq
+import cats.derived.*
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
@@ -37,12 +39,12 @@ case class Button(
 ) extends ReactFnPropsWithChildren[Button](Button.component)
 
 object Button {
-  enum Size(val cls: Css):
+  enum Size(val cls: Css) derives Eq:
     case Small  extends Size(PrimeStyles.ButtonSmall)
     case Normal extends Size(PrimeStyles.ButtonNormal)
     case Large  extends Size(PrimeStyles.ButtonLarge)
 
-  enum Severity(val cls: Css):
+  enum Severity(val cls: Css) derives Eq:
     case Primary   extends Severity(PrimeStyles.ButtonPrimary)
     case Secondary extends Severity(PrimeStyles.ButtonSecondary)
     case Success   extends Severity(PrimeStyles.ButtonSuccess)
@@ -51,12 +53,12 @@ object Button {
     case Help      extends Severity(PrimeStyles.ButtonHelp)
     case Danger    extends Severity(PrimeStyles.ButtonDanger)
 
-  enum Type(val value: submit | reset | button):
+  enum Type(val value: submit | reset | button) derives Eq:
     case Button extends Type(button)
     case Submit extends Type(submit)
     case Reset  extends Type(reset)
 
-  enum IconPosition(val iconCls: Css, val buttonCls: Css):
+  enum IconPosition(val iconCls: Css, val buttonCls: Css) derives Eq:
     case Left   extends IconPosition(PrimeStyles.ButtonIconLeft, Css.Empty)
     case Right  extends IconPosition(PrimeStyles.ButtonIconRight, Css.Empty)
     case Top    extends IconPosition(PrimeStyles.ButtonIconTop, PrimeStyles.ButtonVertical)

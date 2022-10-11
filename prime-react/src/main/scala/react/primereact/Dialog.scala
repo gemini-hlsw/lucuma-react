@@ -9,40 +9,37 @@ import org.scalajs.dom.HTMLElement
 import react.common.*
 import reactST.primereact.components.{Dialog => CDialog}
 import reactST.primereact.dialogMod.DialogAppendToType
-import reactST.primereact.primereactStrings
 
 import scalajs.js
 
 case class Dialog(
-  onHide:          Callback,                                                     // use to set `visible` state/view to false
+  onHide:          Callback,                                              // use to set `visible` state/view to false
   visible:         Boolean,
   id:              js.UndefOr[String] = js.undefined,
   header:          js.UndefOr[VdomNode] = js.undefined,
   footer:          js.UndefOr[VdomNode] = js.undefined,
-  position:        js.UndefOr[DialogPosition] = js.undefined,                    // default: center
-  modal:           js.UndefOr[Boolean] = js.undefined,                           // default: false
-  resizable:       js.UndefOr[Boolean] = js.undefined,                           // default: true
-  draggable:       js.UndefOr[Boolean] = js.undefined,                           // default: true
-  keepInViewport:  js.UndefOr[Boolean] = js.undefined,                           // default: true
-  showHeader:      js.UndefOr[Boolean] = js.undefined,                           // default: true
-  closable:        js.UndefOr[Boolean] = js.undefined,                           // default: true
-  closeOnEscape:   js.UndefOr[Boolean] = js.undefined,                           // default: true
-  dismissableMask: js.UndefOr[Boolean] = js.undefined,                           // default: false
-  maximizable:     js.UndefOr[Boolean] = js.undefined,                           // default: false
-  blockScroll:     js.UndefOr[Boolean] = js.undefined,                           // default: false
-  focusOnShow:     js.UndefOr[Boolean] = js.undefined,                           // default: true
-  maximized:       js.UndefOr[Boolean] = js.undefined,                           // default: false
+  position:        js.UndefOr[DialogPosition] = js.undefined,             // default: center
+  modal:           js.UndefOr[Boolean] = js.undefined,                    // default: false
+  resizable:       js.UndefOr[Boolean] = js.undefined,                    // default: true
+  draggable:       js.UndefOr[Boolean] = js.undefined,                    // default: true
+  keepInViewport:  js.UndefOr[Boolean] = js.undefined,                    // default: true
+  showHeader:      js.UndefOr[Boolean] = js.undefined,                    // default: true
+  closable:        js.UndefOr[Boolean] = js.undefined,                    // default: true
+  closeOnEscape:   js.UndefOr[Boolean] = js.undefined,                    // default: true
+  dismissableMask: js.UndefOr[Boolean] = js.undefined,                    // default: false
+  maximizable:     js.UndefOr[Boolean] = js.undefined,                    // default: false
+  blockScroll:     js.UndefOr[Boolean] = js.undefined,                    // default: false
+  focusOnShow:     js.UndefOr[Boolean] = js.undefined,                    // default: true
+  maximized:       js.UndefOr[Boolean] = js.undefined,                    // default: false
   clazz:           js.UndefOr[Css] = js.undefined,
   headerClass:     js.UndefOr[Css] = js.undefined,
   contentClass:    js.UndefOr[Css] = js.undefined,
   maskClass:       js.UndefOr[Css] = js.undefined,
-  appendTo:        js.UndefOr[Dialog.SelfPosition | HTMLElement] = js.undefined, // default: document.body
-  baseZIndex:      js.UndefOr[Double] = js.undefined                             // default: 0
+  appendTo:        js.UndefOr[SelfPosition | HTMLElement] = js.undefined, // default: document.body
+  baseZIndex:      js.UndefOr[Double] = js.undefined                      // default: 0
 ) extends ReactFnPropsWithChildren[Dialog](Dialog.component)
 
 object Dialog {
-  type SelfPosition = primereactStrings.self
-
   private val component =
     ScalaFnComponent
       .withHooks[Dialog]

@@ -3,6 +3,8 @@
 
 package react.primereact
 
+import cats.Eq
+import cats.derived.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
@@ -26,7 +28,7 @@ case class Tag(
 ) extends ReactFnPropsWithChildren[Tag](Tag.component)
 
 object Tag {
-  enum Severity(val value: danger | info | success | warning):
+  enum Severity(val value: danger | info | success | warning) derives Eq:
     case Danger  extends Severity(danger)
     case Info    extends Severity(info)
     case Success extends Severity(success)

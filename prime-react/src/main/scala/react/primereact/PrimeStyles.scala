@@ -40,6 +40,13 @@ trait PrimeStyles {
 
   // Tag
   val TagIcon: Css = Css("p-tag-icon")
+
+  // Sidebar
+  val SidebarSmall: Css  = Css("p-sidebar-sm")
+  val SidebarMedium: Css = Css("p-sidebar-md")
+  val SidebarLarge: Css  = Css("p-sidebar-lg")
+
+  val SidebarIcon: Css = Css("p-sidebar-icon")
 }
 
 object PrimeStyles extends PrimeStyles
