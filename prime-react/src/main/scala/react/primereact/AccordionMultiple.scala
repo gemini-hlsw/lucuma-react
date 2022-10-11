@@ -7,7 +7,6 @@ import cats.Id
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
-import reactST.primereact.mod.AccordionActiveIndexType
 
 import scalajs.js
 import scalajs.js.JSConverters.*

@@ -18,7 +18,7 @@ case class Toolbar(
 ) extends ReactFnProps[Toolbar](Toolbar.component)
 
 object Toolbar {
-  val component = ScalaFnComponent[Toolbar] { props =>
+  private val component = ScalaFnComponent[Toolbar] { props =>
     CToolbar
       .applyOrNot(props.id, _.id(_))
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))

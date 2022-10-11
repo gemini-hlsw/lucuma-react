@@ -7,7 +7,6 @@ import cats.Id
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
-import reactST.primereact.mod.AccordionActiveIndexType
 
 import scalajs.js
 
@@ -16,7 +15,6 @@ case class Accordion(
   activeIndex:  js.UndefOr[Int] = js.undefined,
   expandIcon:   js.UndefOr[String] = js.undefined,
   collapseIcon: js.UndefOr[String] = js.undefined,
-  className:    js.UndefOr[String] = js.undefined,
   clazz:        js.UndefOr[Css] = js.undefined,
   onTabOpen:    js.UndefOr[Int => Callback] = js.undefined,
   onTabClose:   js.UndefOr[Int => Callback] = js.undefined,
