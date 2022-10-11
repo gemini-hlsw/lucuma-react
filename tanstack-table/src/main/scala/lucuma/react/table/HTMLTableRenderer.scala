@@ -33,6 +33,7 @@ trait HTMLTableRenderer[T]:
   protected val TfootClass: Css       = Css.Empty
   protected val TfootTrClass: Css     = Css.Empty
   protected val TfootThClass: Css     = Css.Empty
+  protected val EmptyMessage: Css     = Css.Empty
 
   protected val ResizerClass: Css         = Css("resizer")
   protected val IsResizingTHeadClass: Css = Css("isResizing")
@@ -157,7 +158,12 @@ trait HTMLTableRenderer[T]:
           .whenDefined
       )(
         TagMod.when(rows.isEmpty)(
-          <.tr(TbodyTrClass, ^.colSpan := table.getAllLeafColumns().length, ^.whiteSpace.nowrap)(
+          <.tr(
+            TbodyTrClass,
+            EmptyMessage,
+            ^.colSpan := table.getAllLeafColumns().length,
+            ^.whiteSpace.nowrap
+          )(
             emptyMessage
           )
         ),

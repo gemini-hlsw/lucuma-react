@@ -32,5 +32,5 @@ trait ColumnDefJS[T, A] extends js.Object:
   var enableSorting: js.UndefOr[Boolean]                   = js.undefined
   var invertSorting: js.UndefOr[Boolean]                   = js.undefined
   var sortDescFirst: js.UndefOr[Boolean]                   = js.undefined
-  // var sortUndefined: js.UndefOr[false | -1 | 1]   = js.undefined
+  var sortUndefined: js.UndefOr[UndefinedPriorityJs]       = js.undefined
   var sortingFn: js.UndefOr[String | raw.mod.SortingFn[T]] = js.undefined
