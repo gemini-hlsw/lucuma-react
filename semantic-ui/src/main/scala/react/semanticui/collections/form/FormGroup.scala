@@ -9,8 +9,8 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common.Css
 import react.common.GenericComponentPAC
-import react.common.syntax.enumValue.*
 import react.common.style.*
+import react.common.syntax.enumValue.*
 import react.semanticui.*
 import react.semanticui.{raw => suiraw}
 

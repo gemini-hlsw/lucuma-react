@@ -8,8 +8,8 @@ import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import react.common.Css
 import react.common.GenericFnComponentPAC
-import react.common.syntax.enumValue.*
 import react.common.style.*
+import react.common.syntax.enumValue.*
 import react.semanticui.*
 import react.semanticui.{raw => suiraw}
 
