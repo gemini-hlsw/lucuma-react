@@ -15,9 +15,13 @@ import scala.scalajs.js.|
 
 import js.JSConverters._
 
+sealed trait StyleExtractor[A] {
+  def extract(s: Style, key: String): Option[A]
+}
+
 given StyleExtractor[Int] = new StyleExtractor[Int] {
   override def extract(s: Style, key: String): Option[Int] =
-    s.styles.get(key).flatMap { x =>
+    s.get(key).flatMap { x =>
       (x: Any) match {
         case x: Int => Some(x)
         case _      => None
@@ -27,7 +31,7 @@ given StyleExtractor[Int] = new StyleExtractor[Int] {
 
 given StyleExtractor[String] = new StyleExtractor[String] {
   override def extract(s: Style, key: String): Option[String] =
-    s.styles.get(key).flatMap { x =>
+    s.get(key).flatMap { x =>
       (x: Any) match {
         case x: String => Some(x)
         case _         => None
@@ -35,47 +39,36 @@ given StyleExtractor[String] = new StyleExtractor[String] {
     }
 }
 
-sealed trait StyleExtractor[A] {
-  def extract(s: Style, key: String): Option[A]
-}
-
 /**
  * Simple class to represent styles
  */
-case class Style(styles: Map[String, String | Int]) {
-  def isEmpty: Boolean = styles.isEmpty
-
-  def nonEmpty: Boolean = styles.nonEmpty
-
-  def toJsObject: js.Object = Style.toJsObject(this)
-
-  def extract[A](key: String)(implicit S: StyleExtractor[A]): Option[A] =
-    S.extract(this, key)
-
-  def remove(key: String): Style =
-    if (this.styles.contains(key))
-      Style(this.styles - key)
-    else
-      this
-
-  def when_(pred: => Boolean): Style =
-    if (pred)
-      this
-    else
-      Style.Empty
-
-  def unless_(pred: => Boolean): Style =
-    if (pred)
-      Style.Empty
-    else
-      this
-
-}
+opaque type Style = Map[String, String | Int]
 
 object Style {
+  extension (styles: Style)
+    inline def value: Map[String, String | Int] = styles
 
-  def toJsObject(style: Style): js.Object =
-    style.styles.toJSDictionary.asInstanceOf[js.Object]
+    inline def isEmpty: Boolean = styles.isEmpty
+
+    inline def nonEmpty: Boolean = styles.nonEmpty
+
+    @targetName("extToJsObject")
+    inline def toJsObject: js.Object =
+      styles.toJSDictionary.asInstanceOf[js.Object]
+
+    inline def extract[A](key: String)(using S: StyleExtractor[A]): Option[A] =
+      S.extract(styles, key)
+
+    inline def remove(key: String): Style =
+      if (styles.contains(key)) Style(styles - key) else styles
+
+    inline def when_(pred: => Boolean): Style =
+      if (pred) styles else Style.Empty
+
+    inline def unless_(pred: => Boolean): Style =
+      if (pred) Style.Empty else styles
+
+  inline def apply(styles: Map[String, String | Int]): Style = styles
 
   def fromJsObject(o: js.Object): Style = {
     val xDict = o.asInstanceOf[js.Dictionary[String | Int]]
@@ -83,7 +76,7 @@ object Style {
     Style(map)
   }
 
-  val Empty: Style = Style(Map.empty)
+  val Empty: Style = Map.empty
 
   given Eq[String | Int] = Eq.instance { (a, b) =>
     (a: Any, b: Any) match {
@@ -93,11 +86,11 @@ object Style {
     }
   }
 
-  given Eq[Style]     = Eq.by(_.styles)
+  given Eq[Style]     = cats.kernel.instances.map.catsKernelStdEqForMap
   given Monoid[Style] = new Monoid[Style] {
     override val empty: Style                       = Style(Map.empty)
     override def combine(a: Style, b: Style): Style =
-      Style(a.styles ++ b.styles)
+      Style(a ++ b)
   }
 }
 

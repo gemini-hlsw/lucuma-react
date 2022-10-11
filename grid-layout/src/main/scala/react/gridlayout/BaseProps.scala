@@ -122,7 +122,7 @@ object BaseProps {
     val p = (new js.Object).asInstanceOf[BaseProps]
     p.className = className
     p.width = width
-    p.style = style.map(Style.toJsObject)
+    p.style = style.map(_.toJsObject)
     p.autoSize = autoSize
     p.cols = cols
     p.draggableCancel = draggableCancel
