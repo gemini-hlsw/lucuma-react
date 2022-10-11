@@ -343,6 +343,9 @@ lazy val tableDemo = project
   .settings(
     demoSettings
   )
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions"
+  )
 
 lazy val tanstackTable = project
   .in(file("tanstack-table"))
@@ -366,6 +369,9 @@ lazy val tanstackTableDemo = project
   .dependsOn(tanstackTable)
   .settings(
     demoSettings
+  )
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions"
   )
 
 lazy val highcharts = project
