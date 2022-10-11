@@ -17,7 +17,6 @@ private[primereact] trait AccordionBase {
   val multiple: js.UndefOr[Boolean]
   val expandIcon: js.UndefOr[String]   // default: "pi pi-chevron-right"
   val collapseIcon: js.UndefOr[String] // default: "pi pi-chevron-down"
-  val className: js.UndefOr[String]
   val clazz: js.UndefOr[Css]
   val onTabOpen: js.UndefOr[Int => Callback]
   val onTabClose: js.UndefOr[Int => Callback]
@@ -34,7 +33,7 @@ object AccordionBase {
         .applyOrNot(props.multiple, _.multiple(_))
         .applyOrNot(props.expandIcon, _.expandIcon(_))
         .applyOrNot(props.collapseIcon, _.collapseIcon(_))
-        .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+        .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
         .applyOrNot(props.onTabOpen, (c, p) => c.onTabOpen(e => p(e.index.toInt)))
         .applyOrNot(props.onTabClose, (c, p) => c.onTabClose(e => p(e.index.toInt)))
         .applyOrNot(props.onTabChange, (c, p) => c.onTabChange(e => p(e.index.toInt)))(

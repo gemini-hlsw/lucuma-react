@@ -22,20 +22,19 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 case class Button(
-  label:     js.UndefOr[String] = js.undefined,
-  icon:      js.UndefOr[FontAwesomeIcon] = js.undefined,
-  iconPos:   Button.IconPosition = Button.IconPosition.Left,
-  className: js.UndefOr[String] = js.undefined,
-  clazz:     js.UndefOr[Css] = js.undefined,
-  onClick:   Callback = Callback.empty,
-  onClickE:  ReactMouseEventFrom[HTMLButtonElement & Element] => Callback = _ => Callback.empty,
-  size:      Button.Size = Button.Size.Normal,
-  tpe:       Button.Type = Button.Type.Button,
-  severity:  Button.Severity = Button.Severity.Primary,
-  outlined:  Boolean = false,
-  raised:    Boolean = false,
-  rounded:   Boolean = false,
-  text:      Boolean = false
+  label:    js.UndefOr[String] = js.undefined,
+  icon:     js.UndefOr[FontAwesomeIcon] = js.undefined,
+  iconPos:  Button.IconPosition = Button.IconPosition.Left,
+  clazz:    js.UndefOr[Css] = js.undefined,
+  onClick:  Callback = Callback.empty,
+  onClickE: ReactMouseEventFrom[HTMLButtonElement & Element] => Callback = _ => Callback.empty,
+  size:     Button.Size = Button.Size.Normal,
+  tpe:      Button.Type = Button.Type.Button,
+  severity: Button.Severity = Button.Severity.Primary,
+  outlined: Boolean = false,
+  raised:   Boolean = false,
+  rounded:  Boolean = false,
+  text:     Boolean = false
 ) extends ReactFnPropsWithChildren[Button](Button.component)
 
 object Button {
@@ -89,6 +88,6 @@ object Button {
           .`type`(props.tpe.value)
           .applyOrNot(props.label, _.label(_))
           .applyOrNot(iconWithClass, (c, p) => c.icon(p.raw))
-          .applyOrNot((props.className, fullCss).toJs, _.className(_))(children)
+          .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))
       }
 }

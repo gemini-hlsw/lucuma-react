@@ -21,7 +21,6 @@ case class Knob(
   valueTemplate: js.UndefOr[String] = js.undefined,  // js template literal: default "{value}"
   readOnly:      js.UndefOr[Boolean] = js.undefined, // default: false
   disabled:      js.UndefOr[Boolean] = js.undefined,
-  className:     js.UndefOr[String] = js.undefined,
   clazz:         js.UndefOr[Css] = js.undefined,
   onChange:      js.UndefOr[Double => Callback] = js.undefined
 ) extends ReactFnProps[Knob](Knob.component)
@@ -40,7 +39,7 @@ object Knob {
       .applyOrNot(props.valueTemplate, _.valueTemplate(_))
       .applyOrNot(props.readOnly, _.readOnly(_))
       .applyOrNot(props.disabled, _.disabled(_))
-      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(
         props.onChange,
         (c, p) => c.onChange(scp => p(scp.value.asInstanceOf[Double]))

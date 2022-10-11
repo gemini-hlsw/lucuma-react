@@ -15,7 +15,6 @@ case class DropdownOptional[A](
   value:           Option[A],
   options:         List[SelectItem[A]],
   id:              js.UndefOr[String] = js.undefined,
-  className:       js.UndefOr[String] = js.undefined,
   clazz:           js.UndefOr[Css] = js.undefined,
   showClear:       js.UndefOr[Boolean] = js.undefined,
   filter:          js.UndefOr[Boolean] = js.undefined,

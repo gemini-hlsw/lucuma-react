@@ -17,7 +17,6 @@ case class Slider(
   step:        js.UndefOr[Double] = js.undefined, // default: 1
   orientation: js.UndefOr[Layout] = js.undefined, // default: horizontal
   disabled:    js.UndefOr[Boolean] = js.undefined,
-  className:   js.UndefOr[String] = js.undefined,
   clazz:       js.UndefOr[Css] = js.undefined,
   onChange:    js.UndefOr[Double => Callback] = js.undefined
 ) extends ReactFnProps[Slider](Slider.component)
@@ -32,7 +31,7 @@ object Slider {
       .applyOrNot(props.step, _.step(_))
       .applyOrNot(props.orientation, (c, p) => c.orientation(p.value))
       .applyOrNot(props.disabled, _.disabled(_))
-      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(
         props.onChange,
         (c, p) => c.onChange(scp => p(scp.value.asInstanceOf[Double]))

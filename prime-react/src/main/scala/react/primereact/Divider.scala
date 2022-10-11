@@ -25,7 +25,6 @@ import scalajs.js
 case class Divider(
   position:   js.UndefOr[Divider.Position] = js.undefined,   // default HorizontalLeft
   borderType: js.UndefOr[Divider.BorderType] = js.undefined, // default: Solid
-  className:  js.UndefOr[String] = js.undefined,
   clazz:      js.UndefOr[Css] = js.undefined
 ) extends ReactFnPropsWithChildren[Divider](Divider.component)
 
@@ -53,8 +52,6 @@ object Divider {
           .applyOrNot(props.position, (c, p) => c.align(p.align))
           .applyOrNot(props.position, (c, p) => c.layout(p.layout))
           .applyOrNot(props.borderType, (c, p) => c.`type`(p.value))
-          .applyOrNot((props.className, props.clazz).toJs, _.className(_))(
-            children
-          )
+          .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(children)
       }
 }

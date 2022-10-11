@@ -21,7 +21,6 @@ case class ProgressBar(
   mode:                 js.UndefOr[ProgressBar.Mode] = js.undefined, // default: determinate
   color:                js.UndefOr[String] = js.undefined,           // default: undefined
   displayValueTemplate: js.UndefOr[Double => VdomNode] = js.undefined,
-  className:            js.UndefOr[String] = js.undefined,
   clazz:                js.UndefOr[Css] = js.undefined
 ) extends ReactFnProps[ProgressBar](ProgressBar.component)
 
@@ -41,6 +40,6 @@ object ProgressBar {
       .applyOrNot(props.displayValueTemplate,
                   (c, p) => c.displayValueTemplate(v => p(v.asInstanceOf[Double]).rawNode)
       )
-      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
   }
 }

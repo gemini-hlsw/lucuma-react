@@ -17,7 +17,6 @@ case class SliderRange(
   step:        js.UndefOr[Double] = js.undefined, // default: 1
   orientation: js.UndefOr[Layout] = js.undefined, // default: horizontal
   disabled:    js.UndefOr[Boolean] = js.undefined,
-  className:   js.UndefOr[String] = js.undefined,
   clazz:       js.UndefOr[Css] = js.undefined,
   onChange:    js.UndefOr[((Double, Double)) => Callback] = js.undefined
 ) extends ReactFnProps[SliderRange](SliderRange.component)
@@ -33,7 +32,7 @@ object SliderRange {
       .applyOrNot(props.step, _.step(_))
       .applyOrNot(props.orientation, (c, p) => c.orientation(p.value))
       .applyOrNot(props.disabled, _.disabled(_))
-      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(
         props.onChange,
         (c, p) => c.onChange(scp => p(scp.value.asInstanceOf[js.Tuple2[Double, Double]]))

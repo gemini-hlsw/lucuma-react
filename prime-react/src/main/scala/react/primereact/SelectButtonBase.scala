@@ -25,7 +25,6 @@ private[primereact] trait SelectButtonBase {
   val disabled: js.UndefOr[Boolean]
   val unselectable: js.UndefOr[Boolean] // default: true
   val itemTemplate: js.UndefOr[SelectItem[AA] => VdomNode]
-  val className: js.UndefOr[String]
   val clazz: js.UndefOr[Css]
   val onChange: js.UndefOr[GG[AA] => Callback]
 
@@ -56,7 +55,7 @@ object SelectButtonBase {
             p(props.selectItemFinder(raw.asInstanceOf[CSelectItem].value)).rawNode
           )
       )
-      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.onChange, (c, p) => c.onChange(e => p(props.valueFinder(e.value))))
   }
 }

@@ -38,7 +38,7 @@ object SelectItem {
       options.map { (si, idx) =>
         val csi: CSelectItem = CSelectItem().setValue(idx).setLabel(si.label)
         si.disabled.foreach(v => csi.setDisabled(v))
-        (si.className, si.clazz).toJs.foreach(cls => csi.setClassName(cls))
+        si.clazz.foreach(v => csi.setClassName(v.htmlClass))
         csi
       }.toJSArray
 }

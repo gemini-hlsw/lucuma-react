@@ -19,7 +19,6 @@ case class SelectButton[A](
   id:             js.UndefOr[String] = js.undefined,
   disabled:       js.UndefOr[Boolean] = js.undefined,
   itemTemplate:   js.UndefOr[SelectItem[A] => VdomNode] = js.undefined,
-  className:      js.UndefOr[String] = js.undefined,
   clazz:          js.UndefOr[Css] = js.undefined,
   onChange:       js.UndefOr[A => Callback] = js.undefined
 )(using val eqAA: Eq[A])

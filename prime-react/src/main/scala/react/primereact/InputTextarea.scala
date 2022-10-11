@@ -11,7 +11,6 @@ import scalajs.js
 
 case class InputTextarea(
   id:          String,
-  className:   js.UndefOr[String] = js.undefined,
   clazz:       js.UndefOr[Css] = js.undefined,
   value:       js.UndefOr[String] = js.undefined,
   autoResize:  js.UndefOr[Boolean] = js.undefined,
@@ -28,7 +27,7 @@ object InputTextarea {
     val cita = CInputTextarea
       .id(props.id)
       .applyOrNot(props.value, _.value(_))
-      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.autoResize, _.autoResize(_))
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.placeholder, _.placeholder(_))

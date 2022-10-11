@@ -11,13 +11,12 @@ import reactST.primereact.components.{Card => CCard}
 import scalajs.js
 
 case class Card(
-  id:        js.UndefOr[String] = js.undefined,
-  header:    js.UndefOr[VdomNode] = js.undefined,
-  footer:    js.UndefOr[VdomNode] = js.undefined,
-  title:     js.UndefOr[VdomNode] = js.undefined,
-  subTitle:  js.UndefOr[VdomNode] = js.undefined,
-  className: js.UndefOr[String] = js.undefined,
-  clazz:     js.UndefOr[Css] = js.undefined
+  id:       js.UndefOr[String] = js.undefined,
+  header:   js.UndefOr[VdomNode] = js.undefined,
+  footer:   js.UndefOr[VdomNode] = js.undefined,
+  title:    js.UndefOr[VdomNode] = js.undefined,
+  subTitle: js.UndefOr[VdomNode] = js.undefined,
+  clazz:    js.UndefOr[Css] = js.undefined
 ) extends ReactFnPropsWithChildren[Card](Card.component)
 
 object Card {
@@ -32,6 +31,6 @@ object Card {
           .applyOrNot(props.footer, (c, p) => c.footer(p.rawNode))
           .applyOrNot(props.title, (c, p) => c.title(p.rawNode))
           .applyOrNot(props.subTitle, (c, p) => c.subTitle(p.rawNode))
-          .applyOrNot((props.className, props.clazz).toJs, _.className(_))(children)
+          .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       }
 }

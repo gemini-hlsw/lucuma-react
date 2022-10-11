@@ -17,7 +17,6 @@ case class Panel(
     js.undefined, // Defines if panel can be expanded and collapsed. default: false
   collapsed: js.UndefOr[Boolean] =
     js.undefined, // If toggleable is true, need to set this via onToggle. default: false
-  className:  js.UndefOr[String] = js.undefined,
   clazz:      js.UndefOr[Css] = js.undefined,
   onCollapse: js.UndefOr[Callback] = js.undefined,           // see comment above
   onExpand:   js.UndefOr[Callback] = js.undefined,           // see comment above
@@ -35,7 +34,7 @@ object Panel {
           .applyOrNot(props.header, (c, p) => c.header(p.rawNode))
           .applyOrNot(props.toggleable, _.toggleable(_))
           .applyOrNot(props.collapsed, _.collapsed(_))
-          .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+          .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
           .applyOrNot(props.onCollapse, (c, p) => c.onCollapse(_ => p))
           .applyOrNot(props.onExpand, (c, p) => c.onExpand(_ => p))
           .applyOrNot(props.onToggle, (c, p) => c.onToggle(toggleParms => p(toggleParms.value)))(

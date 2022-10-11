@@ -10,13 +10,12 @@ import reactST.primereact.components.{InputSwitch => CInputSwitch}
 import scalajs.js
 
 case class InputSwitch(
-  id:        js.UndefOr[String] = js.undefined,
-  inputId:   js.UndefOr[String] = js.undefined,  // id of the input element
-  checked:   js.UndefOr[Boolean] = js.undefined, // id of the input element
-  disabled:  js.UndefOr[Boolean] = js.undefined,
-  className: js.UndefOr[String] = js.undefined,
-  clazz:     js.UndefOr[Css] = js.undefined,
-  onChange:  js.UndefOr[Boolean => Callback] = js.undefined
+  id:       js.UndefOr[String] = js.undefined,
+  inputId:  js.UndefOr[String] = js.undefined,  // id of the input element
+  checked:  js.UndefOr[Boolean] = js.undefined, // id of the input element
+  disabled: js.UndefOr[Boolean] = js.undefined,
+  clazz:    js.UndefOr[Css] = js.undefined,
+  onChange: js.UndefOr[Boolean => Callback] = js.undefined
 ) extends ReactFnProps[InputSwitch](InputSwitch.component)
 
 object InputSwitch {
@@ -26,7 +25,7 @@ object InputSwitch {
       .applyOrNot(props.inputId, _.inputId(_))
       .applyOrNot(props.checked, _.checked(_))
       .applyOrNot(props.disabled, _.disabled(_))
-      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.onChange, (c, p) => c.onChange(iwcp => p(iwcp.value)))
   }
 }

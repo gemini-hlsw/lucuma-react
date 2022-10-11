@@ -22,9 +22,8 @@ case class Tag(
   icon:     js.UndefOr[FontAwesomeIcon] = js.undefined,
   severity: js.UndefOr[Tag.Severity] =
     js.undefined, // default: same as `Info` but no `p-tag-info` class
-  rounded:   js.UndefOr[Boolean] = js.undefined,
-  className: js.UndefOr[String] = js.undefined,
-  clazz:     js.UndefOr[Css] = js.undefined
+  rounded: js.UndefOr[Boolean] = js.undefined,
+  clazz:   js.UndefOr[Css] = js.undefined
 ) extends ReactFnPropsWithChildren[Tag](Tag.component)
 
 object Tag {
@@ -41,6 +40,6 @@ object Tag {
         .applyOrNot(props.icon, (c, p) => c.icon(p.clazz(PrimeStyles.TagIcon).raw))
         .applyOrNot(props.severity, (c, p) => c.severity(p.value))
         .applyOrNot(props.rounded, _.rounded(_))
-        .applyOrNot((props.className, props.clazz).toJs, _.className(_))(children)
+        .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(children)
     }
 }

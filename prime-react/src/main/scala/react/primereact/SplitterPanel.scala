@@ -16,7 +16,6 @@ import scalajs.js.annotation.JSImport
 case class SplitterPanel(
   size:                   js.UndefOr[Double] = js.undefined, // size relative to 100%
   minSize:                js.UndefOr[Double] = js.undefined, // minimum size relative to 100%
-  className:              js.UndefOr[String] = js.undefined,
   clazz:                  js.UndefOr[Css] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[SplitterPanel.SplitterPanelProps, SplitterPanel] {
@@ -44,7 +43,7 @@ object SplitterPanel {
     val p = (new js.Object).asInstanceOf[SplitterPanelProps]
     q.size.foreach(v => p.size = v)
     q.minSize.foreach(v => p.minSize = v)
-    (q.className, q.clazz).toJs.foreach(v => p.className = v)
+    q.clazz.foreach(v => p.className = v.htmlClass)
     p
   }
 

@@ -12,7 +12,6 @@ import scalajs.js
 
 case class Splitter(
   id:           js.UndefOr[String] = js.undefined,
-  className:    js.UndefOr[String] = js.undefined,
   clazz:        js.UndefOr[Css] = js.undefined,
   layout:       js.UndefOr[Layout] = js.undefined, // default: Horizontal
   gutterSize:   js.UndefOr[Int] = js.undefined,    // size of divider in px, default: 4
@@ -27,7 +26,7 @@ object Splitter {
   private val component = ScalaFnComponent[Splitter] { props =>
     CSplitter
       .applyOrNot(props.id, _.id(_))
-      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.layout, (c, p) => c.layout(p.value))
       .applyOrNot(props.gutterSize, (c, p) => c.gutterSize(p.toDouble))
       .applyOrNot(props.stateKey, _.stateKey(_))

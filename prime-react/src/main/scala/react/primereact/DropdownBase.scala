@@ -21,7 +21,6 @@ private[primereact] trait DropdownBase {
   val value: GG[AA]
   val options: List[SelectItem[AA]]
   val id: js.UndefOr[String]
-  val className: js.UndefOr[String]
   val clazz: js.UndefOr[Css]
   val showClear: js.UndefOr[Boolean]
   val filter: js.UndefOr[Boolean]
@@ -43,7 +42,7 @@ object DropdownBase {
       .value(props.getter)
       .options(props.optionsWithIndex.raw)
       .applyOrNot(props.id, _.id(_))
-      .applyOrNot((props.className, props.clazz).toJs, _.className(_))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.showClear, _.showClear(_))
       .applyOrNot(props.filter, _.filter(_))
       .applyOrNot(props.showFilterClear, _.showFilterClear(_))

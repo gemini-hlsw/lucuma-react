@@ -42,7 +42,6 @@ object ConfirmDialog {
     rejectIcon:  js.UndefOr[FontAwesomeIcon] = js.undefined,
     acceptClass: js.UndefOr[Css] = js.undefined,
     rejectClass: js.UndefOr[Css] = js.undefined,
-    className:   js.UndefOr[String] = js.undefined,
     clazz:       js.UndefOr[Css] = js.undefined,
     position:    js.UndefOr[DialogPosition] = js.undefined,
     onHide:      js.UndefOr[ConfirmDialogHideParm => Callback] = js.undefined,
@@ -62,7 +61,7 @@ object ConfirmDialog {
       rejectIcon.foreach(v => props.setRejectIcon(v.raw))
       acceptClass.foreach(v => props.setAcceptClassName(v.htmlClass))
       rejectClass.foreach(v => props.setRejectClassName(v.htmlClass))
-      (className, clazz).toJs.foreach(v => props.setClassName(v))
+      clazz.foreach(v => props.setClassName(v.htmlClass))
 
       // position not in the ST facade, either
       position.foreach(v => StObject.set(props, "position", v.value))

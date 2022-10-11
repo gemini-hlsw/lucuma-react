@@ -35,7 +35,6 @@ object ConfirmPopup {
     rejectIcon:  js.UndefOr[FontAwesomeIcon] = js.undefined,
     acceptClass: js.UndefOr[Css] = js.undefined,
     rejectClass: js.UndefOr[Css] = js.undefined,
-    className:   js.UndefOr[String] = js.undefined,
     clazz:       js.UndefOr[Css] = js.undefined,
     onHide:      js.UndefOr[ConfirmDialogHideParm => Callback] = js.undefined,
     accept:      js.UndefOr[Callback] = js.undefined,
@@ -52,7 +51,7 @@ object ConfirmPopup {
     rejectIcon.foreach(v => props.setRejectIcon(v.raw))
     acceptClass.foreach(v => props.setAcceptClassName(v.htmlClass))
     rejectClass.foreach(v => props.setRejectClassName(v.htmlClass))
-    (className, clazz).toJs.foreach(v => props.setClassName(v))
+    clazz.foreach(v => props.setClassName(v.htmlClass))
     onHide.foreach(v => props.setOnHide(s => v(ConfirmDialogHideParm.fromString(s))))
     accept.foreach(v => props.setAccept(v))
     reject.foreach(v => props.setReject(v))
