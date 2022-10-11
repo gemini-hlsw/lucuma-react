@@ -39,6 +39,7 @@ object ColumnDef:
     enableMultiSort: js.UndefOr[Boolean] = js.undefined,
     invertSorting:   js.UndefOr[Boolean] = js.undefined,
     sortDescFirst:   js.UndefOr[Boolean] = js.undefined,
+    sortUndefined:   js.UndefOr[UndefinedPriority] = js.undefined,
     sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T]] = js.undefined
   ) extends ColumnDef[T, A]:
     def sortableBuiltIn(builtIn: BuiltInSorting): ColumnDef[T, A] =
@@ -79,6 +80,7 @@ object ColumnDef:
       enableMultiSort.foreach(v => p.enableMultiSort = v)
       invertSorting.foreach(v => p.invertSorting = v)
       sortDescFirst.foreach(v => p.sortDescFirst = v)
+      sortUndefined.foreach(v => p.sortUndefined = v.toJs)
       sortingFn.foreach(v =>
         p.sortingFn = v match
           case builtIn: BuiltInSorting => builtIn.raw
@@ -149,6 +151,7 @@ object ColumnDef:
       enableMultiSort: js.UndefOr[Boolean] = js.undefined,
       invertSorting:   js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:   js.UndefOr[Boolean] = js.undefined,
+      sortUndefined:   js.UndefOr[UndefinedPriority] = js.undefined,
       sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T]] = js.undefined
     ): Single[T, A] =
       Single(
@@ -170,6 +173,7 @@ object ColumnDef:
         enableMultiSort,
         invertSorting,
         sortDescFirst,
+        sortUndefined,
         sortingFn
       )
 
