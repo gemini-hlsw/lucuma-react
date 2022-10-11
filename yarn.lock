@@ -978,10 +978,10 @@ fill-range@^7.0.1:
   dependencies:
     to-regex-range "^5.0.1"
 
-fomantic-ui-less@^2.8.7:
-  version "2.8.8"
-  resolved "https://registry.npmjs.org/fomantic-ui-less/-/fomantic-ui-less-2.8.8.tgz"
-  integrity sha512-wy8kuTmD9bmJ0WK8GgIBQKktMA86x4OsaMk7wQxCYK1rP/u9r1UURzXsk8Ok6BRLcqqsfMNd9BDGvIFdEf2k9g==
+fomantic-ui-less@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/fomantic-ui-less/-/fomantic-ui-less-2.9.0.tgz#f2d4595be8ae24f2f0446011494e1329aef3d163"
+  integrity sha512-fVjEpVhnw4u2XS35C8/PLBqpZrehDNRZAOD1eaHfNK/anbJCA3TwuqW4HyQjFD/XQXr/Wil8LLZ4i2fz6lHN4A==
   dependencies:
     jquery "^3.4.0"
 
