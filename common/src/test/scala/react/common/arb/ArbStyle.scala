@@ -4,10 +4,10 @@
 package react.common.arb
 
 import org.scalacheck.Arbitrary
-import org.scalacheck.Arbitrary._
+import org.scalacheck.Arbitrary.*
 import org.scalacheck.Cogen
 import org.scalacheck.Gen
-import react.common._
+import react.common.*
 
 import scala.scalajs.js.|
 
@@ -24,10 +24,10 @@ trait ArbStyle {
       }
     }
   implicit val arbStyle: Arbitrary[Style]              = Arbitrary {
-    arbitrary[Map[String, String | Int]].map(Style.apply)
+    arbitrary[Map[String, String | Int]].map(m => Style(m))
   }
   implicit val cogenStyle: Cogen[Style]                =
-    Cogen[List[(String, String | Int)]].contramap(_.styles.toList)
+    Cogen[List[(String, String | Int)]].contramap(_.value.toList)
 
   implicit val arbGStyle: Arbitrary[Css] = Arbitrary {
     for {
