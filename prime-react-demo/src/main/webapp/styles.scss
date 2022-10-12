@@ -1,0 +1,52 @@
+body {
+  background-color: var(--surface-ground);
+  margin: 3em;
+}
+
+h1 {
+  color: var(--text-color);
+}
+
+.pl-form-column {
+  display: grid;
+  justify-items: start;
+  align-items: baseline;
+  align-self: start;
+  grid-template-columns: [label] auto [field] 1fr;
+  row-gap: 0.5em;
+  column-gap: 1em;
+
+  .pl-form-field-label {
+    grid-column: 1;
+  }
+
+  .pl-form-field {
+    grid-column: 2;
+    justify-self: stretch;
+    margin: 0;
+  }
+}
+
+.vertical-stack {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+}
+
+.horizontal-stack {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1em;
+}
+
+.p-splitter-panel {
+  padding: 1em;
+}
+
+.p-slider {
+  width: 20em;
+}
+
+.p-progressbar {
+  width: 100%
+}

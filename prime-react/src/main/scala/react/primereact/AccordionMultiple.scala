@@ -1,0 +1,34 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
+package react.primereact
+
+import cats.Id
+import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
+import react.common.*
+
+import scalajs.js
+import scalajs.js.JSConverters.*
+
+// Accordion which allows multiple tabs to be open.
+case class AccordionMultiple(
+  id:            js.UndefOr[String] = js.undefined,
+  activeIndices: js.UndefOr[List[Int]] = js.undefined,
+  expandIcon:    js.UndefOr[String] = js.undefined,
+  collapseIcon:  js.UndefOr[String] = js.undefined,
+  className:     js.UndefOr[String] = js.undefined,
+  clazz:         js.UndefOr[Css] = js.undefined,
+  onTabOpen:     js.UndefOr[Int => Callback] = js.undefined,
+  onTabClose:    js.UndefOr[Int => Callback] = js.undefined,
+  onTabChange:   js.UndefOr[Int => Callback] = js.undefined,
+  tabs:          List[AccordionTab] = List.empty
+) extends ReactFnProps[AccordionBase](AccordionBase.component)
+    with AccordionBase {
+
+  override val rawActiveIndex = activeIndices.map(_.map(_.toDouble).toJSArray)
+  override val multiple       = true
+
+  def apply(tab: AccordionTab, moreTabs: AccordionTab*): AccordionMultiple =
+    copy(tabs = (tabs :+ tab) ++ moreTabs)
+}

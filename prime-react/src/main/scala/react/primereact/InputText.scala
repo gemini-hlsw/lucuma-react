@@ -9,9 +9,8 @@ import reactST.primereact.components.{InputText => CInputText}
 
 import scalajs.js
 
-final case class InputText(
+case class InputText(
   id:          String,
-  className:   js.UndefOr[String] = js.undefined,
   clazz:       js.UndefOr[Css] = js.undefined,
   value:       js.UndefOr[String] = js.undefined,
   disabled:    js.UndefOr[Boolean] = js.undefined,
@@ -26,7 +25,7 @@ object InputText {
     CInputText
       .id(props.id)
       .applyOrNot(props.value, _.value(_))
-      .applyOrNot((props.className, props.clazz).cssToJs, _.className(_))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.placeholder, _.placeholder(_))
       .applyOrNot(props.onBlur, _.onBlur(_))

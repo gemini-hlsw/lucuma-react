@@ -3,40 +3,37 @@
 
 package react.primereact
 
+import cats.Eq
+import cats.Id
+import cats.syntax.all._
 import japgolly.scalajs.react.*
 import react.common.*
-import reactST.primereact.components.{Dropdown => CDropdown}
-import reactST.primereact.selectitemMod.SelectItem
 
 import scalajs.js
 import scalajs.js.JSConverters.*
 
-final case class Dropdown(
-  value:           Any,
-  options:         List[SelectItem],
+case class Dropdown[A](
+  value:           A,
+  options:         List[SelectItem[A]],
   id:              js.UndefOr[String] = js.undefined,
-  className:       js.UndefOr[String] = js.undefined,
   clazz:           js.UndefOr[Css] = js.undefined,
-  showClear:       js.UndefOr[Boolean] = js.undefined,
   filter:          js.UndefOr[Boolean] = js.undefined,
   showFilterClear: js.UndefOr[Boolean] = js.undefined,
   placeholder:     js.UndefOr[String] = js.undefined,
   disabled:        js.UndefOr[Boolean] = js.undefined,
-  onChange:        js.UndefOr[Any => Callback] = js.undefined
-) extends ReactFnProps[Dropdown](Dropdown.component)
+  dropdownIcon:    js.UndefOr[String] = js.undefined,
+  onChange:        js.UndefOr[A => Callback] = js.undefined
+)(using val eqAA:  Eq[A])
+    extends ReactFnProps[DropdownBase](DropdownBase.component)
+    with DropdownBase {
+  type AA    = A
+  type GG[X] = Id[X]
 
-object Dropdown {
-  private val component = ScalaFnComponent[Dropdown] { props =>
-    CDropdown
-      .value(props.value)
-      .options(props.options.toJSArray)
-      .applyOrNot(props.id, _.id(_))
-      .applyOrNot((props.className, props.clazz).cssToJs, _.className(_))
-      .applyOrNot(props.showClear, _.showClear(_))
-      .applyOrNot(props.filter, _.filter(_))
-      .applyOrNot(props.showFilterClear, _.showFilterClear(_))
-      .applyOrNot(props.placeholder, _.placeholder(_))
-      .applyOrNot(props.disabled, _.disabled(_))
-      .applyOrNot(props.onChange, (b, a) => b.onChange(e => a(e.value)))
-  }
+  override def getter: js.UndefOr[Int] = optionsWithIndex.indexOfOption(value).orUndefined
+  override def finder(i: Any): A       =
+    optionsWithIndex
+      .findByIndexOption(i.asInstanceOf[Int])
+      .getOrElse(options(0).value) // called by onChange, so should exist
+
+  override val showClear: js.UndefOr[Boolean] = false
 }

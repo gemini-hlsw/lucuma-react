@@ -15,9 +15,15 @@ trait PrimeStyles {
   val InputGroupAddon: Css = Css("p-inputgroup-addon")
 
   // Button
-  val ButtonSmall: Css  = Css("p-button-sm")
-  val ButtonNormal: Css = Css.Empty
-  val ButtonLarge: Css  = Css("p-button-lg")
+  val ButtonSmall: Css      = Css("p-button-sm")
+  val ButtonNormal: Css     = Css.Empty
+  val ButtonLarge: Css      = Css("p-button-lg")
+  val ButtonIcon: Css       = Css("p-button-icon")
+  val ButtonIconLeft: Css   = Css("p-button-icon-left")
+  val ButtonIconRight: Css  = Css("p-button-icon-right")
+  val ButtonIconTop: Css    = Css("p-button-icon-top")
+  val ButtonIconBottom: Css = Css("p-button-icon-bottom")
+  val ButtonVertical: Css   = Css("p-button-vertical")
 
   val ButtonPrimary: Css   = Css.Empty
   val ButtonSecondary: Css = Css("p-button-secondary")
@@ -31,6 +37,16 @@ trait PrimeStyles {
   val ButtonRaised: Css   = Css("p-button-raised")
   val ButtonRounded: Css  = Css("p-button-rounded")
   val ButtonText: Css     = Css("p-button-text")
+
+  // Tag
+  val TagIcon: Css = Css("p-tag-icon")
+
+  // Sidebar
+  val SidebarSmall: Css  = Css("p-sidebar-sm")
+  val SidebarMedium: Css = Css("p-sidebar-md")
+  val SidebarLarge: Css  = Css("p-sidebar-lg")
+
+  val SidebarIcon: Css = Css("p-sidebar-icon")
 }
 
 object PrimeStyles extends PrimeStyles
