@@ -41,6 +41,7 @@ object DemoComponents {
       .useState(false)                  // panel collapsed
       .useState(false)                  // sidebar
       .useState(SidebarOptions.default) // sidebar options
+      .useState(0)                      // tabview activeIndex
       .useState("Text to edit")         // for InputText
       .useState("Resizeable TextArea")  // for InputTextarea
       .useState(2)                      // for Dropdown
@@ -62,6 +63,7 @@ object DemoComponents {
           panelCollapsed,
           sidebar,
           sidebarOptions,
+          tabView,
           inputText,
           inputTextarea,
           dropdown,
@@ -299,6 +301,24 @@ object DemoComponents {
                     "Zydeco (/ˈzaɪdɪˌkoʊ/ ZY-dih-koh or /ˈzaɪdiˌkoʊ/ ZY-dee-koh, French: Zarico) is a music genre that evolved in southwest Louisiana by French Creole speakers which blends blues, rhythm and blues, and music indigenous to the Louisiana Creoles and the Native American people of Louisiana. Although it is distinct in origin from the Cajun music of Louisiana, the two forms influenced each other, forming a complex of genres native to the region. [From Wikipedia]"
                   ),
                   AccordionTab(header = "Weird Al")("Well, Weird Al. What else can we say?")
+                )
+              ),
+              TabView(
+                // I don't think you need to set `activeIndex` if you don't specify `onTabChange`
+                activeIndex = tabView.value,
+                onTabChange =
+                  idx => Callback.log(s"TabView onTabChange: $idx") >> tabView.setState(idx),
+                onTabClose = idx => Callback.log(s"TabView onTabClose: $idx")
+              )(
+                TabPanel(header = "Simple Header")("Simple Tab Contents"),
+                TabPanel(header = <.div(DemoStyles.HorizontalStack, "TagMod", <.small("Header")))(
+                  "Special Header Contents"
+                ),
+                TabPanel(header = "Closable Tab", leftIcon = "pi pi-bolt", closable = true)(
+                  "I'm not sure how useful Closable Tabs will be..."
+                ),
+                TabPanel(header = "Disabled Tab", disabled = true)(
+                  "You shouldn't be able to see this!"
                 )
               ),
               Panel(
