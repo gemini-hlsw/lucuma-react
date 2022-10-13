@@ -19,12 +19,16 @@ case class Accordion(
   onTabOpen:    js.UndefOr[Int => Callback] = js.undefined,
   onTabClose:   js.UndefOr[Int => Callback] = js.undefined,
   onTabChange:  js.UndefOr[Int => Callback] = js.undefined,
-  tabs:         List[AccordionTab] = List.empty
+  tabs:         List[AccordionTab] = List.empty,
+  modifiers:    Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[AccordionBase](AccordionBase.component)
     with AccordionBase {
 
   override val rawActiveIndex = activeIndex.map(_.toDouble)
   override val multiple       = false
+
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
 
   def apply(tab: AccordionTab, moreTabs: AccordionTab*): Accordion =
     copy(tabs = (tabs :+ tab) ++ moreTabs)

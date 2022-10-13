@@ -22,6 +22,7 @@ private[primereact] trait AccordionBase {
   val onTabClose: js.UndefOr[Int => Callback]
   val onTabChange: js.UndefOr[Int => Callback]
   val tabs: List[AccordionTab]
+  val modifiers: Seq[TagMod]
 }
 
 object AccordionBase {
@@ -37,6 +38,7 @@ object AccordionBase {
         .applyOrNot(props.onTabOpen, (c, p) => c.onTabOpen(e => p(e.index.toInt)))
         .applyOrNot(props.onTabClose, (c, p) => c.onTabClose(e => p(e.index.toInt)))
         .applyOrNot(props.onTabChange, (c, p) => c.onTabChange(e => p(e.index.toInt)))(
+          props.modifiers.toTagMod,
           props.tabs.toTagMod
         )
     }

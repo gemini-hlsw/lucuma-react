@@ -19,12 +19,16 @@ case class SelectButtonOptional[A](
   disabled:       js.UndefOr[Boolean] = js.undefined,
   itemTemplate:   js.UndefOr[SelectItem[A] => VdomNode] = js.undefined,
   clazz:          js.UndefOr[Css] = js.undefined,
-  onChange:       js.UndefOr[Option[A] => Callback] = js.undefined
+  onChange:       js.UndefOr[Option[A] => Callback] = js.undefined,
+  modifiers:      Seq[TagMod] = Seq.empty
 )(using val eqAA: Eq[A])
     extends ReactFnProps[SelectButtonBase](SelectButtonBase.component)
     with SelectButtonBase {
   type AA    = A
   type GG[X] = Option[X]
+
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
 
   override def getter: js.UndefOr[Int]        =
     value.flatMap(v => optionsWithIndex.indexOfOption(v)).orUndefined

@@ -37,8 +37,15 @@ case class Sidebar(
   appendTo:      js.UndefOr[SelfPosition | HTMLElement] = js.undefined, // default: document.body
   clazz:         js.UndefOr[Css] = js.undefined,
   maskClass:     js.UndefOr[Css] = js.undefined,
-  onShow:        js.UndefOr[Callback] = js.undefined
-) extends ReactFnPropsWithChildren[Sidebar](Sidebar.component)
+  onShow:        js.UndefOr[Callback] = js.undefined,
+  modifiers:     Seq[TagMod] = Seq.empty
+) extends ReactFnPropsWithChildren[Sidebar](Sidebar.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+
+  // You can add content to the sidebar as children without this method, but if you want
+  // to add event handlers or other attributes, you'll need to use the modifiers.
+  def withMods(mods: TagMod*) = addModifiers(mods)
+}
 
 object Sidebar {
   enum Position(val value: bottom | left | right | top) derives Eq:
@@ -77,9 +84,12 @@ object Sidebar {
         )
         .applyOrNot(props.baseZIndex, _.baseZIndex(_))
         .applyOrNot(props.appendTo, _.appendTo(_))
-        .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))(children)
+        .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))
         .applyOrNot(props.maskClass, (c, p) => c.maskClassName(p.htmlClass))
-        .applyOrNot(props.onShow, _.onShow(_))
+        .applyOrNot(props.onShow, _.onShow(_))(
+          props.modifiers.toTagMod,
+          children
+        )
     }
 
 }

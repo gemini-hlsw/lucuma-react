@@ -27,8 +27,11 @@ final case class TabView(
   panelContainerClass: js.UndefOr[Css] = js.undefined,
   onTabClose:          js.UndefOr[Int => Callback] = js.undefined,
   onTabChange:         js.UndefOr[Int => Callback] = js.undefined,
-  panels:              List[TabPanel] = List.empty
+  panels:              List[TabPanel] = List.empty,
+  modifiers:           Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[TabView](TabView.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
 
   def apply(panel: TabPanel, morePanels: TabPanel*): TabView =
     copy(panels = (panels :+ panel) ++ morePanels)
@@ -45,6 +48,7 @@ object TabView {
       .applyOrNot(props.panelContainerClass, (c, p) => c.panelContainerClassName(p.htmlClass))
       .applyOrNot(props.onTabClose, (c, p) => c.onTabClose(e => p(e.index.toInt)))
       .applyOrNot(props.onTabChange, (c, p) => c.onTabChange(e => p(e.index.toInt)))(
+        props.modifiers.toTagMod,
         props.panels.toTagMod
       )
   }

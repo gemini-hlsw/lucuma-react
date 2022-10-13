@@ -22,9 +22,16 @@ case class Tag(
   icon:     js.UndefOr[FontAwesomeIcon] = js.undefined,
   severity: js.UndefOr[Tag.Severity] =
     js.undefined, // default: same as `Info` but no `p-tag-info` class
-  rounded: js.UndefOr[Boolean] = js.undefined,
-  clazz:   js.UndefOr[Css] = js.undefined
-) extends ReactFnPropsWithChildren[Tag](Tag.component)
+  rounded:   js.UndefOr[Boolean] = js.undefined,
+  clazz:     js.UndefOr[Css] = js.undefined,
+  modifiers: Seq[TagMod] = Seq.empty
+) extends ReactFnPropsWithChildren[Tag](Tag.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+
+  // You can add content to the tag as children without this method, but if you want
+  // to add event handlers or other attributes, you'll need to use the modifiers.
+  def withMods(mods: TagMod*) = addModifiers(mods)
+}
 
 object Tag {
   enum Severity(val value: danger | info | success | warning) derives Eq:
@@ -40,6 +47,9 @@ object Tag {
         .applyOrNot(props.icon, (c, p) => c.icon(p.clazz(PrimeStyles.TagIcon).raw))
         .applyOrNot(props.severity, (c, p) => c.severity(p.value))
         .applyOrNot(props.rounded, _.rounded(_))
-        .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(children)
+        .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(
+          props.modifiers.toTagMod,
+          children
+        )
     }
 }

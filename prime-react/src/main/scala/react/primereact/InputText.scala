@@ -4,6 +4,7 @@
 package react.primereact
 
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import reactST.primereact.components.{InputText => CInputText}
 
@@ -17,8 +18,12 @@ case class InputText(
   placeholder: js.UndefOr[String] = js.undefined,
   onBlur:      js.UndefOr[ReactFocusEventFromInput => Callback] = js.undefined,
   onChange:    js.UndefOr[ReactEventFromInput => Callback] = js.undefined,
-  onKeyDown:   js.UndefOr[ReactKeyboardEventFromInput => Callback] = js.undefined
-) extends ReactFnProps[InputText](InputText.component)
+  onKeyDown:   js.UndefOr[ReactKeyboardEventFromInput => Callback] = js.undefined,
+  modifiers:   Seq[TagMod] = Seq.empty
+) extends ReactFnProps[InputText](InputText.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
+}
 
 object InputText {
   private val component = ScalaFnComponent[InputText] { props =>
@@ -30,6 +35,8 @@ object InputText {
       .applyOrNot(props.placeholder, _.placeholder(_))
       .applyOrNot(props.onBlur, _.onBlur(_))
       .applyOrNot(props.onChange, _.onChange(_))
-      .applyOrNot(props.onKeyDown, _.onKeyDown(_))
+      .applyOrNot(props.onKeyDown, _.onKeyDown(_))(
+        props.modifiers.toTagMod
+      )
   }
 }

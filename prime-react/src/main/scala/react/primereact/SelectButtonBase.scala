@@ -27,6 +27,7 @@ private[primereact] trait SelectButtonBase {
   val itemTemplate: js.UndefOr[SelectItem[AA] => VdomNode]
   val clazz: js.UndefOr[Css]
   val onChange: js.UndefOr[GG[AA] => Callback]
+  val modifiers: Seq[TagMod]
 
   protected def getter: Any
   // used by onChange
@@ -56,6 +57,8 @@ object SelectButtonBase {
           )
       )
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
-      .applyOrNot(props.onChange, (c, p) => c.onChange(e => p(props.valueFinder(e.value))))
+      .applyOrNot(props.onChange, (c, p) => c.onChange(e => p(props.valueFinder(e.value))))(
+        props.modifiers.toTagMod
+      )
   }
 }

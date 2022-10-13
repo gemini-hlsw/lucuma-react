@@ -18,9 +18,17 @@ case class Splitter(
   stateKey:     js.UndefOr[String] = js.undefined, // key for stateful storage
   stateStorage: js.UndefOr[StateStorage] =
     js.undefined, // provide `stateKey` to enable statefulness. Default: Session
-  onResizeEnd: js.UndefOr[(Double, Double) => Callback] = js.undefined
-)(val panel1:  SplitterPanel, val panel2: SplitterPanel)
-    extends ReactFnProps[Splitter](Splitter.component)
+  onResizeEnd: js.UndefOr[(Double, Double) => Callback] = js.undefined,
+  panel1:      js.UndefOr[SplitterPanel] = js.undefined,
+  panel2:      js.UndefOr[SplitterPanel] = js.undefined,
+  modifiers:   Seq[TagMod] = Seq.empty
+) extends ReactFnProps[Splitter](Splitter.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
+
+  // This sets panel 1 and panel 2 for a more natural usage as child-like
+  def apply(panel1: SplitterPanel, panel2: SplitterPanel) = copy(panel1 = panel1, panel2 = panel2)
+}
 
 object Splitter {
   private val component = ScalaFnComponent[Splitter] { props =>
@@ -32,6 +40,7 @@ object Splitter {
       .applyOrNot(props.stateKey, _.stateKey(_))
       .applyOrNot(props.stateStorage, (c, p) => c.stateStorage(p.value))
       .applyOrNot(props.onResizeEnd, (c, p) => c.onResizeEnd(rp => p(rp.sizes(0), rp.sizes(1))))(
+        props.modifiers.toTagMod,
         props.panel1,
         props.panel2
       )

@@ -7,6 +7,7 @@ import cats.Eq
 import cats.Id
 import cats.syntax.all._
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 
 import scalajs.js
@@ -22,12 +23,16 @@ case class Dropdown[A](
   placeholder:     js.UndefOr[String] = js.undefined,
   disabled:        js.UndefOr[Boolean] = js.undefined,
   dropdownIcon:    js.UndefOr[String] = js.undefined,
-  onChange:        js.UndefOr[A => Callback] = js.undefined
+  onChange:        js.UndefOr[A => Callback] = js.undefined,
+  modifiers:       Seq[TagMod] = Seq.empty
 )(using val eqAA:  Eq[A])
     extends ReactFnProps[DropdownBase](DropdownBase.component)
     with DropdownBase {
   type AA    = A
   type GG[X] = Id[X]
+
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
 
   override def getter: js.UndefOr[Int] = optionsWithIndex.indexOfOption(value).orUndefined
   override def finder(i: Any): A       =

@@ -4,6 +4,7 @@
 package react.primereact
 
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import reactST.primereact.components.{InputTextarea => CInputTextarea}
 
@@ -19,8 +20,12 @@ case class InputTextarea(
   rows:        js.UndefOr[Int] = js.undefined,
   onBlur:      js.UndefOr[ReactFocusEventFromTextArea => Callback] = js.undefined,
   onChange:    js.UndefOr[ReactEventFromTextArea => Callback] = js.undefined,
-  onKeyDown:   js.UndefOr[ReactKeyboardEventFromTextArea => Callback] = js.undefined
-) extends ReactFnProps[InputTextarea](InputTextarea.component)
+  onKeyDown:   js.UndefOr[ReactKeyboardEventFromTextArea => Callback] = js.undefined,
+  modifiers:   Seq[TagMod] = Seq.empty
+) extends ReactFnProps[InputTextarea](InputTextarea.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
+}
 
 object InputTextarea {
   private val component = ScalaFnComponent[InputTextarea] { props =>
@@ -39,6 +44,6 @@ object InputTextarea {
     // The primereact typescript facade doesn't expose `rows` and `cols`. At least
     // ScalablyTyped didn't find them. `rows` is useful, so I forced it here. `cols`
     // didn't seem to do anything, but it might be CSS related.
-    props.rows.fold(cita)(rows => cita.set("rows", rows))
+    props.rows.fold(cita)(rows => cita.set("rows", rows))(props.modifiers.toTagMod)
   }
 }
