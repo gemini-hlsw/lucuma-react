@@ -457,8 +457,8 @@ object DemoComponents {
                       options = options,
                       onChange = selectButtonMultiple.setState,
                       itemTemplate = si =>
-                        if (si.disabled.getOrElse(false)) <.s(si.label)
-                        else <.span(si.label)
+                        if (si.disabled.getOrElse(false)) <.s(si.label.toOption)
+                        else <.span(si.label.toOption)
                     ),
                     <.label("ProgressBar 1",
                             ^.htmlFor                := "progress-indeterminate",
