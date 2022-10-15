@@ -137,10 +137,6 @@ lazy val root = project
     draggable,
     floatingui,
     clipboard,
-    virtuoso,
-    virtuosoDemo,
-    table,
-    tableDemo,
     tanstackTable,
     tanstackTableDemo,
     highcharts,
@@ -174,10 +170,6 @@ lazy val rootFloatingui    =
   project.aggregate(floatingui).enablePlugins(NoPublishPlugin)
 lazy val rootClipboard     =
   project.aggregate(clipboard).enablePlugins(NoPublishPlugin)
-lazy val rootVirtuoso      =
-  project.aggregate(virtuoso, virtuosoDemo).enablePlugins(NoPublishPlugin)
-lazy val rootTable         =
-  project.aggregate(table, tableDemo).enablePlugins(NoPublishPlugin)
 lazy val rootTanstackTable =
   project.aggregate(tanstackTable, tanstackTableDemo).enablePlugins(NoPublishPlugin)
 lazy val rootHighcharts    =
@@ -203,8 +195,6 @@ val projects = List(
   rootDraggable,
   rootFloatingui,
   rootClipboard,
-  rootVirtuoso,
-  rootTable,
   rootTanstackTable,
   rootHighcharts,
   rootDatepicker,
@@ -302,51 +292,6 @@ lazy val clipboard = project
     name := "lucuma-react-clipboard",
     facadeSettings,
     yarnSettings
-  )
-
-lazy val virtuoso = project
-  .in(file("virtuoso"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
-  .dependsOn(common)
-  .settings(
-    name := "lucuma-react-virtuoso",
-    facadeSettings,
-    yarnSettings
-  )
-
-lazy val virtuosoDemo = project
-  .in(file("virtuoso-demo"))
-  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
-  .dependsOn(virtuoso)
-  .settings(
-    demoSettings
-  )
-
-lazy val table = project
-  .in(file("table"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
-  .dependsOn(common, virtuoso)
-  .settings(
-    name                     := "lucuma-react-table",
-    stOutputPackage          := "reactST",
-    stUseScalaJsDom          := true,
-    stFlavour                := Flavour.ScalajsReact,
-    stReactEnableTreeShaking := Selection.All,
-    stMinimize               := Selection.AllExcept("react-table"),
-    Compile / doc / sources  := Seq(),
-    Compile / scalacOptions += "-language:implicitConversions",
-    yarnSettings
-  )
-
-lazy val tableDemo = project
-  .in(file("table-demo"))
-  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
-  .dependsOn(table)
-  .settings(
-    demoSettings
-  )
-  .settings(
-    Compile / scalacOptions += "-language:implicitConversions"
   )
 
 lazy val tanstackTable = project
