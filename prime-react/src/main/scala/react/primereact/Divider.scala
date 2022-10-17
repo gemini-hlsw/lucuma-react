@@ -25,8 +25,15 @@ import scalajs.js
 case class Divider(
   position:   js.UndefOr[Divider.Position] = js.undefined,   // default HorizontalLeft
   borderType: js.UndefOr[Divider.BorderType] = js.undefined, // default: Solid
-  clazz:      js.UndefOr[Css] = js.undefined
-) extends ReactFnPropsWithChildren[Divider](Divider.component)
+  clazz:      js.UndefOr[Css] = js.undefined,
+  modifiers:  Seq[TagMod] = Seq.empty
+) extends ReactFnPropsWithChildren[Divider](Divider.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+
+  // You can add content to the divider as children without this method, but if you want
+  // to add event handlers or other attributes, you'll need to use the modifiers.
+  def withMods(mods: TagMod*) = addModifiers(mods)
+}
 
 object Divider {
   enum Position(val layout: horizontal | vertical, val align: left | right | center | top | bottom)
@@ -52,6 +59,9 @@ object Divider {
           .applyOrNot(props.position, (c, p) => c.align(p.align))
           .applyOrNot(props.position, (c, p) => c.layout(p.layout))
           .applyOrNot(props.borderType, (c, p) => c.`type`(p.value))
-          .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(children)
+          .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(
+            props.modifiers.toTagMod,
+            children
+          )
       }
 }

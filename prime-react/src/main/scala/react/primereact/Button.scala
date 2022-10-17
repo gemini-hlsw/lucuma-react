@@ -22,20 +22,27 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 case class Button(
-  label:    js.UndefOr[String] = js.undefined,
-  icon:     js.UndefOr[FontAwesomeIcon] = js.undefined,
-  iconPos:  Button.IconPosition = Button.IconPosition.Left,
-  clazz:    js.UndefOr[Css] = js.undefined,
-  onClick:  Callback = Callback.empty,
-  onClickE: ReactMouseEventFrom[HTMLButtonElement & Element] => Callback = _ => Callback.empty,
-  size:     Button.Size = Button.Size.Normal,
-  tpe:      Button.Type = Button.Type.Button,
-  severity: Button.Severity = Button.Severity.Primary,
-  outlined: Boolean = false,
-  raised:   Boolean = false,
-  rounded:  Boolean = false,
-  text:     Boolean = false
-) extends ReactFnPropsWithChildren[Button](Button.component)
+  label:     js.UndefOr[String] = js.undefined,
+  icon:      js.UndefOr[FontAwesomeIcon] = js.undefined,
+  iconPos:   Button.IconPosition = Button.IconPosition.Left,
+  clazz:     js.UndefOr[Css] = js.undefined,
+  onClick:   Callback = Callback.empty,
+  onClickE:  ReactMouseEventFrom[HTMLButtonElement & Element] => Callback = _ => Callback.empty,
+  size:      Button.Size = Button.Size.Normal,
+  tpe:       Button.Type = Button.Type.Button,
+  severity:  Button.Severity = Button.Severity.Primary,
+  outlined:  Boolean = false,
+  raised:    Boolean = false,
+  rounded:   Boolean = false,
+  text:      Boolean = false,
+  modifiers: Seq[TagMod] = Seq.empty
+) extends ReactFnPropsWithChildren[Button](Button.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+
+  // You can add content to the button as children without this method, but if you want
+  // to add event handlers or other attributes, you'll need to use the modifiers.
+  def withMods(mods: TagMod*) = addModifiers(mods)
+}
 
 object Button {
   enum Size(val cls: Css) derives Eq:
@@ -88,6 +95,9 @@ object Button {
           .`type`(props.tpe.value)
           .applyOrNot(props.label, _.label(_))
           .applyOrNot(iconWithClass, (c, p) => c.icon(p.raw))
-          .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))
+          .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))(
+            props.modifiers.toTagMod,
+            children
+          )
       }
 }

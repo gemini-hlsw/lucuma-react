@@ -36,8 +36,15 @@ case class Dialog(
   contentClass:    js.UndefOr[Css] = js.undefined,
   maskClass:       js.UndefOr[Css] = js.undefined,
   appendTo:        js.UndefOr[SelfPosition | HTMLElement] = js.undefined, // default: document.body
-  baseZIndex:      js.UndefOr[Double] = js.undefined                      // default: 0
-) extends ReactFnPropsWithChildren[Dialog](Dialog.component)
+  baseZIndex:      js.UndefOr[Double] = js.undefined,                     // default: 0
+  modifiers:       Seq[TagMod] = Seq.empty
+) extends ReactFnPropsWithChildren[Dialog](Dialog.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+
+  // You can add content to the dialog as children without this method, but if you want
+  // to add event handlers or other attributes, you'll need to use the modifiers.
+  def withMods(mods: TagMod*) = addModifiers(mods)
+}
 
 object Dialog {
   private val component =
@@ -68,6 +75,6 @@ object Dialog {
           .applyOrNot(props.contentClass, (c, p) => c.contentClassName(p.htmlClass))
           .applyOrNot(props.maskClass, (c, p) => c.maskClassName(p.htmlClass))
           .applyOrNot(props.appendTo, _.appendTo(_))
-          .applyOrNot(props.baseZIndex, _.baseZIndex(_))(children)
+          .applyOrNot(props.baseZIndex, _.baseZIndex(_))(props.modifiers.toTagMod, children)
       }
 }

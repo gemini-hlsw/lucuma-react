@@ -4,6 +4,7 @@
 package react.primereact
 
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import reactST.primereact.components.{Slider => CSlider}
 
@@ -18,8 +19,12 @@ case class Slider(
   orientation: js.UndefOr[Layout] = js.undefined, // default: horizontal
   disabled:    js.UndefOr[Boolean] = js.undefined,
   clazz:       js.UndefOr[Css] = js.undefined,
-  onChange:    js.UndefOr[Double => Callback] = js.undefined
-) extends ReactFnProps[Slider](Slider.component)
+  onChange:    js.UndefOr[Double => Callback] = js.undefined,
+  modifiers:   Seq[TagMod] = Seq.empty
+) extends ReactFnProps[Slider](Slider.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
+}
 
 object Slider {
   private val component = ScalaFnComponent[Slider] { props =>
@@ -35,6 +40,8 @@ object Slider {
       .applyOrNot(
         props.onChange,
         (c, p) => c.onChange(scp => p(scp.value.asInstanceOf[Double]))
+      )(
+        props.modifiers.toTagMod
       )
   }
 }

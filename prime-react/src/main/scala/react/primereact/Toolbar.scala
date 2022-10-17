@@ -11,11 +11,16 @@ import reactST.primereact.components.{Toolbar => CToolbar}
 import scalajs.js
 
 case class Toolbar(
-  id:    js.UndefOr[String] = js.undefined,
-  clazz: js.UndefOr[Css] = js.undefined,
-  left:  js.UndefOr[VdomNode] = js.undefined,
-  right: js.UndefOr[VdomNode] = js.undefined
-) extends ReactFnProps[Toolbar](Toolbar.component)
+  id:        js.UndefOr[String] = js.undefined,
+  clazz:     js.UndefOr[Css] = js.undefined,
+  left:      js.UndefOr[VdomNode] = js.undefined,
+  right:     js.UndefOr[VdomNode] = js.undefined,
+  modifiers: Seq[TagMod] = Seq.empty
+) extends ReactFnProps[Toolbar](Toolbar.component) {
+  // It appears as though the mods might only be applied the the `left` nodes?
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
+}
 
 object Toolbar {
   private val component = ScalaFnComponent[Toolbar] { props =>
@@ -23,6 +28,8 @@ object Toolbar {
       .applyOrNot(props.id, _.id(_))
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.left, (c, p) => c.left(p.rawNode))
-      .applyOrNot(props.right, (c, p) => c.right(p.rawNode))
+      .applyOrNot(props.right, (c, p) => c.right(p.rawNode))(
+        props.modifiers.toTagMod
+      )
   }
 }

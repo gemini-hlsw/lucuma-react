@@ -21,8 +21,12 @@ case class ProgressBar(
   mode:                 js.UndefOr[ProgressBar.Mode] = js.undefined, // default: determinate
   color:                js.UndefOr[String] = js.undefined,           // default: undefined
   displayValueTemplate: js.UndefOr[Double => VdomNode] = js.undefined,
-  clazz:                js.UndefOr[Css] = js.undefined
-) extends ReactFnProps[ProgressBar](ProgressBar.component)
+  clazz:                js.UndefOr[Css] = js.undefined,
+  modifiers:            Seq[TagMod] = Seq.empty
+) extends ReactFnProps[ProgressBar](ProgressBar.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
+}
 
 object ProgressBar {
   enum Mode(val value: determinate | indeterminate):
@@ -40,6 +44,8 @@ object ProgressBar {
       .applyOrNot(props.displayValueTemplate,
                   (c, p) => c.displayValueTemplate(v => p(v.asInstanceOf[Double]).rawNode)
       )
-      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(
+        props.modifiers.toTagMod
+      )
   }
 }

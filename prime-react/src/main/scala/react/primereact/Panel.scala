@@ -18,10 +18,17 @@ case class Panel(
   collapsed: js.UndefOr[Boolean] =
     js.undefined, // If toggleable is true, need to set this via onToggle. default: false
   clazz:      js.UndefOr[Css] = js.undefined,
-  onCollapse: js.UndefOr[Callback] = js.undefined,           // see comment above
-  onExpand:   js.UndefOr[Callback] = js.undefined,           // see comment above
-  onToggle:   js.UndefOr[Boolean => Callback] = js.undefined // see comment above
-) extends ReactFnPropsWithChildren[Panel](Panel.component)
+  onCollapse: js.UndefOr[Callback] = js.undefined,            // see comment above
+  onExpand:   js.UndefOr[Callback] = js.undefined,            // see comment above
+  onToggle:   js.UndefOr[Boolean => Callback] = js.undefined, // see comment above
+  modifiers:  Seq[TagMod] = Seq.empty
+) extends ReactFnPropsWithChildren[Panel](Panel.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+
+  // You can add content to the panel as children without this method, but if you want
+  // to add event handlers or other attributes, you'll need to use the modifiers.
+  def withMods(mods: TagMod*) = addModifiers(mods)
+}
 
 object Panel {
   private val component =
@@ -38,6 +45,7 @@ object Panel {
           .applyOrNot(props.onCollapse, (c, p) => c.onCollapse(_ => p))
           .applyOrNot(props.onExpand, (c, p) => c.onExpand(_ => p))
           .applyOrNot(props.onToggle, (c, p) => c.onToggle(toggleParms => p(toggleParms.value)))(
+            props.modifiers.toTagMod,
             children
           )
       }

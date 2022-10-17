@@ -4,19 +4,24 @@
 package react.primereact
 
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import reactST.primereact.components.{Checkbox => CCheckbox}
 
 import scalajs.js
 
 case class Checkbox(
-  id:       js.UndefOr[String] = js.undefined,
-  inputId:  js.UndefOr[String] = js.undefined,  // id of the input element
-  checked:  js.UndefOr[Boolean] = js.undefined, // id of the input element
-  disabled: js.UndefOr[Boolean] = js.undefined,
-  clazz:    js.UndefOr[Css] = js.undefined,
-  onChange: js.UndefOr[Boolean => Callback] = js.undefined
-) extends ReactFnProps[Checkbox](Checkbox.component)
+  id:        js.UndefOr[String] = js.undefined,
+  inputId:   js.UndefOr[String] = js.undefined,  // id of the input element
+  checked:   js.UndefOr[Boolean] = js.undefined, // id of the input element
+  disabled:  js.UndefOr[Boolean] = js.undefined,
+  clazz:     js.UndefOr[Css] = js.undefined,
+  onChange:  js.UndefOr[Boolean => Callback] = js.undefined,
+  modifiers: Seq[TagMod] = Seq.empty
+) extends ReactFnProps[Checkbox](Checkbox.component) {
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
+}
 
 object Checkbox {
   private val component = ScalaFnComponent[Checkbox] { props =>
@@ -26,6 +31,8 @@ object Checkbox {
       .applyOrNot(props.checked, _.checked(_))
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
-      .applyOrNot(props.onChange, (c, p) => c.onChange(iwcp => p(iwcp.checked)))
+      .applyOrNot(props.onChange, (c, p) => c.onChange(iwcp => p(iwcp.checked)))(
+        props.modifiers.toTagMod
+      )
   }
 }

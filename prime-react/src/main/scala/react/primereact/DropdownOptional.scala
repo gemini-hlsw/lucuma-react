@@ -6,6 +6,7 @@ package react.primereact
 import cats.Eq
 import cats.syntax.all._
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 
 import scalajs.js
@@ -22,12 +23,16 @@ case class DropdownOptional[A](
   placeholder:     js.UndefOr[String] = js.undefined,
   disabled:        js.UndefOr[Boolean] = js.undefined,
   dropdownIcon:    js.UndefOr[String] = js.undefined,
-  onChange:        js.UndefOr[Option[A] => Callback] = js.undefined
+  onChange:        js.UndefOr[Option[A] => Callback] = js.undefined,
+  modifiers:       Seq[TagMod] = Seq.empty
 )(using val eqAA:  Eq[A])
     extends ReactFnProps[DropdownBase](DropdownBase.component)
     with DropdownBase {
   type AA    = A
   type GG[X] = Option[X]
+
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
 
   override def getter: js.UndefOr[Int]   =
     value.flatMap(v => optionsWithIndex.indexOfOption(v)).orUndefined
