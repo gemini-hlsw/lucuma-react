@@ -30,12 +30,12 @@ object Message:
     case Error   extends Severity(error)
     case Info    extends Severity(info)
     case Success extends Severity(success)
-    case Warn    extends Severity(warn)
+    case Warning extends Severity(warn)
 
   private val component = ScalaFnComponent[Message] { props =>
     CMessage
       .applyOrNot(props.id, _.id(_))
-      .applyOrNot(props.severity, (c, p) => c.id(p.value.toString))
+      .applyOrNot(props.severity, (c, p) => c.severity(p.value))
       .applyOrNot(props.text, (c, p) => c.text(p.rawNode))
       .applyOrNot(props.content, (c, p) => c.content(p.rawNode))
       .applyOrNot(props.icon, (c, p) => c.icon(p.raw))

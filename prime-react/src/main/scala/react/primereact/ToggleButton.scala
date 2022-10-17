@@ -13,7 +13,6 @@ import react.common.*
 import react.fa.FontAwesomeIcon
 import react.primereact.PrimeStyles
 import reactST.primereact.components.{ToggleButton => CToggleButton}
-import reactST.primereact.tooltipoptionsMod.TooltipOptions
 import reactST.primereact.tooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
@@ -76,7 +75,9 @@ object ToggleButton:
             props.tooltipOptions,
             (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions])
           )
-          .applyOrNot(props.onChange, (c, p) => c.onChange(e => p(e.value)))
-          .applyOrNot(props.onChangeE, (c, p) => c.onChange(e => p(e.originalEvent, e.value)))
+          .onChange(e =>
+            props.onChange.map(_(e.value)).toOption.getOrEmpty >>
+              props.onChangeE.map(_(e.originalEvent, e.value)).toOption.getOrEmpty
+          )
           .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))
       }

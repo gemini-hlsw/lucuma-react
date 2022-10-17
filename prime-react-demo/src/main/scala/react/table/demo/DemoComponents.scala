@@ -56,6 +56,7 @@ object DemoComponents {
       .useState(2.some)                 // for SelectButtonOptional
       .useState(List(1, 3))             // for SelectButtonMultiple
       .useState(50)                     // for ProgressBar
+      .useState(false)                  // for ToggleButton
       .render {
         (
           _,
@@ -77,7 +78,8 @@ object DemoComponents {
           selectButton,
           selectButtonOptional,
           selectButtonMultiple,
-          progressBar
+          progressBar,
+          toggleButton
         ) =>
           val options: List[SelectItem[Int]] =
             List(
@@ -490,9 +492,7 @@ object DemoComponents {
                                 displayValueTemplate = progressTemplate
                     ),
                     <.label("Tags", DemoStyles.FormFieldLabel),
-                    <.span(
-                      DemoStyles.FormField,
-                      DemoStyles.HorizontalStack,
+                    <.span(DemoStyles.FormField, DemoStyles.HorizontalStack)(
                       Tag(value = "Vanilla"),
                       Tag(value = "Info", severity = Tag.Severity.Info),
                       Tag(value = "Danger", severity = Tag.Severity.Danger),
@@ -501,6 +501,35 @@ object DemoComponents {
                       Tag(value = "Well Rounded Danger",
                           severity = Tag.Severity.Danger,
                           rounded = true
+                      )
+                    ),
+                    <.label("ProgressSpinner", DemoStyles.FormFieldLabel),
+                    <.span(DemoStyles.FormField)(
+                      ProgressSpinner()
+                    ),
+                    <.label("Message", DemoStyles.FormFieldLabel),
+                    <.span(DemoStyles.FormField)(
+                      Message(severity = Message.Severity.Error, text = "This is an error message"),
+                      <.br,
+                      Message(severity = Message.Severity.Info, text = "This is an info message"),
+                      <.br,
+                      Message(
+                        severity = Message.Severity.Success,
+                        text = "This is a success message"
+                      ),
+                      <.br,
+                      Message(
+                        severity = Message.Severity.Warning,
+                        text = "This is a warning message"
+                      )
+                    ),
+                    <.label("ToggleButton", DemoStyles.FormFieldLabel),
+                    <.span(DemoStyles.FormField)(
+                      ToggleButton(
+                        onLabel = "On",
+                        offLabel = "Off",
+                        checked = toggleButton.value,
+                        onChange = toggleButton.setState
                       )
                     )
                   )
