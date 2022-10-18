@@ -5,8 +5,8 @@ package react.primereact
 
 import cats.Eq
 import cats.derived.*
-import japgolly.scalajs.react.*
 import japgolly.scalajs.react.CtorType.Props
+import japgolly.scalajs.react.*
 import japgolly.scalajs.react.component.Js.ComponentWithFacade
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
@@ -14,7 +14,6 @@ import react.common.*
 import scalajs.js.annotation.JSImport
 import scalajs.js
 import scalajs.js.JSConverters.*
-
 import Toast.*
 
 case class ToastRef(
@@ -24,7 +23,7 @@ case class ToastRef(
     ref.get.map(_.fold(())(_.raw.show(message.toJSArray)))
   def replace(message: MessageItem*): Callback =
     ref.get.map(_.fold(())(_.raw.replace(message.toJSArray)))
-  def clear(): Callback                    =
+  def clear(): Callback                        =
     ref.get.map(_.fold(())(_.raw.clear()))
 }
 
@@ -52,7 +51,7 @@ object Toast {
   trait Facade extends js.Object {
     def show(message: js.Array[MessageItem]): Unit    = js.native
     def replace(message: js.Array[MessageItem]): Unit = js.native
-    def clear(): Unit                             = js.native
+    def clear(): Unit                                 = js.native
   }
 
   @js.native

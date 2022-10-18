@@ -3,7 +3,9 @@
 
 package react.primereact
 
+import japgolly.scalajs.react.CtorType.Props
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.component.Js.ComponentWithFacade
 import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.*
 import react.common.*
@@ -11,8 +13,6 @@ import react.common.*
 import scalajs.js.annotation.JSImport
 import scalajs.js
 import scalajs.js.JSConverters.*
-import japgolly.scalajs.react.component.Js.ComponentWithFacade
-import japgolly.scalajs.react.CtorType.Props
 
 case class PopupMenuRef(
   ref: Ref.ToJsComponent[PopupMenu.PopupMenuProps,
