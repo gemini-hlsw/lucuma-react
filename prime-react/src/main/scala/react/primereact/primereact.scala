@@ -62,11 +62,11 @@ object ConfirmDialogHideParm {
 }
 
 extension (icon: FontAwesomeIcon | String)
-  def toPrime: Any                 = icon match {
+  def toPrime: Node                      = icon match {
     case fa: FontAwesomeIcon => fa.raw
     case s: String           => s
   }
-  def toPrimeWithClass(clazz: Css) = icon match {
+  def toPrimeWithClass(clazz: Css): Node = icon match {
     case fa: FontAwesomeIcon => fa.clazz(clazz).raw
     case s: String           => s
   }

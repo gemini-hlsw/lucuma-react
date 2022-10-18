@@ -232,6 +232,9 @@ object DemoControlsPanel {
                 ToggleButton(
                   onLabel = "On",
                   offLabel = "Off",
+                  onIcon = "pi pi-thumbs-up",
+                  offIcon = "pi pi-thumbs-down",
+                  iconPos = ToggleButton.IconPosition.Right,
                   checked = toggleButton.value,
                   onChange = toggleButton.setState
                 )
@@ -266,7 +269,7 @@ object DemoControlsPanel {
                   .withMods(mouseEntered("Info Tag")),
                 Tag(value = "Danger", severity = Tag.Severity.Danger),
                 Tag(value = "Success", severity = Tag.Severity.Success),
-                Tag(value = "Warning", severity = Tag.Severity.Warning),
+                Tag(value = "Warning", severity = Tag.Severity.Warning, icon = "pi pi-bolt"),
                 Tag(value = "Well Rounded Danger", severity = Tag.Severity.Danger, rounded = true)
               ),
               <.label("Message", DemoStyles.FormFieldLabel),
@@ -283,7 +286,12 @@ object DemoControlsPanel {
                 Message(
                   severity = Message.Severity.Warning,
                   text = "This is a warning message"
-                )(mouseEntered("Warning Message"))
+                )(mouseEntered("Warning Message")),
+                <.br,
+                Message(
+                  text = "This is a message with a custom icon",
+                  icon = "pi pi-bolt"
+                )
               )
             )
           )

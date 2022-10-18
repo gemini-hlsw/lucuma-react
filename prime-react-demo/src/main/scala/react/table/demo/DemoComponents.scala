@@ -74,6 +74,8 @@ object DemoComponents {
               .confirmPopup(
                 target = target,
                 message = message,
+                acceptIcon = "pi pi-thumbs-up",
+                rejectIcon = "pi pi-thumbs-down",
                 onHide = s => Callback.log(s"Hiding ConfirmPopup with: $s"),
                 dismissable = false
               )
@@ -85,6 +87,8 @@ object DemoComponents {
                 message = "Pops up where you tell it. See console for result of the dialog",
                 acceptLabel = "You bet",
                 rejectLabel = "NO way",
+                acceptIcon = "pi pi-thumbs-up",
+                rejectIcon = "pi pi-thumbs-down",
                 onHide = s => Callback.log(s"Hiding ConfirmDialog with: $s"),
                 header = <.h1("Big Header"),
                 position = DialogPosition.Bottom
@@ -211,6 +215,7 @@ object DemoComponents {
                     DemoStyles.HorizontalStack,
                     Button(
                       label = "Long Lived Toast",
+                      icon = "pi pi-hourglass",
                       onClick = toastRef.show(
                         MessageItem(summary = "Long Live Toast!",
                                     detail = "10 seconds",
@@ -220,6 +225,8 @@ object DemoComponents {
                     ),
                     Button(
                       label = "Short Lived Toast",
+                      icon = "pi pi-stopwatch",
+                      iconPos = Button.IconPosition.Right,
                       onClick = toastRef.show(
                         MessageItem(summary = "It Dies Young", detail = "0.5 seconds", life = 500)
                       )
@@ -249,22 +256,28 @@ object DemoComponents {
                              )
                            )
                     ),
-                    Button(label = "Clear all toasts", onClick = toastRef.clear())
+                    Button(label = "Toast With Content",
+                           onClick = toastRef.show(
+                             MessageItem(content = <.h1("Big Content"))
+                           )
+                    )
                   ),
                   <.div(
                     DemoStyles.HorizontalStack,
                     Button(
                       label = "Replace All Toasts",
+                      icon = "pi pi-replay",
+                      iconPos = Button.IconPosition.Top,
                       onClick = toastRef.replace(
                         MessageItem(summary = "Replacement 1", detail = "The first"),
                         MessageItem(summary = "Replacement 2", detail = "The second"),
                         MessageItem(summary = "Replacement 3", detail = "The third")
                       )
                     ),
-                    Button(label = "Toast With Content",
-                           onClick = toastRef.show(
-                             MessageItem(content = <.h1("Big Content"))
-                           )
+                    Button(label = "Clear all toasts",
+                           icon = "pi pi-ban",
+                           iconPos = Button.IconPosition.Bottom,
+                           onClick = toastRef.clear()
                     )
                   )
                 )
