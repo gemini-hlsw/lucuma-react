@@ -30,6 +30,7 @@ object DemoControlsPanel {
     .useState(1)                     // for SelectButton
     .useState(2.some)                // for SelectButtonOptional
     .useState(List(1, 3))            // for SelectButtonMultiple
+    .useState(false)                 // for ToggleButton
     .useState(50)                    // for ProgressBar
     .render {
       (
@@ -48,6 +49,7 @@ object DemoControlsPanel {
         selectButton,
         selectButtonOptional,
         selectButtonMultiple,
+        toggleButton,
         progressBar
       ) =>
         val options: List[SelectItem[Int]] =
@@ -218,12 +220,21 @@ object DemoControlsPanel {
                 options = options,
                 onChange = selectButtonMultiple.setState,
                 itemTemplate = si =>
-                  if (si.disabled.getOrElse(false)) <.s(si.label)
-                  else <.span(si.label)
+                  if (si.disabled.getOrElse(false)) <.s(si.label.toOption)
+                  else <.span(si.label.toOption)
               )(mouseEntered("SelectButtonMultiple")),
               <.label("ProgressBar 1",
                       ^.htmlFor                      := "progress-indeterminate",
                       DemoStyles.FormFieldLabel
+              ),
+              <.label("ToggleButton", DemoStyles.FormFieldLabel),
+              <.span(DemoStyles.FormField)(
+                ToggleButton(
+                  onLabel = "On",
+                  offLabel = "Off",
+                  checked = toggleButton.value,
+                  onChange = toggleButton.setState
+                )
               ),
               ProgressBar(id = "progress-indeterminate", mode = ProgressBar.Mode.Indeterminate),
               <.div(
@@ -244,6 +255,10 @@ object DemoControlsPanel {
                           value = progressBar.value,
                           displayValueTemplate = progressTemplate
               ),
+              <.label("ProgressSpinner", DemoStyles.FormFieldLabel),
+              <.span(DemoStyles.FormField)(
+                ProgressSpinner()
+              ),
               <.label("Tags", DemoStyles.FormFieldLabel),
               <.span(
                 DemoStyles.FormField,
@@ -255,6 +270,22 @@ object DemoControlsPanel {
                 Tag(value = "Success", severity = Tag.Severity.Success),
                 Tag(value = "Warning", severity = Tag.Severity.Warning),
                 Tag(value = "Well Rounded Danger", severity = Tag.Severity.Danger, rounded = true)
+              ),
+              <.label("Message", DemoStyles.FormFieldLabel),
+              <.span(DemoStyles.FormField)(
+                Message(severity = Message.Severity.Error, text = "This is an error message"),
+                <.br,
+                Message(severity = Message.Severity.Info, text = "This is an info message"),
+                <.br,
+                Message(
+                  severity = Message.Severity.Success,
+                  text = "This is a success message"
+                ),
+                <.br,
+                Message(
+                  severity = Message.Severity.Warning,
+                  text = "This is a warning message"
+                )
               )
             )
           )
