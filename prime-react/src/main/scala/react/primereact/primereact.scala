@@ -10,7 +10,8 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.VdomNode
-import react.common.Css
+import react.common.*
+import react.fa.FontAwesomeIcon
 import reactST.StBuildingComponent
 import reactST.primereact.dialogMod.DialogPositionType
 import reactST.primereact.primereactStrings.horizontal
@@ -59,6 +60,16 @@ object ConfirmDialogHideParm {
       case _        => Cancel
     })
 }
+
+extension (icon: FontAwesomeIcon | String)
+  def toPrime: Any                 = icon match {
+    case fa: FontAwesomeIcon => fa.raw
+    case s: String           => s
+  }
+  def toPrimeWithClass(clazz: Css) = icon match {
+    case fa: FontAwesomeIcon => fa.clazz(clazz).raw
+    case s: String           => s
+  }
 
 extension [C <: js.Object, B <: StBuildingComponent[C]](b: B)
   def applyOrNot[A](a: js.UndefOr[A], f: (B, A) => B): B = a.fold(b)(a => f(b, a))

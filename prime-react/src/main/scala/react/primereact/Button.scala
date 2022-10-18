@@ -23,7 +23,7 @@ import scalajs.js.JSConverters.*
 
 case class Button(
   label:     js.UndefOr[String] = js.undefined,
-  icon:      js.UndefOr[FontAwesomeIcon] = js.undefined,
+  icon:      js.UndefOr[FontAwesomeIcon | String] = js.undefined,
   iconPos:   Button.IconPosition = Button.IconPosition.Left,
   clazz:     js.UndefOr[Css] = js.undefined,
   onClick:   Callback = Callback.empty,
@@ -88,13 +88,13 @@ object Button {
             props.iconPos.buttonCls
 
         val iconWithClass =
-          props.icon.map(_.clazz(PrimeStyles.ButtonIcon |+| props.iconPos.iconCls))
+          props.icon.map(_.toPrimeWithClass(PrimeStyles.ButtonIcon |+| props.iconPos.iconCls))
 
         CButton
           .onClick(e => props.onClick >> props.onClickE(e))
           .`type`(props.tpe.value)
           .applyOrNot(props.label, _.label(_))
-          .applyOrNot(iconWithClass, (c, p) => c.icon(p.raw))
+          .applyOrNot(iconWithClass, _.icon(_))
           .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))(
             props.modifiers.toTagMod,
             children
