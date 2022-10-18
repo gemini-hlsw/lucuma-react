@@ -17,8 +17,11 @@ import reactST.primereact.primereactStrings.warn
 import scalajs.js
 
 // used by Messages and Toasts
+// Note: This object is called `Message` by primereact. However, primereact has 2 things named
+// `Message`. This one, which is a plain JS object, and another which is a control. To avoid
+// name conflicts and confusion, I renamed this one.
 @js.native
-trait Message extends js.Object {
+trait MessageItem extends js.Object {
   var id: js.UndefOr[String]               = js.native
   var severity: js.UndefOr[String]         = js.native
   var summary: js.UndefOr[String]          = js.native
@@ -31,20 +34,20 @@ trait Message extends js.Object {
   var life: js.UndefOr[Int]                = js.native
 }
 
-object Message {
+object MessageItem {
   def apply(
     id:           js.UndefOr[String] = js.undefined,
-    severity:     Message.Severity = Severity.Info,    // Without a value is mostly transparent.
+    severity:     MessageItem.Severity = Severity.Info, // Without a value is mostly transparent.
     summary:      js.UndefOr[String] = js.undefined,
     detail:       js.UndefOr[String] = js.undefined,
-    content:      js.UndefOr[VdomNode] = js.undefined, // instead of summary and details
+    content:      js.UndefOr[VdomNode] = js.undefined,  // instead of summary and details
     clazz:        js.UndefOr[Css] = js.undefined,
     contentClass: js.UndefOr[Css] = js.undefined,
-    closable:     js.UndefOr[Boolean] = js.undefined,  // default: true
-    sticky:       js.UndefOr[Boolean] = js.undefined,  // default: false?
-    life:         js.UndefOr[Int] = js.undefined       // in milliseconds. default: 3000
-  ): Message = {
-    val m = (new js.Object).asInstanceOf[Message]
+    closable:     js.UndefOr[Boolean] = js.undefined,   // default: true
+    sticky:       js.UndefOr[Boolean] = js.undefined,   // default: false?
+    life:         js.UndefOr[Int] = js.undefined        // in milliseconds. default: 3000
+  ): MessageItem = {
+    val m = (new js.Object).asInstanceOf[MessageItem]
     id.foreach(v => m.id = v)
     m.severity = severity.value
     summary.foreach(v => m.summary = v)

@@ -95,7 +95,7 @@ object DemoComponents {
               left = Button(label = "Toolbar Left Button",
                             size = Button.Size.Small,
                             onClick = toastRef.show(
-                              Message(summary = "Clicked", detail = "Top Left Button")
+                              MessageItem(summary = "Clicked", detail = "Top Left Button")
                             )
               ).withMods(mouseEntered("Toolbar")),
               right = <.div(
@@ -104,7 +104,7 @@ object DemoComponents {
                   label = "Toolbar Right Button",
                   size = Button.Size.Small,
                   onClick = toastRef.show(
-                    Message(summary = "Clicked", detail = "Top Right Button")
+                    MessageItem(summary = "Clicked", detail = "Top Right Button")
                   )
                 ),
                 Button(
@@ -167,19 +167,20 @@ object DemoComponents {
                   ),
                   <.div(
                     DemoStyles.HorizontalStack,
-                    Button(label = "Info Toast",
-                           severity = Button.Severity.Info,
-                           onClick = toastRef
-                             .show(Message(summary = "Information", detail = "Informative Toast"))
+                    Button(
+                      label = "Info Toast",
+                      severity = Button.Severity.Info,
+                      onClick = toastRef
+                        .show(MessageItem(summary = "Information", detail = "Informative Toast"))
                     ),
                     Button(
                       label = "Success Toast",
                       severity = Button.Severity.Success,
                       onClick = toastRef
                         .show(
-                          Message(summary = "Success!",
-                                  detail = "Congratulations",
-                                  severity = Message.Severity.Success
+                          MessageItem(summary = "Success!",
+                                      detail = "Congratulations",
+                                      severity = MessageItem.Severity.Success
                           )
                         )
                     ),
@@ -188,9 +189,9 @@ object DemoComponents {
                       severity = Button.Severity.Warning,
                       onClick = toastRef
                         .show(
-                          Message(summary = "Warning!",
-                                  detail = "I told you so!",
-                                  severity = Message.Severity.Warn
+                          MessageItem(summary = "Warning!",
+                                      detail = "I told you so!",
+                                      severity = MessageItem.Severity.Warn
                           )
                         )
                     ),
@@ -199,9 +200,9 @@ object DemoComponents {
                       severity = Button.Severity.Danger,
                       onClick = toastRef
                         .show(
-                          Message(summary = "Error!",
-                                  detail = "You shouldn't have done that!",
-                                  severity = Message.Severity.Error
+                          MessageItem(summary = "Error!",
+                                      detail = "You shouldn't have done that!",
+                                      severity = MessageItem.Severity.Error
                           )
                         )
                     )
@@ -211,18 +212,23 @@ object DemoComponents {
                     Button(
                       label = "Long Lived Toast",
                       onClick = toastRef.show(
-                        Message(summary = "Long Live Toast!", detail = "10 seconds", life = 10000)
+                        MessageItem(summary = "Long Live Toast!",
+                                    detail = "10 seconds",
+                                    life = 10000
+                        )
                       )
                     ),
-                    Button(label = "Short Lived Toast",
-                           onClick = toastRef.show(
-                             Message(summary = "It Dies Young", detail = "0.5 seconds", life = 500)
-                           )
+                    Button(
+                      label = "Short Lived Toast",
+                      onClick = toastRef.show(
+                        MessageItem(summary = "It Dies Young", detail = "0.5 seconds", life = 500)
+                      )
                     ),
-                    Button(label = "Sticky Toast",
-                           onClick = toastRef.show(
-                             Message(summary = "Sticky!", detail = "Honey, perhaps?", sticky = true)
-                           )
+                    Button(
+                      label = "Sticky Toast",
+                      onClick = toastRef.show(
+                        MessageItem(summary = "Sticky!", detail = "Honey, perhaps?", sticky = true)
+                      )
                     )
                   ),
                   <.div(
@@ -230,16 +236,16 @@ object DemoComponents {
                     Button(
                       label = "Multiple Toasts",
                       onClick = toastRef.show(
-                        Message(summary = "Toast 1", detail = "The first"),
-                        Message(summary = "Toast 2", detail = "The second"),
-                        Message(summary = "Toast 3", detail = "The third")
+                        MessageItem(summary = "Toast 1", detail = "The first"),
+                        MessageItem(summary = "Toast 2", detail = "The second"),
+                        MessageItem(summary = "Toast 3", detail = "The third")
                       )
                     ),
                     Button(label = "Non-closable Toast",
                            onClick = toastRef.show(
-                             Message(summary = "Can't close it.",
-                                     detail = "You have to wait",
-                                     closable = false
+                             MessageItem(summary = "Can't close it.",
+                                         detail = "You have to wait",
+                                         closable = false
                              )
                            )
                     ),
@@ -250,14 +256,14 @@ object DemoComponents {
                     Button(
                       label = "Replace All Toasts",
                       onClick = toastRef.replace(
-                        Message(summary = "Replacement 1", detail = "The first"),
-                        Message(summary = "Replacement 2", detail = "The second"),
-                        Message(summary = "Replacement 3", detail = "The third")
+                        MessageItem(summary = "Replacement 1", detail = "The first"),
+                        MessageItem(summary = "Replacement 2", detail = "The second"),
+                        MessageItem(summary = "Replacement 3", detail = "The third")
                       )
                     ),
                     Button(label = "Toast With Content",
                            onClick = toastRef.show(
-                             Message(content = <.h1("Big Content"))
+                             MessageItem(content = <.h1("Big Content"))
                            )
                     )
                   )
