@@ -15,9 +15,10 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 case class PopupMenuRef(
-  ref: Ref.ToJsComponent[PopupMenu.PopupMenuProps,
-                         Null,
-                         facade.React.Component[PopupMenu.PopupMenuProps, Null] & PopupMenu.Facade
+  ref: Ref.ToJsComponent[
+    PopupMenu.PopupMenuProps,
+    Null,
+    facade.React.Component[PopupMenu.PopupMenuProps, Null] & PopupMenu.Facade
   ]
 ) {
   def toggle: ReactEvent => Callback = e => ref.get.map(_.fold(())(_.raw.toggle(e)))
@@ -33,13 +34,18 @@ case class PopupMenu(
   autoZIndex: js.UndefOr[Boolean] = js.undefined,                    // default: true
   appendTo:   js.UndefOr[SelfPosition | HTMLElement] = js.undefined, // default: document.body
   onHide:     js.UndefOr[Callback] = js.undefined,
-  onShow:     js.UndefOr[Callback] = js.undefined
-) extends GenericComponentPF[PopupMenu.PopupMenuProps, PopupMenu.Facade] {
+  onShow:     js.UndefOr[Callback] = js.undefined,
+  modifiers:  Seq[TagMod] = Seq.empty
+) extends GenericComponentPAF[PopupMenu.PopupMenuProps, PopupMenu, PopupMenu.Facade]:
   override protected def cprops = PopupMenu.props(this)
   override protected val component
     : ComponentWithFacade[PopupMenu.PopupMenuProps, Null, PopupMenu.Facade, Props] =
     PopupMenu.component
-}
+
+  override def addModifiers(modifiers: Seq[TagMod]): PopupMenu =
+    copy(modifiers = this.modifiers ++ modifiers)
+
+  def withMods(mods: TagMod*) = addModifiers(mods)
 
 object PopupMenu {
   @js.native
