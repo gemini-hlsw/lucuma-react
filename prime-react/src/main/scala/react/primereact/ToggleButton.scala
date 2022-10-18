@@ -53,10 +53,10 @@ object ToggleButton:
           props.clazz.toOption.orEmpty |+|
             props.size.cls |+|
             props.severity.cls |+|
-            Option.when(props.outlined)(PrimeStyles.ButtonOutlined).orEmpty |+|
-            Option.when(props.raised)(PrimeStyles.ButtonRaised).orEmpty |+|
-            Option.when(props.rounded)(PrimeStyles.ButtonRounded).orEmpty |+|
-            Option.when(props.text)(PrimeStyles.ButtonText).orEmpty |+|
+            PrimeStyles.ButtonOutlined.when_(props.outlined) |+|
+            PrimeStyles.ButtonRaised.when_(props.raised) |+|
+            PrimeStyles.ButtonRounded.when_(props.rounded) |+|
+            PrimeStyles.ButtonText.when_(props.text) |+|
             props.iconPos.buttonCls
 
         val onIconWithClass =
