@@ -17,25 +17,28 @@ import reactST.primereact.primereactStrings.button
 import reactST.primereact.primereactStrings.reset
 import reactST.primereact.primereactStrings.submit
 import reactST.primereact.primereactStrings.top
+import reactST.primereact.tooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
 
 case class Button(
-  label:     js.UndefOr[String] = js.undefined,
-  icon:      js.UndefOr[FontAwesomeIcon] = js.undefined,
-  iconPos:   Button.IconPosition = Button.IconPosition.Left,
-  clazz:     js.UndefOr[Css] = js.undefined,
-  onClick:   Callback = Callback.empty,
-  onClickE:  ReactMouseEventFrom[HTMLButtonElement & Element] => Callback = _ => Callback.empty,
-  size:      Button.Size = Button.Size.Normal,
-  tpe:       Button.Type = Button.Type.Button,
-  severity:  Button.Severity = Button.Severity.Primary,
-  outlined:  Boolean = false,
-  raised:    Boolean = false,
-  rounded:   Boolean = false,
-  text:      Boolean = false,
-  modifiers: Seq[TagMod] = Seq.empty
+  label:          js.UndefOr[String] = js.undefined,
+  icon:           js.UndefOr[FontAwesomeIcon] = js.undefined,
+  iconPos:        Button.IconPosition = Button.IconPosition.Left,
+  clazz:          js.UndefOr[Css] = js.undefined,
+  onClick:        Callback = Callback.empty,
+  onClickE:       ReactMouseEventFrom[HTMLButtonElement & Element] => Callback = _ => Callback.empty,
+  size:           Button.Size = Button.Size.Normal,
+  tpe:            Button.Type = Button.Type.Button,
+  severity:       Button.Severity = Button.Severity.Primary,
+  outlined:       Boolean = false,
+  raised:         Boolean = false,
+  rounded:        Boolean = false,
+  text:           Boolean = false,
+  tooltip:        js.UndefOr[String] = js.undefined,
+  tooltipOptions: js.UndefOr[TooltipOptions] = js.undefined,
+  modifiers:      Seq[TagMod] = Seq.empty
 ) extends ReactFnPropsWithChildren[Button](Button.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 
@@ -75,16 +78,14 @@ object Button {
       .withHooks[Button]
       .withPropsChildren
       .render { (props, children) =>
-        extension (b: Boolean) def cssOrEmpty(css: Css): Css = if b then css else Css.Empty
-
         val fullCss =
           props.clazz.toOption.orEmpty |+|
             props.size.cls |+|
             props.severity.cls |+|
-            props.outlined.cssOrEmpty(PrimeStyles.ButtonOutlined) |+|
-            props.raised.cssOrEmpty(PrimeStyles.ButtonRaised) |+|
-            props.rounded.cssOrEmpty(PrimeStyles.ButtonRounded) |+|
-            props.text.cssOrEmpty(PrimeStyles.ButtonText) |+|
+            PrimeStyles.ButtonOutlined.when_(props.outlined) |+|
+            PrimeStyles.ButtonRaised.when_(props.raised) |+|
+            PrimeStyles.ButtonRounded.when_(props.rounded) |+|
+            PrimeStyles.ButtonText.when_(props.text) |+|
             props.iconPos.buttonCls
 
         val iconWithClass =
@@ -95,7 +96,12 @@ object Button {
           .`type`(props.tpe.value)
           .applyOrNot(props.label, _.label(_))
           .applyOrNot(iconWithClass, (c, p) => c.icon(p.raw))
-          .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))(
+          .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))
+          .applyOrNot(props.tooltip, _.tooltip(_))
+          .applyOrNot(
+            props.tooltipOptions,
+            (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions])
+          )(
             props.modifiers.toTagMod,
             children
           )

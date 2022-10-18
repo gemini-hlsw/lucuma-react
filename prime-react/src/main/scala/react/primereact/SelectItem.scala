@@ -16,7 +16,7 @@ import scalajs.js.JSConverters.*
 // Note: icon in CSelectItem seems to do nothing. You need to use templates.
 case class SelectItem[A: Eq](
   value:     A,
-  label:     String,
+  label:     js.UndefOr[String] = js.undefined,
   disabled:  js.UndefOr[Boolean] = js.undefined,
   className: js.UndefOr[String] = js.undefined,
   clazz:     js.UndefOr[Css] = js.undefined
@@ -36,7 +36,8 @@ object SelectItem {
       options.find(_._2 === index).map(_._1)
     def raw: SelectItemOptionsType                                     =
       options.map { (si, idx) =>
-        val csi: CSelectItem = CSelectItem().setValue(idx).setLabel(si.label)
+        val csi: CSelectItem = CSelectItem().setValue(idx)
+        si.label.foreach(v => csi.setLabel(v))
         si.disabled.foreach(v => csi.setDisabled(v))
         si.clazz.foreach(v => csi.setClassName(v.htmlClass))
         csi
