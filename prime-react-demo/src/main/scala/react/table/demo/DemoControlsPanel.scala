@@ -135,13 +135,13 @@ object DemoControlsPanel {
                 inputId = "input-switch",
                 checked = inputSwitch.value,
                 onChange = b => inputSwitch.setState(b)
-              ).withMods(mouseEntered("InputSwitch")),
+              )(mouseEntered("InputSwitch")),
               <.label("Checkbox", ^.htmlFor          := "checkbox", DemoStyles.FormFieldLabel),
               Checkbox(
                 inputId = "checkbox",
                 checked = checkbox.value,
                 onChange = b => checkbox.setState(b)
-              ).withMods(mouseEntered("Checkbox")),
+              )(mouseEntered("Checkbox")),
               <.label("Slider", ^.htmlFor            := "slider", DemoStyles.FormFieldLabel),
               <.span(
                 DemoStyles.FormField,
@@ -152,7 +152,7 @@ object DemoControlsPanel {
                        max = 10.0,
                        step = 2,
                        orientation = Layout.Vertical
-                ).withMods(mouseEntered("Slider")),
+                )(mouseEntered("Slider")),
                 slider.value
               ),
               <.label("SliderRange", ^.htmlFor       := "slider-range", DemoStyles.FormFieldLabel),
@@ -161,12 +161,13 @@ object DemoControlsPanel {
                 SliderRange(id = "slider-range",
                             value = rangeSlider.value,
                             onChange = t => rangeSlider.setState(t)
-                ).withMods(mouseEntered("SliderRange")),
+                )(mouseEntered("SliderRange")),
                 s"[${rangeSlider.value._1}, ${rangeSlider.value._2}]"
               ),
               <.label("Knob (steps of 5)", ^.htmlFor := "knob", DemoStyles.FormFieldLabel),
-              Knob(id = "knob", value = knob.value, step = 5, size = 75, onChange = knob.setState)
-                .withMods(mouseEntered("Knob")),
+              Knob(id = "knob", value = knob.value, step = 5, size = 75, onChange = knob.setState)(
+                mouseEntered("Knob")
+              ),
               <.label("Knob for Progress", ^.htmlFor := "readonly-knob", DemoStyles.FormFieldLabel),
               <.div(
                 DemoStyles.HorizontalStack,
@@ -196,7 +197,7 @@ object DemoControlsPanel {
                 value = selectButton.value,
                 options = options,
                 onChange = selectButton.setState
-              ).withMods(mouseEntered("SelectButton")),
+              )(mouseEntered("SelectButton")),
               <.label("SelectButtonOptional",
                       ^.htmlFor                      := "select-button-optional",
                       DemoStyles.FormFieldLabel
@@ -206,7 +207,7 @@ object DemoControlsPanel {
                 value = selectButtonOptional.value,
                 options = options,
                 onChange = selectButtonOptional.setState
-              ).withMods(mouseEntered("SelectButtonOptional")),
+              )(mouseEntered("SelectButtonOptional")),
               <.label("SelectButtonMultiple",
                       ^.htmlFor                      := "select-button-multiple",
                       DemoStyles.FormFieldLabel
@@ -219,7 +220,7 @@ object DemoControlsPanel {
                 itemTemplate = si =>
                   if (si.disabled.getOrElse(false)) <.s(si.label)
                   else <.span(si.label)
-              ).withMods(mouseEntered("SelectButtonMultiple")),
+              )(mouseEntered("SelectButtonMultiple")),
               <.label("ProgressBar 1",
                       ^.htmlFor                      := "progress-indeterminate",
                       DemoStyles.FormFieldLabel
@@ -235,8 +236,9 @@ object DemoControlsPanel {
                 )
               ),
               <.label("ProgressBar 2", ^.htmlFor     := "progress-vanilla", DemoStyles.FormFieldLabel),
-              ProgressBar(id = "progress-vanilla", value = progressBar.value)
-                .withMods(mouseEntered("ProgressBar")),
+              ProgressBar(id = "progress-vanilla", value = progressBar.value)(
+                mouseEntered("ProgressBar")
+              ),
               <.label("ProgressBar 3", ^.htmlFor     := "progress-template", DemoStyles.FormFieldLabel),
               ProgressBar(id = "progress-template",
                           value = progressBar.value,

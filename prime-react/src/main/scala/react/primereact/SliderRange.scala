@@ -24,6 +24,7 @@ case class SliderRange(
 ) extends ReactFnProps[SliderRange](SliderRange.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods: TagMod*)              = addModifiers(mods)
+  def apply(mods: TagMod*)                 = addModifiers(mods)
 }
 
 object SliderRange {

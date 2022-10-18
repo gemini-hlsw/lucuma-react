@@ -30,6 +30,7 @@ case class SelectButton[A](
 
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods: TagMod*)              = addModifiers(mods)
+  def apply(mods: TagMod*)                 = addModifiers(mods)
 
   override def getter: js.UndefOr[Int] = optionsWithIndex.indexOfOption(value).orUndefined
   override def valueFinder(i: Any): A  = selectItemFinder(i).value
