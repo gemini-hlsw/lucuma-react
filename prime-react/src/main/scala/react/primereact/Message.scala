@@ -27,6 +27,7 @@ case class Message(
 ) extends ReactFnProps(Message.component):
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods: TagMod*)              = addModifiers(mods)
+  def apply(mods: TagMod*)                 = addModifiers(mods)
 
 object Message:
   enum Severity(val value: error | info | success | warn):

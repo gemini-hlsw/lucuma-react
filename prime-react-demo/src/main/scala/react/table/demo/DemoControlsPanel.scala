@@ -256,9 +256,7 @@ object DemoControlsPanel {
                           displayValueTemplate = progressTemplate
               ),
               <.label("ProgressSpinner", DemoStyles.FormFieldLabel),
-              <.span(DemoStyles.FormField)(
-                ProgressSpinner()
-              ),
+              ProgressSpinner(clazz = DemoStyles.FormField)(mouseEntered("ProgressSpinner")),
               <.label("Tags", DemoStyles.FormFieldLabel),
               <.span(
                 DemoStyles.FormField,
@@ -285,7 +283,7 @@ object DemoControlsPanel {
                 Message(
                   severity = Message.Severity.Warning,
                   text = "This is a warning message"
-                )
+                )(mouseEntered("Warning Message"))
               )
             )
           )
