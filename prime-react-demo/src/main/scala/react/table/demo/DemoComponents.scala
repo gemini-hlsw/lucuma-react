@@ -458,9 +458,13 @@ object DemoComponents {
               )("You can drag me around!"),
               ConfirmPopup(),
               ConfirmDialog(),
-              PopupMenu(menuItems,
-                        onShow = Callback.log("Showing PopupMenu"),
-                        onHide = Callback.log("Hiding PopupMenu")
+              PopupMenu(
+                menuItems,
+                onShow = Callback.log("Showing PopupMenu"),
+                onHide = Callback.log("Hiding PopupMenu")
+              ).withMods(
+                ^.onMouseEnter --> Callback.log("Mouse entered!"),
+                ^.onMouseLeave --> Callback.log("Mouse left!")
               ).withRef(popupMenuRef.ref),
               Sidebar(
                 visible = sidebarOptions.value.visible,
