@@ -463,8 +463,8 @@ object DemoComponents {
                 onShow = Callback.log("Showing PopupMenu"),
                 onHide = Callback.log("Hiding PopupMenu")
               ).withMods(
-                ^.onMouseEnter --> Callback.log("Mouse entered!"),
-                ^.onMouseLeave --> Callback.log("Mouse left!")
+                mouseEntered("PopupMenu"),
+                ^.onMouseLeave --> Callback.log("Mouse left: PopupMenu")
               ).withRef(popupMenuRef.ref),
               Sidebar(
                 visible = sidebarOptions.value.visible,
@@ -478,7 +478,9 @@ object DemoComponents {
                 blockScroll = sidebarOptions.value.blockScroll,
                 showCloseIcon = sidebarOptions.value.showCloseIcon
               ).withMods(mouseEntered("Sidebar"))(<.div(<.div("Some stuff"), <.div("More stuff"))),
-              Toast(position = toastPosition.value).withRef(toastRef.ref)
+              Toast(position = toastPosition.value)
+                .withMods(mouseEntered("Toast"))
+                .withRef(toastRef.ref)
             )
           )
       }

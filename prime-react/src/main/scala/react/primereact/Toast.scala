@@ -29,12 +29,16 @@ case class ToastRef(
 
 // NOTE: Toasts have onRemove, onClick, onShow, onHide, onMouseEnter, and onMouseLeave events that are not yet implemented.
 case class Toast(
-  position: js.UndefOr[Toast.Position] = js.undefined // default: TopRight
-) extends GenericComponentPF[ToastProps, Facade] {
+  position:  js.UndefOr[Toast.Position] = js.undefined, // default: TopRight
+  modifiers: Seq[TagMod] = Seq.empty
+) extends GenericComponentPAF[ToastProps, Toast, Facade]:
   override protected def cprops: ToastProps                                              = Toast.props(this)
   override protected val component: ComponentWithFacade[ToastProps, Null, Facade, Props] =
     Toast.component
-}
+  override def addModifiers(modifiers: Seq[TagMod]): Toast                               =
+    copy(modifiers = this.modifiers ++ modifiers)
+
+  def withMods(mods: TagMod*) = addModifiers(mods)
 
 object Toast {
   enum Position(val value: String) derives Eq:
