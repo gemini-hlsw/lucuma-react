@@ -29,6 +29,8 @@ case class Message(
   def withMods(mods: TagMod*)              = addModifiers(mods)
   def apply(mods: TagMod*)                 = addModifiers(mods)
 
+// If we ever get rid of ScalablyTyped and do a straight facade, get rid
+// of the `asInstanceOf[String]` cast for MessageItem.severity.
 object Message:
   enum Severity(val value: error | info | success | warn):
     case Error   extends Severity(error)

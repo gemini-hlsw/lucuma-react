@@ -9,10 +9,6 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
-import reactST.primereact.primereactStrings.error
-import reactST.primereact.primereactStrings.info
-import reactST.primereact.primereactStrings.success
-import reactST.primereact.primereactStrings.warn
 
 import scalajs.js
 
@@ -37,19 +33,19 @@ trait MessageItem extends js.Object {
 object MessageItem {
   def apply(
     id:           js.UndefOr[String] = js.undefined,
-    severity:     MessageItem.Severity = Severity.Info, // Without a value is mostly transparent.
+    severity:     Message.Severity = Message.Severity.Info, // Without a value is mostly transparent.
     summary:      js.UndefOr[String] = js.undefined,
     detail:       js.UndefOr[String] = js.undefined,
-    content:      js.UndefOr[VdomNode] = js.undefined,  // instead of summary and details
+    content:      js.UndefOr[VdomNode] = js.undefined,      // instead of summary and details
     clazz:        js.UndefOr[Css] = js.undefined,
     contentClass: js.UndefOr[Css] = js.undefined,
-    closable:     js.UndefOr[Boolean] = js.undefined,   // default: true
-    sticky:       js.UndefOr[Boolean] = js.undefined,   // default: false?
-    life:         js.UndefOr[Int] = js.undefined        // in milliseconds. default: 3000
+    closable:     js.UndefOr[Boolean] = js.undefined,       // default: true
+    sticky:       js.UndefOr[Boolean] = js.undefined,       // default: false?
+    life:         js.UndefOr[Int] = js.undefined            // in milliseconds. default: 3000
   ): MessageItem = {
     val m = (new js.Object).asInstanceOf[MessageItem]
     id.foreach(v => m.id = v)
-    m.severity = severity.value
+    m.severity = severity.value.asInstanceOf[String]
     summary.foreach(v => m.summary = v)
     detail.foreach(v => m.detail = v)
     content.foreach(v => m.content = v.rawNode)

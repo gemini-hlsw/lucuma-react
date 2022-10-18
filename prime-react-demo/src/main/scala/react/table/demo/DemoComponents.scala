@@ -180,7 +180,7 @@ object DemoComponents {
                         .show(
                           MessageItem(summary = "Success!",
                                       detail = "Congratulations",
-                                      severity = MessageItem.Severity.Success
+                                      severity = Message.Severity.Success
                           )
                         )
                     ),
@@ -191,7 +191,7 @@ object DemoComponents {
                         .show(
                           MessageItem(summary = "Warning!",
                                       detail = "I told you so!",
-                                      severity = MessageItem.Severity.Warn
+                                      severity = Message.Severity.Warning
                           )
                         )
                     ),
@@ -202,7 +202,7 @@ object DemoComponents {
                         .show(
                           MessageItem(summary = "Error!",
                                       detail = "You shouldn't have done that!",
-                                      severity = MessageItem.Severity.Error
+                                      severity = Message.Severity.Error
                           )
                         )
                     )
