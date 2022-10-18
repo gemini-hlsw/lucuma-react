@@ -9,10 +9,11 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.HTMLElement
 import react.common.*
 import react.primereact.*
-import reactST.primereact.components.{Accordion => CAccordion}
-import reactST.primereact.components.{AccordionTab => CAccordionTab}
+import react.primereact.hooks.all.*
+
 object DemoComponents {
   case class SidebarOptions(
+    visible:       Boolean,
     position:      Sidebar.Position,
     size:          Sidebar.Size,
     dismissable:   Boolean,
@@ -24,7 +25,8 @@ object DemoComponents {
   )
 
   object SidebarOptions:
-    def default = SidebarOptions(Sidebar.Position.Right,
+    def default = SidebarOptions(false,
+                                 Sidebar.Position.Right,
                                  Sidebar.Size.Small,
                                  true,
                                  true,
@@ -34,92 +36,46 @@ object DemoComponents {
                                  true
     )
 
+  def mouseEntered(msg: String) = ^.onMouseEnter --> Callback.log(s"Mouse entered: $msg")
+
   val component =
     ScalaFnComponent
       .withHooks[Unit]
-      .useState(false)                  // show dialog
-      .useState(false)                  // panel collapsed
-      .useState(false)                  // sidebar
-      .useState(SidebarOptions.default) // sidebar options
-      .useState(0)                      // tabview activeIndex
-      .useState("Text to edit")         // for InputText
-      .useState("Resizeable TextArea")  // for InputTextarea
-      .useState(2)                      // for Dropdown
-      .useState(3.some)                 // for DropdownOptional
-      .useState(false)                  // for InputSwitch
-      .useState(false)                  // for Checkbox
-      .useState((25.0, 75.0))           // for SliderRange
-      .useState(0.0)                    // for Slider
-      .useState(10.0)                   // for Knob
-      .useState(11.0)                   // for Knob (readonly)
-      .useState(1)                      // for SelectButton
-      .useState(2.some)                 // for SelectButtonOptional
-      .useState(List(1, 3))             // for SelectButtonMultiple
-      .useState(50)                     // for ProgressBar
-      .useState(false)                  // for ToggleButton
+      .useState(Toast.Position.TopRight) // toast position
+      .useState(false)                   // show dialog
+      .useState(false)                   // panel collapsed
+      .useState(SidebarOptions.default)  // sidebar options
+      .useState(0)                       // tabview activeIndex
+      .useState(0)                       // tabMenu activeIndex
+      .usePopupMenuRef
+      .useToastRef
       .render {
         (
           _,
+          toastPosition,
           showDialog,
           panelCollapsed,
-          sidebar,
           sidebarOptions,
           tabView,
-          inputText,
-          inputTextarea,
-          dropdown,
-          dropdownOptional,
-          inputSwitch,
-          checkbox,
-          rangeSlider,
-          slider,
-          knob,
-          knobProgress,
-          selectButton,
-          selectButtonOptional,
-          selectButtonMultiple,
-          progressBar,
-          toggleButton
+          tabMenu,
+          popupMenuRef,
+          toastRef
         ) =>
-          val options: List[SelectItem[Int]] =
-            List(
-              SelectItem(1, "Option 1"),
-              SelectItem(2, "Option 2"),
-              SelectItem(3, "Option 3"),
-              SelectItem(4, "Option 4", disabled = true),
-              SelectItem(5, "Option 5")
-            )
-
-          val decreaseProgress: Callback = {
-            val current = progressBar.value
-            if current > 0 then progressBar.setState(current - 1) else Callback.empty
-          }
-
-          val increaseProgress: Callback = {
-            val current = progressBar.value
-            if current < 100 then progressBar.setState(current + 1) else Callback.empty
-          }
-
-          def progressTemplate(v: Double): VdomNode =
-            if (v < 50) "Less than half"
-            else if (v > 50) "More than half"
-            else "Half way"
-
-          def turnDownVolume: Callback = {
-            val current = knobProgress.value
-            if current > 0 then knobProgress.setState(current - 1) else Callback.empty
-          }
-
-          def turnUpVolume: Callback = {
-            val current = knobProgress.value
-            if current < 11 then knobProgress.setState(current + 1) else Callback.empty
-          }
+          val menuItems = List(
+            MenuItem.SubMenu("SubMenu", icon = "pi pi-bolt")(
+              MenuItem.Item("Item 1", icon = "pi pi-bolt")
+            ),
+            MenuItem.Separator,
+            MenuItem.Item("Duck Duck Go", url = "http://duckduckgo.com") // , icon = Icons.DiceOne)
+          )
 
           def showConfirmPopup(target: HTMLElement, message: String): Callback =
             ConfirmPopup
               .confirmPopup(
                 target = target,
                 message = message,
+                acceptIcon = "pi pi-thumbs-up",
+                rejectIcon = "pi pi-thumbs-down",
                 onHide = s => Callback.log(s"Hiding ConfirmPopup with: $s"),
                 dismissable = false
               )
@@ -131,6 +87,8 @@ object DemoComponents {
                 message = "Pops up where you tell it. See console for result of the dialog",
                 acceptLabel = "You bet",
                 rejectLabel = "NO way",
+                acceptIcon = "pi pi-thumbs-up",
+                rejectIcon = "pi pi-thumbs-down",
                 onHide = s => Callback.log(s"Hiding ConfirmDialog with: $s"),
                 header = <.h1("Big Header"),
                 position = DialogPosition.Bottom
@@ -140,20 +98,23 @@ object DemoComponents {
             Toolbar(
               left = Button(label = "Toolbar Left Button",
                             size = Button.Size.Small,
-                            // todo: Change to a Toast
-                            onClickE = e => showConfirmPopup(e.currentTarget, "Clicked Left Button")
-              ),
+                            onClick = toastRef.show(
+                              MessageItem(summary = "Clicked", detail = "Top Left Button")
+                            )
+              ).withMods(mouseEntered("Toolbar")),
               right = <.div(
                 DemoStyles.HorizontalStack,
-                Button(label = "Toolbar Right Button",
-                       size = Button.Size.Small,
-                       // todo: Change to a Toast
-                       onClickE = e => showConfirmPopup(e.currentTarget, "Clicked Right Button")
+                Button(
+                  label = "Toolbar Right Button",
+                  size = Button.Size.Small,
+                  onClick = toastRef.show(
+                    MessageItem(summary = "Clicked", detail = "Top Right Button")
+                  )
                 ),
-                Button(label = "Menu",
-                       size = Button.Size.Small,
-                       // todo: Change to a Toast
-                       onClickE = e => showConfirmPopup(e.currentTarget, "Will open a menu")
+                Button(
+                  icon = "pi pi-bars",
+                  size = Button.Size.Small,
+                  onClickE = popupMenuRef.toggle
                 )
               )
             ),
@@ -186,7 +147,141 @@ object DemoComponents {
                          outlined = true
                   )
                 )
-              )("Card Contents"),
+              )(
+                <.div(
+                  DemoStyles.VerticalStack,
+                  <.h2("Some Toast"),
+                  <.div(
+                    DemoStyles.FormColumn,
+                    <.label("Toast Position",
+                            ^.htmlFor := "toast-position",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    SelectButton(
+                      id = "toast-position",
+                      value = toastPosition.value,
+                      options = List(
+                        SelectItem(Toast.Position.TopRight, "Top Right"),
+                        SelectItem(Toast.Position.TopLeft, "Top Left"),
+                        SelectItem(Toast.Position.BottomRight, "Bottom Right"),
+                        SelectItem(Toast.Position.BottomLeft, "Bottom Left")
+                      ),
+                      onChange = toastPosition.setState
+                    )
+                  ),
+                  <.div(
+                    DemoStyles.HorizontalStack,
+                    Button(
+                      label = "Info Toast",
+                      severity = Button.Severity.Info,
+                      onClick = toastRef
+                        .show(MessageItem(summary = "Information", detail = "Informative Toast"))
+                    ),
+                    Button(
+                      label = "Success Toast",
+                      severity = Button.Severity.Success,
+                      onClick = toastRef
+                        .show(
+                          MessageItem(summary = "Success!",
+                                      detail = "Congratulations",
+                                      severity = Message.Severity.Success
+                          )
+                        )
+                    ),
+                    Button(
+                      label = "Warning Toast",
+                      severity = Button.Severity.Warning,
+                      onClick = toastRef
+                        .show(
+                          MessageItem(summary = "Warning!",
+                                      detail = "I told you so!",
+                                      severity = Message.Severity.Warning
+                          )
+                        )
+                    ),
+                    Button(
+                      label = "Error Toast",
+                      severity = Button.Severity.Danger,
+                      onClick = toastRef
+                        .show(
+                          MessageItem(summary = "Error!",
+                                      detail = "You shouldn't have done that!",
+                                      severity = Message.Severity.Error
+                          )
+                        )
+                    )
+                  ),
+                  <.div(
+                    DemoStyles.HorizontalStack,
+                    Button(
+                      label = "Long Lived Toast",
+                      icon = "pi pi-hourglass",
+                      onClick = toastRef.show(
+                        MessageItem(summary = "Long Live Toast!",
+                                    detail = "10 seconds",
+                                    life = 10000
+                        )
+                      )
+                    ),
+                    Button(
+                      label = "Short Lived Toast",
+                      icon = "pi pi-stopwatch",
+                      iconPos = Button.IconPosition.Right,
+                      onClick = toastRef.show(
+                        MessageItem(summary = "It Dies Young", detail = "0.5 seconds", life = 500)
+                      )
+                    ),
+                    Button(
+                      label = "Sticky Toast",
+                      onClick = toastRef.show(
+                        MessageItem(summary = "Sticky!", detail = "Honey, perhaps?", sticky = true)
+                      )
+                    )
+                  ),
+                  <.div(
+                    DemoStyles.HorizontalStack,
+                    Button(
+                      label = "Multiple Toasts",
+                      onClick = toastRef.show(
+                        MessageItem(summary = "Toast 1", detail = "The first"),
+                        MessageItem(summary = "Toast 2", detail = "The second"),
+                        MessageItem(summary = "Toast 3", detail = "The third")
+                      )
+                    ),
+                    Button(label = "Non-closable Toast",
+                           onClick = toastRef.show(
+                             MessageItem(summary = "Can't close it.",
+                                         detail = "You have to wait",
+                                         closable = false
+                             )
+                           )
+                    ),
+                    Button(label = "Toast With Content",
+                           onClick = toastRef.show(
+                             MessageItem(content = <.h1("Big Content"))
+                           )
+                    )
+                  ),
+                  <.div(
+                    DemoStyles.HorizontalStack,
+                    Button(
+                      label = "Replace All Toasts",
+                      icon = "pi pi-replay",
+                      iconPos = Button.IconPosition.Top,
+                      onClick = toastRef.replace(
+                        MessageItem(summary = "Replacement 1", detail = "The first"),
+                        MessageItem(summary = "Replacement 2", detail = "The second"),
+                        MessageItem(summary = "Replacement 3", detail = "The third")
+                      )
+                    ),
+                    Button(label = "Clear all toasts",
+                           icon = "pi pi-ban",
+                           iconPos = Button.IconPosition.Bottom,
+                           onClick = toastRef.clear()
+                    )
+                  )
+                )
+              ),
               Panel(
                 header = React.Fragment(<.div("A collapsable Panel containing a Splitter"),
                                         <.small("* See the console for event information")
@@ -196,12 +291,15 @@ object DemoComponents {
                 onCollapse = Callback.log("Panel onCollapse"),
                 onExpand = Callback.log("Panel onExpand"),
                 onToggle = b => Callback.log(s"Panel onToggle($b)") >> panelCollapsed.setState(b)
-              )(
+              ).withMods(mouseEntered("Panel"))(
                 Splitter(onResizeEnd =
                   (left, right) => Callback.log(s"Splitter onResizeEnd($left, $right)")
-                )(
+                ).withMods(mouseEntered("Splitter"))(
                   SplitterPanel(size = 30)(
-                    Button(label = "Open Sidebar", onClick = sidebar.setState(true))
+                    mouseEntered("SplitterPanel"),
+                    Button(label = "Open Sidebar",
+                           onClick = sidebarOptions.modState(_.copy(visible = true))
+                    )
                   ),
                   SplitterPanel(size = 70)(
                     <.h2("Sidebar Options"),
@@ -294,25 +392,28 @@ object DemoComponents {
                   )
                 )
               ),
-              Panel(header = "Panel containing an Accordion. There is also AccordionMultiple.")(
-                Accordion(activeIndex = 0)(
-                  AccordionTab(header = "Polka")(
-                    "The polka is originally a Czech dance and genre of dance music familiar throughout all of Europe and the Americas. It originated in the middle of the nineteenth century in German and Austrian influenced Bohemia, now part of the Czech Republic. The polka remains a popular folk music genre in many western countries. [From Wikipedia]"
-                  ),
-                  AccordionTab(header = "Zydeco")(
-                    "Zydeco (/ˈzaɪdɪˌkoʊ/ ZY-dih-koh or /ˈzaɪdiˌkoʊ/ ZY-dee-koh, French: Zarico) is a music genre that evolved in southwest Louisiana by French Creole speakers which blends blues, rhythm and blues, and music indigenous to the Louisiana Creoles and the Native American people of Louisiana. Although it is distinct in origin from the Cajun music of Louisiana, the two forms influenced each other, forming a complex of genres native to the region. [From Wikipedia]"
-                  ),
-                  AccordionTab(header = "Weird Al")("Well, Weird Al. What else can we say?")
-                )
-              ),
+              Panel(header = "Panel containing an Accordion. There is also AccordionMultiple.")
+                .withMods(mouseEntered("Accordion"))(
+                  Accordion(activeIndex = 0)(
+                    AccordionTab(header = "Polka")(
+                      "The polka is originally a Czech dance and genre of dance music familiar throughout all of Europe and the Americas. It originated in the middle of the nineteenth century in German and Austrian influenced Bohemia, now part of the Czech Republic. The polka remains a popular folk music genre in many western countries. [From Wikipedia]"
+                    ),
+                    AccordionTab(header = "Zydeco")(
+                      "Zydeco (/ˈzaɪdɪˌkoʊ/ ZY-dih-koh or /ˈzaɪdiˌkoʊ/ ZY-dee-koh, French: Zarico) is a music genre that evolved in southwest Louisiana by French Creole speakers which blends blues, rhythm and blues, and music indigenous to the Louisiana Creoles and the Native American people of Louisiana. Although it is distinct in origin from the Cajun music of Louisiana, the two forms influenced each other, forming a complex of genres native to the region. [From Wikipedia]"
+                    ),
+                    AccordionTab(header = "Weird Al")(mouseEntered("Weird Al"),
+                                                      "Well, Weird Al. What else can we say?"
+                    )
+                  )
+                ),
               TabView(
                 // I don't think you need to set `activeIndex` if you don't specify `onTabChange`
                 activeIndex = tabView.value,
                 onTabChange =
                   idx => Callback.log(s"TabView onTabChange: $idx") >> tabView.setState(idx),
                 onTabClose = idx => Callback.log(s"TabView onTabClose: $idx")
-              )(
-                TabPanel(header = "Simple Header")("Simple Tab Contents"),
+              ).withMods(mouseEntered("TabView"))(
+                TabPanel(header = "Simple Header")(mouseEntered("TabPanel"), "Simple Tab Contents"),
                 TabPanel(header = <.div(DemoStyles.HorizontalStack, "TagMod", <.small("Header")))(
                   "Special Header Contents"
                 ),
@@ -323,218 +424,24 @@ object DemoComponents {
                   "You shouldn't be able to see this!"
                 )
               ),
-              Panel(
-                header = "Panel for Controls"
-              )(
+              Panel(header = "Some Menus - see PopupMenu in the top ToolBar")(
                 <.div(
                   DemoStyles.VerticalStack,
-                  "Form controls are below the divider",
-                  Divider(
-                    position = Divider.Position.HorizontalCenter,
-                    borderType = Divider.BorderType.Dashed
-                  )("dashed horizontal divider"),
-                  <.div(
-                    DemoStyles.FormColumn,
-                    <.label("InputText", ^.htmlFor   := "input-text", DemoStyles.FormFieldLabel),
-                    InputText(id = "input-text",
-                              value = inputText.value,
-                              placeholder = "No text",
-                              onChange = e => inputText.setState(e.target.value),
-                              clazz = DemoStyles.FormField
+                  <.label("Inline Menu", DemoStyles.FormFieldLabel),
+                  InlineMenu(model = menuItems)(mouseEntered("InlineMenu")),
+                  <.label("Tab Menu", DemoStyles.FormFieldLabel),
+                  TabMenu(
+                    model = List(MenuItem.Item("Tab 1", icon = "pi pi-hourglass"),
+                                 MenuItem.Item("Tab 2", "pi pi-send"),
+                                 MenuItem.Item("Tab 3", command = Callback.log("Tab 3 clicked"))
                     ),
-                    <.label("InputTextarea",
-                            ^.htmlFor                := "input-text-area",
-                            DemoStyles.FormFieldLabel
-                    ),
-                    InputTextarea(id = "input-text-area",
-                                  value = inputTextarea.value,
-                                  rows = 6,
-                                  onChange = e => inputTextarea.setState(e.target.value),
-                                  clazz = DemoStyles.FormField
-                    ),
-                    <.label("Dropdown", ^.htmlFor    := "dropdown", DemoStyles.FormFieldLabel),
-                    Dropdown(
-                      id = "dropdown",
-                      value = dropdown.value,
-                      options = options,
-                      onChange = a => dropdown.setState(a),
-                      clazz = DemoStyles.FormField
-                    ),
-                    <.label("DropdownOptional",
-                            ^.htmlFor                := "dropdown-optional",
-                            DemoStyles.FormFieldLabel
-                    ),
-                    DropdownOptional(
-                      id = "dropdown-optional",
-                      value = dropdownOptional.value,
-                      options = options,
-                      showClear = true,
-                      onChange = a => dropdownOptional.setState(a),
-                      clazz = DemoStyles.FormField
-                    ),
-                    <.label("InputSwitch", ^.htmlFor := "input-switch", DemoStyles.FormFieldLabel),
-                    InputSwitch(
-                      inputId = "input-switch",
-                      checked = inputSwitch.value,
-                      onChange = b => inputSwitch.setState(b)
-                    ),
-                    <.label("Checkbox", ^.htmlFor    := "checkbox", DemoStyles.FormFieldLabel),
-                    Checkbox(
-                      inputId = "checkbox",
-                      checked = checkbox.value,
-                      onChange = b => checkbox.setState(b)
-                    ),
-                    <.label("Slider", ^.htmlFor      := "slider", DemoStyles.FormFieldLabel),
-                    <.span(
-                      DemoStyles.FormField,
-                      Slider(id = "slider",
-                             value = slider.value,
-                             onChange = t => slider.setState(t),
-                             min = -10.0,
-                             max = 10.0,
-                             step = 2,
-                             orientation = Layout.Vertical
-                      ),
-                      slider.value
-                    ),
-                    <.label("SliderRange", ^.htmlFor := "slider-range", DemoStyles.FormFieldLabel),
-                    <.span(
-                      DemoStyles.FormField,
-                      SliderRange(id = "slider-range",
-                                  value = rangeSlider.value,
-                                  onChange = t => rangeSlider.setState(t)
-                      ),
-                      s"[${rangeSlider.value._1}, ${rangeSlider.value._2}]"
-                    ),
-                    <.label("Knob", ^.htmlFor        := "knob", DemoStyles.FormFieldLabel),
-                    Knob(id = "knob",
-                         value = knob.value,
-                         step = 5,
-                         size = 75,
-                         onChange = knob.setState
-                    ),
-                    <.label("Knob for Progress",
-                            ^.htmlFor                := "knob-progress",
-                            DemoStyles.FormFieldLabel
-                    ),
-                    <.div(
-                      DemoStyles.HorizontalStack,
-                      Button(label = "-", onClick = turnDownVolume),
-                      Knob(id = "knob-progress",
-                           value = knobProgress.value,
-                           max = 11,
-                           strokeWidth = 5,
-                           readOnly = true,
-                           valueTemplate = "Vol: {value}"
-                      ),
-                      Button(label = "+", onClick = turnUpVolume)
-                    ),
-                    <.label("SelectButton",
-                            ^.htmlFor                := "select-button",
-                            DemoStyles.FormFieldLabel
-                    ),
-                    SelectButton(
-                      id = "select-button",
-                      value = selectButton.value,
-                      options = options,
-                      onChange = selectButton.setState
-                    ),
-                    <.label("SelectButtonOptional",
-                            ^.htmlFor                := "select-button-optional",
-                            DemoStyles.FormFieldLabel
-                    ),
-                    SelectButtonOptional(
-                      id = "select-button-optional",
-                      value = selectButtonOptional.value,
-                      options = options,
-                      onChange = selectButtonOptional.setState
-                    ),
-                    <.label("SelectButtonMultiple",
-                            ^.htmlFor                := "select-button-multiple",
-                            DemoStyles.FormFieldLabel
-                    ),
-                    SelectButtonMultiple(
-                      id = "select-button-multiple",
-                      value = selectButtonMultiple.value,
-                      options = options,
-                      onChange = selectButtonMultiple.setState,
-                      itemTemplate = si =>
-                        if (si.disabled.getOrElse(false)) <.s(si.label.toOption)
-                        else <.span(si.label.toOption)
-                    ),
-                    <.label("ProgressBar 1",
-                            ^.htmlFor                := "progress-indeterminate",
-                            DemoStyles.FormFieldLabel
-                    ),
-                    ProgressBar(id = "progress-indeterminate",
-                                mode = ProgressBar.Mode.Indeterminate
-                    ),
-                    <.div(
-                      DemoStyles.FormField,
-                      DemoStyles.HorizontalStack,
-                      Button(onClick = decreaseProgress, label = "Decrease Progress"),
-                      Button(onClick = increaseProgress,
-                             label = "Increase Progress",
-                             iconPos = Button.IconPosition.Right
-                      )
-                    ),
-                    <.label("ProgressBar 2",
-                            ^.htmlFor                := "progress-vanilla",
-                            DemoStyles.FormFieldLabel
-                    ),
-                    ProgressBar(id = "progress-vanilla", value = progressBar.value),
-                    <.label("ProgressBar 3",
-                            ^.htmlFor                := "progress-template",
-                            DemoStyles.FormFieldLabel
-                    ),
-                    ProgressBar(id = "progress-template",
-                                value = progressBar.value,
-                                displayValueTemplate = progressTemplate
-                    ),
-                    <.label("Tags", DemoStyles.FormFieldLabel),
-                    <.span(DemoStyles.FormField, DemoStyles.HorizontalStack)(
-                      Tag(value = "Vanilla"),
-                      Tag(value = "Info", severity = Tag.Severity.Info),
-                      Tag(value = "Danger", severity = Tag.Severity.Danger),
-                      Tag(value = "Success", severity = Tag.Severity.Success),
-                      Tag(value = "Warning", severity = Tag.Severity.Warning),
-                      Tag(value = "Well Rounded Danger",
-                          severity = Tag.Severity.Danger,
-                          rounded = true
-                      )
-                    ),
-                    <.label("ProgressSpinner", DemoStyles.FormFieldLabel),
-                    <.span(DemoStyles.FormField)(
-                      ProgressSpinner()
-                    ),
-                    <.label("Message", DemoStyles.FormFieldLabel),
-                    <.span(DemoStyles.FormField)(
-                      Message(severity = Message.Severity.Error, text = "This is an error message"),
-                      <.br,
-                      Message(severity = Message.Severity.Info, text = "This is an info message"),
-                      <.br,
-                      Message(
-                        severity = Message.Severity.Success,
-                        text = "This is a success message"
-                      ),
-                      <.br,
-                      Message(
-                        severity = Message.Severity.Warning,
-                        text = "This is a warning message"
-                      )
-                    ),
-                    <.label("ToggleButton", DemoStyles.FormFieldLabel),
-                    <.span(DemoStyles.FormField)(
-                      ToggleButton(
-                        onLabel = "On",
-                        offLabel = "Off",
-                        checked = toggleButton.value,
-                        onChange = toggleButton.setState
-                      )
-                    )
-                  )
+                    activeIndex = tabMenu.value,
+                    onTabChange = (i, mi) =>
+                      Callback.log(s"Changed tab to $i: ${mi.label}") >> tabMenu.setState(i)
+                  )(mouseEntered("TabMenu"))
                 )
               ),
+              DemoControlsPanel(),
               Dialog(
                 onHide = showDialog.setState(false),
                 visible = showDialog.value,
@@ -551,9 +458,17 @@ object DemoComponents {
               )("You can drag me around!"),
               ConfirmPopup(),
               ConfirmDialog(),
+              PopupMenu(
+                menuItems,
+                onShow = Callback.log("Showing PopupMenu"),
+                onHide = Callback.log("Hiding PopupMenu")
+              ).withMods(
+                mouseEntered("PopupMenu"),
+                ^.onMouseLeave --> Callback.log("Mouse left: PopupMenu")
+              ).withRef(popupMenuRef.ref),
               Sidebar(
-                visible = sidebar.value,
-                onHide = sidebar.setState(false),
+                visible = sidebarOptions.value.visible,
+                onHide = sidebarOptions.modState(_.copy(visible = false)),
                 position = sidebarOptions.value.position,
                 size = sidebarOptions.value.size,
                 dismissable = sidebarOptions.value.dismissable,
@@ -562,7 +477,10 @@ object DemoComponents {
                 fullScreen = sidebarOptions.value.fullScreen,
                 blockScroll = sidebarOptions.value.blockScroll,
                 showCloseIcon = sidebarOptions.value.showCloseIcon
-              )("Sidebar Content")
+              ).withMods(mouseEntered("Sidebar"))(<.div(<.div("Some stuff"), <.div("More stuff"))),
+              Toast(position = toastPosition.value)
+                .withMods(mouseEntered("Toast"))
+                .withRef(toastRef.ref)
             )
           )
       }

@@ -29,6 +29,7 @@ case class SelectButtonOptional[A](
 
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods: TagMod*)              = addModifiers(mods)
+  def apply(mods: TagMod*)                 = addModifiers(mods)
 
   override def getter: js.UndefOr[Int]        =
     value.flatMap(v => optionsWithIndex.indexOfOption(v)).orUndefined

@@ -31,8 +31,8 @@ object ConfirmPopup {
     dismissable: js.UndefOr[Boolean] = js.undefined, // default: true
     acceptLabel: js.UndefOr[String] = js.undefined,  // default: Yes
     rejectLabel: js.UndefOr[String] = js.undefined,  // default: No
-    acceptIcon:  js.UndefOr[FontAwesomeIcon] = js.undefined,
-    rejectIcon:  js.UndefOr[FontAwesomeIcon] = js.undefined,
+    acceptIcon:  js.UndefOr[FontAwesomeIcon | String] = js.undefined,
+    rejectIcon:  js.UndefOr[FontAwesomeIcon | String] = js.undefined,
     acceptClass: js.UndefOr[Css] = js.undefined,
     rejectClass: js.UndefOr[Css] = js.undefined,
     clazz:       js.UndefOr[Css] = js.undefined,
@@ -47,8 +47,8 @@ object ConfirmPopup {
     dismissable.foreach(v => props.setDismissable(v))
     acceptLabel.foreach(v => props.setAcceptLabel(v))
     rejectLabel.foreach(v => props.setRejectLabel(v))
-    acceptIcon.foreach(v => props.setAcceptIcon(v.raw))
-    rejectIcon.foreach(v => props.setRejectIcon(v.raw))
+    acceptIcon.foreach(v => props.setAcceptIcon(v.toPrime))
+    rejectIcon.foreach(v => props.setRejectIcon(v.toPrime))
     acceptClass.foreach(v => props.setAcceptClassName(v.htmlClass))
     rejectClass.foreach(v => props.setRejectClassName(v.htmlClass))
     clazz.foreach(v => props.setClassName(v.htmlClass))

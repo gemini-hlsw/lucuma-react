@@ -29,6 +29,7 @@ case class SelectButtonMultiple[A](
 
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods: TagMod*)              = addModifiers(mods)
+  def apply(mods: TagMod*)                 = addModifiers(mods)
 
   override def getter: js.Array[Int]        =
     value.flatMap(a => optionsWithIndex.indexOfOption(a)).toJSArray

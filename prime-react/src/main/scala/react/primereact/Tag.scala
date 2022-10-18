@@ -19,7 +19,7 @@ import scalajs.js
 
 case class Tag(
   value:    js.UndefOr[VdomNode] = js.undefined,
-  icon:     js.UndefOr[FontAwesomeIcon] = js.undefined,
+  icon:     js.UndefOr[FontAwesomeIcon | String] = js.undefined,
   severity: js.UndefOr[Tag.Severity] =
     js.undefined, // default: same as `Info` but no `p-tag-info` class
   rounded:   js.UndefOr[Boolean] = js.undefined,
@@ -44,7 +44,7 @@ object Tag {
     ScalaFnComponent.withHooks[Tag].withPropsChildren.render { (props, children) =>
       CTag
         .applyOrNot(props.value, _.value(_))
-        .applyOrNot(props.icon, (c, p) => c.icon(p.clazz(PrimeStyles.TagIcon).raw))
+        .applyOrNot(props.icon, (c, p) => c.icon(p.toPrimeWithClass(PrimeStyles.TagIcon)))
         .applyOrNot(props.severity, (c, p) => c.severity(p.value))
         .applyOrNot(props.rounded, _.rounded(_))
         .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(

@@ -13,8 +13,11 @@ import react.common.*
 import react.fa.FontAwesomeIcon
 import react.primereact.PrimeStyles
 import reactST.primereact.components.{Button => CButton}
+import reactST.primereact.primereactStrings.bottom
 import reactST.primereact.primereactStrings.button
+import reactST.primereact.primereactStrings.left
 import reactST.primereact.primereactStrings.reset
+import reactST.primereact.primereactStrings.right
 import reactST.primereact.primereactStrings.submit
 import reactST.primereact.primereactStrings.top
 import reactST.primereact.tooltipoptionsMod.{TooltipOptions => CTooltipOptions}
@@ -24,7 +27,7 @@ import scalajs.js.JSConverters.*
 
 case class Button(
   label:          js.UndefOr[String] = js.undefined,
-  icon:           js.UndefOr[FontAwesomeIcon] = js.undefined,
+  icon:           js.UndefOr[FontAwesomeIcon | String] = js.undefined,
   iconPos:        Button.IconPosition = Button.IconPosition.Left,
   clazz:          js.UndefOr[Css] = js.undefined,
   onClick:        Callback = Callback.empty,
@@ -67,11 +70,16 @@ object Button {
     case Submit extends Type(submit)
     case Reset  extends Type(reset)
 
-  enum IconPosition(val iconCls: Css, val buttonCls: Css) derives Eq:
-    case Left   extends IconPosition(PrimeStyles.ButtonIconLeft, Css.Empty)
-    case Right  extends IconPosition(PrimeStyles.ButtonIconRight, Css.Empty)
-    case Top    extends IconPosition(PrimeStyles.ButtonIconTop, PrimeStyles.ButtonVertical)
-    case Bottom extends IconPosition(PrimeStyles.ButtonIconBottom, PrimeStyles.ButtonVertical)
+  enum IconPosition(
+    val iconCls:       Css,
+    val buttonCls:     Css,
+    val stringIconPos: left | right | top | bottom
+  ) derives Eq:
+    case Left  extends IconPosition(PrimeStyles.ButtonIconLeft, Css.Empty, left)
+    case Right extends IconPosition(PrimeStyles.ButtonIconRight, Css.Empty, right)
+    case Top   extends IconPosition(PrimeStyles.ButtonIconTop, PrimeStyles.ButtonVertical, top)
+    case Bottom
+        extends IconPosition(PrimeStyles.ButtonIconBottom, PrimeStyles.ButtonVertical, bottom)
 
   private val component =
     ScalaFnComponent
@@ -89,13 +97,14 @@ object Button {
             props.iconPos.buttonCls
 
         val iconWithClass =
-          props.icon.map(_.clazz(PrimeStyles.ButtonIcon |+| props.iconPos.iconCls))
+          props.icon.map(_.toPrimeWithClass(PrimeStyles.ButtonIcon |+| props.iconPos.iconCls))
 
         CButton
           .onClick(e => props.onClick >> props.onClickE(e))
           .`type`(props.tpe.value)
+          .iconPos(props.iconPos.stringIconPos)
           .applyOrNot(props.label, _.label(_))
-          .applyOrNot(iconWithClass, (c, p) => c.icon(p.raw))
+          .applyOrNot(iconWithClass, _.icon(_))
           .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))
           .applyOrNot(props.tooltip, _.tooltip(_))
           .applyOrNot(

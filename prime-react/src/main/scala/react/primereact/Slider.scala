@@ -24,6 +24,7 @@ case class Slider(
 ) extends ReactFnProps[Slider](Slider.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods: TagMod*)              = addModifiers(mods)
+  def apply(mods: TagMod*)                 = addModifiers(mods)
 }
 
 object Slider {

@@ -13,6 +13,8 @@ import react.common.*
 import react.fa.FontAwesomeIcon
 import react.primereact.PrimeStyles
 import reactST.primereact.components.{ToggleButton => CToggleButton}
+import reactST.primereact.primereactStrings.left
+import reactST.primereact.primereactStrings.right
 import reactST.primereact.tooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
@@ -20,11 +22,11 @@ import scalajs.js.JSConverters.*
 
 case class ToggleButton(
   id:             js.UndefOr[String] = js.undefined,
-  onIcon:         js.UndefOr[FontAwesomeIcon] = js.undefined,
-  offIcon:        js.UndefOr[FontAwesomeIcon] = js.undefined,
+  onIcon:         js.UndefOr[FontAwesomeIcon | String] = js.undefined,
+  offIcon:        js.UndefOr[FontAwesomeIcon | String] = js.undefined,
   onLabel:        js.UndefOr[String] = js.undefined,
   offLabel:       js.UndefOr[String] = js.undefined,
-  iconPos:        Button.IconPosition = Button.IconPosition.Left,
+  iconPos:        ToggleButton.IconPosition = ToggleButton.IconPosition.Left,
   checked:        js.UndefOr[Boolean] = js.undefined, // default: false
   tabIndex:       js.UndefOr[Int] = js.undefined,     // default: 0
   tooltip:        js.UndefOr[String] = js.undefined,
@@ -44,6 +46,11 @@ case class ToggleButton(
   def withMods(mods: TagMod*)              = addModifiers(mods)
 
 object ToggleButton:
+  enum IconPosition(val iconCls: Css, val buttonCls: Css, val stringIconPos: left | right)
+      derives Eq:
+    case Left  extends IconPosition(PrimeStyles.ButtonIconLeft, Css.Empty, left)
+    case Right extends IconPosition(PrimeStyles.ButtonIconRight, Css.Empty, right)
+
   private val component =
     ScalaFnComponent
       .withHooks[ToggleButton]
@@ -60,15 +67,16 @@ object ToggleButton:
             props.iconPos.buttonCls
 
         val onIconWithClass =
-          props.onIcon.map(_.clazz(PrimeStyles.ButtonIcon |+| props.iconPos.iconCls))
+          props.onIcon.map(_.toPrimeWithClass(PrimeStyles.ButtonIcon |+| props.iconPos.iconCls))
 
         val offIconWithClass =
-          props.offIcon.map(_.clazz(PrimeStyles.ButtonIcon |+| props.iconPos.iconCls))
+          props.offIcon.map(_.toPrimeWithClass(PrimeStyles.ButtonIcon |+| props.iconPos.iconCls))
 
         CToggleButton
+          .iconPos(props.iconPos.stringIconPos)
           .applyOrNot(props.id, _.id(_))
-          .applyOrNot(onIconWithClass, (c, p) => c.onIcon(p.raw))
-          .applyOrNot(offIconWithClass, (c, p) => c.offIcon(p.raw))
+          .applyOrNot(onIconWithClass, _.onIcon(_))
+          .applyOrNot(offIconWithClass, _.offIcon(_))
           .applyOrNot(props.onLabel, _.onLabel(_))
           .applyOrNot(props.offLabel, _.offLabel(_))
           .applyOrNot(props.checked, _.checked(_))
