@@ -16,8 +16,11 @@ case class ProgressSpinner(
   strokeWidth:       js.UndefOr[String] = js.undefined,
   fill:              js.UndefOr[String] = js.undefined,
   animationDuration: js.UndefOr[String] = js.undefined,
-  clazz:             js.UndefOr[Css] = js.undefined
-) extends ReactFnProps(ProgressSpinner.component)
+  clazz:             js.UndefOr[Css] = js.undefined,
+  modifiers:         Seq[TagMod] = Seq.empty
+) extends ReactFnProps(ProgressSpinner.component):
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
 
 object ProgressSpinner:
   private val component = ScalaFnComponent[ProgressSpinner] { props =>
@@ -26,5 +29,7 @@ object ProgressSpinner:
       .applyOrNot(props.strokeWidth, _.strokeWidth(_))
       .applyOrNot(props.fill, _.fill(_))
       .applyOrNot(props.animationDuration, _.animationDuration(_))
-      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(
+        props.modifiers.toTagMod
+      )
   }

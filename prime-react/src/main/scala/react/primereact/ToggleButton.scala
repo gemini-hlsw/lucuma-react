@@ -37,8 +37,11 @@ case class ToggleButton(
   outlined:       Boolean = false,
   raised:         Boolean = false,
   rounded:        Boolean = false,
-  text:           Boolean = false
-) extends ReactFnPropsWithChildren(ToggleButton.component)
+  text:           Boolean = false,
+  modifiers:      Seq[TagMod] = Seq.empty
+) extends ReactFnPropsWithChildren(ToggleButton.component):
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
 
 object ToggleButton:
   private val component =
@@ -79,5 +82,7 @@ object ToggleButton:
             props.onChange.map(_(e.value)).toOption.getOrEmpty >>
               props.onChangeE.map(_(e.originalEvent, e.value)).toOption.getOrEmpty
           )
-          .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))
+          .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))(
+            props.modifiers.toTagMod
+          )
       }

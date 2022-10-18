@@ -17,13 +17,16 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 case class Message(
-  id:       js.UndefOr[String] = js.undefined,
-  severity: js.UndefOr[Message.Severity] = js.undefined,
-  text:     js.UndefOr[String] = js.undefined,
-  content:  js.UndefOr[VdomNode] = js.undefined,
-  icon:     js.UndefOr[FontAwesomeIcon] = js.undefined, // default: severity icon
-  clazz:    js.UndefOr[Css] = js.undefined
-) extends ReactFnProps(Message.component)
+  id:        js.UndefOr[String] = js.undefined,
+  severity:  js.UndefOr[Message.Severity] = js.undefined,
+  text:      js.UndefOr[String] = js.undefined,
+  content:   js.UndefOr[VdomNode] = js.undefined,
+  icon:      js.UndefOr[FontAwesomeIcon] = js.undefined, // default: severity icon
+  clazz:     js.UndefOr[Css] = js.undefined,
+  modifiers: Seq[TagMod] = Seq.empty
+) extends ReactFnProps(Message.component):
+  def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  def withMods(mods: TagMod*)              = addModifiers(mods)
 
 object Message:
   enum Severity(val value: error | info | success | warn):
@@ -39,5 +42,7 @@ object Message:
       .applyOrNot(props.text, (c, p) => c.text(p.rawNode))
       .applyOrNot(props.content, (c, p) => c.content(p.rawNode))
       .applyOrNot(props.icon, (c, p) => c.icon(p.raw))
-      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(
+        props.modifiers.toTagMod
+      )
   }
