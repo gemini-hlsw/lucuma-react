@@ -118,10 +118,10 @@ trait GenericJsComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A] { 
     newComponent: Js.Component[P, Null, CT]
   ): GenericJsComponentC[P, CT, U, A] =
     new GenericJsComponentC[P, CT, U, A] {
-      override protected def cprops: P                              = self.cprops
-      override val children                                         = self.children
+      override protected def cprops: P = self.cprops
+      override val children            = self.children
       override def withChildren(children: CtorType.ChildrenArgs): A = self.withChildren(children)
-      override protected val component                              = newComponent
+      override protected val component = newComponent
     }
 
   def withRef(ref: Ref.Handle[Js.RawMounted[P, Null]]): GenericJsComponentC[P, CT, U, A] =
@@ -147,7 +147,7 @@ trait GenericJsComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
       override protected def cprops: P                                = self.cprops
       override val modifiers: Seq[japgolly.scalajs.react.vdom.TagMod] = self.modifiers
       override protected val component                                = newComponent
-      override def addModifiers(modifiers: Seq[TagMod]): A            = self.addModifiers(modifiers)
+      override def addModifiers(modifiers: Seq[TagMod]): A = self.addModifiers(modifiers)
     }
 
   def withRef(ref: Ref.Handle[Js.RawMounted[P, Null]]): GenericJsComponentA[P, CT, U, A] =
@@ -176,7 +176,7 @@ trait GenericJsComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
       override protected def cprops: P                                = self.cprops
       override val modifiers: Seq[japgolly.scalajs.react.vdom.TagMod] = self.modifiers
       override protected val component                                = newComponent
-      override def addModifiers(modifiers: Seq[TagMod]): A            = self.addModifiers(modifiers)
+      override def addModifiers(modifiers: Seq[TagMod]): A = self.addModifiers(modifiers)
     }
 
   def withRef(ref: Ref.Handle[Js.RawMounted[P, Null]]): GenericJsComponentAC[P, CT, U, A] =
@@ -227,10 +227,10 @@ trait GenericJsComponentCF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F
     newComponent: Js.ComponentWithFacade[P, Null, F, CT]
   ): GenericJsComponentCF[P, CT, U, A, F] =
     new GenericJsComponentCF[P, CT, U, A, F] {
-      override protected def cprops: P                              = self.cprops
-      override val children                                         = self.children
+      override protected def cprops: P = self.cprops
+      override val children            = self.children
       override def withChildren(children: CtorType.ChildrenArgs): A = self.withChildren(children)
-      override protected val component                              = newComponent
+      override protected val component = newComponent
     }
 
   def withRef(
@@ -258,7 +258,7 @@ trait GenericJsComponentAF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F
       override protected def cprops: P                                = self.cprops
       override val modifiers: Seq[japgolly.scalajs.react.vdom.TagMod] = self.modifiers
       override protected val component                                = newComponent
-      override def addModifiers(modifiers: Seq[TagMod]): A            = self.addModifiers(modifiers)
+      override def addModifiers(modifiers: Seq[TagMod]): A = self.addModifiers(modifiers)
     }
 
   def withRef(
@@ -289,7 +289,7 @@ trait GenericJsComponentACF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, 
       override protected def cprops: P                                = self.cprops
       override val modifiers: Seq[japgolly.scalajs.react.vdom.TagMod] = self.modifiers
       override protected val component                                = newComponent
-      override def addModifiers(modifiers: Seq[TagMod]): A            = self.addModifiers(modifiers)
+      override def addModifiers(modifiers: Seq[TagMod]): A = self.addModifiers(modifiers)
     }
 
   def withRef(

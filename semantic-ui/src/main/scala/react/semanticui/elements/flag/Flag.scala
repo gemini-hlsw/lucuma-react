@@ -19,8 +19,8 @@ final case class Flag(
   name:                   js.UndefOr[String] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[Flag.FlagProps, Flag] {
-  override protected def cprops                     = Flag.props(this)
-  override protected val component                  = Flag.component
+  override protected def cprops    = Flag.props(this)
+  override protected val component = Flag.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

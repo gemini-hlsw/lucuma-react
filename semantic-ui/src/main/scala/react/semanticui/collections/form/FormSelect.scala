@@ -105,8 +105,8 @@ final case class FormSelect(
   wrapSelection:          js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[FormSelect.FormSelectProps, FormSelect] {
-  override protected def cprops                     = FormSelect.props(this)
-  override protected val component                  = FormSelect.component
+  override protected def cprops    = FormSelect.props(this)
+  override protected val component = FormSelect.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -43,8 +43,8 @@ final case class Message(
   warning:                js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Message.MessageProps, Message] {
-  override protected def cprops                     = Message.props(this)
-  override protected val component                  = Message.component
+  override protected def cprops    = Message.props(this)
+  override protected val component = Message.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

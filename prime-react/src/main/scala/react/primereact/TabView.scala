@@ -31,7 +31,7 @@ final case class TabView(
   modifiers:           Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[TabView](TabView.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*)              = addModifiers(mods)
+  def withMods(mods:          TagMod*)     = addModifiers(mods)
 
   def apply(panel: TabPanel, morePanels: TabPanel*): TabView =
     copy(panels = (panels :+ panel) ++ morePanels)

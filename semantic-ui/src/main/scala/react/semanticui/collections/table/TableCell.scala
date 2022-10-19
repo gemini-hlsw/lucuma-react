@@ -36,8 +36,8 @@ final case class TableCell(
   width:                  js.UndefOr[SemanticWidth] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[TableCell.TableCellProps, TableCell] {
-  override protected def cprops                     = TableCell.props(this)
-  override protected val component                  = TableCell.component
+  override protected def cprops    = TableCell.props(this)
+  override protected val component = TableCell.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

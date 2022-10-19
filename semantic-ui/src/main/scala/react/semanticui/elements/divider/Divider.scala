@@ -29,8 +29,8 @@ final case class Divider(
   vertical:               js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Divider.DividerProps, Divider] {
-  override protected def cprops                     = Divider.props(this)
-  override protected val component                  = Divider.component
+  override protected def cprops    = Divider.props(this)
+  override protected val component = Divider.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

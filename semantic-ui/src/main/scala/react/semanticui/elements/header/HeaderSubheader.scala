@@ -22,8 +22,8 @@ final case class HeaderSubheader(
   content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[HeaderSubheader.HeaderSubheaderProps, HeaderSubheader] {
-  override protected def cprops                     = HeaderSubheader.props(this)
-  override protected val component                  = HeaderSubheader.component
+  override protected def cprops    = HeaderSubheader.props(this)
+  override protected val component = HeaderSubheader.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

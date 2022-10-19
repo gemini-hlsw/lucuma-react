@@ -26,8 +26,8 @@ final case class PlaceholderHeader(
       PlaceholderHeader.PlaceholderHeaderProps,
       PlaceholderHeader
     ] {
-  override protected def cprops                     = PlaceholderHeader.props(this)
-  override protected val component                  = PlaceholderHeader.component
+  override protected def cprops    = PlaceholderHeader.props(this)
+  override protected val component = PlaceholderHeader.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

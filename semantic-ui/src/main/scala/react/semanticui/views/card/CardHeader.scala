@@ -23,8 +23,8 @@ final case class CardHeader(
   textAlign:              js.UndefOr[SemanticTextAlignment] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[CardHeader.CardHeaderProps, CardHeader] {
-  override protected def cprops                     = CardHeader.props(this)
-  override protected val component                  = CardHeader.component
+  override protected def cprops    = CardHeader.props(this)
+  override protected val component = CardHeader.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

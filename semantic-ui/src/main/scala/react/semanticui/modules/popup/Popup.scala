@@ -54,8 +54,8 @@ final case class Popup(
   wide:                   js.UndefOr[PopupWide] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Popup.PopupProps, Popup] {
-  override protected def cprops                     = Popup.props(this)
-  override protected val component                  = Popup.component
+  override protected def cprops    = Popup.props(this)
+  override protected val component = Popup.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

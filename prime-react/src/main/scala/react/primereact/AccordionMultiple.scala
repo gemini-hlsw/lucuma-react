@@ -28,7 +28,7 @@ case class AccordionMultiple(
     with AccordionBase {
 
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*)              = addModifiers(mods)
+  def withMods(mods:          TagMod*)     = addModifiers(mods)
 
   override val rawActiveIndex = activeIndices.map(_.map(_.toDouble).toJSArray)
   override val multiple       = true

@@ -25,8 +25,8 @@ final case class TabPane(
   loading:                js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[TabPane.TabPaneProps, TabPane] {
-  override protected def cprops                     = TabPane.props(this)
-  override protected val component                  = TabPane.component
+  override protected def cprops    = TabPane.props(this)
+  override protected val component = TabPane.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

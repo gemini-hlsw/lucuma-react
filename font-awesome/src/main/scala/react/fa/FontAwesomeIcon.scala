@@ -45,8 +45,8 @@ final case class FontAwesomeIcon(
   swapOpacity:            js.UndefOr[Boolean],
   override val modifiers: Seq[TagMod]
 ) extends GenericFnComponentPA[FontAwesomeIcon.Props, FontAwesomeIcon] {
-  override protected def cprops                     = FontAwesomeIcon.props(this)
-  override protected val component                  = FontAwesomeIcon.component
+  override protected def cprops    = FontAwesomeIcon.props(this)
+  override protected val component = FontAwesomeIcon.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 
   def clazz(clazz: Css): FontAwesomeIcon = copy(clazz = clazz)

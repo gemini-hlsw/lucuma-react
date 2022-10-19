@@ -58,8 +58,8 @@ final case class FormButton(
   width:                  js.UndefOr[SemanticWidth] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[FormButton.FormButtonProps, FormButton] {
-  override protected def cprops                     = FormButton.props(this)
-  override protected val component                  = FormButton.component
+  override protected def cprops    = FormButton.props(this)
+  override protected val component = FormButton.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

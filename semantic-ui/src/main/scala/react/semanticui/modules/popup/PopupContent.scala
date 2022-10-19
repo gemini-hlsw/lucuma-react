@@ -22,8 +22,8 @@ final case class PopupContent(
   content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[PopupContent.PopupContentProps, PopupContent] {
-  override protected def cprops                     = PopupContent.props(this)
-  override protected val component                  = PopupContent.component
+  override protected def cprops    = PopupContent.props(this)
+  override protected val component = PopupContent.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

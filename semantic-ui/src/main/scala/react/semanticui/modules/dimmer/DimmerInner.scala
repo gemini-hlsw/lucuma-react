@@ -32,8 +32,8 @@ final case class DimmerInner(
   verticalAlign:          js.UndefOr[DimmerVerticalAlign] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[DimmerInner.DimmerInnerProps, DimmerInner] {
-  override protected def cprops                     = DimmerInner.props(this)
-  override protected val component                  = DimmerInner.component
+  override protected def cprops    = DimmerInner.props(this)
+  override protected val component = DimmerInner.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

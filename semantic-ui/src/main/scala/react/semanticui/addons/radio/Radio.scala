@@ -44,8 +44,8 @@ final case class Radio(
   value:                  js.UndefOr[String | Double] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[Radio.RadioProps, Radio] {
-  override protected def cprops                     = Radio.props(this)
-  override protected val component                  = Radio.component
+  override protected def cprops    = Radio.props(this)
+  override protected val component = Radio.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

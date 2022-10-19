@@ -22,8 +22,8 @@ final case class ListList(
   content:                js.UndefOr[VdomNode] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[ListList.ListListProps, ListList] {
-  override protected def cprops                     = ListList.props(this)
-  override protected val component                  = ListList.component
+  override protected def cprops    = ListList.props(this)
+  override protected val component = ListList.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -33,8 +33,8 @@ final case class Form(
   widths:                 js.UndefOr[FormWidths] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Form.FormProps, Form] {
-  override protected def cprops                     = Form.props(this)
-  override protected val component                  = Form.component
+  override protected def cprops    = Form.props(this)
+  override protected val component = Form.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

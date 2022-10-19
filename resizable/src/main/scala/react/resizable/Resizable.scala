@@ -42,8 +42,8 @@ final case class Resizable(
   width:                  Double,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Resizable.Props, Resizable] {
-  override protected def cprops                     = Resizable.props(this)
-  override protected val component                  = Resizable.component
+  override protected def cprops    = Resizable.props(this)
+  override protected val component = Resizable.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

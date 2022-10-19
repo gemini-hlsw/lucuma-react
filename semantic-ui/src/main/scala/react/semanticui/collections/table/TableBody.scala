@@ -19,8 +19,8 @@ final case class TableBody(
   clazz:                  js.UndefOr[Css] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[TableBody.TableBodyProps, TableBody] {
-  override protected def cprops                     = TableBody.props(this)
-  override protected val component                  = TableBody.component
+  override protected def cprops    = TableBody.props(this)
+  override protected val component = TableBody.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

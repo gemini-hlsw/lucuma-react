@@ -24,7 +24,7 @@ case class Splitter(
   modifiers:   Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[Splitter](Splitter.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*)              = addModifiers(mods)
+  def withMods(mods:          TagMod*)     = addModifiers(mods)
 
   // This sets panel 1 and panel 2 for a more natural usage as child-like
   def apply(panel1: SplitterPanel, panel2: SplitterPanel) = copy(panel1 = panel1, panel2 = panel2)

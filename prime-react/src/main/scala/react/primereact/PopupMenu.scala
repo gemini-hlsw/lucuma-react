@@ -54,8 +54,8 @@ object PopupMenu {
 
   @js.native
   trait Facade extends js.Object {
-    def show(event: ReactEvent): Unit   = js.native
-    def hide(event: ReactEvent): Unit   = js.native
+    def show(event:   ReactEvent): Unit = js.native
+    def hide(event:   ReactEvent): Unit = js.native
     def toggle(event: ReactEvent): Unit = js.native
   }
 

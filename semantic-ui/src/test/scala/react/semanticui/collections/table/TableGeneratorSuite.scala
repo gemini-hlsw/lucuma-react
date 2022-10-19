@@ -9,9 +9,9 @@ import react.common.syntax.vdom._
 class TableGeneratorSuite extends munit.FunSuite {
   test("TableGenerator headerRow") {
     def makeRow(a: String, i: Int) = TableRow(TableCell(i.toString), TableCell(a))
-    val headerRow                  = TableRow(TableHeaderCell("header 1"), TableHeaderCell("header 2"))
-    val footerRow                  = TableRow(TableCell("footer 1"), TableCell("footer 2"))
-    val table                      =
+    val headerRow = TableRow(TableHeaderCell("header 1"), TableHeaderCell("header 2"))
+    val footerRow = TableRow(TableCell("footer 1"), TableCell("footer 2"))
+    val table     =
       TableGenerator[String](tableData = Seq("a", "b"),
                              renderBodyRow = makeRow _,
                              headerRow = headerRow,
@@ -27,8 +27,8 @@ class TableGeneratorSuite extends munit.FunSuite {
   }
   test("TableGenerator headerRows") {
     def makeRow(a: String, i: Int) = TableRow(TableCell(i.toString), TableCell(a))
-    val headerRows                 = Seq(TableRow(TableHeaderCell("Row 1")), TableRow(TableHeaderCell("Row 2")))
-    val table                      =
+    val headerRows = Seq(TableRow(TableHeaderCell("Row 1")), TableRow(TableHeaderCell("Row 2")))
+    val table      =
       TableGenerator[String](tableData = Seq("a", "b"),
                              renderBodyRow = makeRow _,
                              headerRows = headerRows

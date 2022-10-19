@@ -25,8 +25,8 @@ final case class PlaceholderParagraph(
       PlaceholderParagraph.PlaceholderParagraphProps,
       PlaceholderParagraph
     ] {
-  override protected def cprops                     = PlaceholderParagraph.props(this)
-  override protected val component                  = PlaceholderParagraph.component
+  override protected def cprops    = PlaceholderParagraph.props(this)
+  override protected val component = PlaceholderParagraph.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

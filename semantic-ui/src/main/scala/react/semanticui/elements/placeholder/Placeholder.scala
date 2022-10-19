@@ -24,8 +24,8 @@ final case class Placeholder(
   inverted:               js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Placeholder.PlaceholderProps, Placeholder] {
-  override protected def cprops                     = Placeholder.props(this)
-  override protected val component                  = Placeholder.component
+  override protected def cprops    = Placeholder.props(this)
+  override protected val component = Placeholder.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

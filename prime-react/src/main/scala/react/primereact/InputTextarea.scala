@@ -24,7 +24,7 @@ case class InputTextarea(
   modifiers:   Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[InputTextarea](InputTextarea.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*)              = addModifiers(mods)
+  def withMods(mods:          TagMod*)     = addModifiers(mods)
 }
 
 object InputTextarea {

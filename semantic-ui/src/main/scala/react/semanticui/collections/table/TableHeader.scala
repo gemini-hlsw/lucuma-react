@@ -23,8 +23,8 @@ final case class TableHeader(
   fullWidth:              js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[TableHeader.TableHeaderProps, TableHeader] {
-  override protected def cprops                     = TableHeader.props(this)
-  override protected val component                  = TableHeader.component
+  override protected def cprops    = TableHeader.props(this)
+  override protected val component = TableHeader.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -55,8 +55,8 @@ final case class ResponsiveReactGridLayout(
       ResponsiveReactGridLayout.ResponsiveReactGridLayoutProps,
       ResponsiveReactGridLayout
     ] {
-  override def cprops                               = ResponsiveReactGridLayout.props(this)
-  override protected val component                  = ResponsiveReactGridLayout.component
+  override def cprops              = ResponsiveReactGridLayout.props(this)
+  override protected val component = ResponsiveReactGridLayout.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

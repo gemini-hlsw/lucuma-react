@@ -48,8 +48,8 @@ final case class TableGenerator[A](
   verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[TableGenerator.TableGeneratorProps, TableGenerator[A]] {
-  override protected def cprops                     = TableGenerator.props(this)
-  override protected val component                  = TableGenerator.component
+  override protected def cprops    = TableGenerator.props(this)
+  override protected val component = TableGenerator.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

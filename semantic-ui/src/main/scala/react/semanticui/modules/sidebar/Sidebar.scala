@@ -34,8 +34,8 @@ final case class Sidebar(
   width:                  js.UndefOr[SidebarWidth] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Sidebar.SidebarProps, Sidebar] {
-  override protected def cprops                     = Sidebar.props(this)
-  override protected val component                  = Sidebar.component
+  override protected def cprops    = Sidebar.props(this)
+  override protected val component = Sidebar.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 
@@ -52,7 +52,7 @@ object Sidebar {
     def apply(key: String): js.Any = js.native
 
     @JSBracketAccess
-    def update(key: String, v: js.Any): Unit               = js.native
+    def update(key: String, v: js.Any): Unit = js.native
     var as: js.UndefOr[AsT]                                = js.native
     var animation: js.UndefOr[String]                      = js.native
     var children: js.UndefOr[React.Node]                   = js.native

@@ -20,10 +20,10 @@ case class AccordionTab(
   contentClass:           js.UndefOr[Css] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[AccordionTab.AccordionTabProps, AccordionTab] {
-  override protected def cprops                     = AccordionTab.props(this)
-  override protected val component                  = AccordionTab.component
+  override protected def cprops    = AccordionTab.props(this)
+  override protected val component = AccordionTab.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def apply(mods: TagMod*)                          = addModifiers(mods)
+  def apply(mods:                      TagMod*)     = addModifiers(mods)
 }
 
 object AccordionTab {

@@ -22,8 +22,8 @@ final case class MessageHeader(
   content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[MessageHeader.MessageHeaderProps, MessageHeader] {
-  override protected def cprops                     = MessageHeader.props(this)
-  override protected val component                  = MessageHeader.component
+  override protected def cprops    = MessageHeader.props(this)
+  override protected val component = MessageHeader.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

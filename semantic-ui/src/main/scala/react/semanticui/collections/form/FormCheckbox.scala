@@ -54,8 +54,8 @@ final case class FormCheckbox(
   width:                  js.UndefOr[SemanticWidth] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[FormCheckbox.FormCheckboxProps, FormCheckbox] {
-  override protected def cprops                     = FormCheckbox.props(this)
-  override protected val component                  = FormCheckbox.component
+  override protected def cprops    = FormCheckbox.props(this)
+  override protected val component = FormCheckbox.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

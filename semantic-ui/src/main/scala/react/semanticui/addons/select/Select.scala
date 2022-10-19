@@ -96,8 +96,8 @@ final case class Select(
   wrapSelection:          js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[Select.SelectProps, Select] {
-  override protected def cprops                     = Select.props(this)
-  override protected val component                  = Select.component
+  override protected def cprops    = Select.props(this)
+  override protected val component = Select.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

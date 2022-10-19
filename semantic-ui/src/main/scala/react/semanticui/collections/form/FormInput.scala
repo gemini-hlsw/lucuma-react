@@ -51,8 +51,8 @@ final case class FormInput(
   value:                  js.UndefOr[String] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[FormInput.FormInputProps, FormInput] {
-  override protected def cprops                     = FormInput.props(this)
-  override protected val component                  = FormInput.component
+  override protected def cprops    = FormInput.props(this)
+  override protected val component = FormInput.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

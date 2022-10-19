@@ -51,8 +51,8 @@ final case class Confirm(
   trigger:                js.UndefOr[VdomNode] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[Confirm.ConfirmProps, Confirm] {
-  override protected def cprops                     = Confirm.props(this)
-  override protected val component                  = Confirm.component
+  override protected def cprops    = Confirm.props(this)
+  override protected val component = Confirm.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -37,8 +37,8 @@ final case class MenuItem(
   position:               js.UndefOr[MenuItemPosition] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[MenuItem.MenuItemProps, MenuItem] {
-  override protected def cprops                     = MenuItem.props(this)
-  override protected val component                  = MenuItem.component
+  override protected def cprops    = MenuItem.props(this)
+  override protected val component = MenuItem.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 
