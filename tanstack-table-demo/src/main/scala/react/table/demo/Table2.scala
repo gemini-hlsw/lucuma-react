@@ -6,6 +6,7 @@ package react.table.demo
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.table.*
+import lucuma.react.syntax.*
 import react.common.*
 import react.common.style.Css
 
@@ -21,9 +22,9 @@ object Table2:
       // cols
       .useMemo(())(_ =>
         List(
-          ColDef("first", _.first, _ => "First", size = 100),
-          ColDef("last", _.last, _ => "Last", size = 100),
-          ColDef("age", _.age, _ => "Age", size = 50)
+          ColDef(ColumnId("first"), _.first, _ => "First", size = 100.toPx),
+          ColDef(ColumnId("last"), _.last, _ => "Last", size = 100.toPx),
+          ColDef(ColumnId("age"), _.age, _ => "Age", size = 50.toPx)
         )
       )
       // rows
@@ -38,7 +39,7 @@ object Table2:
             table,
             containerMod = Css("container"),
             rowMod = row => rowClassEvenOdd(row.index.toInt),
-            estimateRowHeightPx = _ => 24
+            estimateRowHeight = _ => 24.toPx
           )
         )
       )

@@ -6,6 +6,7 @@ package react.table.demo
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.table.*
+import lucuma.react.syntax.*
 import react.common.*
 import react.common.style.Css
 import reactST.{tanstackTableCore => raw}
@@ -20,7 +21,7 @@ object Table3:
       .useMemo(())(_ =>
         List(
           ColDef(
-            "expander",
+            ColumnId("expander"),
             header = header =>
               <.span(^.cursor.pointer)(
                 ^.onClick ==> (e => Callback(header.table.getToggleAllRowsExpandedHandler()(e))),
@@ -33,12 +34,12 @@ object Table3:
                   if (cell.row.getIsExpanded()) "👇" else "👉"
                 )
               else "",
-            size = 50,
+            size = 50.toPx,
             enableResizing = false
           ),
-          ColDef("first", _.value.first, _ => "First", size = 100),
-          ColDef("last", _.value.last, _ => "Last", size = 100),
-          ColDef("age", _.value.age, _ => "Age", size = 50)
+          ColDef(ColumnId("first"), _.value.first, _ => "First", size = 100.toPx),
+          ColDef(ColumnId("last"), _.value.last, _ => "Last", size = 100.toPx),
+          ColDef(ColumnId("age"), _.value.age, _ => "Age", size = 50.toPx)
         )
       )
       // rows
@@ -58,7 +59,7 @@ object Table3:
           HTMLVirtualizedTable(
             table,
             containerMod = Css("container"),
-            estimateRowHeightPx = _ => 24
+            estimateRowHeight = _ => 24.toPx
           )
         )
       )

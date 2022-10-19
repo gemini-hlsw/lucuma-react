@@ -6,6 +6,7 @@ package lucuma.react.table
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.SizePx
 import react.common.*
 import react.common.style.Css
 import reactST.{tanstackTableCore => raw}
@@ -16,7 +17,7 @@ import javax.swing.text.html.HTML
 import scalajs.js
 
 final case class HTMLTable[T](
-  table:         raw.mod.Table[T],
+  table:         Table[T],
   tableMod:      TagMod = TagMod.empty,
   headerMod:     TagMod = TagMod.empty,
   headerRowMod:  raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
@@ -34,8 +35,8 @@ final case class HTMLTable[T](
     with HTMLTableProps[T]
 
 final case class HTMLVirtualizedTable[T](
-  table:               raw.mod.Table[T],
-  estimateRowHeightPx: Int => Int,
+  table:               Table[T],
+  estimateRowHeight: Int => SizePx,
   // Table options
   containerMod:        TagMod = TagMod.empty,
   tableMod:            TagMod = TagMod.empty,
@@ -60,8 +61,8 @@ final case class HTMLVirtualizedTable[T](
     with HTMLVirtualizedTableProps[T]
 
 final case class HTMLAutoHeightVirtualizedTable[T](
-  table:               raw.mod.Table[T],
-  estimateRowHeightPx: Int => Int,
+  table:               Table[T],
+  estimateRowHeight: Int => SizePx,
   // Table options
   containerMod:        TagMod = TagMod.empty,
   innerContainerMod:   TagMod = TagMod.empty,

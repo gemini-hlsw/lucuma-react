@@ -7,6 +7,7 @@ import japgolly.scalajs.react.NonEmptyRef
 import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
+import lucuma.react.SizePx
 import lucuma.react.virtual.facade.Virtualizer
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLDivElement
@@ -17,7 +18,7 @@ import reactST.{tanstackVirtualCore => rawVirtual}
 import scalajs.js
 
 trait HTMLTableProps[T]:
-  def table: raw.mod.Table[T]
+  def table: Table[T]
   def tableMod: TagMod
   def headerMod: TagMod
   def headerRowMod: raw.mod.CoreHeaderGroup[T] => TagMod
@@ -36,7 +37,7 @@ trait HTMLTableProps[T]:
 type HTMLTableVirtualizer = Virtualizer[HTMLDivElement, Element]
 
 trait HTMLVirtualizedTableProps[T] extends HTMLTableProps[T]:
-  def estimateRowHeightPx: Int => Int
+  def estimateRowHeight: Int => SizePx
   // Table options
   def containerMod: TagMod
   // Virtual options

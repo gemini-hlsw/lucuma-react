@@ -7,7 +7,6 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.hooks.CustomHook
 import lucuma.react.table.facade.*
 import reactST.tanstackReactTable.mod.useReactTable
-import reactST.tanstackTableCore.tanstackTableCoreStrings.renderFallbackValue
 import reactST.{tanstackTableCore => raw}
 
 import scala.scalajs.js
@@ -21,8 +20,8 @@ object TableHook:
 
   def useTableHook[T] =
     CustomHook[TableOptions[T]]
-      .useMemoBy(_.columns)(_ => _.toJSArray.map(_.toJS))
+      .useMemoBy(_.columns)(_ => _.toJSArray.map(_.toJs))
       .useMemoBy(_.input.data)(_ => _.toJSArray)
       .buildReturning { (options, cols, rows) =>
-        useReactTableJS[T](options.toJS(cols, rows))
+        Table(useReactTableJS[T](options.toJs(cols, rows)))
       }

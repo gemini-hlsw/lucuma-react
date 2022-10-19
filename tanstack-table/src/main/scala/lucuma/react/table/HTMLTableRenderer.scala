@@ -57,7 +57,7 @@ trait HTMLTableRenderer[T]:
   protected def resizer[T](
     header:     raw.mod.Header[T, ?],
     resizeMode: Option[raw.mod.ColumnResizeMode],
-    sizingInfo: raw.mod.ColumnSizingInfoState
+    sizingInfo: ColumnSizingInfo
   ): VdomNode =
     if (header.column.getCanResize())
       <.div(
@@ -69,13 +69,15 @@ trait HTMLTableRenderer[T]:
         TagMod.when(
           resizeMode.contains(raw.mod.ColumnResizeMode.onEnd) && header.column.getIsResizing()
         )(
-          ^.transform := s"translateX(${sizingInfo.deltaOffset}px)"
+          sizingInfo.deltaOffset
+            .map(offset => ^.transform := s"translateX(${offset}px)")
+            .whenDefined
         )
       )(ResizerContent)
     else EmptyVdom
 
   def render[T](
-    table:         raw.mod.Table[T],
+    table:         Table[T],
     rows:          js.Array[raw.mod.Row[T]],
     tableMod:      TagMod = TagMod.empty,
     headerMod:     TagMod = TagMod.empty,
@@ -137,10 +139,7 @@ trait HTMLTableRenderer[T]:
                           sortIndicator(header.column),
                           resizer(
                             header,
-                            table.options
-                              .asInstanceOf[raw.mod.TableOptionsResolved[T]]
-                              .columnResizeMode
-                              .toOption,
+                            table.optionsRaw.columnResizeMode.toOption,
                             table.getState().columnSizingInfo
                           )
                         )
@@ -150,6 +149,7 @@ trait HTMLTableRenderer[T]:
               }
             )
           )
+          .toTagMod
       ),
       <.tbody(TbodyClass, bodyMod)(
         paddingTop
@@ -224,6 +224,7 @@ trait HTMLTableRenderer[T]:
               )
             )
           )
+          .toTagMod
       )
     )
 
@@ -256,7 +257,7 @@ object HTMLTableRenderer:
       .useVirtualizerBy((props, ref) =>
         VirtualOptions(
           count = props.table.getRowModel().rows.length,
-          estimateSize = props.estimateRowHeightPx,
+          estimateSize = props.estimateRowHeight,
           getScrollElement = ref.get,
           overscan = props.overscan,
           getItemKey = props.getItemKey,
@@ -301,7 +302,7 @@ object HTMLTableRenderer:
       .useVirtualizerBy((props, ref) =>
         VirtualOptions(
           count = props.table.getRowModel().rows.length,
-          estimateSize = props.estimateRowHeightPx,
+          estimateSize = props.estimateRowHeight,
           getScrollElement = ref.get,
           overscan = props.overscan,
           getItemKey = props.getItemKey,

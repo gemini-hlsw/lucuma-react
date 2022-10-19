@@ -12,14 +12,14 @@ object HooksApiExt:
       options: TableOptions[T]
     )(using
       step:    Step
-    ): step.Next[raw.mod.Table[T]] =
+    ): step.Next[Table[T]] =
       useReactTableBy(_ => options)
 
     final def useReactTableBy[T](
       options: Ctx => TableOptions[T]
     )(using
       step:    Step
-    ): step.Next[raw.mod.Table[T]] =
+    ): step.Next[Table[T]] =
       api.customBy(ctx => TableHook.useTableHook(options(ctx)))
 
   final class Secondary[Ctx, CtxFn[_], Step <: HooksApi.SubsequentStep[Ctx, CtxFn]](
@@ -29,7 +29,7 @@ object HooksApiExt:
       tableDefWithOptions: CtxFn[TableOptions[T]]
     )(implicit
       step:                Step
-    ): step.Next[raw.mod.Table[T]] =
+    ): step.Next[Table[T]] =
       super.useReactTableBy(step.squash(tableDefWithOptions)(_))
 
 trait HooksApiExt:

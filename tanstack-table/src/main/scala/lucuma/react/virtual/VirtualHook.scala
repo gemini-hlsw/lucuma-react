@@ -26,7 +26,7 @@ object VirtualHook:
     CustomHook.unchecked[
       VirtualOptions[TScrollElement, TItemElement],
       Virtualizer[TScrollElement, TItemElement]
-    ](i => useVirtualizerJS(i.toJS))
+    ](i => useVirtualizerJS(i.toJs))
 
   // TODO Specify 'observeElementRect' | 'observeElementOffset' | 'scrollToFn'
   // TODO useWindowVirtualizer
