@@ -45,8 +45,8 @@ final case class Image(
   wrapped:                js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Image.ImageProps, Image] {
-  override protected def cprops                     = Image.props(this)
-  override protected val component                  = Image.component
+  override protected def cprops    = Image.props(this)
+  override protected val component = Image.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

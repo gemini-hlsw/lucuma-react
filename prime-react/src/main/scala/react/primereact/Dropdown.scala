@@ -32,7 +32,7 @@ case class Dropdown[A](
   type GG[X] = Id[X]
 
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*)              = addModifiers(mods)
+  def withMods(mods:          TagMod*)     = addModifiers(mods)
 
   override def getter: js.UndefOr[Int] = optionsWithIndex.indexOfOption(value).orUndefined
   override def finder(i: Any): A       =

@@ -22,8 +22,8 @@ final case class ItemExtra(
   content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[ItemExtra.ItemExtraProps, ItemExtra] {
-  override protected def cprops                     = ItemExtra.props(this)
-  override protected val component                  = ItemExtra.component
+  override protected def cprops    = ItemExtra.props(this)
+  override protected val component = ItemExtra.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

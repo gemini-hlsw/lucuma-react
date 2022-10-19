@@ -26,8 +26,8 @@ case class Message(
   modifiers: Seq[TagMod] = Seq.empty
 ) extends ReactFnProps(Message.component):
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*)              = addModifiers(mods)
-  def apply(mods: TagMod*)                 = addModifiers(mods)
+  def withMods(mods:          TagMod*)     = addModifiers(mods)
+  def apply(mods:             TagMod*)     = addModifiers(mods)
 
 // If we ever get rid of ScalablyTyped and do a straight facade, get rid
 // of the `asInstanceOf[String]` cast for MessageItem.severity.

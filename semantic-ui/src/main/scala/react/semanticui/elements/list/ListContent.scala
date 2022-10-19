@@ -27,8 +27,8 @@ final case class ListContent(
   verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[ListContent.ListContentProps, ListContent] {
-  override protected def cprops                     = ListContent.props(this)
-  override protected val component                  = ListContent.component
+  override protected def cprops    = ListContent.props(this)
+  override protected val component = ListContent.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

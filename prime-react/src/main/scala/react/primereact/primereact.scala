@@ -72,4 +72,4 @@ extension (icon: FontAwesomeIcon | String)
   }
 
 extension [C <: js.Object, B <: StBuildingComponent[C]](b: B)
-  def applyOrNot[A](a: js.UndefOr[A], f: (B, A) => B): B = a.fold(b)(a => f(b, a))
+  def applyOrNot[A](a:                                     js.UndefOr[A], f: (B, A) => B): B = a.fold(b)(a => f(b, a))

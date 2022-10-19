@@ -43,8 +43,8 @@ final case class Menu(
   widths:                 js.UndefOr[SemanticWidth] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Menu.MenuProps, Menu] {
-  override protected def cprops                     = Menu.props(this)
-  override protected val component                  = Menu.component
+  override protected def cprops    = Menu.props(this)
+  override protected val component = Menu.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

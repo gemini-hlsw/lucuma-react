@@ -29,8 +29,8 @@ final case class ItemGroup(
   unstackable:            js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[ItemGroup.ItemGroupProps, ItemGroup] {
-  override protected def cprops                     = ItemGroup.props(this)
-  override protected val component                  = ItemGroup.component
+  override protected def cprops    = ItemGroup.props(this)
+  override protected val component = ItemGroup.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

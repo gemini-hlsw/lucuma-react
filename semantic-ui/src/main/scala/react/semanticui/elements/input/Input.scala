@@ -44,8 +44,8 @@ final case class Input(
   value:                  js.UndefOr[String] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Input.InputProps, Input] {
-  override protected def cprops                     = Input.props(this)
-  override protected val component                  = Input.component
+  override protected def cprops    = Input.props(this)
+  override protected val component = Input.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

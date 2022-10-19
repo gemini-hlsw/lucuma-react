@@ -98,8 +98,8 @@ final case class Dropdown(
   wrapSelection:          js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Dropdown.DropdownProps, Dropdown] {
-  override protected def cprops                     = Dropdown.props(this)
-  override protected val component                  = Dropdown.component
+  override protected def cprops    = Dropdown.props(this)
+  override protected val component = Dropdown.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -29,8 +29,8 @@ final case class Loader(
   size:                   js.UndefOr[SemanticSize] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Loader.LoaderProps, Loader] {
-  override protected def cprops                     = Loader.props(this)
-  override protected val component                  = Loader.component
+  override protected def cprops    = Loader.props(this)
+  override protected val component = Loader.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

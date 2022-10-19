@@ -46,8 +46,8 @@ final case class Tab(
   vertical:               js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[Tab.TabProps, Tab] {
-  override protected def cprops                     = Tab.props(this)
-  override protected val component                  = Tab.component
+  override protected def cprops    = Tab.props(this)
+  override protected val component = Tab.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -25,8 +25,8 @@ final case class Container(
   textAlign:              js.UndefOr[SemanticTextAlignment] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Container.ContainerProps, Container] {
-  override protected def cprops                     = Container.props(this)
-  override protected val component                  = Container.component
+  override protected def cprops    = Container.props(this)
+  override protected val component = Container.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

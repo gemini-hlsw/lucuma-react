@@ -42,8 +42,8 @@ final case class Progress(
   warning:                js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Progress.ProgressProps, Progress] {
-  override protected def cprops                     = Progress.props(this)
-  override protected val component                  = Progress.component
+  override protected def cprops    = Progress.props(this)
+  override protected val component = Progress.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -29,8 +29,8 @@ final case class Rail(
   size:                   js.UndefOr[SemanticSize] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[Rail.RailProps, Rail] {
-  override protected def cprops                     = Rail.props(this)
-  override protected val component                  = Rail.component
+  override protected def cprops    = Rail.props(this)
+  override protected val component = Rail.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

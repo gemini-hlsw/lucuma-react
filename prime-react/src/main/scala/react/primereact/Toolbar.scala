@@ -19,7 +19,7 @@ case class Toolbar(
 ) extends ReactFnProps[Toolbar](Toolbar.component) {
   // It appears as though the mods might only be applied the the `left` nodes?
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*)              = addModifiers(mods)
+  def withMods(mods:          TagMod*)     = addModifiers(mods)
 }
 
 object Toolbar {

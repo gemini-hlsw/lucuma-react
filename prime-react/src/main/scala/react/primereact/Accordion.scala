@@ -28,7 +28,7 @@ case class Accordion(
   override val multiple       = false
 
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*)              = addModifiers(mods)
+  def withMods(mods:          TagMod*)     = addModifiers(mods)
 
   def apply(tab: AccordionTab, moreTabs: AccordionTab*): Accordion =
     copy(tabs = (tabs :+ tab) ++ moreTabs)

@@ -20,8 +20,8 @@ case class ProgressSpinner(
   modifiers:         Seq[TagMod] = Seq.empty
 ) extends ReactFnProps(ProgressSpinner.component):
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*)              = addModifiers(mods)
-  def apply(mods: TagMod*)                 = addModifiers(mods)
+  def withMods(mods:          TagMod*)     = addModifiers(mods)
+  def apply(mods:             TagMod*)     = addModifiers(mods)
 
 object ProgressSpinner:
   private val component = ScalaFnComponent[ProgressSpinner] { props =>

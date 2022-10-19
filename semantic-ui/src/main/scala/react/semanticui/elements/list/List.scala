@@ -41,8 +41,8 @@ final case class List(
   verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[List.ListProps, List] {
-  override protected def cprops                     = List.props(this)
-  override protected val component                  = List.component
+  override protected def cprops    = List.props(this)
+  override protected val component = List.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -47,8 +47,8 @@ final case class Label(
   tag:                    js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Label.LabelProps, Label] {
-  override protected def cprops                     = Label.props(this)
-  override protected val component                  = Label.component
+  override protected def cprops    = Label.props(this)
+  override protected val component = Label.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

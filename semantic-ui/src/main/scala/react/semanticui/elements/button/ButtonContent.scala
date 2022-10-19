@@ -24,8 +24,8 @@ final case class ButtonContent(
   visible:                js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[ButtonContent.ButtonContentProps, ButtonContent] {
-  override protected def cprops                     = ButtonContent.props(this)
-  override protected val component                  = ButtonContent.component
+  override protected def cprops    = ButtonContent.props(this)
+  override protected val component = ButtonContent.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -53,9 +53,9 @@ object Toast {
 
   @js.native
   trait Facade extends js.Object {
-    def show(message: js.Array[MessageItem]): Unit    = js.native
+    def show(message:    js.Array[MessageItem]): Unit = js.native
     def replace(message: js.Array[MessageItem]): Unit = js.native
-    def clear(): Unit                                 = js.native
+    def clear(): Unit = js.native
   }
 
   @js.native

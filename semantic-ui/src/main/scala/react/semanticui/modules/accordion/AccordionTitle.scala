@@ -30,8 +30,8 @@ final case class AccordionTitle(
   onClick:                js.UndefOr[Callback] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[AccordionTitle.AccordionTitleProps, AccordionTitle] {
-  override protected def cprops                     = AccordionTitle.props(this)
-  override protected val component                  = AccordionTitle.component
+  override protected def cprops    = AccordionTitle.props(this)
+  override protected val component = AccordionTitle.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -32,8 +32,8 @@ final case class TableRow(
   warning:                js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[TableRow.TableRowProps, TableRow] {
-  override protected def cprops                     = TableRow.props(this)
-  override protected val component                  = TableRow.component
+  override protected def cprops    = TableRow.props(this)
+  override protected val component = TableRow.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

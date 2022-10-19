@@ -23,8 +23,8 @@ final case class AccordionContent(
   content:                js.UndefOr[ShorthandS[VdomNode]] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[AccordionContent.AccordionContentProps, AccordionContent] {
-  override protected def cprops                     = AccordionContent.props(this)
-  override protected val component                  = AccordionContent.component
+  override protected def cprops    = AccordionContent.props(this)
+  override protected val component = AccordionContent.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

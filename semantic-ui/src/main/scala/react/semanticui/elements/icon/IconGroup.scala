@@ -22,8 +22,8 @@ final case class IconGroup(
   size:                   js.UndefOr[SemanticSize] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[IconGroup.IconGroupProps, IconGroup] {
-  override protected def cprops                     = IconGroup.props(this)
-  override protected val component                  = IconGroup.component
+  override protected def cprops    = IconGroup.props(this)
+  override protected val component = IconGroup.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

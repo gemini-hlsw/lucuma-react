@@ -22,7 +22,7 @@ case class InputText(
   modifiers:   Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[InputText](InputText.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*)              = addModifiers(mods)
+  def withMods(mods:          TagMod*)     = addModifiers(mods)
 }
 
 object InputText {

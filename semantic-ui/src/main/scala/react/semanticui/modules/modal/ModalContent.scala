@@ -24,8 +24,8 @@ final case class ModalContent(
   scrolling:              js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[ModalContent.ModalContentProps, ModalContent] {
-  override protected def cprops                     = ModalContent.props(this)
-  override protected val component                  = ModalContent.component
+  override protected def cprops    = ModalContent.props(this)
+  override protected val component = ModalContent.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

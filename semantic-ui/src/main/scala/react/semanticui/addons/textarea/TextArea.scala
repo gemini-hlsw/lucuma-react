@@ -24,8 +24,8 @@ final case class TextArea(
   value:                  js.UndefOr[String | Double] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[TextArea.TextAreaProps, TextArea] {
-  override protected def cprops                     = TextArea.props(this)
-  override protected val component                  = TextArea.component
+  override protected def cprops    = TextArea.props(this)
+  override protected val component = TextArea.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

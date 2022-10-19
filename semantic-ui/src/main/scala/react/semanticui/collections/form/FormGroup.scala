@@ -30,8 +30,8 @@ final case class FormGroup(
   widths:                 js.UndefOr[SemanticWidth | FormWidths] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[FormGroup.FormGroupProps, FormGroup] {
-  override protected def cprops                     = FormGroup.props(this)
-  override protected val component                  = FormGroup.component
+  override protected def cprops    = FormGroup.props(this)
+  override protected val component = FormGroup.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

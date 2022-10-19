@@ -35,8 +35,8 @@ final case class ListIcon(
   verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[ListIcon.ListIconProps, ListIcon] {
-  override protected def cprops                     = ListIcon.props(this)
-  override protected val component                  = ListIcon.component
+  override protected def cprops    = ListIcon.props(this)
+  override protected val component = ListIcon.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

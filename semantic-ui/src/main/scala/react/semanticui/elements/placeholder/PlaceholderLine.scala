@@ -23,8 +23,8 @@ final case class PlaceholderLine(
       PlaceholderLine.PlaceholderLineProps,
       PlaceholderLine
     ] {
-  override protected def cprops                     = PlaceholderLine.props(this)
-  override protected val component                  = PlaceholderLine.component
+  override protected def cprops    = PlaceholderLine.props(this)
+  override protected val component = PlaceholderLine.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -23,8 +23,8 @@ final case class MenuMenu(
   position:               js.UndefOr[MenuMenuPosition] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[MenuMenu.MenuMenuProps, MenuMenu] {
-  override protected def cprops                     = MenuMenu.props(this)
-  override protected val component                  = MenuMenu.component
+  override protected def cprops    = MenuMenu.props(this)
+  override protected val component = MenuMenu.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

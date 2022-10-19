@@ -31,8 +31,8 @@ final case class Accordion(
   panels:                 js.UndefOr[Seq[AccordionPanel]] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[Accordion.AccordionProps, Accordion] {
-  override protected def cprops                     = Accordion.props(this)
-  override protected val component                  = Accordion.component
+  override protected def cprops    = Accordion.props(this)
+  override protected val component = Accordion.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

@@ -30,8 +30,8 @@ final case class SegmentGroup(
   stacked:                js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[SegmentGroup.SegmentGroupProps, SegmentGroup] {
-  override protected def cprops                     = SegmentGroup.props(this)
-  override protected val component                  = SegmentGroup.component
+  override protected def cprops    = SegmentGroup.props(this)
+  override protected val component = SegmentGroup.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 
@@ -48,7 +48,7 @@ object SegmentGroup {
     def apply(key: String): js.Any = js.native
 
     @JSBracketAccess
-    def update(key: String, v: js.Any): Unit          = js.native
+    def update(key: String, v: js.Any): Unit = js.native
     var as: js.UndefOr[AsT]                           = js.native
     var children: js.UndefOr[React.Node]              = js.native
     var className: js.UndefOr[String]                 = js.native

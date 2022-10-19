@@ -27,8 +27,8 @@ final case class ItemContent(
   verticalAlign:          js.UndefOr[SemanticVerticalAlignment] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[ItemContent.ItemContentProps, ItemContent] {
-  override protected def cprops                     = ItemContent.props(this)
-  override protected val component                  = ItemContent.component
+  override protected def cprops    = ItemContent.props(this)
+  override protected val component = ItemContent.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

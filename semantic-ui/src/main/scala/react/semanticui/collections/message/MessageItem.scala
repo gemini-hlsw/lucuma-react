@@ -21,8 +21,8 @@ final case class MessageItem(
   content:                js.UndefOr[ShorthandS[MessageItem]] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[MessageItem.MessageItemProps, MessageItem] {
-  override protected def cprops                     = MessageItem.props(this)
-  override protected val component                  = MessageItem.component
+  override protected def cprops    = MessageItem.props(this)
+  override protected val component = MessageItem.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

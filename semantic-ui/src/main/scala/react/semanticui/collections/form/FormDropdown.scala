@@ -103,8 +103,8 @@ final case class FormDropdown(
   wrapSelection:          js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPA[FormDropdown.FormDropdownProps, FormDropdown] {
-  override protected def cprops                     = FormDropdown.props(this)
-  override protected val component                  = FormDropdown.component
+  override protected def cprops    = FormDropdown.props(this)
+  override protected val component = FormDropdown.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

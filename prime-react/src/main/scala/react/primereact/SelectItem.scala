@@ -29,7 +29,7 @@ object SelectItem {
   // We're using the index of the options for the CSelectValue so comparisons can
   // be made via Eq rather than let javascript do the comparisons.
   extension [A: Eq](options: List[(SelectItem[A], Int)])
-    def indexOfOption(a: A): Option[Int]                               = options.find(_._1.value === a).map(_._2)
+    def indexOfOption(a: A): Option[Int] = options.find(_._1.value === a).map(_._2)
     def findByIndexOption(index: Int): Option[A]                       =
       findSelectItemByIndexOption(index).map(_.value)
     def findSelectItemByIndexOption(index: Int): Option[SelectItem[A]] =

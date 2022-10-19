@@ -43,7 +43,7 @@ case class ToggleButton(
   modifiers:      Seq[TagMod] = Seq.empty
 ) extends ReactFnPropsWithChildren(ToggleButton.component):
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*)              = addModifiers(mods)
+  def withMods(mods:          TagMod*)     = addModifiers(mods)
 
 object ToggleButton:
   enum IconPosition(val iconCls: Css, val buttonCls: Css, val stringIconPos: left | right)

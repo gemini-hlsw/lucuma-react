@@ -24,8 +24,8 @@ final case class DimmerDimmable(
   dimmed:                 js.UndefOr[Boolean] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[DimmerDimmable.DimmerDimmableProps, DimmerDimmable] {
-  override protected def cprops                     = DimmerDimmable.props(this)
-  override protected val component                  = DimmerDimmable.component
+  override protected def cprops    = DimmerDimmable.props(this)
+  override protected val component = DimmerDimmable.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 

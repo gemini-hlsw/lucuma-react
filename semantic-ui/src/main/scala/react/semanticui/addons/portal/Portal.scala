@@ -40,8 +40,8 @@ final case class Portal(
   trigger:                  js.UndefOr[VdomNode] = js.undefined,
   override val modifiers:   Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[Portal.PortalProps, Portal] {
-  override protected def cprops                     = Portal.props(this)
-  override protected val component                  = Portal.component
+  override protected def cprops    = Portal.props(this)
+  override protected val component = Portal.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 
