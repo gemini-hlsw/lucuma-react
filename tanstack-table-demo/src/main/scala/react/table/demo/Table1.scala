@@ -43,7 +43,7 @@ object Table1:
           enableSorting = true,
           enableColumnResizing = true,
           initialState =
-            TableState(sorting = Sorting(ColumnSort(ColumnId("model"), SortDirection.Descending)))
+            TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
         )
       }
       .render { (_, _, _, table) =>
