@@ -3,6 +3,7 @@
 
 package react.primereact
 
+import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.HTMLElement
@@ -26,6 +27,7 @@ case class Dialog(
   showHeader:      js.UndefOr[Boolean] = js.undefined,                    // default: true
   closable:        js.UndefOr[Boolean] = js.undefined,                    // default: true
   closeOnEscape:   js.UndefOr[Boolean] = js.undefined,                    // default: true
+  icons:           js.UndefOr[List[Button]] = js.undefined,               // Should be buttons with an icon but no label
   dismissableMask: js.UndefOr[Boolean] = js.undefined,                    // default: false
   maximizable:     js.UndefOr[Boolean] = js.undefined,                    // default: false
   blockScroll:     js.UndefOr[Boolean] = js.undefined,                    // default: false
@@ -65,6 +67,16 @@ object Dialog {
           .applyOrNot(props.showHeader, _.showHeader(_))
           .applyOrNot(props.closable, _.closable(_))
           .applyOrNot(props.closeOnEscape, _.closeOnEscape(_))
+          .applyOrNot(
+            props.icons,
+            (c, p) =>
+              c.icons(
+                p.map(b =>
+                  b.copy(clazz = b.clazz.toOption.orEmpty |+| PrimeStyles.DialogHeaderIcon)
+                ).toReactFragment
+                  .rawNode
+              )
+          )
           .applyOrNot(props.dismissableMask, _.dismissableMask(_))
           .applyOrNot(props.maximizable, _.maximizable(_))
           .applyOrNot(props.blockScroll, _.blockScroll(_))

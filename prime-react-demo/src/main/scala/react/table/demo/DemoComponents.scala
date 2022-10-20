@@ -11,6 +11,8 @@ import react.common.*
 import react.primereact.*
 import react.primereact.hooks.all.*
 
+import scalajs.js
+
 object DemoComponents {
   case class SidebarOptions(
     visible:       Boolean,
@@ -21,7 +23,8 @@ object DemoComponents {
     modal:         Boolean,
     fullScreen:    Boolean,
     blockScroll:   Boolean,
-    showCloseIcon: Boolean
+    showCloseIcon: Boolean,
+    customIcons:   Boolean
   )
 
   object SidebarOptions:
@@ -33,8 +36,42 @@ object DemoComponents {
                                  true,
                                  false,
                                  false,
-                                 true
+                                 true,
+                                 false
     )
+
+  case class DialogOptions(
+    visible:         Boolean,
+    position:        DialogPosition,
+    resizable:       Boolean,
+    draggable:       Boolean,
+    keepInViewPort:  Boolean,
+    maximizable:     Boolean,
+    blockScroll:     Boolean,
+    dismissableMask: Boolean,
+    closable:        Boolean,
+    closeOnEscape:   Boolean,
+    modal:           Boolean,
+    showHeader:      Boolean,
+    customIcons:     Boolean
+  )
+
+  object DialogOptions:
+    def default =
+      DialogOptions(false,
+                    DialogPosition.Center,
+                    true,
+                    true,
+                    true,
+                    false,
+                    false,
+                    false,
+                    true,
+                    true,
+                    true,
+                    true,
+                    false
+      )
 
   def mouseEntered(msg: String) = ^.onMouseEnter --> Callback.log(s"Mouse entered: $msg")
 
@@ -42,7 +79,7 @@ object DemoComponents {
     ScalaFnComponent
       .withHooks[Unit]
       .useState(Toast.Position.TopRight) // toast position
-      .useState(false)                   // show dialog
+      .useState(DialogOptions.default)   // dialog options
       .useState(false)                   // panel collapsed
       .useState(SidebarOptions.default)  // sidebar options
       .useState(0)                       // tabview activeIndex
@@ -53,7 +90,7 @@ object DemoComponents {
         (
           _,
           toastPosition,
-          showDialog,
+          dialogOptions,
           panelCollapsed,
           sidebarOptions,
           tabView,
@@ -94,6 +131,23 @@ object DemoComponents {
                 position = DialogPosition.Bottom
               )
 
+          def customIcons(show: Boolean): js.UndefOr[List[Button]] =
+            if show then
+              List(
+                Button(icon = "pi pi-thumbs-up",
+                       onClick = toastRef.show(
+                         MessageItem(summary = "You gave a thumbs UP!")
+                       )
+                ),
+                Button(
+                  icon = "pi pi-thumbs-down",
+                  onClick = toastRef.show(
+                    MessageItem(summary = "You gave a thumbs DOWN!")
+                  )
+                )
+              )
+            else js.undefined
+
           <.div(
             Toolbar(
               left = Button(label = "Toolbar Left Button",
@@ -127,12 +181,6 @@ object DemoComponents {
                 header = "The card header could be an image?",
                 footer = <.div(
                   DemoStyles.HorizontalStack,
-                  Button(
-                    onClick = showDialog.setState(true),
-                    size = Button.Size.Small,
-                    label = "Show Dialog",
-                    severity = Button.Severity.Warning
-                  ),
                   Button(
                     onClickE = e =>
                       showConfirmPopup(
@@ -282,6 +330,152 @@ object DemoComponents {
                   )
                 )
               ),
+              Panel(header = "Dialog")(
+                <.div(
+                  DemoStyles.VerticalStack,
+                  <.span(
+                    Button(
+                      onClick = dialogOptions.modState(_.copy(visible = true)),
+                      size = Button.Size.Small,
+                      label = "Show Dialog",
+                      severity = Button.Severity.Warning
+                    )
+                  ),
+                  // <.div(
+                  //   DemoStyles.VerticalStack,
+                  <.h2("Dialog Options"),
+                  <.div(
+                    DemoStyles.FormColumn,
+                    <.label("Position", ^.htmlFor := "dialog-position", DemoStyles.FormFieldLabel),
+                    SelectButton(
+                      id = "dialog-position",
+                      value = dialogOptions.value.position,
+                      options = SelectItem
+                        .fromTupleList[DialogPosition](
+                          List(
+                            (DialogPosition.Center, "Center"),
+                            (DialogPosition.Top, "Top"),
+                            (DialogPosition.TopLeft, "Top Left"),
+                            (DialogPosition.TopRight, "Top Right"),
+                            (DialogPosition.Bottom, "Bottom"),
+                            (DialogPosition.BottomLeft, "Bottom Left"),
+                            (DialogPosition.BottomRight, "Bottom Right"),
+                            (DialogPosition.Left, "Left"),
+                            (DialogPosition.Right, "Right")
+                          )
+                        ),
+                      onChange = v => dialogOptions.modState(_.copy(position = v))
+                    )
+                  ),
+                  <.div(
+                    DemoStyles.HorizontalStack,
+                    <.div(
+                      DemoStyles.FormColumn,
+                      <.label("Resizable",
+                              ^.htmlFor := "dialog-resizable",
+                              DemoStyles.FormFieldLabel
+                      ),
+                      InputSwitch(
+                        inputId = "dialog-resizable",
+                        checked = dialogOptions.value.resizable,
+                        onChange = v => dialogOptions.modState(_.copy(resizable = v))
+                      ),
+                      <.label("Maximizable",
+                              ^.htmlFor := "dialog-maximizable",
+                              DemoStyles.FormFieldLabel
+                      ),
+                      InputSwitch(
+                        inputId = "dialog-maximizable",
+                        checked = dialogOptions.value.maximizable,
+                        onChange = v => dialogOptions.modState(_.copy(maximizable = v))
+                      ),
+                      <.label("Draggable",
+                              ^.htmlFor := "dialog-draggable",
+                              DemoStyles.FormFieldLabel
+                      ),
+                      InputSwitch(
+                        inputId = "dialog-draggable",
+                        checked = dialogOptions.value.draggable,
+                        onChange = v => dialogOptions.modState(_.copy(draggable = v))
+                      ),
+                      <.label("Keep In ViewPort",
+                              ^.htmlFor := "dialog-keepInViewPort",
+                              DemoStyles.FormFieldLabel
+                      ),
+                      InputSwitch(
+                        inputId = "dialog-keepInViewPort",
+                        checked = dialogOptions.value.keepInViewPort,
+                        onChange = v => dialogOptions.modState(_.copy(keepInViewPort = v))
+                      ),
+                      <.label("Block Scroll",
+                              ^.htmlFor := "dialog-blockScroll",
+                              DemoStyles.FormFieldLabel
+                      ),
+                      InputSwitch(
+                        inputId = "dialog-blockScroll",
+                        checked = dialogOptions.value.blockScroll,
+                        onChange = v => dialogOptions.modState(_.copy(blockScroll = v))
+                      )
+                    ),
+                    <.div(
+                      DemoStyles.FormColumn,
+                      <.label("Closable",
+                              ^.htmlFor          := "dialog-closable",
+                              DemoStyles.FormFieldLabel
+                      ),
+                      InputSwitch(
+                        inputId = "dialog-closable",
+                        checked = dialogOptions.value.closable,
+                        onChange = v => dialogOptions.modState(_.copy(closable = v))
+                      ),
+                      <.label("Close On Escape",
+                              ^.htmlFor          := "dialog-closeonescape",
+                              DemoStyles.FormFieldLabel
+                      ),
+                      InputSwitch(
+                        inputId = "dialog-closeonescape",
+                        checked = dialogOptions.value.closeOnEscape,
+                        onChange = v => dialogOptions.modState(_.copy(closeOnEscape = v))
+                      ),
+                      <.label("Dismissable Mask",
+                              ^.htmlFor          := "dialog-dismissableMask",
+                              DemoStyles.FormFieldLabel
+                      ),
+                      InputSwitch(
+                        inputId = "dialog-dismissableMask",
+                        checked = dialogOptions.value.dismissableMask,
+                        onChange = v => dialogOptions.modState(_.copy(dismissableMask = v))
+                      ),
+                      <.label("Modal", ^.htmlFor := "dialog-modal", DemoStyles.FormFieldLabel),
+                      InputSwitch(
+                        inputId = "dialog-modal",
+                        checked = dialogOptions.value.modal,
+                        onChange = v => dialogOptions.modState(_.copy(modal = v))
+                      ),
+                      <.label("Show Header",
+                              ^.htmlFor          := "dialog-showHeader",
+                              DemoStyles.FormFieldLabel
+                      ),
+                      InputSwitch(
+                        inputId = "dialog-showHeader",
+                        checked = dialogOptions.value.showHeader,
+                        onChange = v => dialogOptions.modState(_.copy(showHeader = v))
+                      ),
+                      <.label("Custom Icons",
+                              ^.htmlFor          := "dialog-customIcons",
+                              DemoStyles.FormFieldLabel
+                      ),
+                      InputSwitch(
+                        inputId = "dialog-customIcons",
+                        checked = dialogOptions.value.customIcons,
+                        onChange = v => dialogOptions.modState(_.copy(customIcons = v))
+                      )
+                    )
+                  )
+                )
+                // )
+                // )
+              ),
               Panel(
                 header = React.Fragment(<.div("A collapsable Panel containing a Splitter"),
                                         <.small("* See the console for event information")
@@ -387,6 +581,15 @@ object DemoComponents {
                         inputId = "sidebar-closeicon",
                         checked = sidebarOptions.value.showCloseIcon,
                         onChange = v => sidebarOptions.modState(_.copy(showCloseIcon = v))
+                      ),
+                      <.label("Custom Icons",
+                              ^.htmlFor          := "sidebar-custom-icons",
+                              DemoStyles.FormFieldLabel
+                      ),
+                      InputSwitch(
+                        inputId = "sidebar-custom-icons",
+                        checked = sidebarOptions.value.customIcons,
+                        onChange = v => sidebarOptions.modState(_.copy(customIcons = v))
                       )
                     )
                   )
@@ -443,19 +646,29 @@ object DemoComponents {
               ),
               DemoControlsPanel(),
               Dialog(
-                onHide = showDialog.setState(false),
-                visible = showDialog.value,
+                onHide = dialogOptions.modState(_.copy(visible = false)),
+                visible = dialogOptions.value.visible,
                 header = "A Dialog",
-                footer = Button(onClick = showDialog.setState(false),
+                footer = Button(onClick = dialogOptions.modState(_.copy(visible = false)),
                                 label = "Close Me",
                                 size = Button.Size.Small,
                                 rounded = true,
                                 outlined = true
                 ),
-                position = DialogPosition.Top,
-                dismissableMask = true,
-                draggable = true
-              )("You can drag me around!"),
+                clazz = Css("whatever"),
+                position = dialogOptions.value.position,
+                resizable = dialogOptions.value.resizable,
+                draggable = dialogOptions.value.draggable,
+                keepInViewport = dialogOptions.value.keepInViewPort,
+                maximizable = dialogOptions.value.maximizable,
+                blockScroll = dialogOptions.value.blockScroll,
+                dismissableMask = dialogOptions.value.dismissableMask,
+                closable = dialogOptions.value.closable,
+                closeOnEscape = dialogOptions.value.closeOnEscape,
+                modal = dialogOptions.value.modal,
+                showHeader = dialogOptions.value.showHeader,
+                icons = customIcons(dialogOptions.value.customIcons)
+              )("The contents of the dialog."),
               ConfirmPopup(),
               ConfirmDialog(),
               PopupMenu(
@@ -476,6 +689,7 @@ object DemoComponents {
                 modal = sidebarOptions.value.modal,
                 fullScreen = sidebarOptions.value.fullScreen,
                 blockScroll = sidebarOptions.value.blockScroll,
+                icons = customIcons(sidebarOptions.value.customIcons),
                 showCloseIcon = sidebarOptions.value.showCloseIcon
               ).withMods(mouseEntered("Sidebar"))(<.div(<.div("Some stuff"), <.div("More stuff"))),
               Toast(position = toastPosition.value)
