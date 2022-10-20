@@ -4,12 +4,11 @@
 package lucuma.react.virtual
 
 import japgolly.scalajs.react.callback.*
+import lucuma.react.SizePx
 import lucuma.react.virtual.facade.VirtualOptionsJS
 import lucuma.react.virtual.facade.Virtualizer
 import org.scalajs.dom.Element
-import reactST.tanstackVirtualCore.mod.Key
-import reactST.tanstackVirtualCore.mod.Range
-import reactST.tanstackVirtualCore.mod.Rect
+import reactST.{tanstackVirtualCore => rawVirtual}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -28,7 +27,7 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
    * This measurement should return either the width or height depending on the orientation of your
    * virtualizer.
    */
-  estimateSize:         Int => Int,
+  estimateSize:         Int => SizePx,
   /** Set to true to enable debug logs */
   debug:                js.UndefOr[Boolean] = js.undefined,
   /**
@@ -56,37 +55,37 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
   /**
    * The padding to apply to the start of the virtualizer in pixels.
    */
-  paddingStart:         js.UndefOr[Int] = js.undefined,
+  paddingStart:         js.UndefOr[SizePx] = js.undefined,
   /**
    * The padding to apply to the end of the virtualizer in pixels.
    */
-  paddingEnd:           js.UndefOr[Int] = js.undefined,
+  paddingEnd:           js.UndefOr[SizePx] = js.undefined,
   /**
    * The padding to apply to the start of the virtualizer in pixels when scrolling to an element.
    */
-  scrollPaddingStart:   js.UndefOr[Int] = js.undefined,
+  scrollPaddingStart:   js.UndefOr[SizePx] = js.undefined,
   /**
    * The padding to apply to the end of the virtualizer in pixels when scrolling to an element.
    */
-  scrollPaddingEnd:     js.UndefOr[Int] = js.undefined,
+  scrollPaddingEnd:     js.UndefOr[SizePx] = js.undefined,
   /**
    * The initial offset to apply to the virtualizer. This is usually only useful if you are
    * rendering the virtualizer in a SSR environment.
    */
-  initialOffset:        js.UndefOr[Int] = js.undefined,
+  initialOffset:        js.UndefOr[SizePx] = js.undefined,
   /**
    * This function is passed the index of each item and should return a unique key for that item.
    * The default functionality of this function is to return the index of the item, but you should
    * override this when possible to return a unique identifier for each item across the entire set.
    */
-  getItemKey:           js.UndefOr[Int => Key] = js.undefined,
+  getItemKey:           js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined,
   /**
    * This function receives visible range indexes and should return array of indexes to render. This
    * is useful if you need to add or remove items from the virtualizer manually regardless of the
    * visible range, eg. rendering sticky items, headers, footers, etc. The default range extractor
    * implementation will return the visible range indexes and is exported as defaultRangeExtractor.
    */
-  rangeExtractor:       js.UndefOr[Range => List[Int]] = js.undefined,
+  rangeExtractor:       js.UndefOr[rawVirtual.mod.Range => List[Int]] = js.undefined,
   /**
    * Enables/disables smooth scrolling. Smooth scrolling is enabled by default, but may result in
    * inaccurate landing positions when dynamically measuring elements (a common use case and
@@ -105,7 +104,7 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
    *
    * Attempting to use smoothScroll with dynamically measured elements will not work.
    */
-  scrollToFn:           js.UndefOr[(Int, Boolean, Virtualizer[TScrollElement, TItemElement]) => Callback] =
+  scrollToFn:           js.UndefOr[(SizePx, Boolean, Virtualizer[TScrollElement, TItemElement]) => Callback] =
     js.undefined,
   /**
    * An optional function that if provided is called when the scrollElement changes and should
@@ -142,28 +141,28 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
     (TItemElement, Virtualizer[TScrollElement, TItemElement]) => CallbackTo[Int]
   ] = js.undefined
 ):
-  def toJS: VirtualOptionsJS[TScrollElement, TItemElement] = {
+  def toJs: VirtualOptionsJS[TScrollElement, TItemElement] = {
     val p: VirtualOptionsJS[TScrollElement, TItemElement] =
       new js.Object().asInstanceOf[VirtualOptionsJS[TScrollElement, TItemElement]]
     p.count = count
     p.getScrollElement = () => getScrollElement.map(_.orUndefined).runNow()
-    p.estimateSize = estimateSize
+    p.estimateSize = estimateSize.andThen(_.value)
     debug.foreach(v => p.debug = v)
-    initialRect.foreach(v => p.initialRect = v)
+    initialRect.foreach(v => p.initialRect = v.toJs)
     onChange.foreach(v => p.onChange = v.andThen(_.runNow()))
     overscan.foreach(v => p.overscan = v)
     horizontal.foreach(v => p.horizontal = v)
-    paddingStart.foreach(v => p.paddingStart = v)
-    paddingEnd.foreach(v => p.paddingEnd = v)
-    scrollPaddingStart.foreach(v => p.scrollPaddingStart = v)
-    scrollPaddingEnd.foreach(v => p.scrollPaddingEnd = v)
-    initialOffset.foreach(v => p.initialOffset = v)
+    paddingStart.foreach(v => p.paddingStart = v.value)
+    paddingEnd.foreach(v => p.paddingEnd = v.value)
+    scrollPaddingStart.foreach(v => p.scrollPaddingStart = v.value)
+    scrollPaddingEnd.foreach(v => p.scrollPaddingEnd = v.value)
+    initialOffset.foreach(v => p.initialOffset = v.value)
     getItemKey.foreach(v => p.getItemKey = v)
     rangeExtractor.foreach(v => p.rangeExtractor = v.andThen(_.toJSArray))
     enableSmoothScroll.foreach(v => p.enableSmoothScroll = v)
     scrollToFn.foreach(v =>
       (offset: Int, canSmooth: Boolean, instance: Virtualizer[TScrollElement, TItemElement]) =>
-        p.scrollToFn = v(offset, canSmooth, instance).runNow()
+        p.scrollToFn = v(SizePx(offset), canSmooth, instance).runNow()
     )
     observeElementRect.foreach(v =>
       (instance: Virtualizer[TScrollElement, TItemElement], cb: Rect => Unit) =>

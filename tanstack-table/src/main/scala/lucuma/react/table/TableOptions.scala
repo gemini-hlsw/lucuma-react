@@ -15,12 +15,12 @@ import scalajs.js.JSConverters.*
 case class TableOptions[T](
   columns:                  Reusable[List[ColumnDef[T, ?]]],
   data:                     Reusable[List[T]],
-  getRowId:                 js.UndefOr[(T, Int, Option[T]) => String] = js.undefined,
+  getRowId:                 js.UndefOr[(T, Int, Option[T]) => RowId] = js.undefined,
   getCoreRowModel:          js.UndefOr[raw.mod.Table[T] => js.Function0[raw.mod.RowModel[T]]] = js.undefined,
-  onStateChange:            js.UndefOr[raw.mod.Updater[raw.mod.TableState] => Callback] = js.undefined,
+  // onStateChange:            js.UndefOr[raw.mod.Updater[raw.mod.TableState] => Callback] = js.undefined,
   renderFallbackValue:      js.UndefOr[Any] = js.undefined,
-  state:                    js.UndefOr[raw.anon.PartialTableState] = js.undefined,
-  initialState:             js.UndefOr[raw.mod.InitialTableState] = js.undefined,
+  // state:                    js.UndefOr[raw.anon.PartialTableState] = js.undefined,
+  initialState:             js.UndefOr[TableState] = js.undefined,
   // Column Sizing
   enableColumnResizing:     js.UndefOr[Boolean] = js.undefined,
   columnResizeMode:         js.UndefOr[raw.mod.ColumnResizeMode] = js.undefined,
@@ -50,17 +50,18 @@ case class TableOptions[T](
   getSubRows:               js.UndefOr[(T, Int) => Option[List[T]]] = js.undefined
 ) {
   // Memoized columns and data must be passed.
-  def toJS(cols: js.Array[ColumnDefJS[T, ?]], rows: js.Array[T]): TableOptionsJS[T] =
+  def toJs(cols: js.Array[ColumnDefJS[T, ?]], rows: js.Array[T]): TableOptionsJS[T] =
     TableOptionsJS(
       columns = cols,
       data = rows,
-      getRowId =
-        getRowId.map(fn => (originalRow, index, parent) => fn(originalRow, index, parent.toOption)),
+      getRowId = getRowId.map(fn =>
+        (originalRow, index, parent) => fn(originalRow, index, parent.toOption).value
+      ),
       getCoreRowModel = getCoreRowModel.map(fn => fn), // Forces conversion to js.Function
-      onStateChange = onStateChange,
+      // onStateChange = onStateChange,
       renderFallbackValue = renderFallbackValue,
-      state = state,
-      initialState = initialState,
+      // state = state,
+      initialState = initialState.map(_.toJs.asInstanceOf[raw.mod.InitialTableState]),
       // Column Sizing
       enableColumnResizing = enableColumnResizing,
       columnResizeMode = columnResizeMode,

@@ -4,6 +4,7 @@
 package lucuma.react.table
 
 import japgolly.scalajs.react.vdom.VdomNode
+import lucuma.react.SizePx
 import lucuma.react.table.facade.*
 import reactST.tanstackTableCore.tanstackTableCoreStrings.max
 import reactST.{tanstackTableCore => raw}
@@ -12,16 +13,16 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 sealed trait ColumnDef[T, A]:
-  val id: String
+  val id: ColumnId
   val header: js.UndefOr[String | (raw.mod.HeaderContext[T, A] => VdomNode)]
   val footer: js.UndefOr[raw.mod.HeaderContext[T, A] => VdomNode]
   val meta: js.UndefOr[Any]
 
-  def toJS: ColumnDefJS[T, A]
+  def toJs: ColumnDefJS[T, A]
 
 object ColumnDef:
   case class Single[T, A](
-    id:              String,
+    id:              ColumnId,
     accessor:        js.UndefOr[T => A] = js.undefined,
     header:          js.UndefOr[String | (raw.mod.HeaderContext[T, A] => VdomNode)] = js.undefined,
     cell:            js.UndefOr[raw.mod.CellContext[T, A] => VdomNode] = js.undefined,
@@ -29,9 +30,9 @@ object ColumnDef:
     meta:            js.UndefOr[Any] = js.undefined,
     // Column Sizing
     enableResizing:  js.UndefOr[Boolean] = js.undefined,
-    size:            js.UndefOr[Int] = js.undefined,
-    minSize:         js.UndefOr[Int] = js.undefined,
-    maxSize:         js.UndefOr[Int] = js.undefined,
+    size:            js.UndefOr[SizePx] = js.undefined,
+    minSize:         js.UndefOr[SizePx] = js.undefined,
+    maxSize:         js.UndefOr[SizePx] = js.undefined,
     // Column Visibility
     enableHiding:    js.UndefOr[Boolean] = js.undefined,
     // Sorting
@@ -54,9 +55,9 @@ object ColumnDef:
 
     def sortable(using Ordering[A]) = sortableBy(identity)
 
-    def toJS: ColumnDefJS[T, A] = {
+    def toJs: ColumnDefJS[T, A] = {
       val p: ColumnDefJS[T, A] = new js.Object().asInstanceOf[ColumnDefJS[T, A]]
-      p.id = id
+      p.id = id.value
       accessor.foreach(fn => p.accessorFn = fn)
       header match
         case s: String                                     => p.header = s
@@ -68,9 +69,9 @@ object ColumnDef:
 
       // Column Sizing
       enableResizing.foreach(v => p.enableResizing = v)
-      size.foreach(v => p.size = v)
-      minSize.foreach(v => p.minSize = v)
-      maxSize.foreach(v => p.maxSize = v)
+      size.foreach(v => p.size = v.value)
+      minSize.foreach(v => p.minSize = v.value)
+      maxSize.foreach(v => p.maxSize = v.value)
 
       // Column Visibility
       enableHiding.foreach(v => p.enableHiding = v)
@@ -92,35 +93,35 @@ object ColumnDef:
     }
 
   case class Group[T](
-    id:             String,
+    id:             ColumnId,
     header:         js.UndefOr[String | (raw.mod.HeaderContext[T, Nothing] => VdomNode)] = js.undefined,
     columns:        List[ColumnDef[T, ?]],
     footer:         js.UndefOr[raw.mod.HeaderContext[T, Nothing] => VdomNode] = js.undefined,
     meta:           js.UndefOr[Any] = js.undefined,
     // Column Sizing
     enableResizing: js.UndefOr[Boolean] = js.undefined,
-    size:           js.UndefOr[Int] = js.undefined,
-    minSize:        js.UndefOr[Int] = js.undefined,
-    maxSize:        js.UndefOr[Int] = js.undefined,
+    size:           js.UndefOr[SizePx] = js.undefined,
+    minSize:        js.UndefOr[SizePx] = js.undefined,
+    maxSize:        js.UndefOr[SizePx] = js.undefined,
     // Column Visibility
     enableHiding:   js.UndefOr[Boolean] = js.undefined
   ) extends ColumnDef[T, Nothing]:
-    def toJS: ColumnDefJS[T, Nothing] = {
+    def toJs: ColumnDefJS[T, Nothing] = {
       val p: ColumnDefJS[T, Nothing] = new js.Object().asInstanceOf[ColumnDefJS[T, Nothing]]
-      p.id = id
+      p.id = id.value
       header match
         case s: String                                           => p.header = s
         case fn: (raw.mod.HeaderContext[T, Nothing] => VdomNode) => p.header = fn.andThen(_.rawNode)
         case _                                                   => ()
-      p.columns = columns.map(_.toJS).toJSArray
+      p.columns = columns.map(_.toJs).toJSArray
       footer.foreach(fn => p.footer = fn.andThen(_.rawNode))
       meta.foreach(v => p.meta = v)
 
       // Column Sizing
       enableResizing.foreach(v => p.enableResizing = v)
-      size.foreach(v => p.size = v)
-      minSize.foreach(v => p.minSize = v)
-      maxSize.foreach(v => p.maxSize = v)
+      size.foreach(v => p.size = v.value)
+      minSize.foreach(v => p.minSize = v.value)
+      maxSize.foreach(v => p.maxSize = v.value)
 
       // Column Visibility
       enableHiding.foreach(v => p.enableHiding = v)
@@ -133,7 +134,7 @@ object ColumnDef:
 
   class Applied[T]:
     def apply[A](
-      id:              String,
+      id:              ColumnId,
       accessor:        js.UndefOr[T => A] = js.undefined,
       header:          js.UndefOr[String | (raw.mod.HeaderContext[T, A] => VdomNode)] = js.undefined,
       cell:            js.UndefOr[raw.mod.CellContext[T, A] => VdomNode] = js.undefined,
@@ -141,9 +142,9 @@ object ColumnDef:
       meta:            js.UndefOr[Any] = js.undefined,
       // Column Sizing
       enableResizing:  js.UndefOr[Boolean] = js.undefined,
-      size:            js.UndefOr[Int] = js.undefined,
-      minSize:         js.UndefOr[Int] = js.undefined,
-      maxSize:         js.UndefOr[Int] = js.undefined,
+      size:            js.UndefOr[SizePx] = js.undefined,
+      minSize:         js.UndefOr[SizePx] = js.undefined,
+      maxSize:         js.UndefOr[SizePx] = js.undefined,
       // Column Visibility
       enableHiding:    js.UndefOr[Boolean] = js.undefined,
       // Sorting
@@ -178,16 +179,16 @@ object ColumnDef:
       )
 
     def group(
-      id:             String,
+      id:             ColumnId,
       header:         js.UndefOr[String | (raw.mod.HeaderContext[T, Nothing] => VdomNode)] = js.undefined,
       columns:        List[ColumnDef[T, ?]],
       footer:         js.UndefOr[raw.mod.HeaderContext[T, Nothing] => VdomNode] = js.undefined,
       meta:           js.UndefOr[Any] = js.undefined,
       // Column Sizing
       enableResizing: js.UndefOr[Boolean] = js.undefined,
-      size:           js.UndefOr[Int] = js.undefined,
-      minSize:        js.UndefOr[Int] = js.undefined,
-      maxSize:        js.UndefOr[Int] = js.undefined,
+      size:           js.UndefOr[SizePx] = js.undefined,
+      minSize:        js.UndefOr[SizePx] = js.undefined,
+      maxSize:        js.UndefOr[SizePx] = js.undefined,
       // Column Visibility
       enableHiding:   js.UndefOr[Boolean] = js.undefined
     ): Group[T] =

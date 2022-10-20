@@ -7,8 +7,6 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.table.*
 import react.common.*
-import reactST.tanstackTableCore.mod.ColumnSort
-import reactST.tanstackTableCore.mod.InitialTableState
 
 import scalajs.js
 
@@ -21,16 +19,16 @@ object Table1:
       // cols
       .useMemo(())(_ =>
         List(
-          ColDef("id", _.id, "Id", ctx => s"g-${ctx.value}").sortable,
-          ColDef("make", _.make, _ => "Make"),
-          ColDef("model", _.model, _ => "Model").sortableBy(_.length),
+          ColDef(ColumnId("id"), _.id, "Id", ctx => s"g-${ctx.value}").sortable,
+          ColDef(ColumnId("make"), _.make, _ => "Make"),
+          ColDef(ColumnId("model"), _.model, _ => "Model").sortableBy(_.length),
           ColDef.group(
-            "details",
+            ColumnId("details"),
             _ => <.div(^.textAlign.center)("Details"),
             List(
-              ColDef("year", _.details.year, _ => "Year"),
-              ColDef("pickups", _.details.pickups, _ => "Pickups"),
-              ColDef("color", _.details.color, _ => "Color", enableSorting = false)
+              ColDef(ColumnId("year"), _.details.year, _ => "Year"),
+              ColDef(ColumnId("pickups"), _.details.pickups, _ => "Pickups"),
+              ColDef(ColumnId("color"), _.details.color, _ => "Color", enableSorting = false)
             )
           )
         )
@@ -45,7 +43,7 @@ object Table1:
           enableSorting = true,
           enableColumnResizing = true,
           initialState =
-            InitialTableState().setSorting(js.Array(ColumnSort(desc = true, id = "model")))
+            TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
         )
       }
       .render { (_, _, _, table) =>
