@@ -43,12 +43,17 @@ trait TableOptionsJS[T] extends js.Object:
   var onSortingChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.SortingState]] = js.undefined
   var sortDescFirst: js.UndefOr[Boolean]                                    = js.undefined
 
+  // Selection
+  var enableRowSelection: js.UndefOr[Boolean]                                            = js.undefined
+  var enableMultiRowSelection: js.UndefOr[Boolean]                                       = js.undefined
+  var onSelectChange: js.UndefOr[raw.mod.Updater[raw.mod.RowSelectionState] => Callback] =
+    js.undefined
   // Expanding
-  var enableExpanding: js.UndefOr[Boolean]                                  = js.undefined
+  var enableExpanding: js.UndefOr[Boolean]                                               = js.undefined
   var getExpandedRowModel: js.UndefOr[
     js.Function1[raw.mod.Table[T], js.Function0[raw.mod.RowModel[T]]]
-  ]                                                                         = js.undefined
-  var getSubRows: js.UndefOr[js.Function2[T, Int, js.UndefOr[js.Array[T]]]] = js.undefined
+  ]                                                                                      = js.undefined
+  var getSubRows: js.UndefOr[js.Function2[T, Int, js.UndefOr[js.Array[T]]]]              = js.undefined
 
 object TableOptionsJS:
   def apply[T](
@@ -81,6 +86,11 @@ object TableOptionsJS:
     maxMultiSortColCount:     js.UndefOr[Double] = js.undefined,
     onSortingChange:          js.UndefOr[raw.mod.OnChangeFn[raw.mod.SortingState]] = js.undefined,
     sortDescFirst:            js.UndefOr[Boolean] = js.undefined,
+    // Selection
+    enableRowSelection:       js.UndefOr[Boolean] = js.undefined,
+    enableMultiRowSelection:  js.UndefOr[Boolean] = js.undefined,
+    onSelectChange:           js.UndefOr[raw.mod.Updater[raw.mod.RowSelectionState] => Callback] =
+      js.undefined,
     // Expanding
     enableExpanding:          js.UndefOr[Boolean] = js.undefined,
     getExpandedRowModel:      js.UndefOr[
@@ -114,6 +124,12 @@ object TableOptionsJS:
     // We are always defining a sortedRowModel
     p.enableSorting = enableSorting.getOrElse(false)
     p.getSortedRowModel = getSortedRowModel.getOrElse(rawReact.mod.getSortedRowModel())
+
+    // Selection
+    // TODO You can also pass  ((row: Row<TData>) => boolean)
+    enableRowSelection.foreach(q => p.enableRowSelection = q)
+    enableMultiRowSelection.foreach(q => p.enableMultiRowSelection = q)
+    onSelectChange.foreach(fn => p.onSelectChange = fn)
 
     // Expanding
     // TODO MISSING PROPS!!!

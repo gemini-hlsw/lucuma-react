@@ -39,6 +39,10 @@ case class TableOptions[T](
   maxMultiSortColCount:     js.UndefOr[Double] = js.undefined,
   onSortingChange:          js.UndefOr[raw.mod.OnChangeFn[raw.mod.SortingState]] = js.undefined,
   sortDescFirst:            js.UndefOr[Boolean] = js.undefined,
+  // Selection
+  enableRowSelection:       js.UndefOr[Boolean] = js.undefined,
+  enableMultiRowSelection:  js.UndefOr[Boolean] = js.undefined,
+  onSelectChange:           js.UndefOr[raw.mod.Updater[raw.mod.RowSelectionState] => Callback] = js.undefined,
   // Expanding
   enableExpanding:          js.UndefOr[Boolean] = js.undefined,
   getExpandedRowModel:      js.UndefOr[raw.mod.Table[T] => js.Function0[raw.mod.RowModel[T]]] =
@@ -66,6 +70,10 @@ case class TableOptions[T](
       // Sorting
       enableSorting = enableSorting,
       getSortedRowModel = getSortedRowModel.map(fn => fn),
+      // Selection
+      enableRowSelection = enableRowSelection,
+      enableMultiRowSelection = enableMultiRowSelection,
+      onSelectChange = onSelectChange,
       // Expanding
       enableExpanding = enableExpanding,
       getExpandedRowModel = getExpandedRowModel.map(fn => fn),
