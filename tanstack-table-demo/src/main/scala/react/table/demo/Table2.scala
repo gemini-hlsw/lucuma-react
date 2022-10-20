@@ -5,8 +5,8 @@ package react.table.demo
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import lucuma.react.table.*
 import lucuma.react.syntax.*
+import lucuma.react.table.*
 import react.common.*
 import react.common.style.Css
 
