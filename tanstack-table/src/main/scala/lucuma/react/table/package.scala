@@ -13,12 +13,12 @@ package object table extends HooksApiExt:
 
   opaque type ColumnId = String
   object ColumnId:
-    inline def apply(value: String): ColumnId = value
+    inline def apply(value: String): ColumnId                  = value
     extension (opaqueValue: ColumnId) inline def value: String = opaqueValue
 
   opaque type RowId = String
   object RowId:
-    inline def apply(value: String): RowId = value
+    inline def apply(value: String): RowId                  = value
     extension (opaqueValue: RowId) inline def value: String = opaqueValue
 
   extension [T, A](cellCtx: raw.mod.CellContext[T, A])

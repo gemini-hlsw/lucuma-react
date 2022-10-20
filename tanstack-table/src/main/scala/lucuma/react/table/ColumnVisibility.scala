@@ -10,9 +10,9 @@ import reactST.{tanstackTableCore => raw}
 opaque type ColumnVisibility = Map[ColumnId, Visibility]
 
 object ColumnVisibility:
-  inline def apply(value: Map[ColumnId, Visibility]): ColumnVisibility = value
-  inline def apply(values: (ColumnId, Visibility)*): ColumnVisibility  = values.toMap
-  def fromJs(rawValue: raw.mod.VisibilityState): ColumnVisibility      =
+  inline def apply(value:  Map[ColumnId, Visibility]): ColumnVisibility = value
+  inline def apply(values: (ColumnId, Visibility)*): ColumnVisibility   = values.toMap
+  def fromJs(rawValue: raw.mod.VisibilityState): ColumnVisibility =
     rawValue.toList.map((col, visible) => ColumnId(col) -> Visibility.fromVisible(visible)).toMap
 
   extension (opaqueValue: ColumnVisibility)

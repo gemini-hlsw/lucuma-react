@@ -11,8 +11,8 @@ import scalajs.js.JSConverters.*
 opaque type ColumnOrder = List[ColumnId]
 
 object ColumnOrder:
-  inline def apply(value: List[ColumnId]): ColumnOrder        = value
-  inline def apply(values: ColumnId*): ColumnOrder            = values.toList
+  inline def apply(value:  List[ColumnId]): ColumnOrder = value
+  inline def apply(values: ColumnId*): ColumnOrder      = values.toList
   def fromJs(rawValue: raw.mod.ColumnOrderState): ColumnOrder =
     rawValue.toList.map(ColumnId(_))
 

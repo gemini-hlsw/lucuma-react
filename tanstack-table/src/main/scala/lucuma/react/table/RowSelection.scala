@@ -10,8 +10,8 @@ import reactST.{tanstackTableCore => raw}
 opaque type RowSelection = Map[RowId, Boolean]
 
 object RowSelection:
-  inline def apply(value: Map[RowId, Boolean]): RowSelection    = value
-  inline def apply(values: (RowId, Boolean)*): RowSelection     = values.toMap
+  inline def apply(value:  Map[RowId, Boolean]): RowSelection = value
+  inline def apply(values: (RowId, Boolean)*): RowSelection   = values.toMap
   def fromJs(rawValue: raw.mod.RowSelectionState): RowSelection =
     rawValue.toList.map((row, selected) => RowId(row) -> selected).toMap
 

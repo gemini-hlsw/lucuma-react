@@ -5,5 +5,5 @@ package lucuma.react
 
 opaque type SizePx = Int
 object SizePx:
-  inline def apply(value: Int): SizePx = value
+  inline def apply(value: Int): SizePx                  = value
   extension (opaqueValue: SizePx) inline def value: Int = opaqueValue
