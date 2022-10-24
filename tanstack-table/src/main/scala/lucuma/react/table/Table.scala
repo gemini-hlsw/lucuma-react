@@ -77,9 +77,10 @@ case class Table[T](private val toJs: raw.mod.Table[T]):
   def getPreSortedRowModel(): raw.mod.RowModel[T] = toJs.getPreSortedRowModel()
   def getSortedRowModel(): raw.mod.RowModel[T]    = toJs.getSortedRowModel()
   def resetSorting(): Callback                    = Callback(toJs.resetSorting())
-  def resetSorting(defaultState: Boolean): Callback   = Callback(toJs.resetSorting(defaultState))
-  def setSorting(value:          Sorting): Callback   = Callback(toJs.setSorting(value.toJs))
-  def modSorting(f:              Endo[Sorting]): Unit = Callback(toJs.setSorting(v => f(Sorting.fromJs(v)).toJs))
+  def resetSorting(defaultState: Boolean): Callback = Callback(toJs.resetSorting(defaultState))
+  def setSorting(value:          Sorting): Callback = Callback(toJs.setSorting(value.toJs))
+  def modSorting(f: Endo[Sorting]): Callback =
+    Callback(toJs.setSorting(v => f(Sorting.fromJs(v)).toJs))
 
   // ColumnSizing
   def getCenterTotalSize(): SizePx                         = SizePx(toJs.getCenterTotalSize().toInt)
@@ -112,7 +113,7 @@ case class Table[T](private val toJs: raw.mod.Table[T]):
   def resetExpanded(): Callback                                               = Callback(toJs.resetExpanded())
   def resetExpanded(defaultState: Boolean): Callback  = Callback(toJs.resetExpanded(defaultState))
   def setExpanded(value:          Expanded): Callback = Callback(toJs.setExpanded(value.toJs))
-  def modExpanded(f: Endo[Expanded]): Unit               =
+  def modExpanded(f: Endo[Expanded]): Callback           =
     Callback(toJs.setExpanded(v => f(Expanded.fromJs(v)).toJs))
   def toggleAllRowsExpanded(): Callback                  = Callback(toJs.toggleAllRowsExpanded())
   def toggleAllRowsExpanded(expanded: Boolean): Callback =
@@ -141,5 +142,5 @@ case class Table[T](private val toJs: raw.mod.Table[T]):
   def toggleAllPageRowsSelected(value: Boolean): Callback =
     Callback(toJs.toggleAllPageRowsSelected(value))
   def toggleAllRowsSelected(): Callback                   = Callback(toJs.toggleAllRowsSelected())
-  def toggleAllRowsSelected(value: Boolean): Unit         =
+  def toggleAllRowsSelected(value: Boolean): Callback     =
     Callback(toJs.toggleAllRowsSelected(value))
