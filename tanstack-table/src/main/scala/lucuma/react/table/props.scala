@@ -32,7 +32,7 @@ trait HTMLTableProps[T]:
   def emptyMessage: VdomNode
 
   // Allow subtypes to mixin other classes
-  protected[table] def extraTableClasses: Css = Css.Empty
+  private[table] def extraTableClasses: Css = Css.Empty
 
 type HTMLTableVirtualizer = Virtualizer[HTMLDivElement, Element]
 

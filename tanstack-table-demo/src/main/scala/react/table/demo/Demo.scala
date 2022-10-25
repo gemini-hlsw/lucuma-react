@@ -14,8 +14,6 @@ import js.annotation._
 @JSExportTopLevel("Demo")
 object Demo:
 
-  // def logit(message: String, obj: Any) = dom.console.log(message, obj.asInstanceOf[js.Any])
-
   val guitars =
     List(
       Guitar(1, "Fender", "Stratocaster", Details(2019, 3, "Sunburst")),

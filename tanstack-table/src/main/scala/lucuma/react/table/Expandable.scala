@@ -3,6 +3,7 @@
 
 package lucuma.react.table
 
+import cats.syntax.all.*
 import japgolly.scalajs.react.ReactExtensions._
 import japgolly.scalajs.react.Reusability
 
@@ -12,28 +13,15 @@ import scala.scalajs.js.UndefOr
 
 import scalajs.js
 
-trait Expandable[D] extends js.Object {
-  val value: D
-  val subRows: js.UndefOr[js.Array[Expandable[D]]]
-}
+case class Expandable[D](value: D, subRows: Option[List[Expandable[D]]] = None)
 
-object Expandable {
-  def apply[D](value_ : D): Expandable[D] =
-    new Expandable[D] {
-      override val value   = value_
-      override val subRows = js.undefined
-    }
+object Expandable:
+  def apply[D](value: D, subRows: List[Expandable[D]]): Expandable[D] =
+    Expandable(value, subRows.some)
 
-  implicit class ExpandableOps[D](val expandable: Expandable[D]) extends AnyVal {
-    def withSubRows(subRows: List[Expandable[D]]): Expandable[D] = {
-      expandable.asInstanceOf[js.Dynamic].subRows = subRows.toJSArray
-      expandable
-    }
-  }
-
-  implicit def reuseExpandable[D: Reusability]: Reusability[Expandable[D]] =
+  given [D: Reusability]: Reusability[Expandable[D]] =
     Reusability { (a, b) =>
-      val subRowReuse = Reusability.byIterator[Iterable, Expandable[D]](reuseExpandable)
+      val subRowReuse = Reusability.byIterator[Iterable, Expandable[D]]
 
       a.value ~=~ b.value &&
       a.subRows.exists(subRowsA =>
@@ -42,4 +30,3 @@ object Expandable {
         )
       )
     }
-}

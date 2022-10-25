@@ -31,7 +31,7 @@ case class ColumnSizingInfo(
     .applyOrNull(startSize, (c, p) => c.setStartSize(p.value), _.setStartSizeNull)
 
 object ColumnSizingInfo:
-  def fromJs(rawValue: raw.mod.ColumnSizingInfoState): ColumnSizingInfo =
+  private[table] def fromJs(rawValue: raw.mod.ColumnSizingInfoState): ColumnSizingInfo =
     ColumnSizingInfo(
       rawValue.columnSizingStart.toList.map(tuple => ColumnId(tuple._1) -> SizePx(tuple._2.toInt)),
       rawValue.deltaOffset.nullToOption.map(v => SizePx(v.toInt)),

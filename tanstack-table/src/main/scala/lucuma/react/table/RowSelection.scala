@@ -12,7 +12,7 @@ opaque type RowSelection = Map[RowId, Boolean]
 object RowSelection:
   inline def apply(value:  Map[RowId, Boolean]): RowSelection = value
   inline def apply(values: (RowId, Boolean)*): RowSelection   = values.toMap
-  def fromJs(rawValue: raw.mod.RowSelectionState): RowSelection =
+  private[table] def fromJs(rawValue: raw.mod.RowSelectionState): RowSelection =
     rawValue.toList.map((row, selected) => RowId(row) -> selected).toMap
 
   extension (opaqueValue: RowSelection)

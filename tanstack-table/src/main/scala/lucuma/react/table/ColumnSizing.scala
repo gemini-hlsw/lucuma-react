@@ -13,7 +13,7 @@ opaque type ColumnSizing = Map[ColumnId, SizePx]
 object ColumnSizing:
   inline def apply(value:  Map[ColumnId, SizePx]): ColumnSizing = value
   inline def apply(values: (ColumnId, SizePx)*): ColumnSizing   = values.toMap
-  def fromJs(rawValue: raw.mod.ColumnSizingState): ColumnSizing =
+  private[table] def fromJs(rawValue: raw.mod.ColumnSizingState): ColumnSizing =
     rawValue.toList.map((col, size) => ColumnId(col) -> SizePx(size.toInt)).toMap
 
   extension (opaqueValue: ColumnSizing)

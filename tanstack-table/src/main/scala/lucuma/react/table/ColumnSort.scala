@@ -9,5 +9,5 @@ case class ColumnSort(columnId: ColumnId, direction: SortDirection):
   def toJs: raw.mod.ColumnSort = raw.mod.ColumnSort(direction.toDescending, columnId.value)
 
 object ColumnSort:
-  def fromJs(rawValue: raw.mod.ColumnSort): ColumnSort =
+  private[table] def fromJs(rawValue: raw.mod.ColumnSort): ColumnSort =
     ColumnSort(ColumnId(rawValue.id), SortDirection.fromDescending(rawValue.desc))

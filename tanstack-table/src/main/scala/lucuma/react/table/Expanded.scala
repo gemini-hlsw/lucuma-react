@@ -20,7 +20,7 @@ enum Expanded:
         StringDictionary(rows.map((rowId, expanded) => rowId.value -> expanded).toSeq: _*)
 
 object Expanded:
-  def fromJs(rawValue: raw.mod.ExpandedState): Expanded =
+  private[table] def fromJs(rawValue: raw.mod.ExpandedState): Expanded =
     rawValue match
       case v if v == raw.tanstackTableCoreBooleans.`true` => Expanded.AllRows
       case rows                                           =>

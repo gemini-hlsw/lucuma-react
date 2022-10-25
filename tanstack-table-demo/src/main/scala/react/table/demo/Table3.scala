@@ -37,9 +37,9 @@ object Table3:
             size = 50.toPx,
             enableResizing = false
           ),
-          ColDef(ColumnId("first"), _.value.first, _ => "First", size = 100.toPx),
-          ColDef(ColumnId("last"), _.value.last, _ => "Last", size = 100.toPx),
-          ColDef(ColumnId("age"), _.value.age, _ => "Age", size = 50.toPx)
+          ColDef(ColumnId("first"), _.value.first, "First", size = 100.toPx),
+          ColDef(ColumnId("last"), _.value.last, "Last", size = 100.toPx),
+          ColDef(ColumnId("age"), _.value.age, "Age", size = 50.toPx)
         )
       )
       // rows
@@ -49,8 +49,8 @@ object Table3:
           cols,
           rows,
           enableExpanding = true,
-          columnResizeMode = raw.mod.ColumnResizeMode.onChange,
-          getSubRows = (row, _) => row.subRows.toOption.map(_.toList)
+          columnResizeMode = ColumnResizeMode.OnChange,
+          getSubRows = (row, _) => row.subRows
         )
       )
       .render((_, _, _, table) =>
