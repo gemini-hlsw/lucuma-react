@@ -29,7 +29,12 @@ case class Button(
   label:          js.UndefOr[String] = js.undefined,
   icon:           js.UndefOr[FontAwesomeIcon | String] = js.undefined,
   iconPos:        Button.IconPosition = Button.IconPosition.Left,
+  badge:          js.UndefOr[String] = js.undefined,
+  badgeClass:     js.UndefOr[Css] = js.undefined,
   clazz:          js.UndefOr[Css] = js.undefined,
+  disabled:       js.UndefOr[Boolean] = js.undefined,
+  loading:        js.UndefOr[Boolean] = js.undefined,
+  loadingIcon:    js.UndefOr[FontAwesomeIcon | String] = js.undefined,
   onClick:        Callback = Callback.empty,
   onClickE:       ReactMouseEventFrom[HTMLButtonElement & Element] => Callback = _ => Callback.empty,
   size:           Button.Size = Button.Size.Normal,
@@ -107,6 +112,11 @@ object Button {
           .applyOrNot(iconWithClass, _.icon(_))
           .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))
           .applyOrNot(props.tooltip, _.tooltip(_))
+          .applyOrNot(props.disabled, _.disabled(_))
+          .applyOrNot(props.loading, _.loading(_))
+          .applyOrNot(props.loadingIcon, (c, p) => c.loadingIcon(p.toPrime))
+          .applyOrNot(props.badge, _.badge(_))
+          .applyOrNot(props.badgeClass, (c, p) => c.badgeClassName(p.htmlClass))
           .applyOrNot(
             props.tooltipOptions,
             (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions])
