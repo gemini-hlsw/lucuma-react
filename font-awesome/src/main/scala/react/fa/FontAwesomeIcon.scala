@@ -3,14 +3,15 @@
 
 package react.fa
 
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.html_<^._
-import react.common._
+import cats.syntax.all.*
+import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
+import react.common.*
 
 import scala.annotation.nowarn
 import scala.scalajs.js
-import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation._
+import scala.scalajs.js.JSConverters.*
+import scala.scalajs.js.annotation.*
 import scala.scalajs.js.|
 
 /**
@@ -49,7 +50,7 @@ final case class FontAwesomeIcon(
   override protected val component = FontAwesomeIcon.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 
-  def clazz(clazz: Css): FontAwesomeIcon = copy(clazz = clazz)
+  def clazz(clazz: Css): FontAwesomeIcon = copy(clazz = this.clazz.toOption.orEmpty |+| clazz)
 
   def color(color: String): FontAwesomeIcon = copy(color = color)
 
