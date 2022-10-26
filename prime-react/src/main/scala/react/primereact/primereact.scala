@@ -67,7 +67,7 @@ extension (icon: FontAwesomeIcon | String)
     case s: String           => s
   }
   def toPrimeWithClass(clazz: Css): Node = icon match {
-    case fa: FontAwesomeIcon => fa.clazz(clazz).raw
+    case fa: FontAwesomeIcon => fa.addClass(clazz).raw
     case s: String           => s
   }
 
