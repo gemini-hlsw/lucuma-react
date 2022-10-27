@@ -238,8 +238,8 @@ object ColumnDef:
     /** WARNING: This mutates the object in-place. */
     def setId(id: ColumnId): Group[T] = Group { toJs.id = id.value; toJs }
 
-    // lazy val columns: List[ColumnDef[T, Any]] =
-    //   toJs.columns.map(_.toList).toOption.orEmpty.map(ColumnDef.fromJs[T, Any])
+    lazy val columns: List[ColumnDef[T, Any]] =
+      toJs.columns.map(_.toList).toOption.orEmpty.map(ColumnDef.fromJs[T, Any])
 
     /** WARNING: This mutates the object in-place. */
     def withColumns(columns: List[ColumnDef[T, Any]]): Group[T] =
