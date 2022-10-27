@@ -9,12 +9,12 @@ import reactST.{tanstackTableCore => raw}
 
 import scalajs.js
 
-trait ColumnDefJS[T, A] extends js.Object:
+trait ColumnDefJs[T, A] extends js.Object:
   var id: String
   var header: js.UndefOr[String | js.Function1[raw.mod.HeaderContext[T, A], Node]]
   var accessorFn: js.UndefOr[js.Function1[T, A]]
   var cell: js.UndefOr[js.Function1[raw.mod.CellContext[T, A], Node]]
-  var columns: js.UndefOr[js.Array[ColumnDefJS[T, ?]]]
+  var columns: js.UndefOr[js.Array[ColumnDefJs[T, Any]]]
   var footer: js.UndefOr[js.Function1[raw.mod.HeaderContext[T, A], Node]]
   var meta: js.UndefOr[Any]
 

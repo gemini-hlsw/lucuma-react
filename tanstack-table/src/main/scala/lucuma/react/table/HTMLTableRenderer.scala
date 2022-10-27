@@ -56,7 +56,7 @@ trait HTMLTableRenderer[T]:
 
   protected def resizer[T](
     header:     raw.mod.Header[T, ?],
-    resizeMode: Option[raw.mod.ColumnResizeMode],
+    resizeMode: Option[ColumnResizeMode],
     sizingInfo: ColumnSizingInfo
   ): VdomNode =
     if (header.column.getCanResize())
@@ -67,7 +67,7 @@ trait HTMLTableRenderer[T]:
         ResizerClass,
         IsResizingColClass.when(header.column.getIsResizing()),
         TagMod.when(
-          resizeMode.contains(raw.mod.ColumnResizeMode.onEnd) && header.column.getIsResizing()
+          resizeMode.contains(ColumnResizeMode.OnEnd) && header.column.getIsResizing()
         )(
           sizingInfo.deltaOffset
             .map(offset => ^.transform := s"translateX(${offset}px)")
@@ -114,7 +114,7 @@ trait HTMLTableRenderer[T]:
                   ) != "undefined"
                 )
             )(
-              <.tr(TheadTrClass, headerRowMod(headerGroup))(^.key := headerGroup.id) {
+              <.tr(TheadTrClass, headerRowMod(headerGroup))(^.key := headerGroup.id)(
                 headerGroup.headers
                   .map(header =>
                     <.th(TheadThClass, headerCellMod(header))(
@@ -139,14 +139,14 @@ trait HTMLTableRenderer[T]:
                           sortIndicator(header.column),
                           resizer(
                             header,
-                            table.optionsRaw.columnResizeMode.toOption,
+                            table.options.columnResizeMode.toOption,
                             table.getState().columnSizingInfo
                           )
                         )
                       )
                     )
                   )
-              }
+              )
             )
           )
           .toTagMod

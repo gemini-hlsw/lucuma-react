@@ -1,0 +1,55 @@
+// Copyright (c) 2016-2022 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
+package lucuma.react.table
+
+import japgolly.scalajs.react.callback.Callback
+import japgolly.scalajs.react.facade.SyntheticEvent
+import org.scalajs.dom
+import reactST.{tanstackTableCore => raw}
+
+import scalajs.js.JSConverters.*
+
+// Missing: Filters
+case class Row[T](private[table] val toJs: raw.mod.Row[T]):
+  lazy val depth: Int                       = toJs.depth.toInt
+  lazy val id: RowId                        = RowId(toJs.id)
+  lazy val index: Int                       = toJs.index.toInt
+  lazy val original: T                      = toJs.original
+  lazy val originalSubRows: Option[List[T]] = toJs.originalSubRows.toOption.map(_.toList)
+  lazy val subRows: List[Row[T]]            = toJs.subRows.toList.map(Row(_))
+  def getAllCells(): List[Cell[T, Any]]     = toJs.getAllCells().toList.map(Cell(_))
+  def getLeafRows(): List[Row[T]]           = toJs.getLeafRows().toList.map(Row(_))
+  def getValue[V](columnId: ColumnId): V = toJs.getValue(columnId.value)
+
+  // Visibility
+  def getVisibleCells(): List[Cell[T, Any]] = toJs.getVisibleCells().toList.map(Cell(_))
+
+  // Column Pinning
+  def getCenterVisibleCells(): List[Cell[T, Any]] = toJs.getCenterVisibleCells().toList.map(Cell(_))
+  def getLeftVisibleCells(): List[Cell[T, Any]]   = toJs.getLeftVisibleCells().toList.map(Cell(_))
+  def getRightVisibleCells(): List[Cell[T, Any]]  = toJs.getRightVisibleCells().toList.map(Cell(_))
+
+  // Row Grouping
+  def getIsGrouped(): Boolean               = toJs.getIsGrouped()
+  lazy val groupingColumnId: Option[String] = toJs.groupingColumnId.toOption
+  lazy val groupingValue: Option[Any]       = toJs.groupingValue.toOption
+
+  // Row Selection
+  def getCanMultiSelect(): Boolean                                     = toJs.getCanMultiSelect()
+  def getCanSelect(): Boolean                                          = toJs.getCanSelect()
+  def getCanSelectSubRows(): Boolean                                   = toJs.getCanSelectSubRows()
+  def getIsAllSubRowsSelected(): Boolean                               = toJs.getIsAllSubRowsSelected()
+  def getIsSelected(): Boolean                                         = toJs.getIsSelected()
+  def getIsSomeSelected(): Boolean                                     = toJs.getIsSomeSelected()
+  def getToggleSelectedHandler(): SyntheticEvent[dom.Node] => Callback =
+    e => Callback(toJs.getToggleSelectedHandler()(e))
+  def toggleSelected(): Callback                                       = Callback(toJs.toggleSelected())
+  def toggleSelected(value: Boolean): Callback = Callback(toJs.toggleSelected(value))
+
+  // Expanded Rows
+  def getCanExpand(): Boolean              = toJs.getCanExpand()
+  def getIsExpanded(): Boolean             = toJs.getIsExpanded()
+  def getToggleExpandedHandler(): Callback = Callback(toJs.getToggleExpandedHandler())
+  def toggleExpanded(): Callback           = Callback(toJs.toggleExpanded())
+  def toggleExpanded(expanded: Boolean): Callback = Callback(toJs.toggleExpanded(expanded))

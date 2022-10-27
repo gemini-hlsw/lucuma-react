@@ -7,24 +7,26 @@ import cats.Endo
 import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.SizePx
+import lucuma.react.table.facade.TableOptionsJs
 import org.scalajs.dom
 import reactST.{tanstackTableCore => raw}
 
 import scalajs.js.JSConverters.*
 
 // Missing: ColumnOrder, ColumnPinning, Filters, Grouping, Pagination
-case class Table[T](private val toJs: raw.mod.Table[T]):
-  def getAllColumns(): List[raw.mod.Column[T, Any]]     = toJs.getAllColumns().toList
-  def getAllFlatColumns(): List[raw.mod.Column[T, Any]] = toJs.getAllFlatColumns().toList
-  def getAllLeafColumns(): List[raw.mod.Column[T, Any]] = toJs.getAllLeafColumns().toList
-  def getColumn(columnId: String): raw.mod.Column[T, Any] = toJs.getColumn(columnId)
+case class Table[T](private[table] val toJs: raw.mod.Table[T]):
+  def getAllColumns(): List[Column[T, Any]]     = toJs.getAllColumns().toList.map(Column(_))
+  def getAllFlatColumns(): List[Column[T, Any]] = toJs.getAllFlatColumns().toList.map(Column(_))
+  def getAllLeafColumns(): List[Column[T, Any]] = toJs.getAllLeafColumns().toList.map(Column(_))
+  def getColumn(columnId: String): Column[T, Any] = Column(toJs.getColumn(columnId))
   def getCoreRowModel(): raw.mod.RowModel[T] = toJs.getCoreRowModel()
-  def getRow(id: String): raw.mod.Row[T] = toJs.getRow(id)
-  def getRowModel(): raw.mod.RowModel[T]       = toJs.getRowModel()
-  def getState(): TableState                   = TableState(toJs.getState())
-  lazy val initialState: TableState            = TableState(toJs.initialState)
-  lazy val optionsRaw: raw.mod.TableOptions[T] = toJs.options.asInstanceOf[raw.mod.TableOptions[T]]
-  def reset(): Callback                        = Callback(toJs.reset())
+  def getRow(id: String): Row[T] = Row(toJs.getRow(id))
+  def getRowModel(): raw.mod.RowModel[T] = toJs.getRowModel()
+  def getState(): TableState             = TableState(toJs.getState())
+  lazy val initialState: TableState      = TableState(toJs.initialState)
+  lazy val options: TableOptions[T]      =
+    TableOptions.fromJs(toJs.options.asInstanceOf[TableOptionsJs[T]])
+  def reset(): Callback                  = Callback(toJs.reset())
   def setState(value: TableState): Callback = Callback(toJs.setState(value.toJs))
   def modState(f: Endo[TableState]): Callback =
     Callback(toJs.setState(rawState => f(TableState(rawState)).toJs))
@@ -48,20 +50,20 @@ case class Table[T](private val toJs: raw.mod.Table[T]):
   def getRightLeafHeaders(): List[raw.mod.Header[T, Any]]   = toJs.getRightLeafHeaders().toList
 
   // Visibility
-  def getCenterVisibleLeafColumns(): List[raw.mod.Column[T, Any]]                  =
-    toJs.getCenterVisibleLeafColumns().toList
+  def getCenterVisibleLeafColumns(): List[Column[T, Any]]                          =
+    toJs.getCenterVisibleLeafColumns().toList.map(Column(_))
   def getIsAllColumnsVisible(): Boolean                                            = toJs.getIsAllColumnsVisible()
   def getIsSomeColumnsVisible(): Boolean                                           = toJs.getIsSomeColumnsVisible()
-  def getLeftVisibleLeafColumns(): List[raw.mod.Column[T, Any]]                    =
-    toJs.getLeftVisibleLeafColumns().toList
-  def getRightVisibleLeafColumns(): List[raw.mod.Column[T, Any]]                   =
-    toJs.getRightVisibleLeafColumns().toList
+  def getLeftVisibleLeafColumns(): List[Column[T, Any]]                            =
+    toJs.getLeftVisibleLeafColumns().toList.map(Column(_))
+  def getRightVisibleLeafColumns(): List[Column[T, Any]]                           =
+    toJs.getRightVisibleLeafColumns().toList.map(Column(_))
   def getToggleAllColumnsVisibilityHandler(): SyntheticEvent[dom.Node] => Callback =
     e => Callback(toJs.getToggleAllColumnsVisibilityHandler()(e))
-  def getVisibleFlatColumns(): List[raw.mod.Column[T, Any]]                        =
-    toJs.getVisibleFlatColumns().toList
-  def getVisibleLeafColumns(): List[raw.mod.Column[T, Any]]                        =
-    toJs.getVisibleLeafColumns().toList
+  def getVisibleFlatColumns(): List[Column[T, Any]]                                =
+    toJs.getVisibleFlatColumns().toList.map(Column(_))
+  def getVisibleLeafColumns(): List[Column[T, Any]]                                =
+    toJs.getVisibleLeafColumns().toList.map(Column(_))
   def resetColumnVisibility(): Callback                                            = Callback(toJs.resetColumnVisibility())
   def resetColumnVisibility(defaultState: Boolean): Callback                       =
     Callback(toJs.resetColumnVisibility(defaultState))

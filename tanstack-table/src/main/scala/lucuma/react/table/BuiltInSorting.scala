@@ -3,10 +3,14 @@
 
 package lucuma.react.table
 
-enum BuiltInSorting(private[table] val raw: String):
+enum BuiltInSorting(private[table] val toJs: String):
   case Alphanumeric              extends BuiltInSorting("alphanumeric")
   case AlphanumericCaseSensitive extends BuiltInSorting("alphanumericCaseSensitive")
   case Text                      extends BuiltInSorting("text")
   case TextCaseSensitive         extends BuiltInSorting("textCaseSensitive")
   case Datetime                  extends BuiltInSorting("datetime")
   case Basic                     extends BuiltInSorting("basic")
+
+object BuiltInSorting:
+  private[table] def fromJs(rawValue: String): BuiltInSorting =
+    BuiltInSorting.values.find(_.toJs == rawValue).get

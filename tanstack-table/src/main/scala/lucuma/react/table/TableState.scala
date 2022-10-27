@@ -9,42 +9,49 @@ import reactST.{tanstackTableCore => raw}
 import scalajs.js
 
 // Still missing (everywhere): filters, grouping, pagination
-case class TableState(val toJs: raw.mod.TableState):
+case class TableState(private[table] val toJs: raw.mod.TableState):
   lazy val columnVisibility: ColumnVisibility = ColumnVisibility.fromJs(toJs.columnVisibility)
 
-  def withColumnVisibility(columnVisibility: ColumnVisibility): TableState =
+  /** WARNING: This mutates the object in-place. */
+  def setColumnVisibility(columnVisibility: ColumnVisibility): TableState =
     TableState(toJs.setColumnVisibility(columnVisibility.toJs))
 
   lazy val columnOrder: ColumnOrder = ColumnOrder.fromJs(toJs.columnOrder)
 
-  def withColumnOrder(columnOrder: ColumnOrder): TableState =
+  /** WARNING: This mutates the object in-place. */
+  def setColumnOrder(columnOrder: ColumnOrder): TableState =
     TableState(toJs.setColumnOrder(columnOrder.toJs))
 
   lazy val columnPinning: ColumnPinning = ColumnPinning.fromJs(toJs.columnPinning)
 
   lazy val sorting: Sorting = Sorting.fromJs(toJs.sorting)
 
-  def withSorting(sorting: Sorting): TableState =
+  /** WARNING: This mutates the object in-place. */
+  def setSorting(sorting: Sorting): TableState =
     TableState(toJs.setSorting(sorting.toJs))
 
   lazy val expanded: Expanded = Expanded.fromJs(toJs.expanded)
 
-  def withExpanded(expanded: Expanded): TableState =
+  /** WARNING: This mutates the object in-place. */
+  def setExpanded(expanded: Expanded): TableState =
     TableState(toJs.setExpanded(expanded.toJs))
 
   lazy val columnSizing: ColumnSizing = ColumnSizing.fromJs(toJs.columnSizing)
 
-  def withColumnSizing(columnSizing: ColumnSizing): TableState =
+  /** WARNING: This mutates the object in-place. */
+  def setColumnSizing(columnSizing: ColumnSizing): TableState =
     TableState(toJs.setColumnSizing(columnSizing.toJs))
 
   lazy val columnSizingInfo: ColumnSizingInfo = ColumnSizingInfo.fromJs(toJs.columnSizingInfo)
 
-  def withColumnSizingInfo(columnSizingInfo: ColumnSizingInfo): TableState =
+  /** WARNING: This mutates the object in-place. */
+  def setColumnSizingInfo(columnSizingInfo: ColumnSizingInfo): TableState =
     TableState(toJs.setColumnSizingInfo(columnSizingInfo.toJs))
 
   lazy val rowSelection: RowSelection = RowSelection.fromJs(toJs.rowSelection)
 
-  def withRowSelection(rowSelection: RowSelection): TableState =
+  /** WARNING: This mutates the object in-place. */
+  def setRowSelection(rowSelection: RowSelection): TableState =
     TableState(toJs.setRowSelection(rowSelection.toJs))
 
 object TableState:

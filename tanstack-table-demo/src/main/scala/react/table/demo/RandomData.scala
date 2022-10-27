@@ -5,19 +5,18 @@ package react.table.demo
 
 import lucuma.react.table.Expandable
 
-import scala.util.Random.nextInt
+import scala.util.Random
 
 // word lists and code adapted from https://github.com/bmarcot/haiku
 object RandomData {
-  def getRandElt[A](xs: List[A]): A = xs.apply(nextInt(xs.size))
+  def getRandElt[A](xs: List[A]): A = xs.apply(Random.nextInt(xs.size))
 
-  def getAge: Int = nextInt(110)
+  def getAge: Int = Random.nextInt(110)
 
   def newPerson(id: Int) = Person(id, getRandElt(adjs), getRandElt(nouns), getAge)
 
   def newExpandablePerson(id: Int) =
-    Expandable(newPerson(id))
-      .withSubRows((0 to nextInt(5)).toList.map(newPerson).map(Expandable.apply))
+    Expandable(newPerson(id), (0 to Random.nextInt(5)).toList.map(newPerson).map(Expandable(_)))
 
   def randomPeople(count: Int) = (0 to count).map(newPerson).toList
 
