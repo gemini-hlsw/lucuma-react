@@ -41,6 +41,10 @@ trait PrimeStyles {
   // Tag
   val TagIcon: Css = Css("p-tag-icon")
 
+  // Messages
+  val MessageIcon: Css       = Css("p-message-icon")
+  val InlineMessageIcon: Css = Css("p-inline-message-icon")
+
   // Sidebar
   val SidebarSmall: Css  = Css("p-sidebar-sm")
   val SidebarMedium: Css = Css("p-sidebar-md")

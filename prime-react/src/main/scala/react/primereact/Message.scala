@@ -44,7 +44,7 @@ object Message:
       .applyOrNot(props.severity, (c, p) => c.severity(p.value))
       .applyOrNot(props.text, (c, p) => c.text(p.rawNode))
       .applyOrNot(props.content, (c, p) => c.content(p.rawNode))
-      .applyOrNot(props.icon, (c, p) => c.icon(p.toPrime))
+      .applyOrNot(props.icon, (c, p) => c.icon(p.toPrimeWithClass(PrimeStyles.InlineMessageIcon)))
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(
         props.modifiers.toTagMod
       )

@@ -3,4 +3,7 @@
 
 package react.primereact.hooks
 
-object all extends UsePopupMenuRef.HooksApiExt with UseToastRef.HooksApiExt
+object all
+    extends UsePopupMenuRef.HooksApiExt
+    with UseToastRef.HooksApiExt
+    with UseMessagesRef.HooksApiExt
