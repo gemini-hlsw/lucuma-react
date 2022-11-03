@@ -86,6 +86,7 @@ object DemoComponents {
       .useState(0)                       // tabMenu activeIndex
       .usePopupMenuRef
       .useToastRef
+      .useMessagesRef
       .render {
         (
           _,
@@ -96,7 +97,8 @@ object DemoComponents {
           tabView,
           tabMenu,
           popupMenuRef,
-          toastRef
+          toastRef,
+          messagesRef
         ) =>
           val menuItems = List(
             MenuItem.SubMenu("SubMenu", icon = "pi pi-bolt")(
@@ -330,6 +332,19 @@ object DemoComponents {
                   )
                 )
               ),
+              Panel(header = "Messages")(
+                Button(label = "Show Message",
+                       onClick = messagesRef
+                         .show(
+                           MessageItem(severity = Message.Severity.Error,
+                                       detail = "A Message",
+                                       icon = "pi pi-bolt",
+                                       sticky = true
+                           )
+                         )
+                ),
+                Messages().withRef(messagesRef.ref)
+              ),
               Panel(header = "Dialog")(
                 <.div(
                   DemoStyles.VerticalStack,
@@ -473,229 +488,224 @@ object DemoComponents {
                     )
                   )
                 )
-                // )
-                // )
+              )
+            ),
+            Panel(
+              header = React.Fragment(<.div("A collapsable Panel containing a Splitter"),
+                                      <.small("* See the console for event information")
               ),
-              Panel(
-                header = React.Fragment(<.div("A collapsable Panel containing a Splitter"),
-                                        <.small("* See the console for event information")
+              toggleable = true,
+              collapsed = panelCollapsed.value,
+              onCollapse = Callback.log("Panel onCollapse"),
+              onExpand = Callback.log("Panel onExpand"),
+              onToggle = b => Callback.log(s"Panel onToggle($b)") >> panelCollapsed.setState(b)
+            ).withMods(mouseEntered("Panel"))(
+              Splitter(onResizeEnd =
+                (left, right) => Callback.log(s"Splitter onResizeEnd($left, $right)")
+              ).withMods(mouseEntered("Splitter"))(
+                SplitterPanel(size = 30)(
+                  mouseEntered("SplitterPanel"),
+                  Button(label = "Open Sidebar",
+                         onClick = sidebarOptions.modState(_.copy(visible = true))
+                  )
                 ),
-                toggleable = true,
-                collapsed = panelCollapsed.value,
-                onCollapse = Callback.log("Panel onCollapse"),
-                onExpand = Callback.log("Panel onExpand"),
-                onToggle = b => Callback.log(s"Panel onToggle($b)") >> panelCollapsed.setState(b)
-              ).withMods(mouseEntered("Panel"))(
-                Splitter(onResizeEnd =
-                  (left, right) => Callback.log(s"Splitter onResizeEnd($left, $right)")
-                ).withMods(mouseEntered("Splitter"))(
-                  SplitterPanel(size = 30)(
-                    mouseEntered("SplitterPanel"),
-                    Button(label = "Open Sidebar",
-                           onClick = sidebarOptions.modState(_.copy(visible = true))
+                SplitterPanel(size = 70)(
+                  <.h2("Sidebar Options"),
+                  <.div(
+                    DemoStyles.FormColumn,
+                    <.label("Position", ^.htmlFor := "sidebar-position", DemoStyles.FormFieldLabel),
+                    SelectButton(
+                      id = "sidebar-position",
+                      value = sidebarOptions.value.position,
+                      options = SelectItem
+                        .fromTupleList[Sidebar.Position](
+                          List(
+                            (Sidebar.Position.Top, "Top"),
+                            (Sidebar.Position.Bottom, "Bottom"),
+                            (Sidebar.Position.Left, "Left"),
+                            (Sidebar.Position.Right, "Right")
+                          )
+                        ),
+                      onChange = v => sidebarOptions.modState(_.copy(position = v))
+                    ),
+                    <.label("Size", ^.htmlFor     := "sidebar-size", DemoStyles.FormFieldLabel),
+                    SelectButton(
+                      id = "sidebar-size",
+                      value = sidebarOptions.value.size,
+                      options = SelectItem
+                        .fromTupleList[Sidebar.Size](
+                          List(
+                            (Sidebar.Size.Small, "Small"),
+                            (Sidebar.Size.Medium, "Medium"),
+                            (Sidebar.Size.Large, "Large")
+                          )
+                        ),
+                      onChange = v => sidebarOptions.modState(_.copy(size = v))
+                    ),
+                    <.label("Close On Escape",
+                            ^.htmlFor             := "sidebar-closeonescape",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    InputSwitch(
+                      inputId = "sidebar-closeonescape",
+                      checked = sidebarOptions.value.closeOnEscape,
+                      onChange = v => sidebarOptions.modState(_.copy(closeOnEscape = v))
+                    ),
+                    <.label("Dismissable",
+                            ^.htmlFor             := "sidebar-dismissable",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    InputSwitch(
+                      inputId = "sidebar-dismissable",
+                      checked = sidebarOptions.value.dismissable,
+                      onChange = v => sidebarOptions.modState(_.copy(dismissable = v))
+                    ),
+                    <.label("Modal", ^.htmlFor    := "sidebar-modal", DemoStyles.FormFieldLabel),
+                    InputSwitch(
+                      inputId = "sidebar-modal",
+                      checked = sidebarOptions.value.modal,
+                      onChange = v => sidebarOptions.modState(_.copy(modal = v))
+                    ),
+                    <.label("Full Screen",
+                            ^.htmlFor             := "sidebar-fullscreen",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    InputSwitch(
+                      inputId = "sidebar-fullscreen",
+                      checked = sidebarOptions.value.fullScreen,
+                      onChange = v => sidebarOptions.modState(_.copy(fullScreen = v))
+                    ),
+                    <.label("Block Scroll",
+                            ^.htmlFor             := "sidebar-blockscroll",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    InputSwitch(
+                      inputId = "sidebar-blockscroll",
+                      checked = sidebarOptions.value.blockScroll,
+                      onChange = v => sidebarOptions.modState(_.copy(blockScroll = v))
+                    ),
+                    <.label("Show Close Icon",
+                            ^.htmlFor             := "sidebar-closeicon",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    InputSwitch(
+                      inputId = "sidebar-closeicon",
+                      checked = sidebarOptions.value.showCloseIcon,
+                      onChange = v => sidebarOptions.modState(_.copy(showCloseIcon = v))
+                    ),
+                    <.label("Custom Icons",
+                            ^.htmlFor             := "sidebar-custom-icons",
+                            DemoStyles.FormFieldLabel
+                    ),
+                    InputSwitch(
+                      inputId = "sidebar-custom-icons",
+                      checked = sidebarOptions.value.customIcons,
+                      onChange = v => sidebarOptions.modState(_.copy(customIcons = v))
                     )
+                  )
+                )
+              )
+            ),
+            Panel(header = "Panel containing an Accordion. There is also AccordionMultiple.")
+              .withMods(mouseEntered("Accordion"))(
+                Accordion(activeIndex = 0)(
+                  AccordionTab(header = "Polka")(
+                    "The polka is originally a Czech dance and genre of dance music familiar throughout all of Europe and the Americas. It originated in the middle of the nineteenth century in German and Austrian influenced Bohemia, now part of the Czech Republic. The polka remains a popular folk music genre in many western countries. [From Wikipedia]"
                   ),
-                  SplitterPanel(size = 70)(
-                    <.h2("Sidebar Options"),
-                    <.div(
-                      DemoStyles.FormColumn,
-                      <.label("Position",
-                              ^.htmlFor          := "sidebar-position",
-                              DemoStyles.FormFieldLabel
-                      ),
-                      SelectButton(
-                        id = "sidebar-position",
-                        value = sidebarOptions.value.position,
-                        options = SelectItem
-                          .fromTupleList[Sidebar.Position](
-                            List(
-                              (Sidebar.Position.Top, "Top"),
-                              (Sidebar.Position.Bottom, "Bottom"),
-                              (Sidebar.Position.Left, "Left"),
-                              (Sidebar.Position.Right, "Right")
-                            )
-                          ),
-                        onChange = v => sidebarOptions.modState(_.copy(position = v))
-                      ),
-                      <.label("Size", ^.htmlFor  := "sidebar-size", DemoStyles.FormFieldLabel),
-                      SelectButton(
-                        id = "sidebar-size",
-                        value = sidebarOptions.value.size,
-                        options = SelectItem
-                          .fromTupleList[Sidebar.Size](
-                            List(
-                              (Sidebar.Size.Small, "Small"),
-                              (Sidebar.Size.Medium, "Medium"),
-                              (Sidebar.Size.Large, "Large")
-                            )
-                          ),
-                        onChange = v => sidebarOptions.modState(_.copy(size = v))
-                      ),
-                      <.label("Close On Escape",
-                              ^.htmlFor          := "sidebar-closeonescape",
-                              DemoStyles.FormFieldLabel
-                      ),
-                      InputSwitch(
-                        inputId = "sidebar-closeonescape",
-                        checked = sidebarOptions.value.closeOnEscape,
-                        onChange = v => sidebarOptions.modState(_.copy(closeOnEscape = v))
-                      ),
-                      <.label("Dismissable",
-                              ^.htmlFor          := "sidebar-dismissable",
-                              DemoStyles.FormFieldLabel
-                      ),
-                      InputSwitch(
-                        inputId = "sidebar-dismissable",
-                        checked = sidebarOptions.value.dismissable,
-                        onChange = v => sidebarOptions.modState(_.copy(dismissable = v))
-                      ),
-                      <.label("Modal", ^.htmlFor := "sidebar-modal", DemoStyles.FormFieldLabel),
-                      InputSwitch(
-                        inputId = "sidebar-modal",
-                        checked = sidebarOptions.value.modal,
-                        onChange = v => sidebarOptions.modState(_.copy(modal = v))
-                      ),
-                      <.label("Full Screen",
-                              ^.htmlFor          := "sidebar-fullscreen",
-                              DemoStyles.FormFieldLabel
-                      ),
-                      InputSwitch(
-                        inputId = "sidebar-fullscreen",
-                        checked = sidebarOptions.value.fullScreen,
-                        onChange = v => sidebarOptions.modState(_.copy(fullScreen = v))
-                      ),
-                      <.label("Block Scroll",
-                              ^.htmlFor          := "sidebar-blockscroll",
-                              DemoStyles.FormFieldLabel
-                      ),
-                      InputSwitch(
-                        inputId = "sidebar-blockscroll",
-                        checked = sidebarOptions.value.blockScroll,
-                        onChange = v => sidebarOptions.modState(_.copy(blockScroll = v))
-                      ),
-                      <.label("Show Close Icon",
-                              ^.htmlFor          := "sidebar-closeicon",
-                              DemoStyles.FormFieldLabel
-                      ),
-                      InputSwitch(
-                        inputId = "sidebar-closeicon",
-                        checked = sidebarOptions.value.showCloseIcon,
-                        onChange = v => sidebarOptions.modState(_.copy(showCloseIcon = v))
-                      ),
-                      <.label("Custom Icons",
-                              ^.htmlFor          := "sidebar-custom-icons",
-                              DemoStyles.FormFieldLabel
-                      ),
-                      InputSwitch(
-                        inputId = "sidebar-custom-icons",
-                        checked = sidebarOptions.value.customIcons,
-                        onChange = v => sidebarOptions.modState(_.copy(customIcons = v))
-                      )
-                    )
+                  AccordionTab(header = "Zydeco")(
+                    "Zydeco (/ˈzaɪdɪˌkoʊ/ ZY-dih-koh or /ˈzaɪdiˌkoʊ/ ZY-dee-koh, French: Zarico) is a music genre that evolved in southwest Louisiana by French Creole speakers which blends blues, rhythm and blues, and music indigenous to the Louisiana Creoles and the Native American people of Louisiana. Although it is distinct in origin from the Cajun music of Louisiana, the two forms influenced each other, forming a complex of genres native to the region. [From Wikipedia]"
+                  ),
+                  AccordionTab(header = "Weird Al")(mouseEntered("Weird Al"),
+                                                    "Well, Weird Al. What else can we say?"
                   )
                 )
               ),
-              Panel(header = "Panel containing an Accordion. There is also AccordionMultiple.")
-                .withMods(mouseEntered("Accordion"))(
-                  Accordion(activeIndex = 0)(
-                    AccordionTab(header = "Polka")(
-                      "The polka is originally a Czech dance and genre of dance music familiar throughout all of Europe and the Americas. It originated in the middle of the nineteenth century in German and Austrian influenced Bohemia, now part of the Czech Republic. The polka remains a popular folk music genre in many western countries. [From Wikipedia]"
-                    ),
-                    AccordionTab(header = "Zydeco")(
-                      "Zydeco (/ˈzaɪdɪˌkoʊ/ ZY-dih-koh or /ˈzaɪdiˌkoʊ/ ZY-dee-koh, French: Zarico) is a music genre that evolved in southwest Louisiana by French Creole speakers which blends blues, rhythm and blues, and music indigenous to the Louisiana Creoles and the Native American people of Louisiana. Although it is distinct in origin from the Cajun music of Louisiana, the two forms influenced each other, forming a complex of genres native to the region. [From Wikipedia]"
-                    ),
-                    AccordionTab(header = "Weird Al")(mouseEntered("Weird Al"),
-                                                      "Well, Weird Al. What else can we say?"
-                    )
-                  )
-                ),
-              TabView(
-                // I don't think you need to set `activeIndex` if you don't specify `onTabChange`
-                activeIndex = tabView.value,
-                onTabChange =
-                  idx => Callback.log(s"TabView onTabChange: $idx") >> tabView.setState(idx),
-                onTabClose = idx => Callback.log(s"TabView onTabClose: $idx")
-              ).withMods(mouseEntered("TabView"))(
-                TabPanel(header = "Simple Header")(mouseEntered("TabPanel"), "Simple Tab Contents"),
-                TabPanel(header = <.div(DemoStyles.HorizontalStack, "TagMod", <.small("Header")))(
-                  "Special Header Contents"
-                ),
-                TabPanel(header = "Closable Tab", leftIcon = "pi pi-bolt", closable = true)(
-                  "I'm not sure how useful Closable Tabs will be..."
-                ),
-                TabPanel(header = "Disabled Tab", disabled = true)(
-                  "You shouldn't be able to see this!"
-                )
+            TabView(
+              // I don't think you need to set `activeIndex` if you don't specify `onTabChange`
+              activeIndex = tabView.value,
+              onTabChange =
+                idx => Callback.log(s"TabView onTabChange: $idx") >> tabView.setState(idx),
+              onTabClose = idx => Callback.log(s"TabView onTabClose: $idx")
+            ).withMods(mouseEntered("TabView"))(
+              TabPanel(header = "Simple Header")(mouseEntered("TabPanel"), "Simple Tab Contents"),
+              TabPanel(header = <.div(DemoStyles.HorizontalStack, "TagMod", <.small("Header")))(
+                "Special Header Contents"
               ),
-              Panel(header = "Some Menus - see PopupMenu in the top ToolBar")(
-                <.div(
-                  DemoStyles.VerticalStack,
-                  <.label("Inline Menu", DemoStyles.FormFieldLabel),
-                  InlineMenu(model = menuItems)(mouseEntered("InlineMenu")),
-                  <.label("Tab Menu", DemoStyles.FormFieldLabel),
-                  TabMenu(
-                    model = List(MenuItem.Item("Tab 1", icon = "pi pi-hourglass"),
-                                 MenuItem.Item("Tab 2", "pi pi-send"),
-                                 MenuItem.Item("Tab 3", command = Callback.log("Tab 3 clicked"))
-                    ),
-                    activeIndex = tabMenu.value,
-                    onTabChange = (i, mi) =>
-                      Callback.log(s"Changed tab to $i: ${mi.label}") >> tabMenu.setState(i)
-                  )(mouseEntered("TabMenu"))
-                )
+              TabPanel(header = "Closable Tab", leftIcon = "pi pi-bolt", closable = true)(
+                "I'm not sure how useful Closable Tabs will be..."
               ),
-              DemoControlsPanel(),
-              Dialog(
-                onHide = dialogOptions.modState(_.copy(visible = false)),
-                visible = dialogOptions.value.visible,
-                header = "A Dialog",
-                footer = Button(onClick = dialogOptions.modState(_.copy(visible = false)),
-                                label = "Close Me",
-                                size = Button.Size.Small,
-                                rounded = true,
-                                outlined = true
-                ),
-                clazz = Css("whatever"),
-                position = dialogOptions.value.position,
-                resizable = dialogOptions.value.resizable,
-                draggable = dialogOptions.value.draggable,
-                keepInViewport = dialogOptions.value.keepInViewPort,
-                maximizable = dialogOptions.value.maximizable,
-                blockScroll = dialogOptions.value.blockScroll,
-                dismissableMask = dialogOptions.value.dismissableMask,
-                closable = dialogOptions.value.closable,
-                closeOnEscape = dialogOptions.value.closeOnEscape,
-                modal = dialogOptions.value.modal,
-                showHeader = dialogOptions.value.showHeader,
-                icons = customIcons(dialogOptions.value.customIcons)
-              )("The contents of the dialog."),
-              ConfirmPopup(),
-              ConfirmDialog(),
-              PopupMenu(
-                menuItems,
-                onShow = Callback.log("Showing PopupMenu"),
-                onHide = Callback.log("Hiding PopupMenu")
-              ).withMods(
-                mouseEntered("PopupMenu"),
-                ^.onMouseLeave --> Callback.log("Mouse left: PopupMenu")
-              ).withRef(popupMenuRef.ref),
-              Sidebar(
-                visible = sidebarOptions.value.visible,
-                onHide = sidebarOptions.modState(_.copy(visible = false)),
-                position = sidebarOptions.value.position,
-                size = sidebarOptions.value.size,
-                dismissable = sidebarOptions.value.dismissable,
-                closeOnEscape = sidebarOptions.value.closeOnEscape,
-                modal = sidebarOptions.value.modal,
-                fullScreen = sidebarOptions.value.fullScreen,
-                blockScroll = sidebarOptions.value.blockScroll,
-                icons = customIcons(sidebarOptions.value.customIcons),
-                showCloseIcon = sidebarOptions.value.showCloseIcon
-              ).withMods(mouseEntered("Sidebar"))(<.div(<.div("Some stuff"), <.div("More stuff"))),
-              Toast(position = toastPosition.value)
-                .withMods(mouseEntered("Toast"))
-                .withRef(toastRef.ref)
-            )
+              TabPanel(header = "Disabled Tab", disabled = true)(
+                "You shouldn't be able to see this!"
+              )
+            ),
+            Panel(header = "Some Menus - see PopupMenu in the top ToolBar")(
+              <.div(
+                DemoStyles.VerticalStack,
+                <.label("Inline Menu", DemoStyles.FormFieldLabel),
+                InlineMenu(model = menuItems)(mouseEntered("InlineMenu")),
+                <.label("Tab Menu", DemoStyles.FormFieldLabel),
+                TabMenu(
+                  model = List(MenuItem.Item("Tab 1", icon = "pi pi-hourglass"),
+                               MenuItem.Item("Tab 2", "pi pi-send"),
+                               MenuItem.Item("Tab 3", command = Callback.log("Tab 3 clicked"))
+                  ),
+                  activeIndex = tabMenu.value,
+                  onTabChange = (i, mi) =>
+                    Callback.log(s"Changed tab to $i: ${mi.label}") >> tabMenu.setState(i)
+                )(mouseEntered("TabMenu"))
+              )
+            ),
+            DemoControlsPanel(),
+            Dialog(
+              onHide = dialogOptions.modState(_.copy(visible = false)),
+              visible = dialogOptions.value.visible,
+              header = "A Dialog",
+              footer = Button(onClick = dialogOptions.modState(_.copy(visible = false)),
+                              label = "Close Me",
+                              size = Button.Size.Small,
+                              rounded = true,
+                              outlined = true
+              ),
+              clazz = Css("whatever"),
+              position = dialogOptions.value.position,
+              resizable = dialogOptions.value.resizable,
+              draggable = dialogOptions.value.draggable,
+              keepInViewport = dialogOptions.value.keepInViewPort,
+              maximizable = dialogOptions.value.maximizable,
+              blockScroll = dialogOptions.value.blockScroll,
+              dismissableMask = dialogOptions.value.dismissableMask,
+              closable = dialogOptions.value.closable,
+              closeOnEscape = dialogOptions.value.closeOnEscape,
+              modal = dialogOptions.value.modal,
+              showHeader = dialogOptions.value.showHeader,
+              icons = customIcons(dialogOptions.value.customIcons)
+            )("The contents of the dialog."),
+            ConfirmPopup(),
+            ConfirmDialog(),
+            PopupMenu(
+              menuItems,
+              onShow = Callback.log("Showing PopupMenu"),
+              onHide = Callback.log("Hiding PopupMenu")
+            ).withMods(
+              mouseEntered("PopupMenu"),
+              ^.onMouseLeave --> Callback.log("Mouse left: PopupMenu")
+            ).withRef(popupMenuRef.ref),
+            Sidebar(
+              visible = sidebarOptions.value.visible,
+              onHide = sidebarOptions.modState(_.copy(visible = false)),
+              position = sidebarOptions.value.position,
+              size = sidebarOptions.value.size,
+              dismissable = sidebarOptions.value.dismissable,
+              closeOnEscape = sidebarOptions.value.closeOnEscape,
+              modal = sidebarOptions.value.modal,
+              fullScreen = sidebarOptions.value.fullScreen,
+              blockScroll = sidebarOptions.value.blockScroll,
+              icons = customIcons(sidebarOptions.value.customIcons),
+              showCloseIcon = sidebarOptions.value.showCloseIcon
+            ).withMods(mouseEntered("Sidebar"))(<.div(<.div("Some stuff"), <.div("More stuff"))),
+            Toast(position = toastPosition.value)
+              .withMods(mouseEntered("Toast"))
+              .withRef(toastRef.ref)
           )
       }
 }
