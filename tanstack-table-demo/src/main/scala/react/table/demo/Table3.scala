@@ -59,7 +59,7 @@ object Table3:
           HTMLVirtualizedTable(
             table,
             containerMod = Css("container"),
-            estimateRowHeight = _ => 24.toPx
+            estimateSize = _ => 24.toPx
           )
         )
       )

@@ -153,8 +153,16 @@ trait HTMLTableRenderer[T]:
       ),
       <.tbody(TbodyClass, bodyMod)(
         paddingTop
-          .filter(_ > 0)
-          .map(p => <.tr(TbodyTrClass)(<.td(TbodyTdClass, ^.height := s"${p}px")))
+          .filter(_ > 1)
+          .map(p =>
+            <.tr(TbodyTrClass)(
+              <.td(
+                TbodyTdClass,
+                ^.colSpan := table.getAllLeafColumns().length,
+                ^.height  := s"${p}px"
+              )
+            )
+          )
           .whenDefined
       )(
         TagMod.when(rows.isEmpty)(
@@ -194,8 +202,16 @@ trait HTMLTableRenderer[T]:
           )
       )(
         paddingBottom
-          .filter(_ > 0)
-          .map(p => <.tr(TbodyTrClass)(<.td(TbodyTdClass, ^.height := s"${p}px")))
+          .filter(_ > 1)
+          .map(p =>
+            <.tr(TbodyTrClass)(
+              <.td(
+                TbodyTdClass,
+                ^.colSpan := table.getAllLeafColumns().length,
+                ^.height  := s"${p}px"
+              )
+            )
+          )
           .whenDefined
       ),
       <.tfoot(TfootClass, footerMod)(
@@ -257,11 +273,12 @@ object HTMLTableRenderer:
       .useVirtualizerBy((props, ref) =>
         VirtualOptions(
           count = props.table.getRowModel().rows.length,
-          estimateSize = props.estimateRowHeight,
+          estimateSize = props.estimateSize,
           getScrollElement = ref.get,
           overscan = props.overscan,
           getItemKey = props.getItemKey,
-          onChange = props.onChange
+          onChange = props.onChange,
+          debug = props.debugVirtualizer
         )
       )
       .useEffectOnMountBy((props, _, virtualizer) => // Allow external access to Virtualizer
@@ -302,7 +319,7 @@ object HTMLTableRenderer:
       .useVirtualizerBy((props, ref) =>
         VirtualOptions(
           count = props.table.getRowModel().rows.length,
-          estimateSize = props.estimateRowHeight,
+          estimateSize = props.estimateSize,
           getScrollElement = ref.get,
           overscan = props.overscan,
           getItemKey = props.getItemKey,
