@@ -32,6 +32,7 @@ object DemoControlsPanel {
     .useState(List(1, 3))            // for SelectButtonMultiple
     .useState(false)                 // for ToggleButton
     .useState(50)                    // for ProgressBar
+    .useState("option-1")            // for RadioButton
     .render {
       (
         _,
@@ -50,7 +51,8 @@ object DemoControlsPanel {
         selectButtonOptional,
         selectButtonMultiple,
         toggleButton,
-        progressBar
+        progressBar,
+        radioButton
       ) =>
         val options: List[SelectItem[Int]] =
           List(
@@ -277,11 +279,16 @@ object DemoControlsPanel {
                 RadioButton("option 1",
                             id = "option-1",
                             name = "option",
-                            checked = false,
-                            onChange = (a, c) => Callback.log(s"$a $c")
+                            checked = radioButton.value === "option-1",
+                            onChange = (a, c) => radioButton.setState(a).when_(c)
                 ),
                 <.label("Option 1", ^.htmlFor := "option-1", DemoStyles.FormFieldLabel),
-                RadioButton("option 2", id = "option-2", name = "option", checked = false),
+                RadioButton("option 2",
+                            id = "option-2",
+                            name = "option",
+                            checked = radioButton.value === "option-2",
+                            onChange = (a, c) => radioButton.setState(a).when_(c)
+                ),
                 <.label("Option 2", ^.htmlFor := "option-2", DemoStyles.FormFieldLabel)
               ),
               <.label("Message", DemoStyles.FormFieldLabel),

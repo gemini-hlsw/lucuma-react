@@ -24,41 +24,17 @@ case class RadioButton[A](
   onChange:       js.UndefOr[(A, Boolean) => Callback] = js.undefined,
   modifiers:      Seq[TagMod] = Seq.empty
 )(using val eqAA: Eq[A])
-    extends ReactFnProps[RadioButtonBase](RadioButtonBase.component)
-    with RadioButtonBase {
-  type AA    = A
-  type GG[X] = Id[X]
+    extends ReactFnProps[RadioButton[Any]](RadioButton.component) {
 
-  protected def valueFinder(i: Any): GG[AA] = i.asInstanceOf[A]
+  protected def valueFinder(i: Any): A = i.asInstanceOf[A]
 
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods:          TagMod*)     = addModifiers(mods)
   def apply(mods:             TagMod*)     = addModifiers(mods)
 }
 
-private[primereact] trait RadioButtonBase {
-  protected type AA
-  protected type GG[_]
-  implicit val eqAA: Eq[AA]
-
-  val value: GG[AA]
-  val id: js.UndefOr[String]
-  val inputId: js.UndefOr[String]
-  val name: js.UndefOr[String]
-  val disabled: js.UndefOr[Boolean]
-  val clazz: js.UndefOr[Css]
-  val checked: js.UndefOr[Boolean]
-  val required: js.UndefOr[Boolean]
-  val onChange: js.UndefOr[(GG[AA], Boolean) => Callback]
-  val modifiers: Seq[TagMod]
-
-  // used by onChange
-  protected def valueFinder(i: Any): GG[AA]
-
-}
-
-object RadioButtonBase {
-  private[primereact] val component = ScalaFnComponent[RadioButtonBase] { props =>
+object RadioButton {
+  private[primereact] val component = ScalaFnComponent[RadioButton[Any]] { props =>
     CRadioButton
       .value(props.value)
       .applyOrNot(props.id, _.id(_))
