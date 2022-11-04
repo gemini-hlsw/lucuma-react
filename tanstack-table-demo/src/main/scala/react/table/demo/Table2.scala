@@ -39,7 +39,7 @@ object Table2:
             table,
             containerMod = Css("container"),
             rowMod = row => rowClassEvenOdd(row.index.toInt),
-            estimateRowHeight = _ => 24.toPx
+            estimateSize = _ => 24.toPx
           )
         )
       )

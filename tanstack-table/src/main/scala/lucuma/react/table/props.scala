@@ -37,7 +37,7 @@ trait HTMLTableProps[T]:
 type HTMLTableVirtualizer = Virtualizer[HTMLDivElement, Element]
 
 trait HTMLVirtualizedTableProps[T] extends HTMLTableProps[T]:
-  def estimateRowHeight: Int => SizePx
+  def estimateSize: Int => SizePx
   // Table options
   def containerMod: TagMod
   // Virtual options
@@ -45,6 +45,7 @@ trait HTMLVirtualizedTableProps[T] extends HTMLTableProps[T]:
   def getItemKey: js.UndefOr[Int => rawVirtual.mod.Key]
   def onChange: js.UndefOr[HTMLTableVirtualizer => Callback]
   def virtualizerRef: js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]]
+  def debugVirtualizer: js.UndefOr[Boolean]
 
 trait HTMLAutoHeightVirtualizedTableProps[T] extends HTMLVirtualizedTableProps[T]:
   def innerContainerMod: TagMod

@@ -44,13 +44,13 @@ trait TableOptionsJs[T] extends js.Object:
   var sortDescFirst: js.UndefOr[Boolean]                                    = js.undefined
 
   // Selection
-  var enableRowSelection: js.UndefOr[Boolean]                                   = js.undefined
-  var enableMultiRowSelection: js.UndefOr[Boolean]                              = js.undefined
-  var onSelectChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.RowSelectionState]] =
+  var enableRowSelection: js.UndefOr[Boolean]                                         = js.undefined
+  var enableMultiRowSelection: js.UndefOr[Boolean]                                    = js.undefined
+  var onRowSelectionChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.RowSelectionState]] =
     js.undefined
   // Expanding
-  var enableExpanding: js.UndefOr[Boolean]                                      = js.undefined
+  var enableExpanding: js.UndefOr[Boolean]                                            = js.undefined
   var getExpandedRowModel: js.UndefOr[
     js.Function1[raw.mod.Table[T], js.Function0[raw.mod.RowModel[T]]]
-  ]                                                                             = js.undefined
-  var getSubRows: js.UndefOr[js.Function2[T, Int, js.UndefOr[js.Array[T]]]]     = js.undefined
+  ]                                                                                   = js.undefined
+  var getSubRows: js.UndefOr[js.Function2[T, Int, js.UndefOr[js.Array[T]]]]           = js.undefined

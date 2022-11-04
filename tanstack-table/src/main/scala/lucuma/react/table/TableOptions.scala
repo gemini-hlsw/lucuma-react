@@ -240,8 +240,8 @@ sealed trait TableOptions[T]:
   def setEnableMultiRowSelection(enableMultiRowSelection: js.UndefOr[Boolean]): TableOptions[T] =
     copy(_.enableMultiRowSelection = enableMultiRowSelection)
 
-  lazy val onSelectChange: js.UndefOr[Updater[RowSelection] => Callback] =
-    toJsBase.onSelectChange.map(fn =>
+  lazy val onRowSelectionChange: js.UndefOr[Updater[RowSelection] => Callback] =
+    toJsBase.onRowSelectionChange.map(fn =>
       u =>
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
@@ -251,11 +251,11 @@ sealed trait TableOptions[T]:
     )
 
   /** WARNING: This mutates the object in-place. */
-  def setOnSelectChange(
-    onSelectChange: js.UndefOr[Updater[RowSelection] => Callback]
+  def setOnRowSelectionChange(
+    onRowSelectionChange: js.UndefOr[Updater[RowSelection] => Callback]
   ): TableOptions[T] =
-    copy(_.onSelectChange =
-      onSelectChange.map(fn =>
+    copy(_.onRowSelectionChange =
+      onRowSelectionChange.map(fn =>
         u =>
           fn(
             Updater.fromJs(u) match
@@ -329,7 +329,7 @@ object TableOptions:
     // Selection
     enableRowSelection:       js.UndefOr[Boolean] = js.undefined,
     enableMultiRowSelection:  js.UndefOr[Boolean] = js.undefined,
-    onSelectChange:           js.UndefOr[Updater[RowSelection] => Callback] = js.undefined,
+    onRowSelectionChange:     js.UndefOr[Updater[RowSelection] => Callback] = js.undefined,
     // Expanding
     enableExpanding:          js.UndefOr[Boolean] = js.undefined,
     getExpandedRowModel:      js.UndefOr[Table[T] => () => raw.mod.RowModel[T]] = js.undefined,
@@ -365,7 +365,7 @@ object TableOptions:
       .applyOrNot(sortDescFirst, _.setSortDescFirst(_))
       .applyOrNot(enableRowSelection, _.setEnableRowSelection(_))
       .applyOrNot(enableMultiRowSelection, _.setEnableMultiRowSelection(_))
-      .applyOrNot(onSelectChange, _.setOnSelectChange(_))
+      .applyOrNot(onRowSelectionChange, _.setOnRowSelectionChange(_))
       .applyOrNot(enableExpanding, _.setEnableExpanding(_))
       .applyOrNot(getSubRows, _.setGetSubRows(_))
 
