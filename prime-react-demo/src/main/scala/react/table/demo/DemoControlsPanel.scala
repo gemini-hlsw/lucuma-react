@@ -272,6 +272,18 @@ object DemoControlsPanel {
                 Tag(value = "Warning", severity = Tag.Severity.Warning, icon = "pi pi-bolt"),
                 Tag(value = "Well Rounded Danger", severity = Tag.Severity.Danger, rounded = true)
               ),
+              <.div(
+                DemoStyles.HorizontalStack,
+                RadioButton("option 1",
+                            id = "option-1",
+                            name = "option",
+                            checked = false,
+                            onChange = (a, c) => Callback.log(s"$a $c")
+                ),
+                <.label("Option 1", ^.htmlFor := "option-1", DemoStyles.FormFieldLabel),
+                RadioButton("option 2", id = "option-2", name = "option", checked = false),
+                <.label("Option 2", ^.htmlFor := "option-2", DemoStyles.FormFieldLabel)
+              ),
               <.label("Message", DemoStyles.FormFieldLabel),
               <.span(DemoStyles.FormField)(
                 Message(severity = Message.Severity.Error, text = "This is an error message"),
