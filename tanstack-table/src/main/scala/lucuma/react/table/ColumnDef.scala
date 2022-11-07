@@ -215,6 +215,7 @@ object ColumnDef:
       Single(p)
         .applyOrNot(accessor, _.setAccessor(_))
         .applyOrNot(header, _.setHeader(_))
+        .applyOrNot(footer, _.setFooter(_))
         .applyOrNot(cell, _.setCell(_))
         .applyOrNot(meta, _.setMeta(_))
         .applyOrNot(enableResizing, _.setEnableResizing(_))
