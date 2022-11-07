@@ -13,6 +13,9 @@ import react.common.*
 import react.common.style.Css
 import reactST.{tanstackReactTable => rawReact}
 import reactST.{tanstackTableCore => raw}
+import reactST.{tanstackVirtualCore => rawVirtual}
+
+import scala.util.Random
 
 import scalajs.js
 
@@ -264,6 +267,8 @@ object HTMLTableRenderer:
       )
     )
 
+  private val random = new Random()
+
   def componentBuilderVirtualized[T, Props <: HTMLVirtualizedTableProps[_]](
     renderer: HTMLTableRenderer[T]
   ) =
@@ -284,12 +289,22 @@ object HTMLTableRenderer:
       .useEffectOnMountBy((props, _, virtualizer) => // Allow external access to Virtualizer
         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
       )
-      .render { (props, ref, virtualizer) =>
+      // The virtualizer seems to get confused when we change the number of rendered rows.
+      // Therefore, we use a key to force a remount when the number of rows changes.
+      .useMemoBy((props, _, _) => props.table.getRowModel().rows.length)((_, _, _) =>
+        _ => random.nextInt()
+      )
+      .render { (props, ref, virtualizer, rowsRandom) =>
         val rows                        = props.table.getRowModel().rows
-        val (paddingTop, paddingBottom) = virtualVerticalPadding(virtualizer)
+        val (paddingTop, paddingBottom) =
+          virtualVerticalPadding(virtualizer, props.debugVirtualizer)
 
         // TODO Should we attempt to make the <table>  the container (scroll element) and <tbody> the virtualized element?
-        <.div.withRef(ref)(^.overflowY.auto, props.containerMod)(
+        <.div.withRef(ref)(
+          ^.overflowY.auto,
+          props.containerMod,
+          ^.key := s"table-${rowsRandom.value}"
+        )(
           renderer.render(
             props.table,
             virtualizer.getVirtualItems().map(virtualItem => rows(virtualItem.index.toInt)),
@@ -323,15 +338,24 @@ object HTMLTableRenderer:
           getScrollElement = ref.get,
           overscan = props.overscan,
           getItemKey = props.getItemKey,
-          onChange = props.onChange
+          onChange = props.onChange,
+          debug = props.debugVirtualizer
         )
       )
       .useEffectOnMountBy((props, _, virtualizer) => // Allow external access to Virtualizer
         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
       )
-      .render { (props, ref, virtualizer) =>
+      // The virtualizer seems to get confused when we change the number of rendered rows.
+      // Therefore, we use a key to force a remount when the number of rows changes.
+      .useMemoBy((props, _, _) => props.table.getRowModel().rows.length)((_, _, _) =>
+        _ => random.nextInt()
+      )
+      .render { (props, ref, virtualizer, rowsRandom) =>
         val rows                        = props.table.getRowModel().rows
-        val (paddingTop, paddingBottom) = virtualVerticalPadding(virtualizer)
+        // This is artificially added space on top and bottom so that the scroll bar is shown as if there were
+        // the right number of elements on either side.
+        val (paddingTop, paddingBottom) =
+          virtualVerticalPadding(virtualizer, props.debugVirtualizer)
 
         // We use this trick to get a component whose height adjusts to the container.
         // See https://stackoverflow.com/a/1230666
@@ -342,7 +366,8 @@ object HTMLTableRenderer:
           ^.position.relative,
           ^.height := "100%",
           ^.overflow.auto,
-          props.containerMod
+          props.containerMod,
+          ^.key    := s"table-${rowsRandom.value}"
         )(
           <.div(
             ^.position.absolute,

@@ -5,13 +5,14 @@ package lucuma.react
 
 import japgolly.scalajs.react.vdom.TagMod
 import lucuma.react.virtual.facade.Virtualizer
-import org.scalajs.dom.Element
+import org.scalajs.dom
 
 import scalajs.js
 
 package object virtual extends HooksApiExt:
-  def virtualVerticalPadding[TScrollElement <: Element, TItemElement <: Element](
-    virtualizer: Virtualizer[TScrollElement, TItemElement]
+  def virtualVerticalPadding[TScrollElement <: dom.Element, TItemElement <: dom.Element](
+    virtualizer: Virtualizer[TScrollElement, TItemElement],
+    debug:       js.UndefOr[Boolean]
   ): (Int, Int) =
     val virtualRows   = virtualizer.getVirtualItems()
     val totalSize     = virtualizer.getTotalSize().toInt
@@ -21,5 +22,14 @@ package object virtual extends HooksApiExt:
       if (virtualRows.length > 0)
         totalSize - virtualRows.lastOption.map(_.end.toInt).getOrElse(0)
       else 0
+
+    if (debug.contains(true))
+      dom.console.log(
+        "Measuring Virtualizer Padding:",
+        s"Virtual Rows: ${virtualRows.size},",
+        s"Total Size: ${totalSize}px,",
+        s"HeadOption Start: ${virtualRows.headOption.map(_.start.toInt)}px,",
+        s"LastOption End: ${virtualRows.lastOption.map(_.end.toInt)}px"
+      )
 
     (paddingTop, paddingBottom)
