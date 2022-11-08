@@ -289,22 +289,13 @@ object HTMLTableRenderer:
       .useEffectOnMountBy((props, _, virtualizer) => // Allow external access to Virtualizer
         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
       )
-      // The virtualizer seems to get confused when we change the number of rendered rows.
-      // Therefore, we use a key to force a remount when the number of rows changes.
-      .useMemoBy((props, _, _) => props.table.getRowModel().rows.length)((_, _, _) =>
-        _ => random.nextInt()
-      )
-      .render { (props, ref, virtualizer, rowsRandom) =>
+      .render { (props, ref, virtualizer) =>
         val rows                        = props.table.getRowModel().rows
         val (paddingTop, paddingBottom) =
           virtualVerticalPadding(virtualizer, props.debugVirtualizer)
 
         // TODO Should we attempt to make the <table>  the container (scroll element) and <tbody> the virtualized element?
-        <.div.withRef(ref)(
-          ^.overflowY.auto,
-          props.containerMod,
-          ^.key := s"table-${rowsRandom.value}"
-        )(
+        <.div.withRef(ref)(^.overflowY.auto, props.containerMod)(
           renderer.render(
             props.table,
             virtualizer.getVirtualItems().map(virtualItem => rows(virtualItem.index.toInt)),
@@ -345,12 +336,7 @@ object HTMLTableRenderer:
       .useEffectOnMountBy((props, _, virtualizer) => // Allow external access to Virtualizer
         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
       )
-      // The virtualizer seems to get confused when we change the number of rendered rows.
-      // Therefore, we use a key to force a remount when the number of rows changes.
-      .useMemoBy((props, _, _) => props.table.getRowModel().rows.length)((_, _, _) =>
-        _ => random.nextInt()
-      )
-      .render { (props, ref, virtualizer, rowsRandom) =>
+      .render { (props, ref, virtualizer) =>
         val rows                        = props.table.getRowModel().rows
         // This is artificially added space on top and bottom so that the scroll bar is shown as if there were
         // the right number of elements on either side.
@@ -366,8 +352,7 @@ object HTMLTableRenderer:
           ^.position.relative,
           ^.height := "100%",
           ^.overflow.auto,
-          props.containerMod,
-          ^.key    := s"table-${rowsRandom.value}"
+          props.containerMod
         )(
           <.div(
             ^.position.absolute,

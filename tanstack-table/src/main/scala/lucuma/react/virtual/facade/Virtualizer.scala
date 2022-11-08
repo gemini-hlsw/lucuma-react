@@ -18,7 +18,7 @@ trait Virtualizer[TScrollElement <: Element, TItemElement <: Element] protected 
 
   var scrollElement: TScrollElement | Null = js.native
 
-  def getVirtualItems(): js.Array[rawVirtual.mod.VirtualItem[TItemElement]] = js.native
+  def getVirtualItems(): js.Array[rawVirtual.mod.VirtualItem] = js.native
 
   def scrollToOffset(
     toOffset: Int,
