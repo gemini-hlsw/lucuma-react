@@ -2,7 +2,7 @@
   "devDependencies": {
     "@atlaskit/tree": "^8.6.3",
     "@cquiroz/react-moon": "^2.0.2",
-    "@floating-ui/react-dom-interactions": "^0.10.3",
+    "@floating-ui/react-dom-interactions": "^0.11.0",
     "@tanstack/react-table": "^8.5.27",
     "@tanstack/react-virtual": "v3.0.0-beta.22",
     "@vitejs/plugin-react": "^2.2.0",
