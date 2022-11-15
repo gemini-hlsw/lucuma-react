@@ -71,21 +71,21 @@ jobs:
 
       - name: Check headers and formatting
         if: matrix.java == 'temurin@17'
-        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' headerCheckAll scalafmtCheckAll 'project /' scalafmtSbtCheck lucumaScalafmtCheck lucumaScalafixCheck
+        run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' headerCheckAll scalafmtCheckAll 'project /' scalafmtSbtCheck lucumaScalafmtCheck lucumaScalafixCheck
 
       - name: Test
-        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' test
+        run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' test
 
       - name: Check scalafix lints
         if: matrix.java == 'temurin@17'
-        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' 'scalafixAll --check'
+        run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' 'scalafixAll --check'
 
       - name: Check binary compatibility
         if: matrix.java == 'temurin@17'
-        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' mimaReportBinaryIssues
+        run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' mimaReportBinaryIssues
 
       - name: Aggregate coverage reports
-        run: sbt '++${{ matrix.scala }}' 'project ${{ matrix.project }}' coverageReport coverageAggregate
+        run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' coverageReport coverageAggregate
 
       - name: Upload code coverage data
         run: 'bash <(curl -s https://codecov.io/bash)'
@@ -146,4 +146,4 @@ jobs:
           (echo "$PGP_PASSPHRASE"; echo; echo) | gpg --command-fd 0 --pinentry-mode loopback --change-passphrase $(gpg --list-secret-keys --with-colons 2> /dev/null | grep '^sec:' | cut --delimiter ':' --fields 5 | tail -n 1)
 
       - name: Publish
-        run: sbt '++${{ matrix.scala }}' tlRelease
+        run: sbt '++ ${{ matrix.scala }}' tlRelease
