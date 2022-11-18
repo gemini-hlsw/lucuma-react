@@ -15,7 +15,7 @@ val catsV            = "2.9.0"
 val disciplineMunitV = "2.0.0-M3"
 val jsdomV           = "20.0.2"
 val kittensV         = "3.0.0"
-val munitV           = "1.0.0-M6"
+val munitV           = "1.0.0-M7"
 val scalaJsReactV    = "2.1.1"
 val utestV           = "0.8.1"
 
