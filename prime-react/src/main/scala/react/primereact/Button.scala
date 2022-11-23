@@ -20,7 +20,7 @@ import reactST.primereact.primereactStrings.reset
 import reactST.primereact.primereactStrings.right
 import reactST.primereact.primereactStrings.submit
 import reactST.primereact.primereactStrings.top
-import reactST.primereact.tooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 import scalajs.js.JSConverters.*

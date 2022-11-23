@@ -9,9 +9,9 @@ import org.scalajs.dom.HTMLElement
 import react.common.*
 import react.fa.FontAwesomeIcon
 import reactST.primereact.components.{ConfirmPopup => CConfirmPopup}
-import reactST.primereact.confirmpopupMod.ConfirmPopupProps
-import reactST.primereact.confirmpopupMod.{ConfirmPopupReturn => RawConfirmPopupReturn}
-import reactST.primereact.confirmpopupMod.{confirmPopup => rawConfirmPopup}
+import reactST.primereact.confirmpopupConfirmpopupMod.ConfirmPopupProps
+import reactST.primereact.confirmpopupConfirmpopupMod.{ConfirmPopupReturn => RawConfirmPopupReturn}
+import reactST.primereact.confirmpopupConfirmpopupMod.{confirmPopup => rawConfirmPopup}
 
 import scalajs.js
 
