@@ -13,7 +13,7 @@ import japgolly.scalajs.react.vdom.VdomNode
 import react.common.*
 import react.fa.FontAwesomeIcon
 import reactST.StBuildingComponent
-import reactST.primereact.dialogMod.DialogPositionType
+import reactST.primereact.dialogDialogMod.DialogPositionType
 import reactST.primereact.primereactStrings.horizontal
 import reactST.primereact.primereactStrings.local
 import reactST.primereact.primereactStrings.self

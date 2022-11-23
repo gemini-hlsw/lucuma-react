@@ -8,7 +8,7 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import reactST.primereact.components.{SelectButton => CSelectButton}
-import reactST.primereact.selectitemMod.{SelectItem => CSelectItem}
+import reactST.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
 
 import scalajs.js
 import scalajs.js.JSConverters.*

@@ -8,7 +8,7 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import reactST.primereact.components.{TabView => CTabView}
-import reactST.primereact.tabviewMod.TabViewTabChangeParams
+import reactST.primereact.tabviewTabviewMod.TabViewTabChangeParams
 
 import scalajs.js
 

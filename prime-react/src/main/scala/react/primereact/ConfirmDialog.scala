@@ -10,9 +10,11 @@ import org.scalablytyped.runtime.StObject
 import react.common.*
 import react.fa.FontAwesomeIcon
 import reactST.primereact.components.{ConfirmDialog => CConfirmDialog}
-import reactST.primereact.confirmdialogMod.ConfirmDialogProps
-import reactST.primereact.confirmdialogMod.{ConfirmDialogReturn => RawConfirmDialogReturn}
-import reactST.primereact.confirmdialogMod.{confirmDialog => rawConfirmDialog}
+import reactST.primereact.confirmdialogConfirmdialogMod.ConfirmDialogProps
+import reactST.primereact.confirmdialogConfirmdialogMod.{
+  ConfirmDialogReturn => RawConfirmDialogReturn
+}
+import reactST.primereact.confirmdialogConfirmdialogMod.{confirmDialog => rawConfirmDialog}
 
 import scalajs.js
 

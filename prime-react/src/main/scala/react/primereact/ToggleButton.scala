@@ -15,7 +15,7 @@ import react.primereact.PrimeStyles
 import reactST.primereact.components.{ToggleButton => CToggleButton}
 import reactST.primereact.primereactStrings.left
 import reactST.primereact.primereactStrings.right
-import reactST.primereact.tooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 import scalajs.js.JSConverters.*

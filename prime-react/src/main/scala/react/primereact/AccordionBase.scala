@@ -7,7 +7,7 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import reactST.primereact.components.{Accordion => CAccordion}
-import reactST.primereact.mod.AccordionActiveIndexType
+import reactST.primereact.accordionAccordionMod.AccordionActiveIndexType
 
 import scalajs.js
 
