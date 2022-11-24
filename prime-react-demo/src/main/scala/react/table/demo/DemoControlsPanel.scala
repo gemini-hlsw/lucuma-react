@@ -101,11 +101,14 @@ object DemoControlsPanel {
             <.div(
               DemoStyles.FormColumn,
               <.label("InputText", ^.htmlFor         := "input-text", DemoStyles.FormFieldLabel),
-              InputText(id = "input-text",
-                        value = inputText.value,
-                        placeholder = "No text",
-                        onChange = e => inputText.setState(e.target.value),
-                        clazz = DemoStyles.FormField
+              InputText(
+                id = "input-text",
+                value = inputText.value,
+                placeholder = "No text",
+                onChange = e => inputText.setState(e.target.value),
+                clazz = DemoStyles.FormField,
+                onFocus = e => Callback.log(s"Input Text focused. Value: ${e.target.value}"),
+                onBlur = e => Callback.log(s"Input Text blurred. Value: ${e.target.value}")
               ).withMods(mouseEntered("InputText")),
               <.label("InputTextarea", ^.htmlFor     := "input-text-area", DemoStyles.FormFieldLabel),
               InputTextarea(id = "input-text-area",

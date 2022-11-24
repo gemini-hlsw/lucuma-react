@@ -16,6 +16,7 @@ case class InputText(
   value:       js.UndefOr[String] = js.undefined,
   disabled:    js.UndefOr[Boolean] = js.undefined,
   placeholder: js.UndefOr[String] = js.undefined,
+  onFocus:     js.UndefOr[ReactFocusEventFromInput => Callback] = js.undefined,
   onBlur:      js.UndefOr[ReactFocusEventFromInput => Callback] = js.undefined,
   onChange:    js.UndefOr[ReactEventFromInput => Callback] = js.undefined,
   onKeyDown:   js.UndefOr[ReactKeyboardEventFromInput => Callback] = js.undefined,
@@ -33,6 +34,7 @@ object InputText {
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.placeholder, _.placeholder(_))
+      .applyOrNot(props.onFocus, _.onFocus(_))
       .applyOrNot(props.onBlur, _.onBlur(_))
       .applyOrNot(props.onChange, _.onChange(_))
       .applyOrNot(props.onKeyDown, _.onKeyDown(_))(
