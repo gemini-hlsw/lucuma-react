@@ -14,15 +14,18 @@ trait TableOptionsJs[T] extends js.Object:
   var data: js.Array[T]
   var getCoreRowModel: js.Function1[raw.mod.Table[T], js.Function0[raw.mod.RowModel[T]]]
 
-  var getRowId: js.UndefOr[js.Function3[T, Int, js.UndefOr[T], String]]          = js.undefined
-  var onStateChange: js.UndefOr[raw.mod.Updater[raw.mod.TableState] => Callback] = js.undefined
-  var renderFallbackValue: js.UndefOr[Any]                                       = js.undefined
-  var state: js.UndefOr[raw.anon.PartialTableState]                              = js.undefined
-  var initialState: js.UndefOr[raw.mod.InitialTableState]                        = js.undefined
+  var getRowId: js.UndefOr[js.Function3[T, Int, js.UndefOr[T], String]] = js.undefined
+  var onStateChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.TableState]] = js.undefined
+  var renderFallbackValue: js.UndefOr[Any]                              = js.undefined
+  var state: js.UndefOr[raw.anon.PartialTableState]                     = js.undefined
+  var initialState: js.UndefOr[raw.mod.InitialTableState]               = js.undefined
 
   // Column Sizing // TODO Rest of the properties
-  var enableColumnResizing: js.UndefOr[Boolean]              = js.undefined
-  var columnResizeMode: js.UndefOr[raw.mod.ColumnResizeMode] = js.undefined
+  var enableColumnResizing: js.UndefOr[Boolean]                                               = js.undefined
+  var columnResizeMode: js.UndefOr[raw.mod.ColumnResizeMode]                                  = js.undefined
+  var onColumnSizingChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.ColumnSizingState]]         = js.undefined
+  var onColumnSizingInfoChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.ColumnSizingInfoState]] =
+    js.undefined
 
   // Column Visibility
   var enableHiding: js.UndefOr[Boolean]                                                 = js.undefined
