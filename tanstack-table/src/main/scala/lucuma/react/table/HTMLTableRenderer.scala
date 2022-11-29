@@ -5,6 +5,7 @@ package lucuma.react.table
 
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.hooks.Hooks
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.virtual.*
 import org.scalajs.dom.Element
@@ -120,11 +121,13 @@ trait HTMLTableRenderer[T]:
               <.tr(TheadTrClass, headerRowMod(headerGroup))(^.key := headerGroup.id)(
                 headerGroup.headers
                   .map(header =>
-                    <.th(TheadThClass, headerCellMod(header))(
+                    <.th(
+                      TheadThClass,
                       ^.key     := header.id,
                       ^.colSpan := header.colSpan.toInt,
                       ^.width   := s"${header.getSize().toInt}px",
                       SortableColClass.when(header.column.getCanSort()),
+                      headerCellMod(header),
                       header.column
                         .getToggleSortingHandler()
                         .map(handler => ^.onClick ==> (e => Callback(handler(e))))
@@ -142,7 +145,7 @@ trait HTMLTableRenderer[T]:
                           sortIndicator(header.column),
                           resizer(
                             header,
-                            table.options.columnResizeMode.toOption,
+                            table.options.columnResizeMode,
                             table.getState().columnSizingInfo
                           )
                         )
@@ -322,21 +325,23 @@ object HTMLTableRenderer:
     ScalaFnComponent
       .withHooks[Props[T]]
       .useRefToVdom[HTMLDivElement]
-      .useVirtualizerBy((props, ref) =>
+      .localValBy((props, ownRef) => props.containerRef.getOrElse(ownRef)) // containerRef
+      .useVirtualizerBy((props, _, containerRef) =>
         VirtualOptions(
           count = props.table.getRowModel().rows.length,
           estimateSize = props.estimateSize,
-          getScrollElement = ref.get,
+          getScrollElement = containerRef.get,
           overscan = props.overscan,
           getItemKey = props.getItemKey,
           onChange = props.onChange,
           debug = props.debugVirtualizer
         )
       )
-      .useEffectOnMountBy((props, _, virtualizer) => // Allow external access to Virtualizer
+      .useEffectOnMountBy((props, _, _, virtualizer) =>
+        // Allow external access to Virtualizer if a ref is passed
         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
       )
-      .render { (props, ref, virtualizer) =>
+      .render { (props, _, containerRef, virtualizer) =>
         val rows                        = props.table.getRowModel().rows
         // This is artificially added space on top and bottom so that the scroll bar is shown as if there were
         // the right number of elements on either side.
@@ -348,7 +353,7 @@ object HTMLTableRenderer:
         // We create 2 more containers: an outer one, with position: relative and height: 100%,
         // and an inner one, with position: absolute, and top: 0, bottom: 0.
         // The scrolling element has to be the outer one.
-        <.div.withRef(ref)(
+        <.div.withRef(containerRef)(
           ^.position.relative,
           ^.height := "100%",
           ^.overflow.auto,

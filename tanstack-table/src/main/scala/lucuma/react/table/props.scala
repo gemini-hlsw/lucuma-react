@@ -4,6 +4,7 @@
 package lucuma.react.table
 
 import japgolly.scalajs.react.NonEmptyRef
+import japgolly.scalajs.react.Ref
 import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
@@ -40,6 +41,7 @@ trait HTMLVirtualizedTableProps[T] extends HTMLTableProps[T]:
   def estimateSize: Int => SizePx
   // Table options
   def containerMod: TagMod
+  def containerRef: js.UndefOr[Ref.Simple[HTMLDivElement]]
   // Virtual options
   def overscan: js.UndefOr[Int]
   def getItemKey: js.UndefOr[Int => rawVirtual.mod.Key]
