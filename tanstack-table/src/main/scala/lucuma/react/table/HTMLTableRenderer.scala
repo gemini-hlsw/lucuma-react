@@ -95,6 +95,7 @@ trait HTMLTableRenderer[T]:
     footerRowMod:  raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
       TagMod.empty,
     footerCellMod: raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+    indexOffset:   Int = 0,
     paddingTop:    Option[Int] = none,
     paddingBottom: Option[Int] = none,
     emptyMessage:  VdomNode = EmptyVdom
@@ -181,11 +182,11 @@ trait HTMLTableRenderer[T]:
             emptyMessage
           )
         ),
-        rows
-          .map(row =>
+        rows.zipWithIndex
+          .map((row, index) =>
             <.tr(
               TbodyTrClass,
-              TbodyTrEvenClass.when(row.index.toInt % 2 =!= 0), // Index starts at 0
+              TbodyTrEvenClass.when((index + indexOffset) % 2 =!= 0),
               rowMod(row),
               ^.key := row.id
             )(
@@ -293,9 +294,9 @@ object HTMLTableRenderer:
         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
       )
       .render { (props, ref, virtualizer) =>
-        val rows                        = props.table.getRowModel().rows
-        val (paddingTop, paddingBottom) =
-          virtualVerticalPadding(virtualizer, props.debugVirtualizer)
+        val rows                                       = props.table.getRowModel().rows
+        val (indexOffset, paddingBefore, paddingAfter) =
+          virtualOffsets(virtualizer, props.debugVirtualizer)
 
         // TODO Should we attempt to make the <table>  the container (scroll element) and <tbody> the virtualized element?
         <.div.withRef(ref)(^.overflowY.auto, props.containerMod)(
@@ -312,8 +313,9 @@ object HTMLTableRenderer:
             props.footerMod,
             props.footerRowMod,
             props.footerCellMod,
-            paddingTop.some,
-            paddingBottom.some,
+            indexOffset,
+            paddingBefore.some,
+            paddingAfter.some,
             props.emptyMessage
           )
         )
@@ -342,11 +344,11 @@ object HTMLTableRenderer:
         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
       )
       .render { (props, _, containerRef, virtualizer) =>
-        val rows                        = props.table.getRowModel().rows
+        val rows                                       = props.table.getRowModel().rows
         // This is artificially added space on top and bottom so that the scroll bar is shown as if there were
         // the right number of elements on either side.
-        val (paddingTop, paddingBottom) =
-          virtualVerticalPadding(virtualizer, props.debugVirtualizer)
+        val (indexOffset, paddingBefore, paddingAfter) =
+          virtualOffsets(virtualizer, props.debugVirtualizer)
 
         // We use this trick to get a component whose height adjusts to the container.
         // See https://stackoverflow.com/a/1230666
@@ -378,8 +380,9 @@ object HTMLTableRenderer:
               props.footerMod,
               props.footerRowMod,
               props.footerCellMod,
-              paddingTop.some,
-              paddingBottom.some,
+              indexOffset,
+              paddingBefore.some,
+              paddingAfter.some,
               props.emptyMessage
             )
           )
