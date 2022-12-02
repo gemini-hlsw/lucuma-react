@@ -42,9 +42,11 @@ table.guitars {
     padding: 6px;
   }
 
-  tr {
-    &.odd {
-      background-color: antiquewhite;
+  &.striped {
+    tr {
+      &.row-even {
+        background-color: antiquewhite;
+      }
     }
   }
 

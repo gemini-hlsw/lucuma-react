@@ -13,9 +13,6 @@ import react.common.style.Css
 object Table2:
   private val ColDef = ColumnDef[Person]
 
-  private def rowClassEvenOdd[T](i: Int): TagMod =
-    if (i % 2 == 0) Css("odd") else Css("even")
-
   val component =
     ScalaFnComponent
       .withHooks[List[Person]]
@@ -38,7 +35,7 @@ object Table2:
           HTMLVirtualizedTable(
             table,
             containerMod = Css("container"),
-            rowMod = row => rowClassEvenOdd(row.index.toInt),
+            tableMod = Css("striped"),
             estimateSize = _ => 24.toPx
           )
         )
