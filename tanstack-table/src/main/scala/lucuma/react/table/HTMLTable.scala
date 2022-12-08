@@ -18,42 +18,45 @@ import javax.swing.text.html.HTML
 import scalajs.js
 
 final case class HTMLTable[T](
-  table:         Table[T],
-  tableMod:      TagMod = TagMod.empty,
-  headerMod:     TagMod = TagMod.empty,
-  headerRowMod:  raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+  table:              Table[T],
+  tableMod:           TagMod = TagMod.empty,
+  headerMod:          TagMod = TagMod.empty,
+  headerRowMod:       raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
     TagMod.empty,
-  headerCellMod: raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
-  bodyMod:       TagMod = TagMod.empty,
-  rowMod:        raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
-  cellMod:       raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
-  footerMod:     TagMod = TagMod.empty,
-  footerRowMod:  raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+  headerCellMod:      raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  bodyMod:            TagMod = TagMod.empty,
+  rowMod:             raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
+  cellMod:            raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
+  footerMod:          TagMod = TagMod.empty,
+  footerRowMod:       raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
     TagMod.empty,
-  footerCellMod: raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
-  emptyMessage:  VdomNode = EmptyVdom
+  footerCellMod:      raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  emptyMessage:       VdomNode = EmptyVdom,
+  renderSubComponent: raw.mod.Row[T] => Option[VdomNode] = (_: raw.mod.Row[T]) => none
 ) extends ReactFnProps(HTMLTable.component)
     with HTMLTableProps[T]
 
 final case class HTMLVirtualizedTable[T](
-  table:            Table[T],
-  estimateSize:     Int => SizePx,
+  table:              Table[T],
+  estimateSize:       Int => SizePx,
   // Table options
-  containerMod:     TagMod = TagMod.empty,
-  containerRef:     js.UndefOr[Ref.Simple[HTMLDivElement]] = js.undefined,
-  tableMod:         TagMod = TagMod.empty,
-  headerMod:        TagMod = TagMod.empty,
-  headerRowMod:     raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+  containerMod:       TagMod = TagMod.empty,
+  containerRef:       js.UndefOr[Ref.Simple[HTMLDivElement]] = js.undefined,
+  tableMod:           TagMod = TagMod.empty,
+  headerMod:          TagMod = TagMod.empty,
+  headerRowMod:       raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
     TagMod.empty,
-  headerCellMod:    raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
-  bodyMod:          TagMod = TagMod.empty,
-  rowMod:           raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
-  cellMod:          raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
-  footerMod:        TagMod = TagMod.empty,
-  footerRowMod:     raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+  headerCellMod:      raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  bodyMod:            TagMod = TagMod.empty,
+  rowMod:             raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
+  cellMod:            raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
+  footerMod:          TagMod = TagMod.empty,
+  footerRowMod:       raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
     TagMod.empty,
-  footerCellMod:    raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
-  emptyMessage:     VdomNode = EmptyVdom,
+  footerCellMod:      raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  emptyMessage:       VdomNode = EmptyVdom,
+  renderSubComponent: raw.mod.Row[T] => Option[VdomNode] = (_: raw.mod.Row[T]) => none,
+
   // Virtual options
   overscan:         js.UndefOr[Int] = js.undefined,
   getItemKey:       js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined,
@@ -64,31 +67,32 @@ final case class HTMLVirtualizedTable[T](
     with HTMLVirtualizedTableProps[T]
 
 final case class HTMLAutoHeightVirtualizedTable[T](
-  table:             Table[T],
-  estimateSize:      Int => SizePx,
+  table:              Table[T],
+  estimateSize:       Int => SizePx,
   // Table options
-  containerMod:      TagMod = TagMod.empty,
-  containerRef:      js.UndefOr[Ref.Simple[HTMLDivElement]] = js.undefined,
-  innerContainerMod: TagMod = TagMod.empty,
-  tableMod:          TagMod = TagMod.empty,
-  headerMod:         TagMod = TagMod.empty,
-  headerRowMod:      raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+  containerMod:       TagMod = TagMod.empty,
+  containerRef:       js.UndefOr[Ref.Simple[HTMLDivElement]] = js.undefined,
+  innerContainerMod:  TagMod = TagMod.empty,
+  tableMod:           TagMod = TagMod.empty,
+  headerMod:          TagMod = TagMod.empty,
+  headerRowMod:       raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
     TagMod.empty,
-  headerCellMod:     raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
-  bodyMod:           TagMod = TagMod.empty,
-  rowMod:            raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
-  cellMod:           raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
-  footerMod:         TagMod = TagMod.empty,
-  footerRowMod:      raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+  headerCellMod:      raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  bodyMod:            TagMod = TagMod.empty,
+  rowMod:             raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
+  cellMod:            raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
+  footerMod:          TagMod = TagMod.empty,
+  footerRowMod:       raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
     TagMod.empty,
-  footerCellMod:     raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
-  emptyMessage:      VdomNode = EmptyVdom,
+  footerCellMod:      raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+  emptyMessage:       VdomNode = EmptyVdom,
+  renderSubComponent: raw.mod.Row[T] => Option[VdomNode] = (_: raw.mod.Row[T]) => none,
   // Virtual options
-  overscan:          js.UndefOr[Int] = js.undefined,
-  getItemKey:        js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined,
-  onChange:          js.UndefOr[HTMLTableVirtualizer => Callback] = js.undefined,
-  virtualizerRef:    js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]] = js.undefined,
-  debugVirtualizer:  js.UndefOr[Boolean] = js.undefined
+  overscan:           js.UndefOr[Int] = js.undefined,
+  getItemKey:         js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined,
+  onChange:           js.UndefOr[HTMLTableVirtualizer => Callback] = js.undefined,
+  virtualizerRef:     js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]] = js.undefined,
+  debugVirtualizer:   js.UndefOr[Boolean] = js.undefined
 ) extends ReactFnProps(HTMLAutoHeightVirtualizedTable.component)
     with HTMLAutoHeightVirtualizedTableProps[T]
 
