@@ -15,7 +15,7 @@ val catsV            = "2.9.0"
 val disciplineMunitV = "2.0.0-M3"
 val jsdomV           = "20.0.2"
 val kittensV         = "3.0.0"
-val munitV           = "1.0.0-M6"
+val munitV           = "1.0.0-M7"
 val scalaJsReactV    = "2.1.1"
 val utestV           = "0.8.1"
 
@@ -259,7 +259,7 @@ lazy val gridLayoutDemo = project
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(gridLayout, resizeDetector)
   .settings(
-    libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.8.0",
+    libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.8.1",
     demoSettings
   )
 
@@ -370,7 +370,7 @@ lazy val datepickerDemo = project
     demoSettings,
     Compile / scalacOptions += "-language:implicitConversions",
     libraryDependencies ++= Seq(
-      "io.github.cquiroz" %%% "scala-java-time" % "2.4.0"
+      "io.github.cquiroz" %%% "scala-java-time" % "2.5.0"
     )
   )
 

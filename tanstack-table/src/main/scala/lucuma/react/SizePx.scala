@@ -3,7 +3,11 @@
 
 package lucuma.react
 
+import cats.Endo
+
 opaque type SizePx = Int
 object SizePx:
-  inline def apply(value: Int): SizePx                  = value
-  extension (opaqueValue: SizePx) inline def value: Int = opaqueValue
+  inline def apply(value: Int): SizePx = value
+  extension (opaqueValue: SizePx)
+    inline def value: Int = opaqueValue
+    inline def modify(f: Endo[Int]): SizePx = f(opaqueValue)

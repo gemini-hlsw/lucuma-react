@@ -3,6 +3,7 @@
 
 package lucuma.react.table
 
+import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.table.facade.ColumnDefJs
@@ -35,16 +36,41 @@ sealed trait TableOptions[T]:
       def data                    = self.data
       private[table] def toJsBase = { toJsMod(self.toJsBase); self.toJsBase }
 
-  lazy val getRowId: js.UndefOr[(T, Int, Option[T]) => RowId] =
-    toJsBase.getRowId.map(fn =>
+  lazy val getRowId: Option[(T, Int, Option[T]) => RowId] =
+    toJsBase.getRowId.toOption.map(fn =>
       (originalRow, index, parent) => RowId(fn(originalRow, index, parent.orUndefined))
     )
 
   /** WARNING: This mutates the object in-place. */
-  def setGetRowId(getRowId: js.UndefOr[(T, Int, Option[T]) => RowId]): TableOptions[T] =
+  def setGetRowId(getRowId: Option[(T, Int, Option[T]) => RowId]): TableOptions[T] =
     copy(_.getRowId =
-      getRowId.map(fn =>
+      getRowId.orUndefined.map(fn =>
         (originalRow, index, parent) => fn(originalRow, index, parent.toOption).value
+      )
+    )
+
+  lazy val onStateChange: Option[Updater[TableState] => Callback] =
+    toJsBase.onStateChange.toOption.map(fn =>
+      u =>
+        Callback(fn((u match
+          case Updater.Set(v)   => Updater.Set(v.toJs)
+          case Updater.Mod(mod) =>
+            Updater.Mod((v: raw.mod.TableState) => mod(TableState(v)).toJs)
+        ).toJs))
+    )
+
+  /** WARNING: This mutates the object in-place. */
+  def setOnStateChange(
+    onStateChange: Option[Updater[TableState] => Callback]
+  ): TableOptions[T] =
+    copy(_.onStateChange =
+      onStateChange.orUndefined.map(fn =>
+        u =>
+          fn(
+            Updater.fromJs(u) match
+              case Updater.Set(v)   => Updater.Set(TableState(v))
+              case Updater.Mod(mod) => Updater.Mod(v => TableState(mod(v.toJs)))
+          ).runNow()
       )
     )
 
@@ -53,7 +79,7 @@ sealed trait TableOptions[T]:
 
   /** WARNING: This mutates the object in-place. */
   def setGetCoreRowModel(
-    getCoreRowModel: js.UndefOr[Table[T] => () => raw.mod.RowModel[T]]
+    getCoreRowModel: Option[Table[T] => () => raw.mod.RowModel[T]]
   ): TableOptions[T] =
     copy(_.getCoreRowModel =
       getCoreRowModel
@@ -65,49 +91,101 @@ sealed trait TableOptions[T]:
         .getOrElse(rawReact.mod.getCoreRowModel())
     )
 
-  lazy val renderFallbackValue: js.UndefOr[Any] = toJsBase.renderFallbackValue
+  lazy val renderFallbackValue: Option[Any] = toJsBase.renderFallbackValue.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setRenderFallbackValue(renderFallbackValue: js.UndefOr[Any]): TableOptions[T] =
-    copy(_.renderFallbackValue = renderFallbackValue)
+  def setRenderFallbackValue(renderFallbackValue: Option[Any]): TableOptions[T] =
+    copy(_.renderFallbackValue = renderFallbackValue.orUndefined)
 
-  lazy val state: js.UndefOr[raw.anon.PartialTableState] = toJsBase.state
-
-  /** WARNING: This mutates the object in-place. */
-  def setState(state: js.UndefOr[raw.anon.PartialTableState]): TableOptions[T] =
-    copy(_.state = state)
-
-  lazy val initialState: js.UndefOr[TableState] =
-    TableState(toJsBase.initialState.asInstanceOf[raw.mod.TableState])
+  lazy val state: Option[PartialTableState] = toJsBase.state.toOption.map(PartialTableState.apply)
 
   /** WARNING: This mutates the object in-place. */
-  def setInitialState(initialState: js.UndefOr[TableState]): TableOptions[T] =
-    copy(_.initialState = initialState.map(_.toJs.asInstanceOf[raw.mod.InitialTableState]))
+  def setState(state: Option[PartialTableState]): TableOptions[T] =
+    copy(_.state = state.map(_.toJs).orUndefined)
+
+  lazy val initialState: Option[TableState] =
+    toJsBase.initialState.toOption.map(v => TableState(v.asInstanceOf[raw.mod.TableState]))
+
+  /** WARNING: This mutates the object in-place. */
+  def setInitialState(initialState: Option[TableState]): TableOptions[T] =
+    copy(_.initialState =
+      initialState.map(_.toJs.asInstanceOf[raw.mod.InitialTableState]).orUndefined
+    )
 
   // Column Sizing
-  lazy val enableColumnResizing: js.UndefOr[Boolean] = toJsBase.enableColumnResizing
+  lazy val enableColumnResizing: Option[Boolean] = toJsBase.enableColumnResizing.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setEnableColumnResizing(enableColumnResizing: js.UndefOr[Boolean]): TableOptions[T] =
-    copy(_.enableColumnResizing = enableColumnResizing)
+  def setEnableColumnResizing(enableColumnResizing: Option[Boolean]): TableOptions[T] =
+    copy(_.enableColumnResizing = enableColumnResizing.orUndefined)
 
-  lazy val columnResizeMode: js.UndefOr[ColumnResizeMode] =
-    toJsBase.columnResizeMode.map(ColumnResizeMode.fromJs)
+  lazy val columnResizeMode: Option[ColumnResizeMode] =
+    toJsBase.columnResizeMode.map(ColumnResizeMode.fromJs).toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setColumnResizeMode(columnResizeMode: js.UndefOr[ColumnResizeMode]): TableOptions[T] =
-    copy(_.columnResizeMode = columnResizeMode.map(_.toJs))
+  def setColumnResizeMode(columnResizeMode: Option[ColumnResizeMode]): TableOptions[T] =
+    copy(_.columnResizeMode = columnResizeMode.map(_.toJs).orUndefined)
+
+  lazy val onColumnSizingChange: Option[Updater[ColumnSizing] => Callback] =
+    toJsBase.onColumnSizingChange.toOption.map(fn =>
+      u =>
+        Callback(fn((u match
+          case Updater.Set(v)   => Updater.Set(v.toJs)
+          case Updater.Mod(mod) =>
+            Updater.Mod((v: raw.mod.ColumnSizingState) => mod(ColumnSizing.fromJs(v)).toJs)
+        ).toJs))
+    )
+
+  /** WARNING: This mutates the object in-place. */
+  def setOnColumnSizingChange(
+    onColumnSizingChange: Option[Updater[ColumnSizing] => Callback]
+  ): TableOptions[T] =
+    copy(_.onColumnSizingChange =
+      onColumnSizingChange.orUndefined.map(fn =>
+        u =>
+          fn(
+            Updater.fromJs(u) match
+              case Updater.Set(v)   => Updater.Set(ColumnSizing.fromJs(v))
+              case Updater.Mod(mod) => Updater.Mod(v => ColumnSizing.fromJs(mod(v.toJs)))
+          ).runNow()
+      )
+    )
+
+  lazy val onColumnSizingInfoChange: Option[Updater[ColumnSizingInfo] => Callback] =
+    toJsBase.onColumnSizingInfoChange.toOption.map(fn =>
+      u =>
+        Callback(fn((u match
+          case Updater.Set(v)   => Updater.Set(v.toJs)
+          case Updater.Mod(mod) =>
+            Updater.Mod((v: raw.mod.ColumnSizingInfoState) => mod(ColumnSizingInfo.fromJs(v)).toJs)
+        ).toJs))
+    )
+
+  /** WARNING: This mutates the object in-place. */
+  def setOnColumnSizingInfoChange(
+    onColumnSizingInfoChange: Option[Updater[ColumnSizingInfo] => Callback]
+  ): TableOptions[T] =
+    copy(_.onColumnSizingInfoChange =
+      onColumnSizingInfoChange.orUndefined.map(fn =>
+        u =>
+          fn(
+            Updater.fromJs(u) match
+              case Updater.Set(v)   => Updater.Set(ColumnSizingInfo.fromJs(v))
+              case Updater.Mod(mod) => Updater.Mod(v => ColumnSizingInfo.fromJs(mod(v.toJs)))
+          ).runNow()
+      )
+    )
 
   // Column Visibility
-  lazy val enableHiding: js.UndefOr[Boolean] = toJsBase.enableHiding
+  lazy val enableHiding: Option[Boolean] = toJsBase.enableHiding.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setEnableHiding(enableHiding: js.UndefOr[Boolean]): TableOptions[T] =
-    copy(_.enableHiding = enableHiding)
+  def setEnableHiding(enableHiding: Option[Boolean]): TableOptions[T] =
+    copy(_.enableHiding = enableHiding.orUndefined)
 
   // Column Visibility
-  lazy val onColumnVisibilityChange: js.UndefOr[Updater[ColumnVisibility] => Callback] =
-    toJsBase.onColumnVisibilityChange.map(fn =>
+  lazy val onColumnVisibilityChange: Option[Updater[ColumnVisibility] => Callback] =
+    toJsBase.onColumnVisibilityChange.toOption.map(fn =>
       u =>
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
@@ -118,10 +196,10 @@ sealed trait TableOptions[T]:
 
   /** WARNING: This mutates the object in-place. */
   def setOnColumnVisibilityChange(
-    onColumnVisibilityChange: js.UndefOr[Updater[ColumnVisibility] => Callback]
+    onColumnVisibilityChange: Option[Updater[ColumnVisibility] => Callback]
   ): TableOptions[T] =
     copy(_.onColumnVisibilityChange =
-      onColumnVisibilityChange.map(fn =>
+      onColumnVisibilityChange.orUndefined.map(fn =>
         u =>
           fn(
             Updater.fromJs(u) match
@@ -132,39 +210,39 @@ sealed trait TableOptions[T]:
     )
 
   // Sorting
-  lazy val enableSorting: js.UndefOr[Boolean] = toJsBase.enableSorting
+  lazy val enableSorting: Option[Boolean] = toJsBase.enableSorting.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setEnableSorting(enableSorting: js.UndefOr[Boolean]): TableOptions[T] =
-    copy(_.enableSorting = enableSorting)
+  def setEnableSorting(enableSorting: Option[Boolean]): TableOptions[T] =
+    copy(_.enableSorting = enableSorting.orUndefined)
 
-  lazy val enableMultiSort: js.UndefOr[Boolean] = toJsBase.enableMultiSort
-
-  /** WARNING: This mutates the object in-place. */
-  def setEnableMultiSort(enableMultiSort: js.UndefOr[Boolean]): TableOptions[T] =
-    copy(_.enableMultiSort = enableMultiSort)
-
-  lazy val enableSortingRemoval: js.UndefOr[Boolean] = toJsBase.enableSortingRemoval
+  lazy val enableMultiSort: Option[Boolean] = toJsBase.enableMultiSort.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setEnableSortingRemoval(enableSortingRemoval: js.UndefOr[Boolean]): TableOptions[T] =
-    copy(_.enableSortingRemoval = enableSortingRemoval)
+  def setEnableMultiSort(enableMultiSort: Option[Boolean]): TableOptions[T] =
+    copy(_.enableMultiSort = enableMultiSort.orUndefined)
 
-  lazy val enableMultiRemove: js.UndefOr[Boolean] = toJsBase.enableMultiRemove
+  lazy val enableSortingRemoval: Option[Boolean] = toJsBase.enableSortingRemoval.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setEnableMultiRemove(enableMultiRemove: js.UndefOr[Boolean]): TableOptions[T] =
-    copy(_.enableMultiRemove = enableMultiRemove)
+  def setEnableSortingRemoval(enableSortingRemoval: Option[Boolean]): TableOptions[T] =
+    copy(_.enableSortingRemoval = enableSortingRemoval.orUndefined)
 
-  lazy val getSortedRowModel: js.UndefOr[Table[T] => () => raw.mod.RowModel[T]] =
-    toJsBase.getSortedRowModel.map(fn => t => fn(t.toJs))
+  lazy val enableMultiRemove: Option[Boolean] = toJsBase.enableMultiRemove.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setEnableMultiRemove(enableMultiRemove: Option[Boolean]): TableOptions[T] =
+    copy(_.enableMultiRemove = enableMultiRemove.orUndefined)
+
+  lazy val getSortedRowModel: Option[Table[T] => () => raw.mod.RowModel[T]] =
+    toJsBase.getSortedRowModel.toOption.map(fn => t => fn(t.toJs))
 
   /** WARNING: This mutates the object in-place. */
   def setGetSortedRowModel(
-    getSortedRowModel: js.UndefOr[Table[T] => () => raw.mod.RowModel[T]]
+    getSortedRowModel: Option[Table[T] => () => raw.mod.RowModel[T]]
   ): TableOptions[T] =
     copy(_.getSortedRowModel =
-      getSortedRowModel
+      getSortedRowModel.orUndefined
         .map(fn =>
           ((t: raw.mod.Table[T]) => fn(Table(t))): js.Function1[raw.mod.Table[T], js.Function0[
             raw.mod.RowModel[T]
@@ -173,31 +251,31 @@ sealed trait TableOptions[T]:
         .getOrElse(rawReact.mod.getSortedRowModel())
     )
 
-  lazy val isMultiSortEvent: js.UndefOr[SyntheticEvent[dom.Node] => Boolean] =
-    toJsBase.isMultiSortEvent.map(identity)
+  lazy val isMultiSortEvent: Option[SyntheticEvent[dom.Node] => Boolean] =
+    toJsBase.isMultiSortEvent.toOption.map(identity)
 
   /** WARNING: This mutates the object in-place. */
   def setIsMultiSortEvent(
-    isMultiSortEvent: js.UndefOr[SyntheticEvent[dom.Node] => Boolean]
+    isMultiSortEvent: Option[SyntheticEvent[dom.Node] => Boolean]
   ): TableOptions[T] =
     copy(_.isMultiSortEvent =
-      isMultiSortEvent.map(fn => e => fn(e.asInstanceOf[SyntheticEvent[dom.Node]]))
+      isMultiSortEvent.orUndefined.map(fn => e => fn(e.asInstanceOf[SyntheticEvent[dom.Node]]))
     )
 
-  lazy val manualSorting: js.UndefOr[Boolean] = toJsBase.manualSorting
+  lazy val manualSorting: Option[Boolean] = toJsBase.manualSorting.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setManualSorting(manualSorting: js.UndefOr[Boolean]): TableOptions[T] =
-    copy(_.manualSorting = manualSorting)
+  def setManualSorting(manualSorting: Option[Boolean]): TableOptions[T] =
+    copy(_.manualSorting = manualSorting.orUndefined)
 
-  lazy val maxMultiSortColCount: js.UndefOr[Int] = toJsBase.maxMultiSortColCount.map(_.toInt)
+  lazy val maxMultiSortColCount: Option[Int] = toJsBase.maxMultiSortColCount.toOption.map(_.toInt)
 
   /** WARNING: This mutates the object in-place. */
-  def setMaxMultiSortColCount(maxMultiSortColCount: js.UndefOr[Int]): TableOptions[T] =
-    copy(_.maxMultiSortColCount = maxMultiSortColCount.map(_.toDouble))
+  def setMaxMultiSortColCount(maxMultiSortColCount: Option[Int]): TableOptions[T] =
+    copy(_.maxMultiSortColCount = maxMultiSortColCount.orUndefined.map(_.toDouble))
 
-  lazy val onSortingChange: js.UndefOr[Updater[Sorting] => Callback] =
-    toJsBase.onSortingChange.map(fn =>
+  lazy val onSortingChange: Option[Updater[Sorting] => Callback] =
+    toJsBase.onSortingChange.toOption.map(fn =>
       u =>
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
@@ -208,10 +286,10 @@ sealed trait TableOptions[T]:
 
   /** WARNING: This mutates the object in-place. */
   def setOnSortingChange(
-    onSortingChange: js.UndefOr[Updater[Sorting] => Callback]
+    onSortingChange: Option[Updater[Sorting] => Callback]
   ): TableOptions[T] =
     copy(_.onSortingChange =
-      onSortingChange.map(fn =>
+      onSortingChange.orUndefined.map(fn =>
         u =>
           fn(
             Updater.fromJs(u) match
@@ -221,27 +299,27 @@ sealed trait TableOptions[T]:
       )
     )
 
-  lazy val sortDescFirst: js.UndefOr[Boolean] = toJsBase.sortDescFirst
+  lazy val sortDescFirst: Option[Boolean] = toJsBase.sortDescFirst.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setSortDescFirst(sortDescFirst: js.UndefOr[Boolean]): TableOptions[T] =
-    copy(_.sortDescFirst = sortDescFirst)
+  def setSortDescFirst(sortDescFirst: Option[Boolean]): TableOptions[T] =
+    copy(_.sortDescFirst = sortDescFirst.orUndefined)
 
   // Selection
-  lazy val enableRowSelection: js.UndefOr[Boolean] = toJsBase.enableRowSelection
+  lazy val enableRowSelection: Option[Boolean] = toJsBase.enableRowSelection.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setEnableRowSelection(enableRowSelection: js.UndefOr[Boolean]): TableOptions[T] =
-    copy(_.enableRowSelection = enableRowSelection)
+  def setEnableRowSelection(enableRowSelection: Option[Boolean]): TableOptions[T] =
+    copy(_.enableRowSelection = enableRowSelection.orUndefined)
 
-  lazy val enableMultiRowSelection: js.UndefOr[Boolean] = toJsBase.enableRowSelection
+  lazy val enableMultiRowSelection: Option[Boolean] = toJsBase.enableRowSelection.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setEnableMultiRowSelection(enableMultiRowSelection: js.UndefOr[Boolean]): TableOptions[T] =
-    copy(_.enableMultiRowSelection = enableMultiRowSelection)
+  def setEnableMultiRowSelection(enableMultiRowSelection: Option[Boolean]): TableOptions[T] =
+    copy(_.enableMultiRowSelection = enableMultiRowSelection.orUndefined)
 
-  lazy val onRowSelectionChange: js.UndefOr[Updater[RowSelection] => Callback] =
-    toJsBase.onRowSelectionChange.map(fn =>
+  lazy val onRowSelectionChange: Option[Updater[RowSelection] => Callback] =
+    toJsBase.onRowSelectionChange.toOption.map(fn =>
       u =>
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
@@ -252,10 +330,10 @@ sealed trait TableOptions[T]:
 
   /** WARNING: This mutates the object in-place. */
   def setOnRowSelectionChange(
-    onRowSelectionChange: js.UndefOr[Updater[RowSelection] => Callback]
+    onRowSelectionChange: Option[Updater[RowSelection] => Callback]
   ): TableOptions[T] =
     copy(_.onRowSelectionChange =
-      onRowSelectionChange.map(fn =>
+      onRowSelectionChange.orUndefined.map(fn =>
         u =>
           fn(
             Updater.fromJs(u) match
@@ -266,21 +344,21 @@ sealed trait TableOptions[T]:
     )
 
   // Expanding
-  lazy val enableExpanding: js.UndefOr[Boolean] = toJsBase.enableExpanding
+  lazy val enableExpanding: Option[Boolean] = toJsBase.enableExpanding.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setEnableExpanding(enableExpanding: js.UndefOr[Boolean]): TableOptions[T] =
-    copy(_.enableExpanding = enableExpanding)
+  def setEnableExpanding(enableExpanding: Option[Boolean]): TableOptions[T] =
+    copy(_.enableExpanding = enableExpanding.orUndefined)
 
-  lazy val getExpandedRowModel: js.UndefOr[Table[T] => () => raw.mod.RowModel[T]] =
-    toJsBase.getExpandedRowModel.map(fn => t => fn(t.toJs))
+  lazy val getExpandedRowModel: Option[Table[T] => () => raw.mod.RowModel[T]] =
+    toJsBase.getExpandedRowModel.toOption.map(fn => t => fn(t.toJs))
 
   /** WARNING: This mutates the object in-place. */
   def setGetExpandedRowModel(
-    getExpandedRowModel: js.UndefOr[Table[T] => () => raw.mod.RowModel[T]]
+    getExpandedRowModel: Option[Table[T] => () => raw.mod.RowModel[T]]
   ): TableOptions[T] =
     copy(_.getExpandedRowModel =
-      getExpandedRowModel
+      getExpandedRowModel.orUndefined
         .map(fn =>
           ((t: raw.mod.Table[T]) => fn(Table(t))): js.Function1[raw.mod.Table[T], js.Function0[
             raw.mod.RowModel[T]
@@ -289,13 +367,13 @@ sealed trait TableOptions[T]:
         .getOrElse(rawReact.mod.getExpandedRowModel())
     )
 
-  lazy val getSubRows: js.UndefOr[(T, Int) => Option[List[T]]] =
-    toJsBase.getSubRows.map(fn => (row, idx) => fn(row, idx).toOption.map(_.toList))
+  lazy val getSubRows: Option[(T, Int) => Option[List[T]]] =
+    toJsBase.getSubRows.toOption.map(fn => (row, idx) => fn(row, idx).toOption.map(_.toList))
 
   /** WARNING: This mutates the object in-place. */
-  def setGetSubRows(getSubRows: js.UndefOr[(T, Int) => Option[List[T]]]): TableOptions[T] =
+  def setGetSubRows(getSubRows: Option[(T, Int) => Option[List[T]]]): TableOptions[T] =
     copy(_.getSubRows =
-      getSubRows.map(fn => (row, idx) => fn(row, idx).map(_.toJSArray).orUndefined)
+      getSubRows.orUndefined.map(fn => (row, idx) => fn(row, idx).map(_.toJSArray).orUndefined)
     )
 end TableOptions
 
@@ -305,13 +383,15 @@ object TableOptions:
     data_                   : Reusable[List[T]],
     getCoreRowModel:          js.UndefOr[Table[T] => () => raw.mod.RowModel[T]] = js.undefined,
     getRowId:                 js.UndefOr[(T, Int, Option[T]) => RowId] = js.undefined,
-    // onStateChange:            js.UndefOr[raw.mod.Updater[raw.mod.TableState] => Callback] = js.undefined,
+    onStateChange:            js.UndefOr[Updater[TableState] => Callback] = js.undefined,
     renderFallbackValue:      js.UndefOr[Any] = js.undefined,
-    // state:                    js.UndefOr[raw.anon.PartialTableState] = js.undefined,
+    state:                    js.UndefOr[PartialTableState] = js.undefined,
     initialState:             js.UndefOr[TableState] = js.undefined,
     // Column Sizing
     enableColumnResizing:     js.UndefOr[Boolean] = js.undefined,
     columnResizeMode:         js.UndefOr[ColumnResizeMode] = js.undefined,
+    onColumnSizingChange:     js.UndefOr[Updater[ColumnSizing] => Callback] = js.undefined,
+    onColumnSizingInfoChange: js.UndefOr[Updater[ColumnSizingInfo] => Callback] = js.undefined,
     // Column Visibility
     enableHiding:             js.UndefOr[Boolean] = js.undefined,
     onColumnVisibilityChange: js.UndefOr[Updater[ColumnVisibility] => Callback] = js.undefined,
@@ -344,30 +424,34 @@ object TableOptions:
         var getCoreRowModel = null
       }
     }
-      .setGetCoreRowModel(getCoreRowModel)
-      .setGetSortedRowModel(getSortedRowModel)
-      .setGetExpandedRowModel(getExpandedRowModel)
-      .applyOrNot(getRowId, _.setGetRowId(_))
-      .applyOrNot(renderFallbackValue, _.setRenderFallbackValue(_))
-      .applyOrNot(initialState, _.setInitialState(_))
-      .applyOrNot(enableColumnResizing, _.setEnableColumnResizing(_))
-      .applyOrNot(columnResizeMode, _.setColumnResizeMode(_))
-      .applyOrNot(enableHiding, _.setEnableHiding(_))
-      .applyOrNot(onColumnVisibilityChange, _.setOnColumnVisibilityChange(_))
-      .applyOrNot(enableSorting, _.setEnableSorting(_))
-      .applyOrNot(enableMultiSort, _.setEnableMultiSort(_))
-      .applyOrNot(enableSortingRemoval, _.setEnableSortingRemoval(_))
-      .applyOrNot(enableMultiRemove, _.setEnableMultiRemove(_))
-      .applyOrNot(isMultiSortEvent, _.setIsMultiSortEvent(_))
-      .applyOrNot(manualSorting, _.setManualSorting(_))
-      .applyOrNot(maxMultiSortColCount, _.setMaxMultiSortColCount(_))
-      .applyOrNot(onSortingChange, _.setOnSortingChange(_))
-      .applyOrNot(sortDescFirst, _.setSortDescFirst(_))
-      .applyOrNot(enableRowSelection, _.setEnableRowSelection(_))
-      .applyOrNot(enableMultiRowSelection, _.setEnableMultiRowSelection(_))
-      .applyOrNot(onRowSelectionChange, _.setOnRowSelectionChange(_))
-      .applyOrNot(enableExpanding, _.setEnableExpanding(_))
-      .applyOrNot(getSubRows, _.setGetSubRows(_))
+      .setGetCoreRowModel(getCoreRowModel.toOption)
+      .setGetSortedRowModel(getSortedRowModel.toOption)
+      .setGetExpandedRowModel(getExpandedRowModel.toOption)
+      .applyOrNot(getRowId, (p, v) => p.setGetRowId(v.some))
+      .applyOrNot(onStateChange, (p, v) => p.setOnStateChange(v.some))
+      .applyOrNot(renderFallbackValue, (p, v) => p.setRenderFallbackValue(v.some))
+      .applyOrNot(state, (p, v) => p.setState(v.some))
+      .applyOrNot(initialState, (p, v) => p.setInitialState(v.some))
+      .applyOrNot(enableColumnResizing, (p, v) => p.setEnableColumnResizing(v.some))
+      .applyOrNot(columnResizeMode, (p, v) => p.setColumnResizeMode(v.some))
+      .applyOrNot(onColumnSizingChange, (p, v) => p.setOnColumnSizingChange(v.some))
+      .applyOrNot(onColumnSizingInfoChange, (p, v) => p.setOnColumnSizingInfoChange(v.some))
+      .applyOrNot(enableHiding, (p, v) => p.setEnableHiding(v.some))
+      .applyOrNot(onColumnVisibilityChange, (p, v) => p.setOnColumnVisibilityChange(v.some))
+      .applyOrNot(enableSorting, (p, v) => p.setEnableSorting(v.some))
+      .applyOrNot(enableMultiSort, (p, v) => p.setEnableMultiSort(v.some))
+      .applyOrNot(enableSortingRemoval, (p, v) => p.setEnableSortingRemoval(v.some))
+      .applyOrNot(enableMultiRemove, (p, v) => p.setEnableMultiRemove(v.some))
+      .applyOrNot(isMultiSortEvent, (p, v) => p.setIsMultiSortEvent(v.some))
+      .applyOrNot(manualSorting, (p, v) => p.setManualSorting(v.some))
+      .applyOrNot(maxMultiSortColCount, (p, v) => p.setMaxMultiSortColCount(v.some))
+      .applyOrNot(onSortingChange, (p, v) => p.setOnSortingChange(v.some))
+      .applyOrNot(sortDescFirst, (p, v) => p.setSortDescFirst(v.some))
+      .applyOrNot(enableRowSelection, (p, v) => p.setEnableRowSelection(v.some))
+      .applyOrNot(enableMultiRowSelection, (p, v) => p.setEnableMultiRowSelection(v.some))
+      .applyOrNot(onRowSelectionChange, (p, v) => p.setOnRowSelectionChange(v.some))
+      .applyOrNot(enableExpanding, (p, v) => p.setEnableExpanding(v.some))
+      .applyOrNot(getSubRows, (p, v) => p.setGetSubRows(v.some))
 
   private[table] def fromJs[T](raw: TableOptionsJs[T]): TableOptions[T] =
     new TableOptions[T]:

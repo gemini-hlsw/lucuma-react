@@ -7,8 +7,8 @@ import cats.Eq
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import react.common.*
-import reactST.primereact.selectitemMod.SelectItemOptionsType
-import reactST.primereact.selectitemMod.{SelectItem => CSelectItem}
+import reactST.primereact.selectitemSelectitemMod.SelectItemOptionsType
+import reactST.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
