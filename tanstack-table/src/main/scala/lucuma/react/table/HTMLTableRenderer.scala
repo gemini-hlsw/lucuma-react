@@ -26,18 +26,20 @@ import scalajs.js
  * Allows intermediate customization via constant overriding as well as via properties.
  */
 trait HTMLTableRenderer[T]:
-  protected val TableClass: Css       = Css("react-table")
-  protected val TheadClass: Css       = Css.Empty
-  protected val TheadTrClass: Css     = Css.Empty
-  protected val TheadThClass: Css     = Css.Empty
-  protected val TbodyClass: Css       = Css.Empty
-  protected val TbodyTrClass: Css     = Css.Empty
-  protected val TbodyTrEvenClass: Css = Css("row-even")
-  protected val TbodyTdClass: Css     = Css.Empty
-  protected val TfootClass: Css       = Css.Empty
-  protected val TfootTrClass: Css     = Css.Empty
-  protected val TfootThClass: Css     = Css.Empty
-  protected val EmptyMessage: Css     = Css.Empty
+  protected val TableClass: Css                   = Css("react-table")
+  protected val TheadClass: Css                   = Css.Empty
+  protected val TheadTrClass: Css                 = Css.Empty
+  protected val TheadThClass: Css                 = Css.Empty
+  protected val TbodyClass: Css                   = Css.Empty
+  protected val TbodyTrClass: Css                 = Css.Empty
+  protected val TbodyTrWithSubcomponentClass: Css = Css("has-subcomponent")
+  protected val TbodyTrSubcomponentClass: Css     = Css("is-subcomponent")
+  protected val TbodyTrEvenClass: Css             = Css("row-even")
+  protected val TbodyTdClass: Css                 = Css.Empty
+  protected val TfootClass: Css                   = Css.Empty
+  protected val TfootTrClass: Css                 = Css.Empty
+  protected val TfootThClass: Css                 = Css.Empty
+  protected val EmptyMessage: Css                 = Css.Empty
 
   protected val ResizerClass: Css         = Css("resizer")
   protected val IsResizingTHeadClass: Css = Css("isResizing")
@@ -81,24 +83,25 @@ trait HTMLTableRenderer[T]:
     else EmptyVdom
 
   def render[T](
-    table:         Table[T],
-    rows:          js.Array[raw.mod.Row[T]],
-    tableMod:      TagMod = TagMod.empty,
-    headerMod:     TagMod = TagMod.empty,
-    headerRowMod:  raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+    table:              Table[T],
+    rows:               js.Array[raw.mod.Row[T]],
+    tableMod:           TagMod = TagMod.empty,
+    headerMod:          TagMod = TagMod.empty,
+    headerRowMod:       raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
       TagMod.empty,
-    headerCellMod: raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
-    bodyMod:       TagMod = TagMod.empty,
-    rowMod:        raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
-    cellMod:       raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
-    footerMod:     TagMod = TagMod.empty,
-    footerRowMod:  raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+    headerCellMod:      raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+    bodyMod:            TagMod = TagMod.empty,
+    rowMod:             raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
+    cellMod:            raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
+    footerMod:          TagMod = TagMod.empty,
+    footerRowMod:       raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
       TagMod.empty,
-    footerCellMod: raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
-    indexOffset:   Int = 0,
-    paddingTop:    Option[Int] = none,
-    paddingBottom: Option[Int] = none,
-    emptyMessage:  VdomNode = EmptyVdom
+    footerCellMod:      raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+    indexOffset:        Int = 0,
+    paddingTop:         Option[Int] = none,
+    paddingBottom:      Option[Int] = none,
+    emptyMessage:       VdomNode = EmptyVdom,
+    renderSubComponent: raw.mod.Row[T] => Option[VdomNode] = (_: raw.mod.Row[T]) => none
   ) =
     <.table(TableClass, tableMod)(
       <.thead(
@@ -184,27 +187,41 @@ trait HTMLTableRenderer[T]:
         ),
         rows.zipWithIndex
           .map((row, index) =>
-            <.tr(
-              TbodyTrClass,
-              TbodyTrEvenClass.when((index + indexOffset) % 2 =!= 0),
-              rowMod(row),
-              ^.key := row.id
-            )(
-              row
-                .getVisibleCells()
-                .map(cell =>
-                  <.td(
-                    TbodyTdClass,
-                    cellMod(cell),
-                    ^.key := cell.id
-                  )(
-                    rawReact.mod.flexRender(
-                      cell.column.columnDef.cell
-                        .asInstanceOf[rawReact.mod.Renderable[raw.mod.CellContext[T, Any]]],
-                      cell.getContext().asInstanceOf[raw.mod.CellContext[T, Any]]
+            val subcomponent: Option[VdomNode] = renderSubComponent(row)
+
+            React.Fragment(
+              <.tr(
+                TbodyTrClass,
+                TbodyTrWithSubcomponentClass.when(subcomponent.isDefined),
+                TbodyTrEvenClass.when((index + indexOffset) % 2 =!= 0),
+                rowMod(row),
+                ^.key := row.id
+              )(
+                row
+                  .getVisibleCells()
+                  .map(cell =>
+                    <.td(
+                      TbodyTdClass,
+                      cellMod(cell),
+                      ^.key := cell.id
+                    )(
+                      rawReact.mod.flexRender(
+                        cell.column.columnDef.cell
+                          .asInstanceOf[rawReact.mod.Renderable[raw.mod.CellContext[T, Any]]],
+                        cell.getContext().asInstanceOf[raw.mod.CellContext[T, Any]]
+                      )
                     )
                   )
+              ),
+              subcomponent.map(subComponent =>
+                <.tr(
+                  TbodyTrSubcomponentClass,
+                  TbodyTrEvenClass.when((index + indexOffset) % 2 =!= 0),
+                  ^.key := s"${row.id}-subcomponent"
+                )(
+                  <.td(^.colSpan := table.getAllLeafColumns().length)(subComponent)
                 )
+              )
             )
           )
       )(
@@ -267,7 +284,8 @@ object HTMLTableRenderer:
         props.footerMod,
         props.footerRowMod,
         props.footerCellMod,
-        emptyMessage = props.emptyMessage
+        emptyMessage = props.emptyMessage,
+        renderSubComponent = props.renderSubComponent
       )
     )
 
@@ -316,7 +334,8 @@ object HTMLTableRenderer:
             indexOffset,
             paddingBefore.some,
             paddingAfter.some,
-            props.emptyMessage
+            props.emptyMessage,
+            props.renderSubComponent
           )
         )
       }
@@ -383,7 +402,8 @@ object HTMLTableRenderer:
               indexOffset,
               paddingBefore.some,
               paddingAfter.some,
-              props.emptyMessage
+              props.emptyMessage,
+              props.renderSubComponent
             )
           )
         )
