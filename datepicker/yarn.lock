@@ -547,12 +547,12 @@
     exenv "^1.2.2"
     prop-types "^15.6.2"
 
-"@tanstack/react-table@^8.5.22":
-  version "8.7.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.7.0.tgz#853fae74db6bf49738d0f18e4d507b00262fc09c"
-  integrity sha512-VJ+9rsymDLaSU35rWOfX0bwNXnpW1i+T14wi+sHx8lxwAsfg6IY1Yw7FPfGADvUFP5eQn2t4nlohAJd+IoEj/Q==
+"@tanstack/react-table@^8.7.3":
+  version "8.7.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.7.3.tgz#287713263f48c713ce0ad2324e930b138baa64b1"
+  integrity sha512-4hUSl10UGEp3DTS0sKe8ZEr0MYKEHXKXzAolzjs+w+vjVIimFICuyIjxisY6rLOvRVNXbwF5Pjyr+1YC6ptpZw==
   dependencies:
-    "@tanstack/table-core" "8.7.0"
+    "@tanstack/table-core" "8.7.3"
 
 "@tanstack/react-virtual@v3.0.0-beta.23":
   version "3.0.0-beta.23"
@@ -561,10 +561,10 @@
   dependencies:
     "@tanstack/virtual-core" "3.0.0-beta.23"
 
-"@tanstack/table-core@8.7.0":
-  version "8.7.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.7.0.tgz#046e376cd536cd53727a91a880345f92d3ec5859"
-  integrity sha512-DRiRbOAmDHapzUBd4/C4Yy+FTug4fdGp5sdZWWfCq4wxRoaXQraQgbzmK23a3QcbwLFtLeNezPkZrqbJWuX+VA==
+"@tanstack/table-core@8.7.3":
+  version "8.7.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.7.3.tgz#53e180e74b366468f2c0c10d24c0d148261d8398"
+  integrity sha512-P+LKZuytLRUEKv0zMKFpYCLb9ZRiZ+kaFXh99HS6gOEX58tq41PltQ2BhTBe2UPlB8O6IQFsilKhx94/6w3ZMg==
 
 "@tanstack/virtual-core@3.0.0-beta.23":
   version "3.0.0-beta.23"
