@@ -5,7 +5,7 @@
     "@floating-ui/react-dom-interactions": "^0.10.3",
     "@tanstack/react-table": "^8.7.3",
     "@tanstack/react-virtual": "v3.0.0-beta.23",
-    "@vitejs/plugin-react": "^2.2.0",
+    "@vitejs/plugin-react": "^3.0.0",
     "copy-to-clipboard": "^3.3.3",
     "fomantic-ui-less": "^2.9.0",
     "highcharts": "^10.3.1",
@@ -29,7 +29,7 @@
     "sass": "^1.56.2",
     "semantic-ui-react": "^2.1.4",
     "styled-components": "^5.3.6",
-    "vite": "^3.2.4"
+    "vite": "^4.0.1"
   },
   "dependencies": {
     "typescript": "4.9"
