@@ -116,7 +116,11 @@ object DemoControlsPanel {
                             rows = 6,
                             onChange = e => inputTextarea.setState(e.target.value),
                             clazz = DemoStyles.FormField
-              ).withMods(mouseEntered("InputTextarea")),
+              ).withMods(mouseEntered("InputTextarea"),
+                         ^.onFocus ==> { (e: ReactFocusEventFromInput) =>
+                           Callback.log(s"Focused TextArea: ${e.target.value}")
+                         }
+              ),
               <.label("Dropdown", ^.htmlFor          := "dropdown", DemoStyles.FormFieldLabel),
               Dropdown(
                 id = "dropdown",
@@ -228,10 +232,6 @@ object DemoControlsPanel {
                   if (si.disabled.getOrElse(false)) <.s(si.label.toOption)
                   else <.span(si.label.toOption)
               )(mouseEntered("SelectButtonMultiple")),
-              <.label("ProgressBar 1",
-                      ^.htmlFor                      := "progress-indeterminate",
-                      DemoStyles.FormFieldLabel
-              ),
               <.label("ToggleButton", DemoStyles.FormFieldLabel),
               <.span(DemoStyles.FormField)(
                 ToggleButton(
@@ -243,6 +243,10 @@ object DemoControlsPanel {
                   checked = toggleButton.value,
                   onChange = toggleButton.setState
                 )
+              ),
+              <.label("ProgressBar 1",
+                      ^.htmlFor                      := "progress-indeterminate",
+                      DemoStyles.FormFieldLabel
               ),
               ProgressBar(id = "progress-indeterminate", mode = ProgressBar.Mode.Indeterminate),
               <.div(

@@ -18,12 +18,16 @@ case class Dropdown[A](
   options:         List[SelectItem[A]],
   id:              js.UndefOr[String] = js.undefined,
   clazz:           js.UndefOr[Css] = js.undefined,
+  panelClass:      js.UndefOr[Css] = js.undefined,
   filter:          js.UndefOr[Boolean] = js.undefined,
   showFilterClear: js.UndefOr[Boolean] = js.undefined,
   placeholder:     js.UndefOr[String] = js.undefined,
   disabled:        js.UndefOr[Boolean] = js.undefined,
   dropdownIcon:    js.UndefOr[String] = js.undefined,
+  tooltip:         js.UndefOr[String] = js.undefined,
+  tooltipOptions:  js.UndefOr[TooltipOptions] = js.undefined,
   onChange:        js.UndefOr[A => Callback] = js.undefined,
+  onChangeE:       js.UndefOr[ReactEvent => Callback] = js.undefined, // called after onChange
   modifiers:       Seq[TagMod] = Seq.empty
 )(using val eqAA:  Eq[A])
     extends ReactFnProps[DropdownBase](DropdownBase.component)

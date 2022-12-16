@@ -9,6 +9,7 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import reactST.primereact.components.{SelectButton => CSelectButton}
 import reactST.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
+import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -26,6 +27,8 @@ private[primereact] trait SelectButtonBase {
   val unselectable: js.UndefOr[Boolean] // default: true
   val itemTemplate: js.UndefOr[SelectItem[AA] => VdomNode]
   val clazz: js.UndefOr[Css]
+  val tooltip: js.UndefOr[String]
+  val tooltipOptions: js.UndefOr[TooltipOptions]
   val onChange: js.UndefOr[GG[AA] => Callback]
   val modifiers: Seq[TagMod]
 
@@ -57,6 +60,8 @@ object SelectButtonBase {
           )
       )
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
+      .applyOrNot(props.tooltip, _.tooltip(_))
+      .applyOrNot(props.tooltipOptions, (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions]))
       .applyOrNot(props.onChange, (c, p) => c.onChange(e => p(props.valueFinder(e.value))))(
         props.modifiers.toTagMod
       )

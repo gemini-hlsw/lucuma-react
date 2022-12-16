@@ -19,6 +19,8 @@ case class SelectButtonOptional[A](
   disabled:       js.UndefOr[Boolean] = js.undefined,
   itemTemplate:   js.UndefOr[SelectItem[A] => VdomNode] = js.undefined,
   clazz:          js.UndefOr[Css] = js.undefined,
+  tooltip:        js.UndefOr[String] = js.undefined,
+  tooltipOptions: js.UndefOr[TooltipOptions] = js.undefined,
   onChange:       js.UndefOr[Option[A] => Callback] = js.undefined,
   modifiers:      Seq[TagMod] = Seq.empty
 )(using val eqAA: Eq[A])

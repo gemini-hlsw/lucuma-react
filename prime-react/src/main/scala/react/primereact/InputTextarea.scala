@@ -7,21 +7,24 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import reactST.primereact.components.{InputTextarea => CInputTextarea}
+import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 
 case class InputTextarea(
-  id:          String,
-  clazz:       js.UndefOr[Css] = js.undefined,
-  value:       js.UndefOr[String] = js.undefined,
-  autoResize:  js.UndefOr[Boolean] = js.undefined,
-  disabled:    js.UndefOr[Boolean] = js.undefined,
-  placeholder: js.UndefOr[String] = js.undefined,
-  rows:        js.UndefOr[Int] = js.undefined,
-  onBlur:      js.UndefOr[ReactFocusEventFromTextArea => Callback] = js.undefined,
-  onChange:    js.UndefOr[ReactEventFromTextArea => Callback] = js.undefined,
-  onKeyDown:   js.UndefOr[ReactKeyboardEventFromTextArea => Callback] = js.undefined,
-  modifiers:   Seq[TagMod] = Seq.empty
+  id:             String,
+  clazz:          js.UndefOr[Css] = js.undefined,
+  value:          js.UndefOr[String] = js.undefined,
+  autoResize:     js.UndefOr[Boolean] = js.undefined,
+  disabled:       js.UndefOr[Boolean] = js.undefined,
+  placeholder:    js.UndefOr[String] = js.undefined,
+  rows:           js.UndefOr[Int] = js.undefined,
+  tooltip:        js.UndefOr[String] = js.undefined,
+  tooltipOptions: js.UndefOr[TooltipOptions] = js.undefined,
+  onBlur:         js.UndefOr[ReactFocusEventFromTextArea => Callback] = js.undefined,
+  onChange:       js.UndefOr[ReactEventFromTextArea => Callback] = js.undefined,
+  onKeyDown:      js.UndefOr[ReactKeyboardEventFromTextArea => Callback] = js.undefined,
+  modifiers:      Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[InputTextarea](InputTextarea.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods:          TagMod*)     = addModifiers(mods)
@@ -36,6 +39,8 @@ object InputTextarea {
       .applyOrNot(props.autoResize, _.autoResize(_))
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.placeholder, _.placeholder(_))
+      .applyOrNot(props.tooltip, _.tooltip(_))
+      .applyOrNot(props.tooltipOptions, (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions]))
       .applyOrNot(props.onBlur, _.onBlur(_))
       .applyOrNot(props.onChange, _.onChange(_))
       .applyOrNot(props.onKeyDown, _.onKeyDown(_))

@@ -4,11 +4,14 @@
 package react.primereact
 
 import cats.Eq
+import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import react.fa.FontAwesomeIcon
 import reactST.primereact.components.{Dropdown => CDropdown}
+import reactST.primereact.dropdownDropdownMod.DropdownChangeParams
+import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -23,13 +26,17 @@ private[primereact] trait DropdownBase {
   val options: List[SelectItem[AA]]
   val id: js.UndefOr[String]
   val clazz: js.UndefOr[Css]
+  val panelClass: js.UndefOr[Css]
   val showClear: js.UndefOr[Boolean]
   val filter: js.UndefOr[Boolean]
   val showFilterClear: js.UndefOr[Boolean]
   val placeholder: js.UndefOr[String]
   val disabled: js.UndefOr[Boolean]
   val dropdownIcon: js.UndefOr[String]
+  val tooltip: js.UndefOr[String]
+  val tooltipOptions: js.UndefOr[TooltipOptions]
   val onChange: js.UndefOr[GG[AA] => Callback]
+  val onChangeE: js.UndefOr[ReactEvent => Callback] // called after onChange
   val modifiers: Seq[TagMod]
 
   protected def getter: js.UndefOr[Int]
@@ -40,18 +47,28 @@ private[primereact] trait DropdownBase {
 
 object DropdownBase {
   private[primereact] val component = ScalaFnComponent[DropdownBase] { props =>
+    val changeHandler: DropdownChangeParams => Callback =
+      parms =>
+        props.onChange.toOption.map(_(props.finder(parms.value))).getOrElse(Callback.empty) >>
+          props.onChangeE.toOption.map(_(parms.originalEvent)).getOrElse(Callback.empty)
+
     CDropdown
       .value(props.getter)
       .options(props.optionsWithIndex.raw)
+      .onChange(changeHandler)
       .applyOrNot(props.id, _.id(_))
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
+      .applyOrNot(props.panelClass, (c, p) => c.panelClassName(p.htmlClass))
       .applyOrNot(props.showClear, _.showClear(_))
       .applyOrNot(props.filter, _.filter(_))
       .applyOrNot(props.showFilterClear, _.showFilterClear(_))
       .applyOrNot(props.placeholder, _.placeholder(_))
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.dropdownIcon, _.dropdownIcon(_))
-      .applyOrNot(props.onChange, (c, p) => c.onChange(e => p(props.finder(e.value))))(
+      .applyOrNot(props.tooltip, _.tooltip(_))
+      .applyOrNot(props.tooltipOptions,
+                  (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions])
+      )(
         props.modifiers.toTagMod
       )
   }

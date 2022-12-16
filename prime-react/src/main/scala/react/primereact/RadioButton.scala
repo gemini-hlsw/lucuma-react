@@ -7,20 +7,23 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import reactST.primereact.components.{RadioButton => CRadioButton}
+import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 
 case class RadioButton[A](
-  value:     A,
-  id:        js.UndefOr[String] = js.undefined,
-  inputId:   js.UndefOr[String] = js.undefined, // id of the input element
-  name:      js.UndefOr[String] = js.undefined, // Name of the radio button
-  disabled:  js.UndefOr[Boolean] = js.undefined,
-  clazz:     js.UndefOr[Css] = js.undefined,
-  checked:   js.UndefOr[Boolean] = js.undefined,
-  required:  js.UndefOr[Boolean] = js.undefined,
-  onChange:  js.UndefOr[(A, Boolean) => Callback] = js.undefined,
-  modifiers: Seq[TagMod] = Seq.empty
+  value:          A,
+  id:             js.UndefOr[String] = js.undefined,
+  inputId:        js.UndefOr[String] = js.undefined, // id of the input element
+  name:           js.UndefOr[String] = js.undefined, // Name of the radio button
+  disabled:       js.UndefOr[Boolean] = js.undefined,
+  clazz:          js.UndefOr[Css] = js.undefined,
+  checked:        js.UndefOr[Boolean] = js.undefined,
+  required:       js.UndefOr[Boolean] = js.undefined,
+  tooltip:        js.UndefOr[String] = js.undefined,
+  tooltipOptions: js.UndefOr[TooltipOptions] = js.undefined,
+  onChange:       js.UndefOr[(A, Boolean) => Callback] = js.undefined,
+  modifiers:      Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[RadioButton[Any]](RadioButton.component) {
 
   protected def valueFinder(i: Any): A = i.asInstanceOf[A]
@@ -41,6 +44,8 @@ object RadioButton {
       .applyOrNot(props.checked, _.checked(_))
       .applyOrNot(props.required, _.required(_))
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
+      .applyOrNot(props.tooltip, _.tooltip(_))
+      .applyOrNot(props.tooltipOptions, (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions]))
       .applyOrNot(
         props.onChange,
         (c, p) => c.onChange(scp => p(props.valueFinder(scp.value), scp.checked))
