@@ -36,7 +36,7 @@ private[primereact] trait DropdownBase {
   val tooltip: js.UndefOr[String]
   val tooltipOptions: js.UndefOr[TooltipOptions]
   val onChange: js.UndefOr[GG[AA] => Callback]
-  val onChangeE: js.UndefOr[ReactEvent => Callback] // called after onChange
+  val onChangeE: js.UndefOr[(GG[AA], ReactEvent) => Callback] // called after onChange
   val modifiers: Seq[TagMod]
 
   protected def getter: js.UndefOr[Int]
@@ -49,8 +49,9 @@ object DropdownBase {
   private[primereact] val component = ScalaFnComponent[DropdownBase] { props =>
     val changeHandler: DropdownChangeParams => Callback =
       parms =>
-        props.onChange.toOption.map(_(props.finder(parms.value))).getOrElse(Callback.empty) >>
-          props.onChangeE.toOption.map(_(parms.originalEvent)).getOrElse(Callback.empty)
+        val a = props.finder(parms.value)
+        props.onChange.toOption.map(_(a)).getOrElse(Callback.empty) >>
+          props.onChangeE.toOption.map(_(a, parms.originalEvent)).getOrElse(Callback.empty)
 
     CDropdown
       .value(props.getter)

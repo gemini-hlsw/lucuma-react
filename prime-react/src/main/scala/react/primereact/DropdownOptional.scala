@@ -27,9 +27,10 @@ case class DropdownOptional[A](
   tooltip:         js.UndefOr[String] = js.undefined,
   tooltipOptions:  js.UndefOr[TooltipOptions] = js.undefined,
   onChange:        js.UndefOr[Option[A] => Callback] = js.undefined,
-  onChangeE:       js.UndefOr[ReactEvent => Callback] = js.undefined, // called after onChange
-  modifiers:       Seq[TagMod] = Seq.empty
-)(using val eqAA:  Eq[A])
+  onChangeE:       js.UndefOr[(Option[A], ReactEvent) => Callback] =
+    js.undefined, // called after onChange
+  modifiers:      Seq[TagMod] = Seq.empty
+)(using val eqAA: Eq[A])
     extends ReactFnProps[DropdownBase](DropdownBase.component)
     with DropdownBase {
   type AA    = A

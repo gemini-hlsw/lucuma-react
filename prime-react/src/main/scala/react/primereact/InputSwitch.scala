@@ -13,8 +13,8 @@ import scalajs.js
 
 case class InputSwitch(
   id:             js.UndefOr[String] = js.undefined,
-  inputId:        js.UndefOr[String] = js.undefined,  // id of the input element
-  checked:        js.UndefOr[Boolean] = js.undefined, // id of the input element
+  inputId:        js.UndefOr[String] = js.undefined, // id of the input element
+  checked:        js.UndefOr[Boolean] = js.undefined,
   disabled:       js.UndefOr[Boolean] = js.undefined,
   clazz:          js.UndefOr[Css] = js.undefined,
   tooltip:        js.UndefOr[String] = js.undefined,
