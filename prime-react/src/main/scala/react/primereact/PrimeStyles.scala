@@ -38,6 +38,8 @@ trait PrimeStyles {
   val ButtonRounded: Css  = Css("p-button-rounded")
   val ButtonText: Css     = Css("p-button-text")
 
+  val ButtonSet: Css = Css("p-buttonset")
+
   // Tag
   val TagIcon: Css = Css("p-tag-icon")
 

@@ -7,17 +7,20 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import reactST.primereact.components.{InputSwitch => CInputSwitch}
+import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 
 case class InputSwitch(
-  id:        js.UndefOr[String] = js.undefined,
-  inputId:   js.UndefOr[String] = js.undefined,  // id of the input element
-  checked:   js.UndefOr[Boolean] = js.undefined, // id of the input element
-  disabled:  js.UndefOr[Boolean] = js.undefined,
-  clazz:     js.UndefOr[Css] = js.undefined,
-  onChange:  js.UndefOr[Boolean => Callback] = js.undefined,
-  modifiers: Seq[TagMod] = Seq.empty
+  id:             js.UndefOr[String] = js.undefined,
+  inputId:        js.UndefOr[String] = js.undefined, // id of the input element
+  checked:        js.UndefOr[Boolean] = js.undefined,
+  disabled:       js.UndefOr[Boolean] = js.undefined,
+  clazz:          js.UndefOr[Css] = js.undefined,
+  tooltip:        js.UndefOr[String] = js.undefined,
+  tooltipOptions: js.UndefOr[TooltipOptions] = js.undefined,
+  onChange:       js.UndefOr[Boolean => Callback] = js.undefined,
+  modifiers:      Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[InputSwitch](InputSwitch.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods:          TagMod*)     = addModifiers(mods)
@@ -32,6 +35,8 @@ object InputSwitch {
       .applyOrNot(props.checked, _.checked(_))
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
+      .applyOrNot(props.tooltip, _.tooltip(_))
+      .applyOrNot(props.tooltipOptions, (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions]))
       .applyOrNot(props.onChange, (c, p) => c.onChange(iwcp => p(iwcp.value)))(
         props.modifiers.toTagMod
       )
