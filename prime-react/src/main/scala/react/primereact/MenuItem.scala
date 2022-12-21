@@ -45,7 +45,7 @@ object MenuItem {
     clazz:    js.UndefOr[Css] = js.undefined
   )(items:    MenuItem*): MenuItem = {
     val sm = js.Dynamic.literal(label = label, items = items.toJSArray).asInstanceOf[SubMenu]
-    icon.foreach(i => sm.icon = i.toPrime)
+    icon.foreach(i => sm.icon = i.toPrimeWithClass(PrimeStyles.MenuItemIcon))
     disabled.foreach(v => sm.disabled = v)
     expanded.foreach(v => sm.expanded = v)
     visible.foreach(v => sm.visible = v)
@@ -76,7 +76,7 @@ object MenuItem {
     clazz:    js.UndefOr[Css] = js.undefined
   ): Item = {
     val l = js.Dynamic.literal(label = label).asInstanceOf[Item]
-    icon.foreach(i => l.icon = i.toPrime)
+    icon.foreach(i => l.icon = i.toPrimeWithClass(PrimeStyles.MenuItemIcon))
     url.foreach(u => l.url = u)
     command.foreach(c => l.command = _ => c.runNow())
     disabled.foreach(v => l.disabled = v)
