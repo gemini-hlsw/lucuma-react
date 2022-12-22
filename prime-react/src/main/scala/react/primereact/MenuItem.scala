@@ -38,7 +38,7 @@ object MenuItem {
 
   def SubMenu(
     label:    String,
-    icon:     js.UndefOr[FontAwesomeIcon | String] = js.undefined,
+    icon:     js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
     disabled: js.UndefOr[Boolean] = js.undefined,
     expanded: js.UndefOr[Boolean] = js.undefined,
     visible:  js.UndefOr[Boolean] = js.undefined,
@@ -67,7 +67,7 @@ object MenuItem {
   // Not all properties work with all menu types.
   def Item(
     label:    String,
-    icon:     js.UndefOr[FontAwesomeIcon | String] = js.undefined,
+    icon:     js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
     command:  js.UndefOr[Callback] = js.undefined,
     url:      js.UndefOr[String] = js.undefined,
     disabled: js.UndefOr[Boolean] = js.undefined,
