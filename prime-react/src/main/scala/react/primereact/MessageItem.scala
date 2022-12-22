@@ -35,16 +35,17 @@ trait MessageItem extends js.Object {
 object MessageItem {
   def apply(
     id:           js.UndefOr[String] = js.undefined,
-    severity:     Message.Severity = Message.Severity.Info,           // Without a value is mostly transparent.
-    summary:      js.UndefOr[String] = js.undefined,                  // for messages, use only one of summary or detail
+    severity:     Message.Severity = Message.Severity.Info, // Without a value is mostly transparent.
+    summary:      js.UndefOr[String] = js.undefined,        // for messages, use only one of summary or detail
     detail:       js.UndefOr[String] = js.undefined,
-    content:      js.UndefOr[VdomNode] = js.undefined,                // instead of summary and details
+    content:      js.UndefOr[VdomNode] = js.undefined,      // instead of summary and details
     clazz:        js.UndefOr[Css] = js.undefined,
     contentClass: js.UndefOr[Css] = js.undefined,
-    closable:     js.UndefOr[Boolean] = js.undefined,                 // default: true
-    sticky:       js.UndefOr[Boolean] = js.undefined,                 // default: false?
-    life:         js.UndefOr[Int] = js.undefined,                     // in milliseconds. default: 3000
-    icon:         js.UndefOr[FontAwesomeIcon | String] = js.undefined // only works for Messages, not Toast
+    closable:     js.UndefOr[Boolean] = js.undefined,       // default: true
+    sticky:       js.UndefOr[Boolean] = js.undefined,       // default: false?
+    life:         js.UndefOr[Int] = js.undefined,           // in milliseconds. default: 3000
+    icon:         js.UndefOr[FontAwesomeIcon | Image | String] =
+      js.undefined // only works for Messages, not Toast
   ): MessageItem = {
     val m = (new js.Object).asInstanceOf[MessageItem]
     id.foreach(v => m.id = v)

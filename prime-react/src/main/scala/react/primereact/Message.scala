@@ -21,7 +21,7 @@ case class Message(
   severity:  js.UndefOr[Message.Severity] = js.undefined,
   text:      js.UndefOr[String] = js.undefined,
   content:   js.UndefOr[VdomNode] = js.undefined,
-  icon:      js.UndefOr[FontAwesomeIcon | String] = js.undefined, // default: severity icon
+  icon:      js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined, // default: severity icon
   clazz:     js.UndefOr[Css] = js.undefined,
   modifiers: Seq[TagMod] = Seq.empty
 ) extends ReactFnProps(Message.component):

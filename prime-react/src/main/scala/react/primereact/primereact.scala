@@ -61,13 +61,19 @@ object ConfirmDialogHideParm {
     })
 }
 
-extension (icon: FontAwesomeIcon | String)
+extension (icon: FontAwesomeIcon | Image | String)
   def toPrime: Node                      = icon match {
     case fa: FontAwesomeIcon => fa.raw
+    case img: Image          =>
+      val v: VdomNode = img
+      v.rawNode
     case s: String           => s
   }
   def toPrimeWithClass(clazz: Css): Node = icon match {
     case fa: FontAwesomeIcon => fa.addClass(clazz).raw
+    case img: Image          =>
+      val v: VdomNode = img.copy(clazz = img.clazz.toOption.orEmpty |+| clazz)
+      v.rawNode
     case s: String           => s
   }
 
