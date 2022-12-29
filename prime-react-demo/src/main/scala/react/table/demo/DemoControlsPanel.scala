@@ -111,15 +111,18 @@ object DemoControlsPanel {
                 onBlur = e => Callback.log(s"Input Text blurred. Value: ${e.target.value}")
               ).withMods(mouseEntered("InputText")),
               <.label("InputTextarea", ^.htmlFor     := "input-text-area", DemoStyles.FormFieldLabel),
-              InputTextarea(id = "input-text-area",
-                            value = inputTextarea.value,
-                            rows = 6,
-                            onChange = e => inputTextarea.setState(e.target.value),
-                            clazz = DemoStyles.FormField
-              ).withMods(mouseEntered("InputTextarea"),
-                         ^.onFocus ==> { (e: ReactFocusEventFromInput) =>
-                           Callback.log(s"Focused TextArea: ${e.target.value}")
-                         }
+              InputTextarea()(
+                ^.id                                 := "input-text-area",
+                ^.value                              := inputTextarea.value,
+                ^.rows                               := 6,
+                ^.onChange ==> { (e: ReactEventFromTextArea) =>
+                  inputTextarea.setState(e.target.value)
+                },
+                DemoStyles.FormField,
+                mouseEntered("InputTextarea"),
+                ^.onFocus ==> { (e: ReactEventFromTextArea) =>
+                  Callback.log(s"Focused TextArea: ${e.target.value}")
+                }
               ),
               <.label("Dropdown", ^.htmlFor          := "dropdown", DemoStyles.FormFieldLabel),
               Dropdown(
