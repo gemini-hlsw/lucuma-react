@@ -45,6 +45,7 @@ trait PrimeStyles {
 
   // Menus
   val MenuItemIcon: Css = Css("p-menuitem-icon")
+  val MenuItemLink: Css = Css("p-menuitem-link")
 
   // Messages
   val MessageIcon: Css       = Css("p-message-icon")

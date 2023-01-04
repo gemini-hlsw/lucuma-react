@@ -50,3 +50,13 @@ h1 {
 .p-progressbar {
   width: 100%
 }
+
+.p-menuitem.p-menuitem-link {
+  div:has(.p-slider) {
+    width: 100%;
+
+    .p-slider {
+      width: 100%;
+    }
+  }
+}

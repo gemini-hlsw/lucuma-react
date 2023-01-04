@@ -3,7 +3,10 @@
 
 package react.primereact
 
+import cats.syntax.all._
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.facade.React.Node
+import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import react.fa.FontAwesomeIcon
 
@@ -85,4 +88,18 @@ object MenuItem {
     clazz.foreach(v => l.className = v.htmlClass)
     l
   }
+
+  trait Custom extends MenuItem {
+    val node: js.Function2[Any, Any, Node]
+    var className: js.UndefOr[String] = js.undefined
+  }
+
+  def Custom(
+    node:  VdomNode,
+    clazz: js.UndefOr[Css] = js.undefined
+  ): MenuItem =
+    val className = (clazz.toOption.orEmpty |+| PrimeStyles.MenuItemLink).htmlClass
+    js.Dynamic
+      .literal(template = (_: Any, _: Any) => node.rawNode, className = className)
+      .asInstanceOf[Custom]
 }

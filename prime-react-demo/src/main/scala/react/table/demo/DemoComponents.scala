@@ -84,6 +84,7 @@ object DemoComponents {
       .useState(SidebarOptions.default)  // sidebar options
       .useState(0)                       // tabview activeIndex
       .useState(0)                       // tabMenu activeIndex
+      .useState(4.0)                     // menu slider
       .usePopupMenuRef
       .useToastRef
       .useMessagesRef
@@ -96,6 +97,7 @@ object DemoComponents {
           sidebarOptions,
           tabView,
           tabMenu,
+          menuSlider,
           popupMenuRef,
           toastRef,
           messagesRef
@@ -105,7 +107,18 @@ object DemoComponents {
               MenuItem.Item("Item 1", icon = "pi pi-bolt")
             ),
             MenuItem.Separator,
-            MenuItem.Item("Duck Duck Go", url = "http://duckduckgo.com") // , icon = Icons.DiceOne)
+            MenuItem.Custom(
+              <.div("slider",
+                    Slider(id = "menu-slider",
+                           value = menuSlider.value,
+                           onChange = t => menuSlider.setState(t),
+                           min = 0.0,
+                           max = 10.0
+                    )
+              )
+            ),
+            MenuItem.Item("Duck Duck Go", url = "http://duckduckgo.com"),
+            MenuItem.Item("Nothing, really", icon = "pi pi-ban")
           )
 
           def showConfirmPopup(target: HTMLElement, message: String): Callback =
@@ -682,7 +695,7 @@ object DemoComponents {
             )("The contents of the dialog."),
             ConfirmPopup(),
             ConfirmDialog(),
-            PopupMenu(
+            PopupTieredMenu(
               menuItems,
               onShow = Callback.log("Showing PopupMenu"),
               onHide = Callback.log("Hiding PopupMenu")
