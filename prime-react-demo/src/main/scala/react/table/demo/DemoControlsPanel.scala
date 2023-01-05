@@ -20,6 +20,7 @@ object DemoControlsPanel {
     .useState("Resizeable TextArea") // for InputTextarea
     .useState(2)                     // for Dropdown
     .useState(3.some)                // for DropdownOptional
+    .useState(List(1, 3))            // for MultiSelect
     .useState(false)                 // for InputSwitch
     .useState(false)                 // for Checkbox
     .useState((25.0, 75.0))          // for SliderRange
@@ -40,6 +41,7 @@ object DemoControlsPanel {
         inputTextarea,
         dropdown,
         dropdownOptional,
+        multiselect,
         inputSwitch,
         checkbox,
         rangeSlider,
@@ -144,6 +146,15 @@ object DemoControlsPanel {
                 onChange = a => dropdownOptional.setState(a),
                 clazz = DemoStyles.FormField
               ).withMods(mouseEntered("DropdownOptional")),
+              <.label("MultiSelect", ^.htmlFor       := "multiselect", DemoStyles.FormFieldLabel),
+              MultiSelect(
+                id = "multiselect",
+                value = multiselect.value,
+                options = options,
+                onChange = a => multiselect.setState(a),
+                display = MultiSelect.Display.Chip,
+                clazz = DemoStyles.FormField
+              ).withMods(mouseEntered("MultiSelect")),
               <.label("InputSwitch", ^.htmlFor       := "input-switch", DemoStyles.FormFieldLabel),
               InputSwitch(
                 inputId = "input-switch",
