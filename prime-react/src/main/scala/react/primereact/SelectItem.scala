@@ -20,7 +20,13 @@ case class SelectItem[A: Eq](
   disabled:  js.UndefOr[Boolean] = js.undefined,
   className: js.UndefOr[String] = js.undefined,
   clazz:     js.UndefOr[Css] = js.undefined
-)
+):
+  def raw(index: Int): CSelectItem =
+    val csi: CSelectItem = CSelectItem().setValue(index)
+    label.foreach(v => csi.setLabel(v))
+    disabled.foreach(v => csi.setDisabled(v))
+    clazz.foreach(v => csi.setClassName(v.htmlClass))
+    csi
 
 object SelectItem {
   def fromTupleList[A: Eq](list: List[(A, String)]) =
@@ -35,11 +41,5 @@ object SelectItem {
     def findSelectItemByIndexOption(index: Int): Option[SelectItem[A]] =
       options.find(_._2 === index).map(_._1)
     def raw: SelectItemOptionsType                                     =
-      options.map { (si, idx) =>
-        val csi: CSelectItem = CSelectItem().setValue(idx)
-        si.label.foreach(v => csi.setLabel(v))
-        si.disabled.foreach(v => csi.setDisabled(v))
-        si.clazz.foreach(v => csi.setClassName(v.htmlClass))
-        csi
-      }.toJSArray
+      options.map((si, idx) => si.raw(idx)).toJSArray
 }

@@ -16,7 +16,7 @@ import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOp
 import scalajs.js
 import scalajs.js.JSConverters.*
 
-// TODO: Grouped Dropdowns will require additional work and probably a different implementation.
+// TODO: Support grouped dropdowns. See MultiSelect for implementation.
 private[primereact] trait DropdownBase {
   protected type AA
   protected type GG[_]
