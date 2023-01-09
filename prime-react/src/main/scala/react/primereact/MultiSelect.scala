@@ -14,6 +14,7 @@ import reactST.primereact.multiselectMultiselectMod.MultiSelectAllParams
 import reactST.primereact.multiselectMultiselectMod.MultiSelectChangeParams
 import reactST.primereact.multiselectMultiselectMod.MultiSelectDisplayType
 import reactST.primereact.multiselectMultiselectMod.MultiSelectFilterParams
+import reactST.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
 import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
@@ -23,7 +24,7 @@ case class MultiSelect[A](
   id:                 js.UndefOr[String] = js.undefined,
   name:               js.UndefOr[String] = js.undefined,
   value:              List[A] = List.empty,
-  options:            List[SelectItem[A]] = List.empty,
+  options:            List[SelectItem[A]] | SelectItemGroups[A] = List.empty,
   clazz:              js.UndefOr[Css] = js.undefined,
   panelClass:         js.UndefOr[Css] = js.undefined,
   scrollHeight:       js.UndefOr[String] = js.undefined,
@@ -37,8 +38,9 @@ case class MultiSelect[A](
   inputId:            js.UndefOr[String] = js.undefined,
   tooltip:            js.UndefOr[String] = js.undefined,
   tooltipOptions:     js.UndefOr[TooltipOptions] = js.undefined,
-  itemTemplate:       js.UndefOr[A => VdomNode] = js.undefined,
+  itemTemplate:       js.UndefOr[SelectItem[A] => VdomNode] = js.undefined,
   // filterTemplate:      js.UndefOr[A => VdomNode] = js.undefined,
+  // SelectItemGroup has label: VDomNode, so no group template is required.
   // optionGroupTemplate:      js.UndefOr[A => VdomNode] = js.undefined,
   // selectedItemTemplate:      js.UndefOr[A => VdomNode] = js.undefined,
   // panelHeaderTemplate:      js.UndefOr[A => VdomNode] = js.undefined,
@@ -71,15 +73,16 @@ case class MultiSelect[A](
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods:          TagMod*)     = addModifiers(mods)
 
-  private val optionsWithIndex: List[(SelectItem[A], Int)] = options.zipWithIndex
+  private val optionsWithIndex: List[(SelectItem[A], Int)] = options.toOptionsWithIndex
 
   private val getter: js.Array[Int] =
     value.map(optionsWithIndex.indexOfOption).flattenOption.toJSArray
 
-  private def finder(i: Int): A =
-    optionsWithIndex
-      .findByIndexOption(i)
-      .getOrElse(options(0).value) // called by onChange, so should exist
+  private def selectItemFinder(i: Int): SelectItem[A] =
+    // should always exist - colled by onChange and templates
+    optionsWithIndex.findSelectItemByIndexOption(i).getOrElse(optionsWithIndex(0)._1)
+
+  private def finder(i: Int): A = selectItemFinder(i).value
 
   private val focusHandler: js.UndefOr[ReactFocusEvent => Callback] =
     ((props.onFocus.toOption, props.onFocusE.toOption) match
@@ -136,9 +139,9 @@ object MultiSelect:
         props.onChange.toOption.map(_(a)).getOrElse(Callback.empty) >>
           props.onChangeE.toOption.map(_(a, parms.originalEvent)).getOrElse(Callback.empty)
 
-    CMultiSelect
+    val ms = CMultiSelect
       .value(props.getter)
-      .options(props.optionsWithIndex.raw)
+      // .options(props.optionsWithIndex.raw)
       .onChange(changeHandler)
       .applyOrNot(props.id, _.id(_))
       .applyOrNot(props.name, _.name(_))
@@ -157,7 +160,10 @@ object MultiSelect:
       .applyOrNot(props.tooltipOptions, (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions]))
       .applyOrNot(
         props.itemTemplate,
-        (c, fn) => c.itemTemplateFunction1(i => fn(props.finder(i.asInstanceOf[Int])).rawNode)
+        (c, fn) =>
+          c.itemTemplateFunction1(i =>
+            fn(props.selectItemFinder(i.asInstanceOf[CSelectItem].value.asInstanceOf[Int])).rawNode
+          )
       )
       .applyOrNot(props.maxSelectedLabels, _.maxSelectedLabels(_))
       .applyOrNot(props.selectionLimit, _.selectionLimit(_))
@@ -174,6 +180,11 @@ object MultiSelect:
       .applyOrNot(props.onHide, _.onHide(_))
       .applyOrNot(props.filterHandler, _.onFilter(_))
       .applyOrNot(props.selectAllHandler, _.onSelectAll(_))(props.modifiers.toTagMod)
+
+    props.options match
+      case items: List[SelectItem[A]]  => ms.options(props.optionsWithIndex.raw)
+      case groups: SelectItemGroups[A] =>
+        ms.options(groups.raw).optionGroupLabel("label").optionGroupChildren("children")
   }
 
   private val component = componentBuilder[Any]

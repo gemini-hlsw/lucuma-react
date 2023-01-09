@@ -65,6 +65,20 @@ object DemoControlsPanel {
             SelectItem(5, "Option 5")
           )
 
+        val groupedOptions: SelectItemGroups[Int] = SelectItemGroups(groups =
+          List(
+            SelectItemGroup(label = "Odd Numbers",
+                            options = List(SelectItem(1, "Option 1"),
+                                           SelectItem(3, "Option 3"),
+                                           SelectItem(5, "Option 5")
+                            )
+            ),
+            SelectItemGroup(label = <.span("Even Numbers", ^.cls := "pi pi-bolt"),
+                            options = List(SelectItem(2, "Option 2"), SelectItem(4, "Option 4"))
+            )
+          )
+        )
+
         val decreaseProgress: Callback = {
           val current = progressBar.value
           if current > 0 then progressBar.setState(current - 1) else Callback.empty
@@ -102,7 +116,7 @@ object DemoControlsPanel {
             )("dashed horizontal divider"),
             <.div(
               DemoStyles.FormColumn,
-              <.label("InputText", ^.htmlFor         := "input-text", DemoStyles.FormFieldLabel),
+              <.label("InputText", ^.htmlFor           := "input-text", DemoStyles.FormFieldLabel),
               InputText(
                 id = "input-text",
                 value = inputText.value,
@@ -112,11 +126,11 @@ object DemoControlsPanel {
                 onFocus = e => Callback.log(s"Input Text focused. Value: ${e.target.value}"),
                 onBlur = e => Callback.log(s"Input Text blurred. Value: ${e.target.value}")
               ).withMods(mouseEntered("InputText")),
-              <.label("InputTextarea", ^.htmlFor     := "input-text-area", DemoStyles.FormFieldLabel),
+              <.label("InputTextarea", ^.htmlFor       := "input-text-area", DemoStyles.FormFieldLabel),
               InputTextarea()(
-                ^.id                                 := "input-text-area",
-                ^.value                              := inputTextarea.value,
-                ^.rows                               := 6,
+                ^.id                                   := "input-text-area",
+                ^.value                                := inputTextarea.value,
+                ^.rows                                 := 6,
                 ^.onChange ==> { (e: ReactEventFromTextArea) =>
                   inputTextarea.setState(e.target.value)
                 },
@@ -126,7 +140,7 @@ object DemoControlsPanel {
                   Callback.log(s"Focused TextArea: ${e.target.value}")
                 }
               ),
-              <.label("Dropdown", ^.htmlFor          := "dropdown", DemoStyles.FormFieldLabel),
+              <.label("Dropdown", ^.htmlFor            := "dropdown", DemoStyles.FormFieldLabel),
               Dropdown(
                 id = "dropdown",
                 value = dropdown.value,
@@ -135,7 +149,7 @@ object DemoControlsPanel {
                 clazz = DemoStyles.FormField
               ).withMods(mouseEntered("Dropdown")),
               <.label("DropdownOptional",
-                      ^.htmlFor                      := "dropdown-optional",
+                      ^.htmlFor                        := "dropdown-optional",
                       DemoStyles.FormFieldLabel
               ),
               DropdownOptional(
@@ -146,28 +160,40 @@ object DemoControlsPanel {
                 onChange = a => dropdownOptional.setState(a),
                 clazz = DemoStyles.FormField
               ).withMods(mouseEntered("DropdownOptional")),
-              <.label("MultiSelect", ^.htmlFor       := "multiselect", DemoStyles.FormFieldLabel),
+              <.label("MultiSelect", ^.htmlFor         := "multiselect", DemoStyles.FormFieldLabel),
               MultiSelect(
                 id = "multiselect",
                 value = multiselect.value,
                 options = options,
                 onChange = a => multiselect.setState(a),
                 display = MultiSelect.Display.Chip,
+                filter = true,
+                itemTemplate = si => s"This is: ${si.label}",
                 clazz = DemoStyles.FormField
               ).withMods(mouseEntered("MultiSelect")),
-              <.label("InputSwitch", ^.htmlFor       := "input-switch", DemoStyles.FormFieldLabel),
+              <.label("Grouped MultiSelect", ^.htmlFor := "multiselect", DemoStyles.FormFieldLabel),
+              MultiSelect(
+                id = "grouped-multiselect",
+                value = multiselect.value,
+                options = groupedOptions,
+                onChange = a => multiselect.setState(a),
+                display = MultiSelect.Display.Chip,
+                showSelectAll = false,
+                clazz = DemoStyles.FormField
+              ),
+              <.label("InputSwitch", ^.htmlFor         := "input-switch", DemoStyles.FormFieldLabel),
               InputSwitch(
                 inputId = "input-switch",
                 checked = inputSwitch.value,
                 onChange = b => inputSwitch.setState(b)
               )(mouseEntered("InputSwitch")),
-              <.label("Checkbox", ^.htmlFor          := "checkbox", DemoStyles.FormFieldLabel),
+              <.label("Checkbox", ^.htmlFor            := "checkbox", DemoStyles.FormFieldLabel),
               Checkbox(
                 inputId = "checkbox",
                 checked = checkbox.value,
                 onChange = b => checkbox.setState(b)
               )(mouseEntered("Checkbox")),
-              <.label("Slider", ^.htmlFor            := "slider", DemoStyles.FormFieldLabel),
+              <.label("Slider", ^.htmlFor              := "slider", DemoStyles.FormFieldLabel),
               <.span(
                 DemoStyles.FormField,
                 Slider(id = "slider",
@@ -180,7 +206,7 @@ object DemoControlsPanel {
                 )(mouseEntered("Slider")),
                 slider.value
               ),
-              <.label("SliderRange", ^.htmlFor       := "slider-range", DemoStyles.FormFieldLabel),
+              <.label("SliderRange", ^.htmlFor         := "slider-range", DemoStyles.FormFieldLabel),
               <.span(
                 DemoStyles.FormField,
                 SliderRange(id = "slider-range",
@@ -189,11 +215,11 @@ object DemoControlsPanel {
                 )(mouseEntered("SliderRange")),
                 s"[${rangeSlider.value._1}, ${rangeSlider.value._2}]"
               ),
-              <.label("Knob (steps of 5)", ^.htmlFor := "knob", DemoStyles.FormFieldLabel),
+              <.label("Knob (steps of 5)", ^.htmlFor   := "knob", DemoStyles.FormFieldLabel),
               Knob(id = "knob", value = knob.value, step = 5, size = 75, onChange = knob.setState)(
                 mouseEntered("Knob")
               ),
-              <.label("Knob for Progress", ^.htmlFor := "readonly-knob", DemoStyles.FormFieldLabel),
+              <.label("Knob for Progress", ^.htmlFor   := "readonly-knob", DemoStyles.FormFieldLabel),
               <.div(
                 DemoStyles.HorizontalStack,
                 Button(label = "-", onClick = decreaseKnob),
@@ -206,7 +232,7 @@ object DemoControlsPanel {
                 Button(label = "+", onClick = increaseKnob)
               ),
               <.label("Nigel Tufnel Control",
-                      ^.htmlFor                      := "nigel-tufnel",
+                      ^.htmlFor                        := "nigel-tufnel",
                       DemoStyles.FormFieldLabel
               ),
               Knob(id = "nigel-tufnel",
@@ -216,7 +242,7 @@ object DemoControlsPanel {
                    strokeWidth = 5,
                    valueTemplate = "Vol: {value}"
               ),
-              <.label("SelectButton", ^.htmlFor      := "select-button", DemoStyles.FormFieldLabel),
+              <.label("SelectButton", ^.htmlFor        := "select-button", DemoStyles.FormFieldLabel),
               SelectButton(
                 id = "select-button",
                 value = selectButton.value,
@@ -224,7 +250,7 @@ object DemoControlsPanel {
                 onChange = selectButton.setState
               )(mouseEntered("SelectButton")),
               <.label("SelectButtonOptional",
-                      ^.htmlFor                      := "select-button-optional",
+                      ^.htmlFor                        := "select-button-optional",
                       DemoStyles.FormFieldLabel
               ),
               SelectButtonOptional(
@@ -234,7 +260,7 @@ object DemoControlsPanel {
                 onChange = selectButtonOptional.setState
               )(mouseEntered("SelectButtonOptional")),
               <.label("SelectButtonMultiple",
-                      ^.htmlFor                      := "select-button-multiple",
+                      ^.htmlFor                        := "select-button-multiple",
                       DemoStyles.FormFieldLabel
               ),
               SelectButtonMultiple(
@@ -259,7 +285,7 @@ object DemoControlsPanel {
                 )
               ),
               <.label("ProgressBar 1",
-                      ^.htmlFor                      := "progress-indeterminate",
+                      ^.htmlFor                        := "progress-indeterminate",
                       DemoStyles.FormFieldLabel
               ),
               ProgressBar(id = "progress-indeterminate", mode = ProgressBar.Mode.Indeterminate),
@@ -272,11 +298,11 @@ object DemoControlsPanel {
                        iconPos = Button.IconPosition.Right
                 )
               ),
-              <.label("ProgressBar 2", ^.htmlFor     := "progress-vanilla", DemoStyles.FormFieldLabel),
+              <.label("ProgressBar 2", ^.htmlFor       := "progress-vanilla", DemoStyles.FormFieldLabel),
               ProgressBar(id = "progress-vanilla", value = progressBar.value)(
                 mouseEntered("ProgressBar")
               ),
-              <.label("ProgressBar 3", ^.htmlFor     := "progress-template", DemoStyles.FormFieldLabel),
+              <.label("ProgressBar 3", ^.htmlFor       := "progress-template", DemoStyles.FormFieldLabel),
               ProgressBar(id = "progress-template",
                           value = progressBar.value,
                           displayValueTemplate = progressTemplate
