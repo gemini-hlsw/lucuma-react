@@ -23,7 +23,6 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootDatepicker)
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootBeautifulDnd)
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootTree)
-  - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootSemanticUI)
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, fontAwesome)
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootHotkeys)
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootResizable)
@@ -296,14 +295,6 @@ pull_request_rules:
       add:
       - rootResizable
       remove: []
-- name: Label rootSemanticUI PRs
-  conditions:
-  - files~=^rootSemanticUI/
-  actions:
-    label:
-      add:
-      - rootSemanticUI
-      remove: []
 - name: Label rootTanstackTable PRs
   conditions:
   - files~=^rootTanstackTable/
@@ -319,22 +310,6 @@ pull_request_rules:
     label:
       add:
       - rootTree
-      remove: []
-- name: Label semantic-ui PRs
-  conditions:
-  - files~=^semantic-ui/
-  actions:
-    label:
-      add:
-      - semantic-ui
-      remove: []
-- name: Label semantic-ui-demo PRs
-  conditions:
-  - files~=^semantic-ui-demo/
-  actions:
-    label:
-      add:
-      - semantic-ui-demo
       remove: []
 - name: Label tanstack-table PRs
   conditions:
@@ -389,7 +364,6 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootDatepicker)
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootBeautifulDnd)
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootTree)
-  - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootSemanticUI)
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, fontAwesome)
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootHotkeys)
   - status-success=Build and Test (ubuntu-latest, 3.2.1, temurin@17, rootResizable)
