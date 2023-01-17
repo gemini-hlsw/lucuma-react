@@ -147,8 +147,6 @@ lazy val root = project
     beautifulDndDemo,
     tree,
     treeDemo,
-    semanticUI,
-    semanticUIDemo,
     resizeDetector,
     fontAwesome,
     hotkeys,
@@ -180,8 +178,6 @@ lazy val rootBeautifulDnd  =
   project.aggregate(beautifulDnd, beautifulDndDemo).enablePlugins(NoPublishPlugin)
 lazy val rootTree          =
   project.aggregate(tree, treeDemo).enablePlugins(NoPublishPlugin)
-lazy val rootSemanticUI    =
-  project.aggregate(semanticUI, semanticUIDemo).enablePlugins(NoPublishPlugin)
 lazy val rootHotkeys       =
   project.aggregate(hotkeys, hotkeysDemo).enablePlugins(NoPublishPlugin)
 lazy val rootResizable     =
@@ -200,7 +196,6 @@ val projects = List(
   rootDatepicker,
   rootBeautifulDnd,
   rootTree,
-  rootSemanticUI,
   fontAwesome,
   rootHotkeys,
   rootResizable,
@@ -407,26 +402,6 @@ lazy val treeDemo = project
   .in(file("tree-demo"))
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(tree)
-  .settings(
-    Compile / scalacOptions += "-language:implicitConversions",
-    demoSettings
-  )
-
-lazy val semanticUI = project
-  .in(file("semantic-ui"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
-  .dependsOn(common)
-  .settings(
-    name := "lucuma-react-semantic-ui",
-    Compile / scalacOptions += "-language:implicitConversions",
-    facadeSettings,
-    yarnSettings
-  )
-
-lazy val semanticUIDemo = project
-  .in(file("semantic-ui-demo"))
-  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
-  .dependsOn(semanticUI)
   .settings(
     Compile / scalacOptions += "-language:implicitConversions",
     demoSettings
