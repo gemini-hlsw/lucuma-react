@@ -7,7 +7,7 @@
     "@tanstack/react-virtual": "v3.0.0-beta.23",
     "@vitejs/plugin-react": "^3.0.1",
     "copy-to-clipboard": "^3.3.3",
-    "fomantic-ui-less": "^2.9.0",
+    "fomantic-ui-less": "^2.9.1",
     "highcharts": "^10.3.1",
     "jsdom": "20.0.2",
     "less": "^4.1.3",
