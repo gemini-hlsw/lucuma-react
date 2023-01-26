@@ -16,29 +16,31 @@ object DemoControlsPanel {
 
   private val component = ScalaFnComponent
     .withHooks[DemoControlsPanel]
-    .useState("Text to edit")        // for InputText
-    .useState("Resizeable TextArea") // for InputTextarea
-    .useState(2)                     // for Dropdown
-    .useState(3.some)                // for DropdownOptional
-    .useState(List(1, 3))            // for MultiSelect
-    .useState(false)                 // for InputSwitch
-    .useState(false)                 // for Checkbox
-    .useState((25.0, 75.0))          // for SliderRange
-    .useState(0.0)                   // for Slider
-    .useState(10.0)                  // for Knob
-    .useState(0.0)                   // for Knob (readonly)
-    .useState(11.0)                  // for Nigel Tufnel Knob
-    .useState(1)                     // for SelectButton
-    .useState(2.some)                // for SelectButtonOptional
-    .useState(List(1, 3))            // for SelectButtonMultiple
-    .useState(false)                 // for ToggleButton
-    .useState(50)                    // for ProgressBar
-    .useState("option-1")            // for RadioButton
+    .useState("Text to edit")         // for InputText
+    .useState("Resizeable TextArea")  // for InputTextarea
+    .useState(List("10", "20", "30")) // for Chips
+    .useState(2)                      // for Dropdown
+    .useState(3.some)                 // for DropdownOptional
+    .useState(List(1, 3))             // for MultiSelect
+    .useState(false)                  // for InputSwitch
+    .useState(false)                  // for Checkbox
+    .useState((25.0, 75.0))           // for SliderRange
+    .useState(0.0)                    // for Slider
+    .useState(10.0)                   // for Knob
+    .useState(0.0)                    // for Knob (readonly)
+    .useState(11.0)                   // for Nigel Tufnel Knob
+    .useState(1)                      // for SelectButton
+    .useState(2.some)                 // for SelectButtonOptional
+    .useState(List(1, 3))             // for SelectButtonMultiple
+    .useState(false)                  // for ToggleButton
+    .useState(50)                     // for ProgressBar
+    .useState("option-1")             // for RadioButton
     .render {
       (
         _,
         inputText,
         inputTextarea,
+        chips,
         dropdown,
         dropdownOptional,
         multiselect,
@@ -140,6 +142,14 @@ object DemoControlsPanel {
                   Callback.log(s"Focused TextArea: ${e.target.value}")
                 }
               ),
+              <.label("Chips", ^.htmlFor               := "chips", DemoStyles.FormFieldLabel),
+              Chips(
+                id = "chips",
+                value = chips.value,
+                onChange = v => chips.setState(v),
+                clazz = DemoStyles.FormField,
+                separator = ","
+              ).withMods(mouseEntered("Chips")),
               <.label("Dropdown", ^.htmlFor            := "dropdown", DemoStyles.FormFieldLabel),
               Dropdown(
                 id = "dropdown",
