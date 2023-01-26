@@ -39,13 +39,13 @@ case class Chips(
   onChangeE:      js.UndefOr[(List[String], ReactEvent) => Callback] =
     js.undefined, // called after onChange
   onAdd:     js.UndefOr[String => Callback] = js.undefined,
-  onAddE:    js.UndefOr[(String, ReactEvent) => Callback] = js.undefined, // called after onChange
+  onAddE:    js.UndefOr[(String, ReactEvent) => Callback] = js.undefined, // called after onAdd
   onRemove:  js.UndefOr[String => Callback] = js.undefined,
-  onRemoveE: js.UndefOr[(String, ReactEvent) => Callback] = js.undefined, // called after onChange
+  onRemoveE: js.UndefOr[(String, ReactEvent) => Callback] = js.undefined, // called after onRemove
   onFocus:   js.UndefOr[Callback] = js.undefined,
-  onFocusE:  js.UndefOr[ReactFocusEvent => Callback] = js.undefined,
+  onFocusE:  js.UndefOr[ReactFocusEvent => Callback] = js.undefined,      // called after onFocus
   onBlur:    js.UndefOr[Callback] = js.undefined,
-  onBlurE:   js.UndefOr[ReactFocusEvent => Callback] = js.undefined,
+  onBlurE:   js.UndefOr[ReactFocusEvent => Callback] = js.undefined,      // called after onBlur
   onKeyDown: js.UndefOr[ReactKeyboardEvent => Callback] = js.undefined,
   modifiers: Seq[TagMod] = Seq.empty
 ) extends ReactFnProps(Chips.component):
