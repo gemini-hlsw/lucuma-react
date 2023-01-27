@@ -3,7 +3,7 @@
     "@atlaskit/tree": "^8.6.3",
     "@cquiroz/react-moon": "^2.0.2",
     "@floating-ui/react-dom-interactions": "^0.10.3",
-    "@tanstack/react-table": "^8.7.6",
+    "@tanstack/react-table": "^8.7.8",
     "@tanstack/react-virtual": "v3.0.0-beta.23",
     "@vitejs/plugin-react": "^3.0.1",
     "copy-to-clipboard": "^3.3.3",
