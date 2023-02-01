@@ -3912,10 +3912,10 @@ react-transition-group@^4.4.1:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-virtuoso@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.0.6.tgz#5ee8a72bf0b57d31063cef6343b26e6cde5529e3"
-  integrity sha512-TJ4fyTbre0uTpXE0AXaMG2BOX9PgKfDC7wLhnSmDvBU0WoEUrIAcNJACLJvqyWZMDAuEv3v+b4OyK6jiSkFL9Q==
+react-virtuoso@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.0.7.tgz#74ad76a47af9d414e67b446aa869e350bda816f3"
+  integrity sha512-ZDiX9VuXSH9gt9nGiaTmhj3DJ9mZ0bTmfLjEt/f1pkdY3vCXYn8k4Edo7hXumgTFt6UfRpR8G0Q81z28a7282Q==
 
 react@^17.0.2:
   version "17.0.2"
