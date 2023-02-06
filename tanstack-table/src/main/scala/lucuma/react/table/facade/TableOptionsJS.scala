@@ -15,21 +15,21 @@ trait TableOptionsJs[T] extends js.Object:
   var getCoreRowModel: js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]
 
   var getRowId: js.UndefOr[js.Function3[T, Int, js.UndefOr[T], String]] = js.undefined
-  var onStateChange: js.UndefOr[raw.mod.OnChangeFn[raw.buildLibTypesMod.TableState]] = js.undefined
+  var onStateChange: js.UndefOr[raw.buildLibTypesMod.OnChangeFn[raw.buildLibTypesMod.TableState]] = js.undefined
   var renderFallbackValue: js.UndefOr[Any]                              = js.undefined
   var state: js.UndefOr[raw.anon.PartialTableState]                     = js.undefined
-  var initialState: js.UndefOr[raw.mod.InitialTableState]               = js.undefined
+  var initialState: js.UndefOr[raw.buildLibTypesMod.InitialTableState]               = js.undefined
 
   // Column Sizing // TODO Rest of the properties
   var enableColumnResizing: js.UndefOr[Boolean]                                               = js.undefined
   var columnResizeMode: js.UndefOr[raw.buildLibFeaturesColumnSizingMod.ColumnResizeMode]                                  = js.undefined
-  var onColumnSizingChange: js.UndefOr[raw.mod.OnChangeFn[raw.buildLibFeaturesColumnSizingMod.ColumnSizingState]]         = js.undefined
-  var onColumnSizingInfoChange: js.UndefOr[raw.mod.OnChangeFn[raw.buildLibFeaturesColumnSizingMod.ColumnSizingInfoState]] =
+  var onColumnSizingChange: js.UndefOr[raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesColumnSizingMod.ColumnSizingState]]         = js.undefined
+  var onColumnSizingInfoChange: js.UndefOr[raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesColumnSizingMod.ColumnSizingInfoState]] =
     js.undefined
 
   // Column Visibility
   var enableHiding: js.UndefOr[Boolean]                                                 = js.undefined
-  var onColumnVisibilityChange: js.UndefOr[raw.mod.OnChangeFn[raw.buildLibFeaturesVisibilityMod.VisibilityState]] =
+  var onColumnVisibilityChange: js.UndefOr[raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesVisibilityMod.VisibilityState]] =
     js.undefined
 
   // Sorting
@@ -43,13 +43,13 @@ trait TableOptionsJs[T] extends js.Object:
   var isMultiSortEvent: js.UndefOr[js.Function1[ /* e */ Any, Boolean]]     = js.undefined
   var manualSorting: js.UndefOr[Boolean]                                    = js.undefined
   var maxMultiSortColCount: js.UndefOr[Double]                              = js.undefined
-  var onSortingChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.SortingState]] = js.undefined
+  var onSortingChange: js.UndefOr[raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesSortingMod.SortingState]] = js.undefined
   var sortDescFirst: js.UndefOr[Boolean]                                    = js.undefined
 
   // Selection
   var enableRowSelection: js.UndefOr[Boolean]                                         = js.undefined
   var enableMultiRowSelection: js.UndefOr[Boolean]                                    = js.undefined
-  var onRowSelectionChange: js.UndefOr[raw.mod.OnChangeFn[raw.buildLibTypesMod.RowSelectionState]] =
+  var onRowSelectionChange: js.UndefOr[raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesRowSelectionMod.RowSelectionState]] =
     js.undefined
   // Expanding
   var enableExpanding: js.UndefOr[Boolean]                                            = js.undefined

@@ -11,12 +11,12 @@ enum Updater[T]:
   case Set(value: T)   extends Updater[T]
   case Mod(fn: T => T) extends Updater[T]
 
-  def toJs: raw.mod.Updater[T] = this match
+  def toJs: raw.buildLibTypesMod.Updater[T] = this match
     case Set(value) => value
     case Mod(fn)    => fn
 
 object Updater:
-  def fromJs[T](rawValue: raw.mod.Updater[T]): Updater[T] =
+  def fromJs[T](rawValue: raw.buildLibTypesMod.Updater[T]): Updater[T] =
     js.typeOf(rawValue) match
       case "function" => Mod(rawValue.asInstanceOf[js.Function1[T, T]])
       case _          => Set(rawValue.asInstanceOf[T])

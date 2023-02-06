@@ -109,7 +109,7 @@ sealed trait TableOptions[T]:
   /** WARNING: This mutates the object in-place. */
   def setInitialState(initialState: Option[TableState]): TableOptions[T] =
     copy(_.initialState =
-      initialState.map(_.toJs.asInstanceOf[raw.mod.InitialTableState]).orUndefined
+      initialState.map(_.toJs.asInstanceOf[raw.buildLibTypesMod.InitialTableState]).orUndefined
     )
 
   // Column Sizing
@@ -280,7 +280,7 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.mod.SortingState) => mod(Sorting.fromJs(v)).toJs)
+            Updater.Mod((v: raw.buildLibFeaturesSortingMod.SortingState) => mod(Sorting.fromJs(v)).toJs)
         ).toJs))
     )
 
@@ -324,7 +324,7 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.buildLibTypesMod.RowSelectionState) => mod(RowSelection.fromJs(v)).toJs)
+            Updater.Mod((v: raw.buildLibFeaturesRowSelectionMod.RowSelectionState) => mod(RowSelection.fromJs(v)).toJs)
         ).toJs))
     )
 

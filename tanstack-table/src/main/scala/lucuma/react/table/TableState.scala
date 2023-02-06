@@ -65,7 +65,7 @@ object TableState:
     columnSizingInfo: js.UndefOr[ColumnSizingInfo] = js.undefined,
     rowSelection:     js.UndefOr[RowSelection] = js.undefined
   ): TableState = TableState(
-    raw.mod
+    raw.buildLibTypesMod
       .InitialTableState()
       .applyOrNot(columnVisibility, (s, p) => s.setColumnVisibility(p.toJs))
       .applyOrNot(columnOrder, (s, p) => s.setColumnOrder(p.toJs))

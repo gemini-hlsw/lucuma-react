@@ -18,7 +18,7 @@ case class Table[T](private[table] val toJs: raw.buildLibTypesMod.Table[T]):
   def getAllColumns(): List[Column[T, Any]]     = toJs.getAllColumns().toList.map(Column(_))
   def getAllFlatColumns(): List[Column[T, Any]] = toJs.getAllFlatColumns().toList.map(Column(_))
   def getAllLeafColumns(): List[Column[T, Any]] = toJs.getAllLeafColumns().toList.map(Column(_))
-  def getColumn(columnId: String): Column[T, Any] = Column(toJs.getColumn(columnId))
+  def getColumn(columnId: String): Column[T, Any] = Column(toJs.getColumn(columnId).get)
   def getCoreRowModel(): raw.buildLibTypesMod.RowModel[T] = toJs.getCoreRowModel()
   def getRow(id: String): Row[T] = Row(toJs.getRow(id))
   def getRowModel(): raw.buildLibTypesMod.RowModel[T] = toJs.getRowModel()
