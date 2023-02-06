@@ -12,7 +12,7 @@ import scalajs.js
 
 private[primereact] trait AccordionBase {
   val id: js.UndefOr[String]
-  val rawActiveIndex: js.UndefOr[Double]
+  val rawActiveIndex: js.UndefOr[Double | js.Array[Double]]
   val multiple: js.UndefOr[Boolean]
   val expandIcon: js.UndefOr[String]   // default: "pi pi-chevron-right"
   val collapseIcon: js.UndefOr[String] // default: "pi pi-chevron-down"
