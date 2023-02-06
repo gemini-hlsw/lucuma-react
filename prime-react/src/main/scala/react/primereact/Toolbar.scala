@@ -6,7 +6,7 @@ package react.primereact
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
-import reactST.primereact.components.{Toolbar => CToolbar}
+import lucuma.typed.primereact.components.{Toolbar => CToolbar}
 
 import scalajs.js
 

@@ -7,12 +7,12 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.html
 import react.common.ReactProps
-import reactST.highcharts.anon.TypeofHighcharts
-import reactST.highcharts.anon.TypeofHighchartsAST
-import reactST.highcharts.mod.Chart_
-import reactST.highcharts.mod.HTMLDOMElement
-import reactST.highcharts.mod.Options
-import reactST.highcharts.mod.PointOptionsObject
+import lucuma.typed.highcharts.anon.TypeofHighcharts
+import lucuma.typed.highcharts.anon.TypeofHighchartsAST
+import lucuma.typed.highcharts.mod.Chart_
+import lucuma.typed.highcharts.mod.HTMLDOMElement
+import lucuma.typed.highcharts.mod.Options
+import lucuma.typed.highcharts.mod.PointOptionsObject
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport

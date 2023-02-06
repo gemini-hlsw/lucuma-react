@@ -5,14 +5,14 @@ package lucuma.react.table
 
 import cats.Endo
 import org.scalablytyped.runtime.StringDictionary
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 opaque type RowSelection = Map[RowId, Boolean]
 
 object RowSelection:
   inline def apply(value:  Map[RowId, Boolean]): RowSelection = value
   inline def apply(values: (RowId, Boolean)*): RowSelection   = values.toMap
-  private[table] def fromJs(rawValue: raw.mod.RowSelectionState): RowSelection =
+  private[table] def fromJs(rawValue: raw.buildLibTypesMod.RowSelectionState): RowSelection =
     rawValue.toList.map((row, selected) => RowId(row) -> selected).toMap
 
   extension (opaqueValue: RowSelection)
@@ -20,7 +20,7 @@ object RowSelection:
       opaqueValue
     inline def modify(f: Endo[Map[RowId, Boolean]]): RowSelection =
       f(opaqueValue)
-    def toJs: raw.mod.RowSelectionState                           =
+    def toJs: raw.buildLibTypesMod.RowSelectionState                           =
       StringDictionary(
         opaqueValue.map((rowId, selected) => rowId.value -> selected).toSeq: _*
       )

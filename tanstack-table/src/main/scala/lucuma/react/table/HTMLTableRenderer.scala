@@ -12,9 +12,9 @@ import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLDivElement
 import react.common.*
 import react.common.style.Css
-import reactST.{tanstackReactTable => rawReact}
-import reactST.{tanstackTableCore => raw}
-import reactST.{tanstackVirtualCore => rawVirtual}
+import lucuma.typed.{tanstackReactTable => rawReact}
+import lucuma.typed.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackVirtualCore => rawVirtual}
 
 import scala.util.Random
 
@@ -51,7 +51,7 @@ trait HTMLTableRenderer[T]:
   protected val SortAscIndicator: VdomNode  = "↑"
   protected val SortDescIndicator: VdomNode = "↓"
 
-  protected def sortIndicator[T](col: raw.mod.Column[T, ?]): VdomNode =
+  protected def sortIndicator[T](col: raw.buildLibTypesMod.Column[T, ?]): VdomNode =
     col.getIsSorted().asInstanceOf[Boolean | String] match
       case sorted: String =>
         val index   = if (col.getSortIndex() > 0) (col.getSortIndex() + 1).toInt.toString else ""
@@ -61,7 +61,7 @@ trait HTMLTableRenderer[T]:
         if (col.getCanSort()) SortableIndicator else EmptyVdom
 
   protected def resizer[T](
-    header:     raw.mod.Header[T, ?],
+    header:     raw.buildLibTypesMod.Header[T, ?],
     resizeMode: Option[ColumnResizeMode],
     sizingInfo: ColumnSizingInfo
   ): VdomNode =
@@ -84,24 +84,24 @@ trait HTMLTableRenderer[T]:
 
   def render[T](
     table:              Table[T],
-    rows:               js.Array[raw.mod.Row[T]],
+    rows:               js.Array[raw.buildLibTypesMod.Row[T]],
     tableMod:           TagMod = TagMod.empty,
     headerMod:          TagMod = TagMod.empty,
-    headerRowMod:       raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+    headerRowMod:       raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod = (_: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T]) =>
       TagMod.empty,
-    headerCellMod:      raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+    headerCellMod:      raw.buildLibTypesMod.Header[T, Any] => TagMod = (_: raw.buildLibTypesMod.Header[T, Any]) => TagMod.empty,
     bodyMod:            TagMod = TagMod.empty,
-    rowMod:             raw.mod.Row[T] => TagMod = (_: raw.mod.Row[T]) => TagMod.empty,
-    cellMod:            raw.mod.Cell[T, Any] => TagMod = (_: raw.mod.Cell[T, Any]) => TagMod.empty,
+    rowMod:             raw.buildLibTypesMod.Row[T] => TagMod = (_: raw.buildLibTypesMod.Row[T]) => TagMod.empty,
+    cellMod:            raw.buildLibTypesMod.Cell[T, Any] => TagMod = (_: raw.buildLibTypesMod.Cell[T, Any]) => TagMod.empty,
     footerMod:          TagMod = TagMod.empty,
-    footerRowMod:       raw.mod.CoreHeaderGroup[T] => TagMod = (_: raw.mod.CoreHeaderGroup[T]) =>
+    footerRowMod:       raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod = (_: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T]) =>
       TagMod.empty,
-    footerCellMod:      raw.mod.Header[T, Any] => TagMod = (_: raw.mod.Header[T, Any]) => TagMod.empty,
+    footerCellMod:      raw.buildLibTypesMod.Header[T, Any] => TagMod = (_: raw.buildLibTypesMod.Header[T, Any]) => TagMod.empty,
     indexOffset:        Int = 0,
     paddingTop:         Option[Int] = none,
     paddingBottom:      Option[Int] = none,
     emptyMessage:       VdomNode = EmptyVdom,
-    renderSubComponent: raw.mod.Row[T] => Option[VdomNode] = (_: raw.mod.Row[T]) => none
+    renderSubComponent: raw.buildLibTypesMod.Row[T] => Option[VdomNode] = (_: raw.buildLibTypesMod.Row[T]) => none
   ) =
     <.table(TableClass, tableMod)(
       <.thead(
@@ -118,7 +118,7 @@ trait HTMLTableRenderer[T]:
               headerGroup.headers
                 .exists(header =>
                   js.typeOf(
-                    header.column.columnDef.asInstanceOf[raw.mod.HeaderContext[T, Any]].header
+                    header.column.columnDef.asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]].header
                   ) != "undefined"
                 )
             )(
@@ -141,10 +141,10 @@ trait HTMLTableRenderer[T]:
                         React.Fragment(
                           rawReact.mod.flexRender(
                             header.column.columnDef
-                              .asInstanceOf[raw.mod.HeaderContext[T, Any]]
+                              .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
                               .header
-                              .asInstanceOf[rawReact.mod.Renderable[raw.mod.HeaderContext[T, Any]]],
-                            header.getContext().asInstanceOf[raw.mod.HeaderContext[T, Any]]
+                              .asInstanceOf[rawReact.mod.Renderable[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]],
+                            header.getContext().asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
                           ),
                           sortIndicator(header.column),
                           resizer(
@@ -207,8 +207,8 @@ trait HTMLTableRenderer[T]:
                     )(
                       rawReact.mod.flexRender(
                         cell.column.columnDef.cell
-                          .asInstanceOf[rawReact.mod.Renderable[raw.mod.CellContext[T, Any]]],
-                        cell.getContext().asInstanceOf[raw.mod.CellContext[T, Any]]
+                          .asInstanceOf[rawReact.mod.Renderable[raw.buildLibCoreCellMod.CellContext[T, Any]]],
+                        cell.getContext().asInstanceOf[raw.buildLibCoreCellMod.CellContext[T, Any]]
                       )
                     )
                   )
@@ -255,7 +255,7 @@ trait HTMLTableRenderer[T]:
                     TagMod.unless(footer.isPlaceholder)(
                       rawReact.mod.flexRender(
                         footer.column.columnDef.footer
-                          .asInstanceOf[rawReact.mod.Renderable[raw.mod.HeaderContext[T, Any]]],
+                          .asInstanceOf[rawReact.mod.Renderable[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]],
                         footer.getContext()
                       )
                     )

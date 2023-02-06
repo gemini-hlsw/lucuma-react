@@ -8,10 +8,10 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.HTMLElement
 import react.common.*
 import react.fa.FontAwesomeIcon
-import reactST.primereact.components.{ConfirmPopup => CConfirmPopup}
-import reactST.primereact.confirmpopupConfirmpopupMod.ConfirmPopupProps
-import reactST.primereact.confirmpopupConfirmpopupMod.{ConfirmPopupReturn => RawConfirmPopupReturn}
-import reactST.primereact.confirmpopupConfirmpopupMod.{confirmPopup => rawConfirmPopup}
+import lucuma.typed.primereact.components.{ConfirmPopup => CConfirmPopup}
+import lucuma.typed.primereact.confirmpopupConfirmpopupMod.ConfirmPopupProps
+import lucuma.typed.primereact.confirmpopupConfirmpopupMod.{ConfirmPopupReturn => RawConfirmPopupReturn}
+import lucuma.typed.primereact.confirmpopupConfirmpopupMod.{confirmPopup => rawConfirmPopup}
 
 import scalajs.js
 

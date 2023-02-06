@@ -7,9 +7,9 @@ import cats.Eq
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
-import reactST.primereact.components.{SelectButton => CSelectButton}
-import reactST.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
-import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.components.{SelectButton => CSelectButton}
+import lucuma.typed.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 import scalajs.js.JSConverters.*

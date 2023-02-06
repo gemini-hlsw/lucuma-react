@@ -5,14 +5,14 @@ package lucuma.react.table
 
 import cats.Endo
 import org.scalablytyped.runtime.StringDictionary
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 opaque type ColumnVisibility = Map[ColumnId, Visibility]
 
 object ColumnVisibility:
   inline def apply(value:  Map[ColumnId, Visibility]): ColumnVisibility = value
   inline def apply(values: (ColumnId, Visibility)*): ColumnVisibility   = values.toMap
-  private[table] def fromJs(rawValue: raw.mod.VisibilityState): ColumnVisibility =
+  private[table] def fromJs(rawValue: raw.buildLibFeaturesVisibilityMod.VisibilityState): ColumnVisibility =
     rawValue.toList.map((col, visible) => ColumnId(col) -> Visibility.fromVisible(visible)).toMap
 
   extension (opaqueValue: ColumnVisibility)
@@ -20,5 +20,5 @@ object ColumnVisibility:
       opaqueValue
     inline def modify(f: Endo[Map[ColumnId, Visibility]]): ColumnVisibility =
       f(opaqueValue)
-    def toJs: raw.mod.VisibilityState                                       =
+    def toJs: raw.buildLibFeaturesVisibilityMod.VisibilityState                                       =
       StringDictionary(opaqueValue.map((colId, visible) => colId.value -> visible.value).toSeq: _*)

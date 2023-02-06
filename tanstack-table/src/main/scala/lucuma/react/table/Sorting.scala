@@ -4,7 +4,7 @@
 package lucuma.react.table
 
 import cats.Endo
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -15,7 +15,7 @@ object Sorting:
   inline def apply(value: List[ColumnSort]): Sorting = value
   inline def apply(values: (ColumnId, SortDirection)*): Sorting                =
     values.toList.map(ColumnSort.apply.tupled)
-  protected[table] def fromJs(rawValue: js.Array[raw.mod.ColumnSort]): Sorting =
+  protected[table] def fromJs(rawValue: js.Array[raw.buildLibFeaturesSortingMod.ColumnSort]): Sorting =
     rawValue.toList.map(ColumnSort.fromJs)
 
   extension (opaqueValue: Sorting)
@@ -23,5 +23,5 @@ object Sorting:
       opaqueValue
     inline def modify(f: Endo[List[ColumnSort]]): Sorting =
       f(opaqueValue)
-    def toJs: js.Array[raw.mod.ColumnSort]                =
+    def toJs: js.Array[raw.buildLibFeaturesSortingMod.ColumnSort]                =
       opaqueValue.map(_.toJs).toJSArray

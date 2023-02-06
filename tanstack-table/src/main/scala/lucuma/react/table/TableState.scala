@@ -4,12 +4,12 @@
 package lucuma.react.table
 
 import org.scalablytyped.runtime.StringDictionary
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js
 
 // Still missing (everywhere): filters, grouping, pagination
-case class TableState(private[table] val toJs: raw.mod.TableState):
+case class TableState(private[table] val toJs: raw.buildLibTypesMod.TableState):
   lazy val columnVisibility: ColumnVisibility = ColumnVisibility.fromJs(toJs.columnVisibility)
 
   /** WARNING: This mutates the object in-place. */
@@ -75,5 +75,5 @@ object TableState:
       .applyOrNot(columnSizing, (s, p) => s.setColumnSizing(p.toJs))
       .applyOrNot(columnSizingInfo, (s, p) => s.setColumnSizingInfo(p.toJs))
       .applyOrNot(rowSelection, (s, p) => s.setRowSelection(p.toJs))
-      .asInstanceOf[raw.mod.TableState]
+      .asInstanceOf[raw.buildLibTypesMod.TableState]
   )

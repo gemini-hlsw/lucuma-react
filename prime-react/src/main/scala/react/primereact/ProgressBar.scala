@@ -6,9 +6,9 @@ package react.primereact
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
-import reactST.primereact.components.{ProgressBar => CProgressBar}
-import reactST.primereact.primereactStrings.determinate
-import reactST.primereact.primereactStrings.indeterminate
+import lucuma.typed.primereact.components.{ProgressBar => CProgressBar}
+import lucuma.typed.primereact.primereactStrings.determinate
+import lucuma.typed.primereact.primereactStrings.indeterminate
 
 import scalajs.js
 import scalajs.js.JSConverters.*

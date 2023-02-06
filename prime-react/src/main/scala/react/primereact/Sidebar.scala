@@ -10,11 +10,11 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.*
 import react.common.*
-import reactST.primereact.components.{Sidebar => CSidebar}
-import reactST.primereact.primereactStrings.bottom
-import reactST.primereact.primereactStrings.left
-import reactST.primereact.primereactStrings.right
-import reactST.primereact.primereactStrings.top
+import lucuma.typed.primereact.components.{Sidebar => CSidebar}
+import lucuma.typed.primereact.primereactStrings.bottom
+import lucuma.typed.primereact.primereactStrings.left
+import lucuma.typed.primereact.primereactStrings.right
+import lucuma.typed.primereact.primereactStrings.top
 
 import scalajs.js
 import scalajs.js.JSConverters.*

@@ -4,7 +4,7 @@
 package lucuma.react.table
 
 import org.scalablytyped.runtime.StringDictionary
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js
 import scalajs.js.JSConverters.*

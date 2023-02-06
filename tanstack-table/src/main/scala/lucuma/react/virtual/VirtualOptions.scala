@@ -8,7 +8,7 @@ import lucuma.react.SizePx
 import lucuma.react.virtual.facade.VirtualOptionsJS
 import lucuma.react.virtual.facade.Virtualizer
 import org.scalajs.dom.Element
-import reactST.{tanstackVirtualCore => rawVirtual}
+import lucuma.typed.{tanstackVirtualCore => rawVirtual}
 
 import scalajs.js
 import scalajs.js.JSConverters.*

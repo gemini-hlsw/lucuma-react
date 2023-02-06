@@ -6,9 +6,9 @@ package react.highcharts
 import japgolly.scalajs.react.test._
 import org.scalajs.dom.HTMLElement
 import org.scalajs.dom.document
-import reactST.highcharts.mod.Options
-import reactST.highcharts.mod.charts
-import reactST.highcharts.mod.{^ => HighCharts, _}
+import lucuma.typed.highcharts.mod.Options
+import lucuma.typed.highcharts.mod.charts
+import lucuma.typed.highcharts.mod.{^ => HighCharts, _}
 import utest._
 
 import scala.scalajs.js

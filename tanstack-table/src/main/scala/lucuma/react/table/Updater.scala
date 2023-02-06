@@ -3,7 +3,7 @@
 
 package lucuma.react.table
 
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js
 

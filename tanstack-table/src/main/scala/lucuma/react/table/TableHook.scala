@@ -6,8 +6,8 @@ package lucuma.react.table
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.hooks.CustomHook
 import lucuma.react.table.facade.*
-import reactST.tanstackReactTable.mod.useReactTable
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.tanstackReactTable.mod.useReactTable
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
@@ -16,7 +16,7 @@ import scala.scalajs.js.annotation.JSImport
 object TableHook:
   @JSImport("@tanstack/react-table", "useReactTable")
   @js.native
-  private def useReactTableJs[T](options: TableOptionsJs[T]): raw.mod.Table[T] = js.native
+  private def useReactTableJs[T](options: TableOptionsJs[T]): raw.buildLibTypesMod.Table[T] = js.native
 
   def useTableHook[T] =
     CustomHook[TableOptions[T]]

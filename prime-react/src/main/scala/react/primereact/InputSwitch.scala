@@ -6,8 +6,8 @@ package react.primereact
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
-import reactST.primereact.components.{InputSwitch => CInputSwitch}
-import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.components.{InputSwitch => CInputSwitch}
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 
@@ -37,7 +37,7 @@ object InputSwitch {
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.tooltip, _.tooltip(_))
       .applyOrNot(props.tooltipOptions, (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions]))
-      .applyOrNot(props.onChange, (c, p) => c.onChange(iwcp => p(iwcp.value)))(
+      .applyOrNot(props.onChange, (c, p) => c.onChange(iwcp => p(iwcp.value.asInstanceOf[Boolean])))(
         props.modifiers.toTagMod
       )
   }

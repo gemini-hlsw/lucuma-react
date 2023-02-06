@@ -4,7 +4,7 @@
 package lucuma.react.table.facade
 
 import japgolly.scalajs.react.*
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -12,24 +12,24 @@ import scalajs.js.JSConverters.*
 trait TableOptionsJs[T] extends js.Object:
   var columns: js.Array[ColumnDefJs[T, ?]]
   var data: js.Array[T]
-  var getCoreRowModel: js.Function1[raw.mod.Table[T], js.Function0[raw.mod.RowModel[T]]]
+  var getCoreRowModel: js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]
 
   var getRowId: js.UndefOr[js.Function3[T, Int, js.UndefOr[T], String]] = js.undefined
-  var onStateChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.TableState]] = js.undefined
+  var onStateChange: js.UndefOr[raw.mod.OnChangeFn[raw.buildLibTypesMod.TableState]] = js.undefined
   var renderFallbackValue: js.UndefOr[Any]                              = js.undefined
   var state: js.UndefOr[raw.anon.PartialTableState]                     = js.undefined
   var initialState: js.UndefOr[raw.mod.InitialTableState]               = js.undefined
 
   // Column Sizing // TODO Rest of the properties
   var enableColumnResizing: js.UndefOr[Boolean]                                               = js.undefined
-  var columnResizeMode: js.UndefOr[raw.mod.ColumnResizeMode]                                  = js.undefined
-  var onColumnSizingChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.ColumnSizingState]]         = js.undefined
-  var onColumnSizingInfoChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.ColumnSizingInfoState]] =
+  var columnResizeMode: js.UndefOr[raw.buildLibFeaturesColumnSizingMod.ColumnResizeMode]                                  = js.undefined
+  var onColumnSizingChange: js.UndefOr[raw.mod.OnChangeFn[raw.buildLibFeaturesColumnSizingMod.ColumnSizingState]]         = js.undefined
+  var onColumnSizingInfoChange: js.UndefOr[raw.mod.OnChangeFn[raw.buildLibFeaturesColumnSizingMod.ColumnSizingInfoState]] =
     js.undefined
 
   // Column Visibility
   var enableHiding: js.UndefOr[Boolean]                                                 = js.undefined
-  var onColumnVisibilityChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.VisibilityState]] =
+  var onColumnVisibilityChange: js.UndefOr[raw.mod.OnChangeFn[raw.buildLibFeaturesVisibilityMod.VisibilityState]] =
     js.undefined
 
   // Sorting
@@ -38,7 +38,7 @@ trait TableOptionsJs[T] extends js.Object:
   var enableSorting: js.UndefOr[Boolean]                                    = js.undefined
   var enableSortingRemoval: js.UndefOr[Boolean]                             = js.undefined
   var getSortedRowModel: js.UndefOr[
-    js.Function1[raw.mod.Table[T], js.Function0[raw.mod.RowModel[T]]]
+    js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]
   ]                                                                         = js.undefined
   var isMultiSortEvent: js.UndefOr[js.Function1[ /* e */ Any, Boolean]]     = js.undefined
   var manualSorting: js.UndefOr[Boolean]                                    = js.undefined
@@ -49,11 +49,11 @@ trait TableOptionsJs[T] extends js.Object:
   // Selection
   var enableRowSelection: js.UndefOr[Boolean]                                         = js.undefined
   var enableMultiRowSelection: js.UndefOr[Boolean]                                    = js.undefined
-  var onRowSelectionChange: js.UndefOr[raw.mod.OnChangeFn[raw.mod.RowSelectionState]] =
+  var onRowSelectionChange: js.UndefOr[raw.mod.OnChangeFn[raw.buildLibTypesMod.RowSelectionState]] =
     js.undefined
   // Expanding
   var enableExpanding: js.UndefOr[Boolean]                                            = js.undefined
   var getExpandedRowModel: js.UndefOr[
-    js.Function1[raw.mod.Table[T], js.Function0[raw.mod.RowModel[T]]]
+    js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]
   ]                                                                                   = js.undefined
   var getSubRows: js.UndefOr[js.Function2[T, Int, js.UndefOr[js.Array[T]]]]           = js.undefined

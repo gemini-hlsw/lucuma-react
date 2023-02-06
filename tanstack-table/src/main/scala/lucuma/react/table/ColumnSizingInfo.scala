@@ -4,7 +4,7 @@
 package lucuma.react.table
 
 import lucuma.react.SizePx
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -17,21 +17,24 @@ case class ColumnSizingInfo(
   startOffset:       Option[SizePx],
   startSize:         Option[SizePx]
 ):
-  def toJs: raw.mod.ColumnSizingInfoState = raw.mod
-    .ColumnSizingInfoState(
-      columnSizingStart = columnSizingStart
-        .map((colId, size) => js.Tuple2(colId.value, size.value.toDouble))
-        .toJSArray,
-      isResizingColumn =
-        isResizingColumn.map(_.value).getOrElse(raw.tanstackTableCoreBooleans.`false`)
-    )
-    .applyOrNull(deltaOffset, (c, p) => c.setDeltaOffset(p.value), _.setDeltaOffsetNull)
-    .applyOrNull(deltaPercentage, (c, p) => c.setDeltaPercentage(p), _.setDeltaPercentageNull)
-    .applyOrNull(startOffset, (c, p) => c.setStartOffset(p.value), _.setStartOffsetNull)
-    .applyOrNull(startSize, (c, p) => c.setStartSize(p.value), _.setStartSizeNull)
+  def toJs: raw.buildLibFeaturesColumnSizingMod.ColumnSizingInfoState =
+    raw.buildLibFeaturesColumnSizingMod
+      .ColumnSizingInfoState(
+        columnSizingStart = columnSizingStart
+          .map((colId, size) => js.Tuple2(colId.value, size.value.toDouble))
+          .toJSArray,
+        isResizingColumn =
+          isResizingColumn.map(_.value).getOrElse(raw.tanstackTableCoreBooleans.`false`)
+      )
+      .applyOrNull(deltaOffset, (c, p) => c.setDeltaOffset(p.value), _.setDeltaOffsetNull)
+      .applyOrNull(deltaPercentage, (c, p) => c.setDeltaPercentage(p), _.setDeltaPercentageNull)
+      .applyOrNull(startOffset, (c, p) => c.setStartOffset(p.value), _.setStartOffsetNull)
+      .applyOrNull(startSize, (c, p) => c.setStartSize(p.value), _.setStartSizeNull)
 
 object ColumnSizingInfo:
-  private[table] def fromJs(rawValue: raw.mod.ColumnSizingInfoState): ColumnSizingInfo =
+  private[table] def fromJs(
+    rawValue: raw.buildLibFeaturesColumnSizingMod.ColumnSizingInfoState
+  ): ColumnSizingInfo =
     ColumnSizingInfo(
       rawValue.columnSizingStart.toList.map(tuple => ColumnId(tuple._1) -> SizePx(tuple._2.toInt)),
       rawValue.deltaOffset.nullToOption.map(v => SizePx(v.toInt)),

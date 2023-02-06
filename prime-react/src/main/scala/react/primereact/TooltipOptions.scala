@@ -7,14 +7,14 @@ import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.ReactEventFrom
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLElement
-import reactST.primereact.primereactStrings.both
-import reactST.primereact.primereactStrings.bottom
-import reactST.primereact.primereactStrings.focus
-import reactST.primereact.primereactStrings.hover
-import reactST.primereact.primereactStrings.left
-import reactST.primereact.primereactStrings.right
-import reactST.primereact.primereactStrings.self
-import reactST.primereact.primereactStrings.top
+import lucuma.typed.primereact.primereactStrings.both
+import lucuma.typed.primereact.primereactStrings.bottom
+import lucuma.typed.primereact.primereactStrings.focus
+import lucuma.typed.primereact.primereactStrings.hover
+import lucuma.typed.primereact.primereactStrings.left
+import lucuma.typed.primereact.primereactStrings.right
+import lucuma.typed.primereact.primereactStrings.self
+import lucuma.typed.primereact.primereactStrings.top
 
 import scalajs.js
 

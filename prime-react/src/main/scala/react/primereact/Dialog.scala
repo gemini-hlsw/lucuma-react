@@ -8,8 +8,7 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.HTMLElement
 import react.common.*
-import reactST.primereact.components.{Dialog => CDialog}
-import reactST.primereact.dialogDialogMod.DialogAppendToType
+import lucuma.typed.primereact.components.{Dialog => CDialog}
 
 import scalajs.js
 

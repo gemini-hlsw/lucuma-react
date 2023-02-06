@@ -12,10 +12,10 @@ import org.scalajs.dom.*
 import react.common.*
 import react.fa.FontAwesomeIcon
 import react.primereact.PrimeStyles
-import reactST.primereact.components.{ToggleButton => CToggleButton}
-import reactST.primereact.primereactStrings.left
-import reactST.primereact.primereactStrings.right
-import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.components.{ToggleButton => CToggleButton}
+import lucuma.typed.primereact.primereactStrings.left
+import lucuma.typed.primereact.primereactStrings.right
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 import scalajs.js.JSConverters.*

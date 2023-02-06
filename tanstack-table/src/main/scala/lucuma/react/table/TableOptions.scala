@@ -9,8 +9,8 @@ import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.table.facade.ColumnDefJs
 import lucuma.react.table.facade.TableOptionsJs
 import org.scalajs.dom
-import reactST.{tanstackReactTable => rawReact}
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackReactTable => rawReact}
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -55,7 +55,7 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.mod.TableState) => mod(TableState(v)).toJs)
+            Updater.Mod((v: raw.buildLibTypesMod.TableState) => mod(TableState(v)).toJs)
         ).toJs))
     )
 
@@ -74,18 +74,18 @@ sealed trait TableOptions[T]:
       )
     )
 
-  lazy val getCoreRowModel: Table[T] => () => raw.mod.RowModel[T] =
+  lazy val getCoreRowModel: Table[T] => () => raw.buildLibTypesMod.RowModel[T] =
     t => toJsBase.getCoreRowModel(t.toJs)
 
   /** WARNING: This mutates the object in-place. */
   def setGetCoreRowModel(
-    getCoreRowModel: Option[Table[T] => () => raw.mod.RowModel[T]]
+    getCoreRowModel: Option[Table[T] => () => raw.buildLibTypesMod.RowModel[T]]
   ): TableOptions[T] =
     copy(_.getCoreRowModel =
       getCoreRowModel
         .map(fn =>
-          ((t: raw.mod.Table[T]) => fn(Table(t))): js.Function1[raw.mod.Table[T], js.Function0[
-            raw.mod.RowModel[T]
+          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t))): js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[
+            raw.buildLibTypesMod.RowModel[T]
           ]]
         )
         .getOrElse(rawReact.mod.getCoreRowModel())
@@ -104,7 +104,7 @@ sealed trait TableOptions[T]:
     copy(_.state = state.map(_.toJs).orUndefined)
 
   lazy val initialState: Option[TableState] =
-    toJsBase.initialState.toOption.map(v => TableState(v.asInstanceOf[raw.mod.TableState]))
+    toJsBase.initialState.toOption.map(v => TableState(v.asInstanceOf[raw.buildLibTypesMod.TableState]))
 
   /** WARNING: This mutates the object in-place. */
   def setInitialState(initialState: Option[TableState]): TableOptions[T] =
@@ -132,7 +132,7 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.mod.ColumnSizingState) => mod(ColumnSizing.fromJs(v)).toJs)
+            Updater.Mod((v: raw.buildLibFeaturesColumnSizingMod.ColumnSizingState) => mod(ColumnSizing.fromJs(v)).toJs)
         ).toJs))
     )
 
@@ -157,7 +157,7 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.mod.ColumnSizingInfoState) => mod(ColumnSizingInfo.fromJs(v)).toJs)
+            Updater.Mod((v: raw.buildLibFeaturesColumnSizingMod.ColumnSizingInfoState) => mod(ColumnSizingInfo.fromJs(v)).toJs)
         ).toJs))
     )
 
@@ -190,7 +190,7 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.mod.VisibilityState) => mod(ColumnVisibility.fromJs(v)).toJs)
+            Updater.Mod((v: raw.buildLibFeaturesVisibilityMod.VisibilityState) => mod(ColumnVisibility.fromJs(v)).toJs)
         ).toJs))
     )
 
@@ -234,18 +234,18 @@ sealed trait TableOptions[T]:
   def setEnableMultiRemove(enableMultiRemove: Option[Boolean]): TableOptions[T] =
     copy(_.enableMultiRemove = enableMultiRemove.orUndefined)
 
-  lazy val getSortedRowModel: Option[Table[T] => () => raw.mod.RowModel[T]] =
+  lazy val getSortedRowModel: Option[Table[T] => () => raw.buildLibTypesMod.RowModel[T]] =
     toJsBase.getSortedRowModel.toOption.map(fn => t => fn(t.toJs))
 
   /** WARNING: This mutates the object in-place. */
   def setGetSortedRowModel(
-    getSortedRowModel: Option[Table[T] => () => raw.mod.RowModel[T]]
+    getSortedRowModel: Option[Table[T] => () => raw.buildLibTypesMod.RowModel[T]]
   ): TableOptions[T] =
     copy(_.getSortedRowModel =
       getSortedRowModel.orUndefined
         .map(fn =>
-          ((t: raw.mod.Table[T]) => fn(Table(t))): js.Function1[raw.mod.Table[T], js.Function0[
-            raw.mod.RowModel[T]
+          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t))): js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[
+            raw.buildLibTypesMod.RowModel[T]
           ]]
         )
         .getOrElse(rawReact.mod.getSortedRowModel())
@@ -324,7 +324,7 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.mod.RowSelectionState) => mod(RowSelection.fromJs(v)).toJs)
+            Updater.Mod((v: raw.buildLibTypesMod.RowSelectionState) => mod(RowSelection.fromJs(v)).toJs)
         ).toJs))
     )
 
@@ -350,18 +350,18 @@ sealed trait TableOptions[T]:
   def setEnableExpanding(enableExpanding: Option[Boolean]): TableOptions[T] =
     copy(_.enableExpanding = enableExpanding.orUndefined)
 
-  lazy val getExpandedRowModel: Option[Table[T] => () => raw.mod.RowModel[T]] =
+  lazy val getExpandedRowModel: Option[Table[T] => () => raw.buildLibTypesMod.RowModel[T]] =
     toJsBase.getExpandedRowModel.toOption.map(fn => t => fn(t.toJs))
 
   /** WARNING: This mutates the object in-place. */
   def setGetExpandedRowModel(
-    getExpandedRowModel: Option[Table[T] => () => raw.mod.RowModel[T]]
+    getExpandedRowModel: Option[Table[T] => () => raw.buildLibTypesMod.RowModel[T]]
   ): TableOptions[T] =
     copy(_.getExpandedRowModel =
       getExpandedRowModel.orUndefined
         .map(fn =>
-          ((t: raw.mod.Table[T]) => fn(Table(t))): js.Function1[raw.mod.Table[T], js.Function0[
-            raw.mod.RowModel[T]
+          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t))): js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[
+            raw.buildLibTypesMod.RowModel[T]
           ]]
         )
         .getOrElse(rawReact.mod.getExpandedRowModel())
@@ -381,7 +381,7 @@ object TableOptions:
   def apply[T](
     columns_                : Reusable[List[ColumnDef[T, ?]]],
     data_                   : Reusable[List[T]],
-    getCoreRowModel:          js.UndefOr[Table[T] => () => raw.mod.RowModel[T]] = js.undefined,
+    getCoreRowModel:          js.UndefOr[Table[T] => () => raw.buildLibTypesMod.RowModel[T]] = js.undefined,
     getRowId:                 js.UndefOr[(T, Int, Option[T]) => RowId] = js.undefined,
     onStateChange:            js.UndefOr[Updater[TableState] => Callback] = js.undefined,
     renderFallbackValue:      js.UndefOr[Any] = js.undefined,
@@ -400,7 +400,7 @@ object TableOptions:
     enableMultiSort:          js.UndefOr[Boolean] = js.undefined,
     enableSortingRemoval:     js.UndefOr[Boolean] = js.undefined,
     enableMultiRemove:        js.UndefOr[Boolean] = js.undefined,
-    getSortedRowModel:        js.UndefOr[Table[T] => () => raw.mod.RowModel[T]] = js.undefined,
+    getSortedRowModel:        js.UndefOr[Table[T] => () => raw.buildLibTypesMod.RowModel[T]] = js.undefined,
     isMultiSortEvent:         js.UndefOr[SyntheticEvent[dom.Node] => Boolean] = js.undefined,
     manualSorting:            js.UndefOr[Boolean] = js.undefined,
     maxMultiSortColCount:     js.UndefOr[Int] = js.undefined,
@@ -412,7 +412,7 @@ object TableOptions:
     onRowSelectionChange:     js.UndefOr[Updater[RowSelection] => Callback] = js.undefined,
     // Expanding
     enableExpanding:          js.UndefOr[Boolean] = js.undefined,
-    getExpandedRowModel:      js.UndefOr[Table[T] => () => raw.mod.RowModel[T]] = js.undefined,
+    getExpandedRowModel:      js.UndefOr[Table[T] => () => raw.buildLibTypesMod.RowModel[T]] = js.undefined,
     getSubRows:               js.UndefOr[(T, Int) => Option[List[T]]] = js.undefined
   ): TableOptions[T] =
     new TableOptions[T] {

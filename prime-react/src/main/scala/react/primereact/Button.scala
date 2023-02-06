@@ -12,15 +12,15 @@ import org.scalajs.dom.*
 import react.common.*
 import react.fa.FontAwesomeIcon
 import react.primereact.PrimeStyles
-import reactST.primereact.components.{Button => CButton}
-import reactST.primereact.primereactStrings.bottom
-import reactST.primereact.primereactStrings.button
-import reactST.primereact.primereactStrings.left
-import reactST.primereact.primereactStrings.reset
-import reactST.primereact.primereactStrings.right
-import reactST.primereact.primereactStrings.submit
-import reactST.primereact.primereactStrings.top
-import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.components.{Button => CButton}
+import lucuma.typed.primereact.primereactStrings.bottom
+import lucuma.typed.primereact.primereactStrings.button
+import lucuma.typed.primereact.primereactStrings.left
+import lucuma.typed.primereact.primereactStrings.reset
+import lucuma.typed.primereact.primereactStrings.right
+import lucuma.typed.primereact.primereactStrings.submit
+import lucuma.typed.primereact.primereactStrings.top
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 import scalajs.js.JSConverters.*

@@ -12,13 +12,8 @@ import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common.*
 import react.fa.FontAwesomeIcon
-import reactST.StBuildingComponent
-import reactST.primereact.dialogDialogMod.DialogPositionType
-import reactST.primereact.primereactStrings.horizontal
-import reactST.primereact.primereactStrings.local
-import reactST.primereact.primereactStrings.self
-import reactST.primereact.primereactStrings.session
-import reactST.primereact.primereactStrings.vertical
+import lucuma.typed.StBuildingComponent
+import lucuma.typed.primereact.primereactStrings.*
 
 import scalajs.js
 
@@ -32,16 +27,19 @@ enum StateStorage(val value: local | session) derives Eq:
   case Local   extends StateStorage(local)
   case Session extends StateStorage(session)
 
-enum DialogPosition(val value: DialogPositionType) derives Eq:
-  case Bottom      extends DialogPosition(DialogPositionType.bottom)
-  case BottomLeft  extends DialogPosition(DialogPositionType.`bottom-left`)
-  case BottomRight extends DialogPosition(DialogPositionType.`bottom-right`)
-  case Center      extends DialogPosition(DialogPositionType.center)
-  case Left        extends DialogPosition(DialogPositionType.left)
-  case Right       extends DialogPosition(DialogPositionType.right)
-  case Top         extends DialogPosition(DialogPositionType.top)
-  case TopLeft     extends DialogPosition(DialogPositionType.`top-left`)
-  case TopRight    extends DialogPosition(DialogPositionType.`top-right`)
+enum DialogPosition(
+  val value: bottom | `bottom-left` | `bottom-right` | center | left | right | top | `top-left` |
+    `top-right`
+) derives Eq:
+  case Bottom      extends DialogPosition(bottom)
+  case BottomLeft  extends DialogPosition(`bottom-left`)
+  case BottomRight extends DialogPosition(`bottom-right`)
+  case Center      extends DialogPosition(center)
+  case Left        extends DialogPosition(left)
+  case Right       extends DialogPosition(right)
+  case Top         extends DialogPosition(top)
+  case TopLeft     extends DialogPosition(`top-left`)
+  case TopRight    extends DialogPosition(`top-right`)
 
 case class ConfirmDialogReturn(
   show: Callback,

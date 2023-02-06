@@ -9,9 +9,9 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import react.fa.FontAwesomeIcon
-import reactST.primereact.components.{Dropdown => CDropdown}
-import reactST.primereact.dropdownDropdownMod.DropdownChangeParams
-import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.components.{Dropdown => CDropdown}
+import lucuma.typed.primereact.dropdownDropdownMod.DropdownChangeEvent
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -47,11 +47,11 @@ private[primereact] trait DropdownBase {
 
 object DropdownBase {
   private[primereact] val component = ScalaFnComponent[DropdownBase] { props =>
-    val changeHandler: DropdownChangeParams => Callback =
+    val changeHandler: DropdownChangeEvent => Callback =
       parms =>
         val a = props.finder(parms.value)
         props.onChange.toOption.map(_(a)).getOrElse(Callback.empty) >>
-          props.onChangeE.toOption.map(_(a, parms.originalEvent)).getOrElse(Callback.empty)
+          props.onChangeE.toOption.map(_(a, parms.originalEvent.get)).getOrElse(Callback.empty)
 
     CDropdown
       .value(props.getter)

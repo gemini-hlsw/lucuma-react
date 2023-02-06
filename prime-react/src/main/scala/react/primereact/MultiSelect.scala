@@ -9,13 +9,14 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import react.primereact.SelectItem.*
-import reactST.primereact.components.{MultiSelect => CMultiSelect}
-import reactST.primereact.multiselectMultiselectMod.MultiSelectAllParams
-import reactST.primereact.multiselectMultiselectMod.MultiSelectChangeParams
-import reactST.primereact.multiselectMultiselectMod.MultiSelectDisplayType
-import reactST.primereact.multiselectMultiselectMod.MultiSelectFilterParams
-import reactST.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
-import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.components.{MultiSelect => CMultiSelect}
+import lucuma.typed.primereact.multiselectMultiselectMod.MultiSelectAllEvent
+import lucuma.typed.primereact.multiselectMultiselectMod.MultiSelectChangeEvent
+import lucuma.typed.primereact.multiselectMultiselectMod.MultiSelectFilterEvent
+import lucuma.typed.primereact.primereactStrings.chip
+import lucuma.typed.primereact.primereactStrings.comma
+import lucuma.typed.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -100,40 +101,40 @@ case class MultiSelect[A](
       case _                             => none
     ).orUndefined
 
-  private val filterHandler: js.UndefOr[MultiSelectFilterParams => Callback] =
+  private val filterHandler: js.UndefOr[MultiSelectFilterEvent => Callback] =
     ((props.onFilter.toOption, props.onFilterE.toOption) match
       case (Some(onFilter), Some(onFilterE)) =>
         (
-          (e: MultiSelectFilterParams) => onFilter(e.filter) >> onFilterE(e.filter, e.originalEvent)
+          (e: MultiSelectFilterEvent) => onFilter(e.filter) >> onFilterE(e.filter, e.originalEvent)
         ).some
-      case (Some(onFilter), None)            => ((e: MultiSelectFilterParams) => onFilter(e.filter)).some
+      case (Some(onFilter), None)            => ((e: MultiSelectFilterEvent) => onFilter(e.filter)).some
       case (None, Some(onFilterE))           =>
-        ((e: MultiSelectFilterParams) => onFilterE(e.filter, e.originalEvent)).some
+        ((e: MultiSelectFilterEvent) => onFilterE(e.filter, e.originalEvent)).some
       case _                                 => none
     ).orUndefined
 
-  private val selectAllHandler: js.UndefOr[MultiSelectAllParams => Callback] =
+  private val selectAllHandler: js.UndefOr[MultiSelectAllEvent => Callback] =
     ((props.onSelectAll.toOption, props.onSelectAllE.toOption) match
       case (Some(onSelectAll), Some(onSelectAllE)) =>
         (
-          (e: MultiSelectAllParams) =>
+          (e: MultiSelectAllEvent) =>
             onSelectAll(e.checked) >> onSelectAllE(e.checked, e.originalEvent)
         ).some
-      case (Some(onSelectAll), None)               => ((e: MultiSelectAllParams) => onSelectAll(e.checked)).some
+      case (Some(onSelectAll), None)               => ((e: MultiSelectAllEvent) => onSelectAll(e.checked)).some
       case (None, Some(onSelectAllE))              =>
-        ((e: MultiSelectAllParams) => onSelectAllE(e.checked, e.originalEvent)).some
+        ((e: MultiSelectAllEvent) => onSelectAllE(e.checked, e.originalEvent)).some
       case _                                       => none
     ).orUndefined
 
 object MultiSelect:
-  enum Display(val toJs: MultiSelectDisplayType):
-    case Comma extends Display(MultiSelectDisplayType.comma)
-    case Chip  extends Display(MultiSelectDisplayType.chip)
+  enum Display(val toJs: comma | chip):
+    case Comma extends Display(comma)
+    case Chip  extends Display(chip)
 
   private def componentBuilder[A] = ScalaFnComponent[MultiSelect[A]] { props =>
     import props.eqA
 
-    val changeHandler: MultiSelectChangeParams => Callback =
+    val changeHandler: MultiSelectChangeEvent => Callback =
       parms =>
         val a = parms.value.asInstanceOf[js.Array[Int]].toList.map(props.finder)
         props.onChange.toOption.map(_(a)).getOrElse(Callback.empty) >>

@@ -3,16 +3,16 @@
 
 package lucuma.react.table
 
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 enum ColumnResizeMode:
   case OnChange, OnEnd
 
-  def toJs: raw.mod.ColumnResizeMode = this match
+  def toJs: raw.buildLibFeaturesColumnSizingMod.ColumnResizeMode = this match
     case OnChange => raw.tanstackTableCoreStrings.onChange
     case OnEnd    => raw.tanstackTableCoreStrings.onEnd
 
 object ColumnResizeMode:
-  def fromJs(rawValue: raw.mod.ColumnResizeMode): ColumnResizeMode =
+  def fromJs(rawValue: raw.buildLibFeaturesColumnSizingMod.ColumnResizeMode): ColumnResizeMode =
     if (rawValue == raw.tanstackTableCoreStrings.onEnd) OnEnd
     else OnChange

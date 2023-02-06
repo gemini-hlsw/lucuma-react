@@ -13,11 +13,11 @@ import react.common.style.*
 import react.highcharts.Highcharts
 import react.resizeDetector.UseResizeDetectorProps
 import react.resizeDetector.hooks.*
-import reactST.highcharts.anon.TypeofHighchartsAST
-import reactST.highcharts.mod.Chart_
-import reactST.highcharts.mod.HTMLDOMElement
-import reactST.highcharts.mod.Options
-import reactST.highcharts.mod.PointOptionsObject
+import lucuma.typed.highcharts.anon.TypeofHighchartsAST
+import lucuma.typed.highcharts.mod.Chart_
+import lucuma.typed.highcharts.mod.HTMLDOMElement
+import lucuma.typed.highcharts.mod.Options
+import lucuma.typed.highcharts.mod.PointOptionsObject
 
 case class ResizingChart(
   options:    Options,

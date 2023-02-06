@@ -6,14 +6,13 @@ package react.primereact
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
-import reactST.primereact.accordionAccordionMod.AccordionActiveIndexType
-import reactST.primereact.components.{Accordion => CAccordion}
+import lucuma.typed.primereact.components.{Accordion => CAccordion}
 
 import scalajs.js
 
 private[primereact] trait AccordionBase {
   val id: js.UndefOr[String]
-  val rawActiveIndex: js.UndefOr[AccordionActiveIndexType]
+  val rawActiveIndex: js.UndefOr[Double]
   val multiple: js.UndefOr[Boolean]
   val expandIcon: js.UndefOr[String]   // default: "pi pi-chevron-right"
   val collapseIcon: js.UndefOr[String] // default: "pi pi-chevron-down"

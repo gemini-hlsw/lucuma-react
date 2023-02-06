@@ -6,12 +6,12 @@ package lucuma.react.table
 import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.facade.SyntheticEvent
 import org.scalajs.dom
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js.JSConverters.*
 
 // Missing: Filters
-case class Row[T](private[table] val toJs: raw.mod.Row[T]):
+case class Row[T](private[table] val toJs: raw.buildLibTypesMod.Row[T]):
   lazy val depth: Int                       = toJs.depth.toInt
   lazy val id: RowId                        = RowId(toJs.id)
   lazy val index: Int                       = toJs.index.toInt

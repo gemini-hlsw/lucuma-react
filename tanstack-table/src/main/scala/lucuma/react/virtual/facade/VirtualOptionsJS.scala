@@ -4,9 +4,9 @@
 package lucuma.react.virtual.facade
 
 import org.scalajs.dom.Element
-import reactST.tanstackVirtualCore.mod.Key
-import reactST.tanstackVirtualCore.mod.Range
-import reactST.tanstackVirtualCore.mod.Rect
+import lucuma.typed.tanstackVirtualCore.mod.Key
+import lucuma.typed.tanstackVirtualCore.mod.Range
+import lucuma.typed.tanstackVirtualCore.mod.Rect
 
 import scalajs.js
 
