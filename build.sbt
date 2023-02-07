@@ -301,7 +301,6 @@ lazy val tanstackTable = project
       "edu.gemini" %%% "lucuma-typed-tanstack-react-table"   % lucumaTypedV,
       "edu.gemini" %%% "lucuma-typed-tanstack-react-virtual" % lucumaTypedV
     ),
-    facadeSettings,
     yarnSettings
   )
 
