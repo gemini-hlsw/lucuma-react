@@ -16,7 +16,8 @@ import scala.scalajs.js.annotation.JSImport
 object TableHook:
   @JSImport("@tanstack/react-table", "useReactTable")
   @js.native
-  private def useReactTableJs[T](options: TableOptionsJs[T]): raw.buildLibTypesMod.Table[T] = js.native
+  private def useReactTableJs[T](options: TableOptionsJs[T]): raw.buildLibTypesMod.Table[T] =
+    js.native
 
   def useTableHook[T] =
     CustomHook[TableOptions[T]]

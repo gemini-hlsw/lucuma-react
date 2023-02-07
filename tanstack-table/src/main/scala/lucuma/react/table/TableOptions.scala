@@ -84,9 +84,12 @@ sealed trait TableOptions[T]:
     copy(_.getCoreRowModel =
       getCoreRowModel
         .map(fn =>
-          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t))): js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[
-            raw.buildLibTypesMod.RowModel[T]
-          ]]
+          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t))): js.Function1[
+            raw.buildLibTypesMod.Table[T],
+            js.Function0[
+              raw.buildLibTypesMod.RowModel[T]
+            ]
+          ]
         )
         .getOrElse(rawReact.mod.getCoreRowModel())
     )
@@ -104,7 +107,9 @@ sealed trait TableOptions[T]:
     copy(_.state = state.map(_.toJs).orUndefined)
 
   lazy val initialState: Option[TableState] =
-    toJsBase.initialState.toOption.map(v => TableState(v.asInstanceOf[raw.buildLibTypesMod.TableState]))
+    toJsBase.initialState.toOption.map(v =>
+      TableState(v.asInstanceOf[raw.buildLibTypesMod.TableState])
+    )
 
   /** WARNING: This mutates the object in-place. */
   def setInitialState(initialState: Option[TableState]): TableOptions[T] =
@@ -132,7 +137,9 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.buildLibFeaturesColumnSizingMod.ColumnSizingState) => mod(ColumnSizing.fromJs(v)).toJs)
+            Updater.Mod((v: raw.buildLibFeaturesColumnSizingMod.ColumnSizingState) =>
+              mod(ColumnSizing.fromJs(v)).toJs
+            )
         ).toJs))
     )
 
@@ -157,7 +164,9 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.buildLibFeaturesColumnSizingMod.ColumnSizingInfoState) => mod(ColumnSizingInfo.fromJs(v)).toJs)
+            Updater.Mod((v: raw.buildLibFeaturesColumnSizingMod.ColumnSizingInfoState) =>
+              mod(ColumnSizingInfo.fromJs(v)).toJs
+            )
         ).toJs))
     )
 
@@ -190,7 +199,9 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.buildLibFeaturesVisibilityMod.VisibilityState) => mod(ColumnVisibility.fromJs(v)).toJs)
+            Updater.Mod((v: raw.buildLibFeaturesVisibilityMod.VisibilityState) =>
+              mod(ColumnVisibility.fromJs(v)).toJs
+            )
         ).toJs))
     )
 
@@ -244,9 +255,12 @@ sealed trait TableOptions[T]:
     copy(_.getSortedRowModel =
       getSortedRowModel.orUndefined
         .map(fn =>
-          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t))): js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[
-            raw.buildLibTypesMod.RowModel[T]
-          ]]
+          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t))): js.Function1[
+            raw.buildLibTypesMod.Table[T],
+            js.Function0[
+              raw.buildLibTypesMod.RowModel[T]
+            ]
+          ]
         )
         .getOrElse(rawReact.mod.getSortedRowModel())
     )
@@ -280,7 +294,9 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.buildLibFeaturesSortingMod.SortingState) => mod(Sorting.fromJs(v)).toJs)
+            Updater.Mod((v: raw.buildLibFeaturesSortingMod.SortingState) =>
+              mod(Sorting.fromJs(v)).toJs
+            )
         ).toJs))
     )
 
@@ -324,7 +340,9 @@ sealed trait TableOptions[T]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.buildLibFeaturesRowSelectionMod.RowSelectionState) => mod(RowSelection.fromJs(v)).toJs)
+            Updater.Mod((v: raw.buildLibFeaturesRowSelectionMod.RowSelectionState) =>
+              mod(RowSelection.fromJs(v)).toJs
+            )
         ).toJs))
     )
 
@@ -360,9 +378,12 @@ sealed trait TableOptions[T]:
     copy(_.getExpandedRowModel =
       getExpandedRowModel.orUndefined
         .map(fn =>
-          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t))): js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[
-            raw.buildLibTypesMod.RowModel[T]
-          ]]
+          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t))): js.Function1[
+            raw.buildLibTypesMod.Table[T],
+            js.Function0[
+              raw.buildLibTypesMod.RowModel[T]
+            ]
+          ]
         )
         .getOrElse(rawReact.mod.getExpandedRowModel())
     )
@@ -400,7 +421,8 @@ object TableOptions:
     enableMultiSort:          js.UndefOr[Boolean] = js.undefined,
     enableSortingRemoval:     js.UndefOr[Boolean] = js.undefined,
     enableMultiRemove:        js.UndefOr[Boolean] = js.undefined,
-    getSortedRowModel:        js.UndefOr[Table[T] => () => raw.buildLibTypesMod.RowModel[T]] = js.undefined,
+    getSortedRowModel:        js.UndefOr[Table[T] => () => raw.buildLibTypesMod.RowModel[T]] =
+      js.undefined,
     isMultiSortEvent:         js.UndefOr[SyntheticEvent[dom.Node] => Boolean] = js.undefined,
     manualSorting:            js.UndefOr[Boolean] = js.undefined,
     maxMultiSortColCount:     js.UndefOr[Int] = js.undefined,
@@ -412,7 +434,8 @@ object TableOptions:
     onRowSelectionChange:     js.UndefOr[Updater[RowSelection] => Callback] = js.undefined,
     // Expanding
     enableExpanding:          js.UndefOr[Boolean] = js.undefined,
-    getExpandedRowModel:      js.UndefOr[Table[T] => () => raw.buildLibTypesMod.RowModel[T]] = js.undefined,
+    getExpandedRowModel:      js.UndefOr[Table[T] => () => raw.buildLibTypesMod.RowModel[T]] =
+      js.undefined,
     getSubRows:               js.UndefOr[(T, Int) => Option[List[T]]] = js.undefined
   ): TableOptions[T] =
     new TableOptions[T] {

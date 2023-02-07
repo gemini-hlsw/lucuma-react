@@ -21,7 +21,9 @@ case class ColumnPinning(left: List[ColumnId], right: List[ColumnId]):
 object ColumnPinning:
   def apply(left: ColumnId*): ColumnPinning = ColumnPinning(left.toList, Nil)
 
-  private[table] def fromJs(rawValue: raw.buildLibFeaturesPinningMod.ColumnPinningState): ColumnPinning =
+  private[table] def fromJs(
+    rawValue: raw.buildLibFeaturesPinningMod.ColumnPinningState
+  ): ColumnPinning =
     ColumnPinning(
       rawValue.left.toOption.map(_.toList.map(ColumnId(_))).orEmpty,
       rawValue.right.toOption.map(_.toList.map(ColumnId(_))).orEmpty

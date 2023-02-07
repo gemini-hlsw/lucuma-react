@@ -87,21 +87,26 @@ trait HTMLTableRenderer[T]:
     rows:               js.Array[raw.buildLibTypesMod.Row[T]],
     tableMod:           TagMod = TagMod.empty,
     headerMod:          TagMod = TagMod.empty,
-    headerRowMod:       raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod = (_: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T]) =>
-      TagMod.empty,
-    headerCellMod:      raw.buildLibTypesMod.Header[T, Any] => TagMod = (_: raw.buildLibTypesMod.Header[T, Any]) => TagMod.empty,
+    headerRowMod:       raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod =
+      (_: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T]) => TagMod.empty,
+    headerCellMod:      raw.buildLibTypesMod.Header[T, Any] => TagMod =
+      (_: raw.buildLibTypesMod.Header[T, Any]) => TagMod.empty,
     bodyMod:            TagMod = TagMod.empty,
-    rowMod:             raw.buildLibTypesMod.Row[T] => TagMod = (_: raw.buildLibTypesMod.Row[T]) => TagMod.empty,
-    cellMod:            raw.buildLibTypesMod.Cell[T, Any] => TagMod = (_: raw.buildLibTypesMod.Cell[T, Any]) => TagMod.empty,
-    footerMod:          TagMod = TagMod.empty,
-    footerRowMod:       raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod = (_: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T]) =>
+    rowMod:             raw.buildLibTypesMod.Row[T] => TagMod = (_: raw.buildLibTypesMod.Row[T]) =>
       TagMod.empty,
-    footerCellMod:      raw.buildLibTypesMod.Header[T, Any] => TagMod = (_: raw.buildLibTypesMod.Header[T, Any]) => TagMod.empty,
+    cellMod:            raw.buildLibTypesMod.Cell[T, Any] => TagMod = (_: raw.buildLibTypesMod.Cell[T, Any]) =>
+      TagMod.empty,
+    footerMod:          TagMod = TagMod.empty,
+    footerRowMod:       raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod =
+      (_: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T]) => TagMod.empty,
+    footerCellMod:      raw.buildLibTypesMod.Header[T, Any] => TagMod =
+      (_: raw.buildLibTypesMod.Header[T, Any]) => TagMod.empty,
     indexOffset:        Int = 0,
     paddingTop:         Option[Int] = none,
     paddingBottom:      Option[Int] = none,
     emptyMessage:       VdomNode = EmptyVdom,
-    renderSubComponent: raw.buildLibTypesMod.Row[T] => Option[VdomNode] = (_: raw.buildLibTypesMod.Row[T]) => none
+    renderSubComponent: raw.buildLibTypesMod.Row[T] => Option[VdomNode] =
+      (_: raw.buildLibTypesMod.Row[T]) => none
   ) =
     <.table(TableClass, tableMod)(
       <.thead(
@@ -118,7 +123,9 @@ trait HTMLTableRenderer[T]:
               headerGroup.headers
                 .exists(header =>
                   js.typeOf(
-                    header.column.columnDef.asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]].header
+                    header.column.columnDef
+                      .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
+                      .header
                   ) != "undefined"
                 )
             )(
@@ -143,8 +150,12 @@ trait HTMLTableRenderer[T]:
                             header.column.columnDef
                               .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
                               .header
-                              .asInstanceOf[rawReact.mod.Renderable[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]],
-                            header.getContext().asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
+                              .asInstanceOf[rawReact.mod.Renderable[
+                                raw.buildLibCoreHeadersMod.HeaderContext[T, Any]
+                              ]],
+                            header
+                              .getContext()
+                              .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
                           ),
                           sortIndicator(header.column),
                           resizer(
@@ -207,7 +218,9 @@ trait HTMLTableRenderer[T]:
                     )(
                       rawReact.mod.flexRender(
                         cell.column.columnDef.cell
-                          .asInstanceOf[rawReact.mod.Renderable[raw.buildLibCoreCellMod.CellContext[T, Any]]],
+                          .asInstanceOf[rawReact.mod.Renderable[
+                            raw.buildLibCoreCellMod.CellContext[T, Any]
+                          ]],
                         cell.getContext().asInstanceOf[raw.buildLibCoreCellMod.CellContext[T, Any]]
                       )
                     )
@@ -255,7 +268,9 @@ trait HTMLTableRenderer[T]:
                     TagMod.unless(footer.isPlaceholder)(
                       rawReact.mod.flexRender(
                         footer.column.columnDef.footer
-                          .asInstanceOf[rawReact.mod.Renderable[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]],
+                          .asInstanceOf[rawReact.mod.Renderable[
+                            raw.buildLibCoreHeadersMod.HeaderContext[T, Any]
+                          ]],
                         footer.getContext()
                       )
                     )

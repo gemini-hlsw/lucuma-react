@@ -10,7 +10,9 @@ import react.common.*
 import react.fa.FontAwesomeIcon
 import lucuma.typed.primereact.components.{ConfirmPopup => CConfirmPopup}
 import lucuma.typed.primereact.confirmpopupConfirmpopupMod.ConfirmPopupProps
-import lucuma.typed.primereact.confirmpopupConfirmpopupMod.{ConfirmPopupReturn => RawConfirmPopupReturn}
+import lucuma.typed.primereact.confirmpopupConfirmpopupMod.{
+  ConfirmPopupReturn => RawConfirmPopupReturn
+}
 import lucuma.typed.primereact.confirmpopupConfirmpopupMod.{confirmPopup => rawConfirmPopup}
 
 import scalajs.js

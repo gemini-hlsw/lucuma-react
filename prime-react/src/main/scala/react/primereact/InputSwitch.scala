@@ -37,7 +37,9 @@ object InputSwitch {
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.tooltip, _.tooltip(_))
       .applyOrNot(props.tooltipOptions, (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions]))
-      .applyOrNot(props.onChange, (c, p) => c.onChange(iwcp => p(iwcp.value.asInstanceOf[Boolean])))(
+      .applyOrNot(props.onChange,
+                  (c, p) => c.onChange(iwcp => p(iwcp.value.asInstanceOf[Boolean]))
+      )(
         props.modifiers.toTagMod
       )
   }
