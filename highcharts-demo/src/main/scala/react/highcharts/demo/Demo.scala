@@ -4,6 +4,39 @@
 package react.highcharts.demo
 
 import japgolly.scalajs.react.callback.Callback
+import lucuma.typed.highcharts.highchartsStrings.areaspline
+import lucuma.typed.highcharts.mod.AxisTypeValue
+import lucuma.typed.highcharts.mod.CSSObject
+import lucuma.typed.highcharts.mod.Chart_
+import lucuma.typed.highcharts.mod.CreditsOptions
+import lucuma.typed.highcharts.mod.CursorValue
+import lucuma.typed.highcharts.mod.LegendOptions
+import lucuma.typed.highcharts.mod.Options
+import lucuma.typed.highcharts.mod.PlotAreasplineOptions
+import lucuma.typed.highcharts.mod.PlotOptions
+import lucuma.typed.highcharts.mod.PlotSeriesOptions
+import lucuma.typed.highcharts.mod.Point
+import lucuma.typed.highcharts.mod.PointMarkerOptionsObject
+import lucuma.typed.highcharts.mod.PointOptionsObject
+import lucuma.typed.highcharts.mod.PositionObject
+import lucuma.typed.highcharts.mod.Series
+import lucuma.typed.highcharts.mod.SeriesAreasplineOptions
+import lucuma.typed.highcharts.mod.SeriesClickEventObject
+import lucuma.typed.highcharts.mod.SeriesEventsOptionsObject
+import lucuma.typed.highcharts.mod.SeriesLabelOptionsObject
+import lucuma.typed.highcharts.mod.SeriesOptionsType
+import lucuma.typed.highcharts.mod.SeriesStatesHoverOptionsObject
+import lucuma.typed.highcharts.mod.SeriesStatesOptionsObject
+import lucuma.typed.highcharts.mod.TitleOptions
+import lucuma.typed.highcharts.mod.TooltipOptions
+import lucuma.typed.highcharts.mod.TooltipPositionerCallbackFunction
+import lucuma.typed.highcharts.mod.TooltipShapeValue
+import lucuma.typed.highcharts.mod.XAxisOptions
+import lucuma.typed.highcharts.mod.XAxisPlotBandsLabelOptions
+import lucuma.typed.highcharts.mod.XAxisPlotBandsOptions
+import lucuma.typed.highcharts.mod.YAxisLabelsOptions
+import lucuma.typed.highcharts.mod.YAxisOptions
+import lucuma.typed.highcharts.mod.YAxisTitleOptions
 import org.scalajs.dom
 import react.common._
 import react.highcharts.Chart
@@ -13,39 +46,6 @@ import react.highcharts.implicits._
 import react.highcharts.mods.seriesLabel.SeriesLabelPoint
 import react.highcharts.mods.seriesLabel.SeriesLabelSeries
 import react.highcharts.seriesLabel
-import reactST.highcharts.highchartsStrings.areaspline
-import reactST.highcharts.mod.AxisTypeValue
-import reactST.highcharts.mod.CSSObject
-import reactST.highcharts.mod.Chart_
-import reactST.highcharts.mod.CreditsOptions
-import reactST.highcharts.mod.CursorValue
-import reactST.highcharts.mod.LegendOptions
-import reactST.highcharts.mod.Options
-import reactST.highcharts.mod.PlotAreasplineOptions
-import reactST.highcharts.mod.PlotOptions
-import reactST.highcharts.mod.PlotSeriesOptions
-import reactST.highcharts.mod.Point
-import reactST.highcharts.mod.PointMarkerOptionsObject
-import reactST.highcharts.mod.PointOptionsObject
-import reactST.highcharts.mod.PositionObject
-import reactST.highcharts.mod.Series
-import reactST.highcharts.mod.SeriesAreasplineOptions
-import reactST.highcharts.mod.SeriesClickEventObject
-import reactST.highcharts.mod.SeriesEventsOptionsObject
-import reactST.highcharts.mod.SeriesLabelOptionsObject
-import reactST.highcharts.mod.SeriesOptionsType
-import reactST.highcharts.mod.SeriesStatesHoverOptionsObject
-import reactST.highcharts.mod.SeriesStatesOptionsObject
-import reactST.highcharts.mod.TitleOptions
-import reactST.highcharts.mod.TooltipOptions
-import reactST.highcharts.mod.TooltipPositionerCallbackFunction
-import reactST.highcharts.mod.TooltipShapeValue
-import reactST.highcharts.mod.XAxisOptions
-import reactST.highcharts.mod.XAxisPlotBandsLabelOptions
-import reactST.highcharts.mod.XAxisPlotBandsOptions
-import reactST.highcharts.mod.YAxisLabelsOptions
-import reactST.highcharts.mod.YAxisOptions
-import reactST.highcharts.mod.YAxisTitleOptions
 
 import scala.scalajs.js
 
@@ -208,7 +208,7 @@ object Demo {
       )
       .setSeries(
         List(
-          SeriesAreasplineOptions(areaspline)
+          SeriesAreasplineOptions(areaspline, js.undefined, areaspline)
             .setName("Observation-1")
             .setData(
               List(
@@ -219,7 +219,7 @@ object Demo {
                 (1584655240000.0, 14.0)
               )
             ),
-          SeriesAreasplineOptions(areaspline)
+          SeriesAreasplineOptions(areaspline, js.undefined, areaspline)
             .setName("Observation-2")
             .setData(
               List(
@@ -238,7 +238,7 @@ object Demo {
       chart
         .series(0)
         .addPoint(
-          PointOptionsObject(accessibility = js.undefined)
+          PointOptionsObject()
             .setX(1584655110000.0)
             .setY(35.0)
         )

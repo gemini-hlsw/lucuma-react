@@ -6,9 +6,9 @@ package react.primereact
 import cats.Eq
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
+import lucuma.typed.primereact.selectitemSelectitemMod.SelectItemOptionsType
+import lucuma.typed.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
 import react.common.*
-import reactST.primereact.selectitemSelectitemMod.SelectItemOptionsType
-import reactST.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
 
 import scalajs.js
 import scalajs.js.JSConverters.*

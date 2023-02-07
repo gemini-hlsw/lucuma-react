@@ -4,7 +4,7 @@
 package lucuma.react
 
 import japgolly.scalajs.react.vdom.TagMod
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js
 
@@ -26,7 +26,7 @@ package object table extends HooksApiExt:
     inline def apply(value: String): CellId                  = value
     extension (opaqueValue: CellId) inline def value: String = opaqueValue
 
-  extension [T, A](cellCtx: raw.mod.CellContext[T, A])
+  extension [T, A](cellCtx: raw.buildLibCoreCellMod.CellContext[T, A])
     def value: A = cellCtx.getValue().asInstanceOf[A]
 
   given renderJSArray[A](using ev: A => TagMod): Conversion[js.Array[A], TagMod] =

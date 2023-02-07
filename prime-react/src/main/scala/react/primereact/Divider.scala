@@ -7,18 +7,18 @@ import cats.Eq
 import cats.derived.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.typed.primereact.components.{Divider => CDivider}
+import lucuma.typed.primereact.primereactStrings.bottom
+import lucuma.typed.primereact.primereactStrings.center
+import lucuma.typed.primereact.primereactStrings.dashed
+import lucuma.typed.primereact.primereactStrings.dotted
+import lucuma.typed.primereact.primereactStrings.horizontal
+import lucuma.typed.primereact.primereactStrings.left
+import lucuma.typed.primereact.primereactStrings.right
+import lucuma.typed.primereact.primereactStrings.solid
+import lucuma.typed.primereact.primereactStrings.top
+import lucuma.typed.primereact.primereactStrings.vertical
 import react.common.*
-import reactST.primereact.components.{Divider => CDivider}
-import reactST.primereact.primereactStrings.bottom
-import reactST.primereact.primereactStrings.center
-import reactST.primereact.primereactStrings.dashed
-import reactST.primereact.primereactStrings.dotted
-import reactST.primereact.primereactStrings.horizontal
-import reactST.primereact.primereactStrings.left
-import reactST.primereact.primereactStrings.right
-import reactST.primereact.primereactStrings.solid
-import reactST.primereact.primereactStrings.top
-import reactST.primereact.primereactStrings.vertical
 
 import scalajs.js
 

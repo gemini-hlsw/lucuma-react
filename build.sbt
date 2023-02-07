@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.31"
+ThisBuild / tlBaseVersion       := "0.32"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
@@ -11,6 +11,7 @@ ThisBuild / mergifyPrRules +=
     List(MergifyAction.Merge())
   )
 
+val lucumaTypedV     = "0.1.0"
 val catsV            = "2.9.0"
 val disciplineMunitV = "2.0.0-M3"
 val jsdomV           = "20.0.2"
@@ -291,17 +292,15 @@ lazy val clipboard = project
 
 lazy val tanstackTable = project
   .in(file("tanstack-table"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common)
   .settings(
-    name                     := "lucuma-react-tanstack-table",
-    stOutputPackage          := "reactST",
-    stUseScalaJsDom          := true,
-    stFlavour                := Flavour.ScalajsReact,
-    stReactEnableTreeShaking := Selection.All,
-    stMinimize               := Selection.AllExcept("@tanstack/react-table", "@tanstack/react-virtual"),
-    Compile / doc / sources  := Seq(),
+    name := "lucuma-react-tanstack-table",
     Compile / scalacOptions += "-language:implicitConversions",
+    libraryDependencies ++= Seq(
+      "edu.gemini" %%% "lucuma-typed-tanstack-react-table"   % lucumaTypedV,
+      "edu.gemini" %%% "lucuma-typed-tanstack-react-virtual" % lucumaTypedV
+    ),
     yarnSettings
   )
 
@@ -318,16 +317,14 @@ lazy val tanstackTableDemo = project
 
 lazy val highcharts = project
   .in(file("highcharts"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common, resizeDetector)
   .settings(
-    name                    := "lucuma-react-highcharts",
-    stIgnore ++= List("react", "react-dom"),
-    stUseScalaJsDom         := true,
-    stOutputPackage         := "reactST",
-    stMinimize              := Selection.AllExcept("highcharts"),
-    Compile / doc / sources := Seq(),
+    name := "lucuma-react-highcharts",
     Compile / scalacOptions += "-language:implicitConversions",
+    libraryDependencies ++= Seq(
+      "edu.gemini" %%% "lucuma-typed-highcharts" % lucumaTypedV
+    ),
     facadeSettings,
     yarnSettings
   )
@@ -342,17 +339,14 @@ lazy val highchartsDemo = project
 
 lazy val datepicker = project
   .in(file("datepicker"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common)
   .settings(
-    name                    := "lucuma-react-datepicker",
-    stIgnore ++= List("react-dom"),
-    stUseScalaJsDom         := true,
-    stOutputPackage         := "reactST",
-    stFlavour               := Flavour.ScalajsReact,
-    stMinimize              := Selection.AllExcept("@types/react-datepicker"),
-    Compile / doc / sources := Seq(),
+    name := "lucuma-react-datepicker",
     Compile / scalacOptions += "-language:implicitConversions",
+    libraryDependencies ++= Seq(
+      "edu.gemini" %%% "lucuma-typed-react-datepicker" % lucumaTypedV
+    ),
     facadeSettings,
     yarnSettings
   )
@@ -468,33 +462,15 @@ lazy val resizableDemo = project
 
 lazy val primeReact = project
   .in(file("prime-react"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin, ScalablyTypedConverterGenSourcePlugin)
+  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
   .dependsOn(common, fontAwesome)
   .settings(
-    name                                                      := "lucuma-react-prime-react",
-    stOutputPackage                                           := "reactST",
-    stUseScalaJsDom                                           := true,
-    stFlavour                                                 := Flavour.ScalajsReact,
-    stReactEnableTreeShaking                                  := Selection.All,
-    stMinimize                                                := Selection.AllExcept("primereact"),
-    Compile / doc / sources                                   := Seq(),
+    name := "lucuma-react-prime-react",
     Compile / scalacOptions += "-language:implicitConversions",
-    yarnSettings,
-    ScalablyTypedConverterGenSourcePlugin.autoImport.stImport := {
-      val rtn     = ScalablyTypedConverterGenSourcePlugin.autoImport.stImport.value
-      val sources = (Compile / sourceManaged).value / "scalablytyped" ** "*.scala"
-      sources.get().foreach { f =>
-        val content     = IO.read(f)
-        // use the ESM-style sources in imports
-        val transformed = content.replaceAll(
-          """@JSImport\("primereact\/((.+?)(?<!\.esm))",""",
-          """@JSImport("primereact/$1.esm","""
-        )
-        if (transformed != content)
-          IO.write(f, transformed)
-      }
-      rtn
-    }
+    libraryDependencies ++= Seq(
+      "edu.gemini" %%% "lucuma-typed-primereact" % lucumaTypedV
+    ),
+    yarnSettings
   )
 
 lazy val primeReactDemo = project

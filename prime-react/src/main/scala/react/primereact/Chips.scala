@@ -6,12 +6,12 @@ package react.primereact
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.typed.primereact.chipsChipsMod.ChipsAddEvent
+import lucuma.typed.primereact.chipsChipsMod.ChipsChangeEvent
+import lucuma.typed.primereact.chipsChipsMod.ChipsRemoveEvent
+import lucuma.typed.primereact.components.{Chips => CChips}
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 import react.common.*
-import reactST.primereact.chipsChipsMod.ChipsAddParams
-import reactST.primereact.chipsChipsMod.ChipsChangeParams
-import reactST.primereact.chipsChipsMod.ChipsRemoveParams
-import reactST.primereact.components.{Chips => CChips}
-import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -52,32 +52,32 @@ case class Chips(
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods:          TagMod*)     = addModifiers(mods)
 
-  private val addHandler: js.UndefOr[ChipsAddParams => Callback] =
+  private val addHandler: js.UndefOr[ChipsAddEvent => Callback] =
     ((props.onAdd.toOption, props.onAddE.toOption) match
       case (Some(onAdd), Some(onAddE)) =>
         (
-          (e: ChipsAddParams) =>
+          (e: ChipsAddEvent) =>
             onAdd(e.value.asInstanceOf[String]) >>
               onAddE(e.value.asInstanceOf[String], e.originalEvent)
         ).some
-      case (Some(onAdd), None)         => ((e: ChipsAddParams) => onAdd(e.value.asInstanceOf[String])).some
+      case (Some(onAdd), None)         => ((e: ChipsAddEvent) => onAdd(e.value.asInstanceOf[String])).some
       case (None, Some(onAddE))        =>
-        ((e: ChipsAddParams) => onAddE(e.value.asInstanceOf[String], e.originalEvent)).some
+        ((e: ChipsAddEvent) => onAddE(e.value.asInstanceOf[String], e.originalEvent)).some
       case _                           => none
     ).orUndefined
 
-  private val removeHandler: js.UndefOr[ChipsRemoveParams => Callback] =
+  private val removeHandler: js.UndefOr[ChipsRemoveEvent => Callback] =
     ((props.onRemove.toOption, props.onRemoveE.toOption) match
       case (Some(onRemove), Some(onRemoveE)) =>
         (
-          (e: ChipsRemoveParams) =>
+          (e: ChipsRemoveEvent) =>
             onRemove(e.value.asInstanceOf[String]) >>
               onRemoveE(e.value.asInstanceOf[String], e.originalEvent)
         ).some
       case (Some(onRemove), None)            =>
-        ((e: ChipsRemoveParams) => onRemove(e.value.asInstanceOf[String])).some
+        ((e: ChipsRemoveEvent) => onRemove(e.value.asInstanceOf[String])).some
       case (None, Some(onRemoveE))           =>
-        ((e: ChipsRemoveParams) => onRemoveE(e.value.asInstanceOf[String], e.originalEvent)).some
+        ((e: ChipsRemoveEvent) => onRemoveE(e.value.asInstanceOf[String], e.originalEvent)).some
       case _                                 => none
     ).orUndefined
 
@@ -99,11 +99,11 @@ case class Chips(
 
 object Chips:
   private val component = ScalaFnComponent[Chips] { props =>
-    val changeHandler: ChipsChangeParams => Callback =
+    val changeHandler: ChipsChangeEvent => Callback =
       parms =>
         val a = parms.value.asInstanceOf[js.Array[String]].toList
         props.onChange.toOption.map(_(a)).getOrElse(Callback.empty) >>
-          props.onChangeE.toOption.map(_(a, parms.originalEvent)).getOrElse(Callback.empty)
+          props.onChangeE.toOption.map(_(a, parms.originalEvent.get)).getOrElse(Callback.empty)
 
     CChips
       .value(props.value.toJSArray)

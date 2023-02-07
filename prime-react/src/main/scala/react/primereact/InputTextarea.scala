@@ -5,9 +5,9 @@ package react.primereact
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.typed.primereact.components.{InputTextarea => CInputTextarea}
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 import react.common.*
-import reactST.primereact.components.{InputTextarea => CInputTextarea}
-import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 

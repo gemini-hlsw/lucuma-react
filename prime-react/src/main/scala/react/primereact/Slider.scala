@@ -5,8 +5,8 @@ package react.primereact
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.typed.primereact.components.{Slider => CSlider}
 import react.common.*
-import reactST.primereact.components.{Slider => CSlider}
 
 import scalajs.js
 

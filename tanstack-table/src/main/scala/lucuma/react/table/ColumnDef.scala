@@ -8,16 +8,16 @@ import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.react.SizePx
 import lucuma.react.table.facade.*
-import reactST.tanstackTableCore.tanstackTableCoreStrings.max
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.tanstackTableCore.tanstackTableCoreStrings.max
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
 
 sealed trait ColumnDef[T, A]:
   def id: ColumnId
-  def header: js.UndefOr[String | (raw.mod.HeaderContext[T, A] => VdomNode)]
-  def footer: js.UndefOr[raw.mod.HeaderContext[T, A] => VdomNode]
+  def header: js.UndefOr[String | (raw.buildLibCoreHeadersMod.HeaderContext[T, A] => VdomNode)]
+  def footer: js.UndefOr[raw.buildLibCoreHeadersMod.HeaderContext[T, A] => VdomNode]
   def meta: js.UndefOr[Any]
 
   // Column Sizing
@@ -48,37 +48,44 @@ object ColumnDef:
       toJs.accessorFn = accessor.map(identity); toJs
     }
 
-    lazy val header: js.UndefOr[String | (raw.mod.HeaderContext[T, A] => VdomNode)] =
+    lazy val header
+      : js.UndefOr[String | (raw.buildLibCoreHeadersMod.HeaderContext[T, A] => VdomNode)] =
       toJs.header.map(v =>
         js.typeOf(v) match
           case "string" => v.asInstanceOf[String]
           case fn       =>
-            fn.asInstanceOf[js.Function1[raw.mod.HeaderContext[T, A], Node]].andThen(VdomNode(_))
+            fn.asInstanceOf[js.Function1[raw.buildLibCoreHeadersMod.HeaderContext[T, A], Node]]
+              .andThen(VdomNode(_))
       )
 
     /** WARNING: This mutates the object in-place. */
     def setHeader(
-      header: js.UndefOr[String | (raw.mod.HeaderContext[T, A] => VdomNode)]
+      header: js.UndefOr[String | (raw.buildLibCoreHeadersMod.HeaderContext[T, A] => VdomNode)]
     ): Single[T, A] = Single {
       toJs.header = header match
-        case s: String                                     => s
-        case fn: (raw.mod.HeaderContext[T, A] => VdomNode) => fn.andThen(_.rawNode)
-        case _                                             => ()
+        case s: String                                                        => s
+        case fn: (raw.buildLibCoreHeadersMod.HeaderContext[T, A] => VdomNode) =>
+          fn.andThen(_.rawNode)
+        case _                                                                => ()
       toJs
     }
 
-    lazy val cell: js.UndefOr[raw.mod.CellContext[T, A] => VdomNode] =
+    lazy val cell: js.UndefOr[raw.buildLibCoreCellMod.CellContext[T, A] => VdomNode] =
       toJs.cell.map(_.andThen(VdomNode(_)))
 
     /** WARNING: This mutates the object in-place. */
-    def setCell(cell: js.UndefOr[raw.mod.CellContext[T, A] => VdomNode]): Single[T, A] =
+    def setCell(
+      cell: js.UndefOr[raw.buildLibCoreCellMod.CellContext[T, A] => VdomNode]
+    ): Single[T, A] =
       Single { toJs.cell = cell.map(_.andThen(_.rawNode)); toJs }
 
-    lazy val footer: js.UndefOr[raw.mod.HeaderContext[T, A] => VdomNode] =
+    lazy val footer: js.UndefOr[raw.buildLibCoreHeadersMod.HeaderContext[T, A] => VdomNode] =
       toJs.footer.map(_.andThen(VdomNode(_)))
 
     /** WARNING: This mutates the object in-place. */
-    def setFooter(footer: js.UndefOr[raw.mod.HeaderContext[T, A] => VdomNode]): Single[T, A] =
+    def setFooter(
+      footer: js.UndefOr[raw.buildLibCoreHeadersMod.HeaderContext[T, A] => VdomNode]
+    ): Single[T, A] =
       Single { toJs.footer = footer.map(_.andThen(_.rawNode)); toJs }
 
     lazy val meta: js.UndefOr[Any] = toJs.meta
@@ -156,7 +163,10 @@ object ColumnDef:
           case "string" => BuiltInSorting.fromJs(v.asInstanceOf[String])
           case fn       =>
             (rowA: Row[T], rowB: Row[T], colId: ColumnId) =>
-              fn.asInstanceOf[raw.mod.SortingFn[T]](rowA.toJs, rowB.toJs, colId.value).toInt
+              fn.asInstanceOf[raw.buildLibFeaturesSortingMod.SortingFn[T]](rowA.toJs,
+                                                                           rowB.toJs,
+                                                                           colId.value
+              ).toInt
       )
 
     /** WARNING: This mutates the object in-place. */
@@ -191,9 +201,10 @@ object ColumnDef:
     def apply[T, A](
       id:              ColumnId,
       accessor:        js.UndefOr[T => A] = js.undefined,
-      header:          js.UndefOr[String | (raw.mod.HeaderContext[T, A] => VdomNode)] = js.undefined,
-      cell:            js.UndefOr[raw.mod.CellContext[T, A] => VdomNode] = js.undefined,
-      footer:          js.UndefOr[raw.mod.HeaderContext[T, A] => VdomNode] = js.undefined,
+      header:          js.UndefOr[String | (raw.buildLibCoreHeadersMod.HeaderContext[T, A] => VdomNode)] =
+        js.undefined,
+      cell:            js.UndefOr[raw.buildLibCoreCellMod.CellContext[T, A] => VdomNode] = js.undefined,
+      footer:          js.UndefOr[raw.buildLibCoreHeadersMod.HeaderContext[T, A] => VdomNode] = js.undefined,
       meta:            js.UndefOr[Any] = js.undefined,
       // Column Sizing
       enableResizing:  js.UndefOr[Boolean] = js.undefined,
@@ -246,31 +257,38 @@ object ColumnDef:
     def withColumns(columns: List[ColumnDef[T, Any]]): Group[T] =
       Group { toJs.columns = columns.map(_.toJs).toJSArray; toJs }
 
-    lazy val header: js.UndefOr[String | (raw.mod.HeaderContext[T, Nothing] => VdomNode)] =
+    lazy val header
+      : js.UndefOr[String | (raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing] => VdomNode)] =
       toJs.header.map(v =>
         js.typeOf(v) match
           case "string" => v.asInstanceOf[String]
           case fn       =>
-            fn.asInstanceOf[js.Function1[raw.mod.HeaderContext[T, Nothing], Node]]
-              .andThen(VdomNode(_))
+            fn.asInstanceOf[js.Function1[raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing],
+                                         Node
+            ]].andThen(VdomNode(_))
       )
 
     /** WARNING: This mutates the object in-place. */
     def setHeader(
-      header: js.UndefOr[String | (raw.mod.HeaderContext[T, Nothing] => VdomNode)]
+      header: js.UndefOr[
+        String | (raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing] => VdomNode)
+      ]
     ): Group[T] = Group {
       toJs.header = header match
-        case s: String                                           => s
-        case fn: (raw.mod.HeaderContext[T, Nothing] => VdomNode) => fn.andThen(_.rawNode)
-        case _                                                   => ()
+        case s: String                                                              => s
+        case fn: (raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing] => VdomNode) =>
+          fn.andThen(_.rawNode)
+        case _                                                                      => ()
       toJs
     }
 
-    lazy val footer: js.UndefOr[raw.mod.HeaderContext[T, Nothing] => VdomNode] =
+    lazy val footer: js.UndefOr[raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing] => VdomNode] =
       toJs.footer.map(_.andThen(VdomNode(_)))
 
     /** WARNING: This mutates the object in-place. */
-    def setFooter(footer: js.UndefOr[raw.mod.HeaderContext[T, Nothing] => VdomNode]): Group[T] =
+    def setFooter(
+      footer: js.UndefOr[raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing] => VdomNode]
+    ): Group[T] =
       Group { toJs.footer = footer.map(_.andThen(_.rawNode)); toJs }
 
     lazy val meta: js.UndefOr[Any] = toJs.meta
@@ -315,9 +333,12 @@ object ColumnDef:
   object Group:
     def apply[T](
       id:             ColumnId,
-      header:         js.UndefOr[String | (raw.mod.HeaderContext[T, Nothing] => VdomNode)] = js.undefined,
+      header:         js.UndefOr[
+        String | (raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing] => VdomNode)
+      ] = js.undefined,
       columns:        List[ColumnDef[T, Any]],
-      footer:         js.UndefOr[raw.mod.HeaderContext[T, Nothing] => VdomNode] = js.undefined,
+      footer:         js.UndefOr[raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing] => VdomNode] =
+        js.undefined,
       meta:           js.UndefOr[Any] = js.undefined,
       // Column Sizing
       enableResizing: js.UndefOr[Boolean] = js.undefined,
@@ -354,9 +375,10 @@ object ColumnDef:
     def apply[A](
       id:              ColumnId,
       accessor:        js.UndefOr[T => A] = js.undefined,
-      header:          js.UndefOr[String | (raw.mod.HeaderContext[T, A] => VdomNode)] = js.undefined,
-      cell:            js.UndefOr[raw.mod.CellContext[T, A] => VdomNode] = js.undefined,
-      footer:          js.UndefOr[raw.mod.HeaderContext[T, A] => VdomNode] = js.undefined,
+      header:          js.UndefOr[String | (raw.buildLibCoreHeadersMod.HeaderContext[T, A] => VdomNode)] =
+        js.undefined,
+      cell:            js.UndefOr[raw.buildLibCoreCellMod.CellContext[T, A] => VdomNode] = js.undefined,
+      footer:          js.UndefOr[raw.buildLibCoreHeadersMod.HeaderContext[T, A] => VdomNode] = js.undefined,
       meta:            js.UndefOr[Any] = js.undefined,
       // Column Sizing
       enableResizing:  js.UndefOr[Boolean] = js.undefined,
@@ -398,9 +420,12 @@ object ColumnDef:
 
     def group(
       id:             ColumnId,
-      header:         js.UndefOr[String | (raw.mod.HeaderContext[T, Nothing] => VdomNode)] = js.undefined,
+      header:         js.UndefOr[
+        String | (raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing] => VdomNode)
+      ] = js.undefined,
       columns:        List[ColumnDef[T, Any]],
-      footer:         js.UndefOr[raw.mod.HeaderContext[T, Nothing] => VdomNode] = js.undefined,
+      footer:         js.UndefOr[raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing] => VdomNode] =
+        js.undefined,
       meta:           js.UndefOr[Any] = js.undefined,
       // Column Sizing
       enableResizing: js.UndefOr[Boolean] = js.undefined,

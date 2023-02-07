@@ -3,9 +3,9 @@
 
 package lucuma.react.table
 
+import lucuma.typed.std.Record
+import lucuma.typed.{tanstackTableCore => raw}
 import org.scalablytyped.runtime.StringDictionary
-import reactST.std.Record
-import reactST.{tanstackTableCore => raw}
 
 enum Expanded:
   case AllRows                         extends Expanded
@@ -13,14 +13,14 @@ enum Expanded:
 
   def Rows(rows: (RowId, Boolean)*): Expanded.Rows = Expanded.Rows(rows.toMap)
 
-  def toJs: raw.mod.ExpandedState =
+  def toJs: raw.buildLibFeaturesExpandingMod.ExpandedState =
     this match
       case AllRows    => raw.tanstackTableCoreBooleans.`true`
       case Rows(rows) =>
         StringDictionary(rows.map((rowId, expanded) => rowId.value -> expanded).toSeq: _*)
 
 object Expanded:
-  private[table] def fromJs(rawValue: raw.mod.ExpandedState): Expanded =
+  private[table] def fromJs(rawValue: raw.buildLibFeaturesExpandingMod.ExpandedState): Expanded =
     rawValue match
       case v if v == raw.tanstackTableCoreBooleans.`true` => Expanded.AllRows
       case rows                                           =>

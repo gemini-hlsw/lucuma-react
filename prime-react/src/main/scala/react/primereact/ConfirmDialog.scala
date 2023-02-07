@@ -6,15 +6,15 @@ package react.primereact
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.typed.primereact.components.{ConfirmDialog => CConfirmDialog}
+import lucuma.typed.primereact.confirmdialogConfirmdialogMod.ConfirmDialogProps
+import lucuma.typed.primereact.confirmdialogConfirmdialogMod.{
+  ConfirmDialogReturn => RawConfirmDialogReturn
+}
+import lucuma.typed.primereact.confirmdialogConfirmdialogMod.{confirmDialog => rawConfirmDialog}
 import org.scalablytyped.runtime.StObject
 import react.common.*
 import react.fa.FontAwesomeIcon
-import reactST.primereact.components.{ConfirmDialog => CConfirmDialog}
-import reactST.primereact.confirmdialogConfirmdialogMod.ConfirmDialogProps
-import reactST.primereact.confirmdialogConfirmdialogMod.{
-  ConfirmDialogReturn => RawConfirmDialogReturn
-}
-import reactST.primereact.confirmdialogConfirmdialogMod.{confirmDialog => rawConfirmDialog}
 
 import scalajs.js
 

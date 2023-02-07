@@ -7,13 +7,13 @@ import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.SizePx
 import lucuma.react.table.facade.ColumnDefJs
+import lucuma.typed.{tanstackTableCore => raw}
 import org.scalajs.dom
-import reactST.{tanstackTableCore => raw}
 
 import scalajs.js.JSConverters.*
 
 // Missing: ColumnPinning, Filters, Grouping
-case class Column[T, A](private val toJs: raw.mod.Column[T, A]):
+case class Column[T, A](private val toJs: raw.buildLibTypesMod.Column[T, A]):
   lazy val id: ColumnId                      = ColumnId(toJs.id)
   lazy val depth: Int                        = toJs.depth.toInt
   lazy val accessorFn: Option[(T, Int) => A] =
@@ -21,13 +21,19 @@ case class Column[T, A](private val toJs: raw.mod.Column[T, A]):
   lazy val columnDef: ColumnDef[T, A]        =
     ColumnDef.fromJs(toJs.columnDef.asInstanceOf[ColumnDefJs[T, A]])
   lazy val columns: List[Column[T, Any]]     =
-    toJs.columns.toList.map(col => Column(col.asInstanceOf[raw.mod.Column[T, Any]]))
+    toJs.columns.toList.map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
   lazy val parent: Option[Column[T, Any]]    =
-    toJs.parent.toOption.map(col => Column(col.asInstanceOf[raw.mod.Column[T, Any]]))
+    toJs.parent.toOption.map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
   def getFlatColumns(): List[Column[T, Any]] =
-    toJs.getFlatColumns().toList.map(col => Column(col.asInstanceOf[raw.mod.Column[T, Any]]))
+    toJs
+      .getFlatColumns()
+      .toList
+      .map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
   def getLeafColumns(): List[Column[T, Any]] =
-    toJs.getLeafColumns().toList.map(col => Column(col.asInstanceOf[raw.mod.Column[T, Any]]))
+    toJs
+      .getLeafColumns()
+      .toList
+      .map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
 
   // Column Visibility
   def getCanHide(): Boolean                                              = toJs.getCanHide()

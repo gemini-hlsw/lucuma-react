@@ -4,13 +4,13 @@
 package lucuma.react.table
 
 import cats.syntax.all.*
-import reactST.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js.JSConverters.*
 
 case class ColumnPinning(left: List[ColumnId], right: List[ColumnId]):
-  def toJs: raw.mod.ColumnPinningState =
-    val base        = raw.mod.ColumnPinningState()
+  def toJs: raw.buildLibFeaturesPinningMod.ColumnPinningState =
+    val base        = raw.buildLibFeaturesPinningMod.ColumnPinningState()
     val leftApplied = left match
       case Nil      => base
       case nonEmpty => base.setLeft(nonEmpty.map(_.value).toJSArray)
@@ -21,7 +21,9 @@ case class ColumnPinning(left: List[ColumnId], right: List[ColumnId]):
 object ColumnPinning:
   def apply(left: ColumnId*): ColumnPinning = ColumnPinning(left.toList, Nil)
 
-  private[table] def fromJs(rawValue: raw.mod.ColumnPinningState): ColumnPinning =
+  private[table] def fromJs(
+    rawValue: raw.buildLibFeaturesPinningMod.ColumnPinningState
+  ): ColumnPinning =
     ColumnPinning(
       rawValue.left.toOption.map(_.toList.map(ColumnId(_))).orEmpty,
       rawValue.right.toOption.map(_.toList.map(ColumnId(_))).orEmpty

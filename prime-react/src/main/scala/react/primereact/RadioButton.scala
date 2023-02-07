@@ -5,9 +5,9 @@ package react.primereact
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.typed.primereact.components.{RadioButton => CRadioButton}
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 import react.common.*
-import reactST.primereact.components.{RadioButton => CRadioButton}
-import reactST.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 
 import scalajs.js
 
@@ -48,7 +48,7 @@ object RadioButton {
       .applyOrNot(props.tooltipOptions, (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions]))
       .applyOrNot(
         props.onChange,
-        (c, p) => c.onChange(scp => p(props.valueFinder(scp.value), scp.checked))
+        (c, p) => c.onChange(scp => p(props.valueFinder(scp.value), scp.checked.getOrElse(false)))
       )(
         props.modifiers.toTagMod
       )

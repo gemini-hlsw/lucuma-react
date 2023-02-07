@@ -3,8 +3,8 @@
 
 package lucuma.react.virtual.facade
 
+import lucuma.typed.{tanstackVirtualCore => rawVirtual}
 import org.scalajs.dom.Element
-import reactST.{tanstackVirtualCore => rawVirtual}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport

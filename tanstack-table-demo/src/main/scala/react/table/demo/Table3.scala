@@ -7,9 +7,9 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.syntax.*
 import lucuma.react.table.*
+import lucuma.typed.{tanstackTableCore => raw}
 import react.common.*
 import react.common.style.Css
-import reactST.{tanstackTableCore => raw}
 
 object Table3:
   private val ColDef = ColumnDef[Expandable[Person]]

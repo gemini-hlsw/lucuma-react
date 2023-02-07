@@ -5,22 +5,21 @@ package react.primereact
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.typed.primereact.components.{Accordion => CAccordion}
 import react.common.*
-import reactST.primereact.accordionAccordionMod.AccordionActiveIndexType
-import reactST.primereact.components.{Accordion => CAccordion}
 
 import scalajs.js
 
 private[primereact] trait AccordionBase {
   val id: js.UndefOr[String]
-  val rawActiveIndex: js.UndefOr[AccordionActiveIndexType]
+  val rawActiveIndex: js.UndefOr[Double | js.Array[Double]]
   val multiple: js.UndefOr[Boolean]
   val expandIcon: js.UndefOr[String]   // default: "pi pi-chevron-right"
   val collapseIcon: js.UndefOr[String] // default: "pi pi-chevron-down"
   val clazz: js.UndefOr[Css]
   val onTabOpen: js.UndefOr[Int => Callback]
   val onTabClose: js.UndefOr[Int => Callback]
-  val onTabChange: js.UndefOr[Int => Callback]
+  val rawOnTabChange: js.UndefOr[Double | js.Array[Double] => Callback]
   val tabs: List[AccordionTab]
   val modifiers: Seq[TagMod]
 }
@@ -37,7 +36,7 @@ object AccordionBase {
         .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
         .applyOrNot(props.onTabOpen, (c, p) => c.onTabOpen(e => p(e.index.toInt)))
         .applyOrNot(props.onTabClose, (c, p) => c.onTabClose(e => p(e.index.toInt)))
-        .applyOrNot(props.onTabChange, (c, p) => c.onTabChange(e => p(e.index.toInt)))(
+        .applyOrNot(props.rawOnTabChange, (c, p) => c.onTabChange(e => p(e.index)))(
           props.modifiers.toTagMod,
           props.tabs.toTagMod
         )

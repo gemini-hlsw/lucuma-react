@@ -10,11 +10,11 @@ import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.react.SizePx
 import lucuma.react.virtual.facade.Virtualizer
+import lucuma.typed.{tanstackTableCore => raw}
+import lucuma.typed.{tanstackVirtualCore => rawVirtual}
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLDivElement
 import react.common.style.Css
-import reactST.{tanstackTableCore => raw}
-import reactST.{tanstackVirtualCore => rawVirtual}
 
 import scalajs.js
 
@@ -22,16 +22,16 @@ trait HTMLTableProps[T]:
   def table: Table[T]
   def tableMod: TagMod
   def headerMod: TagMod
-  def headerRowMod: raw.mod.CoreHeaderGroup[T] => TagMod
-  def headerCellMod: raw.mod.Header[T, Any] => TagMod
+  def headerRowMod: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod
+  def headerCellMod: raw.buildLibTypesMod.Header[T, Any] => TagMod
   def bodyMod: TagMod
-  def rowMod: raw.mod.Row[T] => TagMod
-  def cellMod: raw.mod.Cell[T, Any] => TagMod
+  def rowMod: raw.buildLibTypesMod.Row[T] => TagMod
+  def cellMod: raw.buildLibTypesMod.Cell[T, Any] => TagMod
   def footerMod: TagMod
-  def footerRowMod: raw.mod.CoreHeaderGroup[T] => TagMod
-  def footerCellMod: raw.mod.Header[T, Any] => TagMod
+  def footerRowMod: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod
+  def footerCellMod: raw.buildLibTypesMod.Header[T, Any] => TagMod
   def emptyMessage: VdomNode
-  def renderSubComponent: raw.mod.Row[T] => Option[VdomNode]
+  def renderSubComponent: raw.buildLibTypesMod.Row[T] => Option[VdomNode]
 
   // Allow subtypes to mixin other classes
   private[table] def extraTableClasses: Css = Css.Empty
