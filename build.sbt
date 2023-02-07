@@ -470,7 +470,6 @@ lazy val primeReact = project
     libraryDependencies ++= Seq(
       "edu.gemini" %%% "lucuma-typed-primereact" % lucumaTypedV
     ),
-    facadeSettings,
     yarnSettings
   )
 
