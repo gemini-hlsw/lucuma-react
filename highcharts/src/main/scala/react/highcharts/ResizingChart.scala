@@ -6,6 +6,11 @@ package react.highcharts
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.typed.highcharts.anon.TypeofHighchartsAST
+import lucuma.typed.highcharts.mod.Chart_
+import lucuma.typed.highcharts.mod.HTMLDOMElement
+import lucuma.typed.highcharts.mod.Options
+import lucuma.typed.highcharts.mod.PointOptionsObject
 import org.scalajs.dom.html
 import react.common.ReactFnProps
 import react.common.style.Css
@@ -13,11 +18,6 @@ import react.common.style.*
 import react.highcharts.Highcharts
 import react.resizeDetector.UseResizeDetectorProps
 import react.resizeDetector.hooks.*
-import lucuma.typed.highcharts.anon.TypeofHighchartsAST
-import lucuma.typed.highcharts.mod.Chart_
-import lucuma.typed.highcharts.mod.HTMLDOMElement
-import lucuma.typed.highcharts.mod.Options
-import lucuma.typed.highcharts.mod.PointOptionsObject
 
 case class ResizingChart(
   options:    Options,

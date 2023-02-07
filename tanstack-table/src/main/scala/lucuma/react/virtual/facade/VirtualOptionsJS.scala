@@ -3,10 +3,10 @@
 
 package lucuma.react.virtual.facade
 
-import org.scalajs.dom.Element
 import lucuma.typed.tanstackVirtualCore.mod.Key
 import lucuma.typed.tanstackVirtualCore.mod.Range
 import lucuma.typed.tanstackVirtualCore.mod.Rect
+import org.scalajs.dom.Element
 
 import scalajs.js
 

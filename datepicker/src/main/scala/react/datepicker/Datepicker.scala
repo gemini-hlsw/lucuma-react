@@ -5,11 +5,11 @@ package react.datepicker
 
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.ReactEventFrom
-import org.scalablytyped.runtime.StObject
-import org.scalajs.dom.Element
 import lucuma.typed.reactDatepicker.components.ReactDatepicker.Builder
 import lucuma.typed.reactDatepicker.mod.ReactDatePickerProps
 import lucuma.typed.reactDatepicker.mod.default
+import org.scalablytyped.runtime.StObject
+import org.scalajs.dom.Element
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSBracketAccess

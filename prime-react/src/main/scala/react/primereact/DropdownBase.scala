@@ -7,11 +7,11 @@ import cats.Eq
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import react.common.*
-import react.fa.FontAwesomeIcon
 import lucuma.typed.primereact.components.{Dropdown => CDropdown}
 import lucuma.typed.primereact.dropdownDropdownMod.DropdownChangeEvent
 import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import react.common.*
+import react.fa.FontAwesomeIcon
 
 import scalajs.js
 import scalajs.js.JSConverters.*

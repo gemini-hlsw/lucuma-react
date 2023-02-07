@@ -4,15 +4,6 @@
 package react.highcharts.demo
 
 import japgolly.scalajs.react.callback.Callback
-import org.scalajs.dom
-import react.common._
-import react.highcharts.Chart
-import react.highcharts.Highcharts
-import react.highcharts.WrapProceed
-import react.highcharts.implicits._
-import react.highcharts.mods.seriesLabel.SeriesLabelPoint
-import react.highcharts.mods.seriesLabel.SeriesLabelSeries
-import react.highcharts.seriesLabel
 import lucuma.typed.highcharts.highchartsStrings.areaspline
 import lucuma.typed.highcharts.mod.AxisTypeValue
 import lucuma.typed.highcharts.mod.CSSObject
@@ -46,6 +37,15 @@ import lucuma.typed.highcharts.mod.XAxisPlotBandsOptions
 import lucuma.typed.highcharts.mod.YAxisLabelsOptions
 import lucuma.typed.highcharts.mod.YAxisOptions
 import lucuma.typed.highcharts.mod.YAxisTitleOptions
+import org.scalajs.dom
+import react.common._
+import react.highcharts.Chart
+import react.highcharts.Highcharts
+import react.highcharts.WrapProceed
+import react.highcharts.implicits._
+import react.highcharts.mods.seriesLabel.SeriesLabelPoint
+import react.highcharts.mods.seriesLabel.SeriesLabelSeries
+import react.highcharts.seriesLabel
 
 import scala.scalajs.js
 

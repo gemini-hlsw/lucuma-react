@@ -5,8 +5,8 @@ package react.primereact
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import react.common.*
 import lucuma.typed.primereact.components.{Card => CCard}
+import react.common.*
 
 import scalajs.js
 

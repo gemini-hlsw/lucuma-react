@@ -4,9 +4,9 @@
 package react.datepicker.demo
 
 import japgolly.scalajs.react._
+import lucuma.typed.reactDatepicker.components.ReactDatepicker
 import org.scalajs.dom
 import react.datepicker._
-import lucuma.typed.reactDatepicker.components.ReactDatepicker
 
 import java.time.Instant
 import java.time.LocalDate

@@ -5,8 +5,6 @@ package react.primereact
 
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.ReactEventFrom
-import org.scalajs.dom.Element
-import org.scalajs.dom.HTMLElement
 import lucuma.typed.primereact.primereactStrings.both
 import lucuma.typed.primereact.primereactStrings.bottom
 import lucuma.typed.primereact.primereactStrings.focus
@@ -15,6 +13,8 @@ import lucuma.typed.primereact.primereactStrings.left
 import lucuma.typed.primereact.primereactStrings.right
 import lucuma.typed.primereact.primereactStrings.self
 import lucuma.typed.primereact.primereactStrings.top
+import org.scalajs.dom.Element
+import org.scalajs.dom.HTMLElement
 
 import scalajs.js
 

@@ -8,9 +8,9 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.table.facade.ColumnDefJs
 import lucuma.react.table.facade.TableOptionsJs
-import org.scalajs.dom
 import lucuma.typed.{tanstackReactTable => rawReact}
 import lucuma.typed.{tanstackTableCore => raw}
+import org.scalajs.dom
 
 import scalajs.js
 import scalajs.js.JSConverters.*

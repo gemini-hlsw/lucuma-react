@@ -7,7 +7,6 @@ import cats.Eq
 import cats.derived.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import react.common.*
 import lucuma.typed.primereact.components.{Divider => CDivider}
 import lucuma.typed.primereact.primereactStrings.bottom
 import lucuma.typed.primereact.primereactStrings.center
@@ -19,6 +18,7 @@ import lucuma.typed.primereact.primereactStrings.right
 import lucuma.typed.primereact.primereactStrings.solid
 import lucuma.typed.primereact.primereactStrings.top
 import lucuma.typed.primereact.primereactStrings.vertical
+import react.common.*
 
 import scalajs.js
 

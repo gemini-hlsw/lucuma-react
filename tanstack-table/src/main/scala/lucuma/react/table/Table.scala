@@ -8,8 +8,8 @@ import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.SizePx
 import lucuma.react.table.facade.TableOptionsJs
-import org.scalajs.dom
 import lucuma.typed.{tanstackTableCore => raw}
+import org.scalajs.dom
 
 import scalajs.js.JSConverters.*
 

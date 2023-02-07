@@ -6,8 +6,8 @@ package react.primereact
 import cats.Id
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import react.common.*
 import lucuma.typed.primereact.components.{TabView => CTabView}
+import react.common.*
 
 import scalajs.js
 

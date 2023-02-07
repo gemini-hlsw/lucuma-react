@@ -5,15 +5,15 @@ package react.primereact
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import org.scalajs.dom.HTMLElement
-import react.common.*
-import react.fa.FontAwesomeIcon
 import lucuma.typed.primereact.components.{ConfirmPopup => CConfirmPopup}
 import lucuma.typed.primereact.confirmpopupConfirmpopupMod.ConfirmPopupProps
 import lucuma.typed.primereact.confirmpopupConfirmpopupMod.{
   ConfirmPopupReturn => RawConfirmPopupReturn
 }
 import lucuma.typed.primereact.confirmpopupConfirmpopupMod.{confirmPopup => rawConfirmPopup}
+import org.scalajs.dom.HTMLElement
+import react.common.*
+import react.fa.FontAwesomeIcon
 
 import scalajs.js
 

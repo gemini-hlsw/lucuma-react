@@ -5,8 +5,8 @@ package lucuma.react.table
 
 import cats.Endo
 import lucuma.react.SizePx
-import org.scalablytyped.runtime.StringDictionary
 import lucuma.typed.{tanstackTableCore => raw}
+import org.scalablytyped.runtime.StringDictionary
 
 opaque type ColumnSizing = Map[ColumnId, SizePx]
 

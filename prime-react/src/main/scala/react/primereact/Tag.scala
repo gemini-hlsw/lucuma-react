@@ -7,13 +7,13 @@ import cats.Eq
 import cats.derived.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import react.common.*
-import react.fa.FontAwesomeIcon
 import lucuma.typed.primereact.components.{Tag => CTag}
 import lucuma.typed.primereact.primereactStrings.danger
 import lucuma.typed.primereact.primereactStrings.info
 import lucuma.typed.primereact.primereactStrings.success
 import lucuma.typed.primereact.primereactStrings.warning
+import react.common.*
+import react.fa.FontAwesomeIcon
 
 import scalajs.js
 

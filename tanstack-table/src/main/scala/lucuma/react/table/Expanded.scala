@@ -3,9 +3,9 @@
 
 package lucuma.react.table
 
-import org.scalablytyped.runtime.StringDictionary
 import lucuma.typed.std.Record
 import lucuma.typed.{tanstackTableCore => raw}
+import org.scalablytyped.runtime.StringDictionary
 
 enum Expanded:
   case AllRows                         extends Expanded

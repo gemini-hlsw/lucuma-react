@@ -10,10 +10,10 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.VdomNode
-import react.common.*
-import react.fa.FontAwesomeIcon
 import lucuma.typed.StBuildingComponent
 import lucuma.typed.primereact.primereactStrings.*
+import react.common.*
+import react.fa.FontAwesomeIcon
 
 import scalajs.js
 

@@ -5,13 +5,13 @@ package react.primereact
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import react.common.*
-import react.fa.FontAwesomeIcon
 import lucuma.typed.primereact.components.{Message => CMessage}
 import lucuma.typed.primereact.primereactStrings.error
 import lucuma.typed.primereact.primereactStrings.info
 import lucuma.typed.primereact.primereactStrings.success
 import lucuma.typed.primereact.primereactStrings.warn
+import react.common.*
+import react.fa.FontAwesomeIcon
 
 import scalajs.js
 import scalajs.js.JSConverters.*

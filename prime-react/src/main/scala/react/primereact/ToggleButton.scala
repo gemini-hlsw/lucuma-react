@@ -8,14 +8,14 @@ import cats.derived.*
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import org.scalajs.dom.*
-import react.common.*
-import react.fa.FontAwesomeIcon
-import react.primereact.PrimeStyles
 import lucuma.typed.primereact.components.{ToggleButton => CToggleButton}
 import lucuma.typed.primereact.primereactStrings.left
 import lucuma.typed.primereact.primereactStrings.right
 import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import org.scalajs.dom.*
+import react.common.*
+import react.fa.FontAwesomeIcon
+import react.primereact.PrimeStyles
 
 import scalajs.js
 import scalajs.js.JSConverters.*

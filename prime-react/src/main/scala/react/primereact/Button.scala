@@ -8,10 +8,6 @@ import cats.derived.*
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import org.scalajs.dom.*
-import react.common.*
-import react.fa.FontAwesomeIcon
-import react.primereact.PrimeStyles
 import lucuma.typed.primereact.components.{Button => CButton}
 import lucuma.typed.primereact.primereactStrings.bottom
 import lucuma.typed.primereact.primereactStrings.button
@@ -21,6 +17,10 @@ import lucuma.typed.primereact.primereactStrings.right
 import lucuma.typed.primereact.primereactStrings.submit
 import lucuma.typed.primereact.primereactStrings.top
 import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import org.scalajs.dom.*
+import react.common.*
+import react.fa.FontAwesomeIcon
+import react.primereact.PrimeStyles
 
 import scalajs.js
 import scalajs.js.JSConverters.*

@@ -5,9 +5,9 @@ package react.primereact
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.typed.primereact.components.{Menu => CMenu}
 import org.scalajs.dom.HTMLElement
 import react.common.*
-import lucuma.typed.primereact.components.{Menu => CMenu}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
