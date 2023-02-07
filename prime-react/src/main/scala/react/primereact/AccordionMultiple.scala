@@ -21,7 +21,7 @@ case class AccordionMultiple(
   clazz:         js.UndefOr[Css] = js.undefined,
   onTabOpen:     js.UndefOr[Int => Callback] = js.undefined,
   onTabClose:    js.UndefOr[Int => Callback] = js.undefined,
-  onTabChange:   js.UndefOr[Int => Callback] = js.undefined,
+  onTabChange:   js.UndefOr[List[Int] => Callback] = js.undefined,
   tabs:          List[AccordionTab] = List.empty,
   modifiers:     Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[AccordionBase](AccordionBase.component)
@@ -31,6 +31,10 @@ case class AccordionMultiple(
   def withMods(mods:          TagMod*)     = addModifiers(mods)
 
   override val rawActiveIndex = activeIndices.map(_.map(_.toDouble).toJSArray)
+  override val rawOnTabChange =
+    onTabChange.map(
+      _.compose[Double | js.Array[Double]](_.asInstanceOf[js.Array[Int]].toList)
+    )
   override val multiple       = true
 
   def apply(tab: AccordionTab, moreTabs: AccordionTab*): AccordionMultiple =

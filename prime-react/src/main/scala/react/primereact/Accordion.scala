@@ -25,6 +25,8 @@ case class Accordion(
     with AccordionBase {
 
   override val rawActiveIndex = activeIndex.map(_.toDouble)
+  override val rawOnTabChange =
+    onTabChange.map(_.compose[Double | js.Array[Double]](_.asInstanceOf[Int]))
   override val multiple       = false
 
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)

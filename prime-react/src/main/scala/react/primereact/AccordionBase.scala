@@ -19,7 +19,7 @@ private[primereact] trait AccordionBase {
   val clazz: js.UndefOr[Css]
   val onTabOpen: js.UndefOr[Int => Callback]
   val onTabClose: js.UndefOr[Int => Callback]
-  val onTabChange: js.UndefOr[Int => Callback]
+  val rawOnTabChange: js.UndefOr[Double | js.Array[Double] => Callback]
   val tabs: List[AccordionTab]
   val modifiers: Seq[TagMod]
 }
@@ -36,7 +36,7 @@ object AccordionBase {
         .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
         .applyOrNot(props.onTabOpen, (c, p) => c.onTabOpen(e => p(e.index.toInt)))
         .applyOrNot(props.onTabClose, (c, p) => c.onTabClose(e => p(e.index.toInt)))
-        .applyOrNot(props.onTabChange, (c, p) => c.onTabChange(e => p(e.index.toInt)))(
+        .applyOrNot(props.rawOnTabChange, (c, p) => c.onTabChange(e => p(e.index)))(
           props.modifiers.toTagMod,
           props.tabs.toTagMod
         )
