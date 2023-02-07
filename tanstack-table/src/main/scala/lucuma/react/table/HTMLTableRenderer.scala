@@ -187,13 +187,14 @@ trait HTMLTableRenderer[T]:
           .whenDefined
       )(
         TagMod.when(rows.isEmpty)(
-          <.tr(
-            TbodyTrClass,
-            EmptyMessage,
-            ^.colSpan := table.getAllLeafColumns().length,
-            ^.whiteSpace.nowrap
-          )(
-            emptyMessage
+          <.tr(TbodyTrClass,
+               <.td(EmptyMessage,
+                    TbodyTdClass,
+                    ^.colSpan := table.getAllLeafColumns().length,
+                    ^.whiteSpace.nowrap
+               )(
+                 emptyMessage
+               )
           )
         ),
         rows.zipWithIndex
