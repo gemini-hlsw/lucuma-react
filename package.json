@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@atlaskit/tree": "^8.6.3",
+    "@atlaskit/tree": "^8.7.0",
     "@cquiroz/react-moon": "^2.0.2",
     "@floating-ui/react-dom-interactions": "^0.13.3",
     "@tanstack/react-table": "^8.7.9",
