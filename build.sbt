@@ -11,7 +11,7 @@ ThisBuild / mergifyPrRules +=
     List(MergifyAction.Merge())
   )
 
-val lucumaTypedV     = "0.1.0"
+val lucumaTypedV     = "0.4.0"
 val catsV            = "2.9.0"
 val disciplineMunitV = "2.0.0-M3"
 val jsdomV           = "20.0.2"
