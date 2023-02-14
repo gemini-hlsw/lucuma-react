@@ -12,9 +12,9 @@ import react.common.*
 import scalajs.js
 
 case class Checkbox(
+  checked:        Boolean,
   id:             js.UndefOr[String] = js.undefined,
   inputId:        js.UndefOr[String] = js.undefined, // id of the input element
-  checked:        js.UndefOr[Boolean] = js.undefined,
   disabled:       js.UndefOr[Boolean] = js.undefined,
   clazz:          js.UndefOr[Css] = js.undefined,
   tooltip:        js.UndefOr[String] = js.undefined,
@@ -29,10 +29,9 @@ case class Checkbox(
 
 object Checkbox {
   private val component = ScalaFnComponent[Checkbox] { props =>
-    CCheckbox
+    CCheckbox(props.checked)
       .applyOrNot(props.id, _.id(_))
       .applyOrNot(props.inputId, _.inputId(_))
-      .applyOrNot(props.checked, _.checked(_))
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.tooltip, _.tooltip(_))
