@@ -37,6 +37,7 @@ lazy val facadeSettings = Seq(
   ),
   Test / requireJsDomEnv   := true,
   installJsdom / version   := jsdomV,
+  webpack / version        := "5.75.0",
   testFrameworks += new TestFramework("utest.runner.Framework")
 )
 
