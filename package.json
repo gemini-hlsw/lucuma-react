@@ -28,7 +28,7 @@
     "react-virtuoso": "^4.1.0",
     "sass": "^1.58.3",
     "semantic-ui-react": "^2.1.4",
-    "styled-components": "^5.3.6",
+    "styled-components": "^5.3.8",
     "vite": "^4.1.4"
   },
   "dependencies": {
