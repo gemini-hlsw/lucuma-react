@@ -46,16 +46,16 @@ object BeautifulDnDDemo {
       TagMod(
         (^.background := "lightgrey").unless(isDraggingOver),
         (^.background := "lightblue").when(isDraggingOver),
-        ^.padding     := s"${Grid}px",
-        ^.width       := "250px"
+        ^.padding := s"${Grid}px",
+        ^.width   := "250px"
       )
 
     def getItemStyle(isDragging: Boolean, draggableStyle: TagMod): TagMod =
       TagMod(
         // some basic styles to make the items look a bit nicer
         // ^.userSelect := "none",
-        ^.padding     := s"${Grid * 2}px",
-        ^.margin      := s"0 0 ${Grid}px 0",
+        ^.padding := s"${Grid * 2}px",
+        ^.margin  := s"0 0 ${Grid}px 0",
         // change background colour if dragging
         (^.background := "grey").unless(isDragging),
         (^.background := "lightgreen").when(isDragging),

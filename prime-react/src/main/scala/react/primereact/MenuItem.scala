@@ -46,7 +46,7 @@ object MenuItem {
     expanded: js.UndefOr[Boolean] = js.undefined,
     visible:  js.UndefOr[Boolean] = js.undefined,
     clazz:    js.UndefOr[Css] = js.undefined
-  )(items:    MenuItem*): MenuItem = {
+  )(items: MenuItem*): MenuItem = {
     val sm = js.Dynamic.literal(label = label, items = items.toJSArray).asInstanceOf[SubMenu]
     icon.foreach(i => sm.icon = i.toPrimeWithClass(PrimeStyles.MenuItemIcon))
     disabled.foreach(v => sm.disabled = v)

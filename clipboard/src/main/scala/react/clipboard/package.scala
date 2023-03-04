@@ -42,7 +42,7 @@ package clipboard {
 /**
  * External facade
  */
-package object clipboard  {
+package object clipboard {
   // OnCopy callback
   type OnCopy = (String, Boolean) => Callback
 }

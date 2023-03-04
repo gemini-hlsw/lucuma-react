@@ -107,12 +107,12 @@ object HooksApiExt {
   sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]) {
 
     final def useResizeDetector(props: UseResizeDetectorProps = UseResizeDetectorProps())(implicit
-      step:                            Step
+      step: Step
     ): step.Next[UseResizeDetectorReturn] =
       useResizeDetectorBy(_ => props)
 
     final def useResizeDetectorBy(props: Ctx => UseResizeDetectorProps)(implicit
-      step:                              Step
+      step: Step
     ): step.Next[UseResizeDetectorReturn] =
       api.customBy(ctx => hook(props(ctx)))
   }
@@ -122,7 +122,7 @@ object HooksApiExt {
   ) extends Primary[Ctx, Step](api) {
 
     def useResizeDetectorBy(pos: CtxFn[UseResizeDetectorProps])(implicit
-      step:                      Step
+      step: Step
     ): step.Next[UseResizeDetectorReturn] =
       useResizeDetectorBy(step.squash(pos)(_))
   }

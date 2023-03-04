@@ -66,11 +66,11 @@ final case class HTMLVirtualizedTable[T](
     (_: raw.buildLibTypesMod.Row[T]) => none,
 
   // Virtual options
-  overscan:         js.UndefOr[Int] = js.undefined,
-  getItemKey:       js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined,
-  onChange:         js.UndefOr[HTMLTableVirtualizer => Callback] = js.undefined,
-  virtualizerRef:   js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]] = js.undefined,
-  debugVirtualizer: js.UndefOr[Boolean] = js.undefined
+  overscan:           js.UndefOr[Int] = js.undefined,
+  getItemKey:         js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined,
+  onChange:           js.UndefOr[HTMLTableVirtualizer => Callback] = js.undefined,
+  virtualizerRef:     js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]] = js.undefined,
+  debugVirtualizer:   js.UndefOr[Boolean] = js.undefined
 ) extends ReactFnProps(HTMLVirtualizedTable.component)
     with HTMLVirtualizedTableProps[T]
 

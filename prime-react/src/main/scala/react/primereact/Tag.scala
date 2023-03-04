@@ -18,9 +18,9 @@ import react.fa.FontAwesomeIcon
 import scalajs.js
 
 case class Tag(
-  value:    js.UndefOr[VdomNode] = js.undefined,
-  icon:     js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
-  severity: js.UndefOr[Tag.Severity] =
+  value:     js.UndefOr[VdomNode] = js.undefined,
+  icon:      js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
+  severity:  js.UndefOr[Tag.Severity] =
     js.undefined, // default: same as `Info` but no `p-tag-info` class
   rounded:   js.UndefOr[Boolean] = js.undefined,
   clazz:     js.UndefOr[Css] = js.undefined,

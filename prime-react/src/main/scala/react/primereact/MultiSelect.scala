@@ -68,7 +68,7 @@ case class MultiSelect[A](
   onSelectAll:        js.UndefOr[Boolean => Callback] = js.undefined,
   onSelectAllE:       js.UndefOr[(Boolean, ReactEvent) => Callback] = js.undefined,
   modifiers:          Seq[TagMod] = Seq.empty
-)(using val eqA:      Eq[A])
+)(using val eqA: Eq[A])
     extends ReactFnProps(MultiSelect.component):
 
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)

@@ -31,23 +31,23 @@ case class Chips(
   tooltipOptions: js.UndefOr[TooltipOptions] = js.undefined,
   ariaLabelledBy: js.UndefOr[String] = js.undefined,
   allowDuplicate: js.UndefOr[Boolean] = js.undefined,
-  separator:      js.UndefOr[String] = js.undefined, // Currently only possible value is ","
+  separator:      js.UndefOr[String] = js.undefined,                           // Currently only possible value is ","
   itemTemplate:   js.UndefOr[String => VdomNode] = js.undefined,
   keyfilter:      js.UndefOr[String] = js.undefined,
   addOnBlur:      js.UndefOr[Boolean] = js.undefined,
   onChange:       js.UndefOr[List[String] => Callback] = js.undefined,
   onChangeE:      js.UndefOr[(List[String], ReactEvent) => Callback] =
     js.undefined, // called after onChange
-  onAdd:     js.UndefOr[String => Callback] = js.undefined,
-  onAddE:    js.UndefOr[(String, ReactEvent) => Callback] = js.undefined, // called after onAdd
-  onRemove:  js.UndefOr[String => Callback] = js.undefined,
-  onRemoveE: js.UndefOr[(String, ReactEvent) => Callback] = js.undefined, // called after onRemove
-  onFocus:   js.UndefOr[Callback] = js.undefined,
-  onFocusE:  js.UndefOr[ReactFocusEvent => Callback] = js.undefined,      // called after onFocus
-  onBlur:    js.UndefOr[Callback] = js.undefined,
-  onBlurE:   js.UndefOr[ReactFocusEvent => Callback] = js.undefined,      // called after onBlur
-  onKeyDown: js.UndefOr[ReactKeyboardEvent => Callback] = js.undefined,
-  modifiers: Seq[TagMod] = Seq.empty
+  onAdd:          js.UndefOr[String => Callback] = js.undefined,
+  onAddE:         js.UndefOr[(String, ReactEvent) => Callback] = js.undefined, // called after onAdd
+  onRemove:       js.UndefOr[String => Callback] = js.undefined,
+  onRemoveE:      js.UndefOr[(String, ReactEvent) => Callback] = js.undefined, // called after onRemove
+  onFocus:        js.UndefOr[Callback] = js.undefined,
+  onFocusE:       js.UndefOr[ReactFocusEvent => Callback] = js.undefined,      // called after onFocus
+  onBlur:         js.UndefOr[Callback] = js.undefined,
+  onBlurE:        js.UndefOr[ReactFocusEvent => Callback] = js.undefined,      // called after onBlur
+  onKeyDown:      js.UndefOr[ReactKeyboardEvent => Callback] = js.undefined,
+  modifiers:      Seq[TagMod] = Seq.empty
 ) extends ReactFnProps(Chips.component):
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods:          TagMod*)     = addModifiers(mods)

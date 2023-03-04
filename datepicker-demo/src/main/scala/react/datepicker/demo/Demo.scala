@@ -34,7 +34,7 @@ object Demo {
       .render($ =>
         ReactDatepicker(onChange =
           (newValue, _) =>
-            Callback(println((newValue.asInstanceOf[DateOrRange]).toLocalDateOpt)) >>
+            Callback(println(newValue.asInstanceOf[DateOrRange].toLocalDateOpt)) >>
               $.setState(State(newValue.asInstanceOf[DateOrRange].toLocalDateOpt))
         )
           .selected($.state.date.map(_.toJsDate).orNull)
