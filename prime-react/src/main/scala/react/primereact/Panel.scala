@@ -15,7 +15,7 @@ case class Panel(
   header:     js.UndefOr[VdomNode] = js.undefined,
   toggleable: js.UndefOr[Boolean] =
     js.undefined, // Defines if panel can be expanded and collapsed. default: false
-  collapsed: js.UndefOr[Boolean] =
+  collapsed:  js.UndefOr[Boolean] =
     js.undefined, // If toggleable is true, need to set this via onToggle. default: false
   clazz:      js.UndefOr[Css] = js.undefined,
   onCollapse: js.UndefOr[Callback] = js.undefined,            // see comment above

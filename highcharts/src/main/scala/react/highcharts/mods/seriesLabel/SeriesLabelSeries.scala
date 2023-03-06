@@ -26,10 +26,10 @@ trait SeriesLabelSeries extends Series {
   val labelBySeries: js.UndefOr[SVGElement]
   val sum: js.UndefOr[Double]
   def checkClearPoint(
-    x:                           Double,
-    y:                           Double,
-    bBox:                        BBoxObject,
-    checkDistance:               js.UndefOr[Boolean] = js.undefined
+    x:             Double,
+    y:             Double,
+    bBox:          BBoxObject,
+    checkDistance: js.UndefOr[Boolean] = js.undefined
   ): Boolean | LabelClearPointObject
   def drawSeriesLabels(): Unit
   def getPointsOnGraph(): js.UndefOr[js.Array[Point]]

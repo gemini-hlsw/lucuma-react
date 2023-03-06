@@ -448,7 +448,7 @@ object DemoComponents {
                     <.div(
                       DemoStyles.FormColumn,
                       <.label("Closable",
-                              ^.htmlFor          := "dialog-closable",
+                              ^.htmlFor := "dialog-closable",
                               DemoStyles.FormFieldLabel
                       ),
                       InputSwitch(
@@ -457,7 +457,7 @@ object DemoComponents {
                         onChange = v => dialogOptions.modState(_.copy(closable = v))
                       ),
                       <.label("Close On Escape",
-                              ^.htmlFor          := "dialog-closeonescape",
+                              ^.htmlFor := "dialog-closeonescape",
                               DemoStyles.FormFieldLabel
                       ),
                       InputSwitch(
@@ -466,7 +466,7 @@ object DemoComponents {
                         onChange = v => dialogOptions.modState(_.copy(closeOnEscape = v))
                       ),
                       <.label("Dismissable Mask",
-                              ^.htmlFor          := "dialog-dismissableMask",
+                              ^.htmlFor := "dialog-dismissableMask",
                               DemoStyles.FormFieldLabel
                       ),
                       InputSwitch(
@@ -474,14 +474,14 @@ object DemoComponents {
                         checked = dialogOptions.value.dismissableMask,
                         onChange = v => dialogOptions.modState(_.copy(dismissableMask = v))
                       ),
-                      <.label("Modal", ^.htmlFor := "dialog-modal", DemoStyles.FormFieldLabel),
+                      <.label("Modal",   ^.htmlFor := "dialog-modal", DemoStyles.FormFieldLabel),
                       InputSwitch(
                         inputId = "dialog-modal",
                         checked = dialogOptions.value.modal,
                         onChange = v => dialogOptions.modState(_.copy(modal = v))
                       ),
                       <.label("Show Header",
-                              ^.htmlFor          := "dialog-showHeader",
+                              ^.htmlFor := "dialog-showHeader",
                               DemoStyles.FormFieldLabel
                       ),
                       InputSwitch(
@@ -490,7 +490,7 @@ object DemoComponents {
                         onChange = v => dialogOptions.modState(_.copy(showHeader = v))
                       ),
                       <.label("Custom Icons",
-                              ^.htmlFor          := "dialog-customIcons",
+                              ^.htmlFor := "dialog-customIcons",
                               DemoStyles.FormFieldLabel
                       ),
                       InputSwitch(
@@ -541,7 +541,7 @@ object DemoComponents {
                         ),
                       onChange = v => sidebarOptions.modState(_.copy(position = v))
                     ),
-                    <.label("Size", ^.htmlFor     := "sidebar-size", DemoStyles.FormFieldLabel),
+                    <.label("Size",     ^.htmlFor := "sidebar-size", DemoStyles.FormFieldLabel),
                     SelectButton(
                       id = "sidebar-size",
                       value = sidebarOptions.value.size,
@@ -556,7 +556,7 @@ object DemoComponents {
                       onChange = v => sidebarOptions.modState(_.copy(size = v))
                     ),
                     <.label("Close On Escape",
-                            ^.htmlFor             := "sidebar-closeonescape",
+                            ^.htmlFor  := "sidebar-closeonescape",
                             DemoStyles.FormFieldLabel
                     ),
                     InputSwitch(
@@ -565,7 +565,7 @@ object DemoComponents {
                       onChange = v => sidebarOptions.modState(_.copy(closeOnEscape = v))
                     ),
                     <.label("Dismissable",
-                            ^.htmlFor             := "sidebar-dismissable",
+                            ^.htmlFor  := "sidebar-dismissable",
                             DemoStyles.FormFieldLabel
                     ),
                     InputSwitch(
@@ -573,14 +573,14 @@ object DemoComponents {
                       checked = sidebarOptions.value.dismissable,
                       onChange = v => sidebarOptions.modState(_.copy(dismissable = v))
                     ),
-                    <.label("Modal", ^.htmlFor    := "sidebar-modal", DemoStyles.FormFieldLabel),
+                    <.label("Modal",    ^.htmlFor := "sidebar-modal", DemoStyles.FormFieldLabel),
                     InputSwitch(
                       inputId = "sidebar-modal",
                       checked = sidebarOptions.value.modal,
                       onChange = v => sidebarOptions.modState(_.copy(modal = v))
                     ),
                     <.label("Full Screen",
-                            ^.htmlFor             := "sidebar-fullscreen",
+                            ^.htmlFor  := "sidebar-fullscreen",
                             DemoStyles.FormFieldLabel
                     ),
                     InputSwitch(
@@ -589,7 +589,7 @@ object DemoComponents {
                       onChange = v => sidebarOptions.modState(_.copy(fullScreen = v))
                     ),
                     <.label("Block Scroll",
-                            ^.htmlFor             := "sidebar-blockscroll",
+                            ^.htmlFor  := "sidebar-blockscroll",
                             DemoStyles.FormFieldLabel
                     ),
                     InputSwitch(
@@ -598,7 +598,7 @@ object DemoComponents {
                       onChange = v => sidebarOptions.modState(_.copy(blockScroll = v))
                     ),
                     <.label("Show Close Icon",
-                            ^.htmlFor             := "sidebar-closeicon",
+                            ^.htmlFor  := "sidebar-closeicon",
                             DemoStyles.FormFieldLabel
                     ),
                     InputSwitch(
@@ -607,7 +607,7 @@ object DemoComponents {
                       onChange = v => sidebarOptions.modState(_.copy(showCloseIcon = v))
                     ),
                     <.label("Custom Icons",
-                            ^.htmlFor             := "sidebar-custom-icons",
+                            ^.htmlFor  := "sidebar-custom-icons",
                             DemoStyles.FormFieldLabel
                     ),
                     InputSwitch(

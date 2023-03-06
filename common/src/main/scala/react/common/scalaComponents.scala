@@ -16,8 +16,8 @@ sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U] {
   def ctor: CT[Props, U]
 
   @inline def apply(
-    first:       CtorType.ChildArg,
-    rest:        CtorType.ChildArg*
+    first: CtorType.ChildArg,
+    rest:  CtorType.ChildArg*
   )(implicit ev: CT[Props, U] <:< CtorType.PropsAndChildren[Props, U]): U =
     ctor.applyGeneric(props)((first +: rest): _*)
 

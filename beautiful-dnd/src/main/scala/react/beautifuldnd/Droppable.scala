@@ -108,7 +108,7 @@ object Droppable {
     ignoreContainerClipping: js.UndefOr[Boolean] = js.undefined,
     renderClone:             js.UndefOr[Draggable.Render] = js.undefined,
     getContainerForClone:    js.UndefOr[Unit => html.Element] = js.undefined
-  )(children:                (Provided, StateSnapshot) => VdomNode) =
+  )(children: (Provided, StateSnapshot) => VdomNode) =
     component(
       Props(droppableId,
             tpe,

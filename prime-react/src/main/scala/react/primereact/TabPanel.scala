@@ -13,12 +13,12 @@ import scalajs.js.annotation.JSImport
 import scalajs.js
 
 case class TabPanel(
-  header:   js.UndefOr[VdomNode] = js.undefined,
-  disabled: js.UndefOr[Boolean] = js.undefined,
-  closable: js.UndefOr[Boolean] = js.undefined, // if tab can be removed. default: false
-  leftIcon: js.UndefOr[String] =
+  header:                 js.UndefOr[VdomNode] = js.undefined,
+  disabled:               js.UndefOr[Boolean] = js.undefined,
+  closable:               js.UndefOr[Boolean] = js.undefined, // if tab can be removed. default: false
+  leftIcon:               js.UndefOr[String] =
     js.undefined, // left of header. Is applied as a CSS class (like primeicons)
-  rightIcon: js.UndefOr[String] =
+  rightIcon:              js.UndefOr[String] =
     js.undefined, // right of header. Is applied as a CSS class (like primeicons)
   clazz:                  js.UndefOr[Css] = js.undefined,
   headerClass:            js.UndefOr[Css] = js.undefined,

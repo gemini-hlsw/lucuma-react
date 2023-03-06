@@ -18,10 +18,10 @@ case class Splitter(
   stateKey:     js.UndefOr[String] = js.undefined, // key for stateful storage
   stateStorage: js.UndefOr[StateStorage] =
     js.undefined, // provide `stateKey` to enable statefulness. Default: Session
-  onResizeEnd: js.UndefOr[(Double, Double) => Callback] = js.undefined,
-  panel1:      js.UndefOr[SplitterPanel] = js.undefined,
-  panel2:      js.UndefOr[SplitterPanel] = js.undefined,
-  modifiers:   Seq[TagMod] = Seq.empty
+  onResizeEnd:  js.UndefOr[(Double, Double) => Callback] = js.undefined,
+  panel1:       js.UndefOr[SplitterPanel] = js.undefined,
+  panel2:       js.UndefOr[SplitterPanel] = js.undefined,
+  modifiers:    Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[Splitter](Splitter.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods:          TagMod*)     = addModifiers(mods)

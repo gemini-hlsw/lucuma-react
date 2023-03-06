@@ -66,7 +66,7 @@ package hotkeys {
       Map(keyMap: _*)
   }
 
-  object Handlers      {
+  object Handlers {
     def apply(handlers: (String, Handler)*): Handlers =
       Map(handlers: _*)
   }

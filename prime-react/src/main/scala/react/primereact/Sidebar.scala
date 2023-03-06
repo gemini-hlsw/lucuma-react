@@ -20,12 +20,12 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 case class Sidebar(
-  visible:     Boolean,
-  onHide:      Callback,
-  id:          js.UndefOr[String] = js.undefined,
-  position:    js.UndefOr[Sidebar.Position] = js.undefined, // default: Left
-  size:        js.UndefOr[Sidebar.Size] = js.undefined,     // default: Small, but without CSS class
-  dismissable: js.UndefOr[Boolean] =
+  visible:       Boolean,
+  onHide:        Callback,
+  id:            js.UndefOr[String] = js.undefined,
+  position:      js.UndefOr[Sidebar.Position] = js.undefined,           // default: Left
+  size:          js.UndefOr[Sidebar.Size] = js.undefined,               // default: Small, but without CSS class
+  dismissable:   js.UndefOr[Boolean] =
     js.undefined, // whether to dismiss with outside click. default: true
   closeOnEscape: js.UndefOr[Boolean] = js.undefined,                    // default: true
   modal:         js.UndefOr[Boolean] = js.undefined,                    // add a modal layer behind sidebar? default: true

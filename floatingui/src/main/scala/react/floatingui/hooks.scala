@@ -30,22 +30,22 @@ object HooksApiExt {
   sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]) {
 
     final def useFloating(pos: UseFloatingProps = UseFloatingProps())(implicit
-      step:                    Step
+      step: Step
     ): step.Next[UseFloatingReturn] =
       useFloatingBy(_ => pos)
 
     final def useFloatingBy(pos: Ctx => UseFloatingProps)(implicit
-      step:                      Step
+      step: Step
     ): step.Next[UseFloatingReturn] =
       api.customBy(ctx => floatingHook(pos(ctx)))
 
     final def useInteractions(pos: ElementPropsList)(implicit
-      step:                        Step
+      step: Step
     ): step.Next[UseFloatingReturn] =
       useInteractionsBy(_ => pos)
 
     final def useInteractionsBy(pos: Ctx => ElementPropsList)(implicit
-      step:                          Step
+      step: Step
     ): step.Next[UseFloatingReturn] =
       api.customBy(ctx => interactionsHook(pos(ctx)))
   }
@@ -55,12 +55,12 @@ object HooksApiExt {
   ) extends Primary[Ctx, Step](api) {
 
     def useFloatingBy(pos: CtxFn[UseFloatingProps])(implicit
-      step:                Step
+      step: Step
     ): step.Next[UseFloatingReturn] =
       useFloatingBy(step.squash(pos)(_))
 
     def useInteractionsBy(pos: CtxFn[ElementPropsList])(implicit
-      step:                    Step
+      step: Step
     ): step.Next[UseFloatingReturn] =
       useInteractionsBy(step.squash(pos)(_))
 

@@ -80,7 +80,7 @@ object DragDropContext {
     nonce:                js.UndefOr[String] = js.undefined,
     sensors:              js.Array[Sensor] = js.Array(),
     enableDefaultSensors: js.UndefOr[Boolean] = js.undefined
-  )(children:             VdomNode*) =
+  )(children: VdomNode*) =
     component(
       Props(
         onDragEnd,

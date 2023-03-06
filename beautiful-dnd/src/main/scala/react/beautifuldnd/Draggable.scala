@@ -139,7 +139,7 @@ object Draggable {
     isDragDisabled:                    js.UndefOr[Boolean] = js.undefined,
     disableInteractiveElementBlocking: js.UndefOr[Boolean] = js.undefined,
     shouldRespectForcePress:           js.UndefOr[Boolean] = js.undefined
-  )(children:                          Render) =
+  )(children: Render) =
     component.withKey(draggableId)(
       Props(
         draggableId,

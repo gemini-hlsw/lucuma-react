@@ -29,7 +29,7 @@ case class Dropdown[A](
   onChange:        js.UndefOr[A => Callback] = js.undefined,
   onChangeE:       js.UndefOr[(A, ReactEvent) => Callback] = js.undefined, // called after onChange
   modifiers:       Seq[TagMod] = Seq.empty
-)(using val eqAA:  Eq[A])
+)(using val eqAA: Eq[A])
     extends ReactFnProps[DropdownBase](DropdownBase.component)
     with DropdownBase {
   type AA    = A
