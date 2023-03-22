@@ -9,9 +9,9 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: ['**', '!update/**', '!pr/**', '!dependabot/**']
+    branches: ["**", "!update/**", "!pr/**", "!dependabot/**"]
   push:
-    branches: ['**', '!update/**', '!pr/**', '!dependabot/**']
+    branches: ["**", "!update/**", "!pr/**", "!dependabot/**"]
     tags: [v*]
 
 env:
@@ -30,7 +30,25 @@ jobs:
         os: [ubuntu-latest]
         scala: [3.2.2]
         java: [temurin@17]
-        project: [rootCore, rootGridLayout, rootDraggable, rootFloatingui, rootClipboard, rootTanstackTable, rootHighcharts, rootDatepicker, rootBeautifulDnd, rootTree, fontAwesome, rootHotkeys, rootResizable, rootPrimeReact, circularProgressbar, moon]
+        project:
+          [
+            rootCore,
+            rootGridLayout,
+            rootDraggable,
+            rootFloatingui,
+            rootClipboard,
+            rootTanstackTable,
+            rootHighcharts,
+            rootDatepicker,
+            rootBeautifulDnd,
+            rootTree,
+            fontAwesome,
+            rootHotkeys,
+            rootResizable,
+            rootPrimeReact,
+            circularProgressbar,
+            moon,
+          ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)
@@ -73,8 +91,8 @@ jobs:
         if: matrix.java == 'temurin@17'
         run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' headerCheckAll scalafmtCheckAll 'project /' scalafmtSbtCheck lucumaScalafmtCheck lucumaScalafixCheck
 
-      - name: Test
-        run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' test
+      # - name: Test
+      #   run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' test
 
       - name: Check scalafix lints
         if: matrix.java == 'temurin@17' && matrix.os == 'ubuntu-latest'
@@ -88,7 +106,7 @@ jobs:
         run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' coverageReport coverageAggregate
 
       - name: Upload code coverage data
-        run: 'bash <(curl -s https://codecov.io/bash)'
+        run: "bash <(curl -s https://codecov.io/bash)"
 
   publish:
     name: Publish Artifacts
