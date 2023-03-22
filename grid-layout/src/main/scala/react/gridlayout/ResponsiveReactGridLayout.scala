@@ -230,7 +230,8 @@ object ResponsiveReactGridLayout {
      }.toList)
     )
 
-  val component = JsComponent[ResponsiveReactGridLayoutProps, Children.Varargs, Null](RawComponent)
+  val component =
+    JsComponent.force[ResponsiveReactGridLayoutProps, Children.Varargs, Null](RawComponent)
 
   def apply(
     width:   Double,

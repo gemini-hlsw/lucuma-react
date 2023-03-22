@@ -23,7 +23,7 @@ import scala.scalajs.js.|
 trait WrapProceed extends js.ThisFunction0[Chart_, Unit]
 
 @js.native
-@JSImport("highcharts/es-modules/masters/highcharts.src.js", JSImport.Default)
+@JSImport("highcharts", JSImport.Default)
 object Highcharts extends TypeofHighchartsAST {
   @JSName("wrap")
   def wrapThis(
@@ -34,7 +34,7 @@ object Highcharts extends TypeofHighchartsAST {
 }
 
 @js.native
-@JSImport("highcharts/es-modules/masters/modules/accessibility.src.js", JSImport.Default)
+@JSImport("highcharts/modules/accessibility", JSImport.Default)
 object HighchartsAccesibility extends js.Object
 
 case class Chart(

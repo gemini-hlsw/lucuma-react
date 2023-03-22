@@ -97,7 +97,7 @@ object Draggable {
     p
   }
 
-  val component = JsComponent[Props, Children.Varargs, Null](RawComponent)
+  val component = JsComponent.force[Props, Children.Varargs, Null](RawComponent)
 
   def apply(
     p:        Props,

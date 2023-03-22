@@ -4,6 +4,15 @@ ThisBuild / tlBaseVersion       := "0.33"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
+ThisBuild / githubWorkflowBuildPreamble ++= Seq(
+  WorkflowStep.Use(
+    UseRef.Public("actions", "setup-node", "v3"),
+    name = Some("Setup Node"),
+    params = Map("node-version" -> "18", "cache" -> "npm")
+  ),
+  WorkflowStep.Run(List("yarn install --immutable"))
+)
+
 ThisBuild / mergifyPrRules +=
   MergifyPrRule(
     "merge dependabot PRs",
@@ -14,8 +23,6 @@ ThisBuild / mergifyPrRules +=
 val lucumaTypedV     = "0.4.1"
 val catsV            = "2.9.0"
 val disciplineMunitV = "2.0.0-M3"
-val jsdomV           = "20.0.2"
-val webpackV         = "5.76.1"
 val kittensV         = "3.0.0"
 val munitV           = "1.0.0-M7"
 val scalaJsReactV    = "2.1.1"
@@ -33,22 +40,9 @@ lazy val facadeSettings = Seq(
     "com.lihaoyi"                       %%% "utest"     % utestV        % Test,
     "org.scalameta"                     %%% "munit"     % munitV        % Test
   ),
-  Test / webpackConfigFile := Some(
-    baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
-  ),
-  Test / requireJsDomEnv   := true,
-  installJsdom / version   := jsdomV,
-  webpack / version        := webpackV,
+  jsEnv := new HackedJSDOMNodeJSEnv(),
+  scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
   testFrameworks += new TestFramework("utest.runner.Framework")
-)
-
-lazy val yarnSettings = Seq(
-  useYarn := true,
-  yarnExtraArgs ++= {
-    if (githubIsWorkflowBuild.value && !githubWorkflowName.?.value.contains("Update Lockfiles"))
-      List("--frozen-lockfile")
-    else Nil
-  }
 )
 
 lazy val viteConfigGenerate = taskKey[Unit]("Generate vite config")
@@ -225,32 +219,26 @@ lazy val common = project
 
 lazy val test = project
   .in(file("test"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .settings(
-    name                     := "lucuma-react-test",
-    yarnSettings,
-    Test / requireJsDomEnv   := true,
-    installJsdom / version   := jsdomV,
-    webpack / version        := webpackV,
+    name  := "lucuma-react-test",
+    jsEnv := new HackedJSDOMNodeJSEnv(),
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     libraryDependencies ++= Seq(
       "org.scalameta"                     %%% "munit"            % munitV,
       "org.typelevel"                     %%% "discipline-munit" % disciplineMunitV % Test,
       "com.github.japgolly.scalajs-react" %%% "test"             % scalaJsReactV    % Test
-    ),
-    Test / webpackConfigFile := Some(
-      baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
     )
   )
   .dependsOn(common)
 
 lazy val gridLayout = project
   .in(file("grid-layout"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common)
   .settings(
     name := "lucuma-react-grid-layout",
-    facadeSettings,
-    yarnSettings
+    facadeSettings
   )
 
 lazy val gridLayoutDemo = project
@@ -264,38 +252,34 @@ lazy val gridLayoutDemo = project
 
 lazy val draggable = project
   .in(file("draggable"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common)
   .settings(
     name := "lucuma-react-draggable",
-    facadeSettings,
-    yarnSettings
+    facadeSettings
   )
 
 lazy val floatingui = project
   .in(file("floatingui"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common, test % Test)
   .settings(
-    name                := "lucuma-react-floatingui",
-    facadeSettings,
-    yarnSettings,
-    tlVersionIntroduced := Map("3" -> "0.3.1")
+    name := "lucuma-react-floatingui",
+    facadeSettings
   )
 
 lazy val clipboard = project
   .in(file("clipboard"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common, test % Test)
   .settings(
     name := "lucuma-react-clipboard",
-    facadeSettings,
-    yarnSettings
+    facadeSettings
   )
 
 lazy val tanstackTable = project
   .in(file("tanstack-table"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common)
   .settings(
     name := "lucuma-react-tanstack-table",
@@ -303,8 +287,7 @@ lazy val tanstackTable = project
     libraryDependencies ++= Seq(
       "edu.gemini" %%% "lucuma-typed-tanstack-react-table"   % lucumaTypedV,
       "edu.gemini" %%% "lucuma-typed-tanstack-react-virtual" % lucumaTypedV
-    ),
-    yarnSettings
+    )
   )
 
 lazy val tanstackTableDemo = project
@@ -320,7 +303,7 @@ lazy val tanstackTableDemo = project
 
 lazy val highcharts = project
   .in(file("highcharts"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common, resizeDetector)
   .settings(
     name := "lucuma-react-highcharts",
@@ -328,8 +311,7 @@ lazy val highcharts = project
     libraryDependencies ++= Seq(
       "edu.gemini" %%% "lucuma-typed-highcharts" % lucumaTypedV
     ),
-    facadeSettings,
-    yarnSettings
+    facadeSettings
   )
 
 lazy val highchartsDemo = project
@@ -342,7 +324,7 @@ lazy val highchartsDemo = project
 
 lazy val datepicker = project
   .in(file("datepicker"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common)
   .settings(
     name := "lucuma-react-datepicker",
@@ -350,8 +332,7 @@ lazy val datepicker = project
     libraryDependencies ++= Seq(
       "edu.gemini" %%% "lucuma-typed-react-datepicker" % lucumaTypedV
     ),
-    facadeSettings,
-    yarnSettings
+    facadeSettings
   )
 
 lazy val datepickerDemo = project
@@ -368,12 +349,11 @@ lazy val datepickerDemo = project
 
 lazy val beautifulDnd = project
   .in(file("beautiful-dnd"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common)
   .settings(
     name := "lucuma-react-beautiful-dnd",
-    facadeSettings,
-    yarnSettings
+    facadeSettings
   )
 
 lazy val beautifulDndDemo = project
@@ -387,12 +367,11 @@ lazy val beautifulDndDemo = project
 
 lazy val tree = project
   .in(file("tree"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common, beautifulDnd)
   .settings(
     name := "lucuma-react-tree",
-    facadeSettings,
-    yarnSettings
+    facadeSettings
   )
 
 lazy val treeDemo = project
@@ -425,13 +404,12 @@ lazy val fontAwesome = project
 
 lazy val hotkeys = project
   .in(file("hotkeys"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common)
   .settings(
     name := "lucuma-react-hotkeys",
     Compile / scalacOptions += "-language:implicitConversions",
-    facadeSettings,
-    yarnSettings
+    facadeSettings
   )
 
 lazy val hotkeysDemo = project
@@ -445,13 +423,12 @@ lazy val hotkeysDemo = project
 
 lazy val resizable = project
   .in(file("resizable"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common, draggable)
   .settings(
     name := "lucuma-react-resizable",
     Compile / scalacOptions += "-language:implicitConversions",
-    facadeSettings,
-    yarnSettings
+    facadeSettings
   )
 
 lazy val resizableDemo = project
@@ -465,15 +442,14 @@ lazy val resizableDemo = project
 
 lazy val primeReact = project
   .in(file("prime-react"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common, fontAwesome)
   .settings(
     name := "lucuma-react-prime-react",
     Compile / scalacOptions += "-language:implicitConversions",
     libraryDependencies ++= Seq(
       "edu.gemini" %%% "lucuma-typed-primereact" % lucumaTypedV
-    ),
-    yarnSettings
+    )
   )
 
 lazy val primeReactDemo = project
@@ -487,22 +463,18 @@ lazy val primeReactDemo = project
 
 lazy val circularProgressbar = project
   .in(file("circular-progressbar"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common, test % Test)
   .settings(
-    name                := "lucuma-react-circular-progressbar",
-    facadeSettings,
-    yarnSettings,
-    tlVersionIntroduced := Map("3" -> "0.1.1")
+    name := "lucuma-react-circular-progressbar",
+    facadeSettings
   )
 
 lazy val moon = project
   .in(file("moon"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .dependsOn(common, test % Test)
   .settings(
-    name                := "lucuma-react-moon",
-    facadeSettings,
-    yarnSettings,
-    tlVersionIntroduced := Map("3" -> "0.1.1")
+    name := "lucuma-react-moon",
+    facadeSettings
   )

@@ -174,7 +174,7 @@ object ReactGridLayout {
     r
   }
 
-  val component = JsComponent[ReactGridLayoutProps, Children.Varargs, Null](RawComponent)
+  val component = JsComponent.force[ReactGridLayoutProps, Children.Varargs, Null](RawComponent)
 
   def apply(width: Double, content: TagMod*): ReactGridLayout =
     new ReactGridLayout(width = width, modifiers = content)

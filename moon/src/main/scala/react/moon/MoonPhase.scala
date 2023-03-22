@@ -55,5 +55,5 @@ object MoonPhase {
   }
 
   private val component =
-    JsFnComponent[MoonPhaseProps, Children.None](RawComponent)
+    JsFnComponent.force[MoonPhaseProps, Children.None](RawComponent)
 }
