@@ -25,6 +25,10 @@ object HackedJSDOMNodeJSEnv {
     IO.write(
       tmp,
       """|const outerRealmFunctionConstructor = Node.constructor;
+         |const nodeGlobal = new outerRealmFunctionConstructor("return global")();
+         |nodeGlobal.document = document;
+         |nodeGlobal.navigator = navigator;
+         |nodeGlobal.window = window;
          |window.require = new outerRealmFunctionConstructor("return require")();
          |""".stripMargin
     )
