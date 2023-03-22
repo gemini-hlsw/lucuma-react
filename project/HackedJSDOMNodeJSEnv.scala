@@ -13,9 +13,8 @@ class HackedJSDOMNodeJSEnv extends JSDOMNodeJSEnv {
 
   def hackInput(input: Seq[Input]) =
     input.map {
-      case cjs @ Input.CommonJSModule(module) =>
-        Input.Script(module)
-      case other                              => other
+      case Input.CommonJSModule(module) => Input.Script(module)
+      case other                        => other
     }
 }
 

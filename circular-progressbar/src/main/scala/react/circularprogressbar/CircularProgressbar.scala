@@ -93,5 +93,5 @@ object CircularProgressbar {
     p
   }
 
-  private val component = JsComponent.force[Props, Children.None, Null](RawComponent)
+  private val component = JsComponent[Props, Children.None, Null](RawComponent)
 }
