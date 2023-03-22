@@ -33,22 +33,28 @@ lazy val facadeSettings = Seq(
     "com.lihaoyi"                       %%% "utest"     % utestV        % Test,
     "org.scalameta"                     %%% "munit"     % munitV        % Test
   ),
-  Test / webpackConfigFile := Some(
-    baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
-  ),
-  Test / requireJsDomEnv   := true,
-  installJsdom / version   := jsdomV,
-  webpack / version        := webpackV,
+  // Test / webpackConfigFile := Some(
+  //   baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
+  // ),
+  // Test / requireJsDomEnv   := true,
+  // installJsdom / version   := jsdomV,
+  // webpack / version        := webpackV,
+  jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
+  scalaJSLinkerConfig ~= {
+    import org.scalajs.linker.interface.ESVersion
+    _.withModuleKind(ModuleKind.CommonJSModule)
+      .withESFeatures(_.withESVersion(ESVersion.ES2021))
+  },
   testFrameworks += new TestFramework("utest.runner.Framework")
 )
 
 lazy val yarnSettings = Seq(
-  useYarn := true,
-  yarnExtraArgs ++= {
-    if (githubIsWorkflowBuild.value && !githubWorkflowName.?.value.contains("Update Lockfiles"))
-      List("--frozen-lockfile")
-    else Nil
-  }
+  // useYarn := true,
+  // yarnExtraArgs ++= {
+  //   if (githubIsWorkflowBuild.value && !githubWorkflowName.?.value.contains("Update Lockfiles"))
+  //     List("--frozen-lockfile")
+  //   else Nil
+  // }
 )
 
 lazy val viteConfigGenerate = taskKey[Unit]("Generate vite config")
@@ -225,20 +231,13 @@ lazy val common = project
 
 lazy val test = project
   .in(file("test"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(ScalaJSPlugin, ScalaJSLinkerBundlerPlugin)
   .settings(
-    name                     := "lucuma-react-test",
-    yarnSettings,
-    Test / requireJsDomEnv   := true,
-    installJsdom / version   := jsdomV,
-    webpack / version        := webpackV,
+    name := "lucuma-react-test",
     libraryDependencies ++= Seq(
       "org.scalameta"                     %%% "munit"            % munitV,
       "org.typelevel"                     %%% "discipline-munit" % disciplineMunitV % Test,
       "com.github.japgolly.scalajs-react" %%% "test"             % scalaJsReactV    % Test
-    ),
-    Test / webpackConfigFile := Some(
-      baseDirectory.value / "src" / "webpack" / "test.webpack.config.js"
     )
   )
   .dependsOn(common)
