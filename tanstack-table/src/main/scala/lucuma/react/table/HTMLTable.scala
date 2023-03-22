@@ -9,7 +9,7 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.SizePx
 import lucuma.typed.{tanstackTableCore => raw}
 import lucuma.typed.{tanstackVirtualCore => rawVirtual}
-import org.scalajs.dom.HTMLDivElement
+import org.scalajs.dom.HTMLElement
 import react.common.*
 import react.common.style.Css
 
@@ -45,7 +45,7 @@ final case class HTMLVirtualizedTable[T](
   estimateSize:       Int => SizePx,
   // Table options
   containerMod:       TagMod = TagMod.empty,
-  containerRef:       js.UndefOr[Ref.Simple[HTMLDivElement]] = js.undefined,
+  containerRef:       js.UndefOr[Ref.Simple[HTMLElement]] = js.undefined,
   tableMod:           TagMod = TagMod.empty,
   headerMod:          TagMod = TagMod.empty,
   headerRowMod:       raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod =
@@ -79,7 +79,7 @@ final case class HTMLAutoHeightVirtualizedTable[T](
   estimateSize:       Int => SizePx,
   // Table options
   containerMod:       TagMod = TagMod.empty,
-  containerRef:       js.UndefOr[Ref.Simple[HTMLDivElement]] = js.undefined,
+  containerRef:       js.UndefOr[Ref.Simple[HTMLElement]] = js.undefined,
   innerContainerMod:  TagMod = TagMod.empty,
   tableMod:           TagMod = TagMod.empty,
   headerMod:          TagMod = TagMod.empty,
