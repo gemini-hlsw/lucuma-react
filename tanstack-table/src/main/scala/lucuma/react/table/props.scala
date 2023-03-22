@@ -13,7 +13,7 @@ import lucuma.react.virtual.facade.Virtualizer
 import lucuma.typed.{tanstackTableCore => raw}
 import lucuma.typed.{tanstackVirtualCore => rawVirtual}
 import org.scalajs.dom.Element
-import org.scalajs.dom.HTMLDivElement
+import org.scalajs.dom.HTMLElement
 import react.common.style.Css
 
 import scalajs.js
@@ -36,13 +36,13 @@ trait HTMLTableProps[T]:
   // Allow subtypes to mixin other classes
   private[table] def extraTableClasses: Css = Css.Empty
 
-type HTMLTableVirtualizer = Virtualizer[HTMLDivElement, Element]
+type HTMLTableVirtualizer = Virtualizer[HTMLElement, Element]
 
 trait HTMLVirtualizedTableProps[T] extends HTMLTableProps[T]:
   def estimateSize: Int => SizePx
   // Table options
   def containerMod: TagMod
-  def containerRef: js.UndefOr[Ref.Simple[HTMLDivElement]]
+  def containerRef: js.UndefOr[Ref.Simple[HTMLElement]]
   // Virtual options
   def overscan: js.UndefOr[Int]
   def getItemKey: js.UndefOr[Int => rawVirtual.mod.Key]
