@@ -4,6 +4,15 @@ ThisBuild / tlBaseVersion       := "0.33"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
+ThisBuild / githubWorkflowBuildPreamble ++= Seq(
+  WorkflowStep.Use(
+    UseRef.Public("actions", "setup-node", "v3"),
+    name = Some("Setup Node"),
+    params = Map("node-version" -> "18", "cache" -> "npm")
+  ),
+  WorkflowStep.Run(List("npm install"))
+)
+
 ThisBuild / mergifyPrRules +=
   MergifyPrRule(
     "merge dependabot PRs",
