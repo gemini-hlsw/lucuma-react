@@ -10,7 +10,7 @@ ThisBuild / githubWorkflowBuildPreamble ++= Seq(
     name = Some("Setup Node"),
     params = Map("node-version" -> "18", "cache" -> "npm")
   ),
-  WorkflowStep.Run(List("npm install"))
+  WorkflowStep.Run(List("yarn install --immutable"))
 )
 
 ThisBuild / mergifyPrRules +=
