@@ -40,7 +40,7 @@ lazy val facadeSettings = Seq(
     "com.lihaoyi"                       %%% "utest"     % utestV        % Test,
     "org.scalameta"                     %%% "munit"     % munitV        % Test
   ),
-  jsEnv := new HackedJSDOMNodeJSEnv(),
+  jsEnv := new lucuma.LucumaJSDOMNodeJSEnv(),
   scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
   testFrameworks += new TestFramework("utest.runner.Framework")
 )
@@ -222,7 +222,7 @@ lazy val test = project
   .enablePlugins(ScalaJSPlugin)
   .settings(
     name  := "lucuma-react-test",
-    jsEnv := new HackedJSDOMNodeJSEnv(),
+    jsEnv := new lucuma.LucumaJSDOMNodeJSEnv(),
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     libraryDependencies ++= Seq(
       "org.scalameta"                     %%% "munit"            % munitV,
