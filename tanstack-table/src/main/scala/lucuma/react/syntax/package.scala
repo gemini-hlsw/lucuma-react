@@ -3,6 +3,9 @@
 
 package lucuma.react.syntax
 
+import japgolly.scalajs.react.vdom.Attr.ValueType
 import lucuma.react.SizePx
 
 extension (int: Int) inline def toPx: SizePx = SizePx(int)
+
+lazy val vdomAttrVtSizePx: ValueType.Simple[SizePx] = ValueType.byImplicit(s => s"${s.value}px")
