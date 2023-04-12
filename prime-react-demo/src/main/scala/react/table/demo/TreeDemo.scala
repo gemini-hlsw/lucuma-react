@@ -43,12 +43,12 @@ object TreeDemo:
           label = "Add root node",
           onClick = nodes.modState(nodes =>
             val highestId = nodes.map(_.id.value.toInt).max
-            val newId = Tree.Id((highestId + 1).toString)
+            val newId     = Tree.Id((highestId + 1).toString)
             nodes.appended(
               Tree.Node(newId, s"Label${newId.value}", icon = Css("pi pi-star"))
             )
           )
         ),
-        Tree(nodes.value, nodeTemplate = (i, _) => <.span(<.b("Hello there, ") , i).rawNode)
+        Tree(nodes.value, nodeTemplate = (i, _) => <.span(<.b("Hello there, "), i).rawNode)
       )
     }
