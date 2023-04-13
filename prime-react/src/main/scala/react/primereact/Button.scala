@@ -19,7 +19,6 @@ import lucuma.typed.primereact.primereactStrings.top
 import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 import org.scalajs.dom.*
 import react.common.*
-import react.fa.FontAwesomeIcon
 import react.primereact.PrimeStyles
 
 import scalajs.js
@@ -27,14 +26,14 @@ import scalajs.js.JSConverters.*
 
 case class Button(
   label:          js.UndefOr[String] = js.undefined,
-  icon:           js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
+  icon:           js.UndefOr[Icon] = js.undefined,
   iconPos:        Button.IconPosition = Button.IconPosition.Left,
   badge:          js.UndefOr[String] = js.undefined,
   badgeClass:     js.UndefOr[Css] = js.undefined,
   clazz:          js.UndefOr[Css] = js.undefined,
   disabled:       js.UndefOr[Boolean] = js.undefined,
   loading:        js.UndefOr[Boolean] = js.undefined,
-  loadingIcon:    js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
+  loadingIcon:    js.UndefOr[Icon] = js.undefined,
   onClick:        Callback = Callback.empty,
   onClickE:       ReactMouseEventFrom[HTMLButtonElement & Element] => Callback = _ => Callback.empty,
   size:           Button.Size = Button.Size.Normal,

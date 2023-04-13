@@ -9,7 +9,6 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
-import react.fa.FontAwesomeIcon
 
 import scalajs.js
 
@@ -44,8 +43,7 @@ object MessageItem {
     closable:     js.UndefOr[Boolean] = js.undefined,       // default: true
     sticky:       js.UndefOr[Boolean] = js.undefined,       // default: false?
     life:         js.UndefOr[Int] = js.undefined,           // in milliseconds. default: 3000
-    icon:         js.UndefOr[FontAwesomeIcon | Image | String] =
-      js.undefined // only works for Messages, not Toast
+    icon:         js.UndefOr[Icon] = js.undefined           // only works for Messages, not Toast
   ): MessageItem = {
     val m = (new js.Object).asInstanceOf[MessageItem]
     id.foreach(v => m.id = v)

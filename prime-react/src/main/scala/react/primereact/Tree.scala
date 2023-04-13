@@ -17,7 +17,6 @@ import lucuma.typed.primereact.treenodeTreenodeMod.{TreeNode => CTreeNode}
 import org.scalablytyped.runtime.StringDictionary
 import react.common.Css
 import react.common.ReactFnProps
-
 import scalajs.js
 import scalajs.js.JSConverters.*
 
@@ -67,7 +66,7 @@ object Tree {
     id:       Tree.Id,
     data:     A,
     label:    js.UndefOr[String] = js.undefined,
-    icon:     Css = Css.Empty,
+    icon:     js.UndefOr[Icon] = js.undefined,
     children: Seq[Node[A]] = Seq.empty[Node[A]]
   ):
     private[Tree] def toJsNode: CTreeNode =
@@ -75,7 +74,7 @@ object Tree {
         .setId(id.value)
         .setKey(id.value)
         .setData(this)
-        .setIcon(icon.htmlClass)
+        .setIcon(icon.map(_.toPrimeWithClass(PrimeStyles.TreeIcon)))
         .setChildren(children.toJSArray.map(_.toJsNode))
       cNode.label = label
 

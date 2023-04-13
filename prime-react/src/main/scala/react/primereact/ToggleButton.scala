@@ -14,7 +14,6 @@ import lucuma.typed.primereact.primereactStrings.right
 import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 import org.scalajs.dom.*
 import react.common.*
-import react.fa.FontAwesomeIcon
 import react.primereact.PrimeStyles
 
 import scalajs.js
@@ -22,8 +21,8 @@ import scalajs.js.JSConverters.*
 
 case class ToggleButton(
   id:             js.UndefOr[String] = js.undefined,
-  onIcon:         js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
-  offIcon:        js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
+  onIcon:         js.UndefOr[Icon] = js.undefined,
+  offIcon:        js.UndefOr[Icon] = js.undefined,
   onLabel:        js.UndefOr[String] = js.undefined,
   offLabel:       js.UndefOr[String] = js.undefined,
   iconPos:        ToggleButton.IconPosition = ToggleButton.IconPosition.Left,
