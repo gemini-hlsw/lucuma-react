@@ -11,7 +11,6 @@ import lucuma.typed.primereact.primereactStrings.info
 import lucuma.typed.primereact.primereactStrings.success
 import lucuma.typed.primereact.primereactStrings.warn
 import react.common.*
-import react.fa.FontAwesomeIcon
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -21,7 +20,7 @@ case class Message(
   severity:  js.UndefOr[Message.Severity] = js.undefined,
   text:      js.UndefOr[String] = js.undefined,
   content:   js.UndefOr[VdomNode] = js.undefined,
-  icon:      js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined, // default: severity icon
+  icon:      js.UndefOr[Icon] = js.undefined, // default: severity icon
   clazz:     js.UndefOr[Css] = js.undefined,
   modifiers: Seq[TagMod] = Seq.empty
 ) extends ReactFnProps(Message.component):

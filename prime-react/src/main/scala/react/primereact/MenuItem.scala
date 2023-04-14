@@ -8,7 +8,6 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
-import react.fa.FontAwesomeIcon
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -41,7 +40,7 @@ object MenuItem {
 
   def SubMenu(
     label:    String,
-    icon:     js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
+    icon:     js.UndefOr[Icon] = js.undefined,
     disabled: js.UndefOr[Boolean] = js.undefined,
     expanded: js.UndefOr[Boolean] = js.undefined,
     visible:  js.UndefOr[Boolean] = js.undefined,
@@ -70,7 +69,7 @@ object MenuItem {
   // Not all properties work with all menu types.
   def Item(
     label:    String,
-    icon:     js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
+    icon:     js.UndefOr[Icon] = js.undefined,
     command:  js.UndefOr[Callback] = js.undefined,
     url:      js.UndefOr[String] = js.undefined,
     disabled: js.UndefOr[Boolean] = js.undefined,

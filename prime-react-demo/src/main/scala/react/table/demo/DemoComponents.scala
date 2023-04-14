@@ -669,6 +669,7 @@ object DemoComponents {
               )
             ),
             DemoControlsPanel(),
+            TreeDemo(),
             Dialog(
               onHide = dialogOptions.modState(_.copy(visible = false)),
               visible = dialogOptions.value.visible,

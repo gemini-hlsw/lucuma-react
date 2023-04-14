@@ -59,7 +59,9 @@ object ConfirmDialogHideParm {
     })
 }
 
-extension (icon: FontAwesomeIcon | Image | String)
+type Icon = FontAwesomeIcon | Image | String
+
+extension (icon: Icon)
   def toPrime: Node                      = icon match {
     case fa: FontAwesomeIcon => fa.raw
     case img: Image          =>

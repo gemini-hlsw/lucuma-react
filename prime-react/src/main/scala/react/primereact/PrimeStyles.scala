@@ -58,6 +58,9 @@ trait PrimeStyles {
 
   val SidebarIcon: Css      = Css("p-sidebar-icon")
   val DialogHeaderIcon: Css = Css("p-dialog-header-icon")
+
+  // Tree
+  val TreeIcon: Css = Css("p-tree-icon")
 }
 
 object PrimeStyles extends PrimeStyles

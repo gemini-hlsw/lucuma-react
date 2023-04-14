@@ -33,8 +33,8 @@ object ConfirmPopup {
     dismissable: js.UndefOr[Boolean] = js.undefined, // default: true
     acceptLabel: js.UndefOr[String] = js.undefined,  // default: Yes
     rejectLabel: js.UndefOr[String] = js.undefined,  // default: No
-    acceptIcon:  js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
-    rejectIcon:  js.UndefOr[FontAwesomeIcon | Image | String] = js.undefined,
+    acceptIcon:  js.UndefOr[Icon] = js.undefined,
+    rejectIcon:  js.UndefOr[Icon] = js.undefined,
     acceptClass: js.UndefOr[Css] = js.undefined,
     rejectClass: js.UndefOr[Css] = js.undefined,
     clazz:       js.UndefOr[Css] = js.undefined,
