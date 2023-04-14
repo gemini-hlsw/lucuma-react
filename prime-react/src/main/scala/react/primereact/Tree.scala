@@ -17,6 +17,7 @@ import lucuma.typed.primereact.treenodeTreenodeMod.{TreeNode => CTreeNode}
 import org.scalablytyped.runtime.StringDictionary
 import react.common.Css
 import react.common.ReactFnProps
+
 import scalajs.js
 import scalajs.js.JSConverters.*
 
