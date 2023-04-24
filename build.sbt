@@ -303,15 +303,21 @@ lazy val tanstackTableDemo = project
 
 lazy val highcharts = project
   .in(file("highcharts"))
-  .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(ScalaJSPlugin, ScalaJSImportMapPlugin)
   .dependsOn(common, resizeDetector)
   .settings(
-    name := "lucuma-react-highcharts",
+    name                    := "lucuma-react-highcharts",
     Compile / scalacOptions += "-language:implicitConversions",
     libraryDependencies ++= Seq(
       "edu.gemini" %%% "lucuma-typed-highcharts" % lucumaTypedV
     ),
-    facadeSettings
+    facadeSettings,
+    Test / scalaJSImportMap := {
+      case "highcharts/es-modules/masters/highcharts.src.js"            => "highcharts"
+      case "highcharts/es-modules/masters/modules/accessibility.src.js" =>
+        "highcharts/modules/accessibility"
+      case other                                                        => other
+    }
   )
 
 lazy val highchartsDemo = project
