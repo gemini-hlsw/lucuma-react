@@ -10,6 +10,8 @@ import react.primereact.Button
 import react.primereact.Panel
 import react.primereact.Tree
 
+import scalajs.js
+
 final case class TreeDemo() extends ReactFnProps[TreeDemo](TreeDemo.component)
 object TreeDemo:
   private val component = ScalaFnComponent
@@ -49,6 +51,15 @@ object TreeDemo:
             )
           )
         ),
-        Tree(nodes.value, nodeTemplate = (i, _) => <.span(<.b("Hello there, "), i).rawNode)
+        Tree(
+          nodes.value,
+          selectionMode = Tree.SelectionMode.Single,
+          nodeTemplate = (i, _) => <.span(<.b("Hello there, "), i).rawNode,
+          onSelect = (d, e) =>
+            Callback {
+              println(s"selected $d")
+              js.Dynamic.global.console.log(e)
+            }
+        )
       )
     }

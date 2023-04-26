@@ -7,6 +7,7 @@ import cats.Eq
 import cats.derived.*
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.facade.SyntheticEvent
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.typed.primereact.components.{Tree => CTree}
 import lucuma.typed.primereact.primereactStrings.checkbox
@@ -15,6 +16,7 @@ import lucuma.typed.primereact.primereactStrings.single
 import lucuma.typed.primereact.treeTreeMod.TreeNodeTemplateOptions
 import lucuma.typed.primereact.treenodeTreenodeMod.{TreeNode => CTreeNode}
 import org.scalablytyped.runtime.StringDictionary
+import org.scalajs.dom.Element
 import react.common.Css
 import react.common.ReactFnProps
 
@@ -27,7 +29,8 @@ case class Tree[A](
   expandedKeys:  Map[Tree.Id, Boolean] = Map.empty,
   onToggle:      js.UndefOr[Map[Tree.Id, Boolean] => Callback] = js.undefined,
   selectionMode: js.UndefOr[Tree.SelectionMode] = js.undefined,
-  loading:       js.UndefOr[Boolean] = js.undefined
+  loading:       js.UndefOr[Boolean] = js.undefined,
+  onSelect:      js.UndefOr[(A, SyntheticEvent[Element]) => Callback] = js.undefined
 ) extends ReactFnProps[Tree[A]](Tree.component)
 
 object Tree {
@@ -50,6 +53,13 @@ object Tree {
         (c, p) => c.onToggle(e => p(e.value.toMap))
       )
       .applyOrNot(props.loading, _.loading(_))
+      .applyOrNot(
+        props.onSelect,
+        (c, p) =>
+          c.onSelect(e =>
+            p(e.node.asInstanceOf[CTreeNode].data.asInstanceOf[Tree.Node[A]].data, e.originalEvent)
+          )
+      )
 
   }
 
@@ -63,7 +73,7 @@ object Tree {
     inline def apply(value: String): Id                  = value
     extension (opaqueValue: Id) inline def value: String = opaqueValue
 
-  case class Node[A](
+  case class Node[+A](
     id:       Tree.Id,
     data:     A,
     label:    js.UndefOr[String] = js.undefined,
