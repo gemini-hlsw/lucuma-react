@@ -13,12 +13,14 @@ import org.scalajs.dom.Element
 
 trait TestUtils {
 
-  def assertRender(e: VdomElement, expected: String): Unit =
-    assertRender(e.rawElement, expected)
+  def assertRender(e: VdomElement, expected: String, scrub: String = ""): Unit =
+    assertRender(e.rawElement, expected, scrub)
 
-  def assertRender(e: React.Element, expected: String): Unit = {
+  def assertRender(e: React.Element, expected: String, scrub: String): Unit = {
     val rendered: String = ReactDOMServer.raw.renderToStaticMarkup(e)
-    assertEquals(rendered.trim.replaceAll("\n", ""), expected.trim.replaceAll("\n", ""))
+    assertEquals(rendered.replaceAll(scrub, "").trim.replaceAll("\n", ""),
+                 expected.replaceAll(scrub, "").trim.replaceAll("\n", "")
+    )
   }
 
   def assertRender(e: React.Node, expected: String): Unit =
