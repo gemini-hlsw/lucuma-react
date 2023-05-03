@@ -29,8 +29,9 @@ case class ToastRef(
 
 // NOTE: Toasts have onRemove, onClick, onShow, onHide, onMouseEnter, and onMouseLeave events that are not yet implemented.
 case class Toast(
-  position:  js.UndefOr[Toast.Position] = js.undefined, // default: TopRight
-  modifiers: Seq[TagMod] = Seq.empty
+  position:   js.UndefOr[Toast.Position] = js.undefined, // default: TopRight
+  modifiers:  Seq[TagMod] = Seq.empty,
+  baseZIndex: js.UndefOr[Int] = js.undefined
 ) extends GenericComponentPAF[ToastProps, Toast, Facade]:
   override protected def cprops: ToastProps                                              = Toast.props(this)
   override protected val component: ComponentWithFacade[ToastProps, Null, Facade, Props] =
@@ -61,11 +62,13 @@ object Toast {
   @js.native
   trait ToastProps extends js.Object {
     var position: js.UndefOr[String] = js.native
+    var baseZIndex: js.UndefOr[Int]  = js.native
   }
 
   def props(t: Toast): ToastProps = {
     val r = (new js.Object).asInstanceOf[ToastProps]
     t.position.foreach(v => r.position = v.value)
+    t.baseZIndex.foreach(v => r.baseZIndex = v)
     r
   }
 

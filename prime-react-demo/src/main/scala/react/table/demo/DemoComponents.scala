@@ -717,7 +717,7 @@ object DemoComponents {
               icons = customIcons(sidebarOptions.value.customIcons),
               showCloseIcon = sidebarOptions.value.showCloseIcon
             ).withMods(mouseEntered("Sidebar"))(<.div(<.div("Some stuff"), <.div("More stuff"))),
-            Toast(position = toastPosition.value)
+            Toast(position = toastPosition.value, baseZIndex = 5000)
               .withMods(mouseEntered("Toast"))
               .withRef(toastRef.ref)
           )
