@@ -10,10 +10,10 @@
     "@jridgewell/gen-mapping" "^0.3.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@atlaskit/tree@^8.7.0":
-  version "8.7.0"
-  resolved "https://registry.npmjs.org/@atlaskit/tree/-/tree-8.7.0.tgz"
-  integrity sha512-L5jjMixlCGCaOIVf46lDUdUGclyDgyknhGnWUCsazg++RZWNMPdb1nRz2nSKNIoJO1Cgs3td8YeOAEaL2yw/bA==
+"@atlaskit/tree@^8.8.2":
+  version "8.8.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/tree/-/tree-8.8.2.tgz#a36e1fecab6e76a0a0a59bde0ae73d922ecc965e"
+  integrity sha512-BWCFh3EVSRsy13ei+eS/vOuI6dIYlLvjLss8fSbxbfQKJRMCn0P3u1c6XBNBhY1e6Q59m2nV8IEb8XK4M4TBTA==
   dependencies:
     "@babel/runtime" "^7.0.0"
     css-box-model "^1.2.0"
