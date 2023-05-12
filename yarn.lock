@@ -1294,10 +1294,10 @@ primeicons@^6.0.1:
   resolved "https://registry.npmjs.org/primeicons/-/primeicons-6.0.1.tgz"
   integrity sha512-KDeO94CbWI4pKsPnYpA1FPjo79EsY9I+M8ywoPBSf9XMXoe/0crjbUK7jcQEDHuc0ZMRIZsxH3TYLv4TUtHmAA==
 
-primereact@^9.3.1:
-  version "9.3.1"
-  resolved "https://registry.npmjs.org/primereact/-/primereact-9.3.1.tgz"
-  integrity sha512-Ja4ZftnEyuVIcPb2zppbVXE7L6cmYr87XfA6FcQHN0SCsXRW86c2Q/DJi7hC67V/9aPNQd/TrNRxpSQbSI7I/g==
+primereact@^9.4.0:
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/primereact/-/primereact-9.4.0.tgz#cf4747953fb4cec8406f9c31d064b34c69ad2fc3"
+  integrity sha512-nJGQUfc26XCeqdmLPhLKhs+H4ilP4ER2q0J0PhSD0c/U499JI6bBTTDzQjqNs+DsIh/cLSeIR3bx5c0+Zq+qLg==
   dependencies:
     "@types/react-transition-group" "^4.4.1"
     react-transition-group "^4.4.1"
