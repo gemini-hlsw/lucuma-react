@@ -1,4 +1,4 @@
-import "./styles.css";
+import "./styles.scss";
 
 import { Demo } from "@sjs/main.js";
 Demo.main()
