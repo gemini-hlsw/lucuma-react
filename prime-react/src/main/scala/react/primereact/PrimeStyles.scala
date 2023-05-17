@@ -8,13 +8,15 @@ import react.common._
 trait PrimeStyles {
 
   // wrappers for primereact classes
-  val Invalid: Css = Css("p-invalid")
+  val Invalid: Css   = Css("p-invalid")
+  val Component: Css = Css("p-component")
 
   // Input groups
   val InputGroup: Css      = Css("p-inputgroup")
   val InputGroupAddon: Css = Css("p-inputgroup-addon")
 
   // Button
+  val Button: Css           = Css("p-button")
   val ButtonSmall: Css      = Css("p-button-sm")
   val ButtonNormal: Css     = Css.Empty
   val ButtonLarge: Css      = Css("p-button-lg")
@@ -37,6 +39,7 @@ trait PrimeStyles {
   val ButtonRaised: Css   = Css("p-button-raised")
   val ButtonRounded: Css  = Css("p-button-rounded")
   val ButtonText: Css     = Css("p-button-text")
+  val ButtonIconOnly: Css = Css("p-button-icon-only")
 
   val ButtonSet: Css = Css("p-buttonset")
 
