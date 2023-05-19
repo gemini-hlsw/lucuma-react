@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.36"
+ThisBuild / tlBaseVersion       := "0.37"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
@@ -8,7 +8,7 @@ ThisBuild / githubWorkflowBuildPreamble ++= Seq(
   WorkflowStep.Use(
     UseRef.Public("actions", "setup-node", "v3"),
     name = Some("Setup Node"),
-    params = Map("node-version" -> "18", "cache" -> "npm")
+    params = Map("node-version" -> "18", "cache" -> "yarn")
   ),
   WorkflowStep.Run(List("yarn install --immutable"))
 )
