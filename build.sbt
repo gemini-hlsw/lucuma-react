@@ -10,7 +10,7 @@ ThisBuild / githubWorkflowBuildPreamble ++= Seq(
     name = Some("Setup Node"),
     params = Map("node-version" -> "18", "cache" -> "yarn")
   ),
-  WorkflowStep.Run(List("yarn install --immutable"))
+  WorkflowStep.Run(List("yarn install --frozen-lockfile"))
 )
 
 ThisBuild / mergifyPrRules +=
