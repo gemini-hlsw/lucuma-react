@@ -28,9 +28,7 @@
     "sass": "^1.62.1",
     "semantic-ui-react": "^2.1.4",
     "styled-components": "^5.3.10",
+    "typescript": "^5.0.4",
     "vite": "^4.3.8"
-  },
-  "dependencies": {
-    "typescript": "5.0"
   }
 }

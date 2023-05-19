@@ -70,9 +70,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: yarn
+          cache: npm
 
-      - run: yarn install --frozen-lockfile
+      - run: npm ci
 
       - name: Check that workflows are up to date
         run: sbt githubWorkflowCheck
