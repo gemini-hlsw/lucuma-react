@@ -8,9 +8,9 @@ ThisBuild / githubWorkflowBuildPreamble ++= Seq(
   WorkflowStep.Use(
     UseRef.Public("actions", "setup-node", "v3"),
     name = Some("Setup Node"),
-    params = Map("node-version" -> "18", "cache" -> "yarn")
+    params = Map("node-version" -> "18", "cache" -> "npm")
   ),
-  WorkflowStep.Run(List("yarn install --frozen-lockfile"))
+  WorkflowStep.Run(List("npm ci"))
 )
 
 ThisBuild / mergifyPrRules +=
