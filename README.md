@@ -27,7 +27,6 @@ Note that vite should be run from the root directory, but point at the config fi
 - lucuma-react-highcharts
 - lucuma-react-table
 - lucuma-tanstack-table
-- lucuma-react-tree
 - lucuma-react-virtuoso
 
 ## Contributing

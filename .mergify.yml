@@ -22,7 +22,6 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootHighcharts)
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootDatepicker)
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootBeautifulDnd)
-  - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootTree)
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, fontAwesome)
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootHotkeys)
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootResizable)
@@ -303,14 +302,6 @@ pull_request_rules:
       add:
       - rootTanstackTable
       remove: []
-- name: Label rootTree PRs
-  conditions:
-  - files~=^rootTree/
-  actions:
-    label:
-      add:
-      - rootTree
-      remove: []
 - name: Label tanstack-table PRs
   conditions:
   - files~=^tanstack-table/
@@ -335,22 +326,6 @@ pull_request_rules:
       add:
       - test
       remove: []
-- name: Label tree PRs
-  conditions:
-  - files~=^tree/
-  actions:
-    label:
-      add:
-      - tree
-      remove: []
-- name: Label tree-demo PRs
-  conditions:
-  - files~=^tree-demo/
-  actions:
-    label:
-      add:
-      - tree-demo
-      remove: []
 - name: merge dependabot PRs
   conditions:
   - author=dependabot[bot]
@@ -363,7 +338,6 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootHighcharts)
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootDatepicker)
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootBeautifulDnd)
-  - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootTree)
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, fontAwesome)
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootHotkeys)
   - status-success=Build and Test (ubuntu-latest, 3.2.2, temurin@17, rootResizable)
