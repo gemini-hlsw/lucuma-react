@@ -142,8 +142,6 @@ lazy val root = project
     datepickerDemo,
     beautifulDnd,
     beautifulDndDemo,
-    tree,
-    treeDemo,
     resizeDetector,
     fontAwesome,
     hotkeys,
@@ -173,8 +171,6 @@ lazy val rootDatepicker    =
   project.aggregate(datepicker, datepickerDemo).enablePlugins(NoPublishPlugin)
 lazy val rootBeautifulDnd  =
   project.aggregate(beautifulDnd, beautifulDndDemo).enablePlugins(NoPublishPlugin)
-lazy val rootTree          =
-  project.aggregate(tree, treeDemo).enablePlugins(NoPublishPlugin)
 lazy val rootHotkeys       =
   project.aggregate(hotkeys, hotkeysDemo).enablePlugins(NoPublishPlugin)
 lazy val rootResizable     =
@@ -192,7 +188,6 @@ val projects = List(
   rootHighcharts,
   rootDatepicker,
   rootBeautifulDnd,
-  rootTree,
   fontAwesome,
   rootHotkeys,
   rootResizable,
@@ -366,24 +361,6 @@ lazy val beautifulDndDemo = project
   .in(file("beautiful-dnd-demo"))
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(beautifulDnd)
-  .settings(
-    Compile / scalacOptions += "-language:implicitConversions",
-    demoSettings
-  )
-
-lazy val tree = project
-  .in(file("tree"))
-  .enablePlugins(ScalaJSPlugin)
-  .dependsOn(common, beautifulDnd)
-  .settings(
-    name := "lucuma-react-tree",
-    facadeSettings
-  )
-
-lazy val treeDemo = project
-  .in(file("tree-demo"))
-  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
-  .dependsOn(tree)
   .settings(
     Compile / scalacOptions += "-language:implicitConversions",
     demoSettings
