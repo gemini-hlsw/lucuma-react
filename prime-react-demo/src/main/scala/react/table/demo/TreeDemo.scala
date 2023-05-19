@@ -55,11 +55,7 @@ object TreeDemo:
           nodes.value,
           selectionMode = Tree.SelectionMode.Single,
           nodeTemplate = (i, _) => <.span(<.b("Hello there, "), i).rawNode,
-          onSelect = (d, e) =>
-            Callback {
-              println(s"selected $d")
-              js.Dynamic.global.console.log(e)
-            }
+          onSelect = (d, e) => Callback(println(s"selected $d")) *> Callback.log(e)
         )
       )
     }

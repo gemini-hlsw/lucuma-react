@@ -26,8 +26,8 @@ import scalajs.js.JSConverters.*
 case class Tree[A](
   value:         Seq[Tree.Node[A]],
   nodeTemplate:  (A, TreeNodeTemplateOptions) => VdomNode,
-  expandedKeys:  Map[Tree.Id, Boolean] = Map.empty,
-  onToggle:      js.UndefOr[Map[Tree.Id, Boolean] => Callback] = js.undefined,
+  expandedKeys:  js.UndefOr[Set[Tree.Id]] = js.undefined,
+  onToggle:      js.UndefOr[Set[Tree.Id] => Callback] = js.undefined,
   selectionMode: js.UndefOr[Tree.SelectionMode] = js.undefined,
   loading:       js.UndefOr[Boolean] = js.undefined,
   onSelect:      js.UndefOr[(A, SyntheticEvent[Element]) => Callback] = js.undefined
@@ -46,11 +46,11 @@ object Tree {
       )
       .applyOrNot(
         props.expandedKeys,
-        (c, p) => c.expandedKeys(StringDictionary(p.map { case (k, v) => k.value -> v }.toSeq: _*))
+        (c, p) => c.expandedKeys(StringDictionary(p.map(k => k.value -> true).toSeq: _*))
       )
       .applyOrNot(
         props.onToggle,
-        (c, p) => c.onToggle(e => p(e.value.toMap))
+        (c, p) => c.onToggle(e => p(e.value.filter(_._2).keySet.toSet))
       )
       .applyOrNot(props.loading, _.loading(_))
       .applyOrNot(
