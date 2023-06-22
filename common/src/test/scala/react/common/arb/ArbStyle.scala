@@ -9,8 +9,6 @@ import org.scalacheck.Cogen
 import org.scalacheck.Gen
 import react.common.*
 
-import scala.scalajs.js.|
-
 trait ArbStyle {
   implicit val arbStyleMember: Arbitrary[String | Int] = Arbitrary {
     Gen.oneOf(Gen.posNum[Int], Gen.negNum[Int], Gen.alphaNumStr)

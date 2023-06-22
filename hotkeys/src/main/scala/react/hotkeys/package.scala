@@ -3,11 +3,10 @@
 
 package react
 
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 
 import scalajs.js
-import js.|
-import js.JSConverters._
+import js.JSConverters.*
 
 package hotkeys {
   sealed abstract class LogLevel(val name: String)

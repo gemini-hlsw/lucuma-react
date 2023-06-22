@@ -7,7 +7,6 @@ import lucuma.typed.{tanstackVirtualCore => rawVirtual}
 import org.scalajs.dom.Element
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSImport
 
 @js.native
 trait Virtualizer[TScrollElement <: Element, TItemElement <: Element] protected ()

@@ -4,7 +4,6 @@
 package lucuma.react.table
 
 import japgolly.scalajs.react.*
-import lucuma.typed.{tanstackTableCore => raw}
 
 object HooksApiExt:
   sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]):

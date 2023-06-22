@@ -3,14 +3,10 @@
 
 package react.primereact
 
-import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.typed.primereact.components.{ConfirmDialog => CConfirmDialog}
 import lucuma.typed.primereact.confirmdialogConfirmdialogMod.ConfirmDialogProps
-import lucuma.typed.primereact.confirmdialogConfirmdialogMod.{
-  ConfirmDialogReturn => RawConfirmDialogReturn
-}
 import lucuma.typed.primereact.confirmdialogConfirmdialogMod.{confirmDialog => rawConfirmDialog}
 import org.scalablytyped.runtime.StObject
 import react.common.*
@@ -71,7 +67,7 @@ object ConfirmDialog {
       accept.foreach(v => props.setAccept(v))
       reject.foreach(v => props.setReject(v))
 
-      val rawReturn = rawConfirmDialog(props)
+      rawConfirmDialog(props)
     }
     // In case this ever starts working as advertised, remove the Callback wrapper above
     // and uncomment the line below.

@@ -10,7 +10,6 @@ import lucuma.typed.highcharts.mod.SVGElement
 import lucuma.typed.highcharts.mod.Series
 
 import scalajs.js
-import js.|
 
 // https://github.com/highcharts/highcharts/blob/master/ts/modules/series-label.src.ts
 

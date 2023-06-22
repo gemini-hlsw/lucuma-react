@@ -12,7 +12,6 @@ import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTool
 import react.common.*
 
 import scalajs.js
-import scalajs.js.JSConverters.*
 
 private[primereact] trait SelectButtonBase {
   protected type AA

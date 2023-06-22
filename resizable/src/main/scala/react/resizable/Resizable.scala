@@ -16,7 +16,6 @@ import react.draggable.Draggable.{Props => DraggableProps}
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.|
 
 import js.annotation.JSImport
 

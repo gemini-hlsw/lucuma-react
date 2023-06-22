@@ -5,7 +5,6 @@ package react.primereact
 
 import cats.Eq
 import cats.derived.*
-import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.SyntheticEvent
 import japgolly.scalajs.react.vdom.html_<^.*
@@ -17,7 +16,6 @@ import lucuma.typed.primereact.treeTreeMod.TreeNodeTemplateOptions
 import lucuma.typed.primereact.treenodeTreenodeMod.{TreeNode => CTreeNode}
 import org.scalablytyped.runtime.StringDictionary
 import org.scalajs.dom.Element
-import react.common.Css
 import react.common.ReactFnProps
 
 import scalajs.js

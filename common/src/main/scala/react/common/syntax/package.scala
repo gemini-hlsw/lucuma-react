@@ -4,13 +4,11 @@
 package react.common.syntax
 
 import japgolly.scalajs.react.Callback
-import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.VdomNode
 import react.common.*
 
 import scala.language.implicitConversions
 import scala.scalajs.js
-import scala.scalajs.js.|
 
 trait EnumValueSyntax {
   extension [A](a: A)(using ev: EnumValue[A]) inline def toJs: String = ev.value(a)

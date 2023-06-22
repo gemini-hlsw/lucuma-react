@@ -3,17 +3,8 @@
 
 package react.highcharts
 
-import japgolly.scalajs.react.test._
-import lucuma.typed.highcharts.mod.Options
-import lucuma.typed.highcharts.mod.charts
-import lucuma.typed.highcharts.mod.{^ => HighCharts, _}
-import org.scalajs.dom.HTMLElement
-import org.scalajs.dom.document
-import utest._
-
-import scala.scalajs.js
-import scala.scalajs.js.annotation.JSGlobal
-import scala.scalajs.js.annotation.JSImport
+import japgolly.scalajs.react.test.*
+import utest.*
 
 object ChartTest extends TestSuite {
   val tests = Tests {

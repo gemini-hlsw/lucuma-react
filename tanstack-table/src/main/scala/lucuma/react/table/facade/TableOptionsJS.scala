@@ -3,11 +3,9 @@
 
 package lucuma.react.table.facade
 
-import japgolly.scalajs.react.*
 import lucuma.typed.{tanstackTableCore => raw}
 
 import scalajs.js
-import scalajs.js.JSConverters.*
 
 trait TableOptionsJs[T] extends js.Object:
   var columns: js.Array[ColumnDefJs[T, ?]]

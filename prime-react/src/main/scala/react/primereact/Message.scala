@@ -13,7 +13,6 @@ import lucuma.typed.primereact.primereactStrings.warn
 import react.common.*
 
 import scalajs.js
-import scalajs.js.JSConverters.*
 
 case class Message(
   id:        js.UndefOr[String] = js.undefined,

@@ -3,11 +3,10 @@
 
 package react.hotkeys
 
-import japgolly.scalajs.react._
-import react.common._
+import japgolly.scalajs.react.*
+import react.common.*
 
 import scalajs.js
-import js.|
 import js.annotation.JSImport
 
 // This is not working if "only" or "except" are specified, resulting in a runtime exception.

@@ -3,15 +3,14 @@
 
 package react.resizeDetector
 
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 import org.scalajs.dom.html
-import react.common._
-import react.resizeDetector.ResizeDetector._
+import react.common.*
+import react.resizeDetector.ResizeDetector.*
 
 import scala.annotation.nowarn
 import scala.scalajs.js
-import scala.scalajs.js.annotation._
-import scala.scalajs.js.|
+import scala.scalajs.js.annotation.*
 
 @js.native
 trait UseResizeDetectorReturnJS extends DimensionsJS {
@@ -129,7 +128,7 @@ object HooksApiExt {
 }
 
 trait HooksApiExt {
-  import HooksApiExt._
+  import HooksApiExt.*
 
   implicit def hooksExtFloating1[Ctx, Step <: HooksApi.AbstractStep](
     api: HooksApi.Primary[Ctx, Step]

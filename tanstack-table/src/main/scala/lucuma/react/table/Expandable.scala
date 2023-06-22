@@ -4,14 +4,8 @@
 package lucuma.react.table
 
 import cats.syntax.all.*
-import japgolly.scalajs.react.ReactExtensions._
+import japgolly.scalajs.react.ReactExtensions.*
 import japgolly.scalajs.react.Reusability
-
-import scala.annotation.tailrec
-import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.UndefOr
-
-import scalajs.js
 
 case class Expandable[D](value: D, subRows: Option[List[Expandable[D]]] = None)
 

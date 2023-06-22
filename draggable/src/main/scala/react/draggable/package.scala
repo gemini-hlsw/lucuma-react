@@ -8,7 +8,6 @@ import org.scalajs.dom.html.{Element => HTMLElement}
 import react.common.EnumValue
 
 import scala.scalajs.js
-import scala.scalajs.js.|
 
 package object draggable {
   type Bounds = DraggableBounds | String | FalseBounds.type

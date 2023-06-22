@@ -3,7 +3,6 @@
 
 package react.circularprogressbar
 
-import japgolly.scalajs.react.vdom.html_<^.{< => <<, _}
 import react.common.TestUtils
 
 class CircularProgressbarSuite extends munit.FunSuite with TestUtils {

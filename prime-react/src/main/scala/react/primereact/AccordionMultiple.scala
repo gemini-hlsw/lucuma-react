@@ -3,7 +3,6 @@
 
 package react.primereact
 
-import cats.Id
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*

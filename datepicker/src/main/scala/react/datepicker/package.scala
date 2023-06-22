@@ -9,7 +9,6 @@ import lucuma.typed.StBuildingComponent
 import java.time.LocalDate
 
 import scalajs.js
-import scalajs.js.|
 
 package object datepicker {
   type DateRange = js.Tuple2[js.Date | Null, js.Date | Null]

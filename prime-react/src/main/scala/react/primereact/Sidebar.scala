@@ -17,7 +17,6 @@ import org.scalajs.dom.*
 import react.common.*
 
 import scalajs.js
-import scalajs.js.JSConverters.*
 
 case class Sidebar(
   visible:       Boolean,

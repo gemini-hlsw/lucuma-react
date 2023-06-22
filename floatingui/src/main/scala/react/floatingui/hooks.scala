@@ -7,7 +7,6 @@ import japgolly.scalajs.react._
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.|
 
 @js.native
 trait ElementProps extends js.Object

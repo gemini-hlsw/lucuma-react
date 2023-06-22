@@ -8,8 +8,6 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*
 import react.floatingui.*
 
-import scala.scalajs.js
-
 extension (tag: VdomTag)
   def withTooltip(
     tooltip:   VdomNode,

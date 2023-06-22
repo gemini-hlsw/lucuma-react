@@ -3,14 +3,9 @@
 
 package react.highcharts.mods.seriesLabel
 
-import lucuma.typed.highcharts.mod.BBoxObject
 import lucuma.typed.highcharts.mod.Point
-import lucuma.typed.highcharts.mod.PositionObject
-import lucuma.typed.highcharts.mod.SVGElement
-import lucuma.typed.highcharts.mod.Series
 
 import scalajs.js
-import js.|
 
 // https://github.com/highcharts/highcharts/blob/master/ts/modules/series-label.src.ts
 

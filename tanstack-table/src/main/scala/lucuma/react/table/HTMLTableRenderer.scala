@@ -10,13 +10,10 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.virtual.*
 import lucuma.typed.{tanstackReactTable => rawReact}
 import lucuma.typed.{tanstackTableCore => raw}
-import lucuma.typed.{tanstackVirtualCore => rawVirtual}
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLDivElement
 import react.common.*
 import react.common.style.Css
-
-import scala.util.Random
 
 import scalajs.js
 
@@ -304,8 +301,6 @@ object HTMLTableRenderer:
         renderSubComponent = props.renderSubComponent
       )
     )
-
-  private val random = new Random()
 
   def componentBuilderVirtualized[T, Props <: HTMLVirtualizedTableProps[_]](
     renderer: HTMLTableRenderer[T]

@@ -7,7 +7,6 @@ import cats.Eq
 import cats.derived.*
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
-import japgolly.scalajs.react.facade.JsNumber
 import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.typed.StBuildingComponent

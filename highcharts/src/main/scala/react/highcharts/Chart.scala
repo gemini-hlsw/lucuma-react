@@ -5,7 +5,6 @@ package react.highcharts
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import lucuma.typed.highcharts.anon.TypeofHighcharts
 import lucuma.typed.highcharts.anon.TypeofHighchartsAST
 import lucuma.typed.highcharts.mod.Chart_
 import lucuma.typed.highcharts.mod.HTMLDOMElement
@@ -17,7 +16,6 @@ import react.common.ReactProps
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 import scala.scalajs.js.annotation.JSName
-import scala.scalajs.js.|
 
 @js.native
 trait WrapProceed extends js.ThisFunction0[Chart_, Unit]

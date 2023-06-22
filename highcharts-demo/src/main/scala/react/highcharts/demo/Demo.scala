@@ -47,6 +47,7 @@ import react.highcharts.mods.seriesLabel.SeriesLabelPoint
 import react.highcharts.mods.seriesLabel.SeriesLabelSeries
 import react.highcharts.seriesLabel
 
+import scala.annotation.nowarn
 import scala.scalajs.js
 
 import js.annotation._
@@ -126,6 +127,7 @@ object Demo {
           PositionObject(left + center, y)
         }.get
 
+    @nowarn
     val options = Options()
       .setTitle(TitleOptions().setText(""))
       .setLegend(LegendOptions().setEnabled(false))

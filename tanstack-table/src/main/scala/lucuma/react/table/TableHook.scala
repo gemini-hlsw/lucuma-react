@@ -6,11 +6,9 @@ package lucuma.react.table
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.hooks.CustomHook
 import lucuma.react.table.facade.*
-import lucuma.typed.tanstackReactTable.mod.useReactTable
 import lucuma.typed.{tanstackTableCore => raw}
 
 import scala.scalajs.js
-import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.annotation.JSImport
 
 object TableHook:
