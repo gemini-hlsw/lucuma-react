@@ -38,11 +38,11 @@ import lucuma.typed.highcharts.mod.YAxisLabelsOptions
 import lucuma.typed.highcharts.mod.YAxisOptions
 import lucuma.typed.highcharts.mod.YAxisTitleOptions
 import org.scalajs.dom
-import react.common._
+import react.common.*
 import react.highcharts.Chart
 import react.highcharts.Highcharts
 import react.highcharts.WrapProceed
-import react.highcharts.implicits._
+import react.highcharts.implicits.*
 import react.highcharts.mods.seriesLabel.SeriesLabelPoint
 import react.highcharts.mods.seriesLabel.SeriesLabelSeries
 import react.highcharts.seriesLabel
@@ -50,8 +50,8 @@ import react.highcharts.seriesLabel
 import scala.annotation.nowarn
 import scala.scalajs.js
 
-import js.annotation._
-import js.JSConverters._
+import js.annotation.*
+import js.JSConverters.*
 
 // Reproducing https://jsfiddle.net/rpiaggio/xdz4pLg9/105/
 
