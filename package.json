@@ -2,9 +2,9 @@
   "devDependencies": {
     "@cquiroz/react-moon": "^2.0.2",
     "@floating-ui/react-dom-interactions": "^0.13.3",
-    "@tanstack/react-table": "^8.9.1",
+    "@tanstack/react-table": "^8.9.2",
     "@tanstack/react-virtual": "v3.0.0-beta.54",
-    "@vitejs/plugin-react": "^4.0.0",
+    "@vitejs/plugin-react": "^4.0.1",
     "copy-to-clipboard": "^3.3.3",
     "fomantic-ui-less": "^2.9.2",
     "highcharts": "^11.0.1",
@@ -15,7 +15,7 @@
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.1",
     "react-circular-progressbar": "^2.1.0",
-    "react-datepicker": "^4.12.0",
+    "react-datepicker": "^4.14.1",
     "react-dom": "^17.0.2",
     "react-draggable": "^4.4.5",
     "react-grid-layout": "^1.3.0",
@@ -24,11 +24,11 @@
     "react-resize-detector": "^9.1.0",
     "react-semantic-toasts": "^0.6.5",
     "react-table": "^7.8.0",
-    "react-virtuoso": "^4.3.8",
-    "sass": "^1.62.1",
+    "react-virtuoso": "^4.3.10",
+    "sass": "^1.63.5",
     "semantic-ui-react": "^2.1.4",
     "styled-components": "^5.3.10",
-    "typescript": "^5.0.4",
+    "typescript": "^5.1.3",
     "vite": "^4.3.9"
   }
 }
