@@ -3,15 +3,14 @@
 
 package react.resizeDetector
 
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.html
-import react.common._
+import react.common.*
 
 import scala.scalajs.js.annotation.JSImport
 
 import scalajs.js
-import scalajs.js.|
 
 object ResizeDetector {
 

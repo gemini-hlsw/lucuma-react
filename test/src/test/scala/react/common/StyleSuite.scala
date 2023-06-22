@@ -4,7 +4,6 @@
 package react.common
 
 import cats.syntax.all.*
-import react.common.implicits.*
 import react.common.style.*
 import react.common.style.given
 

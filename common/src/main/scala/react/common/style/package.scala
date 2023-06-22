@@ -3,17 +3,16 @@
 
 package react.common.style
 
-import cats._
-import cats.syntax.all._
+import cats.*
+import cats.syntax.all.*
 import japgolly.scalajs.react.Reusability
-import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.vdom.html_<^.*
 
 import scala.annotation.targetName
 import scala.language.implicitConversions
 import scala.scalajs.js
-import scala.scalajs.js.|
 
-import js.JSConverters._
+import js.JSConverters.*
 
 sealed trait StyleExtractor[A] {
   def extract(s: Style, key: String): Option[A]

@@ -5,13 +5,11 @@ package lucuma.react.virtual
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.hooks.CustomHook
-import lucuma.react.table.facade.*
 import lucuma.react.virtual.facade.VirtualOptionsJS
 import lucuma.react.virtual.facade.Virtualizer
 import org.scalajs.dom.Element
 
 import scala.scalajs.js
-import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.annotation.JSImport
 
 object VirtualHook:

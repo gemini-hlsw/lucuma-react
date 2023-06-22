@@ -10,8 +10,6 @@ import react.primereact.Button
 import react.primereact.Panel
 import react.primereact.Tree
 
-import scalajs.js
-
 final case class TreeDemo() extends ReactFnProps[TreeDemo](TreeDemo.component)
 object TreeDemo:
   private val component = ScalaFnComponent

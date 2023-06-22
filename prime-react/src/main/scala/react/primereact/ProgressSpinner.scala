@@ -9,7 +9,6 @@ import lucuma.typed.primereact.components.{ProgressSpinner => CProgressSpinner}
 import react.common.*
 
 import scalajs.js
-import scalajs.js.JSConverters.*
 
 case class ProgressSpinner(
   id:                js.UndefOr[String] = js.undefined,

@@ -3,19 +3,18 @@
 
 package react
 
-import cats._
-import cats.syntax.all._
+import cats.*
 import japgolly.scalajs.react.Callback
 import org.scalajs.dom.Event
 import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.html.{Element => HTMLElement}
-import react.common._
+import react.common.*
 
 import scala.annotation.nowarn
 import scala.scalajs.js
 
 import js.annotation.JSImport
-import js.JSConverters._
+import js.JSConverters.*
 
 package object gridlayout {
   type Margin           = (Int, Int)

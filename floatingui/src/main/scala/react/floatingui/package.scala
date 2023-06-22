@@ -16,7 +16,6 @@ import react.common.syntax.enumValue.*
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSImport
-import scala.scalajs.js.|
 
 enum Side:
   case Top, Right, Bottom, Left

@@ -8,8 +8,6 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.table.*
 import react.common.*
 
-import scalajs.js
-
 object Table1:
   private val ColDef = ColumnDef[Guitar]
 

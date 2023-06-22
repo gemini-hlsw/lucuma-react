@@ -19,10 +19,8 @@ import lucuma.typed.primereact.primereactStrings.top
 import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
 import org.scalajs.dom.*
 import react.common.*
-import react.primereact.PrimeStyles
 
 import scalajs.js
-import scalajs.js.JSConverters.*
 
 case class Button(
   label:          js.UndefOr[String] = js.undefined,

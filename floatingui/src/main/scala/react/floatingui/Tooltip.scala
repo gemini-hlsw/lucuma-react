@@ -3,22 +3,15 @@
 
 package react.floatingui
 
-import cats.syntax.all.*
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 import japgolly.scalajs.react.feature.ReactFragment
-import japgolly.scalajs.react.vdom.TagOf
-import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom
-import org.scalajs.dom.html
 import react.common.ReactFnProps
 import react.common.Style
-import react.floatingui.hooks._
+import react.floatingui.hooks.*
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSExportTopLevel
-import scala.scalajs.js.|
-
-import js.annotation._
 
 /**
  * Tooltip base on floating ui see: https://floating-ui.com/docs/react-dom

@@ -3,11 +3,10 @@
 
 package react.common.implicits
 
-import cats._
-import cats.syntax.all._
+import cats.*
+import cats.syntax.all.*
 
 import scala.scalajs.js
-import scala.scalajs.js.|
 
 given jsUndefOrEq[A: Eq]: Eq[js.UndefOr[A]] =
   Eq.instance { (a, b) =>

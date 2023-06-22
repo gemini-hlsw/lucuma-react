@@ -5,10 +5,8 @@ package react.primereact
 
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.typed.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
-import react.common.*
 
 import scalajs.js
-import scalajs.js.JSConverters.*
 
 case class SelectItemGroup[A](
   label:   VdomNode,

@@ -3,7 +3,6 @@
 
 package react.moon
 
-import japgolly.scalajs.react.vdom.html_<^.{< => <<, _}
 import react.common.TestUtils
 
 class MoonPhaseSuite extends munit.FunSuite with TestUtils {

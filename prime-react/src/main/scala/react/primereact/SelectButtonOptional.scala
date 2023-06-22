@@ -4,7 +4,6 @@
 package react.primereact
 
 import cats.Eq
-import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import react.common.*

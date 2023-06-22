@@ -3,7 +3,6 @@
 
 package lucuma.react
 
-import japgolly.scalajs.react.vdom.TagMod
 import lucuma.react.virtual.facade.Virtualizer
 import org.scalajs.dom
 

@@ -11,7 +11,6 @@ import lucuma.typed.primereact.primereactStrings.indeterminate
 import react.common.*
 
 import scalajs.js
-import scalajs.js.JSConverters.*
 
 case class ProgressBar(
   id:                   js.UndefOr[String] = js.undefined,

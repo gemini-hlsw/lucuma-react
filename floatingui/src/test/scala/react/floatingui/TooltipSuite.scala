@@ -3,10 +3,9 @@
 
 package react.floatingui
 
-import japgolly.scalajs.react.vdom.html_<^.{< => <<, _}
+import japgolly.scalajs.react.vdom.html_<^.{< => <<, *}
 import react.common.TestUtils
 import react.common.fnProps2Component
-import react.floatingui.syntax._
 
 class TooltipSuite extends munit.FunSuite with TestUtils {
   test("render") {

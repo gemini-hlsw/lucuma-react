@@ -15,7 +15,6 @@ import org.scalajs.dom.html
 import react.common.ReactFnProps
 import react.common.style.Css
 import react.common.style.*
-import react.highcharts.Highcharts
 import react.resizeDetector.UseResizeDetectorProps
 import react.resizeDetector.hooks.*
 

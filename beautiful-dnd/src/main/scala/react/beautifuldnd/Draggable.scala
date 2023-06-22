@@ -11,7 +11,6 @@ import org.scalajs.dom.html
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 import scala.scalajs.js.annotation.JSName
-import scala.scalajs.js.|
 
 // https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/draggable.md
 object Draggable {
