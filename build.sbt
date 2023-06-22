@@ -319,7 +319,7 @@ lazy val highchartsDemo = project
   .in(file("highcharts-demo"))
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(highcharts)
-  .settings( 
+  .settings(
     tlFatalWarnings := false,
     demoSettings
   )
