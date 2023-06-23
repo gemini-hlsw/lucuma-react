@@ -2,7 +2,7 @@
   "devDependencies": {
     "@cquiroz/react-moon": "^2.0.2",
     "@floating-ui/react-dom-interactions": "^0.13.3",
-    "@tanstack/react-table": "^8.9.2",
+    "@tanstack/react-table": "^8.9.3",
     "@tanstack/react-virtual": "v3.0.0-beta.54",
     "@vitejs/plugin-react": "^4.0.1",
     "copy-to-clipboard": "^3.3.3",
