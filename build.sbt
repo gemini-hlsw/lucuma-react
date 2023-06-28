@@ -471,7 +471,7 @@ lazy val markdown = project
   .enablePlugins(ScalaJSPlugin)
   .dependsOn(common)
   .settings(
-    name := "lucuma-react-markdown",
+    name      := "lucuma-react-markdown",
     facadeSettings,
     Keys.test := {},
     libraryDependencies ++= Seq(
