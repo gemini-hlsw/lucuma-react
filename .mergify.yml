@@ -28,6 +28,7 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootPrimeReact)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, circularProgressbar)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, moon)
+  - status-success=Build and Test (ubuntu-latest, 3, temurin@17, markdown)
   actions:
     merge: {}
 - name: Label beautiful-dnd PRs
@@ -157,6 +158,14 @@ pull_request_rules:
     label:
       add:
       - hotkeys-demo
+      remove: []
+- name: Label markdown PRs
+  conditions:
+  - files~=^markdown/
+  actions:
+    label:
+      add:
+      - markdown
       remove: []
 - name: Label moon PRs
   conditions:
@@ -344,5 +353,6 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootPrimeReact)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, circularProgressbar)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, moon)
+  - status-success=Build and Test (ubuntu-latest, 3, temurin@17, markdown)
   actions:
     merge: {}

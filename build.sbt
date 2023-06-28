@@ -27,6 +27,7 @@ val kittensV         = "3.0.0"
 val munitV           = "1.0.0-M8"
 val scalaJsReactV    = "2.1.1"
 val utestV           = "0.8.1"
+val http4sV          = "0.23.22"
 
 ThisBuild / crossScalaVersions := Seq("3.3.0")
 
@@ -151,7 +152,8 @@ lazy val root = project
     primeReact,
     primeReactDemo,
     circularProgressbar,
-    moon
+    moon,
+    markdown
   )
 
 lazy val rootCore          = project.aggregate(common, test).enablePlugins(NoPublishPlugin)
@@ -193,7 +195,8 @@ val projects = List(
   rootResizable,
   rootPrimeReact,
   circularProgressbar,
-  moon
+  moon,
+  markdown
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
 ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
@@ -461,4 +464,16 @@ lazy val moon = project
   .settings(
     name := "lucuma-react-moon",
     facadeSettings
+  )
+
+lazy val markdown = project
+  .in(file("markdown"))
+  .enablePlugins(ScalaJSPlugin)
+  .dependsOn(common, test % Test)
+  .settings(
+    name := "lucuma-react-markdown",
+    facadeSettings,
+    libraryDependencies ++= Seq(
+      "org.http4s" %%% "http4s-core" % http4sV
+    )
   )
