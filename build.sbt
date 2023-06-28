@@ -469,10 +469,11 @@ lazy val moon = project
 lazy val markdown = project
   .in(file("markdown"))
   .enablePlugins(ScalaJSPlugin)
-  .dependsOn(common, test % Test)
+  .dependsOn(common)
   .settings(
     name := "lucuma-react-markdown",
     facadeSettings,
+    Keys.test := {},
     libraryDependencies ++= Seq(
       "org.http4s" %%% "http4s-core" % http4sV
     )
