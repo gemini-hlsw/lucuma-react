@@ -390,11 +390,11 @@ lazy val fontAwesome = project
   )
 
 lazy val hotkeys = project
-  .in(file("hotkeys"))
+  .in(file("hotkeys-hooks"))
   .enablePlugins(ScalaJSPlugin)
   .dependsOn(common)
   .settings(
-    name := "lucuma-react-hotkeys",
+    name := "lucuma-react-hotkeys-hooks",
     Compile / scalacOptions += "-language:implicitConversions",
     facadeSettings
   )
@@ -478,3 +478,4 @@ lazy val markdown = project
       "org.http4s" %%% "http4s-core" % http4sV
     )
   )
+
