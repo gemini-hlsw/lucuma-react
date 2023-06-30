@@ -478,4 +478,3 @@ lazy val markdown = project
       "org.http4s" %%% "http4s-core" % http4sV
     )
   )
-

@@ -7,8 +7,8 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom
-import react.hotkeys.hooks.*
 import react.hotkeys.*
+import react.hotkeys.hooks.*
 
 import scalajs.js
 import js.annotation.*
