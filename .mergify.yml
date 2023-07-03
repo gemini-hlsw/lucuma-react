@@ -143,14 +143,6 @@ pull_request_rules:
       add:
       - highcharts-demo
       remove: []
-- name: Label hotkeys PRs
-  conditions:
-  - files~=^hotkeys/
-  actions:
-    label:
-      add:
-      - hotkeys
-      remove: []
 - name: Label hotkeys-demo PRs
   conditions:
   - files~=^hotkeys-demo/
@@ -158,6 +150,14 @@ pull_request_rules:
     label:
       add:
       - hotkeys-demo
+      remove: []
+- name: Label hotkeys-hooks PRs
+  conditions:
+  - files~=^hotkeys-hooks/
+  actions:
+    label:
+      add:
+      - hotkeys-hooks
       remove: []
 - name: Label markdown PRs
   conditions:
