@@ -27,7 +27,6 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootResizable)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootPrimeReact)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, circularProgressbar)
-  - status-success=Build and Test (ubuntu-latest, 3, temurin@17, moon)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, markdown)
   actions:
     merge: {}
@@ -166,14 +165,6 @@ pull_request_rules:
     label:
       add:
       - markdown
-      remove: []
-- name: Label moon PRs
-  conditions:
-  - files~=^moon/
-  actions:
-    label:
-      add:
-      - moon
       remove: []
 - name: Label prime-react PRs
   conditions:
@@ -352,7 +343,6 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootResizable)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootPrimeReact)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, circularProgressbar)
-  - status-success=Build and Test (ubuntu-latest, 3, temurin@17, moon)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, markdown)
   actions:
     merge: {}
