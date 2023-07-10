@@ -152,7 +152,6 @@ lazy val root = project
     primeReact,
     primeReactDemo,
     circularProgressbar,
-    moon,
     markdown
   )
 
@@ -195,7 +194,6 @@ val projects = List(
   rootResizable,
   rootPrimeReact,
   circularProgressbar,
-  moon,
   markdown
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
@@ -454,15 +452,6 @@ lazy val circularProgressbar = project
   .dependsOn(common, test % Test)
   .settings(
     name := "lucuma-react-circular-progressbar",
-    facadeSettings
-  )
-
-lazy val moon = project
-  .in(file("moon"))
-  .enablePlugins(ScalaJSPlugin)
-  .dependsOn(common, test % Test)
-  .settings(
-    name := "lucuma-react-moon",
     facadeSettings
   )
 
