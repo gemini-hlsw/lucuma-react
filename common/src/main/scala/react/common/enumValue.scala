@@ -9,7 +9,7 @@ trait EnumValue[A] {
 }
 
 object EnumValue {
-  inline final def apply[A](implicit ev: EnumValue[A]): EnumValue[A] = ev
+  inline final def apply[A](using ev: EnumValue[A]): EnumValue[A] = ev
 
   def instance[A](f: A => String): EnumValue[A] =
     new EnumValue[A] {
@@ -27,7 +27,7 @@ trait EnumValueB[A] {
 }
 
 object EnumValueB {
-  inline final def apply[A](implicit ev: EnumValueB[A]): EnumValueB[A] = ev
+  inline final def apply[A](using ev: EnumValueB[A]): EnumValueB[A] = ev
 
   def instance[A](f: A => Boolean | String): EnumValueB[A] =
     new EnumValueB[A] {

@@ -51,38 +51,39 @@ package gridlayout {
   @js.native
   @JSImport("react-grid-layout", "Responsive.utils")
   object ResponsiveUtils extends js.Object {
+    // Method from js lanf to get the breakpoint from the width
     @nowarn
     def getBreakpointFromWidth(breakpoints: js.Dictionary[Int], width: Double): String = js.native
   }
 
-  trait BreakpointName {
-    val name: String
-  }
+  opaque type BreakpointName = String
 
   object BreakpointName {
-    implicit val eqBreakpointName: Eq[BreakpointName] = Eq.by(_.name)
+    inline def apply(x: String): BreakpointName = x
 
-    private final case class BreakpointNameI(name: String) extends BreakpointName
-    def apply(name: String): BreakpointName = new BreakpointNameI(name)
+    extension (x: BreakpointName) inline def name: String = x
 
-    val xxl: BreakpointName = apply("xxl")
-    val xl: BreakpointName  = apply("xl")
-    val lg: BreakpointName  = apply("lg")
-    val md: BreakpointName  = apply("md")
-    val sm: BreakpointName  = apply("sm")
-    val xs: BreakpointName  = apply("xs")
-    val xxs: BreakpointName = apply("xxs")
+    given (using ord: Order[String]): Order[BreakpointName]       = ord
+    given (using ord: Ordering[String]): Ordering[BreakpointName] = ord
+
+    val xxl: BreakpointName = "xxl"
+    val xl: BreakpointName  = "xl"
+    val lg: BreakpointName  = "lg"
+    val md: BreakpointName  = "md"
+    val sm: BreakpointName  = "sm"
+    val xs: BreakpointName  = "xs"
+    val xxs: BreakpointName = "xxs"
 
     val predefined: List[BreakpointName] = List(xxl, xl, lg, md, sm, xs, xxs)
   }
 
-  final case class Breakpoint(name: BreakpointName, pos: Int)
+  case class Breakpoint(name: BreakpointName, pos: Int)
 
   object Breakpoint {
-    implicit val eqBreakpoint: Eq[Breakpoint] = Eq.by(x => (x.name, x.pos))
+    given Eq[Breakpoint] = Eq.by(x => (x.name, x.pos))
   }
 
-  final case class Breakpoints(bps: List[Breakpoint]) {
+  case class Breakpoints(bps: List[Breakpoint]) {
     def toRaw: js.Object = {
       val p = js.Dynamic.literal()
       bps.foreach { case Breakpoint(name, v) => p.updateDynamic(name.name)(v.asInstanceOf[js.Any]) }
@@ -91,27 +92,32 @@ package gridlayout {
   }
 
   object Breakpoints {
-    implicit val eqBreakpoints: Eq[Breakpoints] = Eq.by(_.bps)
+    given Eq[Breakpoints] = Eq.by(_.bps)
   }
 
-  final case class Column(col: BreakpointName, pos: Int)
+  case class Column(col: BreakpointName, pos: Int)
   object Column {
-    implicit val eqColumn: Eq[Column] = Eq.by(x => (x.col, x.pos))
+    given Eq[Column] = Eq.by(x => (x.col, x.pos))
   }
 
-  final case class Columns(cols: List[Column]) {
-    def toRaw: js.Object = {
-      val p = js.Dynamic.literal()
-      cols.foreach { case Column(name, v) => p.updateDynamic(name.name)(v.asInstanceOf[js.Any]) }
-      p
-    }
-  }
+  opaque type Columns = List[Column]
 
   object Columns {
-    implicit val eqColumns: Eq[Columns] = Eq.by(_.cols)
+    given (using eq: Eq[List[Column]]): Eq[Columns] = eq
+
+    inline def apply(x: List[Column]): Columns = x
+
+    extension (x: Columns)
+      inline def cols: List[Column] = x
+
+      def toRaw: js.Object = {
+        val p = js.Dynamic.literal()
+        x.foreach { case Column(name, v) => p.updateDynamic(name.name)(v.asInstanceOf[js.Any]) }
+        p
+      }
   }
 
-  final case class DroppingItem(
+  case class DroppingItem(
     i: String,
     w: Int,
     h: Int
@@ -125,10 +131,11 @@ package gridlayout {
     }
   }
 
-  final case class BreakpointLayout(name: BreakpointName, layout: Layout)
+  case class BreakpointLayout(name: BreakpointName, layout: Layout)
 
   object BreakpointLayout {
-    implicit val eqBreakpointLayout: Eq[BreakpointLayout]        = Eq.by(x => (x.name, x.layout))
+    given Eq[BreakpointLayout] = Eq.by(x => (x.name, x.layout))
+
     private[gridlayout] def layoutsFromRaw(l: js.Object): Layout = {
       val c                   = l.asInstanceOf[js.Array[raw.LayoutItem]]
       val i: List[LayoutItem] = c.map(LayoutItem.fromRaw).toList
@@ -136,7 +143,7 @@ package gridlayout {
     }
   }
 
-  final case class Layouts(layouts: List[BreakpointLayout]) {
+  case class Layouts(layouts: List[BreakpointLayout]) {
     def toRaw: js.Object = {
       val p = js.Dynamic.literal()
       layouts.foreach { case BreakpointLayout(name, v) => p.updateDynamic(name.name)(v.toRaw) }
@@ -158,7 +165,7 @@ package gridlayout {
 
   }
 
-  final case class LayoutItem(
+  case class LayoutItem(
     w:             Int,
     h:             Int,
     x:             Int,
@@ -193,8 +200,8 @@ package gridlayout {
   }
 
   object LayoutItem {
-    implicit def eqUndef[A: Eq]: Eq[js.UndefOr[A]] = Eq.by(_.toOption)
-    implicit val eqLayoutItem: Eq[LayoutItem]      = Eq.by(x =>
+    private given eqUndef[A: Eq]: Eq[js.UndefOr[A]] = Eq.by(_.toOption)
+    given eqLayoutItem: Eq[LayoutItem]              = Eq.by(x =>
       (x.w,
        x.h,
        x.x,
@@ -259,29 +266,38 @@ package gridlayout {
         None
   }
 
-  final case class Layout(l: List[LayoutItem]) {
-    private[gridlayout] def toRaw: raw.Layout = l.toArray.map(_.toRaw).toJSArray
-  }
+  opaque type Layout = List[LayoutItem]
 
   object Layout {
-    implicit val eqLayout: Eq[Layout] = Eq.by(_.l)
-    val Empty: Layout                 = Layout(Nil)
+    inline def apply(l: List[LayoutItem]): Layout = l
+
+    extension (l: Layout)
+      private[gridlayout] inline def toRaw: raw.Layout = l.toArray.map(_.toRaw).toJSArray
+
+    given (using eq: Eq[List[LayoutItem]]): Eq[Layout] = eq
+
+    val Empty: Layout = Layout(Nil)
 
     private[gridlayout] def fromRaw(l: raw.Layout): Layout =
       Layout(List(l.map(LayoutItem.fromRaw).toSeq: _*))
   }
 
-  sealed trait CompactType extends Product with Serializable
-  object CompactType {
-    implicit val enumValue: EnumValue[CompactType] = EnumValue.toLowerCaseString
-    case object Vertical   extends CompactType
-    case object Horizontal extends CompactType
+  enum CompactType {
+    case Vertical, Horizontal
   }
 
-  sealed trait ResizeHandle extends Product with Serializable
+  object CompactType {
+    given EnumValue[CompactType] = EnumValue.toLowerCaseString
+  }
+
+  enum ResizeHandle {
+    case S, W, E, N, SW, NW, SE, NE
+  }
+
   object ResizeHandle {
-    implicit val eqResizeHandle: Eq[ResizeHandle]   = Eq.by(enumValue.value)
-    implicit val enumValue: EnumValue[ResizeHandle] = EnumValue.toLowerCaseString
+
+    given enumValue: EnumValue[ResizeHandle] = EnumValue.toLowerCaseString
+    given Eq[ResizeHandle]                   = Eq.by(enumValue.value)
 
     def fromRaw(s: String): Option[ResizeHandle] = s match {
       case "s"  => Some(S)
@@ -295,14 +311,6 @@ package gridlayout {
       case _    => None
     }
 
-    case object S  extends ResizeHandle
-    case object W  extends ResizeHandle
-    case object E  extends ResizeHandle
-    case object N  extends ResizeHandle
-    case object SW extends ResizeHandle
-    case object NW extends ResizeHandle
-    case object SE extends ResizeHandle
-    case object NE extends ResizeHandle
   }
 
 }
