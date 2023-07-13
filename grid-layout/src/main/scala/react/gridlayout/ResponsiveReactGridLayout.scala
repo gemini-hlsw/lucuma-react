@@ -22,7 +22,6 @@ final case class ResponsiveReactGridLayout(
   className:              js.UndefOr[String] = js.undefined,
   style:                  js.UndefOr[Style] = js.undefined,
   autoSize:               js.UndefOr[Boolean] = js.undefined,
-  cols:                   js.UndefOr[Int] = js.undefined,
   draggableCancel:        js.UndefOr[String] = js.undefined,
   draggableHandle:        js.UndefOr[String] = js.undefined,
   verticalCompact:        js.UndefOr[Boolean] = js.undefined,
@@ -72,7 +71,7 @@ object ResponsiveReactGridLayout {
     // Breakpoint names are arbitrary but must match in the cols and layouts objects.
     var breakpoints: js.Object = js.native
     // # of cols. This is a breakpoint -> cols map, e.g. {lg: 12, md: 10, ...}
-    var columns: js.Object     = js.native
+    var cols: js.Object        = js.native
     // layouts is an object mapping breakpoints to layouts.
     // e.g. {lg: Layout, md: Layout, ...}
     var layouts: js.Object     = js.native
@@ -97,7 +96,6 @@ object ResponsiveReactGridLayout {
       q.className,
       q.style,
       q.autoSize,
-      q.cols,
       q.draggableCancel,
       q.draggableHandle,
       q.verticalCompact,
@@ -133,7 +131,6 @@ object ResponsiveReactGridLayout {
     className:          js.UndefOr[String] = js.undefined,
     style:              js.UndefOr[Style] = js.undefined,
     autoSize:           js.UndefOr[Boolean] = js.undefined,
-    cols:               js.UndefOr[Int] = js.undefined,
     draggableCancel:    js.UndefOr[String] = js.undefined,
     draggableHandle:    js.UndefOr[String] = js.undefined,
     verticalCompact:    js.UndefOr[Boolean] = js.undefined,
@@ -167,7 +164,6 @@ object ResponsiveReactGridLayout {
       className,
       style,
       autoSize,
-      cols,
       draggableCancel,
       draggableHandle,
       verticalCompact,
@@ -196,7 +192,7 @@ object ResponsiveReactGridLayout {
     val r                                           = p.asInstanceOf[ResponsiveReactGridLayoutProps]
     val (br: Breakpoints, cl: Columns, ly: Layouts) = build(layouts)
     r.breakpoints = br.toRaw
-    r.columns = cl.toRaw
+    r.cols = cl.toRaw
     r.layouts = ly.toRaw
     r.onBreakpointChange = (newBreakpoint: raw.Breakpoint, newCol: Int) =>
       onBreakpointChange(BreakpointName(newBreakpoint), newCol).runNow()

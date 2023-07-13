@@ -62,6 +62,8 @@ object ReactGridLayout {
 
   @js.native
   trait ReactGridLayoutProps extends BaseProps {
+    // # of cols.
+    var cols: js.UndefOr[Int]
     // layout is an array of object with the format:
     // {x: Number, y: Number, w: Number, h: Number, i: String}
     var layout: js.UndefOr[raw.Layout]
@@ -142,7 +144,6 @@ object ReactGridLayout {
       className,
       style,
       autoSize,
-      cols,
       draggableCancel,
       draggableHandle,
       verticalCompact,
@@ -169,6 +170,7 @@ object ReactGridLayout {
       onDrop
     )
     val r = p.asInstanceOf[ReactGridLayoutProps]
+    r.cols = cols
     r.layout = layout.toRaw
     r.onLayoutChange = (x: raw.Layout) => onLayoutChange(Layout.fromRaw(x)).runNow()
     r
