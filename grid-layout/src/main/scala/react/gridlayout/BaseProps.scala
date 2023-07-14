@@ -21,8 +21,6 @@ trait BaseProps extends js.Object {
   var width: Double
   // If true, the container height swells and contracts to fit contents
   var autoSize: js.UndefOr[Boolean]
-  // # of cols.
-  var cols: js.UndefOr[Int]
   // A selector that will not be draggable.
   var draggableCancel: js.UndefOr[String]
   // A selector for the draggable handler
@@ -93,7 +91,6 @@ object BaseProps {
     className:        js.UndefOr[String] = js.undefined,
     style:            js.UndefOr[Style] = js.undefined,
     autoSize:         js.UndefOr[Boolean] = js.undefined,
-    cols:             js.UndefOr[Int] = js.undefined,
     draggableCancel:  js.UndefOr[String] = js.undefined,
     draggableHandle:  js.UndefOr[String] = js.undefined,
     verticalCompact:  js.UndefOr[Boolean] = js.undefined,
@@ -124,7 +121,6 @@ object BaseProps {
     p.width = width
     p.style = style.map(_.toJsObject)
     p.autoSize = autoSize
-    p.cols = cols
     p.draggableCancel = draggableCancel
     p.draggableHandle = draggableHandle
     p.verticalCompact = verticalCompact

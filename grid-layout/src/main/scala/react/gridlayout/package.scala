@@ -4,6 +4,7 @@
 package react
 
 import cats.*
+import cats.derived.*
 import japgolly.scalajs.react.Callback
 import org.scalajs.dom.Event
 import org.scalajs.dom.MouseEvent
@@ -77,13 +78,9 @@ package gridlayout {
     val predefined: List[BreakpointName] = List(xxl, xl, lg, md, sm, xs, xxs)
   }
 
-  case class Breakpoint(name: BreakpointName, pos: Int)
+  case class Breakpoint(name: BreakpointName, pos: Int) derives Eq
 
-  object Breakpoint {
-    given Eq[Breakpoint] = Eq.by(x => (x.name, x.pos))
-  }
-
-  case class Breakpoints(bps: List[Breakpoint]) {
+  case class Breakpoints(bps: List[Breakpoint]) derives Eq {
     def toRaw: js.Object = {
       val p = js.Dynamic.literal()
       bps.foreach { case Breakpoint(name, v) => p.updateDynamic(name.name)(v.asInstanceOf[js.Any]) }
@@ -91,14 +88,7 @@ package gridlayout {
     }
   }
 
-  object Breakpoints {
-    given Eq[Breakpoints] = Eq.by(_.bps)
-  }
-
-  case class Column(col: BreakpointName, pos: Int)
-  object Column {
-    given Eq[Column] = Eq.by(x => (x.col, x.pos))
-  }
+  case class Column(col: BreakpointName, pos: Int) derives Eq
 
   opaque type Columns = List[Column]
 
@@ -131,11 +121,9 @@ package gridlayout {
     }
   }
 
-  case class BreakpointLayout(name: BreakpointName, layout: Layout)
+  case class BreakpointLayout(name: BreakpointName, layout: Layout) derives Eq
 
   object BreakpointLayout {
-    given Eq[BreakpointLayout] = Eq.by(x => (x.name, x.layout))
-
     private[gridlayout] def layoutsFromRaw(l: js.Object): Layout = {
       val c                   = l.asInstanceOf[js.Array[raw.LayoutItem]]
       val i: List[LayoutItem] = c.map(LayoutItem.fromRaw).toList
@@ -170,7 +158,7 @@ package gridlayout {
     h:             Int,
     x:             Int,
     y:             Int,
-    i:             js.UndefOr[String] = js.undefined,
+    i:             String,
     minW:          js.UndefOr[Int] = js.undefined,
     minH:          js.UndefOr[Int] = js.undefined,
     maxW:          js.UndefOr[Int] = js.undefined,
@@ -180,7 +168,7 @@ package gridlayout {
     isResizable:   js.UndefOr[Boolean] = js.undefined,
     resizeHandles: js.UndefOr[List[ResizeHandle]] = js.undefined,
     isBounded:     js.UndefOr[Boolean] = js.undefined
-  ) {
+  ) derives Eq {
     def toRaw: raw.LayoutItem =
       new raw.LayoutItem(w,
                          h,
@@ -201,24 +189,6 @@ package gridlayout {
 
   object LayoutItem {
     private given eqUndef[A: Eq]: Eq[js.UndefOr[A]] = Eq.by(_.toOption)
-    given eqLayoutItem: Eq[LayoutItem]              = Eq.by(x =>
-      (x.w,
-       x.h,
-       x.x,
-       x.y,
-       x.y,
-       x.i,
-       x.minW,
-       x.minH,
-       x.maxW,
-       x.maxH,
-       x.static,
-       x.isDraggable,
-       x.isResizable,
-       x.resizeHandles,
-       x.isBounded
-      )
-    )
 
     private[gridlayout] def fromRaw(l: raw.LayoutItem): LayoutItem =
       new LayoutItem(
@@ -273,6 +243,7 @@ package gridlayout {
 
     extension (l: Layout)
       private[gridlayout] inline def toRaw: raw.Layout = l.toArray.map(_.toRaw).toJSArray
+      inline def asList: List[LayoutItem]              = l
 
     given (using eq: Eq[List[LayoutItem]]): Eq[Layout] = eq
 
