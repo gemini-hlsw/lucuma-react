@@ -46,7 +46,7 @@ package raw {
     val h:             Int,
     val x:             Int,
     val y:             Int,
-    val i:             js.UndefOr[String] = js.undefined,
+    val i:             String,
     val minW:          js.UndefOr[Int] = js.undefined,
     val minH:          js.UndefOr[Int] = js.undefined,
     val maxW:          js.UndefOr[Int] = js.undefined,

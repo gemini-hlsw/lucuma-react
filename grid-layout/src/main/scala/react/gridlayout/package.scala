@@ -158,7 +158,7 @@ package gridlayout {
     h:             Int,
     x:             Int,
     y:             Int,
-    i:             js.UndefOr[String] = js.undefined,
+    i:             String,
     minW:          js.UndefOr[Int] = js.undefined,
     minH:          js.UndefOr[Int] = js.undefined,
     maxW:          js.UndefOr[Int] = js.undefined,
