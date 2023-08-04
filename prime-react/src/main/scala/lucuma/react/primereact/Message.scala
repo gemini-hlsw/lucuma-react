@@ -5,12 +5,12 @@ package lucuma.react.primereact
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.common.*
 import lucuma.typed.primereact.components.{Message => CMessage}
 import lucuma.typed.primereact.primereactStrings.error
 import lucuma.typed.primereact.primereactStrings.info
 import lucuma.typed.primereact.primereactStrings.success
 import lucuma.typed.primereact.primereactStrings.warn
-import lucuma.react.common.*
 
 import scalajs.js
 

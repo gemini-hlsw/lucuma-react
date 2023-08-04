@@ -3,9 +3,9 @@
 
 package lucuma.react
 
+import lucuma.react.common.EnumValue
 import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.html.{Element => HTMLElement}
-import lucuma.react.common.EnumValue
 
 import scala.scalajs.js
 

@@ -6,9 +6,9 @@ package lucuma.react.primereact
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.common.*
 import lucuma.typed.primereact.components.{Dialog => CDialog}
 import org.scalajs.dom.HTMLElement
-import lucuma.react.common.*
 
 import scalajs.js
 

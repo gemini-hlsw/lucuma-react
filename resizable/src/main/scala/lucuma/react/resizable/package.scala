@@ -3,8 +3,8 @@
 
 package lucuma.react
 
-import org.scalajs.dom.html.{Element => HTMLElement}
 import lucuma.react.common.EnumValue
+import org.scalajs.dom.html.{Element => HTMLElement}
 
 import scala.scalajs.js
 

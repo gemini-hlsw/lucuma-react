@@ -6,11 +6,11 @@ package lucuma.react.gridlayout.demo
 import cats.syntax.all._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import org.scalajs.dom
 import lucuma.react.common._
 import lucuma.react.gridlayout._
 import lucuma.react.resizeDetector._
 import lucuma.react.resizeDetector.hooks._
+import org.scalajs.dom
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation._

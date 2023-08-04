@@ -6,9 +6,9 @@ package lucuma.react.hotkeys.demo
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import org.scalajs.dom
 import lucuma.react.hotkeys.*
 import lucuma.react.hotkeys.hooks.*
+import org.scalajs.dom
 
 import scalajs.js
 import js.annotation.*

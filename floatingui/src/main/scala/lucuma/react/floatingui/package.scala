@@ -7,11 +7,11 @@ import cats.syntax.all.*
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TopNode
-import org.scalajs.dom
-import org.scalajs.dom.html
 import lucuma.react.common.EnumValue
 import lucuma.react.common.syntax.callback.*
 import lucuma.react.common.syntax.enumValue.*
+import org.scalajs.dom
+import org.scalajs.dom.html
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._

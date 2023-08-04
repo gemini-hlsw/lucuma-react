@@ -5,10 +5,10 @@ package lucuma.react.primereact
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.common.*
 import lucuma.typed.primereact.components.{ProgressBar => CProgressBar}
 import lucuma.typed.primereact.primereactStrings.determinate
 import lucuma.typed.primereact.primereactStrings.indeterminate
-import lucuma.react.common.*
 
 import scalajs.js
 

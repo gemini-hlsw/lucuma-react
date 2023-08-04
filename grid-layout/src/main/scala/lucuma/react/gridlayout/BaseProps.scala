@@ -6,10 +6,10 @@ package lucuma.react
 package gridlayout
 
 import japgolly.scalajs.react.Callback
+import lucuma.react.common._
 import org.scalajs.dom.Event
 import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.html.{Element => HTMLElement}
-import lucuma.react.common._
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._

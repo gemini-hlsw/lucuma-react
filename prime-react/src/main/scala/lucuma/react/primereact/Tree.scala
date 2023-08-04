@@ -8,6 +8,7 @@ import cats.derived.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.SyntheticEvent
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.common.ReactFnProps
 import lucuma.typed.primereact.components.{Tree => CTree}
 import lucuma.typed.primereact.primereactStrings.checkbox
 import lucuma.typed.primereact.primereactStrings.multiple
@@ -16,7 +17,6 @@ import lucuma.typed.primereact.treeTreeMod.TreeNodeTemplateOptions
 import lucuma.typed.primereact.treenodeTreenodeMod.{TreeNode => CTreeNode}
 import org.scalablytyped.runtime.StringDictionary
 import org.scalajs.dom.Element
-import lucuma.react.common.ReactFnProps
 
 import scalajs.js
 import scalajs.js.JSConverters.*

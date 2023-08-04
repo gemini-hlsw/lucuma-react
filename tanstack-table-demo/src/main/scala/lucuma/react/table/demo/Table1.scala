@@ -5,8 +5,8 @@ package lucuma.react.table.demo
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import lucuma.react.table.*
 import lucuma.react.common.*
+import lucuma.react.table.*
 
 object Table1:
   private val ColDef = ColumnDef[Guitar]

@@ -7,12 +7,12 @@ import cats.Eq
 import cats.derived.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.common.*
 import lucuma.typed.primereact.components.{Tag => CTag}
 import lucuma.typed.primereact.primereactStrings.danger
 import lucuma.typed.primereact.primereactStrings.info
 import lucuma.typed.primereact.primereactStrings.success
 import lucuma.typed.primereact.primereactStrings.warning
-import lucuma.react.common.*
 
 import scalajs.js
 

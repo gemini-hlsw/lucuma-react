@@ -5,10 +5,10 @@ package lucuma.react.table.demo
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import lucuma.react.syntax.*
-import lucuma.react.table.*
 import lucuma.react.common.*
 import lucuma.react.common.style.Css
+import lucuma.react.syntax.*
+import lucuma.react.table.*
 
 object Table2:
   private val ColDef = ColumnDef[Person]

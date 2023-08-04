@@ -5,9 +5,9 @@ package lucuma.react.markdown
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.*
-import org.http4s.Uri
 import lucuma.react.common.Css
 import lucuma.react.common.GenericFnComponentPA
+import org.http4s.Uri
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*

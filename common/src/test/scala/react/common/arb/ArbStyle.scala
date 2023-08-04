@@ -3,11 +3,11 @@
 
 package lucuma.react.common.arb
 
+import lucuma.react.common.*
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.*
 import org.scalacheck.Cogen
 import org.scalacheck.Gen
-import lucuma.react.common.*
 
 trait ArbStyle {
   implicit val arbStyleMember: Arbitrary[String | Int] = Arbitrary {

@@ -4,10 +4,10 @@
 package lucuma.react.common.implicits
 
 import cats.kernel.laws.discipline._
-import munit._
-import org.scalacheck.Arbitrary._
 import lucuma.react.common._
 import lucuma.react.common.arb._
+import munit._
+import org.scalacheck.Arbitrary._
 
 class StyleSuite extends DisciplineSuite {
   checkAll("Eq[Style]", EqTests[Style].eqv)

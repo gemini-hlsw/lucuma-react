@@ -7,8 +7,8 @@ import japgolly.scalajs.react.CtorType.Props
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.component.Js.ComponentWithFacade
 import japgolly.scalajs.react.vdom.html_<^.*
-import org.scalajs.dom.*
 import lucuma.react.common.*
+import org.scalajs.dom.*
 
 import scalajs.js.annotation.JSImport
 import scalajs.js

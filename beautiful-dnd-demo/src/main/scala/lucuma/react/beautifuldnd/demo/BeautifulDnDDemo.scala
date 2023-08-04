@@ -7,8 +7,8 @@ import cats._
 import cats.syntax.all._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import org.scalajs.dom.document
 import lucuma.react.beautifuldnd._
+import org.scalajs.dom.document
 
 import scala.scalajs.js.annotation._
 

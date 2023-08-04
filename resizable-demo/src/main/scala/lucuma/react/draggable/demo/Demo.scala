@@ -5,9 +5,9 @@ package lucuma.react.draggable.demo
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import org.scalajs.dom
 import lucuma.react.common._
 import lucuma.react.resizable._
+import org.scalajs.dom
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation._

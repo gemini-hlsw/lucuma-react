@@ -4,9 +4,9 @@
 package lucuma.react.resizeDetector
 
 import japgolly.scalajs.react.*
-import org.scalajs.dom.html
 import lucuma.react.common.*
 import lucuma.react.resizeDetector.ResizeDetector.*
+import org.scalajs.dom.html
 
 import scala.annotation.nowarn
 import scala.scalajs.js

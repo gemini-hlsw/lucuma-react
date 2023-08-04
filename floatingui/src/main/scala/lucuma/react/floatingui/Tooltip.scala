@@ -6,10 +6,10 @@ package lucuma.react.floatingui
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.feature.ReactFragment
 import japgolly.scalajs.react.vdom.html_<^.*
-import org.scalajs.dom
 import lucuma.react.common.ReactFnProps
 import lucuma.react.common.Style
 import lucuma.react.floatingui.hooks.*
+import org.scalajs.dom
 
 import scala.scalajs.js
 

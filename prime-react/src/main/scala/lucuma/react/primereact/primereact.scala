@@ -9,10 +9,10 @@ import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.VdomNode
-import lucuma.typed.StBuildingComponent
-import lucuma.typed.primereact.primereactStrings.*
 import lucuma.react.common.*
 import lucuma.react.fa.FontAwesomeIcon
+import lucuma.typed.StBuildingComponent
+import lucuma.typed.primereact.primereactStrings.*
 
 import scalajs.js
 

@@ -4,6 +4,14 @@
 package lucuma.react.highcharts.demo
 
 import japgolly.scalajs.react.callback.Callback
+import lucuma.react.common.*
+import lucuma.react.highcharts.Chart
+import lucuma.react.highcharts.Highcharts
+import lucuma.react.highcharts.WrapProceed
+import lucuma.react.highcharts.implicits.*
+import lucuma.react.highcharts.mods.seriesLabel.SeriesLabelPoint
+import lucuma.react.highcharts.mods.seriesLabel.SeriesLabelSeries
+import lucuma.react.highcharts.seriesLabel
 import lucuma.typed.highcharts.highchartsStrings.areaspline
 import lucuma.typed.highcharts.mod.AxisTypeValue
 import lucuma.typed.highcharts.mod.CSSObject
@@ -38,14 +46,6 @@ import lucuma.typed.highcharts.mod.YAxisLabelsOptions
 import lucuma.typed.highcharts.mod.YAxisOptions
 import lucuma.typed.highcharts.mod.YAxisTitleOptions
 import org.scalajs.dom
-import lucuma.react.common.*
-import lucuma.react.highcharts.Chart
-import lucuma.react.highcharts.Highcharts
-import lucuma.react.highcharts.WrapProceed
-import lucuma.react.highcharts.implicits.*
-import lucuma.react.highcharts.mods.seriesLabel.SeriesLabelPoint
-import lucuma.react.highcharts.mods.seriesLabel.SeriesLabelSeries
-import lucuma.react.highcharts.seriesLabel
 
 import scala.annotation.nowarn
 import scala.scalajs.js

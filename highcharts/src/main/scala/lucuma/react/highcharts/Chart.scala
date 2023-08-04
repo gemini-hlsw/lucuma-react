@@ -5,13 +5,13 @@ package lucuma.react.highcharts
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
+import lucuma.react.common.ReactProps
 import lucuma.typed.highcharts.anon.TypeofHighchartsAST
 import lucuma.typed.highcharts.mod.Chart_
 import lucuma.typed.highcharts.mod.HTMLDOMElement
 import lucuma.typed.highcharts.mod.Options
 import lucuma.typed.highcharts.mod.PointOptionsObject
 import org.scalajs.dom.html
-import lucuma.react.common.ReactProps
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport

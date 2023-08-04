@@ -5,10 +5,10 @@ package lucuma.react.table.demo
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import org.scalajs.dom.HTMLElement
 import lucuma.react.common.*
 import lucuma.react.primereact.*
 import lucuma.react.primereact.hooks.all.*
+import org.scalajs.dom.HTMLElement
 
 import scalajs.js
 

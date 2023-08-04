@@ -6,10 +6,10 @@ package lucuma.react
 import cats.*
 import cats.derived.*
 import japgolly.scalajs.react.Callback
+import lucuma.react.common.*
 import org.scalajs.dom.Event
 import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.html.{Element => HTMLElement}
-import lucuma.react.common.*
 
 import scala.annotation.nowarn
 import scala.scalajs.js

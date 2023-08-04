@@ -8,13 +8,13 @@ import cats.derived.*
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.common.*
 import lucuma.typed.primereact.components.{Sidebar => CSidebar}
 import lucuma.typed.primereact.primereactStrings.bottom
 import lucuma.typed.primereact.primereactStrings.left
 import lucuma.typed.primereact.primereactStrings.right
 import lucuma.typed.primereact.primereactStrings.top
 import org.scalajs.dom.*
-import lucuma.react.common.*
 
 import scalajs.js
 

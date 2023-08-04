@@ -3,10 +3,10 @@
 
 package lucuma.react.common.arb
 
+import lucuma.react.common._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary._
 import org.scalacheck.Cogen
-import lucuma.react.common._
 
 trait ArbSize {
   implicit val arbSize: Arbitrary[Size] = Arbitrary {
