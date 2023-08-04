@@ -1,11 +1,11 @@
 // Copyright (c) 2016-2023 Association of Universities for Research in Astronomy, Inc. (AURA)
 // For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
 
-package react.gridlayout
+package lucuma.react.gridlayout
 
 import japgolly.scalajs.react.test._
 import japgolly.scalajs.react.vdom.html_<^._
-import react.common.syntax.all.*
+import lucuma.react.common.syntax.all.*
 import utest._
 
 object PackageTests extends TestSuite {

@@ -1,11 +1,11 @@
 // Copyright (c) 2016-2023 Association of Universities for Research in Astronomy, Inc. (AURA)
 // For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
 
-package react.common
+package lucuma.react.common
 
 import cats.syntax.all.*
-import react.common.style.*
-import react.common.style.given
+import lucuma.react.common.style.*
+import lucuma.react.common.style.given
 
 class StyleSuite extends munit.FunSuite with TestUtils {
   test("style") {

@@ -1,7 +1,7 @@
 // Copyright (c) 2016-2023 Association of Universities for Research in Astronomy, Inc. (AURA)
 // For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
 
-package react.highcharts
+package lucuma.react.highcharts
 
 import japgolly.scalajs.react.test.*
 import utest.*

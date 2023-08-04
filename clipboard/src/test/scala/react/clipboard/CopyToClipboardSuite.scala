@@ -1,10 +1,10 @@
 // Copyright (c) 2016-2023 Association of Universities for Research in Astronomy, Inc. (AURA)
 // For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
 
-package react.clipboard
+package lucuma.react.clipboard
 
 import japgolly.scalajs.react.vdom.html_<^.{< => <<, _}
-import react.common.TestUtils
+import lucuma.react.common.TestUtils
 
 class CopyToClipboardSuite extends munit.FunSuite with TestUtils {
   test("render") {

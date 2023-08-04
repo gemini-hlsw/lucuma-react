@@ -14,7 +14,7 @@ import lucuma.typed.{tanstackTableCore => raw}
 import lucuma.typed.{tanstackVirtualCore => rawVirtual}
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLElement
-import react.common.style.Css
+import lucuma.react.common.style.Css
 
 import scalajs.js
 

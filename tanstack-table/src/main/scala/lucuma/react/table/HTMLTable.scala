@@ -10,7 +10,7 @@ import lucuma.react.SizePx
 import lucuma.typed.{tanstackTableCore => raw}
 import lucuma.typed.{tanstackVirtualCore => rawVirtual}
 import org.scalajs.dom.HTMLElement
-import react.common.*
+import lucuma.react.common.*
 
 import scalajs.js
 
