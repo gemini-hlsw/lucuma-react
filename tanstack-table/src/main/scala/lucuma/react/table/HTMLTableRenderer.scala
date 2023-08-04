@@ -7,13 +7,13 @@ import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.hooks.Hooks
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.common.*
+import lucuma.react.common.style.Css
 import lucuma.react.virtual.*
 import lucuma.typed.{tanstackReactTable => rawReact}
 import lucuma.typed.{tanstackTableCore => raw}
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLDivElement
-import react.common.*
-import react.common.style.Css
 
 import scalajs.js
 
