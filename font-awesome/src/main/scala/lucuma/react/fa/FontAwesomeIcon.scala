@@ -8,7 +8,6 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 
-import scala.annotation.nowarn
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.annotation.*
@@ -17,7 +16,7 @@ import scala.scalajs.js.annotation.*
  * Facade for the react component for FontAwesomeIcons See:
  * https://fontawesome.com/v5.15/how-to-use/on-the-web/using-with/react
  */
-final case class FontAwesomeIcon(
+case class FontAwesomeIcon(
   family:                 Family,
   icon:                   js.UndefOr[FontAwesomeIcon.Icon],
   clazz:                  js.UndefOr[Css],
@@ -98,50 +97,6 @@ final case class FontAwesomeIcon(
 
   def withSwapOpacity(swapOpacity: Boolean = true): FontAwesomeIcon =
     copy(swapOpacity = swapOpacity)
-}
-
-@js.native
-@nowarn
-trait FAIcon extends js.Object {
-  val iconName: String = js.native
-  val prefix: String   = js.native
-}
-
-@js.native
-trait Transform extends js.Object {
-  var size: js.UndefOr[Double]
-  var x: js.UndefOr[Double]
-  var y: js.UndefOr[Double]
-  var rotate: js.UndefOr[Double]
-  var flipX: js.UndefOr[Boolean]
-  var flipY: js.UndefOr[Boolean]
-}
-
-object Transform {
-  def apply(
-    size:   js.UndefOr[Double] = js.undefined,
-    x:      js.UndefOr[Double] = js.undefined,
-    y:      js.UndefOr[Double] = js.undefined,
-    rotate: js.UndefOr[Double] = js.undefined,
-    flipX:  js.UndefOr[Boolean] = js.undefined,
-    flipY:  js.UndefOr[Boolean] = js.undefined
-  ): Transform = {
-    val p = (new js.Object).asInstanceOf[Transform]
-    size.foreach(v => p.size = v)
-    x.foreach(v => p.x = v)
-    y.foreach(v => p.y = v)
-    rotate.foreach(v => p.rotate = v)
-    flipX.foreach(v => p.flipX = v)
-    flipY.foreach(v => p.flipY = v)
-    p
-  }
-}
-
-@js.native
-@JSImport("@fortawesome/fontawesome-svg-core", "library")
-object IconLibrary extends js.Object {
-  @nowarn
-  def add(arg: FAIcon*): js.Any = js.native
 }
 
 object FontAwesomeIcon {
