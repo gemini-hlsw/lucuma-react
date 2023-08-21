@@ -49,7 +49,7 @@ object ConfirmDialog {
     Callback {
       val props = ConfirmDialogProps()
       message.foreach(v => props.setMessage(v.rawNode))
-      icon.foreach(v => props.setIcon(v.raw))
+      icon.foreach(v => props.setIcon(v.toPrime))
       // header not in the ST facade
       header.foreach(v => StObject.set(props, "header", v.rawNode))
       footer.foreach(v => props.setFooter(v.rawNode))

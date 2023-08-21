@@ -41,7 +41,7 @@ object ConfirmPopup {
   ): ConfirmDialogReturn = {
     val props     = ConfirmPopupProps().setTarget(target)
     message.foreach(v => props.setMessage(v.rawNode))
-    icon.foreach(v => props.setIcon(v.raw))
+    icon.foreach(v => props.setIcon(v.toPrime))
     footer.foreach(v => props.setFooter(v.rawNode))
     dismissable.foreach(v => props.setDismissable(v))
     acceptLabel.foreach(v => props.setAcceptLabel(v))

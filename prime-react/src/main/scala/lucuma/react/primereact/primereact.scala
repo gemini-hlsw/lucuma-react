@@ -62,17 +62,14 @@ type Icon = FontAwesomeIcon | Image | String
 
 extension (icon: Icon)
   def toPrime: Node                      = icon match {
-    case fa: FontAwesomeIcon => fa.raw
-    case img: Image          =>
-      val v: VdomNode = img
-      v.rawNode
+    case fa: FontAwesomeIcon => (fa: VdomNode).rawNode
+    case img: Image          => (img: VdomNode).rawNode
     case s: String           => s
   }
   def toPrimeWithClass(clazz: Css): Node = icon match {
-    case fa: FontAwesomeIcon => fa.addClass(clazz).raw
+    case fa: FontAwesomeIcon => (fa.copy(clazz = fa.clazz |+| clazz): VdomNode).rawNode
     case img: Image          =>
-      val v: VdomNode = img.copy(clazz = img.clazz.toOption.orEmpty |+| clazz)
-      v.rawNode
+      (img.copy(clazz = img.clazz.toOption.orEmpty |+| clazz): VdomNode).rawNode
     case s: String           => s
   }
 

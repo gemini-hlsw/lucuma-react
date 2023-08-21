@@ -9,290 +9,86 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 
 import scala.scalajs.js
-import scala.scalajs.js.JSConverters.*
-import scala.scalajs.js.annotation.*
 
-/**
- * Facade for the react component for FontAwesomeIcons See:
- * https://fontawesome.com/v5.15/how-to-use/on-the-web/using-with/react
- */
 case class FontAwesomeIcon(
-  family:                 Family,
-  icon:                   js.UndefOr[FontAwesomeIcon.Icon],
-  clazz:                  js.UndefOr[Css],
-  color:                  js.UndefOr[String],
-  pulse:                  js.UndefOr[Boolean],
-  beat:                   js.UndefOr[Boolean],
-  beatFade:               js.UndefOr[Boolean],
-  border:                 js.UndefOr[Boolean],
-  fade:                   js.UndefOr[Boolean],
-  flash:                  js.UndefOr[Boolean],
-  fixedWidth:             js.UndefOr[Boolean],
-  inverse:                js.UndefOr[Boolean],
-  listItem:               js.UndefOr[Boolean],
-  flip:                   js.UndefOr[Flip],
-  size:                   js.UndefOr[IconSize],
-  pull:                   js.UndefOr[Pull],
-  rotation:               js.UndefOr[Rotation],
-  transform:              js.UndefOr[String | Transform],
-  tabIndex:               js.UndefOr[Int],
-  spin:                   js.UndefOr[Boolean],
-  spinPulse:              js.UndefOr[Boolean],
-  spinReverse:            js.UndefOr[Boolean],
-  style:                  js.UndefOr[Style],
-  title:                  js.UndefOr[String],
-  swapOpacity:            js.UndefOr[Boolean],
-  override val modifiers: Seq[TagMod]
-) extends GenericFnComponentPA[FontAwesomeIcon.Props, FontAwesomeIcon] {
-  override protected def cprops    = FontAwesomeIcon.props(this)
-  override protected val component = FontAwesomeIcon.component
-  override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
+  icon:        FAIcon | IconLookup,
+  clazz:       Css = Css.Empty,
+  mask:        js.UndefOr[IconLookup] = js.undefined,
+  maskId:      js.UndefOr[String] = js.undefined,
+  symbol:      js.UndefOr[FaSymbol] = js.undefined,
+  transform:   js.UndefOr[Transform] = js.undefined,
+  title:       js.UndefOr[String] = js.undefined,
+  titleId:     js.UndefOr[String] = js.undefined,
+  beat:        Boolean = false,
+  beatFade:    Boolean = false,
+  border:      Boolean = false,
+  bounce:      Boolean = false,
+  fade:        Boolean = false,
+  flash:       Boolean = false,
+  fixedWidth:  Boolean = false,
+  flip:        js.UndefOr[Flip] = js.undefined,
+  inverse:     Boolean = false,
+  listItem:    Boolean = false,
+  pull:        js.UndefOr[Pull] = js.undefined,
+  pulse:       Boolean = false,
+  rotation:    js.UndefOr[Rotation] = js.undefined,
+  shake:       Boolean = false,
+  size:        js.UndefOr[IconSize] = js.undefined,
+  spin:        Boolean = false,
+  spinPulse:   Boolean = false,
+  spinReverse: Boolean = false,
+  swapOpacity: Boolean = false,
+  modifiers:   List[TagMod] = List.empty
+) extends ReactFnProps(FontAwesomeIcon.component)
+    with IconProps:
+  def apply(mods: TagMod*): FontAwesomeIcon = copy(modifiers = modifiers ++ mods)
+  override def faClasses: Css = super.faClasses // For some reason this is necessary (?!?!?)
 
-  def addClass(clazz: Css): FontAwesomeIcon = copy(clazz = this.clazz.toOption.orEmpty |+| clazz)
+  def addClass(value:        Css)            = copy(clazz = clazz |+| value)
+  def withClass(value:       Css)            = copy(clazz = value)
+  def withMask(value:        IconLookup)     = copy(mask = value)
+  def withMaskId(value:      String)         = copy(maskId = value)
+  def withSymbol(value:      FaSymbol)       = copy(symbol = value)
+  def withTransform(value:   Transform)      = copy(transform = value)
+  def withTitle(value:       String)         = copy(title = value)
+  def withTitleId(value:     String)         = copy(titleId = value)
+  def withBeat(value:        Boolean = true) = copy(beat = value)
+  def withBeatFade(value:    Boolean = true) = copy(beatFade = value)
+  def withBorder(value:      Boolean = true) = copy(border = value)
+  def withBounce(value:      Boolean = true) = copy(bounce = value)
+  def withFade(value:        Boolean = true) = copy(fade = value)
+  def withFlash(value:       Boolean = true) = copy(flash = value)
+  def withFlip(value:        Flip)           = copy(flip = value)
+  def withFixedWidth(value:  Boolean = true) = copy(fixedWidth = value)
+  def withInverse(value:     Boolean = true) = copy(inverse = value)
+  def withListItem(value:    Boolean = true) = copy(listItem = value)
+  def withPull(value:        Pull)           = copy(pull = value)
+  def withPulse(value:       Boolean = true) = copy(pulse = value)
+  def withRotation(value:    Rotation)       = copy(rotation = value)
+  def withShake(value:       Boolean = true) = copy(shake = value)
+  def withSize(value:        IconSize)       = copy(size = value)
+  def withSpin(value:        Boolean = true) = copy(spin = value)
+  def withSpinPulse(value:   Boolean = true) = copy(spinPulse = value)
+  def withSpinReverse(value: Boolean = true) = copy(spinReverse = value)
+  def withSwapOpacity(value: Boolean = true) = copy(swapOpacity = value)
 
-  def withClass(clazz: Css): FontAwesomeIcon = copy(clazz = clazz)
+object FontAwesomeIcon:
+  private type Props = FontAwesomeIcon
 
-  def withColor(color: String): FontAwesomeIcon = copy(color = color)
-
-  def withPulse(pulse: Boolean = true): FontAwesomeIcon = copy(pulse = pulse)
-
-  def withBeat(beat: Boolean = true): FontAwesomeIcon = copy(beat = beat)
-
-  def withBeatFade(beat: Boolean = true): FontAwesomeIcon = copy(beatFade = beatFade)
-
-  def withBorder(border: Boolean = true): FontAwesomeIcon = copy(border = border)
-
-  def withFade(fade: Boolean = true): FontAwesomeIcon = copy(fade = fade)
-
-  def withFlash(flash: Boolean = true): FontAwesomeIcon = copy(flash = flash)
-
-  def withFixedWidth(fixedWidth: Boolean = true): FontAwesomeIcon = copy(fixedWidth = fixedWidth)
-
-  def withInverse(inverse: Boolean = true): FontAwesomeIcon = copy(inverse = inverse)
-
-  def withListItem(listItem: Boolean = true): FontAwesomeIcon = copy(listItem = listItem)
-
-  def withFlip(flip: Flip): FontAwesomeIcon = copy(flip = flip)
-
-  def withSize(size: IconSize): FontAwesomeIcon = copy(size = size)
-
-  def withPull(pull: Pull): FontAwesomeIcon = copy(pull = pull)
-
-  def withRotation(rotation: Rotation): FontAwesomeIcon = copy(rotation = rotation)
-
-  def withTransform(transform: Transform): FontAwesomeIcon = copy(transform = transform)
-
-  def withTabIndex(tabIndex: Int): FontAwesomeIcon = copy(tabIndex = tabIndex)
-
-  def withSpin(spin: Boolean = true): FontAwesomeIcon = copy(spin = spin)
-
-  def withSpinPulse(spinPulse: Boolean = true): FontAwesomeIcon = copy(spinPulse = spinPulse)
-
-  def withSpinReverse(spinReverse: Boolean = true): FontAwesomeIcon =
-    copy(spinReverse = spinReverse)
-
-  def withStyle(style: Style): FontAwesomeIcon = copy(style = style)
-
-  def withTitle(title: String): FontAwesomeIcon = copy(title = title)
-
-  def withSwapOpacity(swapOpacity: Boolean = true): FontAwesomeIcon =
-    copy(swapOpacity = swapOpacity)
-}
-
-object FontAwesomeIcon {
-  type Icon            = String | List[String]
-  private type RawIcon = String | js.Array[String]
-
-  def apply(
-    faIcon:      FAIcon,
-    clazz:       js.UndefOr[Css] = js.undefined,
-    color:       js.UndefOr[String] = js.undefined,
-    pulse:       js.UndefOr[Boolean] = js.undefined,
-    beat:        js.UndefOr[Boolean] = js.undefined,
-    beatFade:    js.UndefOr[Boolean] = js.undefined,
-    border:      js.UndefOr[Boolean] = js.undefined,
-    fade:        js.UndefOr[Boolean] = js.undefined,
-    flash:       js.UndefOr[Boolean] = js.undefined,
-    fixedWidth:  js.UndefOr[Boolean] = js.undefined,
-    inverse:     js.UndefOr[Boolean] = js.undefined,
-    listItem:    js.UndefOr[Boolean] = js.undefined,
-    flip:        js.UndefOr[Flip] = js.undefined,
-    size:        js.UndefOr[IconSize] = js.undefined,
-    pull:        js.UndefOr[Pull] = js.undefined,
-    rotation:    js.UndefOr[Rotation] = js.undefined,
-    transform:   js.UndefOr[String | Transform] = js.undefined,
-    tabIndex:    js.UndefOr[Int] = js.undefined,
-    spin:        js.UndefOr[Boolean] = js.undefined,
-    spinPulse:   js.UndefOr[Boolean] = js.undefined,
-    spinReverse: js.UndefOr[Boolean] = js.undefined,
-    style:       js.UndefOr[Style] = js.undefined,
-    title:       js.UndefOr[String] = js.undefined,
-    swapOpacity: js.UndefOr[Boolean] = js.undefined,
-    modifiers:   Seq[TagMod] = Seq.empty
-  ): FontAwesomeIcon = new FontAwesomeIcon(
-    Family.fromString(faIcon.prefix),
-    faIcon.iconName,
-    clazz,
-    color,
-    pulse,
-    beat,
-    beatFade,
-    border,
-    fade,
-    flash,
-    fixedWidth,
-    inverse,
-    listItem,
-    flip,
-    size,
-    pull,
-    rotation,
-    transform,
-    tabIndex,
-    spin,
-    spinPulse,
-    spinReverse,
-    style,
-    title,
-    swapOpacity,
-    modifiers
-  )
-
-  inline def layered(icons: FontAwesomeIcon*): TagMod = {
-    val attrs: Seq[TagMod] = (^.cls := "fa-layers fa-fw") +: icons.map(x => x: TagMod)
-    <.span(attrs: _*)
-  }
-
-  @js.native
-  @JSImport("@fortawesome/react-fontawesome", "FontAwesomeIcon")
-  private object FontAwesomeIcon extends js.Function1[js.Any, js.Any] {
-    def apply(arg: js.Any): js.Any = js.native
-  }
-
-  @js.native
-  trait Props extends js.Object {
-    var icon: js.UndefOr[RawIcon]
-    // mask?: IconProp
-    var className: js.UndefOr[String]
-    var color: js.UndefOr[String]
-    var pulse: js.UndefOr[Boolean]
-    var beat: js.UndefOr[Boolean]
-    var beatFade: js.UndefOr[Boolean]
-    var border: js.UndefOr[Boolean]
-    var fade: js.UndefOr[Boolean]
-    var flash: js.UndefOr[Boolean]
-    var fixedWidth: js.UndefOr[Boolean]
-    var inverse: js.UndefOr[Boolean]
-    var listItem: js.UndefOr[Boolean]
-    var flip: js.UndefOr[String]
-    var size: js.UndefOr[String]
-    var pull: js.UndefOr[String]
-    var rotation: js.UndefOr[Int]
-    var transform: js.UndefOr[String | Transform]
-    // symbol?: FaSymbol
-    var spin: js.UndefOr[Boolean];
-    var spinPulse: js.UndefOr[Boolean];
-    var spinReverse: js.UndefOr[Boolean];
-    var style: js.UndefOr[js.Object]
-    var tabIndex: js.UndefOr[Int]
-    var title: js.UndefOr[String]
-    var swapOpacity: js.UndefOr[Boolean];
-  }
-
-  protected def props(p: FontAwesomeIcon): Props =
-    rawprops(
-      p.family,
-      p.icon,
-      p.clazz,
-      p.color,
-      p.pulse,
-      p.beat,
-      p.beatFade,
-      p.border,
-      p.fade,
-      p.flash,
-      p.fixedWidth,
-      p.inverse,
-      p.listItem,
-      p.flip,
-      p.size,
-      p.pull,
-      p.rotation,
-      p.transform,
-      p.tabIndex,
-      p.spin,
-      p.spinPulse,
-      p.spinReverse,
-      p.style,
-      p.title,
-      p.swapOpacity
-    )
-
-  protected def rawprops(
-    family:      Family,
-    icon:        js.UndefOr[Icon],
-    clazz:       js.UndefOr[Css],
-    color:       js.UndefOr[String],
-    pulse:       js.UndefOr[Boolean],
-    beat:        js.UndefOr[Boolean],
-    beatFade:    js.UndefOr[Boolean],
-    border:      js.UndefOr[Boolean],
-    fade:        js.UndefOr[Boolean],
-    flash:       js.UndefOr[Boolean],
-    fixedWidth:  js.UndefOr[Boolean],
-    inverse:     js.UndefOr[Boolean],
-    listItem:    js.UndefOr[Boolean],
-    flip:        js.UndefOr[Flip],
-    size:        js.UndefOr[IconSize],
-    pull:        js.UndefOr[Pull],
-    rotation:    js.UndefOr[Rotation],
-    transform:   js.UndefOr[String | Transform],
-    tabIndex:    js.UndefOr[Int],
-    spin:        js.UndefOr[Boolean],
-    spinPulse:   js.UndefOr[Boolean],
-    spinReverse: js.UndefOr[Boolean],
-    style:       js.UndefOr[Style],
-    title:       js.UndefOr[String],
-    swapOpacity: js.UndefOr[Boolean]
-  ): Props = {
-    val p = (new js.Object).asInstanceOf[Props]
-    icon.foreach { d =>
-      p.icon = (d: Any) match {
-        case s: String => List(family.prefix, s).toJSArray
-        case s         => s.asInstanceOf[List[String]].toJSArray
-      }
-    }
-    clazz.foreach(v => p.className = v.htmlClass)
-    color.foreach(v => p.color = v)
-    pulse.foreach(v => p.pulse = v)
-    beat.foreach(v => p.beat = v)
-    beatFade.foreach(v => p.beatFade = v)
-    border.foreach(v => p.border = v)
-    fade.foreach(v => p.fade = v)
-    flash.foreach(v => p.flash = v)
-    fixedWidth.foreach(v => p.fixedWidth = v)
-    inverse.foreach(v => p.inverse = v)
-    listItem.foreach(v => p.listItem = v)
-    flip.foreach(v => p.flip = v.toJs)
-    size.foreach(v => p.size = v.toJs)
-    pull.foreach(v => p.pull = v.toJs)
-    rotation.foreach(v =>
-      p.rotation = v match {
-        case Rotation.Rotate90  => 90
-        case Rotation.Rotate180 => 180
-        case Rotation.Rotate270 => 270
-      }
-    )
-    transform.foreach(v => p.transform = v.asInstanceOf[String | Transform])
-    tabIndex.foreach(v => p.tabIndex = v)
-    spin.foreach(v => p.spin = v)
-    spinPulse.foreach(v => p.spinPulse = v)
-    spinReverse.foreach(v => p.spinReverse = v)
-    style.foreach(v => p.style = v.toJsObject)
-    title.foreach(v => p.title = v)
-    swapOpacity.foreach(v => p.swapOpacity = v)
-    p
-  }
-
-  private val component = JsFnComponent[Props, Children.None](FontAwesomeIcon)
-}
+  private val component = ScalaFnComponent[Props]: props =>
+    FontAwesome
+      .icon(
+        props.icon,
+        IconParams(
+          classes = props.faClasses,
+          mask = props.mask,
+          maskId = props.maskId,
+          symbol = props.symbol,
+          title = props.title,
+          titleId = props.titleId,
+          transform = props.transform,
+          modifiers = props.modifiers
+        )
+      )
+      .abstractDef(0)
+      .renderVdom

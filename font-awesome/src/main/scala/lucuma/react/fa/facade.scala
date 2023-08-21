@@ -8,7 +8,6 @@ import lucuma.react.common.Css
 import org.scalajs.dom.HTMLCollection
 import org.scalajs.dom.HTMLElement
 
-import scala.annotation.nowarn
 import scala.scalajs.js
 import scala.scalajs.js.annotation.*
 
@@ -18,15 +17,19 @@ type Attributes = js.Dictionary[Double | String]
 
 type Styles = js.Dictionary[String]
 
+type FaSymbol = String | Boolean
+
+type IconPrefix = String
+
+type IconName = String
+
 @js.native
-@nowarn
 trait FAIcon extends js.Object:
   val iconName: String = js.native
   val prefix: String   = js.native
 
 @js.native
 trait Library extends js.Object:
-  @nowarn
   def add(arg: FAIcon*): js.Any = js.native
 
 @js.native
@@ -57,12 +60,55 @@ object Transform:
     p
 
 @js.native
+trait IconLookup extends js.Object:
+  var prefix: IconPrefix
+  var iconName: IconName
+
+object IconLookup:
+  def apply(prefix: IconPrefix, iconName: IconName): IconLookup =
+    val p = (new js.Object).asInstanceOf[IconLookup]
+    p.prefix = prefix
+    p.iconName = iconName
+    p
+
+@js.native
 trait Params extends js.Object:
   var title: js.UndefOr[String]
   var titleId: js.UndefOr[String]
   var classes: js.UndefOr[String | js.Array[String]]
   var attributes: js.UndefOr[Attributes]
   var styles: js.UndefOr[Styles]
+
+@js.native
+trait IconParams extends Params:
+  var mask: js.UndefOr[IconLookup]
+  var maskId: js.UndefOr[String]
+  var symbol: js.UndefOr[FaSymbol]
+  var transform: js.UndefOr[Transform]
+
+object IconParams:
+  def apply(
+    classes:   Css = Css.Empty,
+    mask:      js.UndefOr[IconLookup] = js.undefined,
+    maskId:    js.UndefOr[String] = js.undefined,
+    symbol:    js.UndefOr[FaSymbol] = js.undefined,
+    title:     js.UndefOr[String] = js.undefined,
+    titleId:   js.UndefOr[String] = js.undefined,
+    transform: js.UndefOr[Transform] = js.undefined,
+    modifiers: List[TagMod] = List.empty
+  ): IconParams =
+    val p           = (new js.Object).asInstanceOf[IconParams]
+    p.classes = classes.value.toJSArray
+    mask.foreach(v => p.mask = v)
+    maskId.foreach(v => p.maskId = v)
+    symbol.foreach(v => p.symbol = v)
+    title.foreach(v => p.title = v)
+    titleId.foreach(v => p.titleId = v)
+    transform.foreach(v => p.transform = v)
+    val modsBuilder = modifiers.toTagMod.toJs
+    p.attributes = modsBuilder.props.asInstanceOf[Attributes]
+    p.styles = modsBuilder.styles.asInstanceOf[Styles]
+    p
 
 @js.native
 trait CounterParams extends Params
@@ -119,6 +165,9 @@ trait FontawesomeObject extends js.Object:
   val node: HTMLCollection[HTMLElement]
 
 @js.native
+trait IconRaw extends FontawesomeObject
+
+@js.native
 trait Text extends FontawesomeObject
 
 @js.native
@@ -133,3 +182,5 @@ object FontAwesome extends js.Object:
     content: String | Float | Double | Int | Short | Byte,
     params:  js.UndefOr[CounterParams]
   ): Counter = js.native
+  def icon(icon: FAIcon | IconLookup, params: js.UndefOr[IconParams] = js.undefined): IconRaw =
+    js.native

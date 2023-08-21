@@ -34,8 +34,12 @@ object DemoMain {
         <.div(
           <.h1("FontAwesome Icons"),
           <.p(
+            "Icon:",
+            FontAwesomeIcon(faCircle, bounce = true)
+          ),
+          <.p(
             "Layered icon:",
-            LayeredIcon(fixedWidth = true, size = IconSize.X3)(
+            LayeredIcon(fixedWidth = true, size = IconSize.X3, spin = true)(
               FontAwesomeIcon(faCircle),
               TextLayer("H", inverse = true, size = IconSize.XS)(
                 ^.fontWeight.lighter, // Demo styles

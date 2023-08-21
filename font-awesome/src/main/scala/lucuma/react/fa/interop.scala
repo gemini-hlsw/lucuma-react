@@ -9,33 +9,38 @@ import japgolly.scalajs.react.vdom.*
 
 import scalajs.js
 
-extension (ae: AbstractElement)
+extension (abstractElement: AbstractElement)
   // WARNING: Mutates a.attributes
   def renderVdom: VdomElement =
-    def splitStyleString(style: String): List[(String, String)] =
-      style
-        .split(";")
-        .toList
-        .map(_.trim)
-        .filter(_.nonEmpty)
-        .map(_.split(":").toList)
-        .collect:
-          case List(k, v) => (k.trim, v.trim)
+    def go(ae: AbstractElement): facade.React.Element =
+      def splitStyleString(style: String): List[(String, String)] =
+        style
+          .split(";")
+          .toList
+          .map(_.trim)
+          .filter(_.nonEmpty)
+          .map(_.split(":").toList)
+          .collect:
+            case List(k, v) => (k.trim, v.trim)
 
-    val vdomBuilder = new VdomBuilder.ToRawReactElement
-    ae.attributes.get("class").foreach(vdomBuilder.addClassName(_))
-    ae.attributes
-      .get("style")
-      .map: s =>
-        splitStyleString(s.asInstanceOf[String])
-      .orEmpty
-      .foreach: (k, v) =>
-        vdomBuilder.addStyle(k, v)
-    ae.attributes -= "class"
-    ae.attributes -= "style"
-    vdomBuilder.addAttrsObject(ae.attributes.asInstanceOf[js.Object])
-    ae.children.foreach:
-      _.foreach: ch =>
-        vdomBuilder.appendChild(ch.asInstanceOf[facade.React.Node])
+      val vdomBuilder = new VdomBuilder.ToRawReactElement
+      ae.attributes.get("class").foreach(vdomBuilder.addClassName(_))
+      ae.attributes
+        .get("style")
+        .map: s =>
+          splitStyleString(s.asInstanceOf[String])
+        .orEmpty
+        .foreach: (k, v) =>
+          vdomBuilder.addStyle(k, v)
+      ae.attributes -= "class"
+      ae.attributes -= "style"
+      vdomBuilder.addAttrsObject(ae.attributes.asInstanceOf[js.Object])
+      ae.children.foreach:
+        _.foreach: ch =>
+          vdomBuilder.appendChild(js.typeOf(ch) match
+            case "string" => ch.asInstanceOf[String]
+            case _        => go(ch.asInstanceOf[AbstractElement])
+          )
+      vdomBuilder.render(ae.tag)
 
-    VdomElement(vdomBuilder.render(ae.tag))
+    VdomElement(go(abstractElement))
