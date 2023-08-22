@@ -31,7 +31,7 @@ enum IconSize:
   case XS2, XS, SM, LG, XL, XL2, X1, X2, X3, X4, X5, X6, X7, X8, X9, X10
 
 object IconSize:
-  given EnumValue[IconSize] = EnumValue.instance {
+  given EnumValue[IconSize] = EnumValue.instance:
     case XS2 => "2xs"
     case XS  => "xs"
     case SM  => "sm"
@@ -48,7 +48,6 @@ object IconSize:
     case X8  => "8x"
     case X9  => "9x"
     case X10 => "10x";
-  }
 
 enum Pull:
   case Left, Right

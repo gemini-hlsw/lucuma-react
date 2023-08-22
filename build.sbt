@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.41"
+ThisBuild / tlBaseVersion       := "0.42"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
@@ -145,6 +145,7 @@ lazy val root = project
     beautifulDndDemo,
     resizeDetector,
     fontAwesome,
+    fontAwesomeDemo,
     hotkeys,
     hotkeysDemo,
     resizable,
@@ -172,6 +173,8 @@ lazy val rootDatepicker    =
   project.aggregate(datepicker, datepickerDemo).enablePlugins(NoPublishPlugin)
 lazy val rootBeautifulDnd  =
   project.aggregate(beautifulDnd, beautifulDndDemo).enablePlugins(NoPublishPlugin)
+lazy val rootFontAwesome   =
+  project.aggregate(fontAwesome, fontAwesomeDemo).enablePlugins(NoPublishPlugin)
 lazy val rootHotkeys       =
   project.aggregate(hotkeys, hotkeysDemo).enablePlugins(NoPublishPlugin)
 lazy val rootResizable     =
@@ -189,7 +192,7 @@ val projects = List(
   rootHighcharts,
   rootDatepicker,
   rootBeautifulDnd,
-  fontAwesome,
+  rootFontAwesome,
   rootHotkeys,
   rootResizable,
   rootPrimeReact,
@@ -384,7 +387,17 @@ lazy val fontAwesome = project
   .dependsOn(common)
   .settings(
     name := "lucuma-react-font-awesome",
+    Compile / scalacOptions += "-language:implicitConversions",
     facadeSettings
+  )
+
+lazy val fontAwesomeDemo = project
+  .in(file("font-awesome-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(fontAwesome)
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
+    demoSettings
   )
 
 lazy val hotkeys = project

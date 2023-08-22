@@ -1,6 +1,8 @@
 {
   "devDependencies": {
     "@floating-ui/react-dom-interactions": "^0.13.3",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@tanstack/react-table": "^8.9.3",
     "@tanstack/react-virtual": "v3.0.0-beta.54",
     "@vitejs/plugin-react": "^4.0.4",
