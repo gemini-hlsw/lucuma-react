@@ -15,7 +15,7 @@ import scalajs.js
 import js.annotation.*
 
 @js.native
-@JSImport("@fortawesome/pro-solid-svg-icons", "faCircle")
+@JSImport("@fortawesome/free-solid-svg-icons", "faCircle")
 val faCircle: FAIcon = js.native
 
 @JSExportTopLevel("Demo")
