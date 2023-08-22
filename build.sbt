@@ -173,6 +173,8 @@ lazy val rootDatepicker    =
   project.aggregate(datepicker, datepickerDemo).enablePlugins(NoPublishPlugin)
 lazy val rootBeautifulDnd  =
   project.aggregate(beautifulDnd, beautifulDndDemo).enablePlugins(NoPublishPlugin)
+lazy val rootFontAwesome   =
+  project.aggregate(fontAwesome, fontAwesomeDemo).enablePlugins(NoPublishPlugin)
 lazy val rootHotkeys       =
   project.aggregate(hotkeys, hotkeysDemo).enablePlugins(NoPublishPlugin)
 lazy val rootResizable     =
@@ -190,7 +192,7 @@ val projects = List(
   rootHighcharts,
   rootDatepicker,
   rootBeautifulDnd,
-  fontAwesome,
+  rootFontAwesome,
   rootHotkeys,
   rootResizable,
   rootPrimeReact,
