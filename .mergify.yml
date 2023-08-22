@@ -110,6 +110,14 @@ pull_request_rules:
       add:
       - font-awesome
       remove: []
+- name: Label font-awesome-demo PRs
+  conditions:
+  - files~=^font-awesome-demo/
+  actions:
+    label:
+      add:
+      - font-awesome-demo
+      remove: []
 - name: Label grid-layout PRs
   conditions:
   - files~=^grid-layout/
