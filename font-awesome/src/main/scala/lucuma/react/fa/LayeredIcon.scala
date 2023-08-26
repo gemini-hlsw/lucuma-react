@@ -32,10 +32,16 @@ case class LayeredIcon(
   spinReverse: Boolean = false,
   swapOpacity: Boolean = false,
   modifiers:   List[TagMod] = List.empty
-) extends ReactFnPropsWithChildren(LayeredIcon.component)
+) extends ReactFnProps(LayeredIcon.component)
     with IconProps:
-  def withMods(mods: TagMod*): LayeredIcon = copy(modifiers = modifiers ++ mods)
-  override def faClasses: Css = super.faClasses // For some reason this is necessary (?!?!?)
+  def apply(mods: TagMod | FontAwesomeIcon | TextLayer | CounterLayer*): LayeredIcon =
+    copy(modifiers = modifiers ++ mods.map:
+      case t: TagMod          => t
+      case c: FontAwesomeIcon => c: VdomElement
+      case c: TextLayer       => c: VdomElement
+      case c: CounterLayer    => c: VdomElement
+    )
+  override def faClasses: Css                                                        = super.faClasses // For some reason this is necessary (?!?!?)
 
   def addClass(value:        Css)            = copy(clazz = clazz |+| value)
   def withClass(value:       Css)            = copy(clazz = value)
@@ -63,8 +69,5 @@ object LayeredIcon:
   private type Props = LayeredIcon
 
   private val component =
-    ScalaFnComponent
-      .withHooks[Props]
-      .withPropsChildren
-      .render: (props, children) =>
-        <.span(Css("fa-layers") |+| props.faClasses, props.modifiers.toTagMod)(children)
+    ScalaFnComponent[Props]: props =>
+      <.span(Css("fa-layers") |+| props.faClasses, props.modifiers.toTagMod) // (props.children: _*)
