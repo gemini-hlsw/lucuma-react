@@ -26,7 +26,7 @@
     "react-semantic-toasts": "^0.6.5",
     "react-table": "^7.8.0",
     "react-virtuoso": "^4.5.1",
-    "sass": "^1.66.1",
+    "sass": "^1.67.0",
     "styled-components": "^6.0.8",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
