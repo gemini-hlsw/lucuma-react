@@ -3,7 +3,7 @@
     "@floating-ui/react-dom-interactions": "^0.13.3",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
-    "@tanstack/react-table": "^8.9.9",
+    "@tanstack/react-table": "^8.9.11",
     "@tanstack/react-virtual": "v3.0.0-beta.60",
     "@vitejs/plugin-react": "^4.0.4",
     "copy-to-clipboard": "^3.3.3",
