@@ -30,7 +30,7 @@
     "styled-components": "^6.0.8",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
-    "rehype-katex": "^6.0.3",
+    "rehype-katex": "^7.0.0",
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0"
   }
