@@ -110,12 +110,12 @@ object Tooltip {
         val arrowStyle =
           arrowOpt.fold(Style(display))(_ => Style(display ++ arrowStyleMap ++ placementStyle))
         ReactFragment(
-          props.trigger(^.untypedRef := floating.reference),
+          props.trigger(^.untypedRef(floating.refs.setReference)),
           if (open.value)
             <.div(
-              ^.untypedRef := floating.floating,
-              ^.cls        := "tooltip",
-              ^.style      := style.toJsObject,
+              ^.untypedRef(floating.refs.setFloating),
+              ^.cls   := "tooltip",
+              ^.style := style.toJsObject,
               props.tooltip,
               <.div(^.cls := "arrow", ^.untypedRef := arrow, ^.style := arrowStyle.toJsObject)
             )
