@@ -69,14 +69,19 @@ given EnumValue[Placement] = EnumValue.instance {
 type Middleware = js.Object
 
 @js.native
+trait FloatingRefs extends js.Object {
+  var setReference: js.Function1[TopNode, Unit] = js.native
+  var setFloating: js.Function1[TopNode, Unit]  = js.native
+}
+
+@js.native
 trait UseFloatingReturn extends js.Object {
 
-  var context: FloatingContext               = js.native
-  var middlewareData: MiddlewareData         = js.native
-  var placement: String                      = js.native
-  val reference: facade.React.RefFn[TopNode] = js.native
-  val floating: facade.React.RefFn[TopNode]  = js.native
-  val strategy: String                       = js.native
+  var context: FloatingContext       = js.native
+  var middlewareData: MiddlewareData = js.native
+  var placement: String              = js.native
+  var refs: FloatingRefs             = js.native
+  val strategy: String               = js.native
 
   val x: js.UndefOr[Double] = js.native
   val y: js.UndefOr[Double] = js.native
@@ -182,7 +187,7 @@ object ArrowElement:
 
 object middleware {
 
-  @JSImport("@floating-ui/react-dom-interactions", JSImport.Namespace)
+  @JSImport("@floating-ui/react", JSImport.Namespace)
   @js.native
   val ^ : js.Any = js.native
 
@@ -230,7 +235,7 @@ object middleware {
 }
 
 object use {
-  @JSImport("@floating-ui/react-dom-interactions", JSImport.Namespace)
+  @JSImport("@floating-ui/react", JSImport.Namespace)
   @js.native
   val ^ : js.Any = js.native
 
