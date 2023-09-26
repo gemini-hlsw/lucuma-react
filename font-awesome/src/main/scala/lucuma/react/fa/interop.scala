@@ -9,8 +9,55 @@ import japgolly.scalajs.react.vdom.*
 
 import scalajs.js
 
+private val attrConversions: Map[String, String] =
+  List(
+    "acceptCharset",
+    "accessKey",
+    "allowFullScreen",
+    "autoComplete",
+    "autoFocus",
+    "autoPlay",
+    "cellPadding",
+    "cellSpacing",
+    "charSet",
+    "classID",
+    "className",
+    "colSpan",
+    "contentEditable",
+    "contextMenu",
+    "controlsList",
+    "crossOrigin",
+    "dateTime",
+    "encType",
+    "formAction",
+    "formEncType",
+    "formMethod",
+    "formNoValidate",
+    "formTarget",
+    "frameBorder",
+    "hrefLang",
+    "httpEquiv",
+    "inputMode",
+    "keyParams",
+    "keyType",
+    "marginHeight",
+    "marginWidth",
+    "maxLength",
+    "mediaGroup",
+    "minLength",
+    "noValidate",
+    "radioGroup",
+    "readOnly",
+    "rowSpan",
+    "spellCheck",
+    "srcDoc",
+    "srcLang",
+    "srcSet",
+    "tabIndex",
+    "useMap"
+  ).map(k => k.toLowerCase -> k).toMap
+
 extension (abstractElement: AbstractElement)
-  // WARNING: Mutates a.attributes
   def renderVdom: VdomElement =
     def go(ae: AbstractElement): facade.React.Element =
       def splitStyleString(style: String): List[(String, String)] =
@@ -21,20 +68,28 @@ extension (abstractElement: AbstractElement)
           .filter(_.nonEmpty)
           .map(_.split(":").toList)
           .collect:
-            case List(k, v) => (k.trim, v.trim)
+            case List(k, v) =>
+              val keyParts = k.trim.split("-")
+              val fixedKey = keyParts.head + keyParts.tail.map(_.capitalize).mkString
+              (fixedKey, v.trim)
 
       val vdomBuilder = new VdomBuilder.ToRawReactElement
-      ae.attributes.get("class").foreach(vdomBuilder.addClassName(_))
       ae.attributes
-        .get("style")
-        .map: s =>
-          splitStyleString(s.asInstanceOf[String])
-        .orEmpty
         .foreach: (k, v) =>
-          vdomBuilder.addStyle(k, v)
-      ae.attributes -= "class"
-      ae.attributes -= "style"
-      vdomBuilder.addAttrsObject(ae.attributes.asInstanceOf[js.Object])
+          // Reference: https://reactjs.org/docs/dom-elements.html
+          k.toLowerCase match
+            case "class" =>
+              vdomBuilder.addClassName(v)
+            case "style" =>
+              splitStyleString(v.asInstanceOf[String]).foreach: (k, v) =>
+                vdomBuilder.addStyle(k, v)
+            case "for"   =>
+              vdomBuilder.addAttr("htmlFor", v)
+            case _       =>
+              attrConversions
+                .get(k.replaceAll("-", ""))
+                .orElse(k.some)
+                .foreach(vdomBuilder.addAttr(_, v))
       ae.children.foreach:
         _.foreach: ch =>
           vdomBuilder.appendChild(js.typeOf(ch) match
