@@ -23,6 +23,8 @@ case class ToastRef(
     ref.get.map(_.fold(())(_.raw.show(message.toJSArray)))
   def replace(message: MessageItem*): Callback =
     ref.get.map(_.fold(())(_.raw.replace(message.toJSArray)))
+  def remove(message: MessageItem*): Callback  =
+    ref.get.map(_.fold(())(_.raw.remove(message.toJSArray)))
   def clear(): Callback                        =
     ref.get.map(_.fold(())(_.raw.clear()))
 }
@@ -56,6 +58,7 @@ object Toast {
   trait Facade extends js.Object {
     def show(message:    js.Array[MessageItem]): Unit = js.native
     def replace(message: js.Array[MessageItem]): Unit = js.native
+    def remove(message:  js.Array[MessageItem]): Unit = js.native
     def clear(): Unit = js.native
   }
 
