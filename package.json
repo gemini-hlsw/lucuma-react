@@ -27,7 +27,7 @@
     "react-table": "^7.8.0",
     "react-virtuoso": "^4.6.1",
     "sass": "^1.69.2",
-    "styled-components": "^6.0.8",
+    "styled-components": "^6.0.9",
     "typescript": "^5.2.2",
     "vite": "^4.4.11",
     "rehype-katex": "^7.0.0",
