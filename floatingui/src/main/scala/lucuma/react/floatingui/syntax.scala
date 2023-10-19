@@ -14,3 +14,18 @@ extension (tag: VdomTag)
     placement: Placement = Placement.Top
   ): VdomNode =
     Tooltip(trigger = tag, tooltip = tooltip, placement = placement)
+
+  def withTooltipWhen(
+    condition: Boolean,
+    tooltip:   VdomNode,
+    placement: Placement = Placement.Top
+  ): VdomNode =
+    if (condition) withTooltip(tooltip, placement)
+    else tag
+
+  def withTooltipUnless(
+    condition: Boolean,
+    tooltip:   VdomNode,
+    placement: Placement = Placement.Top
+  ): VdomNode =
+    withTooltipWhen(!condition, tooltip, placement)
