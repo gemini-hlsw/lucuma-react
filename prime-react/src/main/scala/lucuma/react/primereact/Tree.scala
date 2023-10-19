@@ -5,6 +5,7 @@ package lucuma.react.primereact
 
 import cats.Eq
 import cats.derived.*
+import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.SyntheticEvent
 import japgolly.scalajs.react.vdom.html_<^.*
@@ -13,6 +14,7 @@ import lucuma.typed.primereact.components.{Tree => CTree}
 import lucuma.typed.primereact.primereactStrings.checkbox
 import lucuma.typed.primereact.primereactStrings.multiple
 import lucuma.typed.primereact.primereactStrings.single
+import lucuma.typed.primereact.treeTreeMod.TreeDragDropEvent
 import lucuma.typed.primereact.treeTreeMod.TreeNodeTemplateOptions
 import lucuma.typed.primereact.treenodeTreenodeMod.{TreeNode => CTreeNode}
 import org.scalablytyped.runtime.StringDictionary
@@ -28,7 +30,9 @@ case class Tree[A](
   onToggle:      js.UndefOr[Set[Tree.Id] => Callback] = js.undefined,
   selectionMode: js.UndefOr[Tree.SelectionMode] = js.undefined,
   loading:       js.UndefOr[Boolean] = js.undefined,
-  onSelect:      js.UndefOr[(A, SyntheticEvent[Element]) => Callback] = js.undefined
+  onSelect:      js.UndefOr[(A, SyntheticEvent[Element]) => Callback] = js.undefined,
+  dragDropScope: js.UndefOr[String] = js.undefined,
+  onDragDrop:    js.UndefOr[Tree.DragDropEvent[A] => Callback] = js.undefined
 ) extends ReactFnProps[Tree[A]](Tree.component)
 
 object Tree {
@@ -58,6 +62,8 @@ object Tree {
             p(e.node.asInstanceOf[CTreeNode].data.asInstanceOf[Tree.Node[A]].data, e.originalEvent)
           )
       )
+      .applyOrNot(props.dragDropScope, _.dragdropScope(_))
+      .applyOrNot(props.onDragDrop, (c, p) => c.onDragDrop(e => p(Tree.DragDropEvent(e))))
 
   }
 
@@ -88,4 +94,48 @@ object Tree {
       cNode.label = label
 
       cNode
+
+  object Node:
+    def apply[A](c: CTreeNode): Node[A] =
+      val node = c.data.asInstanceOf[Node[A]]
+      Node(
+        id = node.id,
+        data = node.data,
+        label = c.label,
+        icon = node.icon,
+        children = c.children.toList
+          .flatMap(_.toSeq)
+          .map(n => Node(n.asInstanceOf[CTreeNode]))
+      )
+
+  case class DragDropEvent[A](
+    dragNode:      Node[A],
+    dropNode:      Option[Node[A]],
+    dropIndex:     Int,
+    value:         Seq[Node[A]],
+    originalEvent: TreeDragDropEvent
+  )
+
+  object DragDropEvent:
+    def apply[A](e: TreeDragDropEvent): DragDropEvent[A] =
+      val value    = e.value.toSeq.asInstanceOf[Seq[CTreeNode]].map(Node(_))
+      val dragNode = Node(e.dragNode.asInstanceOf[CTreeNode])
+      val dropNode = Option(e.dropNode).map(_.asInstanceOf[CTreeNode]).map(Node(_))
+
+      // the dropIndex of the event gives the index of the parent if a node is dropped *on* a node instead of the new index inside of the dropped node
+      // To get the correct index, we have to find the index of the dropped node in the list of updated nodes
+      def findIndexOfNode(nodes: Seq[Node[A]]): Option[Int] = nodes.indexOf(dragNode) match
+        case -1 => nodes.collectFirstSome(n => findIndexOfNode(n.children))
+        case i  => i.some
+
+      val dropIndex = findIndexOfNode(value).getOrElse(e.dropIndex.toInt)
+
+      DragDropEvent(
+        dragNode = dragNode,
+        dropNode = dropNode,
+        dropIndex = dropIndex,
+        value = value,
+        originalEvent = e
+      )
+
 }

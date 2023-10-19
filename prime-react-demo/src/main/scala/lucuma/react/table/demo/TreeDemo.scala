@@ -36,8 +36,9 @@ object TreeDemo:
           )
         )
       )
-    )
-    .render { (props, nodes) =>
+    )                             // Nodes
+    .useState(Set.empty[Tree.Id]) // expandedGroups
+    .render { (props, nodes, expandedGroups) =>
       Panel(header = "Tree")(
         Button(
           label = "Add root node",
@@ -49,11 +50,29 @@ object TreeDemo:
             )
           )
         ),
-        Tree(
-          nodes.value,
-          selectionMode = Tree.SelectionMode.Single,
-          nodeTemplate = (i, _) => <.span(<.b("Hello there, "), i).rawNode,
-          onSelect = (d, e) => Callback(println(s"selected $d")) *> Callback.log(e)
+        <.div(
+          ^.height   := "400px",
+          ^.width    := "100%",
+          ^.overflow := "auto",
+          Tree(
+            nodes.value,
+            selectionMode = Tree.SelectionMode.Single,
+            expandedKeys = expandedGroups.value,
+            onToggle = expandedGroups.setState,
+            nodeTemplate = (i, _) => <.span(<.b("Hello there, "), i).rawNode,
+            onSelect = (d, e) => Callback(println(s"selected $d")) *> Callback.log(e),
+            dragDropScope = "tree-demo",
+            onDragDrop = e =>
+              Callback.log(
+                "Elements are not moved by themselves, but have to be updated via the `onDragDrop` callback"
+              ) *> Callback(println(e)) *> nodes.setState(e.value) *>
+                e.dropNode
+                  .map(n =>
+                    expandedGroups
+                      .modState(_ + n.id)
+                  )
+                  .getOrEmpty
+          )
         )
       )
     }
