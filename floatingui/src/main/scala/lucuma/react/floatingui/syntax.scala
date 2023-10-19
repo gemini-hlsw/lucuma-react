@@ -28,5 +28,4 @@ extension (tag: VdomTag)
     tooltip:   VdomNode,
     placement: Placement = Placement.Top
   ): VdomNode =
-    if (condition) tag
-    else withTooltip(tooltip, placement)
+    withTooltipWhen(!condition, tooltip, placement)
