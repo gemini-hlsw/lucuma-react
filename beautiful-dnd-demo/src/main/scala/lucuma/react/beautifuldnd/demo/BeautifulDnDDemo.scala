@@ -44,8 +44,8 @@ object BeautifulDnDDemo {
 
     def getListStyle(isDraggingOver: Boolean): TagMod =
       TagMod(
-        (^.background := "lightgrey").unless(isDraggingOver),
-        (^.background := "lightblue").when(isDraggingOver),
+        (^.background           := "lightgrey").unless(isDraggingOver),
+        (^.background           := "lightblue").when(isDraggingOver),
         ^.padding := s"${Grid}px",
         ^.width   := "250px"
       )
@@ -57,8 +57,8 @@ object BeautifulDnDDemo {
         ^.padding := s"${Grid * 2}px",
         ^.margin  := s"0 0 ${Grid}px 0",
         // change background colour if dragging
-        (^.background := "grey").unless(isDragging),
-        (^.background := "lightgreen").when(isDragging),
+        (^.background           := "grey").unless(isDragging),
+        (^.background           := "lightgreen").when(isDragging),
         // styles we need to apply on draggables
         draggableStyle
       )
