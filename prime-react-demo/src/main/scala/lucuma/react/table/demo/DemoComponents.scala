@@ -74,6 +74,20 @@ object DemoComponents {
 
   def mouseEntered(msg: String) = ^.onMouseEnter --> Callback.log(s"Mouse entered: $msg")
 
+  val removableToast = MessageItem(
+    id = "sticky-toast",
+    summary = "Sticky!",
+    detail = "Honey, perhaps?",
+    sticky = true
+  )
+
+  val removableMessage = MessageItem(
+    severity = Message.Severity.Error,
+    detail = "A Message",
+    icon = "pi pi-bolt",
+    sticky = true
+  )
+
   val component =
     ScalaFnComponent
       .withHooks[Unit]
@@ -148,36 +162,32 @@ object DemoComponents {
           def customIcons(show: Boolean): js.UndefOr[List[Button]] =
             if show then
               List(
-                Button(icon = "pi pi-thumbs-up",
-                       onClick = toastRef.show(
-                         MessageItem(summary = "You gave a thumbs UP!")
-                       )
+                Button(
+                  icon = "pi pi-thumbs-up",
+                  onClick = toastRef.show(MessageItem(summary = "You gave a thumbs UP!"))
                 ),
                 Button(
                   icon = "pi pi-thumbs-down",
-                  onClick = toastRef.show(
-                    MessageItem(summary = "You gave a thumbs DOWN!")
-                  )
+                  onClick = toastRef.show(MessageItem(summary = "You gave a thumbs DOWN!"))
                 )
               )
             else js.undefined
 
           <.div(
             Toolbar(
-              left = Button(label = "Toolbar Left Button",
-                            size = Button.Size.Small,
-                            onClick = toastRef.show(
-                              MessageItem(summary = "Clicked", detail = "Top Left Button")
-                            )
+              left = Button(
+                label = "Toolbar Left Button",
+                size = Button.Size.Small,
+                onClick =
+                  toastRef.show(MessageItem(summary = "Clicked", detail = "Top Left Button"))
               ).withMods(mouseEntered("Toolbar")),
               right = <.div(
                 DemoStyles.HorizontalStack,
                 Button(
                   label = "Toolbar Right Button",
                   size = Button.Size.Small,
-                  onClick = toastRef.show(
-                    MessageItem(summary = "Clicked", detail = "Top Right Button")
-                  )
+                  onClick =
+                    toastRef.show(MessageItem(summary = "Clicked", detail = "Top Right Button"))
                 ),
                 Button(
                   icon = "pi pi-bars",
@@ -215,9 +225,10 @@ object DemoComponents {
                   <.h2("Some Toast"),
                   <.div(
                     DemoStyles.FormColumn,
-                    <.label("Toast Position",
-                            ^.htmlFor := "toast-position",
-                            DemoStyles.FormFieldLabel
+                    <.label(
+                      "Toast Position",
+                      ^.htmlFor := "toast-position",
+                      DemoStyles.FormFieldLabel
                     ),
                     SelectButton(
                       id = "toast-position",
@@ -238,15 +249,17 @@ object DemoComponents {
                       severity = Button.Severity.Info,
                       onClick = toastRef
                         .show(MessageItem(summary = "Information", detail = "Informative Toast"))
+                        .flatMap(Callback.log(_))
                     ),
                     Button(
                       label = "Success Toast",
                       severity = Button.Severity.Success,
                       onClick = toastRef
                         .show(
-                          MessageItem(summary = "Success!",
-                                      detail = "Congratulations",
-                                      severity = Message.Severity.Success
+                          MessageItem(
+                            summary = "Success!",
+                            detail = "Congratulations",
+                            severity = Message.Severity.Success
                           )
                         )
                     ),
@@ -255,9 +268,10 @@ object DemoComponents {
                       severity = Button.Severity.Warning,
                       onClick = toastRef
                         .show(
-                          MessageItem(summary = "Warning!",
-                                      detail = "I told you so!",
-                                      severity = Message.Severity.Warning
+                          MessageItem(
+                            summary = "Warning!",
+                            detail = "I told you so!",
+                            severity = Message.Severity.Warning
                           )
                         )
                     ),
@@ -266,9 +280,10 @@ object DemoComponents {
                       severity = Button.Severity.Danger,
                       onClick = toastRef
                         .show(
-                          MessageItem(summary = "Error!",
-                                      detail = "You shouldn't have done that!",
-                                      severity = Message.Severity.Error
+                          MessageItem(
+                            summary = "Error!",
+                            detail = "You shouldn't have done that!",
+                            severity = Message.Severity.Error
                           )
                         )
                     )
@@ -278,50 +293,57 @@ object DemoComponents {
                     Button(
                       label = "Long Lived Toast",
                       icon = "pi pi-hourglass",
-                      onClick = toastRef.show(
-                        MessageItem(summary = "Long Live Toast!",
-                                    detail = "10 seconds",
-                                    life = 10000
+                      onClick = toastRef
+                        .show(
+                          MessageItem(
+                            summary = "Long Live Toast!",
+                            detail = "10 seconds",
+                            life = 10000
+                          )
                         )
-                      )
                     ),
                     Button(
                       label = "Short Lived Toast",
                       icon = "pi pi-stopwatch",
                       iconPos = Button.IconPosition.Right,
-                      onClick = toastRef.show(
-                        MessageItem(summary = "It Dies Young", detail = "0.5 seconds", life = 500)
-                      )
+                      onClick = toastRef
+                        .show(
+                          MessageItem(summary = "It Dies Young", detail = "0.5 seconds", life = 500)
+                        )
                     ),
                     Button(
                       label = "Sticky Toast",
-                      onClick = toastRef.show(
-                        MessageItem(summary = "Sticky!", detail = "Honey, perhaps?", sticky = true)
-                      )
+                      onClick = toastRef.show(removableToast)
+                    ),
+                    Button(
+                      label = "Remove Sticky",
+                      onClick = toastRef.remove(removableToast)
                     )
                   ),
                   <.div(
                     DemoStyles.HorizontalStack,
                     Button(
                       label = "Multiple Toasts",
-                      onClick = toastRef.show(
-                        MessageItem(summary = "Toast 1", detail = "The first"),
-                        MessageItem(summary = "Toast 2", detail = "The second"),
-                        MessageItem(summary = "Toast 3", detail = "The third")
-                      )
+                      onClick = toastRef
+                        .show(
+                          MessageItem(summary = "Toast 1", detail = "The first"),
+                          MessageItem(summary = "Toast 2", detail = "The second"),
+                          MessageItem(summary = "Toast 3", detail = "The third")
+                        )
                     ),
                     Button(label = "Non-closable Toast",
-                           onClick = toastRef.show(
-                             MessageItem(summary = "Can't close it.",
-                                         detail = "You have to wait",
-                                         closable = false
+                           onClick = toastRef
+                             .show(
+                               MessageItem(
+                                 summary = "Can't close it.",
+                                 detail = "You have to wait",
+                                 closable = false
+                               )
                              )
-                           )
                     ),
-                    Button(label = "Toast With Content",
-                           onClick = toastRef.show(
-                             MessageItem(content = <.h1("Big Content"))
-                           )
+                    Button(
+                      label = "Toast With Content",
+                      onClick = toastRef.show(MessageItem(content = <.h1("Big Content")))
                     )
                   ),
                   <.div(
@@ -330,30 +352,30 @@ object DemoComponents {
                       label = "Replace All Toasts",
                       icon = "pi pi-replay",
                       iconPos = Button.IconPosition.Top,
-                      onClick = toastRef.replace(
-                        MessageItem(summary = "Replacement 1", detail = "The first"),
-                        MessageItem(summary = "Replacement 2", detail = "The second"),
-                        MessageItem(summary = "Replacement 3", detail = "The third")
-                      )
+                      onClick = toastRef
+                        .replace(
+                          MessageItem(summary = "Replacement 1", detail = "The first"),
+                          MessageItem(summary = "Replacement 2", detail = "The second"),
+                          MessageItem(summary = "Replacement 3", detail = "The third")
+                        )
                     ),
-                    Button(label = "Clear all toasts",
-                           icon = "pi pi-ban",
-                           iconPos = Button.IconPosition.Bottom,
-                           onClick = toastRef.clear()
+                    Button(
+                      label = "Clear all toasts",
+                      icon = "pi pi-ban",
+                      iconPos = Button.IconPosition.Bottom,
+                      onClick = toastRef.clear()
                     )
                   )
                 )
               ),
               Panel(header = "Messages")(
-                Button(label = "Show Message",
-                       onClick = messagesRef
-                         .show(
-                           MessageItem(severity = Message.Severity.Error,
-                                       detail = "A Message",
-                                       icon = "pi pi-bolt",
-                                       sticky = true
-                           )
-                         )
+                Button(
+                  label = "Show Message",
+                  onClick = messagesRef.show(removableMessage)
+                ),
+                Button(
+                  label = "Hide Message",
+                  onClick = messagesRef.remove(removableMessage)
                 ),
                 Messages().withRef(messagesRef.ref)
               ),

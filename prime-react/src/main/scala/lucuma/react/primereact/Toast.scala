@@ -19,13 +19,13 @@ import Toast.*
 case class ToastRef(
   ref: Ref.ToJsComponent[ToastProps, Null, facade.React.Component[ToastProps, Null] & Facade]
 ) {
-  def show(message: MessageItem*): Callback    =
-    ref.get.map(_.fold(())(_.raw.show(message.toJSArray)))
-  def replace(message: MessageItem*): Callback =
-    ref.get.map(_.fold(())(_.raw.replace(message.toJSArray)))
-  def remove(message: MessageItem*): Callback  =
-    ref.get.map(_.fold(())(_.raw.remove(message.toJSArray)))
-  def clear(): Callback                        =
+  def show(messages: MessageItem*): Callback    =
+    ref.get.map(_.fold(())(_.raw.show(messages.toJSArray)))
+  def replace(messages: MessageItem*): Callback =
+    ref.get.map(_.fold(())(_.raw.replace(messages.toJSArray)))
+  def remove(message: MessageItem): Callback    =
+    ref.get.map(_.fold(())(_.raw.remove(message)))
+  def clear(): Callback                         =
     ref.get.map(_.fold(())(_.raw.clear()))
 }
 
@@ -58,7 +58,7 @@ object Toast {
   trait Facade extends js.Object {
     def show(message:    js.Array[MessageItem]): Unit = js.native
     def replace(message: js.Array[MessageItem]): Unit = js.native
-    def remove(message:  js.Array[MessageItem]): Unit = js.native
+    def remove(message:  MessageItem): Unit           = js.native
     def clear(): Unit = js.native
   }
 
