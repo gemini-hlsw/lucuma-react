@@ -8,7 +8,7 @@
     "@vitejs/plugin-react": "^4.1.0",
     "copy-to-clipboard": "^3.3.3",
     "fomantic-ui-less": "^2.9.3",
-    "highcharts": "^11.0.1",
+    "highcharts": "^11.2.0",
     "jsdom": "22.1.0",
     "less": "^4.2.0",
     "primeicons": "^6.0.1",
