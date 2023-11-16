@@ -294,9 +294,16 @@ object DemoControlsPanel {
                   onChange = toggleButton.setState
                 )
               ),
-              <.label("ProgressBar 1",
-                      ^.htmlFor             := "progress-indeterminate",
-                      DemoStyles.FormFieldLabel
+              <.label("InputGroup", DemoStyles.FormFieldLabel),
+              InputGroup(
+                InputGroup.Addon("$"),
+                InputText(id = "price", placeholder = "Price"),
+                InputGroup.Addon(".00")
+              ),
+              <.label(
+                "ProgressBar 1",
+                ^.htmlFor                   := "progress-indeterminate",
+                DemoStyles.FormFieldLabel
               ),
               ProgressBar(id = "progress-indeterminate", mode = ProgressBar.Mode.Indeterminate),
               <.div(
