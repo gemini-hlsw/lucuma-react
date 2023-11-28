@@ -2,7 +2,7 @@
   "devDependencies": {
     "@floating-ui/react": "^0.26.3",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
-    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.0",
     "@tanstack/react-table": "^8.10.7",
     "@tanstack/react-virtual": "v3.0.0-beta.68",
     "@vitejs/plugin-react": "^4.2.0",
