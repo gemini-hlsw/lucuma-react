@@ -3,9 +3,9 @@
 
 package lucuma.react.primereact
 
-import lucuma.react.common.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.common.*
 
 case class InputGroup(mods: TagMod*) extends ReactFnProps(InputGroup.component):
   def apply(moreMods: TagMod*): InputGroup = InputGroup((mods ++ moreMods): _*)

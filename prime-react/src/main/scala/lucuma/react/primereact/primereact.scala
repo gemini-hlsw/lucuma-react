@@ -11,6 +11,7 @@ import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.react.common.*
 import lucuma.react.fa.FontAwesomeIcon
+import lucuma.react.fa.LayeredIcon
 import lucuma.typed.StBuildingComponent
 import lucuma.typed.primereact.primereactStrings.*
 
@@ -58,16 +59,18 @@ object ConfirmDialogHideParm {
     })
 }
 
-type Icon = FontAwesomeIcon | Image | String
+type Icon = FontAwesomeIcon | LayeredIcon | Image | String
 
 extension (icon: Icon)
   def toPrime: Node                      = icon match {
     case fa: FontAwesomeIcon => (fa: VdomNode).rawNode
+    case fal: LayeredIcon    => (fal: VdomNode).rawNode
     case img: Image          => (img: VdomNode).rawNode
     case s: String           => s
   }
   def toPrimeWithClass(clazz: Css): Node = icon match {
     case fa: FontAwesomeIcon => (fa.copy(clazz = fa.clazz |+| clazz): VdomNode).rawNode
+    case fal: LayeredIcon    => (fal.copy(clazz = fal.clazz |+| clazz): VdomNode).rawNode
     case img: Image          =>
       (img.copy(clazz = img.clazz.toOption.orEmpty |+| clazz): VdomNode).rawNode
     case s: String           => s
