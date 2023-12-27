@@ -7,11 +7,37 @@ import cats.syntax.all._
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
+import lucuma.react.fa.FAIcon
+import lucuma.react.fa.FontAwesome
+import lucuma.react.fa.FontAwesomeIcon
+import lucuma.react.fa.IconSize
+import lucuma.react.fa.LayeredIcon
 import lucuma.react.primereact.*
+
+import scala.scalajs.js.annotation.JSImport
+
+import scalajs.js
 
 case class DemoControlsPanel() extends ReactFnProps[DemoControlsPanel](DemoControlsPanel.component)
 
 object DemoControlsPanel {
+  object Icons:
+    @js.native
+    @JSImport("@fortawesome/free-solid-svg-icons", "faBan")
+    private val faBan: FAIcon = js.native
+
+    @js.native
+    @JSImport("@fortawesome/free-solid-svg-icons", "faPause")
+    private val faPause: FAIcon = js.native
+
+    FontAwesome.library.add(faBan, faPause)
+
+    inline def Ban = FontAwesomeIcon(faBan)
+
+    inline def Pause = FontAwesomeIcon(faPause)
+
+    val CancelPause = LayeredIcon()(Pause.withInverse(), Ban.withSize(IconSize.LG)).withFixedWidth()
+
   def mouseEntered(msg: String) = ^.onMouseEnter --> Callback.log(s"Mouse entered: $msg")
 
   private val component = ScalaFnComponent
@@ -294,6 +320,8 @@ object DemoControlsPanel {
                   onChange = toggleButton.setState
                 )
               ),
+              <.label("Layered Icon Button", DemoStyles.FormFieldLabel),
+              Button(icon = Icons.CancelPause),
               <.label("InputGroup", DemoStyles.FormFieldLabel),
               InputGroup(
                 InputGroup.Addon("$"),
