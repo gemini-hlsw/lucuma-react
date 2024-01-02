@@ -5,13 +5,13 @@ import path from "path";
 export default ({ command, mode }) => {
   const sjs =
     mode == "production"
-      ? path.resolve(__dirname, "target/scala-3.3.1/datepickerdemo-opt/")
-      : path.resolve(__dirname, "target/scala-3.3.1/datepickerdemo-fastopt/");
+      ? path.resolve(__dirname, "target/scala-3.3.1/resizedetectordemo-opt/")
+      : path.resolve(__dirname, "target/scala-3.3.1/resizedetectordemo-fastopt/");
   const webapp = path.resolve(__dirname, "src/main/webapp/");
   const themeConfig = path.resolve(webapp, "theme/theme.config");
   const themeSite = path.resolve(webapp, "theme/site");
   return {
-    root: "datepicker-demo/src/main/webapp",
+    root: "resize-detector-demo/src/main/webapp",
     resolve: {
       alias: [
         {
