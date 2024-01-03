@@ -214,6 +214,14 @@ pull_request_rules:
       add:
       - resize-detector
       remove: []
+- name: Label resize-detector-demo PRs
+  conditions:
+  - files~=^resize-detector-demo/
+  actions:
+    label:
+      add:
+      - resize-detector-demo
+      remove: []
 - name: Label rootBeautifulDnd PRs
   conditions:
   - files~=^rootBeautifulDnd/

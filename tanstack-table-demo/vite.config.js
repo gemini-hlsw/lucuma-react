@@ -42,12 +42,6 @@ export default ({ command, mode }) => {
       },
     },
     build: {
-      minify: 'terser',
-      // minify: false,
-      terserOptions: {
-        // sourceMap: false,
-        toplevel: true
-      },
       outDir: path.resolve(__dirname, "../docs"),
     },
     plugins: [react()],

@@ -8,7 +8,6 @@ import lucuma.react.common.*
 import lucuma.react.resizeDetector.ResizeDetector.*
 import org.scalajs.dom.html
 
-import scala.annotation.nowarn
 import scala.scalajs.js
 import scala.scalajs.js.annotation.*
 
@@ -34,7 +33,7 @@ object UseResizeDetectorReturn {
   }
 
   implicit val reusabilityUseResizeDetectorReturn: Reusability[UseResizeDetectorReturn] =
-    Reusability.by(x => (x.height, x.width))
+    Reusability.by(x => (x.height, x.width, x.ref))
 }
 
 @js.native
@@ -75,26 +74,16 @@ object HooksApiExt {
 
   object mod {
     @js.native
-    @JSImport("react-resize-detector", JSImport.Namespace)
-    @nowarn
-    private object base extends js.Object
+    @JSImport("react-resize-detector", "useResizeDetector")
+    def baseUseResizeDetector: js.Function1[
+      js.UndefOr[UseResizeDetectorProps],
+      UseResizeDetectorReturnJS
+    ] = js.native
 
-    @scala.inline
-    def useResizeDetector(): UseResizeDetectorReturn = UseResizeDetectorReturn.fromJS(
-      base
-        .asInstanceOf[js.Dynamic]
-        .applyDynamic("useResizeDetector")()
-        .asInstanceOf[UseResizeDetectorReturnJS]
-    )
-
-    @scala.inline
-    def useResizeDetector(props: UseResizeDetectorProps): UseResizeDetectorReturn =
-      UseResizeDetectorReturn.fromJS(
-        base
-          .asInstanceOf[js.Dynamic]
-          .applyDynamic("useResizeDetector")(props.asInstanceOf[js.Any])
-          .asInstanceOf[UseResizeDetectorReturnJS]
-      )
+    inline def useResizeDetector(
+      props: js.UndefOr[UseResizeDetectorProps] = js.undefined
+    ): UseResizeDetectorReturn =
+      UseResizeDetectorReturn.fromJS(baseUseResizeDetector(props))
   }
 
   val hook =

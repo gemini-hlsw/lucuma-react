@@ -50,7 +50,7 @@ lazy val viteConfigGenerate = taskKey[Unit]("Generate vite config")
 lazy val demoSettings       = Seq(
   Compile / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) },
   Compile / fastLinkJS / scalaJSLinkerConfig ~= (_.withModuleSplitStyle(
-    ModuleSplitStyle.SmallestModules
+    ModuleSplitStyle.SmallModulesFor(List("lucuma.react"))
   )),
   Keys.test          := {},
   viteConfigGenerate := {
@@ -108,12 +108,6 @@ lazy val demoSettings       = Seq(
           |      },
           |    },
           |    build: {
-          |      minify: 'terser',
-          |      // minify: false,
-          |      terserOptions: {
-          |        // sourceMap: false,
-          |        toplevel: true
-          |      },
           |      outDir: path.resolve(__dirname, "../docs"),
           |    },
           |    plugins: [react()],
@@ -144,6 +138,7 @@ lazy val root = project
     beautifulDnd,
     beautifulDndDemo,
     resizeDetector,
+    resizeDetectorDemo,
     fontAwesome,
     fontAwesomeDemo,
     hotkeys,
@@ -379,6 +374,15 @@ lazy val resizeDetector = project
     name := "lucuma-react-resize-detector",
     Compile / scalacOptions += "-language:implicitConversions",
     facadeSettings
+  )
+
+lazy val resizeDetectorDemo = project
+  .in(file("resize-detector-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(resizeDetector)
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
+    demoSettings
   )
 
 lazy val fontAwesome = project
