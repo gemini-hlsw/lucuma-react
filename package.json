@@ -29,7 +29,7 @@
     "sass": "^1.70.0",
     "styled-components": "^6.1.8",
     "typescript": "^5.3.3",
-    "vite": "^5.0.11",
+    "vite": "^5.0.12",
     "rehype-katex": "^7.0.0",
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0"
