@@ -31,8 +31,7 @@ object Demo:
           Css("resize-detector-container"),
           ^.width  := "100vw",
           ^.height := "100vh",
-          HookDemo(),
-          ComponentDemo()
+          HookDemo()
         )
       )
       .renderIntoDOM(container)
