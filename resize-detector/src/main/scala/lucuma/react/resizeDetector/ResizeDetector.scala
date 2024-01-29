@@ -8,15 +8,9 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import org.scalajs.dom.html
 
-import scala.scalajs.js.annotation.JSImport
-
 import scalajs.js
 
 object ResizeDetector {
-
-  @js.native
-  @JSImport("react-resize-detector", JSImport.Default)
-  private object RawComponent extends js.Object
 
   @js.native
   trait DimensionsJS extends js.Object {
@@ -38,44 +32,26 @@ object ResizeDetector {
     implicit val dimensionsReuse: Reusability[Dimensions] = Reusability.by(d => (d.height, d.width))
   }
 
-  case class RenderProps(height: Option[Int], width: Option[Int], targetRef: TagMod)
-      extends Dimensions
-  object RenderProps {
-    def apply(renderPropsJS: RenderPropsJS): RenderProps =
-      RenderProps(
-        renderPropsJS.height.toOption.map(_.toInt),
-        renderPropsJS.width.toOption.map(_.toInt),
-        TagMod.fn(_.addRefFn(renderPropsJS.targetRef))
-      )
-
-  }
-
   protected type RenderJS = js.Function1[RenderPropsJS, facade.React.Node | Null]
 
-  type Render = RenderProps => VdomNode
-
-  sealed trait RefreshMode extends Product with Serializable
-
-  object RefreshMode {
+  object RefreshMode:
     implicit val enumValue: EnumValue[RefreshMode] = EnumValue.toLowerCaseString
 
-    case object Throttle extends RefreshMode
-    case object Debounce extends RefreshMode
-  }
+  enum RefreshMode:
+    case Throttle
+    case Debounce
 
-  sealed trait ObserveBox extends Product with Serializable
-
-  object ObserveBox {
+  object ObserveBox:
     implicit val enumValue: EnumValue[ObserveBox] = EnumValue.instance(_ match {
       case Content            => "content-box"
       case Border             => "border-box"
       case DevicePixelContent => "device-pixel-content-box"
     })
 
-    case object Content            extends ObserveBox
-    case object Border             extends ObserveBox
-    case object DevicePixelContent extends ObserveBox
-  }
+  enum ObserveBox:
+    case Content
+    case Border
+    case DevicePixelContent
 
   @js.native
   trait RefreshOptions extends js.Object {
@@ -121,56 +97,4 @@ object ResizeDetector {
     var observerOptions: js.UndefOr[ObserverOptions]
   }
 
-  object Props {
-    def apply(
-      children:        Render,
-      onResize:        js.UndefOr[(Int, Int) => Unit] = js.undefined,
-      handleHeight:    js.UndefOr[Boolean] = js.undefined,
-      handleWidth:     js.UndefOr[Boolean] = js.undefined,
-      skipOnMount:     js.UndefOr[Boolean] = js.undefined,
-      refreshMode:     js.UndefOr[RefreshMode] = js.undefined,
-      refreshRate:     js.UndefOr[Int] = js.undefined,
-      refreshOptions:  js.UndefOr[RefreshOptions] = js.undefined,
-      observerOptions: js.UndefOr[ObserverOptions] = js.undefined
-    ): Props = {
-      val p = (new js.Object).asInstanceOf[Props]
-      p.children = renderPropsJS => children(RenderProps(renderPropsJS)).rawNode
-      onResize.foreach(v =>
-        p.onResize =
-          ((x: Double, y: Double) => v(x.toInt, y.toInt)): js.Function2[Double, Double, Unit]
-      )
-      handleHeight.foreach(v => p.handleHeight = v)
-      handleWidth.foreach(v => p.handleWidth = v)
-      skipOnMount.foreach(v => p.skipOnMount = v)
-      refreshMode.toJs.foreach(v => p.refreshMode = v)
-      refreshRate.foreach(v => p.refreshRate = v)
-      refreshOptions.foreach(v => p.refreshOptions = v)
-      observerOptions.foreach(v => p.observerOptions = v)
-      p
-    }
-  }
-
-  private val component = JsComponent[Props, Children.None, Null](RawComponent)
-
-  def apply(
-    onResize:        js.UndefOr[(Int, Int) => Unit] = js.undefined,
-    handleHeight:    js.UndefOr[Boolean] = js.undefined,
-    handleWidth:     js.UndefOr[Boolean] = js.undefined,
-    skipOnMount:     js.UndefOr[Boolean] = js.undefined,
-    refreshMode:     js.UndefOr[RefreshMode] = js.undefined,
-    refreshRate:     js.UndefOr[Int] = js.undefined,
-    refreshOptions:  js.UndefOr[RefreshOptions] = js.undefined,
-    observerOptions: js.UndefOr[ObserverOptions] = js.undefined
-  )(children: Render) = component(
-    Props(children,
-          onResize,
-          handleHeight,
-          handleWidth,
-          skipOnMount,
-          refreshMode,
-          refreshRate,
-          refreshOptions,
-          observerOptions
-    )
-  )
 }
