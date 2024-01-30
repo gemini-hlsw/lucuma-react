@@ -57,9 +57,7 @@ object DemoMain {
       elem
     }
 
-    App().renderIntoDOM(container)
-
-    ()
+    ReactDOMClient.createRoot(container).render(App())
 
   }
 }

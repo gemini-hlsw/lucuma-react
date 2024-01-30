@@ -23,9 +23,8 @@ class ReactFnPropsSuite extends munit.FunSuite {
     assertEquals(key, None)
     assertEquals(props, Props())
     assertEquals(children.toList, List.empty)
-    ReactTestUtils.withNewBodyElement { mountNode =>
-      p.renderIntoDOM(mountNode)
-      val html = mountNode.innerHTML
+    ReactTestUtils2.withRendered(p.toUnmounted) { mountNode =>
+      val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
   }
@@ -39,9 +38,8 @@ class ReactFnPropsSuite extends munit.FunSuite {
     assertEquals(key, Some("key": FacadeExports.Key))
     assertEquals(props, Props())
     assertEquals(children.toList, List.empty)
-    ReactTestUtils.withNewBodyElement { mountNode =>
-      p.renderIntoDOM(mountNode)
-      val html = mountNode.innerHTML
+    ReactTestUtils2.withRendered(p.toUnmounted) { mountNode =>
+      val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
   }

@@ -23,8 +23,7 @@ object Demo {
       elem
     }
 
-    HomeComponent().renderIntoDOM(container)
-    ()
+    ReactDOMClient.createRoot(container).render(HomeComponent())
   }
 }
 

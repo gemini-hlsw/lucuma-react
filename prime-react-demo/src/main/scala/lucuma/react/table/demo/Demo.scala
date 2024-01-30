@@ -3,6 +3,7 @@
 
 package lucuma.react.table.demo
 
+import japgolly.scalajs.react.ReactDOMClient
 import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom
 
@@ -24,10 +25,11 @@ object Demo:
       elem
     }
 
-    <.div(
-      DemoComponents.component()
-    )
-      .renderIntoDOM(container)
-
-    ()
+    ReactDOMClient
+      .createRoot(container)
+      .render(
+        <.div(
+          DemoComponents.component()
+        )
+      )
   }

@@ -21,11 +21,11 @@ object PackageTests extends TestSuite {
     }
     test("render") {
       val layout = ReactGridLayout(200, <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(layout) { m =>
+      ReactTestUtils2.withRendered(layout.raw) { m =>
         val html =
           """<div class="react-grid-layout" style="height: 10px;"></div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
     }
     test("responsive") {
@@ -38,11 +38,11 @@ object PackageTests extends TestSuite {
         )
       val layout                                           =
         ResponsiveReactGridLayout(200, layouts = layouts, <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(layout) { m =>
+      ReactTestUtils2.withRendered(layout.raw) { m =>
         val html =
           """<div class="react-grid-layout" style="height: 10px;"></div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
     }
   }

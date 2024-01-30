@@ -24,14 +24,13 @@ class ReactFnPropsWithChildrenSuite extends munit.FunSuite {
     assertEquals(key, None)
     assertEquals(props, PropsWithChildren())
     assertEquals(children.count, 1)
-    ReactTestUtils.withNewBodyElement { mountNode =>
-      p.renderIntoDOM(mountNode)
-      val html = mountNode.innerHTML
+
+    ReactTestUtils2.withRendered(p.toUnmounted) { mountNode =>
+      val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-    ReactTestUtils.withNewBodyElement { mountNode =>
-      u.renderIntoDOM(mountNode)
-      val html = mountNode.innerHTML
+    ReactTestUtils2.withRendered(u) { mountNode =>
+      val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
   }
@@ -45,14 +44,12 @@ class ReactFnPropsWithChildrenSuite extends munit.FunSuite {
     assertEquals(key, Some("key": FacadeExports.Key))
     assertEquals(props, PropsWithChildren())
     assertEquals(children.count, 1)
-    ReactTestUtils.withNewBodyElement { mountNode =>
-      p.renderIntoDOM(mountNode)
-      val html = mountNode.innerHTML
+    ReactTestUtils2.withRendered(p.toUnmounted) { mountNode =>
+      val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-    ReactTestUtils.withNewBodyElement { mountNode =>
-      u.renderIntoDOM(mountNode)
-      val html = mountNode.innerHTML
+    ReactTestUtils2.withRendered(u) { mountNode =>
+      val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
   }

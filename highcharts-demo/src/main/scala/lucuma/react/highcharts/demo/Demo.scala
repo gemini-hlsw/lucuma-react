@@ -3,8 +3,8 @@
 
 package lucuma.react.highcharts.demo
 
+import japgolly.scalajs.react.ReactDOMClient
 import japgolly.scalajs.react.callback.Callback
-import lucuma.react.common.*
 import lucuma.react.highcharts.Chart
 import lucuma.react.highcharts.Highcharts
 import lucuma.react.highcharts.WrapProceed
@@ -246,8 +246,7 @@ object Demo {
         )
     )
 
-    Chart(options, onCreated _).renderIntoDOM(container)
+    ReactDOMClient.createRoot(container).render(Chart(options, onCreated _).toUnmounted)
 
-    ()
   }
 }
