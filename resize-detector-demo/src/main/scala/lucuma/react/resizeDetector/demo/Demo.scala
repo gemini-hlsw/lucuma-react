@@ -25,15 +25,17 @@ object Demo:
       elem
     }
 
-    React
-      .StrictMode(
-        <.div(
-          Css("resize-detector-container"),
-          ^.width  := "100vw",
-          ^.height := "100vh",
-          HookDemo()
-        )
+    ReactDOMClient
+      .createRoot(container)
+      .render(
+        React
+          .StrictMode(
+            <.div(
+              Css("resize-detector-container"),
+              ^.width  := "100vw",
+              ^.height := "100vh",
+              HookDemo()
+            )
+          )
       )
-      .renderIntoDOM(container)
-    ()
   }

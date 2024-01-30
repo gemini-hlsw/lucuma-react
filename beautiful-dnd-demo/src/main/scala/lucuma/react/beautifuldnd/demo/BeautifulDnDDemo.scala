@@ -131,7 +131,6 @@ object Demo {
       document.body.appendChild(elem)
       elem
     }
-    component().renderIntoDOM(container)
-    ()
+    ReactDOMClient.createRoot(container).render(component())
   }
 }

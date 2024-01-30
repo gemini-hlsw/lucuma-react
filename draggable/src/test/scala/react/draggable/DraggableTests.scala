@@ -15,33 +15,33 @@ object DraggableTests extends TestSuite {
   val tests = Tests {
     "render" - {
       val draggable = Draggable(Draggable.props(), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
     }
     "supportAllowAnyClick" - {
       Draggable(Draggable.props(), <.div("Abc")).props.allowAnyClick.toOption ==> Some(false)
       val draggable =
         Draggable(Draggable.props(allowAnyClick = true), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.allowAnyClick.toOption ==> Some(true)
     }
     "supportAxis" - {
       Draggable(Draggable.props(), <.div("Abc")).props.axis.toOption ==> Some("both")
       val draggable = Draggable(Draggable.props(axis = Axis.X), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.axis.toOption ==> Some("x")
     }
@@ -51,33 +51,33 @@ object DraggableTests extends TestSuite {
     "supportBounds1" - {
       val draggable =
         Draggable(Draggable.props(bounds = FalseBounds), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.bounds.toOption ==> Some(false)
     }
     "supportBounds2" - {
       val draggable =
         Draggable(Draggable.props(bounds = "bounds"), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.bounds.toOption ==> Some("bounds")
     }
     "supportBounds3" - {
       val draggable =
         Draggable(Draggable.props(bounds = DraggableBounds(1, 2, 3, 4)), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.bounds.toOption
         .map(_.asInstanceOf[DraggableBounds].left) ==> Some(1)
@@ -86,11 +86,11 @@ object DraggableTests extends TestSuite {
       Draggable(Draggable.props(), <.div("Abc")).props.cancel.toOption ==> None
       val draggable =
         Draggable(Draggable.props(cancel = "cancel"), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.cancel.toOption ==> Some("cancel")
     }
@@ -100,11 +100,11 @@ object DraggableTests extends TestSuite {
       )
       val draggable =
         Draggable(Draggable.props(defaultClassName = "draggable"), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.defaultClassName.toOption ==> Some("draggable")
     }
@@ -114,11 +114,11 @@ object DraggableTests extends TestSuite {
       )
       val draggable =
         Draggable(Draggable.props(defaultClassNameDragging = "draggable"), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.defaultClassNameDragging.toOption ==> Some("draggable")
     }
@@ -128,11 +128,11 @@ object DraggableTests extends TestSuite {
       )
       val draggable =
         Draggable(Draggable.props(defaultClassNameDragged = "draggable"), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.defaultClassNameDragged.toOption ==> Some("draggable")
     }
@@ -143,11 +143,11 @@ object DraggableTests extends TestSuite {
         .map(_.y) ==> Some(0)
       val draggable =
         Draggable(Draggable.props(defaultPosition = ControlPosition(1, 2)), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(1px,2px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.defaultPosition.toOption.map(_.x) ==> Some(1)
       draggable.props.defaultPosition.toOption.map(_.y) ==> Some(2)
@@ -155,11 +155,11 @@ object DraggableTests extends TestSuite {
     "supportDisabled" - {
       Draggable(Draggable.props(), <.div("Abc")).props.disabled.toOption ==> Some(false)
       val draggable = Draggable(Draggable.props(disabled = true), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.disabled.toOption ==> Some(true)
     }
@@ -167,11 +167,11 @@ object DraggableTests extends TestSuite {
       Draggable(Draggable.props(), <.div("Abc")).props.grid.toOption ==> None
       val draggable =
         Draggable(Draggable.props(grid = Grid(1, 2)), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.grid.toOption.map(_.apply(0)) ==> Some(1)
       draggable.props.grid.toOption.map(_.apply(1)) ==> Some(2)
@@ -180,11 +180,11 @@ object DraggableTests extends TestSuite {
       Draggable(Draggable.props(), <.div("Abc")).props.handle.toOption ==> None
       val draggable =
         Draggable(Draggable.props(handle = "handle"), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.handle.toOption ==> Some("handle")
     }
@@ -213,11 +213,11 @@ object DraggableTests extends TestSuite {
       Draggable(Draggable.props(), <.div("Abc")).props.position.toOption ==> None
       val draggable =
         Draggable(Draggable.props(position = ControlPosition(1, 2)), <.div("Abc"))
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(1px,2px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.position.toOption.map(_.x) ==> Some(1)
       draggable.props.position.toOption.map(_.y) ==> Some(2)
@@ -228,11 +228,11 @@ object DraggableTests extends TestSuite {
         Draggable(Draggable.props(positionOffset = PositionOffsetControlPosition("10%", "20%")),
                   <.div("Abc")
         )
-      ReactTestUtils.withRenderedIntoDocument(draggable) { m =>
+      ReactTestUtils2.withRendered(draggable) { m =>
         val html =
           """<div class="react-draggable" style="transform: translate(10%, 20%)translate(0px,0px);">Abc</div>""".stripMargin
             .replaceAll("[\n\r]", "")
-        assert(m.outerHtmlScrubbed() == html)
+        assert(m.outerHTML() == html)
       }
       draggable.props.positionOffset.toOption.map(_.x) ==> Some("10%")
       draggable.props.positionOffset.toOption.map(_.y) ==> Some("20%")

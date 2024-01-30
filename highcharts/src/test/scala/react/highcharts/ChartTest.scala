@@ -10,8 +10,8 @@ object ChartTest extends TestSuite {
   val tests = Tests {
     test("render") {
       val chart = Chart(Highcharts.defaultOptions)
-      ReactTestUtils.withRenderedIntoDocument(chart.toUnmounted) { m =>
-        val html           = m.outerHtmlScrubbed()
+      ReactTestUtils2.withRendered(chart.toUnmounted) { m =>
+        val html           = m.outerHTML()
         val normalizedHTML =
           html
             .replaceAll(" id=\"highcharts-\\w{7}-\\d-?\"", "")

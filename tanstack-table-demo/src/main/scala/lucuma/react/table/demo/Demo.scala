@@ -3,6 +3,7 @@
 
 package lucuma.react.table.demo
 
+import japgolly.scalajs.react.ReactDOMClient
 import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom
 
@@ -36,13 +37,15 @@ object Demo:
       elem
     }
 
-    <.div(
-      <.h1("Demo for scalajs-tanstack-table"),
-      Table1.component(guitars),
-      Table2.component(randomData),
-      Table3.component(randomExpandableData)
-    )
-      .renderIntoDOM(container)
+    ReactDOMClient
+      .createRoot(container)
+      .render(
+        <.div(
+          <.h1("Demo for scalajs-tanstack-table"),
+          Table1.component(guitars),
+          Table2.component(randomData),
+          Table3.component(randomExpandableData)
+        )
+      )
 
-    ()
   }

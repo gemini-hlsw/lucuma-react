@@ -52,9 +52,7 @@ object Demo {
       elem
     }
 
-    component().renderIntoDOM(container)
-
-    ()
+    ReactDOMClient.createRoot(container).render(component())
   }
 
 }

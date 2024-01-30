@@ -86,7 +86,6 @@ object Demo {
       elem
     }
 
-    RGLDemo().renderIntoDOM(container)
-    ()
+    ReactDOMClient.createRoot(container).render(RGLDemo())
   }
 }
