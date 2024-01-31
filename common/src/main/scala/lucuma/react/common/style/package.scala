@@ -9,7 +9,6 @@ import japgolly.scalajs.react.Reusability
 import japgolly.scalajs.react.vdom.html_<^.*
 
 import scala.annotation.targetName
-import scala.language.implicitConversions
 import scala.scalajs.js
 
 import js.JSConverters.*

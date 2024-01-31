@@ -11,8 +11,7 @@ import japgolly.scalajs.react.vdom.html_<^.*
 
 import scala.language.implicitConversions
 
-class ReactPropsForwardRefSuite extends munit.FunSuite {
-
+class ReactPropsForwardRefSuite extends munit.FunSuite:
   val forwardee = ScalaComponent
     .builder[Unit]("Forwardee")
     .render(_ => <.div)
@@ -25,7 +24,7 @@ class ReactPropsForwardRefSuite extends munit.FunSuite {
       forwardee.withOptionalRef(ref)()
     )
 
-  test("props") {
+  test("props"):
     val p        = Props()
     val u        = p.toUnmounted
     val key      = u.key
@@ -40,9 +39,8 @@ class ReactPropsForwardRefSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-  }
 
-  test("props.withKey") {
+  test("props.withKey"):
     val p        = Props().withKey("key")
     val u        = p.toUnmounted
     val key      = u.key
@@ -57,9 +55,8 @@ class ReactPropsForwardRefSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-  }
 
-  test("props.withRef") {
+  test("props.withRef"):
     val p        = Props()
     val r        = Ref.toScalaComponent(forwardee)
     val pr       = p.withRef(r)
@@ -76,9 +73,8 @@ class ReactPropsForwardRefSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-  }
 
-  test("props.withRef.withKey") {
+  test("props.withRef.withKey"):
     val p        = Props()
     val r        = Ref.toScalaComponent(forwardee)
     val pr       = p.withRef(r).withKey("key")
@@ -95,5 +91,3 @@ class ReactPropsForwardRefSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-  }
-}

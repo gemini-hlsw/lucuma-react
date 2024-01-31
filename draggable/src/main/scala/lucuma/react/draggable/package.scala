@@ -17,7 +17,7 @@ package draggable {
   sealed trait Axis
 
   object Axis {
-    implicit val enumValue: EnumValue[Axis] = EnumValue.toLowerCaseString
+    given EnumValue[Axis] = EnumValue.toLowerCaseString
 
     case object Both extends Axis
     case object X    extends Axis

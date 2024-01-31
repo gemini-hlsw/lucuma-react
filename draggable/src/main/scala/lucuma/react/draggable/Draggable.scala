@@ -9,10 +9,11 @@ import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.Children
 import japgolly.scalajs.react.JsComponent
 import japgolly.scalajs.react.vdom.VdomNode
-import lucuma.react.common._
+import lucuma.react.common.given
 import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.html.{Element => HTMLElement}
 
+import scala.language.implicitConversions
 import scala.scalajs.js
 
 import js.annotation.JSImport

@@ -3,10 +3,12 @@
 
 package lucuma.react.common
 
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 import japgolly.scalajs.react.component.Scala
 import japgolly.scalajs.react.component.ScalaFn
 import japgolly.scalajs.react.component.ScalaForwardRef
+import japgolly.scalajs.react.vdom.VdomElement
+import japgolly.scalajs.react.vdom.VdomNode
 
 import scalajs.js
 
@@ -15,10 +17,10 @@ sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U] {
 
   def ctor: CT[Props, U]
 
-  @inline def apply(
+  inline def apply(
     first: CtorType.ChildArg,
     rest:  CtorType.ChildArg*
-  )(implicit ev: CT[Props, U] <:< CtorType.PropsAndChildren[Props, U]): U =
+  )(using CT[Props, U] <:< CtorType.PropsAndChildren[Props, U]): U =
     ctor.applyGeneric(props)((first +: rest): _*)
 
   inline def toUnmounted: U = ctor.applyGeneric(props)()
@@ -71,6 +73,15 @@ sealed trait ReactComponentProps[Props, S, B, CT[-p, +u] <: CtorType[p, u]]
     copyComponent(component.withOptionalRef(ref))
 }
 
+object ReactComponentProps:
+  given [Props, S, B, CT[-p, +u] <: CtorType[p, u]]
+    : Conversion[ReactComponentProps[Props, S, B, CT], VdomElement] =
+    _.toUnmounted
+
+  given [Props, S, B, CT[-p, +u] <: CtorType[p, u]]
+    : Renderable[ReactComponentProps[Props, S, B, CT]] =
+    Renderable(c => summon[Renderable[VdomNode]](c.toUnmounted))
+
 class ReactProps[Props, S, B](val component: Scala.Component[Props, S, B, CtorType.Props])
     extends ReactComponentProps[Props, S, B, CtorType.Props]
 
@@ -78,24 +89,42 @@ class ReactPropsWithChildren[Props, S, B](
   val component: Scala.Component[Props, S, B, CtorType.PropsAndChildren]
 ) extends ReactComponentProps[Props, S, B, CtorType.PropsAndChildren]
 
-sealed trait ReactFnComponentProps[Props, CT[-p, +u] <: CtorType[p, u], U]
-    extends CtorWithProps[Props, CT, U] {
+object ReactPropsWithChildren:
+  extension [Props, S, B](p: ReactPropsWithChildren[Props, S, B])
+    inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
+      p(first, rest: _*)
+
+sealed trait ReactFnComponentProps[Props, CT[-p, +u] <: CtorType[p, u]]
+    extends CtorWithProps[Props, CT, ScalaFn.Unmounted[Props]] {
   val component: ScalaFn.Component[Props, CT]
 
   protected[common] lazy val props: Props = this.asInstanceOf[Props]
 }
 
+object ReactFnComponentProps:
+  given [Props, CT[-p, +u] <: CtorType[p, u]]
+    : Conversion[ReactFnComponentProps[Props, CT], VdomElement] =
+    _.toUnmounted
+
+  given [Props, CT[-p, +u] <: CtorType[p, u]]: Renderable[ReactFnComponentProps[Props, CT]] =
+    Renderable(c => summon[Renderable[VdomNode]](c.toUnmounted))
+
 class ReactFnProps[Props](val component: ScalaFn.Component[Props, CtorType.Props])
-    extends ReactFnComponentProps[Props, CtorType.Props, ScalaFn.Unmounted[Props]] {
+    extends ReactFnComponentProps[Props, CtorType.Props] {
   override lazy val ctor: CtorType.Props[Props, ScalaFn.Unmounted[Props]] = component.ctor
 }
 
 class ReactFnPropsWithChildren[Props](
   val component: ScalaFn.Component[Props, CtorType.PropsAndChildren]
-) extends ReactFnComponentProps[Props, CtorType.PropsAndChildren, ScalaFn.Unmounted[Props]] {
+) extends ReactFnComponentProps[Props, CtorType.PropsAndChildren] {
   override lazy val ctor: CtorType.PropsAndChildren[Props, ScalaFn.Unmounted[Props]] =
     component.ctor
 }
+
+object ReactFnPropsWithChildren:
+  extension [Props](p: ReactFnPropsWithChildren[Props])
+    inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
+      p(first, rest: _*)
 
 sealed trait ReactComponentPropsForwardRef[Props, R, CT[-p, +u] <: CtorType[p, u]]
     extends CtorWithProps[Props, CT, ScalaForwardRef.Unmounted[Props, R]] { self =>
@@ -124,6 +153,15 @@ sealed trait ReactComponentPropsForwardRef[Props, R, CT[-p, +u] <: CtorType[p, u
     )
 }
 
+object ReactComponentPropsForwardRef:
+  given [Props, R, CT[-p, +u] <: CtorType[p, u]]
+    : Conversion[ReactComponentPropsForwardRef[Props, R, CT], VdomElement] =
+    _.toUnmounted
+
+  given [Props, R, CT[-p, +u] <: CtorType[p, u]]
+    : Renderable[ReactComponentPropsForwardRef[Props, R, CT]] =
+    Renderable(c => summon[Renderable[VdomNode]](c.toUnmounted))
+
 class ReactPropsForwardRef[Props, R](
   val component: ScalaForwardRef.Component[Props, R, CtorType.Props]
 ) extends ReactComponentPropsForwardRef[Props, R, CtorType.Props]
@@ -131,3 +169,8 @@ class ReactPropsForwardRef[Props, R](
 class ReactPropsForwardRefWithChildren[Props, R](
   val component: ScalaForwardRef.Component[Props, R, CtorType.PropsAndChildren]
 ) extends ReactComponentPropsForwardRef[Props, R, CtorType.PropsAndChildren]
+
+object ReactPropsForwardRefWithChildren:
+  extension [Props, R](p: ReactPropsForwardRefWithChildren[Props, R])
+    inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
+      p(first, rest: _*)

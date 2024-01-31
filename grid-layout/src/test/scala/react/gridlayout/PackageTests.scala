@@ -3,10 +3,12 @@
 
 package lucuma.react.gridlayout
 
-import japgolly.scalajs.react.test._
-import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.test.*
+import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.syntax.all.*
-import utest._
+import utest.*
+
+import scala.language.implicitConversions
 
 object PackageTests extends TestSuite {
 

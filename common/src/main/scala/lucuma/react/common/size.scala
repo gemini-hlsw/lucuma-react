@@ -3,24 +3,20 @@
 
 package lucuma.react.common
 
-import cats._
+import cats.*
 
 import scala.scalajs.js
 
 @js.native
-trait Size extends js.Object {
+trait Size extends js.Object:
   var height: Double
   var width: Double
-}
 
-object Size {
-  def apply(height: Double, width: Double): Size = {
+object Size:
+  def apply(height: Double, width: Double): Size =
     val p = (new js.Object).asInstanceOf[Size]
     p.height = height
     p.width = width
     p
-  }
 
   given Eq[Size] = Eq.by(x => (x.width, x.height))
-
-}

@@ -26,17 +26,47 @@ class AttrsBuilder(p: js.Object) extends VdomBuilder.ToJs {
 
 trait GenericFnComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] {
   protected def cprops: P
-  @inline def render: RenderFn[P]
+  def render: RenderFn[P]
 }
+
+object GenericFnComponent:
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U]
+    : Conversion[GenericFnComponent[P, CT, U], RenderFn[P]] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U]
+    : Conversion[GenericFnComponent[P, CT, U], VdomNode] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U]
+    : Conversion[GenericFnComponent[P, CT, U], js.UndefOr[VdomNode]] =
+    _.render
 
 trait GenericFnComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A] {
   protected def cprops: P
   val children: CtorType.ChildrenArgs
   def withChildren(children: CtorType.ChildrenArgs): A
 
-  @inline def renderWith: RenderFnC[P]
-  @inline def render: RenderFn[P] = renderWith(children)
+  def renderWith: RenderFnC[P]
+  def render: RenderFn[P] = renderWith(children)
 }
+
+object GenericFnComponentC:
+  extension [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A](
+    c: GenericFnComponentC[P, CT, U, A]
+  ) def apply(children: VdomNode*): A = c.withChildren(children)
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericFnComponentC[P, CT, U, A], RenderFn[P]] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericFnComponentC[P, CT, U, A], VdomNode] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericFnComponentC[P, CT, U, A], js.UndefOr[VdomNode]] =
+    _.render
 
 trait Passthrough[P <: js.Object] {
   protected def cprops: P
@@ -66,26 +96,60 @@ trait GenericFnComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
   protected val component: JsFn.Component[P, CT]
   def addModifiers(modifiers: Seq[TagMod]): A
 
-  @inline def render: RenderFn[P] = component.applyGeneric(rawProps)()
+  inline def render: RenderFn[P] = component.applyGeneric(rawProps)()
 }
+
+object GenericFnComponentA:
+  extension [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A](
+    c: GenericFnComponentA[P, CT, U, A]
+  ) def apply(modifiers: TagMod*): A = c.addModifiers(modifiers)
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericFnComponentA[P, CT, U, A], RenderFn[P]] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericFnComponentA[P, CT, U, A], VdomNode] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericFnComponentA[P, CT, U, A], js.UndefOr[VdomNode]] =
+    _.render
 
 trait GenericFnComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
     extends PassthroughAC[P] {
   protected val component: JsFn.Component[P, CT]
   def addModifiers(modifiers: Seq[TagMod]): A
 
-  @inline def render: RenderFn[P] = {
+  inline def render: RenderFn[P] = {
     val (props, children) = rawModifiers
     component.applyGeneric(props)(children: _*)
   }
 }
 
+object GenericFnComponentAC:
+  extension [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A](
+    c: GenericFnComponentAC[P, CT, U, A]
+  ) def apply(modifiers: TagMod*): A = c.addModifiers(modifiers)
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericFnComponentAC[P, CT, U, A], RenderFn[P]] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericFnComponentAC[P, CT, U, A], VdomNode] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericFnComponentAC[P, CT, U, A], js.UndefOr[VdomNode]] =
+    _.render
+
 trait GenericJsComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] { self =>
   protected def cprops: P
   protected val component: Js.Component[P, Null, CT]
 
-  def rawProps: P               = cprops
-  @inline def render: Render[P] = component.applyGeneric(rawProps)()
+  def rawProps: P              = cprops
+  inline def render: Render[P] = component.applyGeneric(rawProps)()
 
   private def copyComponent(
     newComponent: Js.Component[P, Null, CT]
@@ -104,15 +168,28 @@ trait GenericJsComponent[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U] { self
     copyComponent(self.component.withOptionalRef(ref))
 }
 
+object GenericJsComponent:
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U]
+    : Conversion[GenericJsComponent[P, CT, U], Render[P]] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U]
+    : Conversion[GenericJsComponent[P, CT, U], VdomNode] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U]
+    : Conversion[GenericJsComponent[P, CT, U], js.UndefOr[VdomNode]] =
+    _.render
+
 trait GenericJsComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A] { self =>
   protected def cprops: P
   val children: CtorType.ChildrenArgs
   def withChildren(children: CtorType.ChildrenArgs): A
   protected val component: Js.Component[P, Null, CT]
 
-  def rawProps: P                    = cprops
-  @inline def renderWith: RenderC[P] = component.applyGeneric(rawProps)
-  @inline def render: Render[P]      = renderWith(children)
+  def rawProps: P                   = cprops
+  inline def renderWith: RenderC[P] = component.applyGeneric(rawProps)
+  inline def render: Render[P]      = renderWith(children)
 
   private def copyComponent(
     newComponent: Js.Component[P, Null, CT]
@@ -133,12 +210,29 @@ trait GenericJsComponentC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A] { 
     copyComponent(self.component.withOptionalRef(ref))
 }
 
+object GenericJsComponentC:
+  extension [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A](
+    c: GenericJsComponentC[P, CT, U, A]
+  ) def apply(children: VdomNode*): A = c.withChildren(children)
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericJsComponentC[P, CT, U, A], Render[P]] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericJsComponentC[P, CT, U, A], VdomNode] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericJsComponentC[P, CT, U, A], js.UndefOr[VdomNode]] =
+    _.render
+
 trait GenericJsComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
     extends PassthroughA[P] { self =>
   protected val component: Js.Component[P, Null, CT]
   def addModifiers(modifiers: Seq[TagMod]): A
 
-  @inline def render: Render[P] = component.applyGeneric(rawProps)()
+  inline def render: Render[P] = component.applyGeneric(rawProps)()
 
   private def copyComponent(
     newComponent: Js.Component[P, Null, CT]
@@ -159,12 +253,29 @@ trait GenericJsComponentA[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
     copyComponent(self.component.withOptionalRef(ref))
 }
 
+object GenericJsComponentA:
+  extension [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A](
+    c: GenericJsComponentA[P, CT, U, A]
+  ) def apply(modifiers: TagMod*): A = c.addModifiers(modifiers)
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericJsComponentA[P, CT, U, A], Render[P]] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericJsComponentA[P, CT, U, A], VdomNode] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericJsComponentA[P, CT, U, A], js.UndefOr[VdomNode]] =
+    _.render
+
 trait GenericJsComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
     extends PassthroughAC[P] { self =>
   protected val component: Js.Component[P, Null, CT]
   def addModifiers(modifiers: Seq[TagMod]): A
 
-  @inline def render: Render[P] = {
+  inline def render: Render[P] = {
     val (props, children) = rawModifiers
     component.applyGeneric(props)(children: _*)
   }
@@ -188,12 +299,29 @@ trait GenericJsComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
     copyComponent(self.component.withOptionalRef(ref))
 }
 
+object GenericJsComponentAC:
+  extension [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A](
+    c: GenericJsComponentAC[P, CT, U, A]
+  ) def apply(modifiers: TagMod*): A = c.addModifiers(modifiers)
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericJsComponentAC[P, CT, U, A], Render[P]] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericJsComponentAC[P, CT, U, A], VdomNode] =
+    _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
+    : Conversion[GenericJsComponentAC[P, CT, U, A], js.UndefOr[VdomNode]] =
+    _.render
+
 trait GenericJsComponentF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, F <: js.Object] { self =>
   protected def cprops: P
   protected val component: Js.ComponentWithFacade[P, Null, F, CT]
 
-  def rawProps: P                   = cprops
-  @inline def render: RenderF[P, F] = component.applyGeneric(rawProps)()
+  def rawProps: P                  = cprops
+  inline def render: RenderF[P, F] = component.applyGeneric(rawProps)()
 
   private def copyComponent(
     newComponent: Js.ComponentWithFacade[P, Null, F, CT]
@@ -212,6 +340,13 @@ trait GenericJsComponentF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, F <: 
     copyComponent(self.component.withOptionalRef(ref))
 }
 
+object GenericJsComponentF:
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, F <: js.Object]
+    : Conversion[GenericJsComponentF[P, CT, U, F], VdomNode] = _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, F <: js.Object]
+    : Conversion[GenericJsComponentF[P, CT, U, F], js.UndefOr[VdomNode]] = _.render
+
 trait GenericJsComponentCF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F <: js.Object] {
   self =>
   protected def cprops: P
@@ -219,9 +354,9 @@ trait GenericJsComponentCF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F
   def withChildren(children: CtorType.ChildrenArgs): A
   protected val component: Js.ComponentWithFacade[P, Null, F, CT]
 
-  def rawProps: P                        = cprops
-  @inline def renderWith: RenderCF[P, F] = component.applyGeneric(rawProps)
-  @inline def render: RenderF[P, F]      = renderWith(children)
+  def rawProps: P                       = cprops
+  inline def renderWith: RenderCF[P, F] = component.applyGeneric(rawProps)
+  inline def render: RenderF[P, F]      = renderWith(children)
 
   private def copyComponent(
     newComponent: Js.ComponentWithFacade[P, Null, F, CT]
@@ -244,12 +379,19 @@ trait GenericJsComponentCF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F
     copyComponent(self.component.withOptionalRef(ref))
 }
 
+object GenericJsComponentCF:
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F <: js.Object]
+    : Conversion[GenericJsComponentCF[P, CT, U, A, F], VdomNode] = _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F <: js.Object]
+    : Conversion[GenericJsComponentCF[P, CT, U, A, F], js.UndefOr[VdomNode]] = _.render
+
 trait GenericJsComponentAF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F <: js.Object]
     extends PassthroughA[P] { self =>
   protected val component: Js.ComponentWithFacade[P, Null, F, CT]
   def addModifiers(modifiers: Seq[TagMod]): A
 
-  @inline def render: RenderF[P, F] = component.applyGeneric(rawProps)()
+  inline def render: RenderF[P, F] = component.applyGeneric(rawProps)()
 
   private def copyComponent(
     newComponent: Js.ComponentWithFacade[P, Null, F, CT]
@@ -272,12 +414,19 @@ trait GenericJsComponentAF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F
     copyComponent(self.component.withOptionalRef(ref))
 }
 
+object GenericJsComponentAF:
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F <: js.Object]
+    : Conversion[GenericJsComponentAF[P, CT, U, A, F], VdomNode] = _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F <: js.Object]
+    : Conversion[GenericJsComponentAF[P, CT, U, A, F], js.UndefOr[VdomNode]] = _.render
+
 trait GenericJsComponentACF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F <: js.Object]
     extends PassthroughAC[P] { self =>
   protected val component: Js.ComponentWithFacade[P, Null, F, CT]
   def addModifiers(modifiers: Seq[TagMod]): A
 
-  @inline def render: RenderF[P, F] = {
+  inline def render: RenderF[P, F] = {
     val (props, children) = rawModifiers
     component.applyGeneric(props)(children: _*)
   }
@@ -302,3 +451,10 @@ trait GenericJsComponentACF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, 
   ): GenericJsComponentACF[P, CT, U, A, F] =
     copyComponent(self.component.withOptionalRef(ref))
 }
+
+object GenericJsComponentACF:
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F <: js.Object]
+    : Conversion[GenericJsComponentACF[P, CT, U, A, F], VdomNode] = _.render
+
+  given [P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F <: js.Object]
+    : Conversion[GenericJsComponentACF[P, CT, U, A, F], js.UndefOr[VdomNode]] = _.render

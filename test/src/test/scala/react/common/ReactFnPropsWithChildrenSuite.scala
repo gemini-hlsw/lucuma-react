@@ -8,14 +8,13 @@ import japgolly.scalajs.react.internal.FacadeExports
 import japgolly.scalajs.react.test.*
 import japgolly.scalajs.react.vdom.html_<^.*
 
-class ReactFnPropsWithChildrenSuite extends munit.FunSuite {
-
+class ReactFnPropsWithChildrenSuite extends munit.FunSuite:
   case class PropsWithChildren() extends ReactFnPropsWithChildren(fnPropsWithChildrenComponent)
 
   val fnPropsWithChildrenComponent =
     ScalaFnComponent.withChildren[PropsWithChildren]((_, c) => <.div(c))
 
-  test("propsWithChildren") {
+  test("propsWithChildren"):
     val p        = PropsWithChildren()
     val u        = p(<.div)
     val key      = u.key
@@ -33,9 +32,8 @@ class ReactFnPropsWithChildrenSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
-  }
 
-  test("propsWithChildren.withKey") {
+  test("propsWithChildren.withKey"):
     val p        = PropsWithChildren().withKey("key")
     val u        = p(<.div)
     val key      = u.key
@@ -52,5 +50,3 @@ class ReactFnPropsWithChildrenSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
-  }
-}

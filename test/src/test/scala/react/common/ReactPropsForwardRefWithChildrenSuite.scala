@@ -11,8 +11,7 @@ import japgolly.scalajs.react.vdom.html_<^.*
 
 import scala.language.implicitConversions
 
-class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite {
-
+class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite:
   val forwardee = ScalaComponent
     .builder[Unit]("Forwardee")
     .render_C(c => <.div(c))
@@ -26,7 +25,7 @@ class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite {
       .toScalaComponent(forwardee)
       .withChildren[PropsWithChildren]((_, c, ref) => forwardee.withOptionalRef(ref)(c))
 
-  test("propsWithChildren") {
+  test("propsWithChildren"):
     val p        = PropsWithChildren()
     val u        = p(<.div)
     val key      = u.key
@@ -45,9 +44,8 @@ class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
-  }
 
-  test("propsWithChildren.withKey") {
+  test("propsWithChildren.withKey"):
     val p        = PropsWithChildren().withKey("key")
     val u        = p(<.div)
     val key      = u.key
@@ -66,9 +64,8 @@ class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
-  }
 
-  test("propsWithChildren.withRef") {
+  test("propsWithChildren.withRef"):
     val p        = PropsWithChildren()
     val r        = Ref.toScalaComponent(forwardee)
     val pr       = p.withRef(r)
@@ -89,9 +86,8 @@ class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
-  }
 
-  test("propsWithChildren.withRef.withKey") {
+  test("propsWithChildren.withRef.withKey"):
     val p        = PropsWithChildren()
     val r        = Ref.toScalaComponent(forwardee)
     val pr       = p.withRef(r).withKey("key")
@@ -112,6 +108,3 @@ class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
-  }
-
-}
