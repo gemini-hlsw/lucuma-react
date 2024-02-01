@@ -5,7 +5,6 @@ package lucuma.react.gridlayout
 
 import japgolly.scalajs.react.test.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import lucuma.react.common.syntax.all.*
 import utest.*
 
 import scala.language.implicitConversions
