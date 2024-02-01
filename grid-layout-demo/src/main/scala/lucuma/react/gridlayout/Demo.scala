@@ -12,6 +12,7 @@ import lucuma.react.resizeDetector._
 import lucuma.react.resizeDetector.hooks._
 import org.scalajs.dom
 
+import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.annotation._
 

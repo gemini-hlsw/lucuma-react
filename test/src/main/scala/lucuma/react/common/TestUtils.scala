@@ -7,36 +7,35 @@ import japgolly.scalajs.react.ReactDOMServer
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.TopNode
-import japgolly.scalajs.react.vdom.html_<^._
-import munit.Assertions._
+import japgolly.scalajs.react.vdom.html_<^.*
+import munit.Assertions.*
 import org.scalajs.dom.Element
 
-trait TestUtils {
+trait TestUtils:
 
   def assertRender(e: VdomElement, expected: String, scrub: String = ""): Unit =
     assertRender(e.rawElement, expected, scrub)
 
-  def assertRender(e: React.Element, expected: String, scrub: String): Unit = {
+  def assertRender(e: React.Element, expected: String, scrub: String): Unit =
     val rendered: String = ReactDOMServer.raw.renderToStaticMarkup(e)
-    assertEquals(rendered.replaceAll(scrub, "").trim.replaceAll("\n", ""),
-                 expected.replaceAll(scrub, "").trim.replaceAll("\n", "")
+
+    assertEquals(
+      rendered.replaceAll(scrub, "").trim.replaceAll("\n", ""),
+      expected.replaceAll(scrub, "").trim.replaceAll("\n", "")
     )
-  }
 
   def assertRender(e: React.Node, expected: String): Unit =
     assertRenderNode(Some(e), expected)
 
   def assertRenderNode[N <: TopNode](e: Option[React.Node], expected: String): Unit =
-    e.map(x => HtmlTag("div").apply(VdomNode(x))) match {
+    e.map(x => HtmlTag("div").apply(VdomNode(x))) match
       case Some(e) => assertRender(e.rawElement, expected)
       case _       => assert(false)
-    }
 
   def assertRender[N <: TopNode](e: Option[TagOf[N]], expected: String): Unit =
-    e match {
+    e match
       case Some(e) => assertRender(e.rawElement, expected)
       case _       => assert(false)
-    }
 
   def assertOuterHTML(node: Element, expect: String): Unit =
     assertEquals(scrubReactHtml(node.outerHTML), expect)
@@ -46,6 +45,5 @@ trait TestUtils {
 
   def scrubReactHtml(html: String): String =
     reactRubbish.replaceAllIn(html, "")
-}
 
 object TestUtils extends TestUtils

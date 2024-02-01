@@ -5,8 +5,9 @@ package lucuma.react.floatingui.syntax
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import lucuma.react.common.*
 import lucuma.react.floatingui.*
+
+import scala.language.implicitConversions // This shouldn't be necessary, but it is.
 
 extension (tag: VdomTag)
   def withTooltip(

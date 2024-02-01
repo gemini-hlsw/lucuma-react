@@ -9,7 +9,6 @@ import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TopNode
 import lucuma.react.common.EnumValue
 import lucuma.react.common.syntax.callback.*
-import lucuma.react.common.syntax.enumValue.*
 import org.scalajs.dom
 import org.scalajs.dom.html
 

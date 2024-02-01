@@ -5,7 +5,8 @@ package lucuma.react.floatingui
 
 import japgolly.scalajs.react.vdom.html_<^.{< => <<, *}
 import lucuma.react.common.TestUtils
-import lucuma.react.common.fnProps2Component
+
+import scala.language.implicitConversions // This shouldn't be necessary, but it is.
 
 class TooltipSuite extends munit.FunSuite with TestUtils {
   test("render") {

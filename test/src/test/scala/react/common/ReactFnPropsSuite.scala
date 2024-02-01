@@ -3,18 +3,17 @@
 
 package lucuma.react.common
 
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 import japgolly.scalajs.react.internal.FacadeExports
-import japgolly.scalajs.react.test._
-import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.test.*
+import japgolly.scalajs.react.vdom.html_<^.*
 
-class ReactFnPropsSuite extends munit.FunSuite {
-
+class ReactFnPropsSuite extends munit.FunSuite:
   case class Props() extends ReactFnProps(fnPropsComponent)
 
   val fnPropsComponent = ScalaFnComponent[Props](_ => <.div)
 
-  test("props") {
+  test("props"):
     val p        = Props()
     val u        = p.toUnmounted
     val key      = u.key
@@ -27,9 +26,8 @@ class ReactFnPropsSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-  }
 
-  test("props.withKey") {
+  test("props.withKey"):
     val p        = Props().withKey("key")
     val u        = p.toUnmounted
     val key      = u.key
@@ -42,5 +40,3 @@ class ReactFnPropsSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-  }
-}

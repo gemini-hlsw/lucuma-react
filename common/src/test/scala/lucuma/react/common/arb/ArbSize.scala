@@ -3,21 +3,20 @@
 
 package lucuma.react.common.arb
 
-import lucuma.react.common._
+import lucuma.react.common.Size
 import org.scalacheck.Arbitrary
-import org.scalacheck.Arbitrary._
+import org.scalacheck.Arbitrary.*
 import org.scalacheck.Cogen
 
-trait ArbSize {
-  implicit val arbSize: Arbitrary[Size] = Arbitrary {
-    for {
+trait ArbSize:
+  given Arbitrary[Size] = Arbitrary:
+    for
       w <- arbitrary[Double]
       h <- arbitrary[Double]
-    } yield Size(w, h)
-  }
+    yield Size(w, h)
 
-  implicit val cogenSize: Cogen[Size] =
-    Cogen[(Double, Double)].contramap(x => (x.width, x.height))
-}
+  given Cogen[Size] =
+    Cogen[(Double, Double)].contramap: x =>
+      (x.width, x.height)
 
 object ArbSize extends ArbSize

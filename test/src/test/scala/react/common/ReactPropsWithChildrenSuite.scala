@@ -3,22 +3,21 @@
 
 package lucuma.react.common
 
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.React.RefHandle
 import japgolly.scalajs.react.internal.FacadeExports
-import japgolly.scalajs.react.test._
-import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.test.*
+import japgolly.scalajs.react.vdom.html_<^.*
 
 import scala.language.implicitConversions
 
-class ReactPropsWithChildrenSuite extends munit.FunSuite {
-
+class ReactPropsWithChildrenSuite extends munit.FunSuite:
   case class PropsWithChildren() extends ReactPropsWithChildren(propsWithChildrenComponent)
 
   val propsWithChildrenComponent =
     ScalaComponent.builder[PropsWithChildren].render_C(c => <.div(c)).build
 
-  test("propsWithChildren") {
+  test("propsWithChildren"):
     val p        = PropsWithChildren()
     val u        = p(<.div)
     val key      = u.key
@@ -37,9 +36,8 @@ class ReactPropsWithChildrenSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
-  }
 
-  test("propsWithChildren.withKey") {
+  test("propsWithChildren.withKey"):
     val p        = PropsWithChildren().withKey("key")
     val u        = p(<.div)
     val key      = u.key
@@ -58,9 +56,8 @@ class ReactPropsWithChildrenSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
-  }
 
-  test("propsWithChildren.withRef") {
+  test("propsWithChildren.withRef"):
     val p        = PropsWithChildren()
     val r        = Ref.toScalaComponent(p.component)
     val pr       = p.withRef(r)
@@ -81,9 +78,8 @@ class ReactPropsWithChildrenSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
-  }
 
-  test("propsWithChildren.withRef.withKey") {
+  test("propsWithChildren.withRef.withKey"):
     val p        = PropsWithChildren()
     val r        = Ref.toScalaComponent(p.component)
     val pr       = p.withRef(r).withKey("key")
@@ -104,5 +100,3 @@ class ReactPropsWithChildrenSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div><div></div></div>""")
     }
-  }
-}

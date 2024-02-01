@@ -3,21 +3,20 @@
 
 package lucuma.react.common
 
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.React.RefHandle
 import japgolly.scalajs.react.internal.FacadeExports
-import japgolly.scalajs.react.test._
-import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.test.*
+import japgolly.scalajs.react.vdom.html_<^.*
 
 import scala.language.implicitConversions
 
-class ReactPropsSuite extends munit.FunSuite {
-
+class ReactPropsSuite extends munit.FunSuite:
   case class Props() extends ReactProps(propsComponent)
 
   val propsComponent = ScalaComponent.builder[Props].render(_ => <.div).build
 
-  test("props") {
+  test("props"):
     val p        = Props()
     val u        = p.toUnmounted
     val key      = u.key
@@ -32,9 +31,8 @@ class ReactPropsSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-  }
 
-  test("props.withKey") {
+  test("props.withKey"):
     val p        = Props().withKey("key")
     val u        = p.toUnmounted
     val key      = u.key
@@ -49,9 +47,8 @@ class ReactPropsSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-  }
 
-  test("props.withRef") {
+  test("props.withRef"):
     val p        = Props()
     val r        = Ref.toScalaComponent(p.component)
     val pr       = p.withRef(r)
@@ -68,9 +65,8 @@ class ReactPropsSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-  }
 
-  test("props.withRef.withKey") {
+  test("props.withRef.withKey"):
     val p        = Props()
     val r        = Ref.toScalaComponent(p.component)
     val pr       = p.withRef(r).withKey("key")
@@ -87,6 +83,3 @@ class ReactPropsSuite extends munit.FunSuite {
       val html = mountNode.outerHTML()
       assertEquals(html, """<div></div>""")
     }
-  }
-
-}
