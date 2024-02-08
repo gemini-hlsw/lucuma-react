@@ -87,7 +87,7 @@ object ResizeDetector {
   @js.native
   trait Props extends js.Object {
     var children: RenderJS
-    var onResize: js.UndefOr[js.Function2[Double, Double, Unit]]
+    var onResize: js.UndefOr[js.Function2[js.UndefOr[Double], js.UndefOr[Double], Unit]]
     var handleHeight: js.UndefOr[Boolean]
     var handleWidth: js.UndefOr[Boolean]
     var skipOnMount: js.UndefOr[Boolean]

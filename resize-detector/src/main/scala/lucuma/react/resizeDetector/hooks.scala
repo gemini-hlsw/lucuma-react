@@ -55,9 +55,9 @@ object UseResizeDetectorProps {
   ): UseResizeDetectorProps = {
     val p = (new js.Object).asInstanceOf[UseResizeDetectorProps]
     onResize.foreach(v =>
-      p.onResize = { case (x: Double, y: Double) =>
-        v(x.toInt, y.toInt).runNow()
-      }: js.Function2[Double, Double, Unit]
+      p.onResize = { (x, y) =>
+        if (x.isDefined && y.isDefined) v(x.get.toInt, y.get.toInt).runNow()
+      }: js.Function2[js.UndefOr[Double], js.UndefOr[Double], Unit]
     )
     handleHeight.foreach(v => p.handleHeight = v)
     handleWidth.foreach(v => p.handleWidth = v)
