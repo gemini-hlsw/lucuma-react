@@ -44,6 +44,7 @@ object DemoControlsPanel {
     .withHooks[DemoControlsPanel]
     .useState("Text to edit")         // for InputText
     .useState("Resizeable TextArea")  // for InputTextarea
+    .useState(0d)                     // For InputNumber
     .useState(List("10", "20", "30")) // for Chips
     .useState(2)                      // for Dropdown
     .useState(3.some)                 // for DropdownOptional
@@ -66,6 +67,7 @@ object DemoControlsPanel {
         _,
         inputText,
         inputTextarea,
+        inputNumber,
         chips,
         dropdown,
         dropdownOptional,
@@ -168,6 +170,19 @@ object DemoControlsPanel {
                   Callback.log(s"Focused TextArea: ${e.target.value}")
                 }
               ),
+              <.label("InputNumber",         ^.htmlFor := "input-number", DemoStyles.FormFieldLabel),
+              InputNumber(
+                id = "input-number",
+                value = inputNumber.value,
+                onValueChange = e =>
+                  Callback.log(e) *>
+                    e.valueOption
+                      .map(inputNumber.setState)
+                      .getOrElse(Callback.empty),
+                min = 0,
+                max = 100,
+                mode = InputNumber.Mode.Decimal
+              ).withMods(DemoStyles.FormField, mouseEntered("InputNumber")),
               <.label("Chips",               ^.htmlFor := "chips", DemoStyles.FormFieldLabel),
               Chips(
                 id = "chips",
