@@ -16,13 +16,6 @@ given jsUndefOrEq[A: Eq]: Eq[js.UndefOr[A]] =
     }
   }
 
-given Eq[js.Object] = Eq.instance { (a, b) =>
-  val aDict = a.asInstanceOf[js.Dictionary[js.Any]]
-  val bDict = b.asInstanceOf[js.Dictionary[js.Any]]
-  aDict.keySet == bDict.keySet &&
-  aDict.keySet.forall(key => aDict(key) === bDict(key))
-}
-
 given Show[js.Object] = Show.show { a =>
   val aDict = a.asInstanceOf[js.Dictionary[Any]]
   aDict.keySet.map(key => s"$key=${aDict(key)}").mkString("{", ",", "}")
@@ -42,9 +35,16 @@ given jsAnyEq: Eq[js.Any] = Eq.instance { (a, b) =>
       val aDict = a.asInstanceOf[js.Dictionary[js.Any]]
       val bDict = b.asInstanceOf[js.Dictionary[js.Any]]
       aDict.keySet == bDict.keySet &&
-      aDict.keySet.forall(key => aDict(key) === bDict(key))
+      aDict.keySet.forall(key => jsAnyEq.eqv(aDict(key), bDict(key)))
 
     case _ =>
       a == b
   }
+}
+
+given Eq[js.Object] = Eq.instance { (a, b) =>
+  val aDict = a.asInstanceOf[js.Dictionary[js.Any]]
+  val bDict = b.asInstanceOf[js.Dictionary[js.Any]]
+  aDict.keySet == bDict.keySet &&
+  aDict.keySet.forall(key => aDict(key) === bDict(key))
 }

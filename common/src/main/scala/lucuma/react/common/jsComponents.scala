@@ -123,7 +123,7 @@ trait GenericFnComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
 
   inline def render: RenderFn[P] = {
     val (props, children) = rawModifiers
-    component.applyGeneric(props)(children: _*)
+    component.applyGeneric(props)(children*)
   }
 }
 
@@ -277,7 +277,7 @@ trait GenericJsComponentAC[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A]
 
   inline def render: Render[P] = {
     val (props, children) = rawModifiers
-    component.applyGeneric(props)(children: _*)
+    component.applyGeneric(props)(children*)
   }
 
   private def copyComponent(
@@ -331,11 +331,11 @@ trait GenericJsComponentF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, F <: 
       override protected val component = newComponent
     }
 
-  def withRef(ref: Ref.Handle[Js.RawMounted[P, Null] with F]): GenericJsComponentF[P, CT, U, F] =
+  def withRef(ref: Ref.Handle[Js.RawMounted[P, Null] & F]): GenericJsComponentF[P, CT, U, F] =
     copyComponent(self.component.withRef(ref))
 
   def withOptionalRef(
-    ref: Option[Ref.Handle[Js.RawMounted[P, Null] with F]]
+    ref: Option[Ref.Handle[Js.RawMounted[P, Null] & F]]
   ): GenericJsComponentF[P, CT, U, F] =
     copyComponent(self.component.withOptionalRef(ref))
 }
@@ -369,12 +369,12 @@ trait GenericJsComponentCF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F
     }
 
   def withRef(
-    ref: Ref.Handle[Js.RawMounted[P, Null] with F]
+    ref: Ref.Handle[Js.RawMounted[P, Null] & F]
   ): GenericJsComponentCF[P, CT, U, A, F] =
     copyComponent(self.component.withRef(ref))
 
   def withOptionalRef(
-    ref: Option[Ref.Handle[Js.RawMounted[P, Null] with F]]
+    ref: Option[Ref.Handle[Js.RawMounted[P, Null] & F]]
   ): GenericJsComponentCF[P, CT, U, A, F] =
     copyComponent(self.component.withOptionalRef(ref))
 }
@@ -404,12 +404,12 @@ trait GenericJsComponentAF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, F
     }
 
   def withRef(
-    ref: Ref.Handle[Js.RawMounted[P, Null] with F]
+    ref: Ref.Handle[Js.RawMounted[P, Null] & F]
   ): GenericJsComponentAF[P, CT, U, A, F] =
     copyComponent(self.component.withRef(ref))
 
   def withOptionalRef(
-    ref: Option[Ref.Handle[Js.RawMounted[P, Null] with F]]
+    ref: Option[Ref.Handle[Js.RawMounted[P, Null] & F]]
   ): GenericJsComponentAF[P, CT, U, A, F] =
     copyComponent(self.component.withOptionalRef(ref))
 }
@@ -428,7 +428,7 @@ trait GenericJsComponentACF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, 
 
   inline def render: RenderF[P, F] = {
     val (props, children) = rawModifiers
-    component.applyGeneric(props)(children: _*)
+    component.applyGeneric(props)(children*)
   }
 
   private def copyComponent(
@@ -442,12 +442,12 @@ trait GenericJsComponentACF[P <: js.Object, CT[-p, +u] <: CtorType[p, u], U, A, 
     }
 
   def withRef(
-    ref: Ref.Handle[Js.RawMounted[P, Null] with F]
+    ref: Ref.Handle[Js.RawMounted[P, Null] & F]
   ): GenericJsComponentACF[P, CT, U, A, F] =
     copyComponent(self.component.withRef(ref))
 
   def withOptionalRef(
-    ref: Option[Ref.Handle[Js.RawMounted[P, Null] with F]]
+    ref: Option[Ref.Handle[Js.RawMounted[P, Null] & F]]
   ): GenericJsComponentACF[P, CT, U, A, F] =
     copyComponent(self.component.withOptionalRef(ref))
 }

@@ -24,5 +24,5 @@ object RowSelection:
       f(opaqueValue)
     def toJs: raw.buildLibFeaturesRowSelectionMod.RowSelectionState =
       StringDictionary(
-        opaqueValue.map((rowId, selected) => rowId.value -> selected).toSeq: _*
+        opaqueValue.map((rowId, selected) => rowId.value -> selected).toSeq*
       )

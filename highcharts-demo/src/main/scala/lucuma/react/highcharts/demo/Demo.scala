@@ -246,7 +246,7 @@ object Demo {
         )
     )
 
-    ReactDOMClient.createRoot(container).render(Chart(options, onCreated _).toUnmounted)
+    ReactDOMClient.createRoot(container).render(Chart(options, onCreated).toUnmounted)
 
   }
 }

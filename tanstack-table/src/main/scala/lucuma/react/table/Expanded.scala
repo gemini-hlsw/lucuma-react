@@ -17,7 +17,7 @@ enum Expanded:
     this match
       case AllRows    => raw.tanstackTableCoreBooleans.`true`
       case Rows(rows) =>
-        StringDictionary(rows.map((rowId, expanded) => rowId.value -> expanded).toSeq: _*)
+        StringDictionary(rows.map((rowId, expanded) => rowId.value -> expanded).toSeq*)
 
 object Expanded:
   private[table] def fromJs(rawValue: raw.buildLibFeaturesExpandingMod.ExpandedState): Expanded =

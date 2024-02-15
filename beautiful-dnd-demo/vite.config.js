@@ -5,8 +5,8 @@ import path from "path";
 export default ({ command, mode }) => {
   const sjs =
     mode == "production"
-      ? path.resolve(__dirname, "target/scala-3.3.1/beautifuldnddemo-opt/")
-      : path.resolve(__dirname, "target/scala-3.3.1/beautifuldnddemo-fastopt/");
+      ? path.resolve(__dirname, "target/scala-3.4.0/beautifuldnddemo-opt/")
+      : path.resolve(__dirname, "target/scala-3.4.0/beautifuldnddemo-fastopt/");
   const webapp = path.resolve(__dirname, "src/main/webapp/");
   const themeConfig = path.resolve(webapp, "theme/theme.config");
   const themeSite = path.resolve(webapp, "theme/site");
