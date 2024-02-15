@@ -25,7 +25,7 @@ object Datepicker {
       js.UndefOr[
         js.Date | /* for selectsRange */ Null | (js.Tuple2[js.Date | Null, js.Date | Null])
       ],
-      js.UndefOr[ReactEventFrom[js.Any with Element]]
+      js.UndefOr[ReactEventFrom[js.Any & Element]]
     ) => Callback
   ): Builder[CustomModifierNames, WithRange] = {
     val __props = js.Dynamic.literal(onChange =
@@ -34,7 +34,7 @@ object Datepicker {
           t0: js.UndefOr[
             js.Date | /* for selectsRange */ Null | (js.Tuple2[js.Date | Null, js.Date | Null])
           ],
-          t1: js.UndefOr[ReactEventFrom[js.Any with Element]]
+          t1: js.UndefOr[ReactEventFrom[js.Any & Element]]
         ) => onChange(t0, t1).runNow()
       )
     )

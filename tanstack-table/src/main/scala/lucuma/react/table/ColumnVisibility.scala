@@ -23,4 +23,4 @@ object ColumnVisibility:
     inline def modify(f: Endo[Map[ColumnId, Visibility]]): ColumnVisibility =
       f(opaqueValue)
     def toJs: raw.buildLibFeaturesVisibilityMod.VisibilityState             =
-      StringDictionary(opaqueValue.map((colId, visible) => colId.value -> visible.value).toSeq: _*)
+      StringDictionary(opaqueValue.map((colId, visible) => colId.value -> visible.value).toSeq*)

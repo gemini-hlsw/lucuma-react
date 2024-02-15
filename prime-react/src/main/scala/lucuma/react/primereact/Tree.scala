@@ -48,7 +48,7 @@ object Tree {
       )
       .applyOrNot(
         props.expandedKeys,
-        (c, p) => c.expandedKeys(StringDictionary(p.map(k => k.value -> true).toSeq: _*))
+        (c, p) => c.expandedKeys(StringDictionary(p.map(k => k.value -> true).toSeq*))
       )
       .applyOrNot(
         props.onToggle,

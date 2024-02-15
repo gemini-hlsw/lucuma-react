@@ -21,7 +21,7 @@ sealed trait ReactRender[Props, CT[-p, +u] <: CtorType[p, u], U] {
     first: CtorType.ChildArg,
     rest:  CtorType.ChildArg*
   )(using CT[Props, U] <:< CtorType.PropsAndChildren[Props, U]): U =
-    ctor.applyGeneric(props)((first +: rest): _*)
+    ctor.applyGeneric(props)((first +: rest)*)
 
   inline def toUnmounted: U = ctor.applyGeneric(props)()
 }
@@ -92,7 +92,7 @@ class ReactPropsWithChildren[Props, S, B](
 object ReactPropsWithChildren:
   extension [Props, S, B](p: ReactPropsWithChildren[Props, S, B])
     inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
-      p(first, rest: _*)
+      p(first, rest*)
 
 sealed trait ReactFnComponentProps[Props, CT[-p, +u] <: CtorType[p, u]]
     extends CtorWithProps[Props, CT, ScalaFn.Unmounted[Props]] {
@@ -124,7 +124,7 @@ class ReactFnPropsWithChildren[Props](
 object ReactFnPropsWithChildren:
   extension [Props](p: ReactFnPropsWithChildren[Props])
     inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
-      p(first, rest: _*)
+      p(first, rest*)
 
 sealed trait ReactComponentPropsForwardRef[Props, R, CT[-p, +u] <: CtorType[p, u]]
     extends CtorWithProps[Props, CT, ScalaForwardRef.Unmounted[Props, R]] { self =>
@@ -173,4 +173,4 @@ class ReactPropsForwardRefWithChildren[Props, R](
 object ReactPropsForwardRefWithChildren:
   extension [Props, R](p: ReactPropsForwardRefWithChildren[Props, R])
     inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
-      p(first, rest: _*)
+      p(first, rest*)

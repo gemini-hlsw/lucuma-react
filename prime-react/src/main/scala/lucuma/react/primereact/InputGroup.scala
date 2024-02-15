@@ -8,7 +8,7 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 
 case class InputGroup(mods: TagMod*) extends ReactFnProps(InputGroup.component):
-  def apply(moreMods: TagMod*): InputGroup = InputGroup((mods ++ moreMods): _*)
+  def apply(moreMods: TagMod*): InputGroup = InputGroup((mods ++ moreMods)*)
 
 object InputGroup:
   private type Props = InputGroup
@@ -17,7 +17,7 @@ object InputGroup:
     <.div(Css("p-inputgroup"), props.mods.toTagMod)
 
   case class Addon(mods: TagMod*) extends ReactFnProps(Addon.component):
-    def apply(moreMods: TagMod*): Addon = Addon((mods ++ moreMods): _*)
+    def apply(moreMods: TagMod*): Addon = Addon((mods ++ moreMods)*)
 
   object Addon:
     private type Props = Addon

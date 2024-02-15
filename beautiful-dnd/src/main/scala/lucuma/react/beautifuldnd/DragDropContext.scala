@@ -93,5 +93,5 @@ object DragDropContext {
         sensors,
         enableDefaultSensors
       )
-    )(children: _*)
+    )(children*)
 }

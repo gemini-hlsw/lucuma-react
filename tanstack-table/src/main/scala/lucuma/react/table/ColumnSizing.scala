@@ -25,5 +25,5 @@ object ColumnSizing:
       f(opaqueValue)
     def toJs: raw.buildLibFeaturesColumnSizingMod.ColumnSizingState =
       StringDictionary(
-        opaqueValue.map((colId, size) => colId.value -> size.value.toDouble).toSeq: _*
+        opaqueValue.map((colId, size) => colId.value -> size.value.toDouble).toSeq*
       )

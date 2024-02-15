@@ -250,7 +250,7 @@ package gridlayout {
     val Empty: Layout = Layout(Nil)
 
     private[gridlayout] def fromRaw(l: raw.Layout): Layout =
-      Layout(List(l.map(LayoutItem.fromRaw).toSeq: _*))
+      Layout(List(l.map(LayoutItem.fromRaw).toSeq*))
   }
 
   enum CompactType {
