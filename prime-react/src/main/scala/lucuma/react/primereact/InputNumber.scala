@@ -16,6 +16,7 @@ import scalajs.js
 
 case class InputNumber(
   id:                String,
+  size:              js.UndefOr[Int] = js.undefined,
   value:             js.UndefOr[Double] = js.undefined,
   disabled:          js.UndefOr[Boolean] = js.undefined,
   placeholder:       js.UndefOr[String] = js.undefined,
@@ -51,10 +52,11 @@ object InputNumber:
     case Code   extends CurrencyDisplay("code")
     case Name   extends CurrencyDisplay("name")
 
-  def component = ScalaFnComponent[Props]: props =>
+  val component = ScalaFnComponent[Props]: props =>
     CInputNumber
       .id(props.id)
       .applyOrNot(props.value, _.value(_))
+      .applyOrNot(props.size, _.size(_))
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.placeholder, _.placeholder(_))
       .applyOrNot(props.tooltip, _.tooltip(_))

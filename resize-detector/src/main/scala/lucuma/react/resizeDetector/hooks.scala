@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.*
 
 @js.native
 trait UseResizeDetectorReturnJS extends DimensionsJS {
-  val ref: facade.React.RefFn[html.Element]
+  val ref: facade.React.RefHandle[html.Element]
 }
 
 sealed trait UseResizeDetectorReturn extends Dimensions {
@@ -29,7 +29,7 @@ object UseResizeDetectorReturn {
     val height = r.height.toOption.map(_.toInt)
     val width  = r.width.toOption.map(_.toInt)
     val ref    =
-      Ref.fromJs(r.ref.asInstanceOf[facade.React.RefHandle[html.Element | Null]])
+      Ref.fromJs(r.ref)
   }
 
   implicit val reusabilityUseResizeDetectorReturn: Reusability[UseResizeDetectorReturn] =
