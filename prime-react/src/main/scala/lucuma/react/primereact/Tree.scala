@@ -33,11 +33,11 @@ case class Tree[A](
   onSelect:      js.UndefOr[(A, SyntheticEvent[Element]) => Callback] = js.undefined,
   dragDropScope: js.UndefOr[String] = js.undefined,
   onDragDrop:    js.UndefOr[Tree.DragDropEvent[A] => Callback] = js.undefined
-) extends ReactFnProps[Tree[A]](Tree.component)
+) extends ReactFnProps(Tree.component)
 
 object Tree {
 
-  private def component[A] = ScalaFnComponent[Tree[A]] { props =>
+  private def componentBuilder[A] = ScalaFnComponent[Tree[A]] { props =>
     CTree
       .value(props.value.map(_.toJsNode).toJSArray)
       .applyOrNot(props.selectionMode, (c, p) => c.selectionMode(p.value))
@@ -66,6 +66,8 @@ object Tree {
       .applyOrNot(props.onDragDrop, (c, p) => c.onDragDrop(e => p(Tree.DragDropEvent(e))))
 
   }
+
+  protected val component = componentBuilder[Any]
 
   enum SelectionMode(val value: single | multiple | checkbox) derives Eq:
     case Single   extends SelectionMode(single)

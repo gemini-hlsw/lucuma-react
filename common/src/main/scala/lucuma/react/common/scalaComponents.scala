@@ -9,6 +9,7 @@ import japgolly.scalajs.react.component.ScalaFn
 import japgolly.scalajs.react.component.ScalaForwardRef
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.VdomNode
+import sourcecode.FullName
 
 import scalajs.js
 
@@ -94,9 +95,13 @@ object ReactPropsWithChildren:
     inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
       p(first, rest*)
 
-sealed trait ReactFnComponentProps[Props, CT[-p, +u] <: CtorType[p, u]]
+sealed trait ReactFnComponentProps[Props, CT[-p, +u] <: CtorType[p, u]](using name: FullName)
     extends CtorWithProps[Props, CT, ScalaFn.Unmounted[Props]] {
   val component: ScalaFn.Component[Props, CT]
+
+  // Set the displayName for the component. This is used by React.
+  // Inspired by https://github.com/japgolly/scalajs-react/issues/1087
+  component.raw.asInstanceOf[js.Dynamic].displayName = name.value.stripSuffix(".component")
 
   protected[common] lazy val props: Props = this.asInstanceOf[Props]
 }
@@ -109,14 +114,17 @@ object ReactFnComponentProps:
   given [Props, CT[-p, +u] <: CtorType[p, u]]: Renderable[ReactFnComponentProps[Props, CT]] =
     Renderable(c => summon[Renderable[VdomNode]](c.toUnmounted))
 
-class ReactFnProps[Props](val component: ScalaFn.Component[Props, CtorType.Props])
-    extends ReactFnComponentProps[Props, CtorType.Props] {
-  override lazy val ctor: CtorType.Props[Props, ScalaFn.Unmounted[Props]] = component.ctor
+abstract class ReactFnProps[Props](val component: ScalaFn.Component[Props, CtorType.Props])(using
+  FullName
+) extends ReactFnComponentProps[Props, CtorType.Props] {
+  override lazy val ctor: CtorType.Props[Props, ScalaFn.Unmounted[Props]] =
+    component.ctor
 }
 
-class ReactFnPropsWithChildren[Props](
+abstract class ReactFnPropsWithChildren[Props](
   val component: ScalaFn.Component[Props, CtorType.PropsAndChildren]
-) extends ReactFnComponentProps[Props, CtorType.PropsAndChildren] {
+)(using FullName)
+    extends ReactFnComponentProps[Props, CtorType.PropsAndChildren] {
   override lazy val ctor: CtorType.PropsAndChildren[Props, ScalaFn.Unmounted[Props]] =
     component.ctor
 }

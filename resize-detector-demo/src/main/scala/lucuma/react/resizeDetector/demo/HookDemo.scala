@@ -15,7 +15,7 @@ case class HookDemo() extends ReactFnProps(HookDemo.component)
 object HookDemo:
   type Props = HookDemo
 
-  def component =
+  val component = 
     ScalaFnComponent
       .withHooks[Props]
       .useResizeDetector()
