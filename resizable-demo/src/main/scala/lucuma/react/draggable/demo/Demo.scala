@@ -23,7 +23,7 @@ object Demo {
       elem
     }
 
-    ReactDOMClient.createRoot(container).render(HomeComponent())
+    ReactDOMClient.createRoot(container).render(React.StrictMode(HomeComponent()))
   }
 }
 
