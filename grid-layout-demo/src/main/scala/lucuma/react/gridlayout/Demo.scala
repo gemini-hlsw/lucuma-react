@@ -87,6 +87,6 @@ object Demo {
       elem
     }
 
-    ReactDOMClient.createRoot(container).render(RGLDemo())
+    ReactDOMClient.createRoot(container).render(React.StrictMode(RGLDemo()))
   }
 }
