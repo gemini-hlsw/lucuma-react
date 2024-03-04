@@ -6,8 +6,10 @@ package lucuma.react.primereact
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
+import lucuma.typed.primereact.checkboxCheckboxMod.CheckboxChangeEvent
 import lucuma.typed.primereact.components.{Checkbox => CCheckbox}
 import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import org.scalajs.dom.*
 
 import scalajs.js
 
@@ -20,6 +22,7 @@ case class Checkbox(
   tooltip:        js.UndefOr[String] = js.undefined,
   tooltipOptions: js.UndefOr[TooltipOptions] = js.undefined,
   onChange:       js.UndefOr[Boolean => Callback] = js.undefined,
+  onChangeE:      js.UndefOr[(Boolean, ReactEventFrom[Element]) => Callback] = js.undefined,
   modifiers:      Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[Checkbox](Checkbox.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
@@ -29,6 +32,13 @@ case class Checkbox(
 
 object Checkbox {
   private val component = ScalaFnComponent[Checkbox] { props =>
+    val changeHandler: (CheckboxChangeEvent, Boolean) => Callback =
+      (e, b) =>
+        props.onChange.toOption
+          .map(_(b))
+          .orElse(props.onChangeE.toOption.map(_(b, e.originalEvent.get)))
+          .getOrElse(Callback.empty)
+
     CCheckbox(props.checked)
       .applyOrNot(props.id, _.id(_))
       .applyOrNot(props.inputId, _.inputId(_))
@@ -36,7 +46,11 @@ object Checkbox {
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.tooltip, _.tooltip(_))
       .applyOrNot(props.tooltipOptions, (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions]))
-      .applyOrNot(props.onChange, (c, p) => c.onChange(iwcp => p(iwcp.checked.getOrElse(false))))(
+      .applyOrNot(
+        props.onChange.orElse(props.onChangeE),
+        (c, p) =>
+          c.onChange((e: CheckboxChangeEvent) => changeHandler(e, e.checked.getOrElse(false)))
+      )(
         props.modifiers.toTagMod
       )
   }
