@@ -27,7 +27,7 @@ val kittensV         = "3.2.0"
 val munitV           = "1.0.0-M11"
 val scalaJsReactV    = "2.2.0-beta2"
 val utestV           = "0.8.2"
-val http4sV          = "0.23.25"
+val http4sV          = "0.23.26"
 
 ThisBuild / crossScalaVersions := Seq("3.4.0")
 
