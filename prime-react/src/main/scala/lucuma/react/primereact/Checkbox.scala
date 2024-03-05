@@ -34,10 +34,8 @@ object Checkbox {
   private val component = ScalaFnComponent[Checkbox] { props =>
     val changeHandler: (CheckboxChangeEvent, Boolean) => Callback =
       (e, b) =>
-        props.onChange.toOption
-          .map(_(b))
-          .orElse(props.onChangeE.toOption.map(_(b, e.originalEvent.get)))
-          .getOrElse(Callback.empty)
+        props.onChange.toOption.map(_(b)).getOrElse(Callback.empty) >>
+          props.onChangeE.toOption.map(_(b, e.originalEvent.get)).getOrElse(Callback.empty)
 
     CCheckbox(props.checked)
       .applyOrNot(props.id, _.id(_))
