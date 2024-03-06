@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.51"
+ThisBuild / tlBaseVersion       := "0.52"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
@@ -25,7 +25,7 @@ val catsV            = "2.10.0"
 val disciplineMunitV = "2.0.0-M3"
 val kittensV         = "3.2.0"
 val munitV           = "1.0.0-M11"
-val scalaJsReactV    = "2.2.0-beta2"
+val scalaJsReactV    = "3.0.0-beta3"
 val utestV           = "0.8.2"
 val http4sV          = "0.23.26"
 
