@@ -52,7 +52,7 @@ package gridlayout {
   @js.native
   @JSImport("react-grid-layout", "Responsive.utils")
   object ResponsiveUtils extends js.Object {
-    // Method from js lanf to get the breakpoint from the width
+    // Method from js land to get the breakpoint from the width
     @nowarn
     def getBreakpointFromWidth(breakpoints: js.Dictionary[Int], width: Double): String = js.native
   }
