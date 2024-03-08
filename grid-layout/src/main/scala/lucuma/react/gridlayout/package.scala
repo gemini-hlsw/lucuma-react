@@ -11,8 +11,10 @@ import org.scalajs.dom.Event
 import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.html.{Element => HTMLElement}
 
+import scala.annotation.nowarn
 import scala.scalajs.js
 
+import js.annotation.JSImport
 import js.JSConverters.*
 
 package object gridlayout {
@@ -48,12 +50,12 @@ package gridlayout {
    * Facade for ResponsiveUtils
    */
   @js.native
-  trait ResponsiveUtils extends js.Object {
+  @JSImport("react-grid-layout", "Responsive.utils")
+  object ResponsiveUtils extends js.Object {
     // Method from js land to get the breakpoint from the width
+    @nowarn
     def getBreakpointFromWidth(breakpoints: js.Dictionary[Int], width: Double): String = js.native
   }
-
-  val ResponsiveUtils = ResponsiveReactGridLayout.RawComponent.utils
 
   opaque type BreakpointName = String
 

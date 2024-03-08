@@ -14,6 +14,8 @@ import lucuma.react.common._
 
 import scala.scalajs.js
 
+import js.annotation.JSImport
+
 final case class ResponsiveReactGridLayout(
   width:                  Double,
   layouts:                Map[BreakpointName, (Int, Int, Layout)],
@@ -59,11 +61,9 @@ final case class ResponsiveReactGridLayout(
 
 object ResponsiveReactGridLayout {
 
-  val RawComponent = ReactGridLayout.RawComponent.Responsive
-
   @js.native
-  trait Responsive extends js.Object:
-    val utils: ResponsiveUtils = js.native
+  @JSImport("react-grid-layout", "Responsive")
+  object RawComponent extends js.Object
 
   @js.native
   trait ResponsiveReactGridLayoutProps extends BaseProps {

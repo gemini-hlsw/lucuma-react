@@ -48,11 +48,8 @@ final case class Resizable(
 
 object Resizable {
   @js.native
-  @JSImport("react-resizable", JSImport.Default)
-  private object ReactResizable extends js.Object:
-    val Resizable: RawReactElement = js.native
-
-  val RawComponent = ReactResizable.Resizable
+  @JSImport("react-resizable", "Resizable")
+  object RawComponent extends js.Object
 
   type RawReactElement = React.Element
 
