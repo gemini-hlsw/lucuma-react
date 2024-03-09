@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.53"
+ThisBuild / tlBaseVersion       := "0.54"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
@@ -128,7 +128,6 @@ lazy val root = project
     gridLayoutDemo,
     draggable,
     floatingui,
-    clipboard,
     tanstackTable,
     tanstackTableDemo,
     highcharts,
@@ -158,8 +157,6 @@ lazy val rootDraggable     =
   project.aggregate(draggable).enablePlugins(NoPublishPlugin)
 lazy val rootFloatingui    =
   project.aggregate(floatingui).enablePlugins(NoPublishPlugin)
-lazy val rootClipboard     =
-  project.aggregate(clipboard).enablePlugins(NoPublishPlugin)
 lazy val rootTanstackTable =
   project.aggregate(tanstackTable, tanstackTableDemo).enablePlugins(NoPublishPlugin)
 lazy val rootHighcharts    =
@@ -182,7 +179,6 @@ val projects = List(
   rootGridLayout,
   rootDraggable,
   rootFloatingui,
-  rootClipboard,
   rootTanstackTable,
   rootHighcharts,
   rootDatepicker,
@@ -259,15 +255,6 @@ lazy val floatingui = project
   .dependsOn(common, test % Test)
   .settings(
     name := "lucuma-react-floatingui",
-    facadeSettings
-  )
-
-lazy val clipboard = project
-  .in(file("clipboard"))
-  .enablePlugins(ScalaJSPlugin)
-  .dependsOn(common, test % Test)
-  .settings(
-    name := "lucuma-react-clipboard",
     facadeSettings
   )
 

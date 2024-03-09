@@ -17,7 +17,6 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootGridLayout)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootDraggable)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootFloatingui)
-  - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootClipboard)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootTanstackTable)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootHighcharts)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootDatepicker)
@@ -53,14 +52,6 @@ pull_request_rules:
     label:
       add:
       - circular-progressbar
-      remove: []
-- name: Label clipboard PRs
-  conditions:
-  - files~=^clipboard/
-  actions:
-    label:
-      add:
-      - clipboard
       remove: []
 - name: Label common PRs
   conditions:
@@ -230,14 +221,6 @@ pull_request_rules:
       add:
       - rootBeautifulDnd
       remove: []
-- name: Label rootClipboard PRs
-  conditions:
-  - files~=^rootClipboard/
-  actions:
-    label:
-      add:
-      - rootClipboard
-      remove: []
 - name: Label rootCore PRs
   conditions:
   - files~=^rootCore/
@@ -357,7 +340,6 @@ pull_request_rules:
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootGridLayout)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootDraggable)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootFloatingui)
-  - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootClipboard)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootTanstackTable)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootHighcharts)
   - status-success=Build and Test (ubuntu-latest, 3, temurin@17, rootDatepicker)
