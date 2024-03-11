@@ -30,7 +30,7 @@ jobs:
         os: [ubuntu-latest]
         scala: [3]
         java: [temurin@17]
-        project: [rootCore, rootGridLayout, rootDraggable, rootFloatingui, rootClipboard, rootTanstackTable, rootHighcharts, rootDatepicker, rootBeautifulDnd, rootFontAwesome, rootHotkeys, rootResizable, rootPrimeReact, circularProgressbar, markdown]
+        project: [rootCore, rootGridLayout, rootDraggable, rootFloatingui, rootTanstackTable, rootHighcharts, rootDatepicker, rootBeautifulDnd, rootFontAwesome, rootHotkeys, rootResizable, rootPrimeReact, circularProgressbar, markdown]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
