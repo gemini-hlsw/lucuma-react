@@ -13,6 +13,8 @@ import lucuma.react.fa.FontAwesomeIcon
 import lucuma.react.fa.IconSize
 import lucuma.react.fa.LayeredIcon
 import lucuma.react.primereact.*
+import lucuma.react.primereact.tooltip.*
+import lucuma.typed.primereact.primereactStrings.popup
 
 import scala.scalajs.js.annotation.JSImport
 
@@ -418,7 +420,29 @@ object DemoControlsPanel {
                   text = "This is a message with a custom icon",
                   icon = "pi pi-bolt"
                 )
-              )
+              ),
+              <.label("Tooltip", DemoStyles.FormFieldLabel),
+              <.span(DemoStyles.FormField) {
+                val tooltipTarget = Css("tooltip-target")
+
+                React.Fragment(
+                  Tooltip(
+                    targetCss = tooltipTarget,
+                    content = "I am a tooltip",
+                    position = Tooltip.Position.Top
+                  ),
+                  <.span(tooltipTarget, "I am a <span>. Hover over me to see a tooltip."),
+                  <.br,
+                  <.br,
+                  <.span(
+                    tooltipTarget,
+                    "I am another <span>. Hover over me to see a tooltip too."
+                  ).withTooltipOptions(
+                    content = "I'm another tooltip!",
+                    position = Tooltip.Position.Bottom
+                  )
+                )
+              }
             )
           )
         )

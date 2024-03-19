@@ -122,6 +122,8 @@ object Css:
     inline def unless_(pred: => Boolean): Css =
       when_(!pred)
 
+    def querySelector: String = css.mkString(".", ".", "")
+
   inline def apply(css: List[String]): Css = css
 
   inline def apply(css: String): Css = List(css)
