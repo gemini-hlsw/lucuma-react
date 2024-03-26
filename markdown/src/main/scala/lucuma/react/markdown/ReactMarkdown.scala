@@ -33,13 +33,13 @@ object RehypePlugin {
   @js.native
   @JSImport("rehype-katex", JSImport.Default)
   object RehypeKatex extends js.Object with RehypePlugin
+
 }
 
 case class ReactMarkdown(
   content:                js.UndefOr[String],
   clazz:                  js.UndefOr[Css] = js.undefined,
-  linkTarget:             js.UndefOr[String] = js.undefined,
-  transformImageUri:      js.UndefOr[Uri => Uri] = js.undefined,
+  urlTransform:           js.UndefOr[Uri => Uri] = js.undefined,
   remarkPlugins:          js.UndefOr[List[RemarkPlugin]] = js.undefined,
   rehypePlugins:          js.UndefOr[List[RehypePlugin]] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
@@ -61,35 +61,26 @@ object ReactMarkdown {
   trait Props extends js.Object {
     var children: js.UndefOr[String]
     var className: js.UndefOr[String]
-    var linkTarget: js.UndefOr[String]
-    var transformImageUri: js.UndefOr[js.Function1[String, String]]
+    var urlTransform: js.UndefOr[js.Function1[String, String]]
     var remarkPlugins: js.UndefOr[js.Array[js.Object]]
     var rehypePlugins: js.UndefOr[js.Array[js.Object]]
   }
 
   protected def props(p: ReactMarkdown): Props =
-    rawprops(p.content,
-             p.clazz,
-             p.linkTarget,
-             p.transformImageUri,
-             p.remarkPlugins,
-             p.rehypePlugins
-    )
+    rawprops(p.content, p.clazz, p.urlTransform, p.remarkPlugins, p.rehypePlugins)
 
   protected def rawprops(
-    content:           js.UndefOr[String],
-    clazz:             js.UndefOr[Css],
-    linkTarget:        js.UndefOr[String],
-    transformImageUri: js.UndefOr[Uri => Uri],
-    remarkPlugins:     js.UndefOr[List[RemarkPlugin]],
-    rehypePlugins:     js.UndefOr[List[RehypePlugin]]
+    content:       js.UndefOr[String],
+    clazz:         js.UndefOr[Css],
+    urlTransform:  js.UndefOr[Uri => Uri],
+    remarkPlugins: js.UndefOr[List[RemarkPlugin]],
+    rehypePlugins: js.UndefOr[List[RehypePlugin]]
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     content.foreach(v => p.children = v)
     clazz.foreach(v => p.className = v.htmlClass)
-    linkTarget.foreach(v => p.linkTarget = v)
-    transformImageUri.foreach(v =>
-      p.transformImageUri =
+    urlTransform.foreach(v =>
+      p.urlTransform =
         ((u: String) => v(Uri.unsafeFromString(u)).toString()): js.Function1[String, String]
     )
     remarkPlugins.foreach(l => p.remarkPlugins = l.map(_.asInstanceOf[js.Object]).toJSArray)
