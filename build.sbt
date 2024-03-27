@@ -29,7 +29,7 @@ val scalaJsReactV    = "3.0.0-beta3"
 val utestV           = "0.8.2"
 val http4sV          = "0.23.26"
 
-ThisBuild / crossScalaVersions := Seq("3.4.0")
+ThisBuild / crossScalaVersions := Seq("3.4.1")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(
