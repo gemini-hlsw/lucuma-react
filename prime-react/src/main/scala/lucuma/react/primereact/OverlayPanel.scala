@@ -22,7 +22,7 @@ case class OverlayPanelRef(
 ) {
   def toggle: ReactEvent => Callback = e => ref.get.map(_.fold(())(_.raw.toggle(e)))
   def show: ReactEvent => Callback   = e => ref.get.map(_.fold(())(_.raw.show(e)))
-  def hide: Callback                 = ref.get.map(_.fold(())(_.raw.hide))
+  def hide: Callback                 = ref.get.map(_.foldMap(_.raw.hide))
 }
 
 case class OverlayPanel(
