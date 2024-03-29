@@ -10,7 +10,7 @@
     "highcharts": "^11.4.0",
     "jsdom": "24.0.0",
     "less": "^4.2.0",
-    "primeicons": "^6.0.1",
+    "primeicons": "^7.0.0",
     "primereact": "^10.6.2",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
