@@ -6,4 +6,5 @@ package lucuma.react.primereact.hooks
 object all
     extends UsePopupMenuRef.HooksApiExt
     with UseToastRef.HooksApiExt
+    with UseOverlayPanelRef.HooksApiExt
     with UseMessagesRef.HooksApiExt
