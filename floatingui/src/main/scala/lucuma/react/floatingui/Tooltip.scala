@@ -16,8 +16,12 @@ import scala.scalajs.js
 /**
  * Tooltip base on floating ui see: https://floating-ui.com/docs/react-dom
  */
-case class Tooltip(trigger: VdomTag, tooltip: VdomNode, placement: Placement = Placement.Top, open: Boolean = false)
-    extends ReactFnProps(Tooltip.component)
+case class Tooltip(
+  trigger:   VdomTag,
+  tooltip:   VdomNode,
+  placement: Placement = Placement.Top,
+  open:      Boolean = false
+) extends ReactFnProps(Tooltip.component)
 
 object Tooltip {
   private type Props = Tooltip

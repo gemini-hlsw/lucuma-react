@@ -6,8 +6,8 @@ package lucuma.react.primereact
 import cats.Eq
 import cats.syntax.all.*
 import lucuma.react.common.*
+import lucuma.typed.primereact.selectitemSelectitemMod.SelectItem as CSelectItem
 import lucuma.typed.primereact.selectitemSelectitemMod.SelectItemOptionsType
-import lucuma.typed.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
 
 import scalajs.js
 import scalajs.js.JSConverters.*

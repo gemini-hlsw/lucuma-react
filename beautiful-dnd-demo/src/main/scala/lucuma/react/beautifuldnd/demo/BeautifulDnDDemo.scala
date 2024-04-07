@@ -3,14 +3,14 @@
 
 package lucuma.react.beautifuldnd.demo
 
-import cats._
-import cats.syntax.all._
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.html_<^._
-import lucuma.react.beautifuldnd._
+import cats.*
+import cats.syntax.all.*
+import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.beautifuldnd.*
 import org.scalajs.dom.document
 
-import scala.scalajs.js.annotation._
+import scala.scalajs.js.annotation.*
 
 // Adaptation of https://codesandbox.io/s/k260nyxq9v
 object BeautifulDnDDemo {

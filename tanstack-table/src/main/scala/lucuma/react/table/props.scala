@@ -11,8 +11,8 @@ import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.react.SizePx
 import lucuma.react.common.style.Css
 import lucuma.react.virtual.facade.Virtualizer
-import lucuma.typed.{tanstackTableCore => raw}
-import lucuma.typed.{tanstackVirtualCore => rawVirtual}
+import lucuma.typed.tanstackTableCore as raw
+import lucuma.typed.tanstackVirtualCore as rawVirtual
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLElement
 

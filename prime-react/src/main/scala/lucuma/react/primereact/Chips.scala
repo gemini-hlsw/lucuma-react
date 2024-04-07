@@ -10,8 +10,8 @@ import lucuma.react.common.*
 import lucuma.typed.primereact.chipsChipsMod.ChipsAddEvent
 import lucuma.typed.primereact.chipsChipsMod.ChipsChangeEvent
 import lucuma.typed.primereact.chipsChipsMod.ChipsRemoveEvent
-import lucuma.typed.primereact.components.{Chips => CChips}
-import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.components.Chips as CChips
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipOptions as CTooltipOptions
 
 import scalajs.js
 import scalajs.js.JSConverters.*

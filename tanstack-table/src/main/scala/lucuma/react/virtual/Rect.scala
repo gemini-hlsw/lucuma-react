@@ -4,7 +4,7 @@
 package lucuma.react.virtual
 
 import lucuma.react.SizePx
-import lucuma.typed.{tanstackVirtualCore => rawVirtual}
+import lucuma.typed.tanstackVirtualCore as rawVirtual
 
 case class Rect(height: SizePx, width: SizePx):
   def toJs: rawVirtual.mod.Rect = rawVirtual.mod.Rect(height.value, width.value)

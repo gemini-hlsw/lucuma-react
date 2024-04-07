@@ -5,11 +5,11 @@ package lucuma.react
 
 package draggable
 
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.test._
-import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.*
+import japgolly.scalajs.react.test.*
+import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.MouseEvent
-import utest._
+import utest.*
 
 object DraggableTests extends TestSuite {
   val tests = Tests {

@@ -3,7 +3,7 @@
 
 package lucuma.react.table
 
-import lucuma.typed.{tanstackTableCore => raw}
+import lucuma.typed.tanstackTableCore as raw
 
 case class Cell[T, A](private val toJs: raw.buildLibTypesMod.Cell[T, A]):
   lazy val id: CellId                                         = CellId(toJs.id)

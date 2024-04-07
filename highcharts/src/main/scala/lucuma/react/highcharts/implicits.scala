@@ -4,7 +4,7 @@
 package lucuma.react.highcharts
 
 import scala.scalajs.js
-import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.JSConverters.*
 
 object implicits {
   implicit def doubleTupleList2Data[T](

@@ -6,7 +6,7 @@ package lucuma.react.table
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.hooks.CustomHook
 import lucuma.react.table.facade.*
-import lucuma.typed.{tanstackTableCore => raw}
+import lucuma.typed.tanstackTableCore as raw
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport

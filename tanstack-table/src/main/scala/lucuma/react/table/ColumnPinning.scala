@@ -4,7 +4,7 @@
 package lucuma.react.table
 
 import cats.syntax.all.*
-import lucuma.typed.{tanstackTableCore => raw}
+import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js.JSConverters.*
 

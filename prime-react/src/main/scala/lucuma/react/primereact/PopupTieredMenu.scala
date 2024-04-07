@@ -3,8 +3,8 @@
 
 package lucuma.react.primereact
 
-import japgolly.scalajs.react.CtorType.Props
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.CtorType.Props
 import japgolly.scalajs.react.component.Js.ComponentWithFacade
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*

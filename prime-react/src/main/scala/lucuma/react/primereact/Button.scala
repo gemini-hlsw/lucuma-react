@@ -9,7 +9,7 @@ import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
-import lucuma.typed.primereact.components.{Button => CButton}
+import lucuma.typed.primereact.components.Button as CButton
 import lucuma.typed.primereact.primereactStrings.bottom
 import lucuma.typed.primereact.primereactStrings.button
 import lucuma.typed.primereact.primereactStrings.left
@@ -17,7 +17,7 @@ import lucuma.typed.primereact.primereactStrings.reset
 import lucuma.typed.primereact.primereactStrings.right
 import lucuma.typed.primereact.primereactStrings.submit
 import lucuma.typed.primereact.primereactStrings.top
-import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipOptions as CTooltipOptions
 import org.scalajs.dom.*
 
 import scalajs.js

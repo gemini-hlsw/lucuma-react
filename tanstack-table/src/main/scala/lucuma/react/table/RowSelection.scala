@@ -4,7 +4,7 @@
 package lucuma.react.table
 
 import cats.Endo
-import lucuma.typed.{tanstackTableCore => raw}
+import lucuma.typed.tanstackTableCore as raw
 import org.scalablytyped.runtime.StringDictionary
 
 opaque type RowSelection = Map[RowId, Boolean]

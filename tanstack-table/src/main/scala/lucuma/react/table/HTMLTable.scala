@@ -8,8 +8,8 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.SizePx
 import lucuma.react.common.*
-import lucuma.typed.{tanstackTableCore => raw}
-import lucuma.typed.{tanstackVirtualCore => rawVirtual}
+import lucuma.typed.tanstackTableCore as raw
+import lucuma.typed.tanstackVirtualCore as rawVirtual
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js

@@ -11,7 +11,7 @@ import japgolly.scalajs.react.JsComponent
 import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.react.common.given
 import org.scalajs.dom.MouseEvent
-import org.scalajs.dom.html.{Element => HTMLElement}
+import org.scalajs.dom.html.Element as HTMLElement
 
 import scala.language.implicitConversions
 import scala.scalajs.js

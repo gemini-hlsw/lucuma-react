@@ -7,8 +7,8 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
-import lucuma.react.fa.TextLayer
 import lucuma.react.fa.*
+import lucuma.react.fa.TextLayer
 import org.scalajs.dom
 
 import scalajs.js

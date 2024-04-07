@@ -7,8 +7,8 @@ import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.ReactFnProps
-import lucuma.react.common.style.Css
 import lucuma.react.common.style.*
+import lucuma.react.common.style.Css
 import lucuma.react.resizeDetector.UseResizeDetectorProps
 import lucuma.react.resizeDetector.hooks.*
 import lucuma.typed.highcharts.anon.TypeofHighchartsAST

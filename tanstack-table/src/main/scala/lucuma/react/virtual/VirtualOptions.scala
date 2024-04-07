@@ -7,7 +7,7 @@ import japgolly.scalajs.react.callback.*
 import lucuma.react.SizePx
 import lucuma.react.virtual.facade.VirtualOptionsJS
 import lucuma.react.virtual.facade.Virtualizer
-import lucuma.typed.{tanstackVirtualCore => rawVirtual}
+import lucuma.typed.tanstackVirtualCore as rawVirtual
 import org.scalajs.dom.Element
 
 import scalajs.js

@@ -9,10 +9,10 @@ import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
-import lucuma.typed.primereact.components.{ToggleButton => CToggleButton}
+import lucuma.typed.primereact.components.ToggleButton as CToggleButton
 import lucuma.typed.primereact.primereactStrings.left
 import lucuma.typed.primereact.primereactStrings.right
-import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipOptions as CTooltipOptions
 import org.scalajs.dom.*
 
 import scalajs.js

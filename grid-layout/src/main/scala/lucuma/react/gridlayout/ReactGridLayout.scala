@@ -9,7 +9,7 @@ import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.Children
 import japgolly.scalajs.react.JsComponent
 import japgolly.scalajs.react.vdom.TagMod
-import lucuma.react.common._
+import lucuma.react.common.*
 
 import scala.scalajs.js
 

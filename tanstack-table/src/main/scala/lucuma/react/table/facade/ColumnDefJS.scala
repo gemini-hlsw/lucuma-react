@@ -4,7 +4,7 @@
 package lucuma.react.table.facade
 
 import japgolly.scalajs.react.facade.React.Node
-import lucuma.typed.{tanstackTableCore => raw}
+import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
 

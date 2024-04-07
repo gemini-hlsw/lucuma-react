@@ -6,8 +6,8 @@ package lucuma.react.primereact
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
-import lucuma.typed.primereact.components.{InputSwitch => CInputSwitch}
-import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.components.InputSwitch as CInputSwitch
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipOptions as CTooltipOptions
 
 import scalajs.js
 

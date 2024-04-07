@@ -3,8 +3,8 @@
 
 package lucuma.react.datepicker.demo
 
-import japgolly.scalajs.react._
-import lucuma.react.datepicker._
+import japgolly.scalajs.react.*
+import lucuma.react.datepicker.*
 import lucuma.typed.reactDatepicker.components.ReactDatepicker
 import org.scalajs.dom
 
@@ -13,7 +13,7 @@ import java.time.LocalDate
 import java.time.ZoneOffset
 import scala.scalajs.js
 
-import js.annotation._
+import js.annotation.*
 
 @JSExportTopLevel("Demo")
 object Demo {

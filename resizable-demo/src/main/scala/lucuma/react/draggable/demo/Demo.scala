@@ -3,14 +3,14 @@
 
 package lucuma.react.draggable.demo
 
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.html_<^._
-import lucuma.react.common._
-import lucuma.react.resizable._
+import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.common.*
+import lucuma.react.resizable.*
 import org.scalajs.dom
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation._
+import scala.scalajs.js.annotation.*
 
 @JSExportTopLevel("Demo")
 object Demo {
