@@ -16,7 +16,7 @@ import scala.scalajs.js
 /**
  * Tooltip base on floating ui see: https://floating-ui.com/docs/react-dom
  */
-case class Tooltip(trigger: VdomTag, tooltip: VdomNode, placement: Placement = Placement.Top)
+case class Tooltip(trigger: VdomTag, tooltip: VdomNode, placement: Placement = Placement.Top, open: Boolean = false)
     extends ReactFnProps(Tooltip.component)
 
 object Tooltip {
@@ -25,7 +25,7 @@ object Tooltip {
   private val component =
     ScalaFnComponent
       .withHooks[Props]
-      .useState(false) // isOpen
+      .useStateBy(_.open) // isOpen
       .useRefToVdom[dom.HTMLElement] // arrow
       .useFloatingBy { (props, open, arrow) =>
         UseFloatingProps(
