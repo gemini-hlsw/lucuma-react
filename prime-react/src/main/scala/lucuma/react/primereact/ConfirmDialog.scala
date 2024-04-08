@@ -7,9 +7,9 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.fa.FontAwesomeIcon
-import lucuma.typed.primereact.components.{ConfirmDialog => CConfirmDialog}
+import lucuma.typed.primereact.components.ConfirmDialog as CConfirmDialog
 import lucuma.typed.primereact.confirmdialogConfirmdialogMod.ConfirmDialogProps
-import lucuma.typed.primereact.confirmdialogConfirmdialogMod.{confirmDialog => rawConfirmDialog}
+import lucuma.typed.primereact.confirmdialogConfirmdialogMod.confirmDialog as rawConfirmDialog
 import org.scalablytyped.runtime.StObject
 
 import scalajs.js

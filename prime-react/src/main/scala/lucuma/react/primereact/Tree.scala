@@ -10,13 +10,13 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.SyntheticEvent
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.ReactFnProps
-import lucuma.typed.primereact.components.{Tree => CTree}
+import lucuma.typed.primereact.components.Tree as CTree
 import lucuma.typed.primereact.primereactStrings.checkbox
 import lucuma.typed.primereact.primereactStrings.multiple
 import lucuma.typed.primereact.primereactStrings.single
 import lucuma.typed.primereact.treeTreeMod.TreeDragDropEvent
 import lucuma.typed.primereact.treeTreeMod.TreeNodeTemplateOptions
-import lucuma.typed.primereact.treenodeTreenodeMod.{TreeNode => CTreeNode}
+import lucuma.typed.primereact.treenodeTreenodeMod.TreeNode as CTreeNode
 import org.scalablytyped.runtime.StringDictionary
 import org.scalajs.dom.Element
 

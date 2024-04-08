@@ -6,7 +6,7 @@ package lucuma.react.primereact
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
-import lucuma.typed.primereact.components.{Knob => CKnob}
+import lucuma.typed.primereact.components.Knob as CKnob
 
 import scalajs.js
 

@@ -5,7 +5,7 @@ package lucuma.react.table
 
 import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.facade.SyntheticEvent
-import lucuma.typed.{tanstackTableCore => raw}
+import lucuma.typed.tanstackTableCore as raw
 import org.scalajs.dom
 
 import scalajs.js.JSConverters.*

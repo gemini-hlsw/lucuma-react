@@ -3,10 +3,10 @@
 
 package lucuma.react.floatingui
 
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 
 import scala.scalajs.js
-import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.JSConverters.*
 
 @js.native
 trait ElementProps extends js.Object

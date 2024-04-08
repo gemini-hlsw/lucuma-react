@@ -4,7 +4,7 @@
 package lucuma.react.primereact
 
 import japgolly.scalajs.react.vdom.html_<^.*
-import lucuma.typed.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
+import lucuma.typed.primereact.selectitemSelectitemMod.SelectItem as CSelectItem
 
 import scalajs.js
 

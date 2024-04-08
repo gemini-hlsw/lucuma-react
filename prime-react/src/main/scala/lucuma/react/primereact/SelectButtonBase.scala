@@ -7,9 +7,9 @@ import cats.Eq
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
-import lucuma.typed.primereact.components.{SelectButton => CSelectButton}
-import lucuma.typed.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
-import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.components.SelectButton as CSelectButton
+import lucuma.typed.primereact.selectitemSelectitemMod.SelectItem as CSelectItem
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipOptions as CTooltipOptions
 
 import scalajs.js
 

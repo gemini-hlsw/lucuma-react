@@ -3,14 +3,14 @@
 
 package lucuma.react.resizeDetector.demo
 import japgolly.scalajs.react.*
-import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import org.scalajs.dom
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
 
-import js.annotation._
+import js.annotation.*
 
 @JSExportTopLevel("Demo")
 object Demo:

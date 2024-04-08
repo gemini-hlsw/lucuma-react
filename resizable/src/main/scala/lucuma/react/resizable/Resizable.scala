@@ -10,12 +10,12 @@ import japgolly.scalajs.react.ReactEvent
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.VdomNode
-import lucuma.react.common._
+import lucuma.react.common.*
 import lucuma.react.draggable.Axis
-import lucuma.react.draggable.Draggable.{Props => DraggableProps}
+import lucuma.react.draggable.Draggable.Props as DraggableProps
 
 import scala.scalajs.js
-import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.JSConverters.*
 
 import js.annotation.JSImport
 

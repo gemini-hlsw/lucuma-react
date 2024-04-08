@@ -3,7 +3,7 @@
 
 package lucuma.react.circularprogressbar
 
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 import lucuma.react.common.GenericComponentP
 
 import scalajs.js

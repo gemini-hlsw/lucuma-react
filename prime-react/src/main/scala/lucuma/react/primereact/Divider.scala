@@ -8,7 +8,7 @@ import cats.derived.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
-import lucuma.typed.primereact.components.{Divider => CDivider}
+import lucuma.typed.primereact.components.Divider as CDivider
 import lucuma.typed.primereact.primereactStrings.bottom
 import lucuma.typed.primereact.primereactStrings.center
 import lucuma.typed.primereact.primereactStrings.dashed

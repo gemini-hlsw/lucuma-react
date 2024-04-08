@@ -6,11 +6,11 @@ package lucuma.react.primereact
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
-import lucuma.typed.primereact.components.{InputNumber => CInputNumber}
+import lucuma.typed.primereact.components.InputNumber as CInputNumber
 import lucuma.typed.primereact.inputnumberInputnumberMod.InputNumberValueChangeEvent
+import lucuma.typed.primereact.primereactStrings.currency as cCurrency
 import lucuma.typed.primereact.primereactStrings.decimal
-import lucuma.typed.primereact.primereactStrings.{currency => cCurrency}
-import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipOptions as CTooltipOptions
 
 import scalajs.js
 

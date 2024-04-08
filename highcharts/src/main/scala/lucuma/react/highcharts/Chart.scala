@@ -3,8 +3,8 @@
 
 package lucuma.react.highcharts
 
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.ReactProps
 import lucuma.typed.highcharts.anon.TypeofHighchartsAST
 import lucuma.typed.highcharts.mod.Chart_

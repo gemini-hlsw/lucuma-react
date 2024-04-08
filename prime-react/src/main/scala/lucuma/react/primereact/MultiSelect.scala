@@ -9,14 +9,14 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.primereact.SelectItem.*
-import lucuma.typed.primereact.components.{MultiSelect => CMultiSelect}
+import lucuma.typed.primereact.components.MultiSelect as CMultiSelect
 import lucuma.typed.primereact.multiselectMultiselectMod.MultiSelectAllEvent
 import lucuma.typed.primereact.multiselectMultiselectMod.MultiSelectChangeEvent
 import lucuma.typed.primereact.multiselectMultiselectMod.MultiSelectFilterEvent
 import lucuma.typed.primereact.primereactStrings.chip
 import lucuma.typed.primereact.primereactStrings.comma
-import lucuma.typed.primereact.selectitemSelectitemMod.{SelectItem => CSelectItem}
-import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.selectitemSelectitemMod.SelectItem as CSelectItem
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipOptions as CTooltipOptions
 
 import scalajs.js
 import scalajs.js.JSConverters.*

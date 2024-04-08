@@ -3,7 +3,7 @@
 
 package lucuma.react.primereact
 
-import cats.syntax.all._
+import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.html_<^.*

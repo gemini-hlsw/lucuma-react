@@ -10,8 +10,8 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.common.style.Css
 import lucuma.react.virtual.*
-import lucuma.typed.{tanstackReactTable => rawReact}
-import lucuma.typed.{tanstackTableCore => raw}
+import lucuma.typed.tanstackReactTable as rawReact
+import lucuma.typed.tanstackTableCore as raw
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLDivElement
 

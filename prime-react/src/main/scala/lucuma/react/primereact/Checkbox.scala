@@ -7,8 +7,8 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.typed.primereact.checkboxCheckboxMod.CheckboxChangeEvent
-import lucuma.typed.primereact.components.{Checkbox => CCheckbox}
-import lucuma.typed.primereact.tooltipTooltipoptionsMod.{TooltipOptions => CTooltipOptions}
+import lucuma.typed.primereact.components.Checkbox as CCheckbox
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipOptions as CTooltipOptions
 import org.scalajs.dom.*
 
 import scalajs.js

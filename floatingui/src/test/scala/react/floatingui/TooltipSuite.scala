@@ -3,7 +3,7 @@
 
 package lucuma.react.floatingui
 
-import japgolly.scalajs.react.vdom.html_<^.{< => <<, *}
+import japgolly.scalajs.react.vdom.html_<^.{< as <<, *}
 import lucuma.react.common.TestUtils
 
 import scala.language.implicitConversions // This shouldn't be necessary, but it is.

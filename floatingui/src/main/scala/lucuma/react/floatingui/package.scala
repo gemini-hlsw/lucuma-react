@@ -4,7 +4,7 @@
 package lucuma.react.floatingui
 
 import cats.syntax.all.*
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TopNode
 import lucuma.react.common.EnumValue
@@ -13,7 +13,7 @@ import org.scalajs.dom
 import org.scalajs.dom.html
 
 import scala.scalajs.js
-import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.annotation.JSImport
 
 enum Side:

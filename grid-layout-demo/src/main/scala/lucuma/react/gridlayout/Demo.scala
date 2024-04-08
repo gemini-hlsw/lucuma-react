@@ -3,18 +3,18 @@
 
 package lucuma.react.gridlayout.demo
 
-import cats.syntax.all._
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.html_<^._
-import lucuma.react.common._
-import lucuma.react.gridlayout._
-import lucuma.react.resizeDetector._
-import lucuma.react.resizeDetector.hooks._
+import cats.syntax.all.*
+import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.html_<^.*
+import lucuma.react.common.*
+import lucuma.react.gridlayout.*
+import lucuma.react.resizeDetector.*
+import lucuma.react.resizeDetector.hooks.*
 import org.scalajs.dom
 
 import scala.language.implicitConversions
 import scala.scalajs.js
-import scala.scalajs.js.annotation._
+import scala.scalajs.js.annotation.*
 
 object RGLDemo {
 

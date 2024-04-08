@@ -7,9 +7,9 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.fa.FontAwesomeIcon
-import lucuma.typed.primereact.components.{ConfirmPopup => CConfirmPopup}
+import lucuma.typed.primereact.components.ConfirmPopup as CConfirmPopup
 import lucuma.typed.primereact.confirmpopupConfirmpopupMod.ConfirmPopupProps
-import lucuma.typed.primereact.confirmpopupConfirmpopupMod.{confirmPopup => rawConfirmPopup}
+import lucuma.typed.primereact.confirmpopupConfirmpopupMod.confirmPopup as rawConfirmPopup
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js

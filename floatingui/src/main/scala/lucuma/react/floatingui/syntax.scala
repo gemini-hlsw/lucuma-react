@@ -12,21 +12,24 @@ import scala.language.implicitConversions // This shouldn't be necessary, but it
 extension (tag: VdomTag)
   def withTooltip(
     tooltip:   VdomNode,
-    placement: Placement = Placement.Top
+    placement: Placement = Placement.Top,
+    open:      Boolean = false
   ): VdomNode =
-    Tooltip(trigger = tag, tooltip = tooltip, placement = placement)
+    Tooltip(trigger = tag, tooltip = tooltip, placement = placement, open = open)
 
   def withTooltipWhen(
     condition: Boolean,
     tooltip:   VdomNode,
-    placement: Placement = Placement.Top
+    placement: Placement = Placement.Top,
+    open:      Boolean = false
   ): VdomNode =
-    if (condition) withTooltip(tooltip, placement)
+    if (condition) withTooltip(tooltip, placement, open = open)
     else tag
 
   def withTooltipUnless(
     condition: Boolean,
     tooltip:   VdomNode,
-    placement: Placement = Placement.Top
+    placement: Placement = Placement.Top,
+    open:      Boolean = false
   ): VdomNode =
-    withTooltipWhen(!condition, tooltip, placement)
+    withTooltipWhen(!condition, tooltip, placement, open = open)

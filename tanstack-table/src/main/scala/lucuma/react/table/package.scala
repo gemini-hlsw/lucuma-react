@@ -4,7 +4,7 @@
 package lucuma.react
 
 import japgolly.scalajs.react.vdom.TagMod
-import lucuma.typed.{tanstackTableCore => raw}
+import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
 

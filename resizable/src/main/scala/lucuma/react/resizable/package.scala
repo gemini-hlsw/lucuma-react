@@ -4,7 +4,7 @@
 package lucuma.react
 
 import lucuma.react.common.EnumValue
-import org.scalajs.dom.html.{Element => HTMLElement}
+import org.scalajs.dom.html.Element as HTMLElement
 
 import scala.scalajs.js
 
