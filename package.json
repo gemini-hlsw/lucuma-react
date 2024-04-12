@@ -27,7 +27,7 @@
     "rehype-katex": "^7.0.0",
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
-    "sass": "^1.74.1",
+    "sass": "^1.75.0",
     "styled-components": "^6.1.8",
     "typescript": "^5.4.5",
     "vite": "^5.2.8"
