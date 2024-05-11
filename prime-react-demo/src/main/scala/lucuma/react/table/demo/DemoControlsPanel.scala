@@ -6,6 +6,8 @@ package lucuma.react.table.demo
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
+import japgolly.scalajs.react.vdom.svg_<^.< as <<
+import japgolly.scalajs.react.vdom.svg_<^.^ as ^^
 import lucuma.react.common.*
 import lucuma.react.fa.FAIcon
 import lucuma.react.fa.FontAwesome
@@ -13,6 +15,7 @@ import lucuma.react.fa.FontAwesomeIcon
 import lucuma.react.fa.IconSize
 import lucuma.react.fa.LayeredIcon
 import lucuma.react.primereact.*
+import lucuma.react.primereact.tooltip.*
 
 import scala.scalajs.js.annotation.JSImport
 
@@ -21,6 +24,8 @@ import scalajs.js
 case class DemoControlsPanel() extends ReactFnProps[DemoControlsPanel](DemoControlsPanel.component)
 
 object DemoControlsPanel {
+  val startOffset = VdomAttr("startOffset")
+
   object Icons:
     @js.native
     @JSImport("@fortawesome/free-solid-svg-icons", "faBan")
@@ -418,7 +423,49 @@ object DemoControlsPanel {
                   text = "This is a message with a custom icon",
                   icon = "pi pi-bolt"
                 )
-              )
+              ),
+              <.label("Tooltip", DemoStyles.FormFieldLabel),
+              <.span(DemoStyles.FormField) {
+                val TooltipTarget = Css("tooltip-target")
+
+                React.Fragment(
+                  Tooltip(
+                    targetCss = TooltipTarget,
+                    content = "I am a tooltip",
+                    position = Tooltip.Position.Top
+                  ),
+                  <.span(TooltipTarget)("I am a <span>. Hover over me to see a tooltip."),
+                  <.br,
+                  <.br,
+                  <.span(TooltipTarget)("I am another <span>. Hover over me to see a tooltip too.")
+                    .withTooltipOptions(
+                      content = "I'm another tooltip!",
+                      position = Tooltip.Position.Bottom
+                    ),
+                  <.br,
+                  <<.svg(
+                    ^.width  := "300px",
+                    ^.height := "130px",
+                    ^.xmlns  := "http://www.w3.org/2000/svg"
+                  )(
+                    <<.path(
+                      ^.id           := "lineAC",
+                      ^^.d           := "M 30 180 q 150 -250 300 0",
+                      ^^.stroke      := "blue",
+                      ^^.strokeWidth := "2",
+                      ^^.fill        := "none"
+                    ),
+                    <<.text(TooltipTarget, ^^.fill := "red", ^^.fontSize := "24px")(
+                      <<.textPath(^.href := "#lineAC", startOffset := "80")(
+                        "It works with SVG too!"
+                      )
+                    ).withTooltipOptions(
+                      content = "I'm an SVG tooltip!",
+                      mouseTrack = true
+                    )
+                  )
+                )
+              }
             )
           )
         )

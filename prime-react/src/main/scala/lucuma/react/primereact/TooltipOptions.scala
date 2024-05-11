@@ -4,7 +4,6 @@
 package lucuma.react.primereact
 
 import japgolly.scalajs.react.Callback
-import japgolly.scalajs.react.ReactEventFrom
 import lucuma.typed.primereact.primereactStrings.both
 import lucuma.typed.primereact.primereactStrings.bottom
 import lucuma.typed.primereact.primereactStrings.focus
@@ -13,84 +12,64 @@ import lucuma.typed.primereact.primereactStrings.left
 import lucuma.typed.primereact.primereactStrings.right
 import lucuma.typed.primereact.primereactStrings.self
 import lucuma.typed.primereact.primereactStrings.top
-import org.scalajs.dom.Element
+import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipEvent
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js
 
 @js.native
-trait TooltipEventParams extends js.Object:
-  val originalEvent: ReactEventFrom[Element]
-  val target: HTMLElement
-
-@js.native
 trait TooltipOptions extends js.Object:
-  var appendTo: js.UndefOr[self | HTMLElement]                         = js.native
-  var at: js.UndefOr[String]                                           = js.native
-  var autoHide: js.UndefOr[Boolean]                                    = js.native
-  var autoZIndex: js.UndefOr[Boolean]                                  = js.native
-  var baseZIndex: js.UndefOr[Int]                                      = js.native
-  var className: js.UndefOr[String]                                    = js.native
-  var disabled: js.UndefOr[Boolean]                                    = js.native
-  var event: js.UndefOr[hover | focus | both]                          = js.native
-  var hideDelay: js.UndefOr[Int]                                       = js.native
-  var hideEvent: js.UndefOr[String]                                    = js.native
-  var mouseTrack: js.UndefOr[Boolean]                                  = js.native
-  var mouseTrackLeft: js.UndefOr[Int]                                  = js.native
-  var mouseTrackTop: js.UndefOr[Int]                                   = js.native
-  var my: js.UndefOr[String]                                           = js.native
-  var onBeforeHide: js.UndefOr[js.Function1[TooltipEventParams, Unit]] = js.native
-  var onBeforeShow: js.UndefOr[js.Function1[TooltipEventParams, Unit]] = js.native
-  var onHide: js.UndefOr[js.Function1[TooltipEventParams, Unit]]       = js.native
-  var onShow: js.UndefOr[js.Function1[TooltipEventParams, Unit]]       = js.native
-  var position: js.UndefOr[top | bottom | left | right]                = js.native
-  var showDelay: js.UndefOr[Int]                                       = js.native
-  var showEvent: js.UndefOr[String]                                    = js.native
-  var showOnDisabled: js.UndefOr[Boolean]                              = js.native
-  var style: js.UndefOr[js.Object]                                     = js.native
-  var updateDelay: js.UndefOr[Int]                                     = js.native
+  var appendTo: js.UndefOr[self | HTMLElement]                   = js.native
+  var at: js.UndefOr[String]                                     = js.native
+  var autoHide: js.UndefOr[Boolean]                              = js.native
+  var autoZIndex: js.UndefOr[Boolean]                            = js.native
+  var baseZIndex: js.UndefOr[Int]                                = js.native
+  var className: js.UndefOr[String]                              = js.native
+  var disabled: js.UndefOr[Boolean]                              = js.native
+  var event: js.UndefOr[hover | focus | both]                    = js.native
+  var hideDelay: js.UndefOr[Int]                                 = js.native
+  var hideEvent: js.UndefOr[String]                              = js.native
+  var mouseTrack: js.UndefOr[Boolean]                            = js.native
+  var mouseTrackLeft: js.UndefOr[Int]                            = js.native
+  var mouseTrackTop: js.UndefOr[Int]                             = js.native
+  var my: js.UndefOr[String]                                     = js.native
+  var onBeforeHide: js.UndefOr[js.Function1[TooltipEvent, Unit]] = js.native
+  var onBeforeShow: js.UndefOr[js.Function1[TooltipEvent, Unit]] = js.native
+  var onHide: js.UndefOr[js.Function1[TooltipEvent, Unit]]       = js.native
+  var onShow: js.UndefOr[js.Function1[TooltipEvent, Unit]]       = js.native
+  var position: js.UndefOr[top | bottom | left | right]          = js.native
+  var showDelay: js.UndefOr[Int]                                 = js.native
+  var showEvent: js.UndefOr[String]                              = js.native
+  var showOnDisabled: js.UndefOr[Boolean]                        = js.native
+  var style: js.UndefOr[js.Object]                               = js.native
+  var updateDelay: js.UndefOr[Int]                               = js.native
 
 object TooltipOptions:
-  enum AppendTo(val toJs: self | HTMLElement):
-    case Self                          extends AppendTo(self)
-    case Element(element: HTMLElement) extends AppendTo(element)
-
-  enum Event(val toJs: hover | focus | both):
-    case Hover extends Event(hover)
-    case Focus extends Event(focus)
-    case Both  extends Event(both)
-
-  enum Position(val toJs: top | bottom | left | right):
-    case Top    extends Position(top)
-    case Bottom extends Position(bottom)
-    case Left   extends Position(left)
-    case Right  extends Position(right)
-
   def apply(
-    appendTo:       js.UndefOr[TooltipOptions.AppendTo] = js.undefined,
+    appendTo:       js.UndefOr[Tooltip.AppendTo] = js.undefined,
     at:             js.UndefOr[String] = js.undefined,
-    autoHide:       js.UndefOr[Boolean] = js.undefined,                 // default: true
-    autoZIndex:     js.UndefOr[Boolean] = js.undefined,                 // default: true
+    autoHide:       js.UndefOr[Boolean] = js.undefined,          // default: true
+    autoZIndex:     js.UndefOr[Boolean] = js.undefined,          // default: true
     baseZIndex:     js.UndefOr[Int] = js.undefined,
     className:      js.UndefOr[String] = js.undefined,
     disabled:       js.UndefOr[Boolean] = js.undefined,
-    event:          js.UndefOr[TooltipOptions.Event] = js.undefined,
-    hideDelay:      js.UndefOr[Int] = js.undefined,                     // default: 0
-    hideEvent:      js.UndefOr[String] = js.undefined,                  // default: mouseleave
-    mouseTrack:     js.UndefOr[Boolean] = js.undefined,                 // default: mouseTrack
-    mouseTrackLeft: js.UndefOr[Int] = js.undefined,                     // default: 5
-    mouseTrackTop:  js.UndefOr[Int] = js.undefined,                     // default: 5
+    event:          js.UndefOr[Tooltip.Event] = js.undefined,
+    hideDelay:      js.UndefOr[Int] = js.undefined,              // default: 0
+    hideEvent:      js.UndefOr[String] = js.undefined,           // default: mouseleave
+    mouseTrack:     js.UndefOr[Boolean] = js.undefined,          // default: mouseTrack
+    mouseTrackLeft: js.UndefOr[Int] = js.undefined,              // default: 5
+    mouseTrackTop:  js.UndefOr[Int] = js.undefined,              // default: 5
     my:             js.UndefOr[String] = js.undefined,
-    onBeforeHide:   js.UndefOr[TooltipEventParams => Callback] = js.undefined,
-    onBeforeShow:   js.UndefOr[TooltipEventParams => Callback] = js.undefined,
-    onHide:         js.UndefOr[TooltipEventParams => Callback] = js.undefined,
-    onShow:         js.UndefOr[TooltipEventParams => Callback] = js.undefined,
-    position:       js.UndefOr[TooltipOptions.Position] = js.undefined, // default: right
-    showDelay:      js.UndefOr[Int] = js.undefined,                     // default: 0
-    showEvent:      js.UndefOr[String] = js.undefined,                  // default: mouseenter
-    showOnDisabled: js.UndefOr[Boolean] = js.undefined,                 // default: false
+    onBeforeHide:   js.UndefOr[TooltipEvent => Callback] = js.undefined,
+    onBeforeShow:   js.UndefOr[TooltipEvent => Callback] = js.undefined,
+    onHide:         js.UndefOr[TooltipEvent => Callback] = js.undefined,
+    onShow:         js.UndefOr[TooltipEvent => Callback] = js.undefined,
+    position:       js.UndefOr[Tooltip.Position] = js.undefined, // default: right
+    showDelay:      js.UndefOr[Int] = js.undefined,              // default: 0
+    showEvent:      js.UndefOr[String] = js.undefined,           // default: mouseenter
+    showOnDisabled: js.UndefOr[Boolean] = js.undefined,          // default: false
     style:          js.UndefOr[js.Object] = js.undefined,
-    updateDelay:    js.UndefOr[Int] = js.undefined                      // default: 0
+    updateDelay:    js.UndefOr[Int] = js.undefined               // default: 0
   ): TooltipOptions = {
     val p = (new js.Object).asInstanceOf[TooltipOptions]
     appendTo.foreach(v => p.appendTo = v.toJs)
