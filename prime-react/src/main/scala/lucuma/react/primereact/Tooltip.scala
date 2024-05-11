@@ -86,7 +86,7 @@ object Tooltip:
           .applyOrNot(props.autoZIndex, _.autoZIndex(_))
           .applyOrNot(props.baseZIndex, _.baseZIndex(_))
           .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
-          // ST facade erroneusly defines content as String when it should be a ReactNode
+          // ST facade erroneously defines content as String when it should be a ReactNode
           .applyOrNot(props.content, (c, p) => c.content(p.rawNode.asInstanceOf[String]))
           .applyOrNot(props.disabled, _.disabled(_))
           .applyOrNot(props.event, (c, p) => c.event(p.toJs))

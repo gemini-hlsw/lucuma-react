@@ -4,10 +4,10 @@
 package lucuma.react.primereact.tooltip
 
 import japgolly.scalajs.react.vdom.TagOf
+import japgolly.scalajs.react.vdom.TopNode
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.Css
 import lucuma.react.primereact.Tooltip
-import org.scalajs.dom.HTMLElement
 
 import scalajs.js
 
@@ -71,7 +71,7 @@ val tooltipAutoHide = VdomAttr("data-pr-autohide")
 /** Whether to show tooltip for disabled elements. Default: false */
 val tooltipShowOnDisabled = VdomAttr("data-pr-showondisabled")
 
-extension (self: TagOf[HTMLElement])
+extension [E <: TopNode](self: TagOf[E])
   def withTooltipOptions(
     content:        js.UndefOr[String] = js.undefined,
     disabled:       js.UndefOr[Boolean] = js.undefined,
@@ -90,7 +90,7 @@ extension (self: TagOf[HTMLElement])
     hideDelay:      js.UndefOr[Int] = js.undefined,
     autoHide:       js.UndefOr[Boolean] = js.undefined,
     showOnDisabled: js.UndefOr[Boolean] = js.undefined
-  ): TagOf[HTMLElement] =
+  ): TagOf[E] =
     self(
       content.map(tooltipContent := _).whenDefined,
       disabled.map(tooltipDisabled := _).whenDefined,
