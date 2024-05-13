@@ -192,6 +192,7 @@ val projects = List(
 ).map(_.id)
 ThisBuild / githubWorkflowBuildMatrixAdditions += "project" -> projects
 ThisBuild / githubWorkflowBuildSbtStepPreamble += s"project $${{ matrix.project }}"
+ThisBuild / githubWorkflowArtifactDownloadExtraKeys += "project"
 
 lazy val common = project
   .in(file("common"))
