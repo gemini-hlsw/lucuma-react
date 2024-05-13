@@ -429,10 +429,8 @@ object DemoControlsPanel {
                 val TooltipTarget = Css("tooltip-target")
 
                 React.Fragment(
-                  Tooltip(
-                    targetCss = TooltipTarget,
-                    content = "I am a tooltip",
-                    position = Tooltip.Position.Top
+                  Tooltip(targetCss = TooltipTarget, position = Tooltip.Position.Top)(
+                    <.h1("I am a big tooltip")
                   ),
                   <.span(TooltipTarget)("I am a <span>. Hover over me to see a tooltip."),
                   <.br,
@@ -463,6 +461,17 @@ object DemoControlsPanel {
                       content = "I'm an SVG tooltip!",
                       mouseTrack = true
                     )
+                  ),
+                  <.br,
+                  Tooltip.Fragment(
+                    position = Tooltip.Position.Top,
+                    content = <.h4(^.color.yellow)("I'm a tooltip in Tooltip.Fragment")
+                  )(<.span("I'm a span with my own, non-shared, tooltip")),
+                  <.br,
+                  <.br,
+                  <.span("I'm another span with my own, non-shared, tooltip").withTooltip(
+                    position = Tooltip.Position.Bottom,
+                    content = <.h4(^.color.teal)("I'm a tooltip rendered with .withTooltip")
                   )
                 )
               }

@@ -3,11 +3,13 @@
 
 package lucuma.react.primereact.tooltip
 
+import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.TopNode
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.Css
 import lucuma.react.primereact.Tooltip
+import org.scalajs.dom.HTMLElement
 
 import scalajs.js
 
@@ -110,3 +112,58 @@ extension [E <: TopNode](self: TagOf[E])
       autoHide.map(tooltipAutoHide := _).whenDefined,
       showOnDisabled.map(tooltipShowOnDisabled := _).whenDefined
     )
+
+extension (self: TagOf[HTMLElement])
+  def withTooltip(
+    appendTo:       js.UndefOr[Tooltip.AppendTo] = js.undefined,
+    at:             js.UndefOr[String] = js.undefined,
+    autoHide:       js.UndefOr[Boolean] = js.undefined,          // default: true
+    autoZIndex:     js.UndefOr[Boolean] = js.undefined,          // default: true
+    baseZIndex:     js.UndefOr[Int] = js.undefined,
+    clazz:          js.UndefOr[Css] = js.undefined,
+    content:        js.UndefOr[VdomNode] = js.undefined,
+    disabled:       js.UndefOr[Boolean] = js.undefined,
+    event:          js.UndefOr[Tooltip.Event] = js.undefined,
+    hideDelay:      js.UndefOr[Int] = js.undefined,              // default: 0
+    hideEvent:      js.UndefOr[String] = js.undefined,           // default: mouseleave
+    id:             js.UndefOr[String] = js.undefined,
+    mouseTrack:     js.UndefOr[Boolean] = js.undefined,          // default: mouseTrack
+    mouseTrackLeft: js.UndefOr[Int] = js.undefined,              // default: 5
+    mouseTrackTop:  js.UndefOr[Int] = js.undefined,              // default: 5
+    my:             js.UndefOr[String] = js.undefined,
+    onBeforeHide:   js.UndefOr[Tooltip.EventRaw => Callback] = js.undefined,
+    onBeforeShow:   js.UndefOr[Tooltip.EventRaw => Callback] = js.undefined,
+    onHide:         js.UndefOr[Tooltip.EventRaw => Callback] = js.undefined,
+    onShow:         js.UndefOr[Tooltip.EventRaw => Callback] = js.undefined,
+    position:       js.UndefOr[Tooltip.Position] = js.undefined, // default: right
+    showDelay:      js.UndefOr[Int] = js.undefined,              // default: 0
+    showEvent:      js.UndefOr[String] = js.undefined,           // default: mouseenter
+    showOnDisabled: js.UndefOr[Boolean] = js.undefined,          // default: false
+    updateDelay:    js.UndefOr[Int] = js.undefined               // default: 0
+  ): VdomElement = Tooltip.Fragment(
+    appendTo = appendTo,
+    at = at,
+    autoHide = autoHide,
+    autoZIndex = autoZIndex,
+    baseZIndex = baseZIndex,
+    clazz = clazz,
+    content = content,
+    disabled = disabled,
+    event = event,
+    hideDelay = hideDelay,
+    hideEvent = hideEvent,
+    id = id,
+    mouseTrack = mouseTrack,
+    mouseTrackLeft = mouseTrackLeft,
+    mouseTrackTop = mouseTrackTop,
+    my = my,
+    onBeforeHide = onBeforeHide,
+    onBeforeShow = onBeforeShow,
+    onHide = onHide,
+    onShow = onShow,
+    position = position,
+    showDelay = showDelay,
+    showEvent = showEvent,
+    showOnDisabled = showOnDisabled,
+    updateDelay = updateDelay
+  )(self)
