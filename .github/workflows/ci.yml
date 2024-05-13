@@ -64,22 +64,22 @@ jobs:
         run: sbt githubWorkflowCheck
 
       - name: Check headers and formatting
-        if: matrix.java == 'temurin@17' && matrix.os == 'ubuntu-latest' && matrix.project == 'rootCore'
+        if: matrix.java == 'temurin@17' && matrix.os == 'ubuntu-latest'
         run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' headerCheckAll scalafmtCheckAll 'project /' scalafmtSbtCheck lucumaScalafmtCheck lucumaScalafixCheck
 
       - name: Check scalafix lints
-        if: matrix.java == 'temurin@17' && matrix.os == 'ubuntu-latest' && matrix.project == 'rootCore'
+        if: matrix.java == 'temurin@17' && matrix.os == 'ubuntu-latest'
         run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' 'scalafixAll --check'
 
       - name: Test
         run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' test
 
       - name: Check binary compatibility
-        if: matrix.java == 'temurin@17' && matrix.os == 'ubuntu-latest' && matrix.project == 'rootCore'
+        if: matrix.java == 'temurin@17' && matrix.os == 'ubuntu-latest'
         run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' mimaReportBinaryIssues
 
       - name: Generate API documentation
-        if: matrix.java == 'temurin@17' && matrix.os == 'ubuntu-latest' && matrix.project == 'rootCore'
+        if: matrix.java == 'temurin@17' && matrix.os == 'ubuntu-latest'
         run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' doc
 
       - name: Aggregate coverage reports
