@@ -3,7 +3,7 @@
     "@floating-ui/react": "^0.26.14",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
-    "@tanstack/react-table": "^8.17.0",
+    "@tanstack/react-table": "^8.17.3",
     "@tanstack/react-virtual": "v3.5.0",
     "@vitejs/plugin-react": "^4.2.1",
     "fomantic-ui-less": "^2.9.3",
