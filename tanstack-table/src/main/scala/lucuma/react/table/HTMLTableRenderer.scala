@@ -198,13 +198,13 @@ trait HTMLTableRenderer[T]:
           .map((row, index) =>
             val subcomponent: Option[VdomNode] = renderSubComponent(row)
 
-            React.Fragment(
+            React.Fragment.withKey(row.id)(
               <.tr(
                 TbodyTrClass,
                 TbodyTrWithSubcomponentClass.when(subcomponent.isDefined),
                 TbodyTrEvenClass.when((index + indexOffset) % 2 =!= 0),
                 rowMod(row),
-                ^.key := row.id
+                ^.key := s"${row.id}-1"
               )(
                 row
                   .getVisibleCells()
@@ -219,7 +219,7 @@ trait HTMLTableRenderer[T]:
                           .asInstanceOf[rawReact.mod.Renderable[
                             raw.buildLibCoreCellMod.CellContext[T, Any]
                           ]],
-                        cell.getContext().asInstanceOf[raw.buildLibCoreCellMod.CellContext[T, Any]]
+                        cell.getContext()
                       )
                     )
                   )
@@ -228,7 +228,7 @@ trait HTMLTableRenderer[T]:
                 <.tr(
                   TbodyTrSubcomponentClass,
                   TbodyTrEvenClass.when((index + indexOffset) % 2 =!= 0),
-                  ^.key := s"${row.id}-subcomponent"
+                  ^.key := s"${row.id}-2"
                 )(
                   <.td(^.colSpan := table.getAllLeafColumns().length)(subComponent)
                 )
