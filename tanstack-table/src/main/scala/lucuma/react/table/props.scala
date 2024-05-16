@@ -31,7 +31,6 @@ trait HTMLTableProps[T]:
   def footerRowMod: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod
   def footerCellMod: raw.buildLibTypesMod.Header[T, Any] => TagMod
   def emptyMessage: VdomNode
-  def renderSubComponent: raw.buildLibTypesMod.Row[T] => Option[VdomNode]
 
   // Allow subtypes to mixin other classes
   private[table] def extraTableClasses: Css = Css.Empty
