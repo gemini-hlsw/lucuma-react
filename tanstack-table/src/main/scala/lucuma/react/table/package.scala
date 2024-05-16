@@ -4,12 +4,11 @@
 package lucuma.react
 
 import japgolly.scalajs.react.vdom.TagMod
-import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
 
 package object table extends HooksApiExt:
-  type SortingFn[T] = (Row[T], Row[T], ColumnId) => Int
+  type SortingFn[T, TM] = (Row[T, TM], Row[T, TM], ColumnId) => Int
 
   opaque type ColumnId = String
   object ColumnId:
@@ -25,9 +24,6 @@ package object table extends HooksApiExt:
   object CellId:
     inline def apply(value: String): CellId                  = value
     extension (opaqueValue: CellId) inline def value: String = opaqueValue
-
-  extension [T, A](cellCtx: raw.buildLibCoreCellMod.CellContext[T, A])
-    def value: A = cellCtx.getValue().asInstanceOf[A]
 
   given renderJSArray[A](using ev: A => TagMod): Conversion[js.Array[A], TagMod] =
     new Conversion {

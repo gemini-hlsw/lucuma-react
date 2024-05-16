@@ -8,16 +8,16 @@ import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
 
-trait ColumnDefJs[T, A] extends js.Object:
+trait ColumnDefJs[T, A, TM, CM] extends js.Object:
   var id: String
   var header: js.UndefOr[
     String | js.Function1[raw.buildLibCoreHeadersMod.HeaderContext[T, A], Node]
   ]
   var accessorFn: js.UndefOr[js.Function1[T, A]]
   var cell: js.UndefOr[js.Function1[raw.buildLibCoreCellMod.CellContext[T, A], Node]]
-  var columns: js.UndefOr[js.Array[ColumnDefJs[T, Any]]]
+  var columns: js.UndefOr[js.Array[ColumnDefJs[T, ?, TM, ?]]]
   var footer: js.UndefOr[js.Function1[raw.buildLibCoreHeadersMod.HeaderContext[T, A], Node]]
-  var meta: js.UndefOr[Any]
+  var meta: js.UndefOr[CM]
 
   // Column Sizing
   var enableResizing: js.UndefOr[Boolean] = js.undefined

@@ -11,24 +11,27 @@ import org.scalajs.dom
 import scalajs.js.JSConverters.*
 
 // Missing: Filters
-case class Row[T](private[table] val toJs: raw.buildLibTypesMod.Row[T]):
-  lazy val depth: Int                       = toJs.depth.toInt
-  lazy val id: RowId                        = RowId(toJs.id)
-  lazy val index: Int                       = toJs.index.toInt
-  lazy val original: T                      = toJs.original
-  lazy val originalSubRows: Option[List[T]] = toJs.originalSubRows.toOption.map(_.toList)
-  lazy val subRows: List[Row[T]]            = toJs.subRows.toList.map(Row(_))
-  def getAllCells(): List[Cell[T, Any]]     = toJs.getAllCells().toList.map(Cell(_))
-  def getLeafRows(): List[Row[T]]           = toJs.getLeafRows().toList.map(Row(_))
+case class Row[T, TM] private[table] (private[table] val toJs: raw.buildLibTypesMod.Row[T]):
+  lazy val depth: Int                            = toJs.depth.toInt
+  lazy val id: RowId                             = RowId(toJs.id)
+  lazy val index: Int                            = toJs.index.toInt
+  lazy val original: T                           = toJs.original
+  lazy val originalSubRows: Option[List[T]]      = toJs.originalSubRows.toOption.map(_.toList)
+  lazy val subRows: List[Row[T, TM]]             = toJs.subRows.toList.map(Row(_))
+  def getAllCells(): List[Cell[T, Any, TM, Any]] = toJs.getAllCells().toList.map(Cell(_))
+  def getLeafRows(): List[Row[T, TM]]            = toJs.getLeafRows().toList.map(Row(_))
   def getValue[V](columnId: ColumnId): V = toJs.getValue(columnId.value)
 
   // Visibility
-  def getVisibleCells(): List[Cell[T, Any]] = toJs.getVisibleCells().toList.map(Cell(_))
+  def getVisibleCells(): List[Cell[T, Any, TM, Any]] = toJs.getVisibleCells().toList.map(Cell(_))
 
   // Column Pinning
-  def getCenterVisibleCells(): List[Cell[T, Any]] = toJs.getCenterVisibleCells().toList.map(Cell(_))
-  def getLeftVisibleCells(): List[Cell[T, Any]]   = toJs.getLeftVisibleCells().toList.map(Cell(_))
-  def getRightVisibleCells(): List[Cell[T, Any]]  = toJs.getRightVisibleCells().toList.map(Cell(_))
+  def getCenterVisibleCells(): List[Cell[T, Any, TM, Any]] =
+    toJs.getCenterVisibleCells().toList.map(Cell(_))
+  def getLeftVisibleCells(): List[Cell[T, Any, TM, Any]]   =
+    toJs.getLeftVisibleCells().toList.map(Cell(_))
+  def getRightVisibleCells(): List[Cell[T, Any, TM, Any]]  =
+    toJs.getRightVisibleCells().toList.map(Cell(_))
 
   // Row Grouping
   def getIsGrouped(): Boolean               = toJs.getIsGrouped()
@@ -50,6 +53,6 @@ case class Row[T](private[table] val toJs: raw.buildLibTypesMod.Row[T]):
   // Expanded Rows
   def getCanExpand(): Boolean              = toJs.getCanExpand()
   def getIsExpanded(): Boolean             = toJs.getIsExpanded()
-  def getToggleExpandedHandler(): Callback = Callback(toJs.getToggleExpandedHandler())
+  def getToggleExpandedHandler(): Callback = Callback(toJs.getToggleExpandedHandler()())
   def toggleExpanded(): Callback           = Callback(toJs.toggleExpanded())
   def toggleExpanded(expanded: Boolean): Callback = Callback(toJs.toggleExpanded(expanded))

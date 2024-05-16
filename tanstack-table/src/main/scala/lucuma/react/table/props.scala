@@ -11,25 +11,24 @@ import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.react.SizePx
 import lucuma.react.common.style.Css
 import lucuma.react.virtual.facade.Virtualizer
-import lucuma.typed.tanstackTableCore as raw
 import lucuma.typed.tanstackVirtualCore as rawVirtual
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js
 
-trait HTMLTableProps[T]:
-  def table: Table[T]
+trait HTMLTableProps[T, TM]:
+  def table: Table[T, TM]
   def tableMod: TagMod
   def headerMod: TagMod
-  def headerRowMod: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod
-  def headerCellMod: raw.buildLibTypesMod.Header[T, Any] => TagMod
+  def headerRowMod: HeaderGroup[T, TM] => TagMod
+  def headerCellMod: Header[T, Any, TM, Any] => TagMod
   def bodyMod: TagMod
-  def rowMod: raw.buildLibTypesMod.Row[T] => TagMod
-  def cellMod: raw.buildLibTypesMod.Cell[T, Any] => TagMod
+  def rowMod: Row[T, TM] => TagMod
+  def cellMod: Cell[T, Any, TM, Any] => TagMod
   def footerMod: TagMod
-  def footerRowMod: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod
-  def footerCellMod: raw.buildLibTypesMod.Header[T, Any] => TagMod
+  def footerRowMod: HeaderGroup[T, TM] => TagMod
+  def footerCellMod: Header[T, Any, TM, Any] => TagMod
   def emptyMessage: VdomNode
 
   // Allow subtypes to mixin other classes
@@ -37,7 +36,7 @@ trait HTMLTableProps[T]:
 
 type HTMLTableVirtualizer = Virtualizer[HTMLElement, Element]
 
-trait HTMLVirtualizedTableProps[T] extends HTMLTableProps[T]:
+trait HTMLVirtualizedTableProps[T, M] extends HTMLTableProps[T, M]:
   def estimateSize: Int => SizePx
   // Table options
   def containerMod: TagMod
@@ -49,5 +48,5 @@ trait HTMLVirtualizedTableProps[T] extends HTMLTableProps[T]:
   def virtualizerRef: js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]]
   def debugVirtualizer: js.UndefOr[Boolean]
 
-trait HTMLAutoHeightVirtualizedTableProps[T] extends HTMLVirtualizedTableProps[T]:
+trait HTMLAutoHeightVirtualizedTableProps[T, M] extends HTMLVirtualizedTableProps[T, M]:
   def innerContainerMod: TagMod
