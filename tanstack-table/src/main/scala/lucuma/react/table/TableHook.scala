@@ -14,13 +14,13 @@ import scala.scalajs.js.annotation.JSImport
 object TableHook:
   @JSImport("@tanstack/react-table", "useReactTable")
   @js.native
-  private def useReactTableJs[T](options: TableOptionsJs[T]): raw.buildLibTypesMod.Table[T] =
+  private def useReactTableJs[T, M](options: TableOptionsJs[T, M]): raw.buildLibTypesMod.Table[T] =
     js.native
 
-  def useTableHook[T] =
-    CustomHook[TableOptions[T]]
+  def useTableHook[T, M] =
+    CustomHook[TableOptions[T, M]]
       .useMemoBy(_.columns)(input => _ => input.columnsJs)
       .useMemoBy(_.input.data)(ctx => _ => ctx.input.dataJs)
       .buildReturning { (options, cols, rows) =>
-        Table(useReactTableJs[T](options.toJs(cols, rows)))
+        Table[T, M](useReactTableJs[T, M](options.toJs(cols, rows)))
       }

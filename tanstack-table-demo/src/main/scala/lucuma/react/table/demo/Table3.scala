@@ -23,13 +23,13 @@ object Table3:
             ColumnId("expander"),
             header = header =>
               <.span(^.cursor.pointer)(
-                ^.onClick ==> (e => Callback(header.table.getToggleAllRowsExpandedHandler()(e))),
+                ^.onClick ==> header.table.getToggleAllRowsExpandedHandler(),
                 if (header.table.getIsAllRowsExpanded()) "👇" else "👉"
               ),
             cell = cell =>
               if (cell.row.getCanExpand())
                 <.span(^.cursor.pointer)(
-                  ^.onClick --> Callback(cell.row.getToggleExpandedHandler()()),
+                  ^.onClick --> cell.row.getToggleExpandedHandler(),
                   if (cell.row.getIsExpanded()) "👇" else "👉"
                 )
               else "",

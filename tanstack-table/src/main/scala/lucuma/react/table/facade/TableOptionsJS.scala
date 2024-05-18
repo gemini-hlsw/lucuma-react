@@ -7,9 +7,10 @@ import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
 
-trait TableOptionsJs[T] extends js.Object:
-  var columns: js.Array[ColumnDefJs[T, ?]]
+trait TableOptionsJs[T, TM] extends js.Object:
+  var columns: js.Array[ColumnDefJs[T, ?, TM, ?]]
   var data: js.Array[T]
+
   var getCoreRowModel: js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[
     raw.buildLibTypesMod.RowModel[T]
   ]]
@@ -20,6 +21,7 @@ trait TableOptionsJs[T] extends js.Object:
   var renderFallbackValue: js.UndefOr[Any]                                                        = js.undefined
   var state: js.UndefOr[raw.anon.PartialTableState]                                               = js.undefined
   var initialState: js.UndefOr[raw.buildLibTypesMod.InitialTableState]                            = js.undefined
+  var meta: js.UndefOr[TM]                                                                        = js.undefined
 
   // Column Sizing // TODO Rest of the properties
   var enableColumnResizing: js.UndefOr[Boolean]                                          = js.undefined

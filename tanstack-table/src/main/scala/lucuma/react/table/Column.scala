@@ -13,23 +13,25 @@ import org.scalajs.dom
 import scalajs.js.JSConverters.*
 
 // Missing: ColumnPinning, Filters, Grouping
-case class Column[T, A](private val toJs: raw.buildLibTypesMod.Column[T, A]):
-  lazy val id: ColumnId                      = ColumnId(toJs.id)
-  lazy val depth: Int                        = toJs.depth.toInt
-  lazy val accessorFn: Option[(T, Int) => A] =
+case class Column[T, A, TM, CM] private[table] (
+  private val toJs: raw.buildLibTypesMod.Column[T, A]
+):
+  lazy val id: ColumnId                               = ColumnId(toJs.id)
+  lazy val depth: Int                                 = toJs.depth.toInt
+  lazy val accessorFn: Option[(T, Int) => A]          =
     toJs.accessorFn.toOption.map(f => (row, index) => f(row, index))
-  lazy val columnDef: ColumnDef[T, A]        =
-    ColumnDef.fromJs(toJs.columnDef.asInstanceOf[ColumnDefJs[T, A]])
-  lazy val columns: List[Column[T, Any]]     =
+  lazy val columnDef: ColumnDef[T, A, TM, CM]         =
+    ColumnDef.fromJs(toJs.columnDef.asInstanceOf[ColumnDefJs[T, A, TM, CM]])
+  lazy val columns: List[Column[T, Any, TM, Any]]     =
     toJs.columns.toList.map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
-  lazy val parent: Option[Column[T, Any]]    =
+  lazy val parent: Option[Column[T, Any, TM, Any]]    =
     toJs.parent.toOption.map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
-  def getFlatColumns(): List[Column[T, Any]] =
+  def getFlatColumns(): List[Column[T, Any, TM, CM]]  =
     toJs
       .getFlatColumns()
       .toList
       .map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
-  def getLeafColumns(): List[Column[T, Any]] =
+  def getLeafColumns(): List[Column[T, Any, TM, Any]] =
     toJs
       .getLeafColumns()
       .toList
@@ -47,7 +49,7 @@ case class Column[T, A](private val toJs: raw.buildLibTypesMod.Column[T, A]):
   def clearSorting(): Callback                                                = Callback(toJs.clearSorting())
   def getAutoSortDir(): SortDirection                                         =
     SortDirection.fromDescending(toJs.getAutoSortDir() == raw.tanstackTableCoreStrings.desc)
-  def getAutoSortingFn(): SortingFn[T]                                        =
+  def getAutoSortingFn(): SortingFn[T, TM]                                    =
     (rowA, rowB, colId) => toJs.getAutoSortingFn()(rowA.toJs, rowB.toJs, colId.value).toInt
   def getCanMultiSort(): Boolean                                              = toJs.getCanMultiSort()
   def getCanSort(): Boolean                                                   = toJs.getCanSort()
@@ -63,7 +65,7 @@ case class Column[T, A](private val toJs: raw.buildLibTypesMod.Column[T, A]):
       .filterNot(_ == raw.tanstackTableCoreBooleans.`false`)
       .map(dir => SortDirection.fromDescending(dir == raw.tanstackTableCoreStrings.desc))
   def getSortIndex(): Int                                                     = toJs.getSortIndex().toInt
-  def getSortingFn(): SortingFn[T]                                            =
+  def getSortingFn(): SortingFn[T, TM]                                        =
     (rowA, rowB, colId) => toJs.getSortingFn()(rowA.toJs, rowB.toJs, colId.value).toInt
   def getToggleSortingHandler(): Option[SyntheticEvent[dom.Node] => Callback] =
     toJs.getToggleSortingHandler().toOption.map(fn => e => Callback(fn(e)))

@@ -46,24 +46,24 @@ trait HTMLTableRenderer[T]:
   protected val SortAscIndicator: VdomNode  = "↑"
   protected val SortDescIndicator: VdomNode = "↓"
 
-  protected def sortIndicator[T](col: raw.buildLibTypesMod.Column[T, ?]): VdomNode =
-    col.getIsSorted().asInstanceOf[Boolean | String] match
-      case sorted: String =>
+  protected def sortIndicator[T, TM](col: Column[T, ?, TM, ?]): VdomNode =
+    col
+      .getIsSorted()
+      .fold(if (col.getCanSort()) SortableIndicator else EmptyVdom): sortDirection =>
         val index   = if (col.getSortIndex() > 0) (col.getSortIndex() + 1).toInt.toString else ""
-        val ascDesc = if (sorted == "desc") SortDescIndicator else SortAscIndicator
+        val ascDesc =
+          if (sortDirection == SortDirection.Descending) SortDescIndicator else SortAscIndicator
         <.span(ascDesc, <.small(index))
-      case _              =>
-        if (col.getCanSort()) SortableIndicator else EmptyVdom
 
-  protected def resizer[T](
-    header:     raw.buildLibTypesMod.Header[T, ?],
+  protected def resizer[T, TM](
+    header:     Header[T, ?, TM, ?],
     resizeMode: Option[ColumnResizeMode],
     sizingInfo: ColumnSizingInfo
   ): VdomNode =
     if (header.column.getCanResize())
       <.div(
-        ^.onMouseDown ==> (e => Callback(header.getResizeHandler()(e))),
-        ^.onTouchStart ==> (e => Callback(header.getResizeHandler()(e))),
+        ^.onMouseDown ==> header.getResizeHandler(),
+        ^.onTouchStart ==> header.getResizeHandler(),
         ^.onClick ==> (_.stopPropagationCB),
         ResizerClass,
         IsResizingColClass.when(header.column.getIsResizing()),
@@ -77,25 +77,19 @@ trait HTMLTableRenderer[T]:
       )(ResizerContent)
     else EmptyVdom
 
-  def render[T](
-    table:         Table[T],
-    rows:          js.Array[raw.buildLibTypesMod.Row[T]],
+  def render[T, TM](
+    table:         Table[T, TM],
+    rows:          List[Row[T, TM]],
     tableMod:      TagMod = TagMod.empty,
     headerMod:     TagMod = TagMod.empty,
-    headerRowMod:  raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod =
-      (_: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T]) => TagMod.empty,
-    headerCellMod: raw.buildLibTypesMod.Header[T, Any] => TagMod =
-      (_: raw.buildLibTypesMod.Header[T, Any]) => TagMod.empty,
+    headerRowMod:  HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
+    headerCellMod: Header[T, Any, TM, Any] => TagMod = (_: Header[T, Any, TM, Any]) => TagMod.empty,
     bodyMod:       TagMod = TagMod.empty,
-    rowMod:        raw.buildLibTypesMod.Row[T] => TagMod = (_: raw.buildLibTypesMod.Row[T]) =>
-      TagMod.empty,
-    cellMod:       raw.buildLibTypesMod.Cell[T, Any] => TagMod = (_: raw.buildLibTypesMod.Cell[T, Any]) =>
-      TagMod.empty,
+    rowMod:        Row[T, TM] => TagMod = (_: Row[T, TM]) => TagMod.empty,
+    cellMod:       Cell[T, Any, TM, Any] => TagMod = (_: Cell[T, Any, TM, Any]) => TagMod.empty,
     footerMod:     TagMod = TagMod.empty,
-    footerRowMod:  raw.buildLibCoreHeadersMod.CoreHeaderGroup[T] => TagMod =
-      (_: raw.buildLibCoreHeadersMod.CoreHeaderGroup[T]) => TagMod.empty,
-    footerCellMod: raw.buildLibTypesMod.Header[T, Any] => TagMod =
-      (_: raw.buildLibTypesMod.Header[T, Any]) => TagMod.empty,
+    footerRowMod:  HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
+    footerCellMod: Header[T, Any, TM, Any] => TagMod = (_: Header[T, Any, TM, Any]) => TagMod.empty,
     indexOffset:   Int = 0,
     paddingTop:    Option[Int] = none,
     paddingBottom: Option[Int] = none,
@@ -116,31 +110,31 @@ trait HTMLTableRenderer[T]:
               headerGroup.headers
                 .exists(header =>
                   js.typeOf(
-                    header.column.columnDef
+                    header.column.columnDef.toJs
                       .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
                       .header
                   ) != "undefined"
                 )
             )(
-              <.tr(TheadTrClass, headerRowMod(headerGroup))(^.key := headerGroup.id)(
+              <.tr(TheadTrClass, headerRowMod(headerGroup))(^.key := headerGroup.id.value)(
                 headerGroup.headers
                   .map(header =>
                     <.th(
                       TheadThClass,
-                      ^.key     := header.id,
+                      ^.key     := header.id.value,
                       ^.colSpan := header.colSpan.toInt,
                       ^.width   := s"${header.getSize().toInt}px",
                       SortableColClass.when(header.column.getCanSort()),
                       headerCellMod(header),
                       header.column
                         .getToggleSortingHandler()
-                        .map(handler => ^.onClick ==> (e => Callback(handler(e))))
+                        .map(handler => ^.onClick ==> handler)
                         .whenDefined
                     )(
                       TagMod.unless(header.isPlaceholder)(
                         React.Fragment(
                           rawReact.mod.flexRender(
-                            header.column.columnDef
+                            header.column.columnDef.toJs
                               .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
                               .header
                               .asInstanceOf[rawReact.mod.Renderable[
@@ -148,6 +142,7 @@ trait HTMLTableRenderer[T]:
                               ]],
                             header
                               .getContext()
+                              .toJs
                               .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
                           ),
                           sortIndicator(header.column),
@@ -160,6 +155,7 @@ trait HTMLTableRenderer[T]:
                       )
                     )
                   )
+                  .toTagMod
               )
             )
           )
@@ -196,7 +192,7 @@ trait HTMLTableRenderer[T]:
               TbodyTrClass,
               TbodyTrEvenClass.when((index + indexOffset) % 2 =!= 0),
               rowMod(row),
-              ^.key := row.id
+              ^.key := row.id.value
             )(
               row
                 .getVisibleCells()
@@ -204,19 +200,23 @@ trait HTMLTableRenderer[T]:
                   <.td(
                     TbodyTdClass,
                     cellMod(cell),
-                    ^.key := cell.id
+                    ^.key := cell.id.value
                   )(
-                    rawReact.mod.flexRender(
-                      cell.column.columnDef.cell
-                        .asInstanceOf[rawReact.mod.Renderable[
-                          raw.buildLibCoreCellMod.CellContext[T, Any]
-                        ]],
-                      cell.getContext()
-                    )
+                    cell.column.columnDef match
+                      case colDef @ ColumnDef.Single[T, Any, TM, Any](_) =>
+                        rawReact.mod.flexRender(
+                          colDef.toJs.cell
+                            .asInstanceOf[rawReact.mod.Renderable[
+                              raw.buildLibCoreCellMod.CellContext[T, Any]
+                            ]],
+                          cell.getContext().toJs
+                        )
                   )
                 )
+                .toTagMod
             ),
           )
+          .toTagMod
       )(
         paddingBottom
           .filter(_ > 1)
@@ -237,25 +237,33 @@ trait HTMLTableRenderer[T]:
           .map(footerGroup =>
             TagMod.when(
               footerGroup.headers
-                .exists(footer => js.typeOf(footer.column.columnDef.footer) != "undefined")
+                .exists(footer =>
+                  js.typeOf(
+                    footer.column.columnDef.toJs
+                      .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
+                      .header
+                  ) != "undefined"
+                )
             )(
-              <.tr(TfootTrClass, footerRowMod(footerGroup))(^.key := footerGroup.id)(
-                footerGroup.headers.map(footer =>
-                  <.th(TfootThClass, footerCellMod(footer))(
-                    ^.key     := footer.id,
-                    ^.colSpan := footer.colSpan.toInt
-                  )(
-                    TagMod.unless(footer.isPlaceholder)(
-                      rawReact.mod.flexRender(
-                        footer.column.columnDef.footer
-                          .asInstanceOf[rawReact.mod.Renderable[
-                            raw.buildLibCoreHeadersMod.HeaderContext[T, Any]
-                          ]],
-                        footer.getContext()
+              <.tr(TfootTrClass, footerRowMod(footerGroup))(^.key := footerGroup.id.value)(
+                footerGroup.headers
+                  .map(footer =>
+                    <.th(TfootThClass, footerCellMod(footer))(
+                      ^.key     := footer.id.value,
+                      ^.colSpan := footer.colSpan.toInt
+                    )(
+                      TagMod.unless(footer.isPlaceholder)(
+                        rawReact.mod.flexRender(
+                          footer.column.columnDef.toJs.footer
+                            .asInstanceOf[rawReact.mod.Renderable[
+                              raw.buildLibCoreHeadersMod.HeaderContext[T, Any]
+                            ]],
+                          footer.getContext().toJs
+                        )
                       )
                     )
                   )
-                )
+                  .toTagMod
               )
             )
           )
@@ -264,8 +272,8 @@ trait HTMLTableRenderer[T]:
     )
 
 object HTMLTableRenderer:
-  def componentBuilder[T, Props <: HTMLTableProps[_]](renderer: HTMLTableRenderer[T]) =
-    ScalaFnComponent[Props[T]](props =>
+  def componentBuilder[T, M, Props <: HTMLTableProps[_, _]](renderer: HTMLTableRenderer[T]) =
+    ScalaFnComponent[Props[T, M]](props =>
       renderer.render(
         props.table,
         props.table.getRowModel().rows,
@@ -283,11 +291,11 @@ object HTMLTableRenderer:
       )
     )
 
-  def componentBuilderVirtualized[T, Props <: HTMLVirtualizedTableProps[_]](
+  def componentBuilderVirtualized[T, M, Props <: HTMLVirtualizedTableProps[_, _]](
     renderer: HTMLTableRenderer[T]
   ) =
     ScalaFnComponent
-      .withHooks[Props[T]]
+      .withHooks[Props[T, M]]
       .useRefToVdom[HTMLDivElement]
       .useVirtualizerBy((props, ref) =>
         VirtualOptions(
@@ -312,7 +320,7 @@ object HTMLTableRenderer:
         <.div.withRef(ref)(^.overflowY.auto, props.containerMod)(
           renderer.render(
             props.table,
-            virtualizer.getVirtualItems().map(virtualItem => rows(virtualItem.index.toInt)),
+            virtualizer.getVirtualItems().toList.map(virtualItem => rows(virtualItem.index.toInt)),
             TagMod(props.tableMod, props.extraTableClasses),
             props.headerMod,
             props.headerRowMod,
@@ -331,11 +339,13 @@ object HTMLTableRenderer:
         )
       }
 
-  def componentBuilderAutoHeightVirtualized[T, Props <: HTMLAutoHeightVirtualizedTableProps[_]](
+  def componentBuilderAutoHeightVirtualized[T, M, Props <: HTMLAutoHeightVirtualizedTableProps[_,
+                                                                                               _
+  ]](
     renderer: HTMLTableRenderer[T]
   ) =
     ScalaFnComponent
-      .withHooks[Props[T]]
+      .withHooks[Props[T, M]]
       .useRefToVdom[HTMLDivElement]
       .localValBy((props, ownRef) => props.containerRef.getOrElse(ownRef)) // containerRef
       .useVirtualizerBy((props, _, containerRef) =>
@@ -379,7 +389,10 @@ object HTMLTableRenderer:
           )(
             renderer.render(
               props.table,
-              virtualizer.getVirtualItems().map(virtualItem => rows(virtualItem.index.toInt)),
+              virtualizer
+                .getVirtualItems()
+                .toList
+                .map(virtualItem => rows(virtualItem.index.toInt)),
               TagMod(props.tableMod, props.extraTableClasses),
               props.headerMod,
               props.headerRowMod,

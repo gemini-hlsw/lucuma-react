@@ -7,28 +7,28 @@ import japgolly.scalajs.react.*
 
 object HooksApiExt:
   sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]):
-    final def useReactTable[T](
-      options: TableOptions[T]
+    final def useReactTable[T, M](
+      options: TableOptions[T, M]
     )(using
       step:    Step
-    ): step.Next[Table[T]] =
+    ): step.Next[Table[T, M]] =
       useReactTableBy(_ => options)
 
-    final def useReactTableBy[T](
-      options: Ctx => TableOptions[T]
+    final def useReactTableBy[T, M](
+      options: Ctx => TableOptions[T, M]
     )(using
       step:    Step
-    ): step.Next[Table[T]] =
+    ): step.Next[Table[T, M]] =
       api.customBy(ctx => TableHook.useTableHook(options(ctx)))
 
   final class Secondary[Ctx, CtxFn[_], Step <: HooksApi.SubsequentStep[Ctx, CtxFn]](
     api: HooksApi.Secondary[Ctx, CtxFn, Step]
   ) extends Primary[Ctx, Step](api):
-    def useReactTableBy[T](
-      tableDefWithOptions: CtxFn[TableOptions[T]]
+    def useReactTableBy[T, M](
+      tableDefWithOptions: CtxFn[TableOptions[T, M]]
     )(implicit
       step:                Step
-    ): step.Next[Table[T]] =
+    ): step.Next[Table[T, M]] =
       super.useReactTableBy(step.squash(tableDefWithOptions)(_))
 
 trait HooksApiExt:
