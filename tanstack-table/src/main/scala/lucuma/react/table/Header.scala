@@ -72,7 +72,7 @@ case class Header[T, A, TM, CM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  lazy val id: String = toJs.id
+  lazy val id: HeaderId = HeaderId(toJs.id)
 
   /**
    * The index for the header within the header group.
@@ -100,7 +100,7 @@ case class Header[T, A, TM, CM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  lazy val placeholderId: Option[String] = toJs.placeholderId.toOption
+  lazy val placeholderId: Option[PlaceholderId] = toJs.placeholderId.toOption.map(PlaceholderId(_))
 
   /**
    * The row-span for the header.

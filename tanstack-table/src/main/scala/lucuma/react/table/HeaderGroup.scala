@@ -8,8 +8,6 @@ import lucuma.typed.tanstackTableCore as raw
 case class HeaderGroup[T, TM] private[table] (
   private[table] val toJs: raw.buildLibTypesMod.HeaderGroup[T]
 ):
-  lazy val depth: Int = toJs.depth.toInt
-
+  lazy val depth: Int                             = toJs.depth.toInt
   lazy val headers: List[Header[T, Any, TM, Any]] = toJs.headers.toList.map(Header(_))
-
-  lazy val id: String = toJs.id
+  lazy val id: HeaderGroupId                      = HeaderGroupId(toJs.id)

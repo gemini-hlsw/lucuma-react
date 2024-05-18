@@ -9,7 +9,5 @@ case class HeaderContext[T, A, TM, CM] private[table] (
   private[table] val toJs: raw.buildLibCoreHeadersMod.HeaderContext[T, A]
 ):
   lazy val column: Column[T, A, TM, CM] = Column(toJs.column)
-
   lazy val header: Header[T, A, TM, CM] = Header(toJs.header)
-
-  lazy val table: Table[T, TM] = Table(toJs.table)
+  lazy val table: Table[T, TM]          = Table(toJs.table)

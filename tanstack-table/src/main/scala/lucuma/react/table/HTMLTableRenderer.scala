@@ -116,12 +116,12 @@ trait HTMLTableRenderer[T]:
                   ) != "undefined"
                 )
             )(
-              <.tr(TheadTrClass, headerRowMod(headerGroup))(^.key := headerGroup.id)(
+              <.tr(TheadTrClass, headerRowMod(headerGroup))(^.key := headerGroup.id.value)(
                 headerGroup.headers
                   .map(header =>
                     <.th(
                       TheadThClass,
-                      ^.key     := header.id,
+                      ^.key     := header.id.value,
                       ^.colSpan := header.colSpan.toInt,
                       ^.width   := s"${header.getSize().toInt}px",
                       SortableColClass.when(header.column.getCanSort()),
@@ -245,11 +245,11 @@ trait HTMLTableRenderer[T]:
                   ) != "undefined"
                 )
             )(
-              <.tr(TfootTrClass, footerRowMod(footerGroup))(^.key := footerGroup.id)(
+              <.tr(TfootTrClass, footerRowMod(footerGroup))(^.key := footerGroup.id.value)(
                 footerGroup.headers
                   .map(footer =>
                     <.th(TfootThClass, footerCellMod(footer))(
-                      ^.key     := footer.id,
+                      ^.key     := footer.id.value,
                       ^.colSpan := footer.colSpan.toInt
                     )(
                       TagMod.unless(footer.isPlaceholder)(
