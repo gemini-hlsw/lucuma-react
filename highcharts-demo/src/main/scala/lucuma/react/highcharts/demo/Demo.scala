@@ -4,6 +4,7 @@
 package lucuma.react.highcharts.demo
 
 import japgolly.scalajs.react.ReactDOMClient
+import japgolly.scalajs.react.Reusable
 import japgolly.scalajs.react.callback.Callback
 import lucuma.react.highcharts.Chart
 import lucuma.react.highcharts.Highcharts
@@ -235,18 +236,21 @@ object Demo {
         ).map(_.asInstanceOf[SeriesOptionsType]).toJSArray
       )
 
-    def onCreated(chart: Chart_) = Callback(
-      // dom.console.log(chart)
-      chart
-        .series(0)
-        .addPoint(
-          PointOptionsObject()
-            .setX(1584655110000.0)
-            .setY(35.0)
+    def onCreate(chart: Chart_) =
+      Callback.log(chart) >>
+        Callback(
+          chart
+            .series(0)
+            .addPoint(
+              PointOptionsObject()
+                .setX(1584655110000.0)
+                .setY(35.0)
+            )
         )
-    )
 
-    ReactDOMClient.createRoot(container).render(Chart(options, onCreated).toUnmounted)
+    ReactDOMClient
+      .createRoot(container)
+      .render(Chart(Reusable.always(options), onCreate = onCreate).toUnmounted)
 
   }
 }
