@@ -3,9 +3,10 @@
 
 package lucuma.react.highcharts
 
+import cats.syntax.option.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
-import lucuma.react.common.ReactProps
+import lucuma.react.common.ReactFnProps
 import lucuma.typed.highcharts.anon.TypeofHighchartsAST
 import lucuma.typed.highcharts.mod.Chart_
 import lucuma.typed.highcharts.mod.HTMLDOMElement
@@ -36,13 +37,15 @@ object Highcharts extends TypeofHighchartsAST {
 object HighchartsAccesibility extends js.Object
 
 case class Chart(
-  options:    Options,
-  onCreate:   Chart_ => Callback = _ => Callback.empty,
-  highcharts: TypeofHighchartsAST = Highcharts
-) extends ReactProps(Chart.component)
+  options:      Reusable[Options],
+  allowUpdate:  Boolean = true,
+  containerMod: TagMod = TagMod.empty,
+  onCreate:     Chart_ => Callback = _ => Callback.empty,
+  highcharts:   TypeofHighchartsAST = Highcharts
+) extends ReactFnProps(Chart.component)
 
-object Chart {
-  type Props = Chart
+object Chart:
+  private type Props = Chart
 
   type Data =
     Double |
@@ -51,37 +54,30 @@ object Chart {
         Double | Null
       ] | Null | PointOptionsObject
 
-  class Backend($ : BackendScope[Props, Unit]) {
-    private val containerRef = Ref[html.Element]
-    private val graphRef     = Ref[Chart_]
-
-    def render(props: Props) =
-      <.div.withRef(containerRef)
-
-    def destroy(): Callback =
-      graphRef.foreach(_.destroy())
-
-    def refresh(props: Props): Callback =
-      containerRef.foreach { element =>
-        props.highcharts.chart(
-          element.asInstanceOf[HTMLDOMElement],
-          props.options,
-          c => (props.onCreate(c) *> graphRef.set(Some(c))).runNow()
-        )
-        ()
-      }
-  }
-
-  // We are purposefully not updating the chart on each rerender.
-  // To update the chart either:
-  //  A) Call the refresh method via a Ref; or
-  //  B) Remount with a different key.
-  val component =
-    ScalaComponent
-      .builder[Props]
-      .renderBackend[Backend]
-      .componentDidMount($ => $.backend.refresh($.props))
-      .componentWillUnmount($ => $.backend.destroy())
-      // .componentDidUpdate($ => $.backend.init($.currentProps))
-      .build
-}
+  private val component =
+    ScalaFnComponent
+      .withHooks[Props]
+      .useRefToVdom[html.Element] // containerRef
+      .useRef(none[Chart_])       // chartRef
+      .useLayoutEffectWithDepsBy((props, _, _) => (props.options, props.allowUpdate)):
+        (props, containerRef, chartRef) =>
+          (options, allowUpdate) =>
+            chartRef.get >>= { chartOpt =>
+              chartOpt
+                .filter(_ => allowUpdate)
+                .fold( // No chartRef yet, or not allowed to Update
+                  containerRef.foreach { element =>
+                    props.highcharts.chart(
+                      element.asInstanceOf[HTMLDOMElement],
+                      options,
+                      c => (chartRef.set(c.some) >> props.onCreate(c)).runNow()
+                    )
+                    ()
+                  }
+                ): chart => // We have a chartRef and we are allowed to update
+                  Callback(chart.update(options))
+            }
+      .useEffectOnMountBy: (_, _, chartRef) =>
+        CallbackTo(chartRef.get.map(_.foreach(_.destroy()))) // Destroy at unmount
+      .render: (props, containerRef, chartRef) =>
+        <.div(props.containerMod).withRef(containerRef)
