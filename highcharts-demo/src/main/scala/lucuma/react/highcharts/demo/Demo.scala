@@ -139,7 +139,7 @@ object Demo {
           .setPointFormat("")
           .setSnap(0)
           .setAnimation(false)
-          .setShape(TooltipShapeValue.square)
+          .setShape(TooltipShapeValue.rect)
           .setPositioner(tooltipPositioner)
       )
       .setXAxis(
@@ -211,7 +211,7 @@ object Demo {
       )
       .setSeries(
         List(
-          SeriesAreasplineOptions(areaspline, js.undefined, areaspline)
+          SeriesAreasplineOptions(areaspline, js.undefined)
             .setName("Observation-1")
             .setData(
               List(
@@ -222,7 +222,7 @@ object Demo {
                 (1584655240000.0, 14.0)
               )
             ),
-          SeriesAreasplineOptions(areaspline, js.undefined, areaspline)
+          SeriesAreasplineOptions(areaspline, js.undefined)
             .setName("Observation-2")
             .setData(
               List(

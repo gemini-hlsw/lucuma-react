@@ -11,7 +11,7 @@ enum Expanded:
   case AllRows                         extends Expanded
   case Rows(rows: Map[RowId, Boolean]) extends Expanded
 
-  def toJs: raw.buildLibFeaturesExpandingMod.ExpandedState =
+  def toJs: raw.buildLibFeaturesRowExpandingMod.ExpandedState =
     this match
       case AllRows    => raw.tanstackTableCoreBooleans.`true`
       case Rows(rows) =>
@@ -22,7 +22,7 @@ object Expanded:
   def fromExpandedRows(rows:  RowId*): Expanded.Rows            = fromRows(rows.map(_ -> true)*)
   def fromCollapsedRows(rows: RowId*): Expanded.Rows            = fromRows(rows.map(_ -> false)*)
 
-  private[table] def fromJs(rawValue: raw.buildLibFeaturesExpandingMod.ExpandedState): Expanded =
+  private[table] def fromJs(rawValue: raw.buildLibFeaturesRowExpandingMod.ExpandedState): Expanded =
     rawValue match
       case v if v == raw.tanstackTableCoreBooleans.`true` => Expanded.AllRows
       case rows                                           =>
