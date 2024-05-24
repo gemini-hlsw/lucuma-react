@@ -6,9 +6,9 @@ package lucuma.react.table
 import lucuma.typed.tanstackTableCore as raw
 
 case class ColumnSort(columnId: ColumnId, direction: SortDirection):
-  def toJs: raw.buildLibFeaturesSortingMod.ColumnSort =
-    raw.buildLibFeaturesSortingMod.ColumnSort(direction.toDescending, columnId.value)
+  def toJs: raw.buildLibFeaturesRowSortingMod.ColumnSort =
+    raw.buildLibFeaturesRowSortingMod.ColumnSort(direction.toDescending, columnId.value)
 
 object ColumnSort:
-  private[table] def fromJs(rawValue: raw.buildLibFeaturesSortingMod.ColumnSort): ColumnSort =
+  private[table] def fromJs(rawValue: raw.buildLibFeaturesRowSortingMod.ColumnSort): ColumnSort =
     ColumnSort(ColumnId(rawValue.id), SortDirection.fromDescending(rawValue.desc))

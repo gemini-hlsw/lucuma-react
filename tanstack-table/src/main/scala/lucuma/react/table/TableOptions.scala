@@ -206,7 +206,7 @@ sealed trait TableOptions[T, TM]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.buildLibFeaturesVisibilityMod.VisibilityState) =>
+            Updater.Mod((v: raw.buildLibFeaturesColumnVisibilityMod.VisibilityState) =>
               mod(ColumnVisibility.fromJs(v)).toJs
             )
         ).toJs))
@@ -301,7 +301,7 @@ sealed trait TableOptions[T, TM]:
         Callback(fn((u match
           case Updater.Set(v)   => Updater.Set(v.toJs)
           case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.buildLibFeaturesSortingMod.SortingState) =>
+            Updater.Mod((v: raw.buildLibFeaturesRowSortingMod.SortingState) =>
               mod(Sorting.fromJs(v)).toJs
             )
         ).toJs))

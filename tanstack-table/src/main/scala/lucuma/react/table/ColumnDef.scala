@@ -181,7 +181,7 @@ object ColumnDef:
           case "string" => BuiltInSorting.fromJs(v.asInstanceOf[String])
           case fn       =>
             (rowA: Row[T, TM], rowB: Row[T, TM], colId: ColumnId) =>
-              fn.asInstanceOf[raw.buildLibFeaturesSortingMod.SortingFn[T]](
+              fn.asInstanceOf[raw.buildLibFeaturesRowSortingMod.SortingFn[T]](
                 rowA.toJs,
                 rowB.toJs,
                 colId.value

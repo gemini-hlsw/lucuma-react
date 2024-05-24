@@ -16,14 +16,14 @@ object Sorting:
   inline def apply(values: (ColumnId, SortDirection)*): Sorting =
     values.toList.map(ColumnSort.apply.tupled)
   protected[table] def fromJs(
-    rawValue: js.Array[raw.buildLibFeaturesSortingMod.ColumnSort]
+    rawValue: js.Array[raw.buildLibFeaturesRowSortingMod.ColumnSort]
   ): Sorting =
     rawValue.toList.map(ColumnSort.fromJs)
 
   extension (opaqueValue: Sorting)
-    inline def value: List[ColumnSort]                            =
+    inline def value: List[ColumnSort]                               =
       opaqueValue
-    inline def modify(f: Endo[List[ColumnSort]]): Sorting         =
+    inline def modify(f: Endo[List[ColumnSort]]): Sorting            =
       f(opaqueValue)
-    def toJs: js.Array[raw.buildLibFeaturesSortingMod.ColumnSort] =
+    def toJs: js.Array[raw.buildLibFeaturesRowSortingMod.ColumnSort] =
       opaqueValue.map(_.toJs).toJSArray

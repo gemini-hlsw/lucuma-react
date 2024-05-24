@@ -3,7 +3,7 @@
 
 package lucuma.react.table
 
-import lucuma.typed.tanstackTableCore.buildLibFeaturesPinningMod as raw
+import lucuma.typed.tanstackTableCore.buildLibFeaturesColumnPinningMod as raw
 
 enum ColumnPinningPosition(private[table] val toJs: raw.ColumnPinningPosition):
   case Left  extends ColumnPinningPosition(raw.ColumnPinningPosition.left)

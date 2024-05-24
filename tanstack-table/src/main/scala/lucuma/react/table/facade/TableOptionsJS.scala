@@ -38,7 +38,7 @@ trait TableOptionsJs[T, TM] extends js.Object:
   // Column Visibility
   var enableHiding: js.UndefOr[Boolean] = js.undefined
   var onColumnVisibilityChange: js.UndefOr[
-    raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesVisibilityMod.VisibilityState]
+    raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesColumnVisibilityMod.VisibilityState]
   ] =
     js.undefined
 
@@ -54,7 +54,7 @@ trait TableOptionsJs[T, TM] extends js.Object:
   var manualSorting: js.UndefOr[Boolean]                                = js.undefined
   var maxMultiSortColCount: js.UndefOr[Double]                          = js.undefined
   var onSortingChange
-    : js.UndefOr[raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesSortingMod.SortingState]] =
+    : js.UndefOr[raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesRowSortingMod.SortingState]] =
     js.undefined
   var sortDescFirst: js.UndefOr[Boolean]                                = js.undefined
 

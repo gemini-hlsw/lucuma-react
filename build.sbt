@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.64"
+ThisBuild / tlBaseVersion       := "0.65"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
@@ -20,7 +20,7 @@ ThisBuild / mergifyPrRules +=
     List(MergifyAction.Merge())
   )
 
-val lucumaTypedV     = "0.5.1"
+val lucumaTypedV     = "0.6.0"
 val catsV            = "2.10.0"
 val disciplineMunitV = "2.0.0-M3"
 val kittensV         = "3.3.0"
