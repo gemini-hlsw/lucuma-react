@@ -22,14 +22,14 @@ ThisBuild / mergifyPrRules +=
 
 val lucumaTypedV     = "0.6.0"
 val catsV            = "2.12.0"
-val disciplineMunitV = "2.0.0-M3"
+val disciplineMunitV = "2.0.0"
 val kittensV         = "3.3.0"
-val munitV           = "1.0.0-M11"
+val munitV           = "1.0.0"
 val scalaJsReactV    = "3.0.0-beta3"
 val utestV           = "0.8.3"
 val http4sV          = "0.23.27"
 
-ThisBuild / crossScalaVersions := Seq("3.4.1")
+ThisBuild / crossScalaVersions := Seq("3.4.2")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(
@@ -237,7 +237,7 @@ lazy val gridLayoutDemo = project
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(gridLayout, resizeDetector)
   .settings(
-    libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.8.1",
+    libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.9.0",
     demoSettings
   )
 
