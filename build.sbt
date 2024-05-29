@@ -22,7 +22,7 @@ ThisBuild / mergifyPrRules +=
 
 val lucumaTypedV     = "0.6.0"
 val catsV            = "2.10.0"
-val disciplineMunitV = "2.0.0-M3"
+val disciplineMunitV = "2.0.0"
 val kittensV         = "3.3.0"
 val munitV           = "1.0.0-M11"
 val scalaJsReactV    = "3.0.0-beta3"
