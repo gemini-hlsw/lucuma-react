@@ -237,7 +237,7 @@ lazy val gridLayoutDemo = project
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(gridLayout, resizeDetector)
   .settings(
-    libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.8.1",
+    libraryDependencies += "com.lihaoyi" %%% "pprint" % "0.9.0",
     demoSettings
   )
 
