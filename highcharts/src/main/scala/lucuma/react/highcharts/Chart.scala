@@ -59,10 +59,13 @@ object Chart:
       .withHooks[Props]
       .useRefToVdom[html.Element] // containerRef
       .useRef(none[Chart_])       // chartRef
-      .useLayoutEffectWithDepsBy((props, _, _) => (props.options, props.allowUpdate)):
-        (props, containerRef, chartRef) =>
+      .useRef(false)              // isUnmounting
+      .useEffectOnMountBy: (_, _, _, isUnmounting) =>
+        isUnmounting.set(true)
+      .useLayoutEffectWithDepsBy((props, _, _, _) => (props.options, props.allowUpdate)):
+        (props, containerRef, chartRef, isUnmounting) =>
           (options, allowUpdate) =>
-            chartRef.get >>= { chartOpt =>
+            (chartRef.get >>= { (chartOpt: Option[Chart_]) =>
               chartOpt
                 .filter(_ => allowUpdate)
                 .fold( // No chartRef yet, or not allowed to Update
@@ -76,11 +79,8 @@ object Chart:
                   }
                 ): chart => // We have a chartRef and we are allowed to update
                   Callback(chart.update(options))
-            }
-      .useEffectOnMountBy: (_, _, chartRef) =>
-        CallbackTo(
-          // Destroy at unmount
-          chartRef.get.map(_.foreach(_.destroy())) >> chartRef.set(none)
-        )
-      .render: (props, containerRef, chartRef) =>
+            }).map(_ =>
+              isUnmounting.get >>= (Callback.when(_)(chartRef.get.map(_.foreach(_.destroy()))))
+            )
+      .render: (props, containerRef, _, _) =>
         <.div(props.containerMod).withRef(containerRef)
