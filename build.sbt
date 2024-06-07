@@ -332,7 +332,7 @@ lazy val datepickerDemo = project
     demoSettings,
     Compile / scalacOptions += "-language:implicitConversions",
     libraryDependencies ++= Seq(
-      "io.github.cquiroz" %%% "scala-java-time" % "2.5.0"
+      "io.github.cquiroz" %%% "scala-java-time" % "2.6.0"
     )
   )
 
