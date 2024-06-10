@@ -78,6 +78,9 @@ object Chart:
                   Callback(chart.update(options))
             }
       .useEffectOnMountBy: (_, _, chartRef) =>
-        CallbackTo(chartRef.get.map(_.foreach(_.destroy()))) // Destroy at unmount
+        CallbackTo(
+          // Destroy at unmount
+          chartRef.get.map(_.foreach(_.destroy())) >> chartRef.set(none)
+        )
       .render: (props, containerRef, chartRef) =>
         <.div(props.containerMod).withRef(containerRef)
