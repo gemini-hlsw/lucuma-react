@@ -34,6 +34,29 @@ object RehypePlugin {
   @JSImport("rehype-katex", JSImport.Default)
   object RehypeKatex extends js.Object with RehypePlugin
 
+  @js.native
+  trait ExternalLinksOptions extends js.Object {
+    var target: js.UndefOr[String]
+    var rel: js.UndefOr[js.Array[String]]
+  }
+
+  object ExternalLinksOptions {
+    def apply(
+      target: js.UndefOr[String] = js.undefined,
+      rel:    js.UndefOr[List[String]] = js.undefined
+    ): ExternalLinksOptions = {
+      val p = (new js.Object).asInstanceOf[ExternalLinksOptions]
+      target.map(v => p.target = v)
+      rel.map(v => p.rel = v.toJSArray)
+      p
+    }
+  }
+
+  @js.native
+  @JSImport("rehype-external-links", JSImport.Default)
+  object RehypeExternalLinks extends js.Object with RehypePlugin {
+    def apply(args: ExternalLinksOptions): RehypePlugin = js.native
+  }
 }
 
 case class ReactMarkdown(
