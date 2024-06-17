@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.65"
+ThisBuild / tlBaseVersion       := "0.66"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
@@ -20,26 +20,28 @@ ThisBuild / mergifyPrRules +=
     List(MergifyAction.Merge())
   )
 
-val lucumaTypedV     = "0.6.0"
 val catsV            = "2.12.0"
 val disciplineMunitV = "2.0.0"
+val http4sV          = "0.23.27"
 val kittensV         = "3.3.0"
+val lucumaTypedV     = "0.6.0"
 val munitV           = "1.0.0"
+val scalaJsDomV      = "2.8.0"
 val scalaJsReactV    = "3.0.0-beta3"
 val utestV           = "0.8.3"
-val http4sV          = "0.23.27"
 
 ThisBuild / crossScalaVersions := Seq("3.4.2")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(
-    "com.github.japgolly.scalajs-react" %%% "core"      % scalaJsReactV,
-    "com.github.japgolly.scalajs-react" %%% "extra"     % scalaJsReactV,
-    "com.github.japgolly.scalajs-react" %%% "test"      % scalaJsReactV % Test,
-    "org.typelevel"                     %%% "cats-core" % catsV,
-    "org.typelevel"                     %%% "kittens"   % kittensV,
-    "com.lihaoyi"                       %%% "utest"     % utestV        % Test,
-    "org.scalameta"                     %%% "munit"     % munitV        % Test
+    "com.github.japgolly.scalajs-react" %%% "core"        % scalaJsReactV,
+    "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReactV,
+    "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReactV % Test,
+    "org.typelevel"                     %%% "cats-core"   % catsV,
+    "org.typelevel"                     %%% "kittens"     % kittensV,
+    "org.scala-js"                      %%% "scalajs-dom" % scalaJsDomV,
+    "com.lihaoyi"                       %%% "utest"       % utestV        % Test,
+    "org.scalameta"                     %%% "munit"       % munitV        % Test
   ),
   jsEnv := new lucuma.LucumaJSDOMNodeJSEnv(),
   scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
