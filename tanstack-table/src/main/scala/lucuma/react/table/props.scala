@@ -40,7 +40,7 @@ trait HTMLVirtualizedTableProps[T, M] extends HTMLTableProps[T, M]:
   def estimateSize: Int => SizePx
   // Table options
   def containerMod: TagMod
-  def containerRef: js.UndefOr[Ref.Simple[HTMLElement]]
+  def containerRef: js.UndefOr[Ref.ToVdom[HTMLElement]]
   // Virtual options
   def overscan: js.UndefOr[Int]
   def getItemKey: js.UndefOr[Int => rawVirtual.mod.Key]

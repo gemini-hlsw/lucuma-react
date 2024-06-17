@@ -34,7 +34,7 @@ final case class HTMLVirtualizedTable[T, TM](
   estimateSize:  Int => SizePx,
   // Table options
   containerMod:  TagMod = TagMod.empty,
-  containerRef:  js.UndefOr[Ref.Simple[HTMLElement]] = js.undefined,
+  containerRef:  js.UndefOr[Ref.ToVdom[HTMLElement]] = js.undefined,
   tableMod:      TagMod = TagMod.empty,
   headerMod:     TagMod = TagMod.empty,
   headerRowMod:  HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
@@ -61,7 +61,7 @@ final case class HTMLAutoHeightVirtualizedTable[T, TM](
   estimateSize:      Int => SizePx,
   // Table options
   containerMod:      TagMod = TagMod.empty,
-  containerRef:      js.UndefOr[Ref.Simple[HTMLElement]] = js.undefined,
+  containerRef:      js.UndefOr[Ref.ToVdom[HTMLElement]] = js.undefined,
   innerContainerMod: TagMod = TagMod.empty,
   tableMod:          TagMod = TagMod.empty,
   headerMod:         TagMod = TagMod.empty,
