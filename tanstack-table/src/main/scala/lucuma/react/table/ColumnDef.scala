@@ -28,6 +28,9 @@ sealed trait ColumnDef[T, A, TM, CM]:
   // Column Visibility
   def enableHiding: js.UndefOr[Boolean]
 
+  // Column Pinning
+  def enablePinning: js.UndefOr[Boolean]
+
   private[table] def toJs: ColumnDefJs[T, A, TM, CM]
 
 object ColumnDef:
@@ -217,6 +220,13 @@ object ColumnDef:
     /** WARNING: This mutates the object in-place. */
     def sortable(using Ordering[A]) = sortableBy(identity)
 
+    // Column Pinning
+    lazy val enablePinning: js.UndefOr[Boolean] = toJs.enablePinning
+
+    /** WARNING: This mutates the object in-place. */
+    def setEnablePinning(enablePinning: js.UndefOr[Boolean]): Single[T, A, TM, CM] =
+      Single { toJs.enablePinning = enablePinning; toJs }
+
   end Single
 
   object Single:
@@ -244,7 +254,9 @@ object ColumnDef:
       invertSorting:   js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:   js.UndefOr[Boolean] = js.undefined,
       sortUndefined:   js.UndefOr[UndefinedPriority] = js.undefined,
-      sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T, TM]] = js.undefined
+      sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T, TM]] = js.undefined,
+      // Column Pinning
+      enablePinning:   js.UndefOr[Boolean] = js.undefined
     ): Single[T, A, TM, CM] = { // TODO Check where TM is used???!?!?!?
       val p: ColumnDefJs[T, A, TM, CM] = new js.Object().asInstanceOf[ColumnDefJs[T, A, TM, CM]]
       p.id = id.value
@@ -265,6 +277,7 @@ object ColumnDef:
         .applyOrNot(sortDescFirst, _.setSortDescFirst(_))
         .applyOrNot(sortUndefined, _.setSortUndefined(_))
         .applyOrNot(sortingFn, _.setSortingFn(_))
+        .applyOrNot(enablePinning, _.setEnablePinning(_))
     }
   end Single
 
@@ -369,6 +382,13 @@ object ColumnDef:
     def setEnableHiding(enableHiding: js.UndefOr[Boolean]): Group[T, TM, CM] =
       Group { toJs.enableHiding = enableHiding; toJs }
 
+    // Column Pinning
+    lazy val enablePinning: js.UndefOr[Boolean] = toJs.enablePinning
+
+    /** WARNING: This mutates the object in-place. */
+    def setEnablePinning(enablePinning: js.UndefOr[Boolean]): Group[T, TM, CM] =
+      Group { toJs.enablePinning = enablePinning; toJs }
+
   end Group
 
   object Group:
@@ -388,7 +408,9 @@ object ColumnDef:
       minSize:        js.UndefOr[SizePx] = js.undefined,
       maxSize:        js.UndefOr[SizePx] = js.undefined,
       // Column Visibility
-      enableHiding:   js.UndefOr[Boolean] = js.undefined
+      enableHiding:   js.UndefOr[Boolean] = js.undefined,
+      // Column Pinning
+      enablePinning:  js.UndefOr[Boolean] = js.undefined
     ): Group[T, TM, CM] = {
       val p: ColumnDefJs[T, Nothing, TM, CM] =
         new js.Object().asInstanceOf[ColumnDefJs[T, Nothing, TM, CM]]
@@ -402,6 +424,7 @@ object ColumnDef:
         .applyOrNot(minSize, _.setMinSize(_))
         .applyOrNot(maxSize, _.setMaxSize(_))
         .applyOrNot(enableHiding, _.setEnableHiding(_))
+        .applyOrNot(enablePinning, _.setEnablePinning(_))
     }
   end Group
 
@@ -441,7 +464,9 @@ object ColumnDef:
       invertSorting:   js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:   js.UndefOr[Boolean] = js.undefined,
       sortUndefined:   js.UndefOr[UndefinedPriority] = js.undefined,
-      sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T, TM]] = js.undefined
+      sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T, TM]] = js.undefined,
+      // Column Pinning
+      enablePinning:   js.UndefOr[Boolean] = js.undefined
     ): Single[T, A, TM, Nothing] =
       Single(
         id,
@@ -463,7 +488,9 @@ object ColumnDef:
         invertSorting,
         sortDescFirst,
         sortUndefined,
-        sortingFn
+        sortingFn,
+        // Column Pinning
+        enablePinning
       )
 
     def group(
@@ -478,7 +505,9 @@ object ColumnDef:
       minSize:        js.UndefOr[SizePx] = js.undefined,
       maxSize:        js.UndefOr[SizePx] = js.undefined,
       // Column Visibility
-      enableHiding:   js.UndefOr[Boolean] = js.undefined
+      enableHiding:   js.UndefOr[Boolean] = js.undefined,
+      // Column Pinning
+      enablePinning:  js.UndefOr[Boolean] = js.undefined
     ): Group[T, TM, Nothing] =
       Group(
         id,
@@ -486,11 +515,15 @@ object ColumnDef:
         columns,
         footer,
         js.undefined,
+        // Column Sizing
         enableResizing,
         size,
         minSize,
         maxSize,
-        enableHiding
+        // Column Visibility
+        enableHiding,
+        // Column Pinning
+        enablePinning
       )
 
     def WithColumnMeta[CM]: AppliedWithColumnMeta[T, TM, CM] =
@@ -521,7 +554,9 @@ object ColumnDef:
       invertSorting:   js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:   js.UndefOr[Boolean] = js.undefined,
       sortUndefined:   js.UndefOr[UndefinedPriority] = js.undefined,
-      sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T, TM]] = js.undefined
+      sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T, TM]] = js.undefined,
+      // Column Pinning
+      enablePinning:   js.UndefOr[Boolean] = js.undefined
     ): Single[T, A, TM, CM] =
       Single(
         id,
@@ -543,7 +578,9 @@ object ColumnDef:
         invertSorting,
         sortDescFirst,
         sortUndefined,
-        sortingFn
+        sortingFn,
+        // Column Pinning
+        enablePinning
       )
 
     def group[TM](
@@ -558,9 +595,26 @@ object ColumnDef:
       minSize:        js.UndefOr[SizePx] = js.undefined,
       maxSize:        js.UndefOr[SizePx] = js.undefined,
       // Column Visibility
-      enableHiding:   js.UndefOr[Boolean] = js.undefined
+      enableHiding:   js.UndefOr[Boolean] = js.undefined,
+      // Column Pinning
+      enablePinning:  js.UndefOr[Boolean] = js.undefined
     ): Group[T, TM, CM] =
-      Group(id, header, columns, footer, meta, enableResizing, size, minSize, maxSize, enableHiding)
+      Group(
+        id,
+        header,
+        columns,
+        footer,
+        meta,
+        // Column Sizing
+        enableResizing,
+        size,
+        minSize,
+        maxSize,
+        // Column Visibility
+        enableHiding,
+        // Column Pinning
+        enablePinning
+      )
   end AppliedWithColumnMeta
 
 end ColumnDef

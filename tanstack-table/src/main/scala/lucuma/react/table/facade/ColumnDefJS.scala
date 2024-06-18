@@ -35,3 +35,6 @@ trait ColumnDefJs[T, A, TM, CM] extends js.Object:
   var sortDescFirst: js.UndefOr[Boolean]                                             = js.undefined
   var sortUndefined: js.UndefOr[UndefinedPriorityJs]                                 = js.undefined
   var sortingFn: js.UndefOr[String | raw.buildLibFeaturesRowSortingMod.SortingFn[T]] = js.undefined
+
+  // Column Pinning
+  var enablePinning: js.UndefOr[Boolean] = js.undefined

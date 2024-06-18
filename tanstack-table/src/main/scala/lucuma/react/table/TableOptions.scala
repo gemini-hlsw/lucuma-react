@@ -403,6 +403,81 @@ sealed trait TableOptions[T, TM]:
     copy(_.getSubRows =
       getSubRows.orUndefined.map(fn => (row, idx) => fn(row, idx).map(_.toJSArray).orUndefined)
     )
+
+  // Pinning
+  lazy val enablePinning: Option[Boolean] = toJsBase.enablePinning.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setEnablePinning(enablePinning: Option[Boolean]): TableOptions[T, TM] =
+    copy(_.enablePinning = enablePinning.orUndefined)
+
+  // Column Pinning
+  lazy val enableColumnPinning: Option[Boolean] = toJsBase.enableColumnPinning.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setEnableColumnPinning(enableColumnPinning: Option[Boolean]): TableOptions[T, TM] =
+    copy(_.enableColumnPinning = enableColumnPinning.orUndefined)
+
+  lazy val onColumnPinningChange: Option[Updater[ColumnPinning] => Callback] =
+    toJsBase.onColumnPinningChange.toOption.map: fn =>
+      u =>
+        Callback(fn((u match
+          case Updater.Set(v)   => Updater.Set(v.toJs)
+          case Updater.Mod(mod) =>
+            Updater.Mod((v: raw.buildLibFeaturesColumnPinningMod.ColumnPinningState) =>
+              mod(ColumnPinning.fromJs(v)).toJs
+            )
+        ).toJs))
+
+  /** WARNING: This mutates the object in-place. */
+  def setOnColumnPinningChange(
+    onColumnPinningChange: Option[Updater[ColumnPinning] => Callback]
+  ): TableOptions[T, TM] =
+    copy(_.onColumnPinningChange = onColumnPinningChange.orUndefined.map: fn =>
+      u =>
+        fn(
+          Updater.fromJs(u) match
+            case Updater.Set(v)   => Updater.Set(ColumnPinning.fromJs(v))
+            case Updater.Mod(mod) => Updater.Mod(v => ColumnPinning.fromJs(mod(v.toJs)))
+        ).runNow())
+
+  // Row Pinning
+  lazy val enableRowPinning: Option[RowPinningEnabled[T, TM]] =
+    toJsBase.enableRowPinning.toOption.map(RowPinningEnabled.fromJs)
+
+  /** WARNING: This mutates the object in-place. */
+  def setEnableRowPinning(enableRowPinning: Option[RowPinningEnabled[T, TM]]): TableOptions[T, TM] =
+    copy(_.enableRowPinning = enableRowPinning.map(_.toJs).orUndefined)
+
+  lazy val keepPinnedRows: Option[Boolean] = toJsBase.keepPinnedRows.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setKeepPinnedRows(keepPinnedRows: Option[Boolean]): TableOptions[T, TM] =
+    copy(_.keepPinnedRows = keepPinnedRows.orUndefined)
+
+  lazy val onRowPinningChange: Option[Updater[RowPinning] => Callback] =
+    toJsBase.onRowPinningChange.toOption.map: fn =>
+      u =>
+        Callback(fn((u match
+          case Updater.Set(v)   => Updater.Set(v.toJs)
+          case Updater.Mod(mod) =>
+            Updater.Mod((v: raw.buildLibFeaturesRowPinningMod.RowPinningState) =>
+              mod(RowPinning.fromJs(v)).toJs
+            )
+        ).toJs))
+
+  /** WARNING: This mutates the object in-place. */
+  def setOnRowPinningChange(
+    onRowPinningChange: Option[Updater[RowPinning] => Callback]
+  ): TableOptions[T, TM] =
+    copy(_.onRowPinningChange = onRowPinningChange.orUndefined.map: fn =>
+      u =>
+        fn(
+          Updater.fromJs(u) match
+            case Updater.Set(v)   => Updater.Set(RowPinning.fromJs(v))
+            case Updater.Mod(mod) => Updater.Mod(v => RowPinning.fromJs(mod(v.toJs)))
+        ).runNow())
+
 end TableOptions
 
 object TableOptions:
@@ -442,7 +517,16 @@ object TableOptions:
     // Expanding
     enableExpanding:          js.UndefOr[Boolean] = js.undefined,
     getExpandedRowModel:      js.UndefOr[Table[T, TM] => () => RowModel[T, TM]] = js.undefined,
-    getSubRows:               js.UndefOr[(T, Int) => Option[List[T]]] = js.undefined
+    getSubRows:               js.UndefOr[(T, Int) => Option[List[T]]] = js.undefined,
+    // Pinning
+    enablePinning:            js.UndefOr[Boolean] = js.undefined,
+    // Column Pinning
+    enableColumnPinning:      js.UndefOr[Boolean] = js.undefined,
+    onColumnPinningChange:    js.UndefOr[Updater[ColumnPinning] => Callback] = js.undefined,
+    // Row Pinning
+    enableRowPinning:         js.UndefOr[RowPinningEnabled[T, TM]] = js.undefined,
+    keepPinnedRows:           js.UndefOr[Boolean] = js.undefined,
+    onRowPinningChange:       js.UndefOr[Updater[RowPinning] => Callback] = js.undefined
   ): TableOptions[T, TM] =
     new TableOptions[T, TM] {
       val columns                 = columns_
@@ -482,6 +566,12 @@ object TableOptions:
       .applyOrNot(onRowSelectionChange, (p, v) => p.setOnRowSelectionChange(v.some))
       .applyOrNot(enableExpanding, (p, v) => p.setEnableExpanding(v.some))
       .applyOrNot(getSubRows, (p, v) => p.setGetSubRows(v.some))
+      .applyOrNot(enablePinning, (p, v) => p.setEnablePinning(v.some))
+      .applyOrNot(enableColumnPinning, (p, v) => p.setEnableColumnPinning(v.some))
+      .applyOrNot(onColumnPinningChange, (p, v) => p.setOnColumnPinningChange(v.some))
+      .applyOrNot(enableRowPinning, (p, v) => p.setEnableRowPinning(v.some))
+      .applyOrNot(keepPinnedRows, (p, v) => p.setKeepPinnedRows(v.some))
+      .applyOrNot(onRowPinningChange, (p, v) => p.setOnRowPinningChange(v.some))
 
   private[table] def fromJs[T, TM](raw: TableOptionsJs[T, TM]): TableOptions[T, TM] =
     new TableOptions[T, TM]:
