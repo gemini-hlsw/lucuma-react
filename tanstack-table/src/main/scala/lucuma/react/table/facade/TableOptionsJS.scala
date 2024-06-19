@@ -59,15 +59,35 @@ trait TableOptionsJs[T, TM] extends js.Object:
   var sortDescFirst: js.UndefOr[Boolean]                                = js.undefined
 
   // Selection
-  var enableRowSelection: js.UndefOr[Boolean]                               = js.undefined
-  var enableMultiRowSelection: js.UndefOr[Boolean]                          = js.undefined
+  var enableRowSelection: js.UndefOr[Boolean]      = js.undefined
+  var enableMultiRowSelection: js.UndefOr[Boolean] = js.undefined
   var onRowSelectionChange: js.UndefOr[
     raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesRowSelectionMod.RowSelectionState]
   ] =
     js.undefined
+
   // Expanding
   var enableExpanding: js.UndefOr[Boolean]                                  = js.undefined
   var getExpandedRowModel: js.UndefOr[
     js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]
   ] = js.undefined
   var getSubRows: js.UndefOr[js.Function2[T, Int, js.UndefOr[js.Array[T]]]] = js.undefined
+
+  // Pinning
+  var enablePinning: js.UndefOr[Boolean] = js.undefined
+
+  // Column Pinning
+  var enableColumnPinning: js.UndefOr[Boolean] = js.undefined
+  var onColumnPinningChange: js.UndefOr[
+    raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesColumnPinningMod.ColumnPinningState]
+  ] =
+    js.undefined
+
+  // Row Pinning
+  var enableRowPinning: js.UndefOr[Boolean | js.Function1[raw.buildLibTypesMod.Row[T], Boolean]] =
+    js.undefined
+  var keepPinnedRows: js.UndefOr[Boolean]                                                        = js.undefined
+  var onRowPinningChange: js.UndefOr[
+    raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesRowPinningMod.RowPinningState]
+  ] =
+    js.undefined

@@ -12,7 +12,7 @@ import org.scalajs.dom
 
 import scalajs.js.JSConverters.*
 
-// Missing: ColumnPinning, Filters, Grouping
+// Missing: Filters, Grouping
 case class Column[T, A, TM, CM] private[table] (
   private val toJs: raw.buildLibTypesMod.Column[T, A]
 ):
@@ -82,3 +82,13 @@ case class Column[T, A, TM, CM] private[table] (
   def getStart(): SizePx       = SizePx(toJs.getStart().toInt)
   // def getStart(position: ColumnPinningPosition): Double = js.native
   def resetSize(): Callback    = Callback(toJs.resetSize())
+
+  // Column Pinning
+  def getCanPin(): Boolean                         = toJs.getCanPin()
+  def getPinnedIndex(): Int                        = toJs.getPinnedIndex().toInt
+  def getIsPinned(): Option[ColumnPinningPosition] =
+    ColumnPinningPosition.fromJs(toJs.getIsPinned())
+  def pin(position: ColumnPinningPosition): Callback = Callback(toJs.pin(position.toJs))
+  def unpin(): Callback = Callback(
+    toJs.pin(raw.buildLibFeaturesColumnPinningMod.ColumnPinningPosition.`false`)
+  )

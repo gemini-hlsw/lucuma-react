@@ -56,3 +56,12 @@ case class Row[T, TM] private[table] (private[table] val toJs: raw.buildLibTypes
   def getToggleExpandedHandler(): Callback = Callback(toJs.getToggleExpandedHandler()())
   def toggleExpanded(): Callback           = Callback(toJs.toggleExpanded())
   def toggleExpanded(expanded: Boolean): Callback = Callback(toJs.toggleExpanded(expanded))
+
+  // Row Pinning
+  def pin(position: RowPinningPosition): Callback = Callback(toJs.pin(position.toJs))
+  def unpin(): Callback                         = Callback(
+    toJs.pin(raw.buildLibFeaturesRowPinningMod.RowPinningPosition.`false`)
+  )
+  def getCanPin(): Boolean                      = toJs.getCanPin()
+  def getIsPinned(): Option[RowPinningPosition] = RowPinningPosition.fromJs(toJs.getIsPinned())
+  def getPinnedIndex(): Int                     = toJs.getPinnedIndex().toInt

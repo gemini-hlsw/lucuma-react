@@ -13,7 +13,7 @@ import org.scalajs.dom
 
 import scalajs.js.JSConverters.*
 
-// Missing: ColumnOrder, ColumnPinning, Filters, Grouping, Pagination
+// Missing: ColumnOrder, Filters, Grouping, Pagination
 case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTypesMod.Table[T]):
   def getAllColumns(): List[Column[T, Any, TM, Any]]               = toJs.getAllColumns().toList.map(Column(_))
   def getAllFlatColumns(): List[Column[T, Any, TM, Any]]           =
@@ -35,36 +35,12 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
     Callback(toJs.setState(rawState => f(TableState(rawState)).toJs))
 
   // Headers
-  def getCenterFlatHeaders(): List[Header[T, Any, TM, Any]] =
-    toJs.getCenterFlatHeaders().toList.map(Header(_))
-  def getCenterFooterGroups(): List[HeaderGroup[T, TM]]     =
-    toJs.getCenterFooterGroups().toList.map(HeaderGroup(_))
-  def getCenterHeaderGroups(): List[HeaderGroup[T, TM]]     =
-    toJs.getCenterHeaderGroups().toList.map(HeaderGroup(_))
-  def getCenterLeafHeaders(): List[Header[T, Any, TM, Any]] =
-    toJs.getCenterLeafHeaders().toList.map(Header(_))
-  def getFlatHeaders(): List[Header[T, Any, TM, Any]]       = toJs.getFlatHeaders().toList.map(Header(_))
-  def getFooterGroups(): List[HeaderGroup[T, TM]]           =
+  def getFlatHeaders(): List[Header[T, Any, TM, Any]] = toJs.getFlatHeaders().toList.map(Header(_))
+  def getFooterGroups(): List[HeaderGroup[T, TM]]     =
     toJs.getFooterGroups().toList.map(HeaderGroup(_))
-  def getHeaderGroups(): List[HeaderGroup[T, TM]]           =
+  def getHeaderGroups(): List[HeaderGroup[T, TM]]     =
     toJs.getHeaderGroups().toList.map(HeaderGroup(_))
-  def getLeafHeaders(): List[Header[T, Any, TM, Any]]       = toJs.getLeafHeaders().toList.map(Header(_))
-  def getLeftFlatHeaders(): List[Header[T, Any, TM, Any]]   =
-    toJs.getLeftFlatHeaders().toList.map(Header(_))
-  def getLeftFooterGroups(): List[HeaderGroup[T, TM]]       =
-    toJs.getLeftFooterGroups().toList.map(HeaderGroup(_))
-  def getLeftHeaderGroups(): List[HeaderGroup[T, TM]]       =
-    toJs.getLeftHeaderGroups().toList.map(HeaderGroup(_))
-  def getLeftLeafHeaders(): List[Header[T, Any, TM, Any]]   =
-    toJs.getLeftLeafHeaders().toList.map(Header(_))
-  def getRightFlatHeaders(): List[Header[T, Any, TM, Any]]  =
-    toJs.getRightFlatHeaders().toList.map(Header(_))
-  def getRightFooterGroups(): List[HeaderGroup[T, TM]]      =
-    toJs.getRightFooterGroups().toList.map(HeaderGroup(_))
-  def getRightHeaderGroups(): List[HeaderGroup[T, TM]]      =
-    toJs.getRightHeaderGroups().toList.map(HeaderGroup(_))
-  def getRightLeafHeaders(): List[Header[T, Any, TM, Any]]  =
-    toJs.getRightLeafHeaders().toList.map(Header(_))
+  def getLeafHeaders(): List[Header[T, Any, TM, Any]] = toJs.getLeafHeaders().toList.map(Header(_))
 
   // Visibility
   def getCenterVisibleLeafColumns(): List[Column[T, Any, TM, Any]]                 =
@@ -163,3 +139,55 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
   def toggleAllRowsSelected(): Callback                   = Callback(toJs.toggleAllRowsSelected())
   def toggleAllRowsSelected(value: Boolean): Callback     =
     Callback(toJs.toggleAllRowsSelected(value))
+
+  // Column Pinning
+  def setColumnPinning(value: ColumnPinning): Callback = Callback(toJs.setColumnPinning(value.toJs))
+  def modColumnPinning(f: Endo[ColumnPinning]): Callback               =
+    Callback(toJs.setColumnPinning(v => f(ColumnPinning.fromJs(v)).toJs))
+  def resetColumnPinning(): Callback                                   = Callback(toJs.resetColumnPinning())
+  def resetColumnPinning(defaultState: Boolean): Callback              =
+    Callback(toJs.resetColumnPinning(defaultState))
+  def getIsSomeColumnsPinned(): Boolean                                = toJs.getIsSomeColumnsPinned()
+  def getIsSomeColumnsPinned(position: ColumnPinningPosition): Boolean =
+    toJs.getIsSomeColumnsPinned(position.toJs)
+  def getCenterFlatHeaders(): List[Header[T, Any, TM, Any]]            =
+    toJs.getCenterFlatHeaders().toList.map(Header(_))
+  def getCenterFooterGroups(): List[HeaderGroup[T, TM]]                =
+    toJs.getCenterFooterGroups().toList.map(HeaderGroup(_))
+  def getCenterHeaderGroups(): List[HeaderGroup[T, TM]]                =
+    toJs.getCenterHeaderGroups().toList.map(HeaderGroup(_))
+  def getCenterLeafHeaders(): List[Header[T, Any, TM, Any]]            =
+    toJs.getCenterLeafHeaders().toList.map(Header(_))
+  def getLeftFlatHeaders(): List[Header[T, Any, TM, Any]]              =
+    toJs.getLeftFlatHeaders().toList.map(Header(_))
+  def getLeftFooterGroups(): List[HeaderGroup[T, TM]]                  =
+    toJs.getLeftFooterGroups().toList.map(HeaderGroup(_))
+  def getLeftHeaderGroups(): List[HeaderGroup[T, TM]]                  =
+    toJs.getLeftHeaderGroups().toList.map(HeaderGroup(_))
+  def getLeftLeafHeaders(): List[Header[T, Any, TM, Any]]              =
+    toJs.getLeftLeafHeaders().toList.map(Header(_))
+  def getRightFlatHeaders(): List[Header[T, Any, TM, Any]]             =
+    toJs.getRightFlatHeaders().toList.map(Header(_))
+  def getRightFooterGroups(): List[HeaderGroup[T, TM]]                 =
+    toJs.getRightFooterGroups().toList.map(HeaderGroup(_))
+  def getRightHeaderGroups(): List[HeaderGroup[T, TM]]                 =
+    toJs.getRightHeaderGroups().toList.map(HeaderGroup(_))
+  def getRightLeafHeaders(): List[Header[T, Any, TM, Any]]             =
+    toJs.getRightLeafHeaders().toList.map(Header(_))
+  // Row Pinning
+  def setRowPinning(value: RowPinning): Callback = Callback(toJs.setRowPinning(value.toJs))
+  def modRowPinning(f: Endo[RowPinning]): Callback               = Callback:
+    toJs.setRowPinning(v => f(RowPinning.fromJs(v)).toJs)
+  def resetRowPinning(): Callback                                = Callback(toJs.resetRowPinning())
+  def resetRowPinning(defaultState: Boolean): Callback           = Callback(
+    toJs.resetRowPinning(defaultState)
+  )
+  def getIsSomeRowsPinned(): Boolean                             = toJs.getIsSomeRowsPinned()
+  def getIsSomeRowsPinned(position: RowPinningPosition): Boolean =
+    toJs.getIsSomeRowsPinned(position.toJs)
+  def getTopRows(): List[Row[T, TM]]                             =
+    toJs.getTopRows().toList.map(Row(_))
+  def getBottomRows(): List[Row[T, TM]]                          =
+    toJs.getBottomRows().toList.map(Row(_))
+  def getCenterRows(): List[Row[T, TM]]                          =
+    toJs.getCenterRows().toList.map(Row(_))
