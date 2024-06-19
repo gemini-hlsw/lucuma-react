@@ -10,9 +10,9 @@ import scalajs.js
 enum RowPinningEnabled[T, TM](
   val toJs: Boolean | js.Function1[raw.buildLibTypesMod.Row[T], Boolean]
 ):
-  case ForAll  extends RowPinningEnabled[Nothing, Nothing](true)
-  case ForNone extends RowPinningEnabled[Nothing, Nothing](false)
-  case ForSome[T, TM](isEnabled: Row[T, TM] => Boolean)
+  case ForAllRows extends RowPinningEnabled[Nothing, Nothing](true)
+  case ForNoRows  extends RowPinningEnabled[Nothing, Nothing](false)
+  case When[T, TM](isEnabled: Row[T, TM] => Boolean)
       extends RowPinningEnabled[T, TM]((row: raw.buildLibTypesMod.Row[T]) => isEnabled(Row(row)))
 
   private def covary[T, TM]: RowPinningEnabled[T, TM] = this.asInstanceOf[RowPinningEnabled[T, TM]]
@@ -23,8 +23,8 @@ object RowPinningEnabled:
   ): RowPinningEnabled[T, TM] =
     js.typeOf(rp) match
       case "boolean" =>
-        if rp.asInstanceOf[Boolean] then ForAll.covary[T, TM] else ForNone.covary[T, TM]
+        if rp.asInstanceOf[Boolean] then ForAllRows.covary[T, TM] else ForNoRows.covary[T, TM]
       case _         =>
-        ForSome((row: Row[T, TM]) =>
+        When((row: Row[T, TM]) =>
           rp.asInstanceOf[js.Function1[raw.buildLibTypesMod.Row[T], Boolean]](row.toJs)
         )
