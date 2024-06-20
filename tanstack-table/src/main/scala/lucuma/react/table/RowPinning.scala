@@ -8,7 +8,7 @@ import lucuma.typed.tanstackTableCore.buildLibFeaturesRowPinningMod as raw
 
 import scalajs.js.JSConverters.*
 
-case class RowPinning(bottom: List[RowId], top: List[RowId]):
+case class RowPinning(bottom: List[RowId] = List.empty, top: List[RowId] = List.empty):
   def toJs: raw.RowPinningState =
     raw
       .RowPinningState()
@@ -16,6 +16,10 @@ case class RowPinning(bottom: List[RowId], top: List[RowId]):
       .setTop(top.map(_.value).toJSArray)
 
 object RowPinning:
+  def bottom(bottom: RowId*): RowPinning = RowPinning(bottom = bottom.toList)
+
+  def top(top: RowId*): RowPinning = RowPinning(top = top.toList)
+
   def fromJs(rawValue: raw.RowPinningState): RowPinning =
     RowPinning(
       rawValue.bottom.map(_.toList.map(RowId(_))).toOption.orEmpty,

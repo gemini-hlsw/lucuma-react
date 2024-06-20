@@ -24,6 +24,16 @@ case class TableState(private[table] val toJs: raw.buildLibTypesMod.TableState):
 
   lazy val columnPinning: ColumnPinning = ColumnPinning.fromJs(toJs.columnPinning)
 
+  /** WARNING: This mutates the object in-place. */
+  def setColumnPinning(columnPinning: ColumnPinning): TableState =
+    TableState(toJs.setColumnPinning(columnPinning.toJs))
+
+  lazy val rowPinning: RowPinning = RowPinning.fromJs(toJs.rowPinning)
+
+  /** WARNING: This mutates the object in-place. */
+  def setRowPinning(rowPinning: RowPinning): TableState =
+    TableState(toJs.setRowPinning(rowPinning.toJs))
+
   lazy val sorting: Sorting = Sorting.fromJs(toJs.sorting)
 
   /** WARNING: This mutates the object in-place. */
@@ -59,6 +69,7 @@ object TableState:
     columnVisibility: js.UndefOr[ColumnVisibility] = js.undefined,
     columnOrder:      js.UndefOr[ColumnOrder] = js.undefined,
     columnPinning:    js.UndefOr[ColumnPinning] = js.undefined,
+    rowPinning:       js.UndefOr[RowPinning] = js.undefined,
     sorting:          js.UndefOr[Sorting] = js.undefined,
     expanded:         js.UndefOr[Expanded] = js.undefined,
     columnSizing:     js.UndefOr[ColumnSizing] = js.undefined,
@@ -70,6 +81,7 @@ object TableState:
       .applyOrNot(columnVisibility, (s, p) => s.setColumnVisibility(p.toJs))
       .applyOrNot(columnOrder, (s, p) => s.setColumnOrder(p.toJs))
       .applyOrNot(columnPinning, (s, p) => s.setColumnPinning(p.toJs))
+      .applyOrNot(rowPinning, (s, p) => s.setRowPinning(p.toJs))
       .applyOrNot(sorting, (s, p) => s.setSorting(p.toJs))
       .applyOrNot(expanded, (s, p) => s.setExpanded(p.toJs))
       .applyOrNot(columnSizing, (s, p) => s.setColumnSizing(p.toJs))
