@@ -6,13 +6,17 @@ package lucuma.react.table
 import lucuma.react.table.facade.UndefinedPriorityJs
 
 enum UndefinedPriority(private[table] val toJs: UndefinedPriorityJs):
-  case Tied   extends UndefinedPriority(false)
-  case Higher extends UndefinedPriority(-1)
-  case Lower  extends UndefinedPriority(1)
+  case First extends UndefinedPriority(UndefinedPriorityJs.First)
+  case Last  extends UndefinedPriority(UndefinedPriorityJs.Last)
+  case Tied  extends UndefinedPriority(UndefinedPriorityJs.Tied)
+  case Min   extends UndefinedPriority(UndefinedPriorityJs.Min)
+  case Max   extends UndefinedPriority(UndefinedPriorityJs.Max)
 
 object UndefinedPriority:
   private[table] def fromJs(rawValue: UndefinedPriorityJs): UndefinedPriority =
-    rawValue match
-      case _: false => UndefinedPriority.Tied
-      case _: -1    => UndefinedPriority.Higher
-      case _: 1     => UndefinedPriority.Lower
+    (rawValue: Any) match
+      case UndefinedPriorityJs.First => First
+      case UndefinedPriorityJs.Last  => Last
+      case UndefinedPriorityJs.Tied  => Tied
+      case UndefinedPriorityJs.Min   => Min
+      case UndefinedPriorityJs.Max   => Max

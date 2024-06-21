@@ -3,4 +3,12 @@
 
 package lucuma.react.table.facade
 
-type UndefinedPriorityJs = false | -1 | 1
+type UndefinedPriorityJs = UndefinedPriorityJs.First.type | UndefinedPriorityJs.Last.type |
+  UndefinedPriorityJs.Tied.type | UndefinedPriorityJs.Min.type | UndefinedPriorityJs.Max.type
+
+object UndefinedPriorityJs:
+  val First: "first" = "first"
+  val Last: "last"   = "last"
+  val Tied: false    = false
+  val Min: -1        = -1
+  val Max: 1         = 1
