@@ -95,6 +95,8 @@ trait HTMLTableRenderer[T]:
     paddingBottom: Option[Int] = none,
     emptyMessage:  VdomNode = EmptyVdom
   ) =
+    val visibleColumnCount: Int = table.getAllLeafColumns().filter(_.getIsVisible()).length
+
     <.table(TableClass, tableMod)(
       <.thead(
         TheadClass,
@@ -168,7 +170,7 @@ trait HTMLTableRenderer[T]:
             <.tr(TbodyTrClass)(
               <.td(
                 TbodyTdClass,
-                ^.colSpan := table.getAllLeafColumns().length,
+                ^.colSpan := visibleColumnCount,
                 ^.height  := s"${p}px"
               )
             )
@@ -176,14 +178,16 @@ trait HTMLTableRenderer[T]:
           .whenDefined
       )(
         TagMod.when(rows.isEmpty)(
-          <.tr(TbodyTrClass,
-               <.td(EmptyMessage,
-                    TbodyTdClass,
-                    ^.colSpan := table.getAllLeafColumns().length,
-                    ^.whiteSpace.nowrap
-               )(
-                 emptyMessage
-               )
+          <.tr(
+            TbodyTrClass,
+            <.td(
+              EmptyMessage,
+              TbodyTdClass,
+              ^.colSpan := visibleColumnCount,
+              ^.whiteSpace.nowrap
+            )(
+              emptyMessage
+            )
           )
         ),
         rows.zipWithIndex
@@ -224,7 +228,7 @@ trait HTMLTableRenderer[T]:
             <.tr(TbodyTrClass)(
               <.td(
                 TbodyTdClass,
-                ^.colSpan := table.getAllLeafColumns().length,
+                ^.colSpan := visibleColumnCount,
                 ^.height  := s"${p}px"
               )
             )
