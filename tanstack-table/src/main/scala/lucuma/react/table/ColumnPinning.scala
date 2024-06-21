@@ -8,7 +8,7 @@ import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js.JSConverters.*
 
-case class ColumnPinning(left: List[ColumnId], right: List[ColumnId]):
+case class ColumnPinning(left: List[ColumnId] = List.empty, right: List[ColumnId] = List.empty):
   def toJs: raw.buildLibFeaturesColumnPinningMod.ColumnPinningState =
     val base        = raw.buildLibFeaturesColumnPinningMod.ColumnPinningState()
     val leftApplied = left match
@@ -19,7 +19,9 @@ case class ColumnPinning(left: List[ColumnId], right: List[ColumnId]):
       case nonEmpty => leftApplied.setRight(nonEmpty.map(_.value).toJSArray)
 
 object ColumnPinning:
-  def apply(left: ColumnId*): ColumnPinning = ColumnPinning(left.toList, Nil)
+  def left(left: ColumnId*): ColumnPinning = ColumnPinning(left = left.toList)
+
+  def right(right: ColumnId*): ColumnPinning = ColumnPinning(right = right.toList)
 
   private[table] def fromJs(
     rawValue: raw.buildLibFeaturesColumnPinningMod.ColumnPinningState

@@ -34,6 +34,21 @@ case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState
   lazy val columnPinning: Option[ColumnPinning] =
     toJs.columnPinning.toOption.map(ColumnPinning.fromJs)
 
+  /** WARNING: This mutates the object in-place. */
+  def setColumnPinning(columnPinning: Option[ColumnPinning]): PartialTableState =
+    PartialTableState(
+      columnPinning.fold(toJs.setColumnPinningUndefined)(v => toJs.setColumnPinning(v.toJs))
+    )
+
+  lazy val rowPinning: Option[RowPinning] =
+    toJs.rowPinning.toOption.map(RowPinning.fromJs)
+
+  /** WARNING: This mutates the object in-place. */
+  def setRowPinning(columnPinning: Option[RowPinning]): PartialTableState =
+    PartialTableState(
+      rowPinning.fold(toJs.setRowPinningUndefined)(v => toJs.setRowPinning(v.toJs))
+    )
+
   lazy val sorting: Option[Sorting] =
     toJs.sorting.toOption.map(Sorting.fromJs)
 
@@ -86,6 +101,7 @@ object PartialTableState:
     columnVisibility: js.UndefOr[ColumnVisibility] = js.undefined,
     columnOrder:      js.UndefOr[ColumnOrder] = js.undefined,
     columnPinning:    js.UndefOr[ColumnPinning] = js.undefined,
+    rowPinning:       js.UndefOr[RowPinning] = js.undefined,
     sorting:          js.UndefOr[Sorting] = js.undefined,
     expanded:         js.UndefOr[Expanded] = js.undefined,
     columnSizing:     js.UndefOr[ColumnSizing] = js.undefined,
@@ -97,6 +113,7 @@ object PartialTableState:
       .applyOrNot(columnVisibility, (s, p) => s.setColumnVisibility(p.toJs))
       .applyOrNot(columnOrder, (s, p) => s.setColumnOrder(p.toJs))
       .applyOrNot(columnPinning, (s, p) => s.setColumnPinning(p.toJs))
+      .applyOrNot(rowPinning, (s, p) => s.setRowPinning(p.toJs))
       .applyOrNot(sorting, (s, p) => s.setSorting(p.toJs))
       .applyOrNot(expanded, (s, p) => s.setExpanded(p.toJs))
       .applyOrNot(columnSizing, (s, p) => s.setColumnSizing(p.toJs))

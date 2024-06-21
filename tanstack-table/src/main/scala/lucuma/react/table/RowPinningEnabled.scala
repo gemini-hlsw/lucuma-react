@@ -25,6 +25,10 @@ object RowPinningEnabled:
       case "boolean" =>
         if rp.asInstanceOf[Boolean] then ForAllRows.covary[T, TM] else ForNoRows.covary[T, TM]
       case _         =>
-        When((row: Row[T, TM]) =>
+        When: (row: Row[T, TM]) =>
           rp.asInstanceOf[js.Function1[raw.buildLibTypesMod.Row[T], Boolean]](row.toJs)
-        )
+
+  // We can't make RowPinningEnabled covariant on its type parameters but we can do this.
+  given [T, TM]
+    : Conversion[RowPinningEnabled[Nothing, Nothing], js.UndefOr[RowPinningEnabled[T, TM]]] =
+    _.covary[T, TM]

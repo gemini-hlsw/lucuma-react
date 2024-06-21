@@ -273,7 +273,7 @@ trait HTMLTableRenderer[T]:
 
 object HTMLTableRenderer:
   def componentBuilder[T, M, Props <: HTMLTableProps[_, _]](renderer: HTMLTableRenderer[T]) =
-    ScalaFnComponent[Props[T, M]](props =>
+    ScalaFnComponent[Props[T, M]]: props =>
       renderer.render(
         props.table,
         props.table.getRowModel().rows,
@@ -289,7 +289,6 @@ object HTMLTableRenderer:
         props.footerCellMod,
         emptyMessage = props.emptyMessage
       )
-    )
 
   def componentBuilderVirtualized[T, M, Props <: HTMLVirtualizedTableProps[_, _]](
     renderer: HTMLTableRenderer[T]
@@ -297,7 +296,7 @@ object HTMLTableRenderer:
     ScalaFnComponent
       .withHooks[Props[T, M]]
       .useRefToVdom[HTMLDivElement]
-      .useVirtualizerBy((props, ref) =>
+      .useVirtualizerBy: (props, ref) =>
         VirtualOptions(
           count = props.table.getRowModel().rows.length,
           estimateSize = props.estimateSize,
@@ -307,12 +306,12 @@ object HTMLTableRenderer:
           onChange = props.onChange,
           debug = props.debugVirtualizer
         )
-      )
-      .useEffectOnMountBy((props, _, virtualizer) => // Allow external access to Virtualizer
+      .useEffectOnMountBy: (props, _, virtualizer) => // Allow external access to Virtualizer
         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
-      )
-      .render { (props, ref, virtualizer) =>
-        val rows                                       = props.table.getRowModel().rows
+      .render: (props, ref, virtualizer) =>
+        val rows =
+          props.table.getTopRows() ++ props.table.getCenterRows() ++ props.table.getBottomRows()
+
         val (indexOffset, paddingBefore, paddingAfter) =
           virtualOffsets(virtualizer, props.debugVirtualizer)
 
@@ -337,7 +336,6 @@ object HTMLTableRenderer:
             props.emptyMessage
           )
         )
-      }
 
   def componentBuilderAutoHeightVirtualized[T, M, Props <: HTMLAutoHeightVirtualizedTableProps[_,
                                                                                                _
@@ -348,7 +346,7 @@ object HTMLTableRenderer:
       .withHooks[Props[T, M]]
       .useRefToVdom[HTMLDivElement]
       .localValBy((props, ownRef) => props.containerRef.getOrElse(ownRef)) // containerRef
-      .useVirtualizerBy((props, _, containerRef) =>
+      .useVirtualizerBy: (props, _, containerRef) =>
         VirtualOptions(
           count = props.table.getRowModel().rows.length,
           estimateSize = props.estimateSize,
@@ -358,13 +356,13 @@ object HTMLTableRenderer:
           onChange = props.onChange,
           debug = props.debugVirtualizer
         )
-      )
-      .useEffectOnMountBy((props, _, _, virtualizer) =>
+      .useEffectOnMountBy: (props, _, _, virtualizer) =>
         // Allow external access to Virtualizer if a ref is passed
         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
-      )
-      .render { (props, _, containerRef, virtualizer) =>
-        val rows                                       = props.table.getRowModel().rows
+      .render: (props, _, containerRef, virtualizer) =>
+        val rows =
+          props.table.getTopRows() ++ props.table.getCenterRows() ++ props.table.getBottomRows()
+
         // This is artificially added space on top and bottom so that the scroll bar is shown as if there were
         // the right number of elements on either side.
         val (indexOffset, paddingBefore, paddingAfter) =
@@ -410,4 +408,3 @@ object HTMLTableRenderer:
             )
           )
         )
-      }
