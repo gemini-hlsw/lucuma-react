@@ -61,7 +61,7 @@ object Chart:
       .useRef(none[Chart_])       // chartRef
       .useRef(false)              // isUnmounting
       .useEffectOnMountBy: (_, _, _, isUnmounting) =>
-        isUnmounting.set(true)
+        CallbackTo(isUnmounting.set(true))
       .useLayoutEffectWithDepsBy((props, _, _, _) => (props.options, props.allowUpdate)):
         (props, containerRef, chartRef, isUnmounting) =>
           (options, allowUpdate) =>
@@ -79,8 +79,7 @@ object Chart:
                   }
                 ): chart => // We have a chartRef and we are allowed to update
                   Callback(chart.update(options))
-            }).map(_ =>
+            }).map: _ =>
               isUnmounting.get >>= (Callback.when(_)(chartRef.get.map(_.foreach(_.destroy()))))
-            )
       .render: (props, containerRef, _, _) =>
         <.div(props.containerMod).withRef(containerRef)
