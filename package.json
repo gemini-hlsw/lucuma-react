@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@floating-ui/react": "^0.26.18",
+    "@floating-ui/react": "^0.26.19",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@react-hook/resize-observer": "^2.0.1",
