@@ -7,7 +7,6 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.table.*
-import lucuma.typed.react.components.footer
 
 object Table1:
   private val ColDef = ColumnDef[Guitar]
