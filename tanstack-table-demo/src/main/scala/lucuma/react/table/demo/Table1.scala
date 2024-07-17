@@ -25,7 +25,12 @@ object Table1:
             _ => <.div(^.textAlign.center)("Details"),
             List(
               ColDef(ColumnId("year"), _.details.year, _ => "Year"),
-              ColDef(ColumnId("pickups"), _.details.pickups, _ => "Pickups"),
+              ColDef(
+                ColumnId("pickups"),
+                _.details.pickups,
+                _ => "Pickups",
+                footer = _.table.getRowModel().rows.map(_.original.details.pickups).sum
+              ),
               ColDef(ColumnId("color"), _.details.color, _ => "Color", enableSorting = false)
             )
           )

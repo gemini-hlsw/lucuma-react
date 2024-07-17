@@ -33,7 +33,7 @@ trait HTMLTableRenderer[T]:
   protected val TbodyTdClass: Css     = Css.Empty
   protected val TfootClass: Css       = Css.Empty
   protected val TfootTrClass: Css     = Css.Empty
-  protected val TfootThClass: Css     = Css.Empty
+  protected val TfootTdClass: Css     = Css.Empty
   protected val EmptyMessage: Css     = Css.Empty
 
   protected val ResizerClass: Css         = Css("resizer")
@@ -252,7 +252,7 @@ trait HTMLTableRenderer[T]:
               <.tr(TfootTrClass, footerRowMod(footerGroup))(^.key := footerGroup.id.value)(
                 footerGroup.headers
                   .map(footer =>
-                    <.th(TfootThClass, footerCellMod(footer))(
+                    <.td(TfootTdClass, footerCellMod(footer))(
                       ^.key     := footer.id.value,
                       ^.colSpan := footer.colSpan.toInt
                     )(
