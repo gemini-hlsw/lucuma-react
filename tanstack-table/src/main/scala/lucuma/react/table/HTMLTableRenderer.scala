@@ -98,26 +98,23 @@ trait HTMLTableRenderer[T]:
     val visibleColumnCount: Int = table.getAllLeafColumns().filter(_.getIsVisible()).length
 
     <.table(TableClass, tableMod)(
-      <.thead(
-        TheadClass,
-        headerMod,
-        IsResizingTHeadClass.when(
-          table.getHeaderGroups().exists(_.headers.exists(_.column.getIsResizing()))
-        )
-      )(
+      TagMod.when(
         table
           .getHeaderGroups()
-          .map(headerGroup =>
-            TagMod.when(
-              headerGroup.headers
-                .exists(header =>
-                  js.typeOf(
-                    header.column.columnDef.toJs
-                      .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
-                      .header
-                  ) != "undefined"
-                )
-            )(
+          .exists: headerGroup =>
+            headerGroup.headers.exists: header =>
+              header.column.columnDef.header.isDefined
+      )(
+        <.thead(
+          TheadClass,
+          headerMod,
+          IsResizingTHeadClass.when(
+            table.getHeaderGroups().exists(_.headers.exists(_.column.getIsResizing()))
+          )
+        )(
+          table
+            .getHeaderGroups()
+            .map(headerGroup =>
               <.tr(TheadTrClass, headerRowMod(headerGroup))(^.key := headerGroup.id.value)(
                 headerGroup.headers
                   .map(header =>
@@ -160,8 +157,8 @@ trait HTMLTableRenderer[T]:
                   .toTagMod
               )
             )
-          )
-          .toTagMod
+            .toTagMod
+        )
       ),
       <.tbody(TbodyClass, bodyMod)(
         paddingTop
@@ -235,20 +232,17 @@ trait HTMLTableRenderer[T]:
           )
           .whenDefined
       ),
-      <.tfoot(TfootClass, footerMod)(
+      TagMod.when(
         table
           .getFooterGroups()
-          .map(footerGroup =>
-            TagMod.when(
-              footerGroup.headers
-                .exists(footer =>
-                  js.typeOf(
-                    footer.column.columnDef.toJs
-                      .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
-                      .header
-                  ) != "undefined"
-                )
-            )(
+          .exists: footerGroup =>
+            footerGroup.headers.exists: header =>
+              header.column.columnDef.footer.isDefined
+      )(
+        <.tfoot(TfootClass, footerMod)(
+          table
+            .getFooterGroups()
+            .map(footerGroup =>
               <.tr(TfootTrClass, footerRowMod(footerGroup))(^.key := footerGroup.id.value)(
                 footerGroup.headers
                   .map(footer =>
@@ -270,8 +264,8 @@ trait HTMLTableRenderer[T]:
                   .toTagMod
               )
             )
-          )
-          .toTagMod
+            .toTagMod
+        )
       )
     )
 
