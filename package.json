@@ -3,7 +3,7 @@
     "@floating-ui/react": "^0.26.20",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
-    "@react-hook/resize-observer": "^2.0.1",
+    "@react-hook/resize-observer": "^2.0.2",
     "@tanstack/react-table": "^8.19.3",
     "@tanstack/react-virtual": "v3.8.3",
     "@vitejs/plugin-react": "^4.3.1",
