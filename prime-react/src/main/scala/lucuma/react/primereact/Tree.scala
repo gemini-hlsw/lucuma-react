@@ -9,7 +9,7 @@ import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.SyntheticEvent
 import japgolly.scalajs.react.vdom.html_<^.*
-import lucuma.react.common.ReactFnProps
+import lucuma.react.common.*
 import lucuma.typed.primereact.components.Tree as CTree
 import lucuma.typed.primereact.primereactStrings.checkbox
 import lucuma.typed.primereact.primereactStrings.multiple
@@ -80,22 +80,39 @@ object Tree {
     extension (opaqueValue: Id) inline def value: String = opaqueValue
 
   case class Node[+A](
-    id:       Tree.Id,
-    data:     A,
-    label:    js.UndefOr[String] = js.undefined,
-    icon:     js.UndefOr[Icon] = js.undefined,
-    children: Seq[Node[A]] = Seq.empty[Node[A]]
+    id:         Tree.Id,
+    data:       A,
+    label:      js.UndefOr[String] = js.undefined,
+    icon:       js.UndefOr[Icon] = js.undefined,
+    children:   Seq[Node[A]] = Seq.empty[Node[A]],
+    clazz:      js.UndefOr[Css] = js.undefined,
+    droppable:  js.UndefOr[Boolean] = js.undefined,
+    draggable:  js.UndefOr[Boolean] = js.undefined,
+    selectable: js.UndefOr[Boolean] = js.undefined,
+    leaf:       js.UndefOr[Boolean] = js.undefined,
+    expanded:   js.UndefOr[Boolean] = js.undefined
   ):
-    private[Tree] def toJsNode: CTreeNode =
-      val cNode = CTreeNode()
+    private[Tree] def toJsNode: CTreeNode = {
+      extension (b: CTreeNode.MutableBuilder[CTreeNode])
+        def applyOrNot[A](
+          a: js.UndefOr[A],
+          f: (CTreeNode.MutableBuilder[CTreeNode], A) => CTreeNode.MutableBuilder[CTreeNode]
+        ): CTreeNode.MutableBuilder[CTreeNode] = a.fold(b)(a => f(b, a))
+
+      CTreeNode()
         .setId(id.value)
         .setKey(id.value)
         .setData(this)
-        .setIcon(icon.map(_.toPrimeWithClass(PrimeStyles.TreeIcon)))
+        .applyOrNot(label, _.setLabel(_))
+        .applyOrNot(icon, _.setIcon(_))
+        .applyOrNot(clazz, (c, p) => c.setClassName(p.htmlClass))
+        .applyOrNot(droppable, _.setDroppable(_))
+        .applyOrNot(draggable, _.setDraggable(_))
+        .applyOrNot(selectable, _.setSelectable(_))
+        .applyOrNot(leaf, _.setLeaf(_))
+        .applyOrNot(expanded, _.setExpanded(_))
         .setChildren(children.toJSArray.map(_.toJsNode))
-      cNode.label = label
-
-      cNode
+    }
 
   object Node:
     def apply[A](c: CTreeNode): Node[A] =
@@ -105,6 +122,11 @@ object Tree {
         data = node.data,
         label = c.label,
         icon = node.icon,
+        droppable = c.droppable,
+        draggable = c.draggable,
+        selectable = c.selectable,
+        leaf = c.leaf,
+        expanded = c.expanded,
         children = c.children.toList
           .flatMap(_.toSeq)
           .map(n => Node(n.asInstanceOf[CTreeNode]))
