@@ -5,8 +5,8 @@ import path from "path";
 export default ({ command, mode }) => {
   const sjs =
     mode == "production"
-      ? path.resolve(__dirname, "target/scala-3.4.2/primereactdemo-opt/")
-      : path.resolve(__dirname, "target/scala-3.4.2/primereactdemo-fastopt/");
+      ? path.resolve(__dirname, "target/scala-3.4.3/primereactdemo-opt/")
+      : path.resolve(__dirname, "target/scala-3.4.3/primereactdemo-fastopt/");
   const webapp = path.resolve(__dirname, "src/main/webapp/");
   const themeConfig = path.resolve(webapp, "theme/theme.config");
   const themeSite = path.resolve(webapp, "theme/site");
