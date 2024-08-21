@@ -25,17 +25,23 @@ case class Dropdown[A](
   dropdownIcon:    js.UndefOr[String] = js.undefined,
   tooltip:         js.UndefOr[String] = js.undefined,
   tooltipOptions:  js.UndefOr[TooltipOptions] = js.undefined,
+  itemTemplate:    js.UndefOr[SelectItem[A] => VdomNode] = js.undefined,
+  valueTemplate:   js.UndefOr[SelectItem[A] => VdomNode] = js.undefined,
   onChange:        js.UndefOr[A => Callback] = js.undefined,
   onChangeE:       js.UndefOr[(A, ReactEvent) => Callback] = js.undefined, // called after onChange
   modifiers:       Seq[TagMod] = Seq.empty
 )(using val eqAA: Eq[A])
     extends ReactFnProps[DropdownBase](DropdownBase.component)
     with DropdownBase {
+
   type AA    = A
   type GG[X] = Id[X]
 
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def withMods(mods:          TagMod*)     = addModifiers(mods)
+
+  override val emptyMessage: js.UndefOr[VdomNode]         = js.undefined
+  override val emptyMessageTemplate: js.UndefOr[VdomNode] = js.undefined
 
   override def getter: js.UndefOr[Int] = optionsWithIndex.indexOfOption(value).orUndefined
   override def finder(i: Any): A       =

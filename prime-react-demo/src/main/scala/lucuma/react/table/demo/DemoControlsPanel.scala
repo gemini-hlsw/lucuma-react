@@ -204,6 +204,19 @@ object DemoControlsPanel {
                 onChange = a => dropdown.setState(a),
                 clazz = DemoStyles.FormField
               ).withMods(mouseEntered("Dropdown")),
+              <.label("DropdownTemplate",
+                      ^.htmlFor             := "dropdown-template",
+                      DemoStyles.FormFieldLabel
+              ),
+              Dropdown(
+                id = "dropdown-template",
+                value = dropdown.value,
+                options = options,
+                onChange = a => dropdown.setState(a),
+                itemTemplate = si => s"This is: ${si.label}",
+                valueTemplate = si => s"Value is: ${si.label}",
+                clazz = DemoStyles.FormField
+              ).withMods(mouseEntered("DropdownTemplate")),
               <.label("DropdownOptional",
                       ^.htmlFor             := "dropdown-optional",
                       DemoStyles.FormFieldLabel
@@ -216,6 +229,25 @@ object DemoControlsPanel {
                 onChange = a => dropdownOptional.setState(a),
                 clazz = DemoStyles.FormField
               ).withMods(mouseEntered("DropdownOptional")),
+              <.label("DropdownTemplateOptional",
+                      ^.htmlFor             := "dropdown-template-optional",
+                      DemoStyles.FormFieldLabel
+              ),
+              DropdownOptional(
+                id = "dropdown-template-optional",
+                value = dropdownOptional.value,
+                options = options,
+                showClear = true,
+                onChange = a => Callback.log(s"Selected $a") *> dropdownOptional.setState(a),
+                itemTemplate = si => s"This is: ${si.label}",
+                valueTemplate = si => s"Value is: ${si.label}",
+                emptyMessageTemplate = <.div("Nothing selected"),
+                clazz = DemoStyles.FormField
+              ).withMods(mouseEntered("DropdownTemplateOptional")),
+              <.label("DropdownOptional",
+                      ^.htmlFor             := "dropdown-optional",
+                      DemoStyles.FormFieldLabel
+              ),
               <.label("MultiSelect",         ^.htmlFor := "multiselect", DemoStyles.FormFieldLabel),
               MultiSelect(
                 id = "multiselect",

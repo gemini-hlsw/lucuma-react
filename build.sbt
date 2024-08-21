@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.70"
+ThisBuild / tlBaseVersion       := "0.71"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
@@ -25,7 +25,8 @@ val disciplineMunitV = "2.0.0"
 val http4sV          = "0.23.27"
 val kittensV         = "3.3.0"
 val lucumaTypedV     = "0.6.1"
-val munitV           = "1.0.0"
+val munitScalacheckV = "1.0.0"
+val munitV           = "1.0.1"
 val scalaJsDomV      = "2.8.0"
 val scalaJsReactV    = "3.0.0-beta6"
 val utestV           = "0.8.4"
@@ -205,7 +206,7 @@ lazy val common = project
       "com.github.japgolly.scalajs-react" %%% "core"             % scalaJsReactV,
       "org.typelevel"                     %%% "cats-core"        % catsV,
       "org.typelevel"                     %%% "cats-laws"        % catsV            % Test,
-      "org.scalameta"                     %%% "munit-scalacheck" % munitV           % Test,
+      "org.scalameta"                     %%% "munit-scalacheck" % munitScalacheckV % Test,
       "org.typelevel"                     %%% "discipline-munit" % disciplineMunitV % Test
     )
   )

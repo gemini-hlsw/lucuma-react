@@ -13,23 +13,27 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 case class DropdownOptional[A](
-  value:           Option[A],
-  options:         List[SelectItem[A]],
-  id:              js.UndefOr[String] = js.undefined,
-  clazz:           js.UndefOr[Css] = js.undefined,
-  panelClass:      js.UndefOr[Css] = js.undefined,
-  showClear:       js.UndefOr[Boolean] = js.undefined,
-  filter:          js.UndefOr[Boolean] = js.undefined,
-  showFilterClear: js.UndefOr[Boolean] = js.undefined,
-  placeholder:     js.UndefOr[String] = js.undefined,
-  disabled:        js.UndefOr[Boolean] = js.undefined,
-  dropdownIcon:    js.UndefOr[String] = js.undefined,
-  tooltip:         js.UndefOr[String] = js.undefined,
-  tooltipOptions:  js.UndefOr[TooltipOptions] = js.undefined,
-  onChange:        js.UndefOr[Option[A] => Callback] = js.undefined,
-  onChangeE:       js.UndefOr[(Option[A], ReactEvent) => Callback] =
+  value:                Option[A],
+  options:              List[SelectItem[A]],
+  id:                   js.UndefOr[String] = js.undefined,
+  clazz:                js.UndefOr[Css] = js.undefined,
+  panelClass:           js.UndefOr[Css] = js.undefined,
+  showClear:            js.UndefOr[Boolean] = js.undefined,
+  filter:               js.UndefOr[Boolean] = js.undefined,
+  showFilterClear:      js.UndefOr[Boolean] = js.undefined,
+  placeholder:          js.UndefOr[String] = js.undefined,
+  disabled:             js.UndefOr[Boolean] = js.undefined,
+  dropdownIcon:         js.UndefOr[String] = js.undefined,
+  tooltip:              js.UndefOr[String] = js.undefined,
+  tooltipOptions:       js.UndefOr[TooltipOptions] = js.undefined,
+  itemTemplate:         js.UndefOr[SelectItem[A] => VdomNode] = js.undefined,
+  valueTemplate:        js.UndefOr[SelectItem[A] => VdomNode] = js.undefined,
+  emptyMessage:         js.UndefOr[VdomNode] = js.undefined,
+  emptyMessageTemplate: js.UndefOr[VdomNode] = js.undefined,
+  onChange:             js.UndefOr[Option[A] => Callback] = js.undefined,
+  onChangeE:            js.UndefOr[(Option[A], ReactEvent) => Callback] =
     js.undefined, // called after onChange
-  modifiers:       Seq[TagMod] = Seq.empty
+  modifiers:            Seq[TagMod] = Seq.empty
 )(using val eqAA: Eq[A])
     extends ReactFnProps[DropdownBase](DropdownBase.component)
     with DropdownBase {
