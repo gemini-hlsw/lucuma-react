@@ -9,6 +9,7 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.typed.primereact.components.Dropdown as CDropdown
 import lucuma.typed.primereact.dropdownDropdownMod.DropdownChangeEvent
+import lucuma.typed.primereact.selectitemSelectitemMod.SelectItem as CSelectItem
 import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipOptions as CTooltipOptions
 
 import scalajs.js
@@ -32,6 +33,10 @@ private[primereact] trait DropdownBase {
   val dropdownIcon: js.UndefOr[String]
   val tooltip: js.UndefOr[String]
   val tooltipOptions: js.UndefOr[TooltipOptions]
+  val itemTemplate: js.UndefOr[SelectItem[AA] => VdomNode]
+  val valueTemplate: js.UndefOr[SelectItem[AA] => VdomNode]
+  val emptyMessage: js.UndefOr[VdomNode]
+  val emptyMessageTemplate: js.UndefOr[VdomNode]
   val onChange: js.UndefOr[GG[AA] => Callback]
   val onChangeE: js.UndefOr[(GG[AA], ReactEvent) => Callback] // called after onChange
   val modifiers: Seq[TagMod]
@@ -40,6 +45,10 @@ private[primereact] trait DropdownBase {
   protected def finder(i: Any): GG[AA]
 
   protected val optionsWithIndex: List[(SelectItem[AA], Int)] = options.zipWithIndex
+
+  // called by itemTemplate, so should always find a value here.
+  protected def selectItemFinder(i: Any): SelectItem[AA] =
+    optionsWithIndex.findSelectItemByIndexOption(i.asInstanceOf[Int]).getOrElse(options(0))
 }
 
 object DropdownBase {
@@ -65,6 +74,24 @@ object DropdownBase {
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.dropdownIcon, _.dropdownIcon(_))
       .applyOrNot(props.tooltip, _.tooltip(_))
+      .applyOrNot(props.emptyMessage, (c, p) => c.emptyMessage(props.emptyMessage.rawNode))
+      .applyOrNot(
+        props.itemTemplate,
+        (c, p) =>
+          c.itemTemplate(raw =>
+            p(props.selectItemFinder(raw.asInstanceOf[CSelectItem].value)).rawNode
+          )
+      )
+      .applyOrNot(
+        props.valueTemplate,
+        (c, p) =>
+          c.valueTemplateFunction2 { (_, o) =>
+            val value = o.asInstanceOf[CSelectItem].value
+            val cvt   = props.emptyMessageTemplate.getOrElse(EmptyVdom)
+            (if (js.isUndefined(value)) { cvt }
+             else p(props.selectItemFinder(value))).rawNode
+          }
+      )
       .applyOrNot(props.tooltipOptions,
                   (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions])
       )(

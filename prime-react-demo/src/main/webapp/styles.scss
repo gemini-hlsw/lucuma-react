@@ -60,3 +60,9 @@ h1 {
     }
   }
 }
+
+// These aree set to 0 and hidden on the original prime-css
+.p-dropdown-label-empty {
+  opacity: 1;
+  visibility: visible;
+}
