@@ -238,6 +238,7 @@ trait HTMLTableRenderer[T]:
           .exists: footerGroup =>
             footerGroup.headers.exists: header =>
               header.column.columnDef.footer.isDefined
+            || footerMod != TagMod.empty
       )(
         <.tfoot(TfootClass, footerMod)(
           table
