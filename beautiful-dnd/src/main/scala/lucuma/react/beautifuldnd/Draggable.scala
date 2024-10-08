@@ -15,7 +15,7 @@ import scala.scalajs.js.annotation.JSName
 // https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/draggable.md
 object Draggable {
   @js.native
-  @JSImport("react-beautiful-dnd", "Draggable")
+  @JSImport("@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration", "Draggable")
   object RawComponent extends js.Object
 
   @js.native

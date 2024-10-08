@@ -25,7 +25,7 @@ object Provided {
 
 object Droppable {
   @js.native
-  @JSImport("react-beautiful-dnd", "Droppable")
+  @JSImport("@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration", "Droppable")
   object RawComponent extends js.Object
 
   // https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/droppable.md
