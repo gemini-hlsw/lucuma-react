@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.JSImport
 // https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/guides/responders.md
 object DragDropContext {
   @js.native
-  @JSImport("react-beautiful-dnd", "DragDropContext")
+  @JSImport("@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration", "DragDropContext")
   object RawComponent extends js.Object
 
   type OnDragEndResponder         = js.Function2[DropResult, ResponderProvided, Unit]
