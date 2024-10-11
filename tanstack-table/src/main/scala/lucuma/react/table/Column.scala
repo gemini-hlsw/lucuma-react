@@ -43,37 +43,37 @@ case class Column[T, A, TM, CM] private[table] (
   def getToggleVisibilityHandler(): SyntheticEvent[dom.Node] => Callback =
     e => Callback(toJs.getToggleVisibilityHandler()(e))
   def toggleVisibility(): Callback                                       = Callback(toJs.toggleVisibility())
-  def toggleVisibility(value: Boolean): Callback = Callback(toJs.toggleVisibility(value))
+  def toggleVisibility(value: Boolean): Callback                         = Callback(toJs.toggleVisibility(value))
 
   // Sorting
-  def clearSorting(): Callback                                                = Callback(toJs.clearSorting())
-  def getAutoSortDir(): SortDirection                                         =
+  def clearSorting(): Callback                                                    = Callback(toJs.clearSorting())
+  def getAutoSortDir(): SortDirection                                             =
     SortDirection.fromDescending(toJs.getAutoSortDir() == raw.tanstackTableCoreStrings.desc)
-  def getAutoSortingFn(): SortingFn[T, TM]                                    =
+  def getAutoSortingFn(): SortingFn[T, TM]                                        =
     (rowA, rowB, colId) => toJs.getAutoSortingFn()(rowA.toJs, rowB.toJs, colId.value).toInt
-  def getCanMultiSort(): Boolean                                              = toJs.getCanMultiSort()
-  def getCanSort(): Boolean                                                   = toJs.getCanSort()
-  def getFirstSortDir(): SortDirection                                        = SortDirection.fromDescending(
+  def getCanMultiSort(): Boolean                                                  = toJs.getCanMultiSort()
+  def getCanSort(): Boolean                                                       = toJs.getCanSort()
+  def getFirstSortDir(): SortDirection                                            = SortDirection.fromDescending(
     toJs.getFirstSortDir() == raw.tanstackTableCoreStrings.desc
   )
-  def getIsSorted(): Option[SortDirection]                                    =
+  def getIsSorted(): Option[SortDirection]                                        =
     Some(toJs.getIsSorted())
       .filterNot(_ == raw.tanstackTableCoreBooleans.`false`)
       .map(dir => SortDirection.fromDescending(dir == raw.tanstackTableCoreStrings.desc))
-  def getNextSortingOrder(): Option[SortDirection]                            =
+  def getNextSortingOrder(): Option[SortDirection]                                =
     Some(toJs.getNextSortingOrder())
       .filterNot(_ == raw.tanstackTableCoreBooleans.`false`)
       .map(dir => SortDirection.fromDescending(dir == raw.tanstackTableCoreStrings.desc))
-  def getSortIndex(): Int                                                     = toJs.getSortIndex().toInt
-  def getSortingFn(): SortingFn[T, TM]                                        =
+  def getSortIndex(): Int                                                         = toJs.getSortIndex().toInt
+  def getSortingFn(): SortingFn[T, TM]                                            =
     (rowA, rowB, colId) => toJs.getSortingFn()(rowA.toJs, rowB.toJs, colId.value).toInt
-  def getToggleSortingHandler(): Option[SyntheticEvent[dom.Node] => Callback] =
+  def getToggleSortingHandler(): Option[SyntheticEvent[dom.Node] => Callback]     =
     toJs.getToggleSortingHandler().toOption.map(fn => e => Callback(fn(e)))
-  def toggleSorting(): Callback                                               = Callback(toJs.toggleSorting())
-  def toggleSorting(dir: SortDirection): Callback = Callback(toJs.toggleSorting(dir.toDescending))
-  def toggleSorting(dir: SortDirection, isMulti: Boolean): Callback =
+  def toggleSorting(): Callback                                                   = Callback(toJs.toggleSorting())
+  def toggleSorting(dir:     SortDirection): Callback                             = Callback(toJs.toggleSorting(dir.toDescending))
+  def toggleSorting(dir: SortDirection, isMulti: Boolean): Callback               =
     Callback(toJs.toggleSorting(dir.toDescending, isMulti))
-  def toggleSorting(isMulti: Boolean): Callback = Callback(toJs.toggleSorting((), isMulti))
+  def toggleSorting(isMulti: Boolean): Callback                                   = Callback(toJs.toggleSorting((), isMulti))
 
   // Column Sizing
   def getCanResize(): Boolean  = toJs.getCanResize()
@@ -84,11 +84,11 @@ case class Column[T, A, TM, CM] private[table] (
   def resetSize(): Callback    = Callback(toJs.resetSize())
 
   // Column Pinning
-  def getCanPin(): Boolean                         = toJs.getCanPin()
-  def getPinnedIndex(): Int                        = toJs.getPinnedIndex().toInt
-  def getIsPinned(): Option[ColumnPinningPosition] =
+  def getCanPin(): Boolean                           = toJs.getCanPin()
+  def getPinnedIndex(): Int                          = toJs.getPinnedIndex().toInt
+  def getIsPinned(): Option[ColumnPinningPosition]   =
     ColumnPinningPosition.fromJs(toJs.getIsPinned())
   def pin(position: ColumnPinningPosition): Callback = Callback(toJs.pin(position.toJs))
-  def unpin(): Callback = Callback(
+  def unpin(): Callback                              = Callback(
     toJs.pin(raw.buildLibFeaturesColumnPinningMod.ColumnPinningPosition.`false`)
   )

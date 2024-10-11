@@ -215,7 +215,7 @@ trait HTMLTableRenderer[T]:
                   )
                 )
                 .toTagMod
-            ),
+            )
           )
           .toTagMod
       )(
