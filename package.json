@@ -23,7 +23,7 @@
     "react-hotkeys-hook": "4.5.1",
     "react-resizable": "^3.0.5",
     "react-table": "^7.8.0",
-    "react-virtuoso": "^4.10.4",
+    "react-virtuoso": "^4.12.0",
     "rehype-katex": "^7.0.1",
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
