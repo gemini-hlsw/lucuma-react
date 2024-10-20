@@ -154,5 +154,5 @@ case class Header[T, A, TM, CM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/column-sizing)
    */
-  def getStart(): Double = toJs.getStart()
+  def getStart(): Double                                = toJs.getStart()
   def getStart(position: ColumnPinningPosition): Double = toJs.getStart(position.toJs)

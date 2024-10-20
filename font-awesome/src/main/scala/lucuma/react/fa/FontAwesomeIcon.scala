@@ -42,7 +42,7 @@ case class FontAwesomeIcon(
 ) extends ReactFnProps(FontAwesomeIcon.component)
     with IconProps:
   def apply(mods: TagMod*): FontAwesomeIcon = copy(modifiers = modifiers ++ mods)
-  override def faClasses: Css = super.faClasses // For some reason this is necessary (?!?!?)
+  override def faClasses: Css               = super.faClasses // For some reason this is necessary (?!?!?)
 
   def addClass(value:        Css)            = copy(clazz = clazz |+| value)
   def withClass(value:       Css)            = copy(clazz = value)
