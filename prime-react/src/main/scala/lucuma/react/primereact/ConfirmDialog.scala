@@ -46,32 +46,32 @@ object ConfirmDialog {
     accept:      js.UndefOr[Callback] = js.undefined,
     reject:      js.UndefOr[Callback] = js.undefined
   ): Callback =
-    Callback {
-      val props = ConfirmDialogProps()
-      message.foreach(v => props.setMessage(v.rawNode))
-      icon.foreach(v => props.setIcon(v.toPrime))
-      // header not in the ST facade
-      header.foreach(v => StObject.set(props, "header", v.rawNode))
-      footer.foreach(v => props.setFooter(v.rawNode))
-      acceptLabel.foreach(v => props.setAcceptLabel(v))
-      rejectLabel.foreach(v => props.setRejectLabel(v))
-      acceptIcon.foreach(v => props.setAcceptIcon(v.toPrime))
-      rejectIcon.foreach(v => props.setRejectIcon(v.toPrime))
-      acceptClass.foreach(v => props.setAcceptClassName(v.htmlClass))
-      rejectClass.foreach(v => props.setRejectClassName(v.htmlClass))
-      clazz.foreach(v => props.setClassName(v.htmlClass))
+  Callback {
+    val props = ConfirmDialogProps()
+    message.foreach(v => props.setMessage(v.rawNode))
+    icon.foreach(v => props.setIcon(v.toPrime))
+    // header not in the ST facade
+    header.foreach(v => StObject.set(props, "header", v.rawNode))
+    footer.foreach(v => props.setFooter(v.rawNode))
+    acceptLabel.foreach(v => props.setAcceptLabel(v))
+    rejectLabel.foreach(v => props.setRejectLabel(v))
+    acceptIcon.foreach(v => props.setAcceptIcon(v.toPrime))
+    rejectIcon.foreach(v => props.setRejectIcon(v.toPrime))
+    acceptClass.foreach(v => props.setAcceptClassName(v.htmlClass))
+    rejectClass.foreach(v => props.setRejectClassName(v.htmlClass))
+    clazz.foreach(v => props.setClassName(v.htmlClass))
 
-      // position not in the ST facade, either
-      position.foreach(v => StObject.set(props, "position", v.value))
-      onHide.foreach(v => props.setOnHide(s => v(ConfirmDialogHideParm.fromString(s))))
-      accept.foreach(v => props.setAccept(v))
-      reject.foreach(v => props.setReject(v))
+    // position not in the ST facade, either
+    position.foreach(v => StObject.set(props, "position", v.value))
+    onHide.foreach(v => props.setOnHide(s => v(ConfirmDialogHideParm.fromString(s))))
+    accept.foreach(v => props.setAccept(v))
+    reject.foreach(v => props.setReject(v))
 
-      rawConfirmDialog(props)
-    }
-    // In case this ever starts working as advertised, remove the Callback wrapper above
-    // and uncomment the line below.
-    // ConfirmDialogReturn(Callback(rawReturn.show()), Callback(rawReturn.hide()))
+    rawConfirmDialog(props)
+  }
+  // In case this ever starts working as advertised, remove the Callback wrapper above
+  // and uncomment the line below.
+  // ConfirmDialogReturn(Callback(rawReturn.show()), Callback(rawReturn.hide()))
 
   private val component = ScalaFnComponent[ConfirmDialog] { props =>
     CConfirmDialog()

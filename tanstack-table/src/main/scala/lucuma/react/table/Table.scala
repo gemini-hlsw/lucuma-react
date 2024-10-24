@@ -15,23 +15,23 @@ import scalajs.js.JSConverters.*
 
 // Missing: ColumnOrder, Filters, Grouping, Pagination
 case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTypesMod.Table[T]):
-  def getAllColumns(): List[Column[T, Any, TM, Any]]               = toJs.getAllColumns().toList.map(Column(_))
-  def getAllFlatColumns(): List[Column[T, Any, TM, Any]]           =
+  def getAllColumns(): List[Column[T, Any, TM, Any]]                    = toJs.getAllColumns().toList.map(Column(_))
+  def getAllFlatColumns(): List[Column[T, Any, TM, Any]]                =
     toJs.getAllFlatColumns().toList.map(Column(_))
-  def getAllLeafColumns(): List[Column[T, Any, TM, Any]]           =
+  def getAllLeafColumns(): List[Column[T, Any, TM, Any]]                =
     toJs.getAllLeafColumns().toList.map(Column(_))
-  def getColumn(columnId: String): Option[Column[T, Any, TM, Any]] =
+  def getColumn(columnId: String): Option[Column[T, Any, TM, Any]]      =
     toJs.getColumn(columnId).toOption.map(Column(_))
-  def getCoreRowModel(): RowModel[T, TM]                           = RowModel(toJs.getCoreRowModel())
-  def getRow(id: String): Row[T, TM] = Row(toJs.getRow(id))
-  def getRowModel(): RowModel[T, TM]    = RowModel(toJs.getRowModel())
-  def getState(): TableState            = TableState(toJs.getState())
-  lazy val initialState: TableState     = TableState(toJs.initialState)
-  lazy val options: TableOptions[T, TM] =
+  def getCoreRowModel(): RowModel[T, TM]                                = RowModel(toJs.getCoreRowModel())
+  def getRow(id:      String): Row[T, TM]                               = Row(toJs.getRow(id))
+  def getRowModel(): RowModel[T, TM]                                    = RowModel(toJs.getRowModel())
+  def getState(): TableState                                            = TableState(toJs.getState())
+  lazy val initialState: TableState                                     = TableState(toJs.initialState)
+  lazy val options: TableOptions[T, TM]                                 =
     TableOptions.fromJs(toJs.options.asInstanceOf[TableOptionsJs[T, TM]])
-  def reset(): Callback                 = Callback(toJs.reset())
-  def setState(value: TableState): Callback = Callback(toJs.setState(value.toJs))
-  def modState(f: Endo[TableState]): Callback =
+  def reset(): Callback                                                 = Callback(toJs.reset())
+  def setState(value: TableState): Callback                             = Callback(toJs.setState(value.toJs))
+  def modState(f: Endo[TableState]): Callback                           =
     Callback(toJs.setState(rawState => f(TableState(rawState)).toJs))
 
   // Headers
@@ -69,26 +69,26 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
     Callback(toJs.toggleAllColumnsVisible(value))
 
   // Sorting
-  def getPreSortedRowModel(): RowModel[T, TM] = RowModel(toJs.getPreSortedRowModel())
-  def getSortedRowModel(): RowModel[T, TM]    = RowModel(toJs.getSortedRowModel())
-  def resetSorting(): Callback                = Callback(toJs.resetSorting())
+  def getPreSortedRowModel(): RowModel[T, TM]       = RowModel(toJs.getPreSortedRowModel())
+  def getSortedRowModel(): RowModel[T, TM]          = RowModel(toJs.getSortedRowModel())
+  def resetSorting(): Callback                      = Callback(toJs.resetSorting())
   def resetSorting(defaultState: Boolean): Callback = Callback(toJs.resetSorting(defaultState))
   def setSorting(value:          Sorting): Callback = Callback(toJs.setSorting(value.toJs))
-  def modSorting(f: Endo[Sorting]): Callback =
+  def modSorting(f: Endo[Sorting]): Callback        =
     Callback(toJs.setSorting(v => f(Sorting.fromJs(v)).toJs))
 
   // ColumnSizing
-  def getCenterTotalSize(): SizePx                         = SizePx(toJs.getCenterTotalSize().toInt)
-  def getLeftTotalSize(): SizePx                           = SizePx(toJs.getLeftTotalSize().toInt)
-  def getRightTotalSize(): SizePx                          = SizePx(toJs.getRightTotalSize().toInt)
-  def getTotalSize(): SizePx                               = SizePx(toJs.getTotalSize().toInt)
-  def resetColumnSizing(): Callback                        = Callback(toJs.resetColumnSizing())
-  def resetColumnSizing(defaultState: Boolean): Callback   =
+  def getCenterTotalSize(): SizePx                             = SizePx(toJs.getCenterTotalSize().toInt)
+  def getLeftTotalSize(): SizePx                               = SizePx(toJs.getLeftTotalSize().toInt)
+  def getRightTotalSize(): SizePx                              = SizePx(toJs.getRightTotalSize().toInt)
+  def getTotalSize(): SizePx                                   = SizePx(toJs.getTotalSize().toInt)
+  def resetColumnSizing(): Callback                            = Callback(toJs.resetColumnSizing())
+  def resetColumnSizing(defaultState: Boolean): Callback       =
     Callback(toJs.resetColumnSizing(defaultState))
-  def resetHeaderSizeInfo(): Callback                      = Callback(toJs.resetHeaderSizeInfo())
-  def resetHeaderSizeInfo(defaultState: Boolean): Callback =
+  def resetHeaderSizeInfo(): Callback                          = Callback(toJs.resetHeaderSizeInfo())
+  def resetHeaderSizeInfo(defaultState: Boolean): Callback     =
     Callback(toJs.resetHeaderSizeInfo(defaultState))
-  def setColumnSizing(value: ColumnSizing): Callback = Callback(toJs.setColumnSizing(value.toJs))
+  def setColumnSizing(value: ColumnSizing): Callback           = Callback(toJs.setColumnSizing(value.toJs))
   def modColumnSizing(f: Endo[ColumnSizing]): Callback         =
     Callback(toJs.setColumnSizing(v => f(ColumnSizing.fromJs(v)).toJs))
   def setColumnSizingInfo(value: ColumnSizingInfo): Callback   =
@@ -106,12 +106,12 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
   def getToggleAllRowsExpandedHandler(): SyntheticEvent[dom.Node] => Callback =
     e => Callback(toJs.getToggleAllRowsExpandedHandler()(e))
   def resetExpanded(): Callback                                               = Callback(toJs.resetExpanded())
-  def resetExpanded(defaultState: Boolean): Callback  = Callback(toJs.resetExpanded(defaultState))
-  def setExpanded(value:          Expanded): Callback = Callback(toJs.setExpanded(value.toJs))
-  def modExpanded(f: Endo[Expanded]): Callback           =
+  def resetExpanded(defaultState: Boolean): Callback                          = Callback(toJs.resetExpanded(defaultState))
+  def setExpanded(value:          Expanded): Callback                         = Callback(toJs.setExpanded(value.toJs))
+  def modExpanded(f: Endo[Expanded]): Callback                                =
     Callback(toJs.setExpanded(v => f(Expanded.fromJs(v)).toJs))
-  def toggleAllRowsExpanded(): Callback                  = Callback(toJs.toggleAllRowsExpanded())
-  def toggleAllRowsExpanded(expanded: Boolean): Callback =
+  def toggleAllRowsExpanded(): Callback                                       = Callback(toJs.toggleAllRowsExpanded())
+  def toggleAllRowsExpanded(expanded: Boolean): Callback                      =
     Callback(toJs.toggleAllRowsExpanded(expanded))
 
   // RowSelection
@@ -130,18 +130,18 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
   def resetRowSelection(): Callback                                               = Callback(toJs.resetRowSelection())
   def resetRowSelection(defaultState: Boolean): Callback                          =
     Callback(toJs.resetRowSelection(defaultState))
-  def setRowSelection(value: RowSelection): Callback = Callback(toJs.setRowSelection(value.toJs))
-  def modRowSelection(f: Endo[RowSelection]): Callback    =
+  def setRowSelection(value: RowSelection): Callback                              = Callback(toJs.setRowSelection(value.toJs))
+  def modRowSelection(f: Endo[RowSelection]): Callback                            =
     Callback(toJs.setRowSelection(v => f(RowSelection.fromJs(v)).toJs))
-  def toggleAllPageRowsSelected(): Callback               = Callback(toJs.toggleAllPageRowsSelected())
-  def toggleAllPageRowsSelected(value: Boolean): Callback =
+  def toggleAllPageRowsSelected(): Callback                                       = Callback(toJs.toggleAllPageRowsSelected())
+  def toggleAllPageRowsSelected(value: Boolean): Callback                         =
     Callback(toJs.toggleAllPageRowsSelected(value))
-  def toggleAllRowsSelected(): Callback                   = Callback(toJs.toggleAllRowsSelected())
-  def toggleAllRowsSelected(value: Boolean): Callback     =
+  def toggleAllRowsSelected(): Callback                                           = Callback(toJs.toggleAllRowsSelected())
+  def toggleAllRowsSelected(value: Boolean): Callback                             =
     Callback(toJs.toggleAllRowsSelected(value))
 
   // Column Pinning
-  def setColumnPinning(value: ColumnPinning): Callback = Callback(toJs.setColumnPinning(value.toJs))
+  def setColumnPinning(value: ColumnPinning): Callback                 = Callback(toJs.setColumnPinning(value.toJs))
   def modColumnPinning(f: Endo[ColumnPinning]): Callback               =
     Callback(toJs.setColumnPinning(v => f(ColumnPinning.fromJs(v)).toJs))
   def resetColumnPinning(): Callback                                   = Callback(toJs.resetColumnPinning())
@@ -175,19 +175,19 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
   def getRightLeafHeaders(): List[Header[T, Any, TM, Any]]             =
     toJs.getRightLeafHeaders().toList.map(Header(_))
   // Row Pinning
-  def setRowPinning(value: RowPinning): Callback = Callback(toJs.setRowPinning(value.toJs))
-  def modRowPinning(f: Endo[RowPinning]): Callback               = Callback:
+  def setRowPinning(value:    RowPinning): Callback                    = Callback(toJs.setRowPinning(value.toJs))
+  def modRowPinning(f: Endo[RowPinning]): Callback                     = Callback:
     toJs.setRowPinning(v => f(RowPinning.fromJs(v)).toJs)
-  def resetRowPinning(): Callback                                = Callback(toJs.resetRowPinning())
-  def resetRowPinning(defaultState: Boolean): Callback           = Callback(
+  def resetRowPinning(): Callback                                      = Callback(toJs.resetRowPinning())
+  def resetRowPinning(defaultState: Boolean): Callback                 = Callback(
     toJs.resetRowPinning(defaultState)
   )
-  def getIsSomeRowsPinned(): Boolean                             = toJs.getIsSomeRowsPinned()
-  def getIsSomeRowsPinned(position: RowPinningPosition): Boolean =
+  def getIsSomeRowsPinned(): Boolean                                   = toJs.getIsSomeRowsPinned()
+  def getIsSomeRowsPinned(position: RowPinningPosition): Boolean       =
     toJs.getIsSomeRowsPinned(position.toJs)
-  def getTopRows(): List[Row[T, TM]]                             =
+  def getTopRows(): List[Row[T, TM]]                                   =
     toJs.getTopRows().toList.map(Row(_))
-  def getBottomRows(): List[Row[T, TM]]                          =
+  def getBottomRows(): List[Row[T, TM]]                                =
     toJs.getBottomRows().toList.map(Row(_))
-  def getCenterRows(): List[Row[T, TM]]                          =
+  def getCenterRows(): List[Row[T, TM]]                                =
     toJs.getCenterRows().toList.map(Row(_))
