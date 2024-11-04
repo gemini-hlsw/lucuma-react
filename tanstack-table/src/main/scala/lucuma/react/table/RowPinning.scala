@@ -15,7 +15,21 @@ case class RowPinning(bottom: List[RowId] = List.empty, top: List[RowId] = List.
       .setBottom(bottom.map(_.value).toJSArray)
       .setTop(top.map(_.value).toJSArray)
 
+  def addedBottom(rowId: RowId): RowPinning =
+    copy(bottom = bottom :+ rowId)
+
+  def removedBottom(rowId: RowId): RowPinning =
+    copy(bottom = bottom.filterNot(_ == rowId))
+
+  def addedTop(rowId: RowId): RowPinning =
+    copy(top = top :+ rowId)
+
+  def removedTop(rowId: RowId): RowPinning =
+    copy(top = top.filterNot(_ == rowId))
+
 object RowPinning:
+  val Empty: RowPinning = RowPinning()
+
   def bottom(bottom: RowId*): RowPinning = RowPinning(bottom = bottom.toList)
 
   def top(top: RowId*): RowPinning = RowPinning(top = top.toList)

@@ -11,6 +11,8 @@ import org.scalablytyped.runtime.StringDictionary
 opaque type ColumnSizing = Map[ColumnId, SizePx]
 
 object ColumnSizing:
+  val Empty: ColumnSizing = ColumnSizing(Map.empty)
+
   inline def apply(value:  Map[ColumnId, SizePx]): ColumnSizing = value
   inline def apply(values: (ColumnId, SizePx)*): ColumnSizing   = values.toMap
   private[table] def fromJs(
@@ -27,3 +29,6 @@ object ColumnSizing:
       StringDictionary(
         opaqueValue.map((colId, size) => colId.value -> size.value.toDouble).toSeq*
       )
+
+    def set(columnId: ColumnId, size: SizePx): ColumnSizing =
+      modify(_.updated(columnId, size))
