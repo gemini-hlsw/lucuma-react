@@ -8,7 +8,6 @@ import lucuma.react.common.*
 import org.scalajs.dom
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSExportTopLevel
 
 import js.annotation.*
 

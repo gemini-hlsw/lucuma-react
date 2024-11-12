@@ -89,11 +89,6 @@ class ReactPropsWithChildren[Props, S, B](
   val component: Scala.Component[Props, S, B, CtorType.PropsAndChildren]
 ) extends ReactComponentProps[Props, S, B, CtorType.PropsAndChildren]
 
-object ReactPropsWithChildren:
-  extension [Props, S, B](p: ReactPropsWithChildren[Props, S, B])
-    inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
-      p(first, rest*)
-
 sealed trait ReactFnComponentProps[Props, CT[-p, +u] <: CtorType[p, u]]
     extends CtorWithProps[Props, CT, ScalaFn.Unmounted[Props]] {
   val component: ScalaFn.Component[Props, CT]
@@ -121,11 +116,6 @@ abstract class ReactFnPropsWithChildren[Props](
   override lazy val ctor: CtorType.PropsAndChildren[Props, ScalaFn.Unmounted[Props]] =
     component.ctor
 }
-
-object ReactFnPropsWithChildren:
-  extension [Props](p: ReactFnPropsWithChildren[Props])
-    inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
-      p(first, rest*)
 
 sealed trait ReactComponentPropsForwardRef[Props, R, CT[-p, +u] <: CtorType[p, u]]
     extends CtorWithProps[Props, CT, ScalaForwardRef.Unmounted[Props, R]] { self =>
@@ -170,8 +160,3 @@ class ReactPropsForwardRef[Props, R](
 class ReactPropsForwardRefWithChildren[Props, R](
   val component: ScalaForwardRef.Component[Props, R, CtorType.PropsAndChildren]
 ) extends ReactComponentPropsForwardRef[Props, R, CtorType.PropsAndChildren]
-
-object ReactPropsForwardRefWithChildren:
-  extension [Props, R](p: ReactPropsForwardRefWithChildren[Props, R])
-    inline def apply(first: CtorType.ChildArg, rest: CtorType.ChildArg*): VdomElement =
-      p(first, rest*)
