@@ -62,7 +62,6 @@ object DropdownBase {
     CDropdown
       .value(props.getter)
       .options(props.optionsWithIndex.raw)
-      .optionValue("value")
       .onChange(changeHandler)
       .applyOrNot(props.id, _.id(_))
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
