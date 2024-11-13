@@ -8,7 +8,6 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSExportTopLevel
 
 import js.annotation.*
 

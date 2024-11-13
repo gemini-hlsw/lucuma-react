@@ -4,7 +4,7 @@ Common utilities and facades for React and Scala.js
 
 Example running a demo:
 ```sh
-sbt semanticUIDemo/fastLinkJS
+sbt primeReactDemo/fastLinkJS
 npm install
 npx vite -c primeReactDemo/vite.config.js
 ```

@@ -5,7 +5,6 @@ package lucuma.react.floatingui
 
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
-import japgolly.scalajs.react.facade.React
 import japgolly.scalajs.react.vdom.TopNode
 import lucuma.react.common.EnumValue
 import lucuma.react.common.syntax.callback.*
