@@ -23,6 +23,7 @@ case class DropdownOptional[A](
   showFilterClear:      js.UndefOr[Boolean] = js.undefined,
   placeholder:          js.UndefOr[String] = js.undefined,
   disabled:             js.UndefOr[Boolean] = js.undefined,
+  loading:              js.UndefOr[Boolean] = js.undefined,
   dropdownIcon:         js.UndefOr[String] = js.undefined,
   tooltip:              js.UndefOr[String] = js.undefined,
   tooltipOptions:       js.UndefOr[TooltipOptions] = js.undefined,

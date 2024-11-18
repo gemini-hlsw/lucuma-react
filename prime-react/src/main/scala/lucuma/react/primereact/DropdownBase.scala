@@ -30,6 +30,7 @@ private[primereact] trait DropdownBase {
   val showFilterClear: js.UndefOr[Boolean]
   val placeholder: js.UndefOr[String]
   val disabled: js.UndefOr[Boolean]
+  val loading: js.UndefOr[Boolean]
   val dropdownIcon: js.UndefOr[String]
   val tooltip: js.UndefOr[String]
   val tooltipOptions: js.UndefOr[TooltipOptions]
@@ -71,6 +72,7 @@ object DropdownBase {
       .applyOrNot(props.showFilterClear, _.showFilterClear(_))
       .applyOrNot(props.placeholder, _.placeholder(_))
       .applyOrNot(props.disabled, _.disabled(_))
+      .applyOrNot(props.loading, _.loading(_))
       .applyOrNot(props.dropdownIcon, _.dropdownIcon(_))
       .applyOrNot(props.tooltip, _.tooltip(_))
       .applyOrNot(props.emptyMessage, (c, p) => c.emptyMessage(props.emptyMessage.rawNode))
