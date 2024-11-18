@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.72"
+ThisBuild / tlBaseVersion       := "0.73"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 
