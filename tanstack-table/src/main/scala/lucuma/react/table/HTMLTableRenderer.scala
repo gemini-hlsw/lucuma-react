@@ -201,7 +201,8 @@ trait HTMLTableRenderer[T]:
                   <.td(
                     TbodyTdClass,
                     cellMod(cell),
-                    ^.key := cell.id.value
+                    ^.key   := cell.id.value,
+                    ^.width := s"${cell.column.getSize().value}px"
                   )(
                     cell.column.columnDef match
                       case colDef @ ColumnDef.Single[T, Any, TM, Any](_) =>
@@ -249,7 +250,8 @@ trait HTMLTableRenderer[T]:
                   .map(footer =>
                     <.td(TfootTdClass, footerCellMod(footer))(
                       ^.key     := footer.id.value,
-                      ^.colSpan := footer.colSpan.toInt
+                      ^.colSpan := footer.colSpan.toInt,
+                      ^.width   := s"${footer.getSize().toInt}px"
                     )(
                       TagMod.unless(footer.isPlaceholder)(
                         rawReact.mod.flexRender(
