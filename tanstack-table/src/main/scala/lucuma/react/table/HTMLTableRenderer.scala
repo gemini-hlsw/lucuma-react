@@ -165,18 +165,20 @@ trait HTMLTableRenderer[T]:
           .filter(_ > 1)
           .map(p =>
             <.tr(TbodyTrClass)(
-              <.td(
-                TbodyTdClass,
-                ^.colSpan := visibleColumnCount,
-                ^.height  := s"${p}px"
-              )
+              table
+                .getLeafHeaders()
+                .map: header =>
+                  <.td(TbodyTdClass)(
+                    ^.height := s"${p}px",
+                    ^.width  := s"${header.getSize().toInt}px"
+                  )
+                .toTagMod
             )
           )
           .whenDefined
       )(
         TagMod.when(rows.isEmpty)(
-          <.tr(
-            TbodyTrClass,
+          <.tr(TbodyTrClass)(
             <.td(
               EmptyMessage,
               TbodyTdClass,
@@ -224,11 +226,15 @@ trait HTMLTableRenderer[T]:
           .filter(_ > 1)
           .map(p =>
             <.tr(TbodyTrClass)(
-              <.td(
-                TbodyTdClass,
-                ^.colSpan := visibleColumnCount,
-                ^.height  := s"${p}px"
-              )
+              table
+                .getLeafHeaders()
+                .map: header =>
+                  <.td(
+                    TbodyTdClass,
+                    ^.height := s"${p}px",
+                    ^.width  := s"${header.getSize().toInt}px"
+                  )
+                .toTagMod
             )
           )
           .whenDefined
