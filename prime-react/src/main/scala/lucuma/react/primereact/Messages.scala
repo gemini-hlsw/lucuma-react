@@ -34,7 +34,7 @@ case class Messages(
   override protected val component                            = Messages.component
   override def addModifiers(modifiers: Seq[TagMod]): Messages =
     copy(modifiers = this.modifiers ++ modifiers)
-  def withMods(mods: TagMod*) = addModifiers(mods)
+  def withMods(mods: TagMod*)                                 = addModifiers(mods)
 
 object Messages {
   @js.native
@@ -46,7 +46,7 @@ object Messages {
     def show(message:    js.Array[MessageItem]): Unit = js.native
     def replace(message: js.Array[MessageItem]): Unit = js.native
     def remove(message:  MessageItem): Unit           = js.native
-    def clear(): Unit = js.native
+    def clear(): Unit                                 = js.native
   }
 
   @js.native
