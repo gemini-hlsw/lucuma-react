@@ -202,9 +202,9 @@ trait HTMLTableRenderer[T]:
                 .map(cell =>
                   <.td(
                     TbodyTdClass,
-                    cellMod(cell),
                     ^.key   := cell.id.value,
-                    ^.width := s"${cell.column.getSize().value}px"
+                    ^.width := s"${cell.column.getSize().value}px",
+                    cellMod(cell)
                   )(
                     cell.column.columnDef match
                       case colDef @ ColumnDef.Single[T, Any, TM, Any](_) =>
