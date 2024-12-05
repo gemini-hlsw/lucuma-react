@@ -59,7 +59,7 @@ object Toast {
     def show(message:    js.Array[MessageItem]): Unit = js.native
     def replace(message: js.Array[MessageItem]): Unit = js.native
     def remove(message:  MessageItem): Unit           = js.native
-    def clear(): Unit = js.native
+    def clear(): Unit                                 = js.native
   }
 
   @js.native
