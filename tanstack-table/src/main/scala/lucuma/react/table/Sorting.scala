@@ -14,7 +14,7 @@ opaque type Sorting = List[ColumnSort]
 object Sorting:
   val Empty: Sorting = Sorting(List.empty)
 
-  inline def apply(value: List[ColumnSort]): Sorting = value
+  inline def apply(value: List[ColumnSort]): Sorting            = value
   inline def apply(values: (ColumnId, SortDirection)*): Sorting =
     values.toList.map(ColumnSort.apply.tupled)
   protected[table] def fromJs(
