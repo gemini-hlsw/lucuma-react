@@ -228,11 +228,11 @@ sealed trait TableOptions[T, TM]:
     )
 
   // Sorting
-  lazy val enableSorting: Option[Boolean] = toJsBase.enableSorting.toOption
+  lazy val enableSorting: Boolean = toJsBase.enableSorting.getOrElse(true)
 
   /** WARNING: This mutates the object in-place. */
-  def setEnableSorting(enableSorting: Option[Boolean]): TableOptions[T, TM] =
-    copy(_.enableSorting = enableSorting.orUndefined)
+  def setEnableSorting(enableSorting: Boolean): TableOptions[T, TM] =
+    copy(_.enableSorting = enableSorting)
 
   lazy val enableMultiSort: Option[Boolean] = toJsBase.enableMultiSort.toOption
 
@@ -499,8 +499,8 @@ object TableOptions:
     // Column Visibility
     enableHiding:             js.UndefOr[Boolean] = js.undefined,
     onColumnVisibilityChange: js.UndefOr[Updater[ColumnVisibility] => Callback] = js.undefined,
-    // Sorting
-    enableSorting:            js.UndefOr[Boolean] = js.undefined,
+    // Sorting - We override the default of "true" to "false", so that ordering must be explicitly specified for each column.
+    enableSorting:            Boolean = false,
     enableMultiSort:          js.UndefOr[Boolean] = js.undefined,
     enableSortingRemoval:     js.UndefOr[Boolean] = js.undefined,
     enableMultiRemove:        js.UndefOr[Boolean] = js.undefined,
@@ -552,7 +552,7 @@ object TableOptions:
       .applyOrNot(onColumnSizingInfoChange, (p, v) => p.setOnColumnSizingInfoChange(v.some))
       .applyOrNot(enableHiding, (p, v) => p.setEnableHiding(v.some))
       .applyOrNot(onColumnVisibilityChange, (p, v) => p.setOnColumnVisibilityChange(v.some))
-      .applyOrNot(enableSorting, (p, v) => p.setEnableSorting(v.some))
+      .setEnableSorting(enableSorting)
       .applyOrNot(enableMultiSort, (p, v) => p.setEnableMultiSort(v.some))
       .applyOrNot(enableSortingRemoval, (p, v) => p.setEnableSortingRemoval(v.some))
       .applyOrNot(enableMultiRemove, (p, v) => p.setEnableMultiRemove(v.some))

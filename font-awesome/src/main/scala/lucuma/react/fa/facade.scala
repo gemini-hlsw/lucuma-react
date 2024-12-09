@@ -175,12 +175,14 @@ trait Counter extends FontawesomeObject
 
 @js.native
 @JSImport("@fortawesome/fontawesome-svg-core", JSImport.Namespace)
-object FontAwesome extends js.Object:
-  def library: Library = js.native
-  def text(content: String, params: js.UndefOr[TextParams] = js.undefined): Text = js.native
+object FontAwesome extends js.Object {
+  def library: Library                                                                        = js.native
+  def text(content: String, params: js.UndefOr[TextParams] = js.undefined): Text              = js.native
   def counter(
     content: String | Float | Double | Int | Short | Byte,
     params:  js.UndefOr[CounterParams]
   ): Counter = js.native
   def icon(icon: FAIcon | IconLookup, params: js.UndefOr[IconParams] = js.undefined): IconRaw =
     js.native
+
+}

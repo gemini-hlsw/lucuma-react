@@ -147,10 +147,10 @@ object ColumnDef:
       Single { toJs.enableHiding = enableHiding; toJs }
 
     // Sorting
-    lazy val enableSorting: js.UndefOr[Boolean] = toJs.enableSorting
+    lazy val enableSorting: Boolean = toJs.enableSorting.getOrElse(true)
 
     /** WARNING: This mutates the object in-place. */
-    def setEnableSorting(enableSorting: js.UndefOr[Boolean]): Single[T, A, TM, CM] =
+    def setEnableSorting(enableSorting: Boolean): Single[T, A, TM, CM] =
       Single { toJs.enableSorting = enableSorting; toJs }
 
     lazy val enableMultiSort: js.UndefOr[Boolean] = toJs.enableMultiSort
@@ -248,8 +248,8 @@ object ColumnDef:
       maxSize:         js.UndefOr[SizePx] = js.undefined,
       // Column Visibility
       enableHiding:    js.UndefOr[Boolean] = js.undefined,
-      // Sorting
-      enableSorting:   js.UndefOr[Boolean] = js.undefined,
+      // Sorting - We override the default of "true" to "false", so that ordering must be explicitly specified for each column.
+      enableSorting:   Boolean = false,
       enableMultiSort: js.UndefOr[Boolean] = js.undefined,
       invertSorting:   js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:   js.UndefOr[Boolean] = js.undefined,
@@ -271,7 +271,7 @@ object ColumnDef:
         .applyOrNot(minSize, _.setMinSize(_))
         .applyOrNot(maxSize, _.setMaxSize(_))
         .applyOrNot(enableHiding, _.setEnableHiding(_))
-        .applyOrNot(enableSorting, _.setEnableSorting(_))
+        .setEnableSorting(enableSorting)
         .applyOrNot(enableMultiSort, _.setEnableMultiSort(_))
         .applyOrNot(invertSorting, _.setInvertSorting(_))
         .applyOrNot(sortDescFirst, _.setSortDescFirst(_))
@@ -458,8 +458,8 @@ object ColumnDef:
       maxSize:         js.UndefOr[SizePx] = js.undefined,
       // Column Visibility
       enableHiding:    js.UndefOr[Boolean] = js.undefined,
-      // Sorting
-      enableSorting:   js.UndefOr[Boolean] = js.undefined,
+      // Sorting - We override the default of "true" to "false", so that ordering must be explicitly specified for each column.
+      enableSorting:   Boolean = false,
       enableMultiSort: js.UndefOr[Boolean] = js.undefined,
       invertSorting:   js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:   js.UndefOr[Boolean] = js.undefined,
@@ -548,8 +548,8 @@ object ColumnDef:
       maxSize:         js.UndefOr[SizePx] = js.undefined,
       // Column Visibility
       enableHiding:    js.UndefOr[Boolean] = js.undefined,
-      // Sorting
-      enableSorting:   js.UndefOr[Boolean] = js.undefined,
+      // Sorting - We override the default of "true" to "false", so that ordering must be explicitly specified for each column.
+      enableSorting:   Boolean = false,
       enableMultiSort: js.UndefOr[Boolean] = js.undefined,
       invertSorting:   js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:   js.UndefOr[Boolean] = js.undefined,

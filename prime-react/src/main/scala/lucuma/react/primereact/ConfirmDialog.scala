@@ -69,11 +69,12 @@ object ConfirmDialog {
 
       rawConfirmDialog(props)
     }
-    // In case this ever starts working as advertised, remove the Callback wrapper above
-    // and uncomment the line below.
-    // ConfirmDialogReturn(Callback(rawReturn.show()), Callback(rawReturn.hide()))
+  // In case this ever starts working as advertised, remove the Callback wrapper above
+  // and uncomment the line below.
+  // ConfirmDialogReturn(Callback(rawReturn.show()), Callback(rawReturn.hide()))
 
   private val component = ScalaFnComponent[ConfirmDialog] { props =>
     CConfirmDialog()
   }
+
 }

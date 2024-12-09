@@ -19,8 +19,8 @@ case class SplitterPanel(
   clazz:                  js.UndefOr[Css] = js.undefined,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericFnComponentPAC[SplitterPanel.SplitterPanelProps, SplitterPanel] {
-  override protected def cprops    = SplitterPanel.props(this)
-  override protected val component = SplitterPanel.component
+  override protected def cprops                     = SplitterPanel.props(this)
+  override protected val component                  = SplitterPanel.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
   def apply(mods:                      TagMod*)     = addModifiers(mods)
 }
@@ -48,4 +48,5 @@ object SplitterPanel {
   }
 
   private val component = JsFnComponent[SplitterPanelProps, Children.Varargs](RawSplitterPanel)
+
 }

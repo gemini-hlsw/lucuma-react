@@ -49,8 +49,8 @@ final case class ReactGridLayout(
   onDrop:                 DropCallback = (_, _, _) => Callback.empty,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[ReactGridLayout.ReactGridLayoutProps, ReactGridLayout] {
-  override def cprops              = ReactGridLayout.props(this)
-  override protected val component = ReactGridLayout.component
+  override def cprops                               = ReactGridLayout.props(this)
+  override protected val component                  = ReactGridLayout.component
   override def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
 }
 
@@ -180,4 +180,5 @@ object ReactGridLayout {
 
   def apply(width: Double, content: TagMod*): ReactGridLayout =
     new ReactGridLayout(width = width, modifiers = content)
+
 }
