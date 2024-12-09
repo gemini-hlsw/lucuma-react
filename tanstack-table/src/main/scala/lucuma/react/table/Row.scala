@@ -20,7 +20,7 @@ case class Row[T, TM] private[table] (private[table] val toJs: raw.buildLibTypes
   lazy val subRows: List[Row[T, TM]]             = toJs.subRows.toList.map(Row(_))
   def getAllCells(): List[Cell[T, Any, TM, Any]] = toJs.getAllCells().toList.map(Cell(_))
   def getLeafRows(): List[Row[T, TM]]            = toJs.getLeafRows().toList.map(Row(_))
-  def getValue[V](columnId: ColumnId): V = toJs.getValue(columnId.value)
+  def getValue[V](columnId: ColumnId): V         = toJs.getValue(columnId.value)
 
   // Visibility
   def getVisibleCells(): List[Cell[T, Any, TM, Any]] = toJs.getVisibleCells().toList.map(Cell(_))
@@ -48,20 +48,20 @@ case class Row[T, TM] private[table] (private[table] val toJs: raw.buildLibTypes
   def getToggleSelectedHandler(): SyntheticEvent[dom.Node] => Callback =
     e => Callback(toJs.getToggleSelectedHandler()(e))
   def toggleSelected(): Callback                                       = Callback(toJs.toggleSelected())
-  def toggleSelected(value: Boolean): Callback = Callback(toJs.toggleSelected(value))
+  def toggleSelected(value: Boolean): Callback                         = Callback(toJs.toggleSelected(value))
 
   // Expanded Rows
-  def getCanExpand(): Boolean              = toJs.getCanExpand()
-  def getIsExpanded(): Boolean             = toJs.getIsExpanded()
-  def getToggleExpandedHandler(): Callback = Callback(toJs.getToggleExpandedHandler()())
-  def toggleExpanded(): Callback           = Callback(toJs.toggleExpanded())
+  def getCanExpand(): Boolean                     = toJs.getCanExpand()
+  def getIsExpanded(): Boolean                    = toJs.getIsExpanded()
+  def getToggleExpandedHandler(): Callback        = Callback(toJs.getToggleExpandedHandler()())
+  def toggleExpanded(): Callback                  = Callback(toJs.toggleExpanded())
   def toggleExpanded(expanded: Boolean): Callback = Callback(toJs.toggleExpanded(expanded))
 
   // Row Pinning
   def pin(position: RowPinningPosition): Callback = Callback(toJs.pin(position.toJs))
-  def unpin(): Callback                         = Callback(
+  def unpin(): Callback                           = Callback(
     toJs.pin(raw.buildLibFeaturesRowPinningMod.RowPinningPosition.`false`)
   )
-  def getCanPin(): Boolean                      = toJs.getCanPin()
-  def getIsPinned(): Option[RowPinningPosition] = RowPinningPosition.fromJs(toJs.getIsPinned())
-  def getPinnedIndex(): Int                     = toJs.getPinnedIndex().toInt
+  def getCanPin(): Boolean                        = toJs.getCanPin()
+  def getIsPinned(): Option[RowPinningPosition]   = RowPinningPosition.fromJs(toJs.getIsPinned())
+  def getPinnedIndex(): Int                       = toJs.getPinnedIndex().toInt

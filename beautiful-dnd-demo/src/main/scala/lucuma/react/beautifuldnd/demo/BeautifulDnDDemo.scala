@@ -25,7 +25,7 @@ object BeautifulDnDDemo {
   final case class State(list: List[Item] = getItems(10))
 
   implicit object CallbackMonoid extends Monoid[Callback] {
-    def empty: Callback = Callback.empty
+    def empty: Callback                             = Callback.empty
     def combine(x: Callback, y: Callback): Callback = x *> y
   }
 
@@ -133,4 +133,5 @@ object Demo {
     }
     ReactDOMClient.createRoot(container).render(component())
   }
+
 }

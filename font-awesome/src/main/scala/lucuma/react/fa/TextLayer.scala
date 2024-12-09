@@ -40,7 +40,7 @@ case class TextLayer(
 ) extends ReactFnProps(TextLayer.component)
     with IconProps:
   def apply(mods: TagMod*): TextLayer = copy(modifiers = modifiers ++ mods)
-  override def faClasses: Css = super.faClasses // For some reason this is necessary (?!?!?)
+  override def faClasses: Css         = super.faClasses // For some reason this is necessary (?!?!?)
 
   def addClass(value:        Css)            = copy(clazz = clazz |+| value)
   def withClass(value:       Css)            = copy(clazz = value)
@@ -67,7 +67,7 @@ case class TextLayer(
   def withSpinReverse(value: Boolean = true) = copy(spinReverse = value)
   def withSwapOpacity(value: Boolean = true) = copy(swapOpacity = value)
 
-object TextLayer:
+object TextLayer {
   private type Props = TextLayer
 
   private val component = ScalaFnComponent[Props]: props =>
@@ -84,3 +84,5 @@ object TextLayer:
       )
       .abstractDef(0)
       .renderVdom
+
+}

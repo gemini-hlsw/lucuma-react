@@ -54,8 +54,8 @@ object OverlayPanel {
 
   @js.native
   trait Facade extends js.Object {
-    def show(event: ReactEvent): Unit = js.native
-    def hide: Unit = js.native
+    def show(event:   ReactEvent): Unit = js.native
+    def hide: Unit                      = js.native
     def toggle(event: ReactEvent): Unit = js.native
   }
 
@@ -88,4 +88,5 @@ object OverlayPanel {
 
   val component =
     JsComponent[OverlayPanelProps, Children.Varargs, Null](RawOverlayPanel).addFacade[Facade]
+
 }

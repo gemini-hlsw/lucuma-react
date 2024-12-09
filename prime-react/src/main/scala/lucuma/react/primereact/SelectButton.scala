@@ -34,8 +34,9 @@ case class SelectButton[A](
   def apply(mods:             TagMod*)     = addModifiers(mods)
 
   override def getter: js.UndefOr[Int] = optionsWithIndex.indexOfOption(value).orUndefined
-  override def valueFinder(i: Any): A = selectItemFinder(i).value
+  override def valueFinder(i: Any): A  = selectItemFinder(i).value
 
   override val multiple: js.UndefOr[Boolean]     = false
   override val unselectable: js.UndefOr[Boolean] = false
+
 }
