@@ -162,3 +162,55 @@ trait VirtualOptionsJS[TScrollElement <: Element, TItemElement <: Element] exten
   var measureElement
     : js.UndefOr[js.Function2[TItemElement, Virtualizer[TScrollElement, TItemElement], Int]] =
     js.undefined
+
+  /**
+   * With this option, you can specify where the scroll offset should originate. Typically, this
+   * value represents the space between the beginning of the scrolling element and the start of the
+   * list. This is especially useful in common scenarios such as when you have a header preceding a
+   * window virtualizer or when multiple virtualizers are utilized within a single scrolling
+   * element. If you are using absolute positioning of elements, you should take into account the
+   * scrollMargin in your CSS transform:
+   *
+   * transform: `translateY(${ virtualRow.start - rowVirtualizer.options.scrollMargin }px)`
+   *
+   * To dynamically measure value for scrollMargin you can use getBoundingClientRect() or
+   * ResizeObserver. This is helpful in scenarios when items above your virtual list might change
+   * their height.
+   */
+  var scrollMargin: js.UndefOr[Double] = js.undefined
+
+  /**
+   * This option allows you to set the spacing between items in the virtualized list. It's
+   * particularly useful for maintaining a consistent visual separation between items without having
+   * to manually adjust each item's margin or padding. The value is specified in pixels.
+   */
+  var gap: js.UndefOr[Double] = js.undefined
+
+  /**
+   * The number of lanes the list is divided into (aka columns for vertical lists and rows for
+   * horizontal lists).
+   */
+  var lanes: js.UndefOr[Int] = js.undefined
+
+  /**
+   * This option allows you to specify the duration to wait after the last scroll event before
+   * resetting the isScrolling instance property. The default value is 150 milliseconds.
+   *
+   * The implementation of this option is driven by the need for a reliable mechanism to handle
+   * scrolling behavior across different browsers. Until all browsers uniformly support the
+   * scrollEnd event.
+   */
+  var isScrollingResetDelay: js.UndefOr[Int] = js.undefined
+
+  /**
+   * This option allows you to switch to use debounced fallback to reset the isScrolling instance
+   * property after isScrollingResetDelay milliseconds. The default value is true.
+   *
+   * The implementation of this option is driven by the need for a reliable mechanism to handle
+   * scrolling behavior across different browsers. Until all browsers uniformly support the
+   * scrollEnd event.
+   */
+  var useScrollendEvent: js.UndefOr[Boolean] = js.undefined
+
+  /** Whether to invert horizontal scrolling to support right-to-left language locales. */
+  var isRtl: js.UndefOr[Boolean] = js.undefined
