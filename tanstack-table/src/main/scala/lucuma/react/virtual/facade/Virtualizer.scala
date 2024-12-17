@@ -9,6 +9,11 @@ import org.scalajs.dom.Element
 import scala.scalajs.js
 
 @js.native
+trait IndexRange extends js.Object:
+  val startIndex: Int = js.native
+  val endIndex: Int   = js.native
+
+@js.native
 trait Virtualizer[TScrollElement <: Element, TItemElement <: Element] protected ()
     extends js.Object:
   // These are just the documented elements
@@ -33,3 +38,13 @@ trait Virtualizer[TScrollElement <: Element, TItemElement <: Element] protected 
   def getTotalSize(): Int = js.native
 
   def measure(): Unit = js.native
+
+  val isScrolling: Boolean = js.native
+
+  val range: IndexRange = js.native
+
+  val scrollOffset: Double = js.native
+
+  val scrollDirection: String = js.native
+
+  val scrollAdjustments: Double = js.native
