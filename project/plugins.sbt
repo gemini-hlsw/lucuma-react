@@ -1,4 +1,4 @@
-val sbtLucumaVersion            = "0.12.2"
+val sbtLucumaVersion            = "0.12.4"
 addSbtPlugin("edu.gemini"     % "sbt-lucuma-lib"        % sbtLucumaVersion)
 addSbtPlugin("com.armanbilge" % "sbt-scalajs-importmap" % "0.1.1")
 
