@@ -7,16 +7,33 @@ import japgolly.scalajs.react.*
 
 import scalajs.js
 
-private def useHotkeysHook[D: Reusability](
-  deps: => D
-)(props: D => UseHotkeysProps): CustomHook[Unit, Ref] =
-  CustomHook
-    .reusableDeps[D]
-    .apply(() => deps)
-    .map { case (d, rev) =>
+object HooksDef {
+  // TODO Move to scalajs-react?
+  private def useReusableDeps[D: Reusability]: (() => D) => HookResult[(D, Int)] =
+    CustomHook.reusableDeps[D].toHookResult
+
+  // This is withdeps... what is global???
+  def useHotkeysWithDeps[D: Reusability](deps: => D)(props: D => UseHotkeysProps): HookResult[Ref] =
+    useReusableDeps(() => deps).map: (d, rev) =>
       val p = props(d)
-      Ref.fromJs(useHotkeys(p.keys, p.callback, p.options, js.Array(rev)))
-    }
+      Ref.fromJs(useHotkeysJs(p.keys, p.callback, p.options, js.Array(rev)))
+
+  def useHotkeys(props: UseHotkeysProps): HookResult[Ref] =
+    useHotkeysWithDeps(Reusable.never(()))(_ => props)
+
+  def useGlobalHotkeysWithDeps[D: Reusability](deps: => D)(
+    props: D => UseHotkeysProps
+  ): HookResult[Unit] =
+    useHotkeysWithDeps(deps)(props).map(_ => ())
+
+  def useGlobalHotkeys(props: UseHotkeysProps): HookResult[Unit] =
+    useGlobalHotkeysWithDeps(Reusable.never(()))(_ => props)
+
+  protected[hotkeys] def useHotkeysHook[D: Reusability](
+    deps: => D
+  )(props: D => UseHotkeysProps): CustomHook[Unit, Ref] =
+    CustomHook.fromHookResult(useHotkeysWithDeps(deps)(props))
+}
 
 object HooksApiExt {
 
@@ -42,7 +59,7 @@ object HooksApiExt {
       deps: Ctx => D
     )(props: Ctx => D => UseHotkeysProps)(using step: Step): step.Next[Ref] =
       api.customBy { ctx =>
-        val hookInstance = useHotkeysHook[D]
+        val hookInstance = HooksDef.useHotkeysHook[D]
         hookInstance(deps(ctx))(props(ctx))
       }
   }
@@ -88,7 +105,7 @@ object HooksApiExtGlobal {
       deps: Ctx => D
     )(props: Ctx => D => UseHotkeysProps)(using step: Step): step.Self =
       api.customBy { ctx =>
-        val hookInstance = useHotkeysHook[D]
+        val hookInstance = HooksDef.useHotkeysHook[D]
         hookInstance(deps(ctx))(props(ctx)).map(_ => ())
       }
   }
@@ -142,4 +159,5 @@ trait HooksApiExtGlobal {
     new Secondary(api)
 }
 
-object hooks extends HooksApiExt with HooksApiExtGlobal
+object hooks extends HooksApiExt with HooksApiExtGlobal:
+  export HooksDef.{useGlobalHotkeys, useGlobalHotkeysWithDeps, useHotkeys, useHotkeysWithDeps}
