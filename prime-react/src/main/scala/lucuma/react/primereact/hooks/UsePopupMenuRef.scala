@@ -8,10 +8,12 @@ import lucuma.react.primereact.PopupMenu
 import lucuma.react.primereact.PopupMenuRef
 
 object UsePopupMenuRef {
+  val usePopupMenuRef: HookResult[PopupMenuRef] =
+    useRefToJsComponentWithMountedFacade[PopupMenu.PopupMenuProps, Null, PopupMenu.Facade].map:
+      PopupMenuRef(_)
 
-  val hook = CustomHook[Unit]
-    .useRefToJsComponentWithMountedFacade[PopupMenu.PopupMenuProps, Null, PopupMenu.Facade]
-    .buildReturning((_, ref) => PopupMenuRef(ref))
+  private val hook: CustomHook[Unit, PopupMenuRef] =
+    CustomHook.fromHookResult(usePopupMenuRef)
 
   object HooksApiExt {
     sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]) {

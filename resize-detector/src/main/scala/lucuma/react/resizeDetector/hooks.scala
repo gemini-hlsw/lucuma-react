@@ -29,7 +29,7 @@ object ResizeDetector {
     ] = js.native
   }
 
-  val jsHook = HookResult.fromFunction(raw.useResizeObserver)
+  private val jsHook = HookResult.fromFunction(raw.useResizeObserver)
 
   def useResizeDetector(props: UseResizeDetectorProps): HookResult[UseResizeDetectorReturn] =
     for

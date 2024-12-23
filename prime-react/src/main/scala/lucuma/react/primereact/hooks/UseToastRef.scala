@@ -8,10 +8,12 @@ import lucuma.react.primereact.Toast
 import lucuma.react.primereact.ToastRef
 
 object UseToastRef {
+  val useToastRef: HookResult[ToastRef] =
+    useRefToJsComponentWithMountedFacade[Toast.ToastProps, Null, Toast.Facade].map:
+      ToastRef(_)
 
-  val hook = CustomHook[Unit]
-    .useRefToJsComponentWithMountedFacade[Toast.ToastProps, Null, Toast.Facade]
-    .buildReturning((_, ref) => ToastRef(ref))
+  private val hook: CustomHook[Unit, ToastRef] =
+    CustomHook.fromHookResult(useToastRef)
 
   object HooksApiExt {
     sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]) {
