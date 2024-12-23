@@ -8,6 +8,8 @@ import japgolly.scalajs.react.vdom.TagMod
 import scalajs.js
 
 package object table extends HooksApiExt:
+  export TableHook.useReactTable
+
   type SortingFn[T, TM] = (Row[T, TM], Row[T, TM], ColumnId) => Int
 
   opaque type ColumnId = String

@@ -9,6 +9,8 @@ import org.scalajs.dom
 import scalajs.js
 
 package object virtual extends HooksApiExt:
+  export VirtualHook.useVirtualizer
+
   /**
    * Given a virtualizer, returns:
    *   - Index of first element in original model.
