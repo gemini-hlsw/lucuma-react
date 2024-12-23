@@ -14,17 +14,17 @@ trait ElementProps extends js.Object
 type ElementPropsList = List[ElementProps]
 
 object HooksApiExt {
-  private val floatingHook =
-    CustomHook[UseFloatingProps]
-      .buildReturning { pos =>
-        use.useFloating(pos)
-      }
+  val useFloating: UseFloatingProps => HookResult[UseFloatingReturn] =
+    HookResult.fromFunction(use.useFloating(_))
 
-  private val interactionsHook =
-    CustomHook[ElementPropsList]
-      .buildReturning { ctx =>
-        use.useInteractions(ctx.toJSArray)
-      }
+  private val floatingHook: CustomHook[UseFloatingProps, UseFloatingReturn] =
+    CustomHook.fromHookResult(useFloating(_))
+
+  val useInteractions: ElementPropsList => HookResult[UseFloatingReturn] =
+    HookResult.fromFunction(use.useInteractions(_)).contramap(_.toJSArray)
+
+  private val interactionsHook: CustomHook[ElementPropsList, UseFloatingReturn] =
+    CustomHook.fromHookResult(useInteractions(_))
 
   sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]) {
 
