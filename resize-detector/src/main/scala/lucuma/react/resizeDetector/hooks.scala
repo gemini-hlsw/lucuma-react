@@ -29,32 +29,26 @@ object ResizeDetector {
     ] = js.native
   }
 
-  val jsHook =
-    CustomHook.unchecked(
-      (props: (facade.React.RefHandle[TopNode | Null], raw.UseResizeObserverCallback)) =>
-        raw.useResizeObserver(props._1, props._2)
-    )
+  val jsHook = HookResult.fromFunction(raw.useResizeObserver)
 
-  val hook =
-    CustomHook[UseResizeDetectorProps]
-      .useRefToVdom[HTMLElement]
-      .useStateBy((_, ref) => UseResizeDetectorReturn(none, none, ref))
-      .customBy: (props, ref, size) =>
-        jsHook(
-          (
-            ref.raw,
-            (entry, _) =>
-              val height = entry.contentRect.height.toInt
-              val width  = entry.contentRect.width.toInt
+  def useResizeDetector(props: UseResizeDetectorProps): HookResult[UseResizeDetectorReturn] =
+    for
+      ref  <- useRefToVdom[HTMLElement]
+      size <- useState(UseResizeDetectorReturn(none, none, ref))
+      _    <- jsHook(
+                ref.raw,
+                (entry, _) =>
+                  val height = entry.contentRect.height.toInt
+                  val width  = entry.contentRect.width.toInt
 
-              (
-                size.setState(UseResizeDetectorReturn(height.some, width.some, ref)) >>
-                  props.onResize.map(_(height, width)).toOption.getOrEmpty
-              ).runNow()
-          )
-        )
-      .buildReturning: (_, _, state, _) =>
-        state.value
+                  (
+                    size.setState(UseResizeDetectorReturn(height.some, width.some, ref)) >>
+                      props.onResize.map(_(height, width)).toOption.getOrEmpty
+                  ).runNow()
+              )
+    yield size.value
+
+  val hook = CustomHook.fromHookResult(useResizeDetector)
 }
 
 object HooksApiExt {
@@ -96,4 +90,5 @@ trait HooksApiExt {
     new Secondary(api)
 }
 
-object hooks extends HooksApiExt
+object hooks extends HooksApiExt:
+  export ResizeDetector.useResizeDetector
