@@ -8,10 +8,13 @@ import lucuma.react.primereact.OverlayPanel
 import lucuma.react.primereact.OverlayPanelRef
 
 object UseOverlayPanelRef {
+  val useOverlayPanelRef: HookResult[OverlayPanelRef] =
+    useRefToJsComponentWithMountedFacade[OverlayPanel.OverlayPanelProps, Null, OverlayPanel.Facade]
+      .map:
+        OverlayPanelRef(_)
 
-  val hook = CustomHook[Unit]
-    .useRefToJsComponentWithMountedFacade[OverlayPanel.OverlayPanelProps, Null, OverlayPanel.Facade]
-    .buildReturning((_, ref) => OverlayPanelRef(ref))
+  private val hook: CustomHook[Unit, OverlayPanelRef] =
+    CustomHook.fromHookResult(useOverlayPanelRef)
 
   object HooksApiExt {
     sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]) {

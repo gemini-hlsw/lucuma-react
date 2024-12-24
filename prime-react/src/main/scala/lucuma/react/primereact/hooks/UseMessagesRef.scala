@@ -8,10 +8,12 @@ import lucuma.react.primereact.Messages
 import lucuma.react.primereact.MessagesRef
 
 object UseMessagesRef {
+  val useMessagesRef: HookResult[MessagesRef] =
+    useRefToJsComponentWithMountedFacade[Messages.MessagesProps, Null, Messages.Facade].map:
+      MessagesRef(_)
 
-  val hook = CustomHook[Unit]
-    .useRefToJsComponentWithMountedFacade[Messages.MessagesProps, Null, Messages.Facade]
-    .buildReturning((_, ref) => MessagesRef(ref))
+  private val hook: CustomHook[Unit, MessagesRef] =
+    CustomHook.fromHookResult(useMessagesRef)
 
   object HooksApiExt {
     sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]) {

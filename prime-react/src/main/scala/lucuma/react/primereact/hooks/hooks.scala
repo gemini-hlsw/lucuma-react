@@ -7,4 +7,6 @@ object all
     extends UsePopupMenuRef.HooksApiExt
     with UseToastRef.HooksApiExt
     with UseOverlayPanelRef.HooksApiExt
-    with UseMessagesRef.HooksApiExt
+    with UseMessagesRef.HooksApiExt:
+  export UsePopupMenuRef.usePopupMenuRef, UseToastRef.useToastRef,
+    UseOverlayPanelRef.useOverlayPanelRef, UseMessagesRef.useMessagesRef

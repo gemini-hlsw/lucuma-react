@@ -4,7 +4,6 @@
 package lucuma.react.virtual
 
 import japgolly.scalajs.react.*
-import japgolly.scalajs.react.hooks.CustomHook
 import lucuma.react.virtual.facade.VirtualOptionsJS
 import lucuma.react.virtual.facade.Virtualizer
 import org.scalajs.dom.Element
@@ -15,16 +14,18 @@ import scala.scalajs.js.annotation.JSImport
 object VirtualHook:
   @JSImport("@tanstack/react-virtual", "useVirtualizer")
   @js.native
-  private def useVirtualizerJS[TScrollElement <: Element, TItemElement <: Element](
-    options: VirtualOptionsJS[TScrollElement, TItemElement]
-  ): Virtualizer[TScrollElement, TItemElement] =
-    js.native
+  private def useVirtualizerJs[TScrollElement <: Element, TItemElement <: Element]: js.Function1[
+    VirtualOptionsJS[TScrollElement, TItemElement],
+    Virtualizer[TScrollElement, TItemElement]
+  ] = js.native
+
+  def useVirtualizer[TScrollElement <: Element, TItemElement <: Element] =
+    HookResult
+      .fromFunction(useVirtualizerJs[TScrollElement, TItemElement])
+      .contramap[VirtualOptions[TScrollElement, TItemElement]](_.toJs)
 
   def useVirtualizerHook[TScrollElement <: Element, TItemElement <: Element] =
-    CustomHook.unchecked[
-      VirtualOptions[TScrollElement, TItemElement],
-      Virtualizer[TScrollElement, TItemElement]
-    ](i => useVirtualizerJS(i.toJs))
+    CustomHook.fromHookResult(useVirtualizer[TScrollElement, TItemElement](_))
 
   // TODO Specify 'observeElementRect' | 'observeElementOffset' | 'scrollToFn'
   // TODO useWindowVirtualizer

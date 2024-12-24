@@ -17,10 +17,11 @@ object TableHook:
   private def useReactTableJs[T, M](options: TableOptionsJs[T, M]): raw.buildLibTypesMod.Table[T] =
     js.native
 
-  def useTableHook[T, M] =
-    CustomHook[TableOptions[T, M]]
-      .useMemoBy(_.columns)(input => _ => input.columnsJs)
-      .useMemoBy(_.input.data)(ctx => _ => ctx.input.dataJs)
-      .buildReturning { (options, cols, rows) =>
-        Table[T, M](useReactTableJs[T, M](options.toJs(cols, rows)))
-      }
+  def useReactTable[T, M](options: TableOptions[T, M]): HookResult[Table[T, M]] =
+    for
+      cols <- useMemo(options.columns)(_ => options.columnsJs)
+      rows <- useMemo(options.data)(_ => options.dataJs)
+    yield Table[T, M](useReactTableJs(options.toJs(cols, rows)))
+
+  def useTableHook[T, M]: CustomHook[TableOptions[T, M], Table[T, M]] =
+    CustomHook.fromHookResult(useReactTable(_))

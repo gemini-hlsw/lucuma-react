@@ -76,7 +76,7 @@ object UseHotkeysProps {
 
 @JSImport("react-hotkeys-hook", "useHotkeys")
 @js.native
-private val useHotkeys: js.Function4[
+private val useHotkeysJs: js.Function4[
   String | js.Array[String],
   js.Function2[js.Any, HotkeysEvent, Unit],
   js.UndefOr[HotkeysOptions],
