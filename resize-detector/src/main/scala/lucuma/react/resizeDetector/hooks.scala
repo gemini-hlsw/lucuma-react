@@ -29,9 +29,9 @@ object ResizeDetector {
     ] = js.native
   }
 
-  private val jsHook = HookResult.fromFunction(raw.useResizeObserver)
+  private final val jsHook = HookResult.fromFunction(raw.useResizeObserver)
 
-  def useResizeDetector(props: UseResizeDetectorProps): HookResult[UseResizeDetectorReturn] =
+  final def useResizeDetector(props: UseResizeDetectorProps): HookResult[UseResizeDetectorReturn] =
     for
       ref  <- useRefToVdom[HTMLElement]
       size <- useState(UseResizeDetectorReturn(none, none, ref))
@@ -48,7 +48,10 @@ object ResizeDetector {
               )
     yield size.value
 
-  val hook = CustomHook.fromHookResult(useResizeDetector)
+  inline final def useResizeDetector: HookResult[UseResizeDetectorReturn] =
+    useResizeDetector(UseResizeDetectorProps())
+
+  final val hook = CustomHook.fromHookResult(useResizeDetector(_))
 }
 
 object HooksApiExt {
