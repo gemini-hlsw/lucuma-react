@@ -45,6 +45,11 @@ trait TooltipOptions extends js.Object:
   var updateDelay: js.UndefOr[Int]                               = js.native
 
 object TooltipOptions:
+  val Top: TooltipOptions    = TooltipOptions(position = Tooltip.Position.Top)
+  val Bottom: TooltipOptions = TooltipOptions(position = Tooltip.Position.Bottom)
+  val Left: TooltipOptions   = TooltipOptions(position = Tooltip.Position.Left)
+  val Right: TooltipOptions  = TooltipOptions(position = Tooltip.Position.Right)
+
   def apply(
     appendTo:       js.UndefOr[Tooltip.AppendTo] = js.undefined,
     at:             js.UndefOr[String] = js.undefined,
