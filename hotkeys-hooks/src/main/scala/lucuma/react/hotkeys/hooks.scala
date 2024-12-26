@@ -12,7 +12,6 @@ object HooksDef {
   private def useReusableDeps[D: Reusability]: (() => D) => HookResult[(D, Int)] =
     CustomHook.reusableDeps[D].toHookResult
 
-  // This is withdeps... what is global???
   def useHotkeysWithDeps[D: Reusability](deps: => D)(props: D => UseHotkeysProps): HookResult[Ref] =
     useReusableDeps(() => deps).map: (d, rev) =>
       val p = props(d)

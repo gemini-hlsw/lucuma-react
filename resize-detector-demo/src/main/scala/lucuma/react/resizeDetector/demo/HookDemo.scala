@@ -10,22 +10,18 @@ import lucuma.react.common.*
 import lucuma.react.resizeDetector.*
 import lucuma.react.resizeDetector.hooks.*
 
-case class HookDemo() extends ReactFnProps(HookDemo.component)
+case class HookDemo() extends ReactFnProps(HookDemo)
 
-object HookDemo:
-  type Props = HookDemo
-
-  val component =
-    ScalaFnComponent
-      .withHooks[Props]
-      .useResizeDetector()
-      .useEffectBy((_, resize) => Callback(println(resize)))
-      .render { (_, resize) =>
-        <.div(
-          Css("resize-detector-demo")
-        )(
-          <.span("Hook demo"),
-          <.span(s"Width: ${resize.width.orEmpty}px"),
-          <.span(s"Height: ${resize.height.orEmpty}px")
-        ).withRef(resize.ref)
-      }
+object HookDemo
+    extends ReactFnComponent[HookDemo](props =>
+      for
+        resize <- useResizeDetector
+        _      <- useEffect(Callback(println(resize)))
+      yield <.div(
+        Css("resize-detector-demo")
+      )(
+        <.span("Hook demo"),
+        <.span(s"Width: ${resize.width.orEmpty}px"),
+        <.span(s"Height: ${resize.height.orEmpty}px")
+      ).withRef(resize.ref)
+    )

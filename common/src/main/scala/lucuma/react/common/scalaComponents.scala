@@ -4,6 +4,8 @@
 package lucuma.react.common
 
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.component.Delayed
+import japgolly.scalajs.react.component.ReactForwardRef
 import japgolly.scalajs.react.component.Scala
 import japgolly.scalajs.react.component.ScalaFn
 import japgolly.scalajs.react.component.ScalaForwardRef
@@ -91,7 +93,7 @@ class ReactPropsWithChildren[Props, S, B](
 
 sealed trait ReactFnComponentProps[Props, CT[-p, +u] <: CtorType[p, u]]
     extends CtorWithProps[Props, CT, ScalaFn.Unmounted[Props]] {
-  val component: ScalaFn.Component[Props, CT]
+  protected val component: ScalaFn.Component[Props, CT]
 
   protected[common] lazy val props: Props = this.asInstanceOf[Props]
 }
@@ -104,22 +106,39 @@ object ReactFnComponentProps:
   given [Props, CT[-p, +u] <: CtorType[p, u]]: Renderable[ReactFnComponentProps[Props, CT]] =
     Renderable(c => summon[Renderable[VdomNode]](c.toUnmounted))
 
-abstract class ReactFnProps[Props](val component: ScalaFn.Component[Props, CtorType.Props])
-    extends ReactFnComponentProps[Props, CtorType.Props] {
+trait ReactFnComponent[Props](private val render: Props => Delayed[VdomNode]):
+  private val component = ScalaFnComponent[Props](render)
+
+object ReactFnComponent:
+  given [Props]: Conversion[ReactFnComponent[Props], ScalaFnComponent[Props, CtorType.Props]] =
+    _.component
+
+trait ReactFnProps[Props](protected val component: ScalaFn.Component[Props, CtorType.Props])
+    extends ReactFnComponentProps[Props, CtorType.Props]:
   override lazy val ctor: CtorType.Props[Props, ScalaFn.Unmounted[Props]] =
     component.ctor
-}
 
-abstract class ReactFnPropsWithChildren[Props](
-  val component: ScalaFn.Component[Props, CtorType.PropsAndChildren]
-) extends ReactFnComponentProps[Props, CtorType.PropsAndChildren] {
+trait ReactFnComponentWithChildren[Props](
+  private val render: (Props, PropsChildren) => Delayed[VdomNode]
+):
+  private val component = ScalaFnComponent.withChildren[Props](render)
+
+object ReactFnComponentWithChildren:
+  given [Props]: Conversion[
+    ReactFnComponentWithChildren[Props],
+    ScalaFnComponent[Props, CtorType.PropsAndChildren]
+  ] =
+    _.component
+
+trait ReactFnPropsWithChildren[Props](
+  protected val component: ScalaFn.Component[Props, CtorType.PropsAndChildren]
+) extends ReactFnComponentProps[Props, CtorType.PropsAndChildren]:
   override lazy val ctor: CtorType.PropsAndChildren[Props, ScalaFn.Unmounted[Props]] =
     component.ctor
-}
 
 sealed trait ReactComponentPropsForwardRef[Props, R, CT[-p, +u] <: CtorType[p, u]]
     extends CtorWithProps[Props, CT, ScalaForwardRef.Unmounted[Props, R]] { self =>
-  val component: ScalaForwardRef.Component[Props, R, CT]
+  protected val component: ScalaForwardRef.Component[Props, R, CT]
 
   protected[common] lazy val props: Props = this.asInstanceOf[Props]
 
@@ -153,10 +172,34 @@ object ReactComponentPropsForwardRef:
     : Renderable[ReactComponentPropsForwardRef[Props, R, CT]] =
     Renderable(c => summon[Renderable[VdomNode]](c.toUnmounted))
 
-class ReactPropsForwardRef[Props, R](
-  val component: ScalaForwardRef.Component[Props, R, CtorType.Props]
+trait ReactComponentForwardRef[Props, R](
+  private val render: (Props, Option[Ref.Simple[R]]) => VdomNode
+):
+  private val component = ReactForwardRef[Props, R](render)
+
+object ReactComponentForwardRef:
+  given [Props, R]: Conversion[
+    ReactComponentForwardRef[Props, R],
+    ScalaForwardRef.Component[Props, R, CtorType.Props]
+  ] =
+    _.component
+
+trait ReactPropsForwardRef[Props, R](
+  protected val component: ScalaForwardRef.Component[Props, R, CtorType.Props]
 ) extends ReactComponentPropsForwardRef[Props, R, CtorType.Props]
 
-class ReactPropsForwardRefWithChildren[Props, R](
-  val component: ScalaForwardRef.Component[Props, R, CtorType.PropsAndChildren]
+trait ReactComponentForwardRefWithChildren[Props, R](
+  private val render: (Props, PropsChildren, Option[Ref.Simple[R]]) => VdomNode
+):
+  private val component = ReactForwardRef.withChildren[Props, R](render)
+
+object ReactComponentForwardRefWithChildren:
+  given [Props, R]: Conversion[
+    ReactComponentForwardRefWithChildren[Props, R],
+    ScalaForwardRef.Component[Props, R, CtorType.PropsAndChildren]
+  ] =
+    _.component
+
+trait ReactPropsForwardRefWithChildren[Props, R](
+  protected val component: ScalaForwardRef.Component[Props, R, CtorType.PropsAndChildren]
 ) extends ReactComponentPropsForwardRef[Props, R, CtorType.PropsAndChildren]
