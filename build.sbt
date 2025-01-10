@@ -29,7 +29,7 @@ val munitScalacheckV = "1.0.0"
 val munitV           = "1.0.4"
 val scalaJsDomV      = "2.8.0"
 val scalaJsReactV    = "3.0.0-beta8"
-val utestV           = "0.8.4"
+val utestV           = "0.8.5"
 
 ThisBuild / crossScalaVersions := Seq("3.6.2")
 
