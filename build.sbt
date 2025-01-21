@@ -20,7 +20,7 @@ ThisBuild / mergifyPrRules +=
     List(MergifyAction.Merge())
   )
 
-val catsV            = "2.12.0"
+val catsV            = "2.13.0"
 val disciplineMunitV = "2.0.0"
 val http4sV          = "0.23.30"
 val kittensV         = "3.4.0"
