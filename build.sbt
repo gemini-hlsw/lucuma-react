@@ -26,9 +26,9 @@ val http4sV          = "0.23.30"
 val kittensV         = "3.4.0"
 val lucumaTypedV     = "0.7.0"
 val munitScalacheckV = "1.0.0"
-val munitV           = "1.0.4"
+val munitV           = "1.1.0"
 val scalaJsDomV      = "2.8.0"
-val scalaJsReactV    = "3.0.0-beta8"
+val scalaJsReactV    = "3.0.0-beta10"
 val utestV           = "0.8.5"
 
 ThisBuild / crossScalaVersions := Seq("3.6.3")
