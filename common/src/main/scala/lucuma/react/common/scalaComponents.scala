@@ -173,7 +173,7 @@ object ReactComponentPropsForwardRef:
     Renderable(c => summon[Renderable[VdomNode]](c.toUnmounted))
 
 trait ReactComponentForwardRef[Props, R](
-  private val render: (Props, Option[Ref.Simple[R]]) => VdomNode
+  private val render: (Props, Option[Ref.Simple[R]]) => Delayed[VdomNode]
 ):
   private val component = ReactForwardRef[Props, R](render)
 
@@ -189,7 +189,7 @@ trait ReactPropsForwardRef[Props, R](
 ) extends ReactComponentPropsForwardRef[Props, R, CtorType.Props]
 
 trait ReactComponentForwardRefWithChildren[Props, R](
-  private val render: (Props, PropsChildren, Option[Ref.Simple[R]]) => VdomNode
+  private val render: (Props, PropsChildren, Option[Ref.Simple[R]]) => Delayed[VdomNode]
 ):
   private val component = ReactForwardRef.withChildren[Props, R](render)
 
