@@ -30,6 +30,6 @@
     "sass": "^1.83.4",
     "styled-components": "^6.1.15",
     "typescript": "^5.7.3",
-    "vite": "^6.0.11"
+    "vite": "^6.1.0"
   }
 }
