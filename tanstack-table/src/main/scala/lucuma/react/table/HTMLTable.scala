@@ -17,13 +17,16 @@ final case class HTMLTable[T, TM](
   tableMod:      TagMod = TagMod.empty,
   headerMod:     TagMod = TagMod.empty,
   headerRowMod:  HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
-  headerCellMod: Header[T, Any, TM, Any] => TagMod = (_: Header[T, Any, TM, Any]) => TagMod.empty,
+  headerCellMod: Header[T, Any, TM, Any, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, Any, Any, Any]) => TagMod.empty,
   bodyMod:       TagMod = TagMod.empty,
   rowMod:        Row[T, TM] => TagMod = (_: Row[T, TM]) => TagMod.empty,
-  cellMod:       Cell[T, Any, TM, Any] => TagMod = (_: Cell[T, Any, TM, Any]) => TagMod.empty,
+  cellMod:       Cell[T, Any, TM, Any, Any, Any] => TagMod = (_: Cell[T, Any, TM, Any, Any, Any]) =>
+    TagMod.empty,
   footerMod:     TagMod = TagMod.empty,
   footerRowMod:  HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
-  footerCellMod: Header[T, Any, TM, Any] => TagMod = (_: Header[T, Any, TM, Any]) => TagMod.empty,
+  footerCellMod: Header[T, Any, TM, Any, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, Any, Any, Any]) => TagMod.empty,
   emptyMessage:  VdomNode = EmptyVdom
 ) extends ReactFnProps(HTMLTable.component)
     with HTMLTableProps[T, TM]
@@ -37,13 +40,16 @@ final case class HTMLVirtualizedTable[T, TM](
   tableMod:      TagMod = TagMod.empty,
   headerMod:     TagMod = TagMod.empty,
   headerRowMod:  HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
-  headerCellMod: Header[T, Any, TM, Any] => TagMod = (_: Header[T, Any, TM, Any]) => TagMod.empty,
+  headerCellMod: Header[T, Any, TM, Any, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, Any, Any, Any]) => TagMod.empty,
   bodyMod:       TagMod = TagMod.empty,
   rowMod:        Row[T, TM] => TagMod = (_: Row[T, TM]) => TagMod.empty,
-  cellMod:       Cell[T, Any, TM, Any] => TagMod = (_: Cell[T, Any, TM, Any]) => TagMod.empty,
+  cellMod:       Cell[T, Any, TM, Any, Any, Any] => TagMod = (_: Cell[T, Any, TM, Any, Any, Any]) =>
+    TagMod.empty,
   footerMod:     TagMod = TagMod.empty,
   footerRowMod:  HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
-  footerCellMod: Header[T, Any, TM, Any] => TagMod = (_: Header[T, Any, TM, Any]) => TagMod.empty,
+  footerCellMod: Header[T, Any, TM, Any, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, Any, Any, Any]) => TagMod.empty,
   emptyMessage:  VdomNode = EmptyVdom,
 
   // Virtual options
@@ -65,13 +71,16 @@ final case class HTMLAutoHeightVirtualizedTable[T, TM](
   tableMod:          TagMod = TagMod.empty,
   headerMod:         TagMod = TagMod.empty,
   headerRowMod:      HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
-  headerCellMod:     Header[T, Any, TM, Any] => TagMod = (_: Header[T, Any, TM, Any]) => TagMod.empty,
+  headerCellMod:     Header[T, Any, TM, Any, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, Any, Any, Any]) => TagMod.empty,
   bodyMod:           TagMod = TagMod.empty,
   rowMod:            Row[T, TM] => TagMod = (_: Row[T, TM]) => TagMod.empty,
-  cellMod:           Cell[T, Any, TM, Any] => TagMod = (_: Cell[T, Any, TM, Any]) => TagMod.empty,
+  cellMod:           Cell[T, Any, TM, Any, Any, Any] => TagMod = (_: Cell[T, Any, TM, Any, Any, Any]) =>
+    TagMod.empty,
   footerMod:         TagMod = TagMod.empty,
   footerRowMod:      HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
-  footerCellMod:     Header[T, Any, TM, Any] => TagMod = (_: Header[T, Any, TM, Any]) => TagMod.empty,
+  footerCellMod:     Header[T, Any, TM, Any, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, Any, Any, Any]) => TagMod.empty,
   emptyMessage:      VdomNode = EmptyVdom,
   // Virtual options
   overscan:          js.UndefOr[Int] = js.undefined,

@@ -16,16 +16,17 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 sealed trait TableOptions[T, TM]:
-  def columns: Reusable[List[ColumnDef[T, ?, TM, ?]]]
+  def columns: Reusable[List[ColumnDef[T, ?, TM, ?, ?, ?]]]
   def data: Reusable[List[T]]
   private[table] def toJsBase: TableOptionsJs[T, TM]
 
-  private[table] def columnsJs: js.Array[ColumnDefJs[T, ?, TM, ?]] = columns.toJSArray.map(_.toJs)
+  private[table] def columnsJs: js.Array[ColumnDefJs[T, ?, TM, ?, ?, ?]] =
+    columns.toJSArray.map(_.toJs)
 
   private[table] def dataJs: js.Array[T] = data.toJSArray
 
   private[table] def toJs(
-    cols: js.Array[ColumnDefJs[T, ?, TM, ?]],
+    cols: js.Array[ColumnDefJs[T, ?, TM, ?, ?, ?]],
     rows: js.Array[T]
   ): TableOptionsJs[T, TM] =
     toJsBase.columns = cols
@@ -482,7 +483,7 @@ end TableOptions
 
 object TableOptions:
   def apply[T, TM](
-    columns_                : Reusable[List[ColumnDef[T, ?, TM, ?]]],
+    columns_                : Reusable[List[ColumnDef[T, ?, TM, ?, ?, ?]]],
     data_                   : Reusable[List[T]],
     getCoreRowModel:          js.UndefOr[Table[T, TM] => () => RowModel[T, TM]] = js.undefined,
     getRowId:                 js.UndefOr[(T, Int, Option[T]) => RowId] = js.undefined,

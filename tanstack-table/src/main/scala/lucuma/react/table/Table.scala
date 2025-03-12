@@ -15,47 +15,50 @@ import scalajs.js.JSConverters.*
 
 // Missing: ColumnOrder, Filters, Grouping, Pagination
 case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTypesMod.Table[T]):
-  def getAllColumns(): List[Column[T, Any, TM, Any]]                    = toJs.getAllColumns().toList.map(Column(_))
-  def getAllFlatColumns(): List[Column[T, Any, TM, Any]]                =
+  def getAllColumns(): List[Column[T, Any, TM, Any, Any, Any]]                    =
+    toJs.getAllColumns().toList.map(Column(_))
+  def getAllFlatColumns(): List[Column[T, Any, TM, Any, Any, Any]]                =
     toJs.getAllFlatColumns().toList.map(Column(_))
-  def getAllLeafColumns(): List[Column[T, Any, TM, Any]]                =
+  def getAllLeafColumns(): List[Column[T, Any, TM, Any, Any, Any]]                =
     toJs.getAllLeafColumns().toList.map(Column(_))
-  def getColumn(columnId: String): Option[Column[T, Any, TM, Any]]      =
+  def getColumn(columnId: String): Option[Column[T, Any, TM, Any, Any, Any]]      =
     toJs.getColumn(columnId).toOption.map(Column(_))
-  def getCoreRowModel(): RowModel[T, TM]                                = RowModel(toJs.getCoreRowModel())
-  def getRow(id:      String): Row[T, TM]                               = Row(toJs.getRow(id))
-  def getRowModel(): RowModel[T, TM]                                    = RowModel(toJs.getRowModel())
-  def getState(): TableState                                            = TableState(toJs.getState())
-  lazy val initialState: TableState                                     = TableState(toJs.initialState)
-  lazy val options: TableOptions[T, TM]                                 =
+  def getCoreRowModel(): RowModel[T, TM]                                          = RowModel(toJs.getCoreRowModel())
+  def getRow(id:      String): Row[T, TM]                                         = Row(toJs.getRow(id))
+  def getRowModel(): RowModel[T, TM]                                              = RowModel(toJs.getRowModel())
+  def getState(): TableState                                                      = TableState(toJs.getState())
+  lazy val initialState: TableState                                               = TableState(toJs.initialState)
+  lazy val options: TableOptions[T, TM]                                           =
     TableOptions.fromJs(toJs.options.asInstanceOf[TableOptionsJs[T, TM]])
-  def reset(): Callback                                                 = Callback(toJs.reset())
-  def setState(value: TableState): Callback                             = Callback(toJs.setState(value.toJs))
-  def modState(f: Endo[TableState]): Callback                           =
+  def reset(): Callback                                                           = Callback(toJs.reset())
+  def setState(value: TableState): Callback                                       = Callback(toJs.setState(value.toJs))
+  def modState(f: Endo[TableState]): Callback                                     =
     Callback(toJs.setState(rawState => f(TableState(rawState)).toJs))
 
   // Headers
-  def getFlatHeaders(): List[Header[T, Any, TM, Any]] = toJs.getFlatHeaders().toList.map(Header(_))
-  def getFooterGroups(): List[HeaderGroup[T, TM]]     =
+  def getFlatHeaders(): List[Header[T, Any, TM, Any, Any, Any]] =
+    toJs.getFlatHeaders().toList.map(Header(_))
+  def getFooterGroups(): List[HeaderGroup[T, TM]]               =
     toJs.getFooterGroups().toList.map(HeaderGroup(_))
-  def getHeaderGroups(): List[HeaderGroup[T, TM]]     =
+  def getHeaderGroups(): List[HeaderGroup[T, TM]]               =
     toJs.getHeaderGroups().toList.map(HeaderGroup(_))
-  def getLeafHeaders(): List[Header[T, Any, TM, Any]] = toJs.getLeafHeaders().toList.map(Header(_))
+  def getLeafHeaders(): List[Header[T, Any, TM, Any, Any, Any]] =
+    toJs.getLeafHeaders().toList.map(Header(_))
 
   // Visibility
-  def getCenterVisibleLeafColumns(): List[Column[T, Any, TM, Any]]                 =
+  def getCenterVisibleLeafColumns(): List[Column[T, Any, TM, Any, Any, Any]]       =
     toJs.getCenterVisibleLeafColumns().toList.map(Column(_))
   def getIsAllColumnsVisible(): Boolean                                            = toJs.getIsAllColumnsVisible()
   def getIsSomeColumnsVisible(): Boolean                                           = toJs.getIsSomeColumnsVisible()
-  def getLeftVisibleLeafColumns(): List[Column[T, Any, TM, Any]]                   =
+  def getLeftVisibleLeafColumns(): List[Column[T, Any, TM, Any, Any, Any]]         =
     toJs.getLeftVisibleLeafColumns().toList.map(Column(_))
-  def getRightVisibleLeafColumns(): List[Column[T, Any, TM, Any]]                  =
+  def getRightVisibleLeafColumns(): List[Column[T, Any, TM, Any, Any, Any]]        =
     toJs.getRightVisibleLeafColumns().toList.map(Column(_))
   def getToggleAllColumnsVisibilityHandler(): SyntheticEvent[dom.Node] => Callback =
     e => Callback(toJs.getToggleAllColumnsVisibilityHandler()(e))
-  def getVisibleFlatColumns(): List[Column[T, Any, TM, Any]]                       =
+  def getVisibleFlatColumns(): List[Column[T, Any, TM, Any, Any, Any]]             =
     toJs.getVisibleFlatColumns().toList.map(Column(_))
-  def getVisibleLeafColumns(): List[Column[T, Any, TM, Any]]                       =
+  def getVisibleLeafColumns(): List[Column[T, Any, TM, Any, Any, Any]]             =
     toJs.getVisibleLeafColumns().toList.map(Column(_))
   def resetColumnVisibility(): Callback                                            = Callback(toJs.resetColumnVisibility())
   def resetColumnVisibility(defaultState: Boolean): Callback                       =
@@ -150,29 +153,29 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
   def getIsSomeColumnsPinned(): Boolean                                = toJs.getIsSomeColumnsPinned()
   def getIsSomeColumnsPinned(position: ColumnPinningPosition): Boolean =
     toJs.getIsSomeColumnsPinned(position.toJs)
-  def getCenterFlatHeaders(): List[Header[T, Any, TM, Any]]            =
+  def getCenterFlatHeaders(): List[Header[T, Any, TM, Any, Any, Any]]  =
     toJs.getCenterFlatHeaders().toList.map(Header(_))
   def getCenterFooterGroups(): List[HeaderGroup[T, TM]]                =
     toJs.getCenterFooterGroups().toList.map(HeaderGroup(_))
   def getCenterHeaderGroups(): List[HeaderGroup[T, TM]]                =
     toJs.getCenterHeaderGroups().toList.map(HeaderGroup(_))
-  def getCenterLeafHeaders(): List[Header[T, Any, TM, Any]]            =
+  def getCenterLeafHeaders(): List[Header[T, Any, TM, Any, Any, Any]]  =
     toJs.getCenterLeafHeaders().toList.map(Header(_))
-  def getLeftFlatHeaders(): List[Header[T, Any, TM, Any]]              =
+  def getLeftFlatHeaders(): List[Header[T, Any, TM, Any, Any, Any]]    =
     toJs.getLeftFlatHeaders().toList.map(Header(_))
   def getLeftFooterGroups(): List[HeaderGroup[T, TM]]                  =
     toJs.getLeftFooterGroups().toList.map(HeaderGroup(_))
   def getLeftHeaderGroups(): List[HeaderGroup[T, TM]]                  =
     toJs.getLeftHeaderGroups().toList.map(HeaderGroup(_))
-  def getLeftLeafHeaders(): List[Header[T, Any, TM, Any]]              =
+  def getLeftLeafHeaders(): List[Header[T, Any, TM, Any, Any, Any]]    =
     toJs.getLeftLeafHeaders().toList.map(Header(_))
-  def getRightFlatHeaders(): List[Header[T, Any, TM, Any]]             =
+  def getRightFlatHeaders(): List[Header[T, Any, TM, Any, Any, Any]]   =
     toJs.getRightFlatHeaders().toList.map(Header(_))
   def getRightFooterGroups(): List[HeaderGroup[T, TM]]                 =
     toJs.getRightFooterGroups().toList.map(HeaderGroup(_))
   def getRightHeaderGroups(): List[HeaderGroup[T, TM]]                 =
     toJs.getRightHeaderGroups().toList.map(HeaderGroup(_))
-  def getRightLeafHeaders(): List[Header[T, Any, TM, Any]]             =
+  def getRightLeafHeaders(): List[Header[T, Any, TM, Any, Any, Any]]   =
     toJs.getRightLeafHeaders().toList.map(Header(_))
   // Row Pinning
   def setRowPinning(value:    RowPinning): Callback                    = Callback(toJs.setRowPinning(value.toJs))

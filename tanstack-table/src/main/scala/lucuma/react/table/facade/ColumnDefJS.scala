@@ -7,15 +7,16 @@ import japgolly.scalajs.react.facade.React.Node
 import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
+import raw.buildLibFeaturesColumnFilteringMod.FilterFn
 
-trait ColumnDefJs[T, A, TM, CM] extends js.Object:
+trait ColumnDefJs[T, A, TM, CM, F, FM] extends js.Object:
   var id: String
   var header: js.UndefOr[
     String | js.Function1[raw.buildLibCoreHeadersMod.HeaderContext[T, A], Node]
   ]
   var accessorFn: js.UndefOr[js.Function1[T, A]]
   var cell: js.UndefOr[js.Function1[raw.buildLibCoreCellMod.CellContext[T, A], Node]]
-  var columns: js.UndefOr[js.Array[ColumnDefJs[T, ?, TM, ?]]]
+  var columns: js.UndefOr[js.Array[ColumnDefJs[T, ?, TM, ?, ?, ?]]]
   var footer: js.UndefOr[js.Function1[raw.buildLibCoreHeadersMod.HeaderContext[T, A], Node]]
   var meta: js.UndefOr[CM]
 
@@ -38,3 +39,7 @@ trait ColumnDefJs[T, A, TM, CM] extends js.Object:
 
   // Column Pinning
   var enablePinning: js.UndefOr[Boolean] = js.undefined
+
+  // Column Filtering
+  var filterFn: js.UndefOr[FilterFn[T]] // TODO: | keyof FilterFns | keyof BuiltInFilterFns
+  var enableColumnFilter: js.UndefOr[Boolean] = js.undefined

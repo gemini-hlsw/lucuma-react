@@ -12,25 +12,26 @@ import scalajs.js.JSConverters.*
 
 // Missing: Filters
 case class Row[T, TM] private[table] (private[table] val toJs: raw.buildLibTypesMod.Row[T]):
-  lazy val depth: Int                            = toJs.depth.toInt
-  lazy val id: RowId                             = RowId(toJs.id)
-  lazy val index: Int                            = toJs.index.toInt
-  lazy val original: T                           = toJs.original
-  lazy val originalSubRows: Option[List[T]]      = toJs.originalSubRows.toOption.map(_.toList)
-  lazy val subRows: List[Row[T, TM]]             = toJs.subRows.toList.map(Row(_))
-  def getAllCells(): List[Cell[T, Any, TM, Any]] = toJs.getAllCells().toList.map(Cell(_))
-  def getLeafRows(): List[Row[T, TM]]            = toJs.getLeafRows().toList.map(Row(_))
-  def getValue[V](columnId: ColumnId): V         = toJs.getValue(columnId.value)
+  lazy val depth: Int                                      = toJs.depth.toInt
+  lazy val id: RowId                                       = RowId(toJs.id)
+  lazy val index: Int                                      = toJs.index.toInt
+  lazy val original: T                                     = toJs.original
+  lazy val originalSubRows: Option[List[T]]                = toJs.originalSubRows.toOption.map(_.toList)
+  lazy val subRows: List[Row[T, TM]]                       = toJs.subRows.toList.map(Row(_))
+  def getAllCells(): List[Cell[T, Any, TM, Any, Any, Any]] = toJs.getAllCells().toList.map(Cell(_))
+  def getLeafRows(): List[Row[T, TM]]                      = toJs.getLeafRows().toList.map(Row(_))
+  def getValue[V](columnId: ColumnId): V                   = toJs.getValue(columnId.value)
 
   // Visibility
-  def getVisibleCells(): List[Cell[T, Any, TM, Any]] = toJs.getVisibleCells().toList.map(Cell(_))
+  def getVisibleCells(): List[Cell[T, Any, TM, Any, Any, Any]] =
+    toJs.getVisibleCells().toList.map(Cell(_))
 
   // Column Pinning
-  def getCenterVisibleCells(): List[Cell[T, Any, TM, Any]] =
+  def getCenterVisibleCells(): List[Cell[T, Any, TM, Any, Any, Any]] =
     toJs.getCenterVisibleCells().toList.map(Cell(_))
-  def getLeftVisibleCells(): List[Cell[T, Any, TM, Any]]   =
+  def getLeftVisibleCells(): List[Cell[T, Any, TM, Any, Any, Any]]   =
     toJs.getLeftVisibleCells().toList.map(Cell(_))
-  def getRightVisibleCells(): List[Cell[T, Any, TM, Any]]  =
+  def getRightVisibleCells(): List[Cell[T, Any, TM, Any, Any, Any]]  =
     toJs.getRightVisibleCells().toList.map(Cell(_))
 
   // Row Grouping

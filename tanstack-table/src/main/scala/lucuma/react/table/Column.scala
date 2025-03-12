@@ -13,25 +13,25 @@ import org.scalajs.dom
 import scalajs.js.JSConverters.*
 
 // Missing: Filters, Grouping
-case class Column[T, A, TM, CM] private[table] (
+case class Column[T, A, TM, CM, F, FM] private[table] (
   private val toJs: raw.buildLibTypesMod.Column[T, A]
 ):
-  lazy val id: ColumnId                               = ColumnId(toJs.id)
-  lazy val depth: Int                                 = toJs.depth.toInt
-  lazy val accessorFn: Option[(T, Int) => A]          =
+  lazy val id: ColumnId                                         = ColumnId(toJs.id)
+  lazy val depth: Int                                           = toJs.depth.toInt
+  lazy val accessorFn: Option[(T, Int) => A]                    =
     toJs.accessorFn.toOption.map(f => (row, index) => f(row, index))
-  lazy val columnDef: ColumnDef[T, A, TM, CM]         =
-    ColumnDef.fromJs(toJs.columnDef.asInstanceOf[ColumnDefJs[T, A, TM, CM]])
-  lazy val columns: List[Column[T, Any, TM, Any]]     =
+  lazy val columnDef: ColumnDef[T, A, TM, CM, F, FM]            =
+    ColumnDef.fromJs(toJs.columnDef.asInstanceOf[ColumnDefJs[T, A, TM, CM, F, FM]])
+  lazy val columns: List[Column[T, Any, TM, Any, Any, Any]]     =
     toJs.columns.toList.map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
-  lazy val parent: Option[Column[T, Any, TM, Any]]    =
+  lazy val parent: Option[Column[T, Any, TM, Any, Any, Any]]    =
     toJs.parent.toOption.map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
-  def getFlatColumns(): List[Column[T, Any, TM, CM]]  =
+  def getFlatColumns(): List[Column[T, Any, TM, CM, Any, Any]]  =
     toJs
       .getFlatColumns()
       .toList
       .map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
-  def getLeafColumns(): List[Column[T, Any, TM, Any]] =
+  def getLeafColumns(): List[Column[T, Any, TM, Any, Any, Any]] =
     toJs
       .getLeafColumns()
       .toList
@@ -92,3 +92,19 @@ case class Column[T, A, TM, CM] private[table] (
   def unpin(): Callback                              = Callback(
     toJs.pin(raw.buildLibFeaturesColumnPinningMod.ColumnPinningPosition.`false`)
   )
+
+  // Column Filtering
+  def getCanFilter(): Boolean                              = toJs.getCanFilter()
+  def getFilterIndex: Int                                  = toJs.getFilterIndex().toInt
+  def getIsFiltered(): Boolean                             = toJs.getIsFiltered()
+  def getFilterValue(): Option[F]                          = Option(toJs.getFilterValue().asInstanceOf[F])
+  def setFilterValue(value: F): Callback                   = Callback(toJs.setFilterValue(value))
+  // def getAutoFilterFn(): FilterFn[T, TM]                   =
+  //   (row, columnId, filterValue) => toJs.getAutoFilterFn()(row.toJs, columnId.value, filterValue)
+  def getFilterFn[F, FM](): Option[FilterFn[T, TM, F, FM]] =
+    toJs
+      .getFilterFn()
+      .toOption
+      .map: fn =>
+        (row, columnId, filterValue, addMeta) =>
+          fn(row.toJs, columnId.value, filterValue, (m: Any) => addMeta(m.asInstanceOf[FM]))

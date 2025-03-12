@@ -7,7 +7,7 @@ import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.ReactEvent
 import lucuma.typed.tanstackTableCore as raw
 
-case class Header[T, A, TM, CM] private[table] (
+case class Header[T, A, TM, CM, F, FM] private[table] (
   private[table] val toJs: raw.buildLibTypesMod.Header[T, A]
 ):
   /**
@@ -26,7 +26,7 @@ case class Header[T, A, TM, CM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  lazy val column: Column[T, A, TM, CM] = Column(toJs.column)
+  lazy val column: Column[T, A, TM, CM, F, FM] = Column(toJs.column)
 
   /**
    * The depth of the header, zero-indexed based.
@@ -45,7 +45,7 @@ case class Header[T, A, TM, CM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  def getContext(): HeaderContext[T, A, TM, CM] = HeaderContext(toJs.getContext())
+  def getContext(): HeaderContext[T, A, TM, CM, F, FM] = HeaderContext(toJs.getContext())
 
   /**
    * Returns the leaf headers hierarchically nested under this header.
@@ -54,7 +54,8 @@ case class Header[T, A, TM, CM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  def getLeafHeaders(): List[Header[T, Any, TM, Any]] = toJs.getLeafHeaders().toList.map(Header(_))
+  def getLeafHeaders(): List[Header[T, Any, TM, Any, Any, Any]] =
+    toJs.getLeafHeaders().toList.map(Header(_))
 
   /**
    * The header's associated header group object.
@@ -119,8 +120,8 @@ case class Header[T, A, TM, CM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  lazy val subHeaders: List[Header[T, Any, TM, Any]] =
-    toJs.subHeaders.toList.map(Header(_).asInstanceOf[Header[T, Any, TM, Any]])
+  lazy val subHeaders: List[Header[T, Any, TM, Any, Any, Any]] =
+    toJs.subHeaders.toList.map(Header(_).asInstanceOf[Header[T, Any, TM, Any, Any, Any]])
 
   // ColumnSizingHeader
 

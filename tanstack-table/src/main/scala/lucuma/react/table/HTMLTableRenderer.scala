@@ -46,7 +46,7 @@ trait HTMLTableRenderer[T]:
   protected val SortAscIndicator: VdomNode  = "↑"
   protected val SortDescIndicator: VdomNode = "↓"
 
-  protected def sortIndicator[T, TM](col: Column[T, ?, TM, ?]): VdomNode =
+  protected def sortIndicator[T, TM](col: Column[T, ?, TM, ?, ?, ?]): VdomNode =
     col
       .getIsSorted()
       .fold(if (col.getCanSort()) SortableIndicator else EmptyVdom): sortDirection =>
@@ -56,7 +56,7 @@ trait HTMLTableRenderer[T]:
         <.span(ascDesc, <.small(index))
 
   protected def resizer[T, TM](
-    header:     Header[T, ?, TM, ?],
+    header:     Header[T, ?, TM, ?, ?, ?],
     resizeMode: Option[ColumnResizeMode],
     sizingInfo: ColumnSizingInfo
   ): VdomNode =
@@ -83,13 +83,16 @@ trait HTMLTableRenderer[T]:
     tableMod:      TagMod = TagMod.empty,
     headerMod:     TagMod = TagMod.empty,
     headerRowMod:  HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
-    headerCellMod: Header[T, Any, TM, Any] => TagMod = (_: Header[T, Any, TM, Any]) => TagMod.empty,
+    headerCellMod: Header[T, Any, TM, Any, Any, Any] => TagMod =
+      (_: Header[T, Any, TM, Any, Any, Any]) => TagMod.empty,
     bodyMod:       TagMod = TagMod.empty,
     rowMod:        Row[T, TM] => TagMod = (_: Row[T, TM]) => TagMod.empty,
-    cellMod:       Cell[T, Any, TM, Any] => TagMod = (_: Cell[T, Any, TM, Any]) => TagMod.empty,
+    cellMod:       Cell[T, Any, TM, Any, Any, Any] => TagMod = (_: Cell[T, Any, TM, Any, Any, Any]) =>
+      TagMod.empty,
     footerMod:     TagMod = TagMod.empty,
     footerRowMod:  HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
-    footerCellMod: Header[T, Any, TM, Any] => TagMod = (_: Header[T, Any, TM, Any]) => TagMod.empty,
+    footerCellMod: Header[T, Any, TM, Any, Any, Any] => TagMod =
+      (_: Header[T, Any, TM, Any, Any, Any]) => TagMod.empty,
     indexOffset:   Int = 0,
     paddingTop:    Option[Int] = none,
     paddingBottom: Option[Int] = none,
@@ -207,7 +210,7 @@ trait HTMLTableRenderer[T]:
                     cellMod(cell)
                   )(
                     cell.column.columnDef match
-                      case colDef @ ColumnDef.Single[T, Any, TM, Any](_) =>
+                      case colDef @ ColumnDef.Single[T, Any, TM, Any, Any, Any](_) =>
                         rawReact.mod.flexRender(
                           colDef.toJs.cell
                             .asInstanceOf[rawReact.mod.Renderable[

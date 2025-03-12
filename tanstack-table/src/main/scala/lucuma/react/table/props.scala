@@ -22,13 +22,13 @@ trait HTMLTableProps[T, TM]:
   def tableMod: TagMod
   def headerMod: TagMod
   def headerRowMod: HeaderGroup[T, TM] => TagMod
-  def headerCellMod: Header[T, Any, TM, Any] => TagMod
+  def headerCellMod: Header[T, Any, TM, Any, Any, Any] => TagMod
   def bodyMod: TagMod
   def rowMod: Row[T, TM] => TagMod
-  def cellMod: Cell[T, Any, TM, Any] => TagMod
+  def cellMod: Cell[T, Any, TM, Any, Any, Any] => TagMod
   def footerMod: TagMod
   def footerRowMod: HeaderGroup[T, TM] => TagMod
-  def footerCellMod: Header[T, Any, TM, Any] => TagMod
+  def footerCellMod: Header[T, Any, TM, Any, Any, Any] => TagMod
   def emptyMessage: VdomNode
 
   // Allow subtypes to mixin other classes
