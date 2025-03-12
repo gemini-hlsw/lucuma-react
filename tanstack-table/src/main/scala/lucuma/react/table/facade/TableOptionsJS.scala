@@ -4,7 +4,6 @@
 package lucuma.react.table.facade
 
 import lucuma.typed.tanstackTableCore as raw
-// import lucuma.typed.std.Record
 
 import scalajs.js
 // import raw.buildLibFeaturesColumnFilteringMod.FilterFn

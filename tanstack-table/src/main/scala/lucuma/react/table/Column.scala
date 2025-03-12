@@ -105,6 +105,4 @@ case class Column[T, A, TM, CM, F, FM] private[table] (
     toJs
       .getFilterFn()
       .toOption
-      .map: fn =>
-        (row, columnId, filterValue, addMeta) =>
-          fn(row.toJs, columnId.value, filterValue, (m: Any) => addMeta(m.asInstanceOf[FM]))
+      .map(FilterFn.fromJs(_))

@@ -4,12 +4,22 @@
 package lucuma.react.table
 
 import cats.syntax.option.*
-import lucuma.typed.tanstackTableCore as rawCore
-import lucuma.typed.tanstackTableCore.buildLibFeaturesColumnFilteringMod as rawFilter
-import lucuma.typed.tanstackTableCore.buildLibTypesMod as raw
 
-import scalajs.js
-import raw.FilterMeta
+enum BuiltInFilter[F](private[table] val toJs: String):
+  case IncludesString          extends BuiltInFilter("includesString")
+  case IncludesStringSensitive extends BuiltInFilter("includesStringSensitive")
+  case EqualsString            extends BuiltInFilter("equalsString")
+  case EqualsStringSensitive   extends BuiltInFilter("equalsStringSensitive")
+  case ArrIncludes             extends BuiltInFilter("arrIncludes")
+  case ArrIncludesAll          extends BuiltInFilter("arrIncludesAll")
+  case ArrIncludesSome         extends BuiltInFilter("arrIncludesSome")
+  case Equals                  extends BuiltInFilter("equals")
+  case WeakEquals              extends BuiltInFilter("weakEquals")
+  case InNumberRange           extends BuiltInFilter("inNumberRange")
+
+object BuiltInFilter:
+  private[table] def fromJs(rawValue: String): BuiltInFilter[?] =
+    BuiltInFilter.values.find(_.toJs == rawValue).get
 
 // enum FilterFn[T, TM, F, FM](val toJs: BuiltInFilterFn | rawFilter.FilterFn[T]):
 //   case IncludesString
@@ -106,37 +116,46 @@ import raw.FilterMeta
 //     : Conversion[(Row[T, TM], ColumnId, F, FM => Unit) => Boolean, FilterFn.Custom[T, TM, F, FM]] =
 //     FilterFn.Custom[T, TM, F, FM](_)
 
-case class FilterFn[T, TM, F, FM](fn: (Row[T, TM], ColumnId, F, FM => Unit) => Boolean) {
-// resolveFilterValue?: TransformFilterValueFn<TData>
-// autoRemove?: ColumnFilterAutoRemoveTestFn<TData>
+// // trait FilterFn[T, TM, F, FM] extends ((Row[T, TM], ColumnId, F, FM => Unit) => Boolean) { self =>
+// // // resolveFilterValue?: TransformFilterValueFn<TData>
+// // // autoRemove?: ColumnFilterAutoRemoveTestFn<TData>
 
-  def toJs: rawFilter.FilterFn[T] =
-    val f: js.Function4[raw.Row[T], String, Any, js.Function1[FilterMeta, Unit], Boolean] =
-      (
-        row:         raw.Row[T],
-        colId:       String,
-        filterValue: Any,
-        addMeta:     js.Function1[FilterMeta, Unit]
-      ) =>
-        fn(
-          Row(row),
-          ColumnId(colId),
-          filterValue.asInstanceOf[F],
-          (m: FM) => addMeta(m.asInstanceOf[FilterMeta])
-        )
+// //   def toJs: rawFilter.FilterFn[T] =
+// //     val fn: js.Function4[raw.Row[T], String, Any, js.Function1[FilterMeta, Unit], Boolean] =
+// //       (
+// //         row:         raw.Row[T],
+// //         colId:       String,
+// //         filterValue: Any,
+// //         addMeta:     js.Function1[FilterMeta, Unit]
+// //       ) =>
+// //         self.apply(
+// //           Row(row),
+// //           ColumnId(colId),
+// //           filterValue.asInstanceOf[F],
+// //           (m: FM) => addMeta(m.asInstanceOf[FilterMeta])
+// //         )
 
-    val p: rawFilter.FilterFn[T] = f.asInstanceOf[rawFilter.FilterFn[T]]
-    // resolveFilterValue?: TransformFilterValueFn<TData>
-    // autoRemove?: ColumnFilterAutoRemoveTestFn<TData>
+// //     val p: rawFilter.FilterFn[T] = fn.asInstanceOf[rawFilter.FilterFn[T]]
+// //     // resolveFilterValue?: TransformFilterValueFn<TData>
+// //     // autoRemove?: ColumnFilterAutoRemoveTestFn<TData>
 
-    p
-}
+// //     p
+// // }
 
-object FilterFn:
-  given [T, TM, F, FM]
-    : Conversion[(Row[T, TM], ColumnId, F, FM => Unit) => Boolean, FilterFn[T, TM, F, FM]] =
-    FilterFn[T, TM, F, FM](_)
+// // object FilterFn:
+// //   given [T, TM, F, FM]
+// //     : Conversion[(Row[T, TM], ColumnId, F, FM => Unit) => Boolean, FilterFn[T, TM, F, FM]] =
+// //     fn =>
+// //       new FilterFn[T, TM, F, FM] {
+// //         override def apply(
+// //           row:         Row[T, TM],
+// //           colId:       ColumnId,
+// //           filterValue: F,
+// //           addMeta:     FM => Unit
+// //         ): Boolean =
+// //           fn(row, colId, filterValue, addMeta)
+// //       }
 
-  def fromJs[T, TM, F, FM](fn: rawFilter.FilterFn[T]): FilterFn[T, TM, F, FM] =
-    FilterFn: (row: Row[T, TM], colId: ColumnId, filterValue: F, addMeta: FM => Unit) =>
-      fn(row.toJs, colId.value, filterValue, (m: Any) => addMeta(m.asInstanceOf[FM]))
+// //   def fromJs[T](fn: rawFilter.FilterFn[T]): FilterFn[T, Any, Any, Any] =
+// //     val p: (Row[T], ColumnId, Any, Any => Unit) => Boolean =
+// //       (row: Row[T], colId: ColumnId, filterValue: Any, addMeta: Any => Unit) =>

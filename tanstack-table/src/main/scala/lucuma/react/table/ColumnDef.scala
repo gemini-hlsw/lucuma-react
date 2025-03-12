@@ -32,8 +32,7 @@ sealed trait ColumnDef[T, A, TM, CM, F, FM]:
   def enablePinning: js.UndefOr[Boolean]
 
   // Column Filtering
-  def filterFn
-    : js.UndefOr[FilterFn[T, TM, F, FM]] // TODO: | keyof FilterFns | keyof BuiltInFilterFns
+  def filterFn: js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]]
   def enableColumnFilter: js.UndefOr[Boolean]
 
   private[table] def toJs: ColumnDefJs[T, A, TM, CM, F, FM]
@@ -243,19 +242,25 @@ object ColumnDef:
       Single { toJs.enablePinning = enablePinning; toJs }
 
     // Column Filtering
-    def filterFn: js.UndefOr[FilterFn[T, TM, F, FM]] = toJs.filterFn.map(fn =>
-      (row: Row[T, TM], colId: ColumnId, filterValue: F, addMeta: FM => Unit) =>
-        fn.asInstanceOf[raw.buildLibFeaturesColumnFilteringMod.FilterFn[T]](
-          row.toJs,
-          colId.value,
-          filterValue,
-          (m: Any) => addMeta(m.asInstanceOf[FM])
-        )
-    )
+    def filterFn: js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]] =
+      toJs.filterFn.map(v =>
+        js.typeOf(v) match
+          case "string" =>
+            BuiltInFilter.fromJs(v.asInstanceOf[String]).asInstanceOf[BuiltInFilter[F]]
+          case fn       =>
+            FilterFn.fromJs(fn.asInstanceOf[raw.buildLibFeaturesColumnFilteringMod.FilterFn[T]])
+      )
 
     /** WARNING: This mutates the object in-place. */
-    def setFilterFn(filterFn: js.UndefOr[FilterFn[T, TM, F, FM]]): Single[T, A, TM, CM, F, FM] =
-      Single { toJs.filterFn = filterFn.map(_.toJs); toJs }
+    def setFilterFn[F1, FM1](
+      filterFn: js.UndefOr[BuiltInFilter[F1] | FilterFn[T, TM, F1, FM1]]
+    ): Single[T, A, TM, CM, F1, FM1] =
+      Single {
+        toJs.filterFn = filterFn match
+          case builtIn: BuiltInFilter[F1] => builtIn.toJs
+          case fn                         => fn.asInstanceOf[FilterFn[T, TM, F1, FM1]].toJs
+        toJs.asInstanceOf[ColumnDefJs[T, A, TM, CM, F1, FM1]]
+      }
 
     def enableColumnFilter: js.UndefOr[Boolean] = toJs.enableColumnFilter
 
@@ -304,7 +309,7 @@ object ColumnDef:
       // Column Pinning
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
-      filterFn:           js.UndefOr[FilterFn[T, TM, F, FM]] = js.undefined,
+      filterFn:           js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]] = js.undefined,
       enableColumnFilter: js.UndefOr[Boolean] = js.undefined
     ): Single[T, A, TM, CM, F, FM] = {
       val p: ColumnDefJs[T, A, TM, CM, F, FM] =
@@ -443,19 +448,25 @@ object ColumnDef:
       Group { toJs.enablePinning = enablePinning; toJs }
 
     // Column Filtering
-    def filterFn: js.UndefOr[FilterFn[T, TM, F, FM]] = toJs.filterFn.map(fn =>
-      (row: Row[T, TM], colId: ColumnId, filterValue: F, addMeta: FM => Unit) =>
-        fn.asInstanceOf[raw.buildLibFeaturesColumnFilteringMod.FilterFn[T]](
-          row.toJs,
-          colId.value,
-          filterValue,
-          (m: Any) => addMeta(m.asInstanceOf[FM])
-        )
-    )
+    def filterFn: js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]] =
+      toJs.filterFn.map(v =>
+        js.typeOf(v) match
+          case "string" =>
+            BuiltInFilter.fromJs(v.asInstanceOf[String]).asInstanceOf[BuiltInFilter[F]]
+          case fn       =>
+            FilterFn.fromJs(fn.asInstanceOf[raw.buildLibFeaturesColumnFilteringMod.FilterFn[T]])
+      )
 
     /** WARNING: This mutates the object in-place. */
-    def setFilterFn(filterFn: js.UndefOr[FilterFn[T, TM, F, FM]]): Group[T, TM, CM, F, FM] =
-      Group { toJs.filterFn = filterFn.map(_.toJs); toJs }
+    def setFilterFn[F1, FM1](
+      filterFn: js.UndefOr[BuiltInFilter[F1] | FilterFn[T, TM, F1, FM1]]
+    ): Group[T, TM, CM, F1, FM1] =
+      Group {
+        toJs.filterFn = filterFn match
+          case builtIn: BuiltInFilter[F1] => builtIn.toJs
+          case fn                         => fn.asInstanceOf[FilterFn[T, TM, F1, FM1]].toJs
+        toJs.asInstanceOf[ColumnDefJs[T, Nothing, TM, CM, F1, FM1]]
+      }
 
     def enableColumnFilter: js.UndefOr[Boolean] = toJs.enableColumnFilter
 
@@ -497,7 +508,7 @@ object ColumnDef:
       // Column Pinning
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
-      filterFn:           js.UndefOr[FilterFn[T, TM, F, FM]] = js.undefined,
+      filterFn:           js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]] = js.undefined,
       enableColumnFilter: js.UndefOr[Boolean] = js.undefined
     ): Group[T, TM, CM, F, FM] = {
       val p: ColumnDefJs[T, Nothing, TM, CM, F, FM] =
@@ -559,7 +570,7 @@ object ColumnDef:
       // Column Pinning
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
-      filterFn:           js.UndefOr[FilterFn[T, TM, F, FM]] = js.undefined,
+      filterFn:           js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]] = js.undefined,
       enableColumnFilter: js.UndefOr[Boolean] = js.undefined
     ): Single[T, A, TM, Nothing, F, FM] =
       Single(

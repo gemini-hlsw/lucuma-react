@@ -7,7 +7,6 @@ import japgolly.scalajs.react.facade.React.Node
 import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
-import raw.buildLibFeaturesColumnFilteringMod.FilterFn
 
 trait ColumnDefJs[T, A, TM, CM, F, FM] extends js.Object:
   var id: String
@@ -41,5 +40,6 @@ trait ColumnDefJs[T, A, TM, CM, F, FM] extends js.Object:
   var enablePinning: js.UndefOr[Boolean] = js.undefined
 
   // Column Filtering
-  var filterFn: js.UndefOr[FilterFn[T]] // TODO: | keyof FilterFns | keyof BuiltInFilterFns
-  var enableColumnFilter: js.UndefOr[Boolean] = js.undefined
+  var filterFn: js.UndefOr[String | raw.buildLibFeaturesColumnFilteringMod.FilterFn[T]] =
+    js.undefined
+  var enableColumnFilter: js.UndefOr[Boolean]                                           = js.undefined
