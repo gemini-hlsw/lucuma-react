@@ -194,3 +194,12 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
     toJs.getBottomRows().toList.map(Row(_))
   def getCenterRows(): List[Row[T, TM]]                                =
     toJs.getCenterRows().toList.map(Row(_))
+
+  // Column Filtering
+  def setColumnFilters(value:          ColumnFilters): Callback   = Callback(toJs.setColumnFilters(value.toJs))
+  def modColumnFilters(f: Endo[ColumnFilters]): Callback          = Callback:
+    toJs.setColumnFilters(v => f(ColumnFilters.fromJs(v)).toJs)
+  def resetColumnFilters()                                        = toJs.resetColumnFilters()
+  def resetColumnFilters(defaultState: Boolean)                   = toJs.resetColumnFilters(defaultState)
+  def getPreFilteredRowModel(): RowModel[T, TM]                   = RowModel(toJs.getPreFilteredRowModel())
+  def getFilteredRowModel(): RowModel[T, TM]                      = RowModel(toJs.getFilteredRowModel())

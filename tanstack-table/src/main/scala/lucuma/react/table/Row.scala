@@ -10,7 +10,6 @@ import org.scalajs.dom
 
 import scalajs.js.JSConverters.*
 
-// Missing: Filters
 case class Row[T, TM] private[table] (private[table] val toJs: raw.buildLibTypesMod.Row[T]):
   lazy val depth: Int                                      = toJs.depth.toInt
   lazy val id: RowId                                       = RowId(toJs.id)
@@ -66,3 +65,9 @@ case class Row[T, TM] private[table] (private[table] val toJs: raw.buildLibTypes
   def getCanPin(): Boolean                        = toJs.getCanPin()
   def getIsPinned(): Option[RowPinningPosition]   = RowPinningPosition.fromJs(toJs.getIsPinned())
   def getPinnedIndex(): Int                       = toJs.getPinnedIndex().toInt
+
+  // Column Filtering
+  def columnFilters: Map[ColumnId, FilterResult] =
+    toJs.columnFilters.map((colId, pass) => (ColumnId(colId), FilterResult.fromBoolean(pass))).toMap
+  def columnFiltersMeta: Map[ColumnId, Any]      =
+    toJs.columnFiltersMeta.map((colId, value) => (ColumnId(colId), value)).toMap

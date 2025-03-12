@@ -4,8 +4,10 @@
 package lucuma.react.table.facade
 
 import lucuma.typed.tanstackTableCore as raw
+// import lucuma.typed.std.Record
 
 import scalajs.js
+// import raw.buildLibFeaturesColumnFilteringMod.FilterFn
 
 trait TableOptionsJs[T, TM] extends js.Object:
   var columns: js.Array[ColumnDefJs[T, ?, TM, ?, ?, ?]]
@@ -86,8 +88,24 @@ trait TableOptionsJs[T, TM] extends js.Object:
   // Row Pinning
   var enableRowPinning: js.UndefOr[Boolean | js.Function1[raw.buildLibTypesMod.Row[T], Boolean]] =
     js.undefined
-  var keepPinnedRows: js.UndefOr[Boolean]                                                        = js.undefined
+  var keepPinnedRows: js.UndefOr[Boolean]                                                        =
+    js.undefined
   var onRowPinningChange: js.UndefOr[
     raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesRowPinningMod.RowPinningState]
   ] =
     js.undefined
+
+  // Column Filtering
+  // var filterFns: js.UndefOr[Record[String, FilterFn[Any]]] = js.undefined
+  var filterFromLeafRows: js.UndefOr[Boolean]   = js.undefined
+  var maxLeafRowFilterDepth: js.UndefOr[Double] = js.undefined
+  var enableFilters: js.UndefOr[Boolean]        = js.undefined
+  var manualFiltering: js.UndefOr[Boolean]      = js.undefined
+  var onColumnFiltersChange: js.UndefOr[
+    raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesColumnFilteringMod.ColumnFiltersState]
+  ] =
+    js.undefined
+  var enableColumnFilters: js.UndefOr[Boolean]  = js.undefined
+  var getFilteredRowModel: js.UndefOr[
+    js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]
+  ] = js.undefined

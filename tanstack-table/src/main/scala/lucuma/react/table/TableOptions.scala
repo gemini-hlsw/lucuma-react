@@ -479,6 +479,80 @@ sealed trait TableOptions[T, TM]:
             case Updater.Mod(mod) => Updater.Mod(v => RowPinning.fromJs(mod(v.toJs)))
         ).runNow())
 
+  // Column Filtering
+  lazy val filterFromLeafRows: Option[Boolean] = toJsBase.filterFromLeafRows.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setFilterFromLeafRows(filterFromLeafRows: Option[Boolean]): TableOptions[T, TM] =
+    copy(_.filterFromLeafRows = filterFromLeafRows.orUndefined)
+
+  lazy val maxLeafRowFilterDepth: Option[Double] = toJsBase.maxLeafRowFilterDepth.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setMaxLeafRowFilterDepth(maxLeafRowFilterDepth: Option[Double]): TableOptions[T, TM] =
+    copy(_.maxLeafRowFilterDepth = maxLeafRowFilterDepth.orUndefined)
+
+  lazy val enableFilters: Option[Boolean] = toJsBase.enableFilters.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setEnableFilters(enableFilters: Option[Boolean]): TableOptions[T, TM] =
+    copy(_.enableFilters = enableFilters.orUndefined)
+
+  lazy val manualFiltering: Option[Boolean] = toJsBase.manualFiltering.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setManualFiltering(manualFiltering: Option[Boolean]): TableOptions[T, TM] =
+    copy(_.manualFiltering = manualFiltering.orUndefined)
+
+  lazy val onColumnFiltersChange: Option[Updater[ColumnFilters] => Callback] =
+    toJsBase.onColumnFiltersChange.toOption.map: fn =>
+      u =>
+        Callback(fn((u match
+          case Updater.Set(v)   => Updater.Set(v.toJs)
+          case Updater.Mod(mod) =>
+            Updater.Mod((v: raw.buildLibFeaturesColumnFilteringMod.ColumnFiltersState) =>
+              mod(ColumnFilters.fromJs(v)).toJs
+            )
+        ).toJs))
+
+  /** WARNING: This mutates the object in-place. */
+  def setOnColumnFiltersChange(
+    onColumnFiltersChange: Option[Updater[ColumnFilters] => Callback]
+  ): TableOptions[T, TM] =
+    copy(_.onColumnFiltersChange = onColumnFiltersChange.orUndefined.map: fn =>
+      u =>
+        fn(
+          Updater.fromJs(u) match
+            case Updater.Set(v)   => Updater.Set(ColumnFilters.fromJs(v))
+            case Updater.Mod(mod) => Updater.Mod(v => ColumnFilters.fromJs(mod(v.toJs)))
+        ).runNow())
+
+  lazy val enableColumnFilters: Option[Boolean] = toJsBase.enableColumnFilters.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setEnableColumnFilters(enableColumnFilters: Option[Boolean]): TableOptions[T, TM] =
+    copy(_.enableColumnFilters = enableColumnFilters.orUndefined)
+
+  lazy val getFilteredRowModel: Option[Table[T, TM] => () => RowModel[T, TM]] =
+    toJsBase.getFilteredRowModel.toOption.map(fn =>
+      t => (fn(t.toJs): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
+    )
+
+  /** WARNING: This mutates the object in-place. */
+  def setGetFilteredRowModel(
+    getFilteredRowModel: Option[Table[T, TM] => () => RowModel[T, TM]]
+  ): TableOptions[T, TM] =
+    copy(_.getFilteredRowModel =
+      getFilteredRowModel.orUndefined
+        .map(fn =>
+          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t)).map(_.toJs)): js.Function1[
+            raw.buildLibTypesMod.Table[T],
+            js.Function0[raw.buildLibTypesMod.RowModel[T]]
+          ]
+        )
+        .getOrElse(rawReact.mod.getFilteredRowModel())
+    )
+
 end TableOptions
 
 object TableOptions:
@@ -527,7 +601,16 @@ object TableOptions:
     // Row Pinning
     enableRowPinning:         js.UndefOr[RowPinningEnabled[T, TM]] = js.undefined,
     keepPinnedRows:           js.UndefOr[Boolean] = js.undefined,
-    onRowPinningChange:       js.UndefOr[Updater[RowPinning] => Callback] = js.undefined
+    onRowPinningChange:       js.UndefOr[Updater[RowPinning] => Callback] = js.undefined,
+    // Column Filtering
+    // filterFns:                js.UndefOr[Record[String, FilterFn[Any]]] = js.undefined,
+    filterFromLeafRows:       js.UndefOr[Boolean] = js.undefined,
+    maxLeafRowFilterDepth:    js.UndefOr[Double] = js.undefined,
+    enableFilters:            js.UndefOr[Boolean] = js.undefined,
+    manualFiltering:          js.UndefOr[Boolean] = js.undefined,
+    onColumnFiltersChange:    js.UndefOr[Option[Updater[ColumnFilters] => Callback]] = js.undefined,
+    enableColumnFilters:      js.UndefOr[Boolean] = js.undefined,
+    getFilteredRowModel:      js.UndefOr[Table[T, TM] => () => RowModel[T, TM]] = js.undefined
   ): TableOptions[T, TM] =
     new TableOptions[T, TM] {
       val columns                 = columns_
@@ -573,6 +656,13 @@ object TableOptions:
       .applyOrNot(enableRowPinning, (p, v) => p.setEnableRowPinning(v.some))
       .applyOrNot(keepPinnedRows, (p, v) => p.setKeepPinnedRows(v.some))
       .applyOrNot(onRowPinningChange, (p, v) => p.setOnRowPinningChange(v.some))
+      .applyOrNot(filterFromLeafRows, (p, v) => p.setFilterFromLeafRows(v.some))
+      .applyOrNot(maxLeafRowFilterDepth, (p, v) => p.setMaxLeafRowFilterDepth(v.some))
+      .applyOrNot(enableFilters, (p, v) => p.setEnableFilters(v.some))
+      .applyOrNot(manualFiltering, (p, v) => p.setManualFiltering(v.some))
+      .applyOrNot(onColumnFiltersChange, (p, v) => p.setOnColumnFiltersChange(v))
+      .applyOrNot(enableColumnFilters, (p, v) => p.setEnableColumnFilters(v.some))
+      .applyOrNot(getFilteredRowModel, (p, v) => p.setGetFilteredRowModel(v.some))
 
   private[table] def fromJs[T, TM](raw: TableOptionsJs[T, TM]): TableOptions[T, TM] =
     new TableOptions[T, TM]:
