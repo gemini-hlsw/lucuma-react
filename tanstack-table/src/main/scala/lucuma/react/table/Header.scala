@@ -54,7 +54,7 @@ case class Header[T, A, TM, CM, F, FM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  def getLeafHeaders(): List[Header[T, Any, TM, Any, Any, Any]] =
+  def getLeafHeaders(): List[Header[T, Any, TM, CM, Any, Any]] =
     toJs.getLeafHeaders().toList.map(Header(_))
 
   /**
@@ -64,7 +64,7 @@ case class Header[T, A, TM, CM, F, FM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  lazy val headerGroup: HeaderGroup[T, TM] = HeaderGroup(toJs.headerGroup)
+  lazy val headerGroup: HeaderGroup[T, TM, CM] = HeaderGroup(toJs.headerGroup)
 
   /**
    * The unique identifier for the header.
@@ -120,8 +120,8 @@ case class Header[T, A, TM, CM, F, FM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  lazy val subHeaders: List[Header[T, Any, TM, Any, Any, Any]] =
-    toJs.subHeaders.toList.map(Header(_).asInstanceOf[Header[T, Any, TM, Any, Any, Any]])
+  lazy val subHeaders: List[Header[T, Any, TM, CM, Any, Any]] =
+    toJs.subHeaders.toList.map(Header(_).asInstanceOf[Header[T, Any, TM, CM, Any, Any]])
 
   // ColumnSizingHeader
 

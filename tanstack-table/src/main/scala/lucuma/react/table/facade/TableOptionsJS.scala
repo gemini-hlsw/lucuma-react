@@ -8,8 +8,8 @@ import lucuma.typed.tanstackTableCore as raw
 import scalajs.js
 // import raw.buildLibFeaturesColumnFilteringMod.FilterFn
 
-trait TableOptionsJs[T, TM] extends js.Object:
-  var columns: js.Array[ColumnDefJs[T, ?, TM, ?, ?, ?]]
+trait TableOptionsJs[T, TM, CM] extends js.Object:
+  var columns: js.Array[ColumnDefJs[T, ?, TM, CM, ?, ?]]
   var data: js.Array[T]
 
   var getCoreRowModel: js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[

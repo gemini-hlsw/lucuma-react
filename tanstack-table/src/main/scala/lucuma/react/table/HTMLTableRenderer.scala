@@ -46,7 +46,7 @@ trait HTMLTableRenderer[T]:
   protected val SortAscIndicator: VdomNode  = "↑"
   protected val SortDescIndicator: VdomNode = "↓"
 
-  protected def sortIndicator[T, TM](col: Column[T, ?, TM, ?, ?, ?]): VdomNode =
+  protected def sortIndicator[T, TM, CM](col: Column[T, ?, TM, CM, ?, ?]): VdomNode =
     col
       .getIsSorted()
       .fold(if (col.getCanSort()) SortableIndicator else EmptyVdom): sortDirection =>
@@ -55,8 +55,8 @@ trait HTMLTableRenderer[T]:
           if (sortDirection == SortDirection.Descending) SortDescIndicator else SortAscIndicator
         <.span(ascDesc, <.small(index))
 
-  protected def resizer[T, TM](
-    header:     Header[T, ?, TM, ?, ?, ?],
+  protected def resizer[T, TM, CM](
+    header:     Header[T, ?, TM, CM, ?, ?],
     resizeMode: Option[ColumnResizeMode],
     sizingInfo: ColumnSizingInfo
   ): VdomNode =
@@ -77,22 +77,22 @@ trait HTMLTableRenderer[T]:
       )(ResizerContent)
     else EmptyVdom
 
-  def render[T, TM](
-    table:         Table[T, TM],
-    rows:          List[Row[T, TM]],
+  def render[T, TM, CM](
+    table:         Table[T, TM, CM],
+    rows:          List[Row[T, TM, CM]],
     tableMod:      TagMod = TagMod.empty,
     headerMod:     TagMod = TagMod.empty,
-    headerRowMod:  HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
-    headerCellMod: Header[T, Any, TM, Any, Any, Any] => TagMod =
-      (_: Header[T, Any, TM, Any, Any, Any]) => TagMod.empty,
+    headerRowMod:  HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
+    headerCellMod: Header[T, Any, TM, CM, Any, Any] => TagMod =
+      (_: Header[T, Any, TM, CM, Any, Any]) => TagMod.empty,
     bodyMod:       TagMod = TagMod.empty,
-    rowMod:        Row[T, TM] => TagMod = (_: Row[T, TM]) => TagMod.empty,
-    cellMod:       Cell[T, Any, TM, Any, Any, Any] => TagMod = (_: Cell[T, Any, TM, Any, Any, Any]) =>
+    rowMod:        Row[T, TM, CM] => TagMod = (_: Row[T, TM, CM]) => TagMod.empty,
+    cellMod:       Cell[T, Any, TM, CM, Any, Any] => TagMod = (_: Cell[T, Any, TM, CM, Any, Any]) =>
       TagMod.empty,
     footerMod:     TagMod = TagMod.empty,
-    footerRowMod:  HeaderGroup[T, TM] => TagMod = (_: HeaderGroup[T, TM]) => TagMod.empty,
-    footerCellMod: Header[T, Any, TM, Any, Any, Any] => TagMod =
-      (_: Header[T, Any, TM, Any, Any, Any]) => TagMod.empty,
+    footerRowMod:  HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
+    footerCellMod: Header[T, Any, TM, CM, Any, Any] => TagMod =
+      (_: Header[T, Any, TM, CM, Any, Any]) => TagMod.empty,
     indexOffset:   Int = 0,
     paddingTop:    Option[Int] = none,
     paddingBottom: Option[Int] = none,
@@ -210,7 +210,7 @@ trait HTMLTableRenderer[T]:
                     cellMod(cell)
                   )(
                     cell.column.columnDef match
-                      case colDef @ ColumnDef.Single[T, Any, TM, Any, Any, Any](_) =>
+                      case colDef @ ColumnDef.Single[T, Any, TM, CM, Any, Any](_) =>
                         rawReact.mod.flexRender(
                           colDef.toJs.cell
                             .asInstanceOf[rawReact.mod.Renderable[
@@ -282,8 +282,10 @@ trait HTMLTableRenderer[T]:
     )
 
 object HTMLTableRenderer:
-  def componentBuilder[T, M, Props <: HTMLTableProps[_, _]](renderer: HTMLTableRenderer[T]) =
-    ScalaFnComponent[Props[T, M]]: props =>
+  def componentBuilder[T, TM, CM, Props <: HTMLTableProps[_, _, _]](
+    renderer: HTMLTableRenderer[T]
+  ) =
+    ScalaFnComponent[Props[T, TM, CM]]: props =>
       renderer.render(
         props.table,
         props.table.getRowModel().rows,
@@ -300,11 +302,11 @@ object HTMLTableRenderer:
         emptyMessage = props.emptyMessage
       )
 
-  def componentBuilderVirtualized[T, M, Props <: HTMLVirtualizedTableProps[_, _]](
+  def componentBuilderVirtualized[T, TM, CM, Props <: HTMLVirtualizedTableProps[_, _, _]](
     renderer: HTMLTableRenderer[T]
   ) =
     ScalaFnComponent
-      .withHooks[Props[T, M]]
+      .withHooks[Props[T, TM, CM]]
       .useRefToVdom[HTMLDivElement]
       .useVirtualizerBy: (props, ref) =>
         VirtualOptions(
@@ -347,13 +349,15 @@ object HTMLTableRenderer:
           )
         )
 
-  def componentBuilderAutoHeightVirtualized[T, M, Props <: HTMLAutoHeightVirtualizedTableProps[_,
-                                                                                               _
+  def componentBuilderAutoHeightVirtualized[T, TM, CM, Props <: HTMLAutoHeightVirtualizedTableProps[
+    _,
+    _,
+    _
   ]](
     renderer: HTMLTableRenderer[T]
   ) =
     ScalaFnComponent
-      .withHooks[Props[T, M]]
+      .withHooks[Props[T, TM, CM]]
       .useRefToVdom[HTMLDivElement]
       .localValBy((props, ownRef) => props.containerRef.getOrElse(ownRef)) // containerRef
       .useVirtualizerBy: (props, _, containerRef) =>

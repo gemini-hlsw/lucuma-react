@@ -14,51 +14,51 @@ import org.scalajs.dom
 import scalajs.js.JSConverters.*
 
 // Missing: ColumnOrder, Filters, Grouping, Pagination
-case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTypesMod.Table[T]):
-  def getAllColumns(): List[Column[T, Any, TM, Any, Any, Any]]                    =
+case class Table[T, TM, CM] private[table] (private[table] val toJs: raw.buildLibTypesMod.Table[T]):
+  def getAllColumns(): List[Column[T, Any, TM, CM, Any, Any]]                    =
     toJs.getAllColumns().toList.map(Column(_))
-  def getAllFlatColumns(): List[Column[T, Any, TM, Any, Any, Any]]                =
+  def getAllFlatColumns(): List[Column[T, Any, TM, CM, Any, Any]]                =
     toJs.getAllFlatColumns().toList.map(Column(_))
-  def getAllLeafColumns(): List[Column[T, Any, TM, Any, Any, Any]]                =
+  def getAllLeafColumns(): List[Column[T, Any, TM, CM, Any, Any]]                =
     toJs.getAllLeafColumns().toList.map(Column(_))
-  def getColumn(columnId: String): Option[Column[T, Any, TM, Any, Any, Any]]      =
+  def getColumn(columnId: String): Option[Column[T, Any, TM, CM, Any, Any]]      =
     toJs.getColumn(columnId).toOption.map(Column(_))
-  def getCoreRowModel(): RowModel[T, TM]                                          = RowModel(toJs.getCoreRowModel())
-  def getRow(id:      String): Row[T, TM]                                         = Row(toJs.getRow(id))
-  def getRowModel(): RowModel[T, TM]                                              = RowModel(toJs.getRowModel())
-  def getState(): TableState                                                      = TableState(toJs.getState())
-  lazy val initialState: TableState                                               = TableState(toJs.initialState)
-  lazy val options: TableOptions[T, TM]                                           =
-    TableOptions.fromJs(toJs.options.asInstanceOf[TableOptionsJs[T, TM]])
-  def reset(): Callback                                                           = Callback(toJs.reset())
-  def setState(value: TableState): Callback                                       = Callback(toJs.setState(value.toJs))
-  def modState(f: Endo[TableState]): Callback                                     =
+  def getCoreRowModel(): RowModel[T, TM, CM]                                     = RowModel(toJs.getCoreRowModel())
+  def getRow(id:      String): Row[T, TM, CM]                                    = Row(toJs.getRow(id))
+  def getRowModel(): RowModel[T, TM, CM]                                         = RowModel(toJs.getRowModel())
+  def getState(): TableState                                                     = TableState(toJs.getState())
+  lazy val initialState: TableState                                              = TableState(toJs.initialState)
+  lazy val options: TableOptions[T, TM, CM]                                      =
+    TableOptions.fromJs(toJs.options.asInstanceOf[TableOptionsJs[T, TM, CM]])
+  def reset(): Callback                                                          = Callback(toJs.reset())
+  def setState(value: TableState): Callback                                      = Callback(toJs.setState(value.toJs))
+  def modState(f: Endo[TableState]): Callback                                    =
     Callback(toJs.setState(rawState => f(TableState(rawState)).toJs))
 
   // Headers
-  def getFlatHeaders(): List[Header[T, Any, TM, Any, Any, Any]] =
+  def getFlatHeaders(): List[Header[T, Any, TM, CM, Any, Any]] =
     toJs.getFlatHeaders().toList.map(Header(_))
-  def getFooterGroups(): List[HeaderGroup[T, TM]]               =
+  def getFooterGroups(): List[HeaderGroup[T, TM, CM]]          =
     toJs.getFooterGroups().toList.map(HeaderGroup(_))
-  def getHeaderGroups(): List[HeaderGroup[T, TM]]               =
+  def getHeaderGroups(): List[HeaderGroup[T, TM, CM]]          =
     toJs.getHeaderGroups().toList.map(HeaderGroup(_))
-  def getLeafHeaders(): List[Header[T, Any, TM, Any, Any, Any]] =
+  def getLeafHeaders(): List[Header[T, Any, TM, CM, Any, Any]] =
     toJs.getLeafHeaders().toList.map(Header(_))
 
   // Visibility
-  def getCenterVisibleLeafColumns(): List[Column[T, Any, TM, Any, Any, Any]]       =
+  def getCenterVisibleLeafColumns(): List[Column[T, Any, TM, CM, Any, Any]]        =
     toJs.getCenterVisibleLeafColumns().toList.map(Column(_))
   def getIsAllColumnsVisible(): Boolean                                            = toJs.getIsAllColumnsVisible()
   def getIsSomeColumnsVisible(): Boolean                                           = toJs.getIsSomeColumnsVisible()
-  def getLeftVisibleLeafColumns(): List[Column[T, Any, TM, Any, Any, Any]]         =
+  def getLeftVisibleLeafColumns(): List[Column[T, Any, TM, CM, Any, Any]]          =
     toJs.getLeftVisibleLeafColumns().toList.map(Column(_))
-  def getRightVisibleLeafColumns(): List[Column[T, Any, TM, Any, Any, Any]]        =
+  def getRightVisibleLeafColumns(): List[Column[T, Any, TM, CM, Any, Any]]         =
     toJs.getRightVisibleLeafColumns().toList.map(Column(_))
   def getToggleAllColumnsVisibilityHandler(): SyntheticEvent[dom.Node] => Callback =
     e => Callback(toJs.getToggleAllColumnsVisibilityHandler()(e))
-  def getVisibleFlatColumns(): List[Column[T, Any, TM, Any, Any, Any]]             =
+  def getVisibleFlatColumns(): List[Column[T, Any, TM, CM, Any, Any]]              =
     toJs.getVisibleFlatColumns().toList.map(Column(_))
-  def getVisibleLeafColumns(): List[Column[T, Any, TM, Any, Any, Any]]             =
+  def getVisibleLeafColumns(): List[Column[T, Any, TM, CM, Any, Any]]              =
     toJs.getVisibleLeafColumns().toList.map(Column(_))
   def resetColumnVisibility(): Callback                                            = Callback(toJs.resetColumnVisibility())
   def resetColumnVisibility(defaultState: Boolean): Callback                       =
@@ -72,8 +72,8 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
     Callback(toJs.toggleAllColumnsVisible(value))
 
   // Sorting
-  def getPreSortedRowModel(): RowModel[T, TM]       = RowModel(toJs.getPreSortedRowModel())
-  def getSortedRowModel(): RowModel[T, TM]          = RowModel(toJs.getSortedRowModel())
+  def getPreSortedRowModel(): RowModel[T, TM, CM]   = RowModel(toJs.getPreSortedRowModel())
+  def getSortedRowModel(): RowModel[T, TM, CM]      = RowModel(toJs.getSortedRowModel())
   def resetSorting(): Callback                      = Callback(toJs.resetSorting())
   def resetSorting(defaultState: Boolean): Callback = Callback(toJs.resetSorting(defaultState))
   def setSorting(value:          Sorting): Callback = Callback(toJs.setSorting(value.toJs))
@@ -102,10 +102,10 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
   // Expanded
   def getCanSomeRowsExpand(): Boolean                                         = toJs.getCanSomeRowsExpand()
   def getExpandedDepth(): Int                                                 = toJs.getExpandedDepth().toInt
-  def getExpandedRowModel(): RowModel[T, TM]                                  = RowModel(toJs.getExpandedRowModel())
+  def getExpandedRowModel(): RowModel[T, TM, CM]                              = RowModel(toJs.getExpandedRowModel())
   def getIsAllRowsExpanded(): Boolean                                         = toJs.getIsAllRowsExpanded()
   def getIsSomeRowsExpanded(): Boolean                                        = toJs.getIsSomeRowsExpanded()
-  def getPreExpandedRowModel(): RowModel[T, TM]                               = RowModel(toJs.getPreExpandedRowModel())
+  def getPreExpandedRowModel(): RowModel[T, TM, CM]                           = RowModel(toJs.getPreExpandedRowModel())
   def getToggleAllRowsExpandedHandler(): SyntheticEvent[dom.Node] => Callback =
     e => Callback(toJs.getToggleAllRowsExpandedHandler()(e))
   def resetExpanded(): Callback                                               = Callback(toJs.resetExpanded())
@@ -118,14 +118,18 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
     Callback(toJs.toggleAllRowsExpanded(expanded))
 
   // RowSelection
-  def getFilteredSelectedRowModel(): RowModel[T, TM]                              = RowModel(toJs.getFilteredSelectedRowModel())
-  def getGroupedSelectedRowModel(): RowModel[T, TM]                               = RowModel(toJs.getGroupedSelectedRowModel())
+  def getFilteredSelectedRowModel(): RowModel[T, TM, CM]                          = RowModel(
+    toJs.getFilteredSelectedRowModel()
+  )
+  def getGroupedSelectedRowModel(): RowModel[T, TM, CM]                           = RowModel(
+    toJs.getGroupedSelectedRowModel()
+  )
   def getIsAllPageRowsSelected(): Boolean                                         = toJs.getIsAllPageRowsSelected()
   def getIsAllRowsSelected(): Boolean                                             = toJs.getIsAllRowsSelected()
   def getIsSomePageRowsSelected(): Boolean                                        = toJs.getIsSomePageRowsSelected()
   def getIsSomeRowsSelected(): Boolean                                            = toJs.getIsSomeRowsSelected()
-  def getPreSelectedRowModel(): RowModel[T, TM]                                   = RowModel(toJs.getPreSelectedRowModel())
-  def getSelectedRowModel(): RowModel[T, TM]                                      = RowModel(toJs.getSelectedRowModel())
+  def getPreSelectedRowModel(): RowModel[T, TM, CM]                               = RowModel(toJs.getPreSelectedRowModel())
+  def getSelectedRowModel(): RowModel[T, TM, CM]                                  = RowModel(toJs.getSelectedRowModel())
   def getToggleAllPageRowsSelectedHandler(): SyntheticEvent[dom.Node] => Callback =
     e => Callback(toJs.getToggleAllPageRowsSelectedHandler()(e))
   def getToggleAllRowsSelectedHandler(): SyntheticEvent[dom.Node] => Callback     =
@@ -153,29 +157,29 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
   def getIsSomeColumnsPinned(): Boolean                                = toJs.getIsSomeColumnsPinned()
   def getIsSomeColumnsPinned(position: ColumnPinningPosition): Boolean =
     toJs.getIsSomeColumnsPinned(position.toJs)
-  def getCenterFlatHeaders(): List[Header[T, Any, TM, Any, Any, Any]]  =
+  def getCenterFlatHeaders(): List[Header[T, Any, TM, CM, Any, Any]]   =
     toJs.getCenterFlatHeaders().toList.map(Header(_))
-  def getCenterFooterGroups(): List[HeaderGroup[T, TM]]                =
+  def getCenterFooterGroups(): List[HeaderGroup[T, TM, CM]]            =
     toJs.getCenterFooterGroups().toList.map(HeaderGroup(_))
-  def getCenterHeaderGroups(): List[HeaderGroup[T, TM]]                =
+  def getCenterHeaderGroups(): List[HeaderGroup[T, TM, CM]]            =
     toJs.getCenterHeaderGroups().toList.map(HeaderGroup(_))
-  def getCenterLeafHeaders(): List[Header[T, Any, TM, Any, Any, Any]]  =
+  def getCenterLeafHeaders(): List[Header[T, Any, TM, CM, Any, Any]]   =
     toJs.getCenterLeafHeaders().toList.map(Header(_))
-  def getLeftFlatHeaders(): List[Header[T, Any, TM, Any, Any, Any]]    =
+  def getLeftFlatHeaders(): List[Header[T, Any, TM, CM, Any, Any]]     =
     toJs.getLeftFlatHeaders().toList.map(Header(_))
-  def getLeftFooterGroups(): List[HeaderGroup[T, TM]]                  =
+  def getLeftFooterGroups(): List[HeaderGroup[T, TM, CM]]              =
     toJs.getLeftFooterGroups().toList.map(HeaderGroup(_))
-  def getLeftHeaderGroups(): List[HeaderGroup[T, TM]]                  =
+  def getLeftHeaderGroups(): List[HeaderGroup[T, TM, CM]]              =
     toJs.getLeftHeaderGroups().toList.map(HeaderGroup(_))
-  def getLeftLeafHeaders(): List[Header[T, Any, TM, Any, Any, Any]]    =
+  def getLeftLeafHeaders(): List[Header[T, Any, TM, CM, Any, Any]]     =
     toJs.getLeftLeafHeaders().toList.map(Header(_))
-  def getRightFlatHeaders(): List[Header[T, Any, TM, Any, Any, Any]]   =
+  def getRightFlatHeaders(): List[Header[T, Any, TM, CM, Any, Any]]    =
     toJs.getRightFlatHeaders().toList.map(Header(_))
-  def getRightFooterGroups(): List[HeaderGroup[T, TM]]                 =
+  def getRightFooterGroups(): List[HeaderGroup[T, TM, CM]]             =
     toJs.getRightFooterGroups().toList.map(HeaderGroup(_))
-  def getRightHeaderGroups(): List[HeaderGroup[T, TM]]                 =
+  def getRightHeaderGroups(): List[HeaderGroup[T, TM, CM]]             =
     toJs.getRightHeaderGroups().toList.map(HeaderGroup(_))
-  def getRightLeafHeaders(): List[Header[T, Any, TM, Any, Any, Any]]   =
+  def getRightLeafHeaders(): List[Header[T, Any, TM, CM, Any, Any]]    =
     toJs.getRightLeafHeaders().toList.map(Header(_))
   // Row Pinning
   def setRowPinning(value:    RowPinning): Callback                    = Callback(toJs.setRowPinning(value.toJs))
@@ -188,11 +192,11 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
   def getIsSomeRowsPinned(): Boolean                                   = toJs.getIsSomeRowsPinned()
   def getIsSomeRowsPinned(position: RowPinningPosition): Boolean       =
     toJs.getIsSomeRowsPinned(position.toJs)
-  def getTopRows(): List[Row[T, TM]]                                   =
+  def getTopRows(): List[Row[T, TM, CM]]                               =
     toJs.getTopRows().toList.map(Row(_))
-  def getBottomRows(): List[Row[T, TM]]                                =
+  def getBottomRows(): List[Row[T, TM, CM]]                            =
     toJs.getBottomRows().toList.map(Row(_))
-  def getCenterRows(): List[Row[T, TM]]                                =
+  def getCenterRows(): List[Row[T, TM, CM]]                            =
     toJs.getCenterRows().toList.map(Row(_))
 
   // Column Filtering
@@ -201,5 +205,5 @@ case class Table[T, TM] private[table] (private[table] val toJs: raw.buildLibTyp
     toJs.setColumnFilters(v => f(ColumnFilters.fromJs(v)).toJs)
   def resetColumnFilters()                                        = toJs.resetColumnFilters()
   def resetColumnFilters(defaultState: Boolean)                   = toJs.resetColumnFilters(defaultState)
-  def getPreFilteredRowModel(): RowModel[T, TM]                   = RowModel(toJs.getPreFilteredRowModel())
-  def getFilteredRowModel(): RowModel[T, TM]                      = RowModel(toJs.getFilteredRowModel())
+  def getPreFilteredRowModel(): RowModel[T, TM, CM]               = RowModel(toJs.getPreFilteredRowModel())
+  def getFilteredRowModel(): RowModel[T, TM, CM]                  = RowModel(toJs.getFilteredRowModel())

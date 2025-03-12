@@ -10,4 +10,4 @@ case class HeaderContext[T, A, TM, CM, F, FM] private[table] (
 ):
   lazy val column: Column[T, A, TM, CM, F, FM] = Column(toJs.column)
   lazy val header: Header[T, A, TM, CM, F, FM] = Header(toJs.header)
-  lazy val table: Table[T, TM]                 = Table(toJs.table)
+  lazy val table: Table[T, TM, CM]             = Table(toJs.table)

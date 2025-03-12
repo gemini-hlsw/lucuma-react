@@ -106,7 +106,7 @@ import raw.FilterMeta
 //     : Conversion[(Row[T, TM], ColumnId, F, FM => Unit) => Boolean, FilterFn.Custom[T, TM, F, FM]] =
 //     FilterFn.Custom[T, TM, F, FM](_)
 
-case class FilterFn[T, TM, F, FM](fn: (Row[T, TM], ColumnId, F, FM => Unit) => Boolean) {
+case class FilterFn[T, TM, CM, F, FM](fn: (Row[T, TM, CM], ColumnId, F, FM => Unit) => Boolean) {
 // resolveFilterValue?: TransformFilterValueFn<TData>
 // autoRemove?: ColumnFilterAutoRemoveTestFn<TData>
 
@@ -133,10 +133,10 @@ case class FilterFn[T, TM, F, FM](fn: (Row[T, TM], ColumnId, F, FM => Unit) => B
 }
 
 object FilterFn:
-  given [T, TM, F, FM]
-    : Conversion[(Row[T, TM], ColumnId, F, FM => Unit) => Boolean, FilterFn[T, TM, F, FM]] =
-    FilterFn[T, TM, F, FM](_)
+  given [T, TM, CM, F, FM]
+    : Conversion[(Row[T, TM, CM], ColumnId, F, FM => Unit) => Boolean, FilterFn[T, TM, CM, F, FM]] =
+    FilterFn[T, TM, CM, F, FM](_)
 
-  def fromJs[T, TM, F, FM](fn: rawFilter.FilterFn[T]): FilterFn[T, TM, F, FM] =
-    FilterFn: (row: Row[T, TM], colId: ColumnId, filterValue: F, addMeta: FM => Unit) =>
+  def fromJs[T, TM, CM, F, FM](fn: rawFilter.FilterFn[T]): FilterFn[T, TM, CM, F, FM] =
+    FilterFn: (row: Row[T, TM, CM], colId: ColumnId, filterValue: F, addMeta: FM => Unit) =>
       fn(row.toJs, colId.value, filterValue, (m: Any) => addMeta(m.asInstanceOf[FM]))

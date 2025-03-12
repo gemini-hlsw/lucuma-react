@@ -32,7 +32,7 @@ sealed trait ColumnDef[T, A, TM, CM, F, FM]:
   def enablePinning: js.UndefOr[Boolean]
 
   // Column Filtering
-  def filterFn: js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]]
+  def filterFn: js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, CM, F, FM]]
   def enableColumnFilter: js.UndefOr[Boolean]
 
   private[table] def toJs: ColumnDefJs[T, A, TM, CM, F, FM]
@@ -192,12 +192,12 @@ object ColumnDef:
     ): Single[T, A, TM, CM, F, FM] =
       Single { toJs.sortUndefined = sortUndefined.map(_.toJs); toJs }
 
-    lazy val sortingFn: js.UndefOr[BuiltInSorting | SortingFn[T, TM]] =
+    lazy val sortingFn: js.UndefOr[BuiltInSorting | SortingFn[T, TM, CM]] =
       toJs.sortingFn.map(v =>
         js.typeOf(v) match
           case "string" => BuiltInSorting.fromJs(v.asInstanceOf[String])
           case fn       =>
-            (rowA: Row[T, TM], rowB: Row[T, TM], colId: ColumnId) =>
+            (rowA: Row[T, TM, CM], rowB: Row[T, TM, CM], colId: ColumnId) =>
               fn.asInstanceOf[raw.buildLibFeaturesRowSortingMod.SortingFn[T]](
                 rowA.toJs,
                 rowB.toJs,
@@ -207,14 +207,14 @@ object ColumnDef:
 
     /** WARNING: This mutates the object in-place. */
     def setSortingFn(
-      sortingFn: js.UndefOr[BuiltInSorting | SortingFn[T, TM]]
+      sortingFn: js.UndefOr[BuiltInSorting | SortingFn[T, TM, CM]]
     ): Single[T, A, TM, CM, F, FM] =
       Single {
         toJs.sortingFn = sortingFn match
           case builtIn: BuiltInSorting => builtIn.toJs
           case fn                      =>
             (rowA, rowB, colId) =>
-              fn.asInstanceOf[SortingFn[T, TM]](Row(rowA), Row(rowB), ColumnId(colId)).toDouble
+              fn.asInstanceOf[SortingFn[T, TM, CM]](Row(rowA), Row(rowB), ColumnId(colId)).toDouble
         toJs
       }
 
@@ -224,7 +224,7 @@ object ColumnDef:
 
     /** WARNING: This mutates the object in-place. */
     def sortableWith[B](f: (A, A) => Int): Single[T, A, TM, CM, F, FM] =
-      val sbfn: SortingFn[T, TM] = (r1, r2, col) => f(r1.getValue[A](col), r2.getValue[A](col))
+      val sbfn: SortingFn[T, TM, CM] = (r1, r2, col) => f(r1.getValue[A](col), r2.getValue[A](col))
       this.setSortingFn(sbfn).setEnableSorting(true)
 
     /** WARNING: This mutates the object in-place. */
@@ -242,7 +242,7 @@ object ColumnDef:
       Single { toJs.enablePinning = enablePinning; toJs }
 
     // Column Filtering
-    def filterFn: js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]] =
+    def filterFn: js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, CM, F, FM]] =
       toJs.filterFn.map(v =>
         js.typeOf(v) match
           case "string" =>
@@ -253,12 +253,12 @@ object ColumnDef:
 
     /** WARNING: This mutates the object in-place. */
     def setFilterFn[F1, FM1](
-      filterFn: js.UndefOr[BuiltInFilter[F1] | FilterFn[T, TM, F1, FM1]]
+      filterFn: js.UndefOr[BuiltInFilter[F1] | FilterFn[T, TM, CM, F1, FM1]]
     ): Single[T, A, TM, CM, F1, FM1] =
       Single {
         toJs.filterFn = filterFn match
           case builtIn: BuiltInFilter[F1] => builtIn.toJs
-          case fn                         => fn.asInstanceOf[FilterFn[T, TM, F1, FM1]].toJs
+          case fn                         => fn.asInstanceOf[FilterFn[T, TM, CM, F1, FM1]].toJs
         toJs.asInstanceOf[ColumnDefJs[T, A, TM, CM, F1, FM1]]
       }
 
@@ -305,11 +305,11 @@ object ColumnDef:
       invertSorting:      js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:      js.UndefOr[Boolean] = js.undefined,
       sortUndefined:      js.UndefOr[UndefinedPriority] = js.undefined,
-      sortingFn:          js.UndefOr[BuiltInSorting | SortingFn[T, TM]] = js.undefined,
+      sortingFn:          js.UndefOr[BuiltInSorting | SortingFn[T, TM, CM]] = js.undefined,
       // Column Pinning
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
-      filterFn:           js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]] = js.undefined,
+      filterFn:           js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, CM, F, FM]] = js.undefined,
       enableColumnFilter: js.UndefOr[Boolean] = js.undefined
     ): Single[T, A, TM, CM, F, FM] = {
       val p: ColumnDefJs[T, A, TM, CM, F, FM] =
@@ -346,15 +346,15 @@ object ColumnDef:
     /** WARNING: This mutates the object in-place. */
     def setId(id: ColumnId): Group[T, TM, CM, F, FM] = Group { toJs.id = id.value; toJs }
 
-    lazy val columns: List[ColumnDef[T, Any, TM, Any, Any, Any]] =
+    lazy val columns: List[ColumnDef[T, Any, TM, CM, Any, Any]] =
       toJs.columns
         .map(_.toList)
         .toOption
         .orEmpty
-        .map(ColumnDef.fromJs(_).asInstanceOf[ColumnDef[T, Any, TM, Any, Any, Any]])
+        .map(ColumnDef.fromJs(_).asInstanceOf[ColumnDef[T, Any, TM, CM, Any, Any]])
 
     /** WARNING: This mutates the object in-place. */
-    def withColumns(columns: List[ColumnDef[T, Any, TM, Any, Any, Any]]): Group[T, TM, CM, F, FM] =
+    def withColumns(columns: List[ColumnDef[T, Any, TM, CM, Any, Any]]): Group[T, TM, CM, F, FM] =
       Group { toJs.columns = columns.map(_.toJs).toJSArray; toJs }
 
     lazy val header: js.UndefOr[String | (HeaderContext[T, Nothing, TM, CM, F, FM] => VdomNode)] =
@@ -448,7 +448,7 @@ object ColumnDef:
       Group { toJs.enablePinning = enablePinning; toJs }
 
     // Column Filtering
-    def filterFn: js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]] =
+    def filterFn: js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, CM, F, FM]] =
       toJs.filterFn.map(v =>
         js.typeOf(v) match
           case "string" =>
@@ -459,12 +459,12 @@ object ColumnDef:
 
     /** WARNING: This mutates the object in-place. */
     def setFilterFn[F1, FM1](
-      filterFn: js.UndefOr[BuiltInFilter[F1] | FilterFn[T, TM, F1, FM1]]
+      filterFn: js.UndefOr[BuiltInFilter[F1] | FilterFn[T, TM, CM, F1, FM1]]
     ): Group[T, TM, CM, F1, FM1] =
       Group {
         toJs.filterFn = filterFn match
           case builtIn: BuiltInFilter[F1] => builtIn.toJs
-          case fn                         => fn.asInstanceOf[FilterFn[T, TM, F1, FM1]].toJs
+          case fn                         => fn.asInstanceOf[FilterFn[T, TM, CM, F1, FM1]].toJs
         toJs.asInstanceOf[ColumnDefJs[T, Nothing, TM, CM, F1, FM1]]
       }
 
@@ -508,7 +508,7 @@ object ColumnDef:
       // Column Pinning
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
-      filterFn:           js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]] = js.undefined,
+      filterFn:           js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, CM, F, FM]] = js.undefined,
       enableColumnFilter: js.UndefOr[Boolean] = js.undefined
     ): Group[T, TM, CM, F, FM] = {
       val p: ColumnDefJs[T, Nothing, TM, CM, F, FM] =
@@ -538,21 +538,20 @@ object ColumnDef:
     else
       Single(colDef)
 
-  def apply[T]: Applied[T, Nothing, Nothing, Nothing] =
-    new Applied[T, Nothing, Nothing, Nothing]
+  def apply[T]: Applied[T, Nothing, Nothing, Nothing, Nothing] =
+    new Applied[T, Nothing, Nothing, Nothing, Nothing]
 
   object WithTableMeta:
-    def apply[T, TM]: Applied[T, TM, Nothing, Nothing] =
-      new Applied[T, TM, Nothing, Nothing]
+    def apply[T, TM, CM]: Applied[T, TM, CM, Nothing, Nothing] =
+      new Applied[T, TM, CM, Nothing, Nothing]
 
-  class Applied[T, TM, F, FM]:
+  class Applied[T, TM, CM, F, FM]:
     def apply[A](
       id:                 ColumnId,
       accessor:           js.UndefOr[T => A] = js.undefined,
-      header:             js.UndefOr[String | (HeaderContext[T, A, TM, Nothing, F, FM] => VdomNode)] =
-        js.undefined,
-      cell:               js.UndefOr[CellContext[T, A, TM, Nothing, F, FM] => VdomNode] = js.undefined,
-      footer:             js.UndefOr[HeaderContext[T, A, TM, Nothing, F, FM] => VdomNode] = js.undefined,
+      header:             js.UndefOr[String | (HeaderContext[T, A, TM, CM, F, FM] => VdomNode)] = js.undefined,
+      cell:               js.UndefOr[CellContext[T, A, TM, CM, F, FM] => VdomNode] = js.undefined,
+      footer:             js.UndefOr[HeaderContext[T, A, TM, CM, F, FM] => VdomNode] = js.undefined,
       // Column Sizing
       enableResizing:     js.UndefOr[Boolean] = js.undefined,
       size:               js.UndefOr[SizePx] = js.undefined,
@@ -566,13 +565,13 @@ object ColumnDef:
       invertSorting:      js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:      js.UndefOr[Boolean] = js.undefined,
       sortUndefined:      js.UndefOr[UndefinedPriority] = js.undefined,
-      sortingFn:          js.UndefOr[BuiltInSorting | SortingFn[T, TM]] = js.undefined,
+      sortingFn:          js.UndefOr[BuiltInSorting | SortingFn[T, TM, CM]] = js.undefined,
       // Column Pinning
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
-      filterFn:           js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, F, FM]] = js.undefined,
+      filterFn:           js.UndefOr[BuiltInFilter[F] | FilterFn[T, TM, CM, F, FM]] = js.undefined,
       enableColumnFilter: js.UndefOr[Boolean] = js.undefined
-    ): Single[T, A, TM, Nothing, F, FM] =
+    ): Single[T, A, TM, CM, F, FM] =
       Single(
         id,
         accessor,
@@ -603,10 +602,10 @@ object ColumnDef:
 
     def group(
       id:                 ColumnId,
-      header:             js.UndefOr[String | (HeaderContext[T, Nothing, TM, Nothing, F, FM] => VdomNode)] =
+      header:             js.UndefOr[String | (HeaderContext[T, Nothing, TM, CM, F, FM] => VdomNode)] =
         js.undefined,
       columns:            List[ColumnDef[T, ?, TM, ?, ?, ?]],
-      footer:             js.UndefOr[HeaderContext[T, Nothing, TM, Nothing, F, FM] => VdomNode] = js.undefined,
+      footer:             js.UndefOr[HeaderContext[T, Nothing, TM, CM, F, FM] => VdomNode] = js.undefined,
       // Column Sizing
       enableResizing:     js.UndefOr[Boolean] = js.undefined,
       size:               js.UndefOr[SizePx] = js.undefined,
@@ -617,9 +616,9 @@ object ColumnDef:
       // Column Pinning
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
-      filterFn:           js.UndefOr[FilterFn[T, TM, F, FM]] = js.undefined,
+      filterFn:           js.UndefOr[FilterFn[T, TM, CM, F, FM]] = js.undefined,
       enableColumnFilter: js.UndefOr[Boolean] = js.undefined
-    ): Group[T, TM, Nothing, F, FM] =
+    ): Group[T, TM, CM, F, FM] =
       Group(
         id,
         header,
@@ -645,7 +644,7 @@ object ColumnDef:
   end Applied
 
   object Applied:
-    type NoMeta[T] = Applied[T, Nothing, Nothing, Nothing]
+    type NoMeta[T] = Applied[T, Nothing, Nothing, Nothing, Nothing]
 
   class AppliedWithColumnMeta[T, TM, CM, F, FM]:
     def apply[A](
@@ -668,7 +667,7 @@ object ColumnDef:
       invertSorting:   js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:   js.UndefOr[Boolean] = js.undefined,
       sortUndefined:   js.UndefOr[UndefinedPriority] = js.undefined,
-      sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T, TM]] = js.undefined,
+      sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T, TM, CM]] = js.undefined,
       // Column Pinning
       enablePinning:   js.UndefOr[Boolean] = js.undefined
     ): Single[T, A, TM, CM, F, FM] =
@@ -701,7 +700,7 @@ object ColumnDef:
       id:             ColumnId,
       header:         js.UndefOr[String | (HeaderContext[T, Nothing, TM, CM, F, FM] => VdomNode)] =
         js.undefined,
-      columns:        List[ColumnDef[T, Any, TM, Any, F, FM]],
+      columns:        List[ColumnDef[T, Any, TM, CM, F, FM]],
       footer:         js.UndefOr[HeaderContext[T, Nothing, TM, CM, F, FM] => VdomNode] = js.undefined,
       meta:           js.UndefOr[CM] = js.undefined,
       // Column Sizing

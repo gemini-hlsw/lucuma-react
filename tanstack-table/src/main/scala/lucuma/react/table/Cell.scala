@@ -7,7 +7,7 @@ import lucuma.typed.tanstackTableCore as raw
 
 case class Cell[T, A, TM, CM, F, FM](private val toJs: raw.buildLibTypesMod.Cell[T, A]):
   lazy val id: CellId                                = CellId(toJs.id)
-  lazy val row: Row[T, TM]                           = Row(toJs.row)
+  lazy val row: Row[T, TM, CM]                       = Row(toJs.row)
   lazy val column: Column[T, A, TM, CM, F, FM]       = Column(toJs.column)
   def getContext(): CellContext[T, A, TM, CM, F, FM] = CellContext(toJs.getContext())
   def getValue[V](): V                               = toJs.getValue().asInstanceOf[V]

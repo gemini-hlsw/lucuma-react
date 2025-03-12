@@ -13,5 +13,5 @@ case class CellContext[T, A, TM, CM, F, FM] private[table] (
   def getValue(): A                            = toJs.getValue().asInstanceOf[A]
   lazy val value: A                            = getValue() // Added for convenience
   def renderValue(): Option[A]                 = Option(toJs.renderValue().asInstanceOf[A])
-  lazy val row: Row[T, TM]                     = Row(toJs.row)
-  lazy val table: Table[T, TM]                 = Table(toJs.table)
+  lazy val row: Row[T, TM, CM]                 = Row(toJs.row)
+  lazy val table: Table[T, TM, CM]             = Table(toJs.table)

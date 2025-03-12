@@ -5,11 +5,11 @@ package lucuma.react.table
 
 import lucuma.typed.tanstackTableCore as raw
 
-case class RowModel[T, TM] private[table] (
+case class RowModel[T, TM, CM] private[table] (
   private[table] val toJs: raw.buildLibTypesMod.RowModel[T]
 ):
-  lazy val flatRows: List[Row[T, TM]]       = toJs.flatRows.map(Row(_)).toList
-  lazy val rows: List[Row[T, TM]]           = toJs.rows.map(Row(_)).toList
-  lazy val rowsById: Map[RowId, Row[T, TM]] =
+  lazy val flatRows: List[Row[T, TM, CM]]       = toJs.flatRows.map(Row(_)).toList
+  lazy val rows: List[Row[T, TM, CM]]           = toJs.rows.map(Row(_)).toList
+  lazy val rowsById: Map[RowId, Row[T, TM, CM]] =
     toJs.rowsById.toMap.map: (k, v) =>
-      RowId(k) -> Row[T, TM](v)
+      RowId(k) -> Row[T, TM, CM](v)
