@@ -94,7 +94,7 @@ case class Column[T, A, TM, CM, F, FM] private[table] (val toJs: raw.buildLibTyp
 
   // Column Filtering
   def getCanFilter(): Boolean                                  = toJs.getCanFilter()
-  def getFilterIndex: Int                                      = toJs.getFilterIndex().toInt
+  def getFilterIndex(): Int                                    = toJs.getFilterIndex().toInt
   def getIsFiltered(): Boolean                                 = toJs.getIsFiltered()
   def getFilterValue(): Option[F]                              =
     toJs.getFilterValue().asInstanceOf[js.UndefOr[F]].toOption
@@ -102,8 +102,11 @@ case class Column[T, A, TM, CM, F, FM] private[table] (val toJs: raw.buildLibTyp
   def modFilterValue(f: Option[F] => Option[F]): Callback      = Callback(
     toJs.setFilterValue((v: js.UndefOr[F]) => f(v.toOption).orUndefined)
   )
-  // def getAutoFilterFn(): FilterFn[T, TM]                   =
-  //   (row, columnId, filterValue) => toJs.getAutoFilterFn()(row.toJs, columnId.value, filterValue)
+  def getAutoFilterFn(): Option[FilterFn[T, TM, CM, F, FM]]    =
+    toJs
+      .getAutoFilterFn()
+      .toOption
+      .map(FilterFn.fromJs(_))
   def getFilterFn[F, FM](): Option[FilterFn[T, TM, CM, F, FM]] =
     toJs
       .getFilterFn()
