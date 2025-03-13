@@ -118,6 +118,7 @@ object Table1:
                      rows,
                      enableSorting = true,
                      enableColumnResizing = true,
+                     enableFilters = true,
                      initialState =
                        TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
                    )
