@@ -5,9 +5,9 @@ package lucuma.react.table
 
 import lucuma.typed.tanstackTableCore as raw
 
-case class HeaderGroup[T, TM] private[table] (
+case class HeaderGroup[T, TM, CM] private[table] (
   private[table] val toJs: raw.buildLibTypesMod.HeaderGroup[T]
 ):
-  lazy val depth: Int                             = toJs.depth.toInt
-  lazy val headers: List[Header[T, Any, TM, Any]] = toJs.headers.toList.map(Header(_))
-  lazy val id: HeaderGroupId                      = HeaderGroupId(toJs.id)
+  lazy val depth: Int                                      = toJs.depth.toInt
+  lazy val headers: List[Header[T, Any, TM, CM, Any, Any]] = toJs.headers.toList.map(Header(_))
+  lazy val id: HeaderGroupId                               = HeaderGroupId(toJs.id)

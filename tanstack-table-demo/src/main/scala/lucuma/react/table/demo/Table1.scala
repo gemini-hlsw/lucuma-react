@@ -3,59 +3,130 @@
 
 package lucuma.react.table.demo
 
+import cats.syntax.option.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.table.*
 
+import scala.util.Try
+
+import scalajs.js
+import scalajs.js.JSConverters.*
+
 object Table1:
   private val ColDef = ColumnDef[Guitar]
 
-  val component =
-    ScalaFnComponent
-      .withHooks[List[Guitar]]
-      // cols
-      .useMemo(())(_ =>
-        List(
-          ColDef(ColumnId("id"), _.id, "Id", ctx => s"g-${ctx.value}").sortable,
-          ColDef(ColumnId("make"), _.make, _ => "Make"),
-          ColDef(ColumnId("model"), _.model, _ => "Model").sortableBy(_.length),
-          ColDef.group(
-            ColumnId("details"),
-            _ => <.div(^.textAlign.center)("Details"),
-            List(
-              ColDef(ColumnId("year"), _.details.year, _ => "Year"),
-              ColDef(
-                ColumnId("pickups"),
-                _.details.pickups,
-                _ => "Pickups",
-                footer = _.table.getRowModel().rows.map(_.original.details.pickups).sum
-              ),
-              ColDef(ColumnId("color"), _.details.color, _ => "Color", enableSorting = false)
-            )
+  private val Columns =
+    Reusable.always:
+      List(
+        ColDef(
+          ColumnId("id"),
+          _.id,
+          "Id",
+          ctx => s"g-${ctx.value}",
+          enableColumnFilter = false
+        ).sortable,
+        ColDef(ColumnId("make"), _.make, _ => "Make", filterFn = BuiltInFilter.IncludesString),
+        ColDef(ColumnId("model"), _.model, _ => "Model", filterFn = BuiltInFilter.IncludesString)
+          .sortableBy(_.length),
+        ColDef.group(
+          ColumnId("details"),
+          _ => <.div(^.textAlign.center)("Details"),
+          List(
+            ColDef(
+              ColumnId("year"),
+              _.details.year,
+              _ => "Year",
+              filterFn = BuiltInFilter.InNumberRange
+            ),
+            ColDef(
+              ColumnId("pickups"),
+              _.details.pickups,
+              _ => "Pickups",
+              filterFn = (
+                row,
+                colId,
+                filterValue: Int,
+                _
+              ) => row.getValue[Int](colId) >= filterValue,
+              footer = _.table.getRowModel().rows.map(_.original.details.pickups).sum
+            ),
+            ColDef(ColumnId("color"), _.details.color, _ => "Color", enableSorting = false)
           )
         )
       )
-      // rows
-      .useMemoBy((guitars, _) => guitars)((_, _) => identity)
-      // table
-      .useReactTableBy { (_, cols, rows) =>
-        TableOptions(
-          cols,
-          rows,
-          enableSorting = true,
-          enableColumnResizing = true,
-          initialState =
-            TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
+
+  private def filterRenderer(col: ColDef.ColType): VdomNode =
+    col.id.value match
+      case "pickups" =>
+        <.input(
+          ^.`type`      := "tel",
+          ^.placeholder := "At least",
+          ^.width       := "100%",
+          ^.value       := col.getFilterValue().map(_.toString).getOrElse(""),
+          ^.onChange ==> ((e: ReactEventFromInput) =>
+            col.setFilterValue(Try(e.target.value.toInt).toOption)
+          )
         )
-      }
-      .render { (_, _, _, table) =>
-        React.Fragment(
-          <.h2("Sortable table"),
-          HTMLTable(
-            table,
-            Css("guitars")
+      case "year"    =>
+        val value: js.Tuple2[js.UndefOr[Int], js.UndefOr[Int]] =
+          col
+            .getFilterValue()
+            .map(_.asInstanceOf[js.Tuple2[js.UndefOr[Int], js.UndefOr[Int]]])
+            .getOrElse(js.Tuple2(js.undefined, js.undefined))
+        <.div(^.display.flex)(
+          <.input(
+            ^.`type`      := "tel",
+            ^.placeholder := "From",
+            ^.width       := "100%",
+            ^.value       := value._1.map(_.toString).getOrElse(""),
+            ^.onChange ==> ((e: ReactEventFromInput) =>
+              col.setFilterValue:
+                js.Tuple2(Try(e.target.value.toDouble).toOption.orUndefined, value._2).some
+            )
           ),
-          "Click header to sort. Shift-Click for multi-sort."
+          <.input(
+            ^.`type`      := "tel",
+            ^.placeholder := "To",
+            ^.width       := "100%",
+            ^.value       := value._2.map(_.toString).getOrElse(""),
+            ^.onChange ==> ((e: ReactEventFromInput) =>
+              col.setFilterValue:
+                js.Tuple2(value._1, Try(e.target.value.toDouble).toOption.orUndefined).some
+            )
+          )
         )
-      }
+      case _         =>
+        <.input(
+          ^.`type`      := "text",
+          ^.placeholder := "Filter",
+          ^.width       := "100%",
+          ^.value       := col.getFilterValue().map(_.toString).getOrElse(""),
+          ^.onChange ==> ((e: ReactEventFromInput) =>
+            col.setFilterValue(e.target.value.some.filter(_.nonEmpty))
+          )
+        )
+
+  val component =
+    ScalaFnComponent[List[Guitar]]: guitars =>
+      for
+        rows  <- useMemo(guitars)(identity)
+        table <- useReactTable:
+                   TableOptions(
+                     Columns,
+                     rows,
+                     enableSorting = true,
+                     enableColumnResizing = true,
+                     initialState =
+                       TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
+                   )
+      yield React.Fragment(
+        <.h2("Sortable table"),
+        HTMLTable(
+          table,
+          Css("guitars"),
+          columnFilterRenderer = filterRenderer
+        ),
+        "Click header to sort. Shift-Click for multi-sort."
+      )

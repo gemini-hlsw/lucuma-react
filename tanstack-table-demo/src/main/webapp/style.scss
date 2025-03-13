@@ -1,6 +1,7 @@
 table.guitars {
   border-spacing: 0;
   border: 1px solid black;
+  width: auto !important;
 }
 
 .container {
@@ -86,7 +87,7 @@ table.guitars {
       opacity: 0;
     }
 
-    thead:not(.isResizing) *:hover>.resizer {
+    thead:not(.isResizing) *:hover > .resizer {
       opacity: 1;
     }
   }

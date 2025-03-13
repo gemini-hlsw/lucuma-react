@@ -17,18 +17,19 @@ import org.scalajs.dom.HTMLElement
 
 import scalajs.js
 
-trait HTMLTableProps[T, TM]:
-  def table: Table[T, TM]
+trait HTMLTableProps[T, TM, CM]:
+  def table: Table[T, TM, CM]
   def tableMod: TagMod
   def headerMod: TagMod
-  def headerRowMod: HeaderGroup[T, TM] => TagMod
-  def headerCellMod: Header[T, Any, TM, Any] => TagMod
+  def headerRowMod: HeaderGroup[T, TM, CM] => TagMod
+  def columnFilterRenderer: Column[T, Any, TM, CM, Any, Any] => VdomNode
+  def headerCellMod: Header[T, Any, TM, CM, Any, Any] => TagMod
   def bodyMod: TagMod
-  def rowMod: Row[T, TM] => TagMod
-  def cellMod: Cell[T, Any, TM, Any] => TagMod
+  def rowMod: Row[T, TM, CM] => TagMod
+  def cellMod: Cell[T, Any, TM, CM, Any, Any] => TagMod
   def footerMod: TagMod
-  def footerRowMod: HeaderGroup[T, TM] => TagMod
-  def footerCellMod: Header[T, Any, TM, Any] => TagMod
+  def footerRowMod: HeaderGroup[T, TM, CM] => TagMod
+  def footerCellMod: Header[T, Any, TM, CM, Any, Any] => TagMod
   def emptyMessage: VdomNode
 
   // Allow subtypes to mixin other classes
@@ -36,7 +37,7 @@ trait HTMLTableProps[T, TM]:
 
 type HTMLTableVirtualizer = Virtualizer[HTMLElement, Element]
 
-trait HTMLVirtualizedTableProps[T, M] extends HTMLTableProps[T, M]:
+trait HTMLVirtualizedTableProps[T, TM, CM] extends HTMLTableProps[T, TM, CM]:
   def estimateSize: Int => SizePx
   // Table options
   def containerMod: TagMod
@@ -48,5 +49,5 @@ trait HTMLVirtualizedTableProps[T, M] extends HTMLTableProps[T, M]:
   def virtualizerRef: js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]]
   def debugVirtualizer: js.UndefOr[Boolean]
 
-trait HTMLAutoHeightVirtualizedTableProps[T, M] extends HTMLVirtualizedTableProps[T, M]:
+trait HTMLAutoHeightVirtualizedTableProps[T, TM, CM] extends HTMLVirtualizedTableProps[T, TM, CM]:
   def innerContainerMod: TagMod
