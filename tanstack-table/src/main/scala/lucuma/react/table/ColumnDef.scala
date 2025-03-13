@@ -262,8 +262,8 @@ object ColumnDef:
       Single {
         toJs.filterFn = filterFn match
           case builtIn: BuiltInFilter[F1] => builtIn.toJs
-          case ff @ FilterFn(_)           => ff.asInstanceOf[FilterFn[T, TM, CM, F1, FM1]].toJs
-          case fn                         => FilterFn(fn.asInstanceOf[FilterFn.Type[T, TM, CM, F1, FM1]]).toJs
+          case ff @ FilterFn(_, _, _)     => ff.asInstanceOf[FilterFn[T, TM, CM, F1, FM1]].toJs
+          case fn                         => FilterFn(fn.asInstanceOf[FilterFn.Type[T, TM, CM, F1, FM1]], none, none).toJs
         toJs.asInstanceOf[ColumnDefJs[T, A, TM, CM, F1, FM1]]
       }
 

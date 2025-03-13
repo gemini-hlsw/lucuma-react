@@ -14,9 +14,7 @@ import scalajs.js.JSConverters.*
 import scalajs.js
 
 // Missing: Filters, Grouping
-case class Column[T, A, TM, CM, F, FM] private[table] (
-  private val toJs: raw.buildLibTypesMod.Column[T, A]
-):
+case class Column[T, A, TM, CM, F, FM] private[table] (val toJs: raw.buildLibTypesMod.Column[T, A]):
   lazy val id: ColumnId                                        = ColumnId(toJs.id)
   lazy val depth: Int                                          = toJs.depth.toInt
   lazy val accessorFn: Option[(T, Int) => A]                   =
