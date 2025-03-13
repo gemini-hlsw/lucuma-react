@@ -232,8 +232,8 @@ sealed trait TableOptions[T, TM, CM]:
   lazy val enableSorting: Boolean = toJsBase.enableSorting.getOrElse(true)
 
   /** WARNING: This mutates the object in-place. */
-  def setEnableSorting(enableSorting: Boolean): TableOptions[T, TM, CM] =
-    copy(_.enableSorting = enableSorting)
+  def setEnableSorting(enableSorting: Option[Boolean]): TableOptions[T, TM, CM] =
+    copy(_.enableSorting = enableSorting.orUndefined)
 
   lazy val enableMultiSort: Option[Boolean] = toJsBase.enableMultiSort.toOption
 
@@ -578,8 +578,8 @@ object TableOptions:
     // Column Visibility
     enableHiding:             js.UndefOr[Boolean] = js.undefined,
     onColumnVisibilityChange: js.UndefOr[Updater[ColumnVisibility] => Callback] = js.undefined,
-    // Sorting - We override the default of "true" to "false", so that ordering must be explicitly specified for each column.
-    enableSorting:            Boolean = false,
+    // Sorting
+    enableSorting:            js.UndefOr[Boolean] = js.undefined,
     enableMultiSort:          js.UndefOr[Boolean] = js.undefined,
     enableSortingRemoval:     js.UndefOr[Boolean] = js.undefined,
     enableMultiRemove:        js.UndefOr[Boolean] = js.undefined,
@@ -607,15 +607,42 @@ object TableOptions:
     keepPinnedRows:           js.UndefOr[Boolean] = js.undefined,
     onRowPinningChange:       js.UndefOr[Updater[RowPinning] => Callback] = js.undefined,
     // Column Filtering
-    // filterFns:                js.UndefOr[Record[String, FilterFn[Any]]] = js.undefined,
+    enableFilters:            js.UndefOr[Boolean] = js.undefined,
+    enableColumnFilters:      js.UndefOr[Boolean] = js.undefined,
     filterFromLeafRows:       js.UndefOr[Boolean] = js.undefined,
     maxLeafRowFilterDepth:    js.UndefOr[Double] = js.undefined,
-    enableFilters:            js.UndefOr[Boolean] = js.undefined,
     manualFiltering:          js.UndefOr[Boolean] = js.undefined,
     onColumnFiltersChange:    js.UndefOr[Option[Updater[ColumnFilters] => Callback]] = js.undefined,
-    enableColumnFilters:      js.UndefOr[Boolean] = js.undefined,
     getFilteredRowModel:      js.UndefOr[Table[T, TM, CM] => () => RowModel[T, TM, CM]] = js.undefined
   ): TableOptions[T, TM, CM] =
+    val autoEnableSorting: Boolean   = !enableSorting.contains(false) && (
+      enableSorting.contains(true) ||
+        enableMultiSort.contains(true) ||
+        enableSortingRemoval.contains(true) ||
+        enableMultiRemove.contains(true) ||
+        getSortedRowModel.isDefined ||
+        isMultiSortEvent.isDefined ||
+        manualSorting.contains(true) ||
+        maxMultiSortColCount.isDefined ||
+        onSortingChange.isDefined ||
+        sortDescFirst.contains(true)
+    )
+    val autoEnableExpanding: Boolean = !enableExpanding.contains(false) && (
+      enableExpanding.contains(true) ||
+        getExpandedRowModel.isDefined ||
+        getSubRows.isDefined
+    )
+    val autoEnableFiltering: Boolean =
+      !enableFilters.contains(false) && !enableColumnFilters.contains(false) && (
+        enableFilters.contains(true) ||
+          enableColumnFilters.contains(true) ||
+          filterFromLeafRows.contains(true) ||
+          maxLeafRowFilterDepth.isDefined ||
+          manualFiltering.contains(true) ||
+          onColumnFiltersChange.isDefined ||
+          getFilteredRowModel.isDefined
+      )
+
     new TableOptions[T, TM, CM] {
       val columns                 = columns_
       val data                    = data_
@@ -626,9 +653,9 @@ object TableOptions:
       }
     }
       .setGetCoreRowModel(getCoreRowModel.toOption)
-      .setGetSortedRowModel(getSortedRowModel.toOption)
-      .setGetExpandedRowModel(getExpandedRowModel.toOption)
-      .setGetFilteredRowModel(getFilteredRowModel.toOption)
+      .applyWhen(autoEnableSorting, _.setGetSortedRowModel(getSortedRowModel.toOption))
+      .applyWhen(autoEnableExpanding, _.setGetExpandedRowModel(getExpandedRowModel.toOption))
+      .applyWhen(autoEnableFiltering, _.setGetFilteredRowModel(getFilteredRowModel.toOption))
       .applyOrNot(getRowId, (p, v) => p.setGetRowId(v.some))
       .applyOrNot(onStateChange, (p, v) => p.setOnStateChange(v.some))
       .applyOrNot(renderFallbackValue, (p, v) => p.setRenderFallbackValue(v.some))
@@ -641,7 +668,7 @@ object TableOptions:
       .applyOrNot(onColumnSizingInfoChange, (p, v) => p.setOnColumnSizingInfoChange(v.some))
       .applyOrNot(enableHiding, (p, v) => p.setEnableHiding(v.some))
       .applyOrNot(onColumnVisibilityChange, (p, v) => p.setOnColumnVisibilityChange(v.some))
-      .setEnableSorting(enableSorting)
+      .applyOrNot(enableSorting, (p, v) => p.setEnableSorting(v.some))
       .applyOrNot(enableMultiSort, (p, v) => p.setEnableMultiSort(v.some))
       .applyOrNot(enableSortingRemoval, (p, v) => p.setEnableSortingRemoval(v.some))
       .applyOrNot(enableMultiRemove, (p, v) => p.setEnableMultiRemove(v.some))

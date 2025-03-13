@@ -54,6 +54,9 @@ package object table extends HooksApiExt:
     private[table] def applyOrNull[A](a: Option[A], f: (B, A) => B, fNull: B => B): B =
       a.fold(fNull(b))(a => f(b, a))
 
+    private[table] def applyWhen[A](cond: Boolean, f: B => B): B =
+      if cond then f(b) else b
+
   extension [A](opt: Null | A)
     private[table] def nullToOption: Option[A] = opt match
       case null => None
