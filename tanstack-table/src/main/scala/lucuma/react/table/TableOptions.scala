@@ -628,6 +628,7 @@ object TableOptions:
       .setGetCoreRowModel(getCoreRowModel.toOption)
       .setGetSortedRowModel(getSortedRowModel.toOption)
       .setGetExpandedRowModel(getExpandedRowModel.toOption)
+      .setGetFilteredRowModel(getFilteredRowModel.toOption)
       .applyOrNot(getRowId, (p, v) => p.setGetRowId(v.some))
       .applyOrNot(onStateChange, (p, v) => p.setOnStateChange(v.some))
       .applyOrNot(renderFallbackValue, (p, v) => p.setRenderFallbackValue(v.some))
@@ -666,7 +667,6 @@ object TableOptions:
       .applyOrNot(manualFiltering, (p, v) => p.setManualFiltering(v.some))
       .applyOrNot(onColumnFiltersChange, (p, v) => p.setOnColumnFiltersChange(v))
       .applyOrNot(enableColumnFilters, (p, v) => p.setEnableColumnFilters(v.some))
-      .applyOrNot(getFilteredRowModel, (p, v) => p.setGetFilteredRowModel(v.some))
 
   private[table] def fromJs[T, TM, CM](raw: TableOptionsJs[T, TM, CM]): TableOptions[T, TM, CM] =
     new TableOptions[T, TM, CM]:

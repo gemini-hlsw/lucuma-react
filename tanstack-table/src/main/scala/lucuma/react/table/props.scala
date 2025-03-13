@@ -22,6 +22,7 @@ trait HTMLTableProps[T, TM, CM]:
   def tableMod: TagMod
   def headerMod: TagMod
   def headerRowMod: HeaderGroup[T, TM, CM] => TagMod
+  def columnFilterRenderer: Column[T, Any, TM, CM, Any, Any] => VdomNode
   def headerCellMod: Header[T, Any, TM, CM, Any, Any] => TagMod
   def bodyMod: TagMod
   def rowMod: Row[T, TM, CM] => TagMod

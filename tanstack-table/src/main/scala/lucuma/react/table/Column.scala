@@ -11,6 +11,7 @@ import lucuma.typed.tanstackTableCore as raw
 import org.scalajs.dom
 
 import scalajs.js.JSConverters.*
+import scalajs.js
 
 // Missing: Filters, Grouping
 case class Column[T, A, TM, CM, F, FM] private[table] (
@@ -97,8 +98,12 @@ case class Column[T, A, TM, CM, F, FM] private[table] (
   def getCanFilter(): Boolean                                  = toJs.getCanFilter()
   def getFilterIndex: Int                                      = toJs.getFilterIndex().toInt
   def getIsFiltered(): Boolean                                 = toJs.getIsFiltered()
-  def getFilterValue(): Option[F]                              = Option(toJs.getFilterValue().asInstanceOf[F])
-  def setFilterValue(value: F): Callback                       = Callback(toJs.setFilterValue(value))
+  def getFilterValue(): Option[F]                              =
+    toJs.getFilterValue().asInstanceOf[js.UndefOr[F]].toOption
+  def setFilterValue(value: Option[F]): Callback               = Callback(toJs.setFilterValue(value.orUndefined))
+  def modFilterValue(f: Option[F] => Option[F]): Callback      = Callback(
+    toJs.setFilterValue((v: js.UndefOr[F]) => f(v.toOption).orUndefined)
+  )
   // def getAutoFilterFn(): FilterFn[T, TM]                   =
   //   (row, columnId, filterValue) => toJs.getAutoFilterFn()(row.toJs, columnId.value, filterValue)
   def getFilterFn[F, FM](): Option[FilterFn[T, TM, CM, F, FM]] =

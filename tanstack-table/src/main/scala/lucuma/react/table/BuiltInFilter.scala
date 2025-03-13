@@ -5,17 +5,20 @@ package lucuma.react.table
 
 import cats.syntax.option.*
 
+import scalajs.js
+
 enum BuiltInFilter[F](private[table] val toJs: String):
-  case IncludesString          extends BuiltInFilter("includesString")
-  case IncludesStringSensitive extends BuiltInFilter("includesStringSensitive")
-  case EqualsString            extends BuiltInFilter("equalsString")
-  case EqualsStringSensitive   extends BuiltInFilter("equalsStringSensitive")
-  case ArrIncludes             extends BuiltInFilter("arrIncludes")
-  case ArrIncludesAll          extends BuiltInFilter("arrIncludesAll")
-  case ArrIncludesSome         extends BuiltInFilter("arrIncludesSome")
-  case Equals                  extends BuiltInFilter("equals")
-  case WeakEquals              extends BuiltInFilter("weakEquals")
-  case InNumberRange           extends BuiltInFilter("inNumberRange")
+  case IncludesString          extends BuiltInFilter[String]("includesString")
+  case IncludesStringSensitive extends BuiltInFilter[String]("includesStringSensitive")
+  case EqualsString            extends BuiltInFilter[String]("equalsString")
+  case EqualsStringSensitive   extends BuiltInFilter[String]("equalsStringSensitive")
+  case ArrIncludes             extends BuiltInFilter[js.Array[?]]("arrIncludes")
+  case ArrIncludesAll          extends BuiltInFilter[js.Array[?]]("arrIncludesAll")
+  case ArrIncludesSome         extends BuiltInFilter[js.Array[?]]("arrIncludesSome")
+  case Equals                  extends BuiltInFilter[Any]("equals")
+  case WeakEquals              extends BuiltInFilter[Any]("weakEquals")
+  case InNumberRange
+      extends BuiltInFilter[js.Tuple2[js.UndefOr[Double], js.UndefOr[Double]]]("inNumberRange")
 
 object BuiltInFilter:
   private[table] def fromJs(rawValue: String): BuiltInFilter[?] =

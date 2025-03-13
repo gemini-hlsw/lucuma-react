@@ -78,25 +78,27 @@ trait HTMLTableRenderer[T]:
     else EmptyVdom
 
   def render[T, TM, CM](
-    table:         Table[T, TM, CM],
-    rows:          List[Row[T, TM, CM]],
-    tableMod:      TagMod = TagMod.empty,
-    headerMod:     TagMod = TagMod.empty,
-    headerRowMod:  HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
-    headerCellMod: Header[T, Any, TM, CM, Any, Any] => TagMod =
+    table:                Table[T, TM, CM],
+    rows:                 List[Row[T, TM, CM]],
+    tableMod:             TagMod = TagMod.empty,
+    headerMod:            TagMod = TagMod.empty,
+    headerRowMod:         HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
+    headerCellMod:        Header[T, Any, TM, CM, Any, Any] => TagMod =
       (_: Header[T, Any, TM, CM, Any, Any]) => TagMod.empty,
-    bodyMod:       TagMod = TagMod.empty,
-    rowMod:        Row[T, TM, CM] => TagMod = (_: Row[T, TM, CM]) => TagMod.empty,
-    cellMod:       Cell[T, Any, TM, CM, Any, Any] => TagMod = (_: Cell[T, Any, TM, CM, Any, Any]) =>
+    columnFilterRenderer: Column[T, Any, TM, CM, Any, Any] => VdomNode =
+      (_: Column[T, Any, TM, CM, Any, Any]) => EmptyVdom,
+    bodyMod:              TagMod = TagMod.empty,
+    rowMod:               Row[T, TM, CM] => TagMod = (_: Row[T, TM, CM]) => TagMod.empty,
+    cellMod:              Cell[T, Any, TM, CM, Any, Any] => TagMod = (_: Cell[T, Any, TM, CM, Any, Any]) =>
       TagMod.empty,
-    footerMod:     TagMod = TagMod.empty,
-    footerRowMod:  HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
-    footerCellMod: Header[T, Any, TM, CM, Any, Any] => TagMod =
+    footerMod:            TagMod = TagMod.empty,
+    footerRowMod:         HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
+    footerCellMod:        Header[T, Any, TM, CM, Any, Any] => TagMod =
       (_: Header[T, Any, TM, CM, Any, Any]) => TagMod.empty,
-    indexOffset:   Int = 0,
-    paddingTop:    Option[Int] = none,
-    paddingBottom: Option[Int] = none,
-    emptyMessage:  VdomNode = EmptyVdom
+    indexOffset:          Int = 0,
+    paddingTop:           Option[Int] = none,
+    paddingBottom:        Option[Int] = none,
+    emptyMessage:         VdomNode = EmptyVdom
   ) =
     val visibleColumnCount: Int = table.getAllLeafColumns().filter(_.getIsVisible()).length
 
@@ -127,27 +129,35 @@ trait HTMLTableRenderer[T]:
                       ^.colSpan := header.colSpan.toInt,
                       ^.width   := s"${header.getSize().toInt}px",
                       SortableColClass.when(header.column.getCanSort()),
-                      headerCellMod(header),
-                      header.column
-                        .getToggleSortingHandler()
-                        .map(handler => ^.onClick ==> handler)
-                        .whenDefined
+                      headerCellMod(header)
                     )(
                       TagMod.unless(header.isPlaceholder)(
                         React.Fragment(
-                          rawReact.mod.flexRender(
-                            header.column.columnDef.toJs
-                              .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
-                              .header
-                              .asInstanceOf[rawReact.mod.Renderable[
-                                raw.buildLibCoreHeadersMod.HeaderContext[T, Any]
-                              ]],
-                            header
-                              .getContext()
-                              .toJs
-                              .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
+                          <.div(
+                            header.column
+                              .getToggleSortingHandler()
+                              .map(handler => ^.onClick ==> handler)
+                              .whenDefined
+                          )(
+                            <.div(
+                              rawReact.mod.flexRender(
+                                header.column.columnDef.toJs
+                                  .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
+                                  .header
+                                  .asInstanceOf[rawReact.mod.Renderable[
+                                    raw.buildLibCoreHeadersMod.HeaderContext[T, Any]
+                                  ]],
+                                header
+                                  .getContext()
+                                  .toJs
+                                  .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
+                              ),
+                              sortIndicator(header.column)
+                            )
                           ),
-                          sortIndicator(header.column),
+                          if (header.column.getCanFilter())
+                            columnFilterRenderer(header.column)
+                          else EmptyVdom,
                           resizer(
                             header,
                             table.options.columnResizeMode,
@@ -293,6 +303,7 @@ object HTMLTableRenderer:
         props.headerMod,
         props.headerRowMod,
         props.headerCellMod,
+        props.columnFilterRenderer,
         props.bodyMod,
         props.rowMod,
         props.cellMod,
@@ -336,6 +347,7 @@ object HTMLTableRenderer:
             props.headerMod,
             props.headerRowMod,
             props.headerCellMod,
+            props.columnFilterRenderer,
             props.bodyMod,
             props.rowMod,
             props.cellMod,
@@ -409,6 +421,7 @@ object HTMLTableRenderer:
               props.headerMod,
               props.headerRowMod,
               props.headerCellMod,
+              props.columnFilterRenderer,
               props.bodyMod,
               props.rowMod,
               props.cellMod,
