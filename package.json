@@ -6,7 +6,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@react-hook/resize-observer": "^2.0.2",
     "@tanstack/react-table": "^8.21.2",
-    "@tanstack/react-virtual": "v3.13.0",
+    "@tanstack/react-virtual": "v3.13.4",
     "@vitejs/plugin-react": "^4.3.4",
     "fomantic-ui-less": "^2.9.3",
     "highcharts": "^11.4.7",
