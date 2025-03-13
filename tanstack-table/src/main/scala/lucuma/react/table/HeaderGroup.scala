@@ -5,9 +5,19 @@ package lucuma.react.table
 
 import lucuma.typed.tanstackTableCore as raw
 
-case class HeaderGroup[T, TM, CM] private[table] (
+/**
+ * @tparam T
+ *   The type of the row.
+ * @tparam TM
+ *   The type of the metadata for the table.
+ * @tparam CM
+ *   The type of the metadata for the column.
+ * @tparam TF
+ *   The type of the global filter.
+ */
+case class HeaderGroup[T, TM, CM, TF] private[table] (
   private[table] val toJs: raw.buildLibTypesMod.HeaderGroup[T]
 ):
-  lazy val depth: Int                                      = toJs.depth.toInt
-  lazy val headers: List[Header[T, Any, TM, CM, Any, Any]] = toJs.headers.toList.map(Header(_))
-  lazy val id: HeaderGroupId                               = HeaderGroupId(toJs.id)
+  lazy val depth: Int                                          = toJs.depth.toInt
+  lazy val headers: List[Header[T, Any, TM, CM, TF, Any, Any]] = toJs.headers.toList.map(Header(_))
+  lazy val id: HeaderGroupId                                   = HeaderGroupId(toJs.id)
