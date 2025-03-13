@@ -214,10 +214,34 @@ case class Table[T, TM, CM, TF] private[table] (
     toJs.getCenterRows().toList.map(Row(_))
 
   // Column Filtering
-  def setColumnFilters(value:          ColumnFilters): Callback   = Callback(toJs.setColumnFilters(value.toJs))
-  def modColumnFilters(f: Endo[ColumnFilters]): Callback          = Callback:
+  def setColumnFilters(value: ColumnFilters): Callback    = Callback(toJs.setColumnFilters(value.toJs))
+  def modColumnFilters(f: Endo[ColumnFilters]): Callback  = Callback:
     toJs.setColumnFilters(v => f(ColumnFilters.fromJs(v)).toJs)
-  def resetColumnFilters()                                        = toJs.resetColumnFilters()
-  def resetColumnFilters(defaultState: Boolean)                   = toJs.resetColumnFilters(defaultState)
-  def getPreFilteredRowModel(): RowModel[T, TM, CM, TF]           = RowModel(toJs.getPreFilteredRowModel())
-  def getFilteredRowModel(): RowModel[T, TM, CM, TF]              = RowModel(toJs.getFilteredRowModel())
+  def resetColumnFilters(): Callback                      = Callback(toJs.resetColumnFilters())
+  def resetColumnFilters(defaultState: Boolean): Callback = Callback(
+    toJs.resetColumnFilters(defaultState)
+  )
+  def getPreFilteredRowModel(): RowModel[T, TM, CM, TF]   = RowModel(
+    toJs.getPreFilteredRowModel()
+  ) // ENABLE IF THERE ARE GLOBAL FILTERS!!!!?!?!?!?!?!??!
+  def getFilteredRowModel(): RowModel[T, TM, CM, TF] = RowModel(toJs.getFilteredRowModel())
+
+  // Global Filtering
+  def setGlobalFilter(value: TF): Callback                              = Callback(toJs.setGlobalFilter(value))
+  def modGlobalFilter(f: Endo[TF]): Callback                            = Callback(
+    toJs.setGlobalFilter(v => f(v.asInstanceOf[TF]))
+  )
+  def resetGlobalFilter(): Callback                                     = Callback(toJs.resetGlobalFilter())
+  def resetGlobalFilter(defaultState: Boolean): Callback                = Callback(
+    toJs.resetGlobalFilter(defaultState)
+  )
+  def getGlobalAutoFilterFn(): Option[FilterFn[T, TM, CM, TF, TF, Any]] =
+    toJs
+      .getGlobalAutoFilterFn()
+      .toOption
+      .map(FilterFn.fromJs(_))
+  def getGlobalFilterFn(): Option[FilterFn[T, TM, CM, TF, TF, Any]]     =
+    toJs
+      .getGlobalFilterFn()
+      .toOption
+      .map(FilterFn.fromJs(_))
