@@ -588,14 +588,19 @@ sealed trait TableOptions[T, TM, CM, TF]:
 
   /** WARNING: This mutates the object in-place. */
   def setGlobalFilterFn[TF1](
-    globalFilterFn: Option[BuiltInFilter[TF1] | FilterFn[T, TM, CM, TF1, TF1, Any]]
+    globalFilterFn: Option[
+      BuiltInFilter[TF1] | FilterFn[T, TM, CM, TF1, TF1, Any] |
+        FilterFn.Type[T, TM, CM, TF, TF, Any]
+    ]
   ): TableOptions[T, TM, CM, TF1] =
     copy(_.globalFilterFn =
       globalFilterFn
         .map: fn =>
           fn match
             case builtIn: BuiltInFilter[TF1] => builtIn.toJs
-            case filterFn                    => filterFn.asInstanceOf[FilterFn[T, TM, CM, TF1, TF1, Any]].toJs
+            case ff @ FilterFn(_, _, _)      => ff.asInstanceOf[FilterFn[T, TM, CM, TF1, TF1, Any]].toJs
+            case fn                          =>
+              FilterFn(fn.asInstanceOf[FilterFn.Type[T, TM, CM, TF, TF, Any]], none, none).toJs
         .orUndefined
     ).asInstanceOf[TableOptions[T, TM, CM, TF1]]
 
@@ -700,9 +705,16 @@ object TableOptions:
     manualFiltering:          js.UndefOr[Boolean] = js.undefined,
     onColumnFiltersChange:    js.UndefOr[Option[Updater[ColumnFilters] => Callback]] = js.undefined,
     getFilteredRowModel:      js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
-      js.undefined
+      js.undefined,
+    // Global Filtering
+    enableGlobalFilter:       js.UndefOr[Boolean] = js.undefined,
+    globalFilterFn:           js.UndefOr[
+      BuiltInFilter[TF] | FilterFn[T, TM, CM, TF, TF, Any] | FilterFn.Type[T, TM, CM, TF, TF, Any]
+    ] = js.undefined,
+    onGlobalFilterChange:     js.UndefOr[Option[Updater[TF] => Callback]] = js.undefined,
+    getColumnCanGlobalFilter: js.UndefOr[Column[T, ?, TM, CM, TF, ?, ?] => Boolean] = js.undefined
   ): TableOptions[T, TM, CM, TF] =
-    val autoEnableSorting: Boolean   = !enableSorting.contains(false) && (
+    val autoEnableSorting: Boolean         = !enableSorting.contains(false) && (
       enableSorting.contains(true) ||
         enableMultiSort.contains(true) ||
         enableSortingRemoval.contains(true) ||
@@ -714,21 +726,30 @@ object TableOptions:
         onSortingChange.isDefined ||
         sortDescFirst.contains(true)
     )
-    val autoEnableExpanding: Boolean = !enableExpanding.contains(false) && (
+    val autoEnableExpanding: Boolean       = !enableExpanding.contains(false) && (
       enableExpanding.contains(true) ||
         getExpandedRowModel.isDefined ||
         getSubRows.isDefined
     )
-    val autoEnableFiltering: Boolean =
-      !enableFilters.contains(false) && !enableColumnFilters.contains(false) && (
-        enableFilters.contains(true) ||
-          enableColumnFilters.contains(true) ||
+    val autoEnableColumnFiltering: Boolean =
+      !enableColumnFilters.contains(false) && (
+        enableColumnFilters.contains(true) ||
           filterFromLeafRows.contains(true) ||
           maxLeafRowFilterDepth.isDefined ||
           manualFiltering.contains(true) ||
           onColumnFiltersChange.isDefined ||
           getFilteredRowModel.isDefined
       )
+    val autoEnableGlobalFiltering: Boolean =
+      !enableGlobalFilter.contains(false) && (
+        enableGlobalFilter.contains(true) ||
+          globalFilterFn.isDefined ||
+          onGlobalFilterChange.isDefined
+      )
+    val autoEnableFiltering: Boolean       =
+      !enableFilters.contains(false) && (enableFilters.contains(
+        true
+      ) || autoEnableColumnFiltering || autoEnableGlobalFiltering)
 
     new TableOptions[T, TM, CM, TF] {
       val columns                 = columns_
@@ -781,6 +802,10 @@ object TableOptions:
       .applyOrNot(manualFiltering, (p, v) => p.setManualFiltering(v.some))
       .applyOrNot(onColumnFiltersChange, (p, v) => p.setOnColumnFiltersChange(v))
       .applyOrNot(enableColumnFilters, (p, v) => p.setEnableColumnFilters(v.some))
+      .applyOrNot(enableGlobalFilter, (p, v) => p.setEnableGlobalFilter(v.some))
+      .applyOrNot(globalFilterFn, (p, v) => p.setGlobalFilterFn(v.some))
+      .applyOrNot(onGlobalFilterChange, (p, v) => p.setOnGlobalFilterChange(v))
+      .applyOrNot(getColumnCanGlobalFilter, (p, v) => p.setGetColumnCanGlobalFilter(v.some))
 
   private[table] def fromJs[T, TM, CM, TF](
     raw: TableOptionsJs[T, TM, CM]

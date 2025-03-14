@@ -366,7 +366,9 @@ object ColumnDef:
       filterFn:           js.UndefOr[
         BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM] | FilterFn.Type[T, TM, CM, TF, CF, FM]
       ] = js.undefined,
-      enableColumnFilter: js.UndefOr[Boolean] = js.undefined
+      enableColumnFilter: js.UndefOr[Boolean] = js.undefined,
+      // Global Filtering
+      enableGlobalFilter: js.UndefOr[Boolean] = js.undefined
     ): Single[T, A, TM, CM, TF, CF, FM] = {
       val p: ColumnDefJs[T, A, CM] =
         new js.Object().asInstanceOf[ColumnDefJs[T, A, CM]]
@@ -391,6 +393,7 @@ object ColumnDef:
         .applyOrNot(enablePinning, _.setEnablePinning(_))
         .applyOrNot(filterFn, _.setFilterFn(_))
         .applyOrNot(enableColumnFilter, _.setEnableColumnFilter(_))
+        .applyOrNot(enableGlobalFilter, _.setEnableGlobalFilter(_))
     }
   end Single
 
@@ -593,7 +596,9 @@ object ColumnDef:
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
       filterFn:           js.UndefOr[BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM]] = js.undefined,
-      enableColumnFilter: js.UndefOr[Boolean] = js.undefined
+      enableColumnFilter: js.UndefOr[Boolean] = js.undefined,
+      // Global Filtering
+      enableGlobalFilter: js.UndefOr[Boolean] = js.undefined
     ): Group[T, TM, CM, TF, CF, FM] = {
       val p: ColumnDefJs[T, Nothing, CM] =
         new js.Object().asInstanceOf[ColumnDefJs[T, Nothing, CM]]
@@ -610,6 +615,7 @@ object ColumnDef:
         .applyOrNot(enablePinning, _.setEnablePinning(_))
         .applyOrNot(filterFn, _.setFilterFn(_))
         .applyOrNot(enableColumnFilter, _.setEnableColumnFilter(_))
+        .applyOrNot(enableGlobalFilter, _.setEnableGlobalFilter(_))
     }
   end Group
 
