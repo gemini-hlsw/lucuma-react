@@ -11,6 +11,7 @@ import lucuma.react.table.facade.TableOptionsJs
 import lucuma.typed.tanstackTableCore as raw
 import org.scalajs.dom
 
+import scalajs.js
 import scalajs.js.JSConverters.*
 
 // Missing: ColumnOrder, Grouping, Pagination
@@ -40,13 +41,13 @@ case class Table[T, TM, CM, TF] private[table] (
   def getCoreRowModel(): RowModel[T, TM, CM, TF]                                     = RowModel(toJs.getCoreRowModel())
   def getRow(id:      String): Row[T, TM, CM, TF]                                    = Row(toJs.getRow(id))
   def getRowModel(): RowModel[T, TM, CM, TF]                                         = RowModel(toJs.getRowModel())
-  def getState(): TableState                                                         = TableState(toJs.getState())
-  lazy val initialState: TableState                                                  = TableState(toJs.initialState)
+  def getState(): TableState[TF]                                                     = TableState(toJs.getState())
+  lazy val initialState: TableState[TF]                                              = TableState(toJs.initialState)
   lazy val options: TableOptions[T, TM, CM, TF]                                      =
     TableOptions.fromJs(toJs.options.asInstanceOf[TableOptionsJs[T, TM, CM]])
   def reset(): Callback                                                              = Callback(toJs.reset())
-  def setState(value: TableState): Callback                                          = Callback(toJs.setState(value.toJs))
-  def modState(f: Endo[TableState]): Callback                                        =
+  def setState(value: TableState[TF]): Callback                                      = Callback(toJs.setState(value.toJs))
+  def modState(f: Endo[TableState[TF]]): Callback                                    =
     Callback(toJs.setState(rawState => f(TableState(rawState)).toJs))
 
   // Headers
@@ -223,13 +224,15 @@ case class Table[T, TM, CM, TF] private[table] (
   )
   def getPreFilteredRowModel(): RowModel[T, TM, CM, TF]   = RowModel(
     toJs.getPreFilteredRowModel()
-  ) // ENABLE IF THERE ARE GLOBAL FILTERS!!!!?!?!?!?!?!??!
-  def getFilteredRowModel(): RowModel[T, TM, CM, TF] = RowModel(toJs.getFilteredRowModel())
+  )
+  def getFilteredRowModel(): RowModel[T, TM, CM, TF]      = RowModel(toJs.getFilteredRowModel())
 
   // Global Filtering
-  def setGlobalFilter(value: TF): Callback                              = Callback(toJs.setGlobalFilter(value))
-  def modGlobalFilter(f: Endo[TF]): Callback                            = Callback(
-    toJs.setGlobalFilter(v => f(v.asInstanceOf[TF]))
+  def setGlobalFilter(value: Option[TF]): Callback                      = Callback(
+    toJs.setGlobalFilter(value.orUndefined)
+  )
+  def modGlobalFilter(f: Endo[Option[TF]]): Callback                    = Callback(
+    toJs.setGlobalFilter(v => f(v.asInstanceOf[js.UndefOr[TF]].toOption).orUndefined)
   )
   def resetGlobalFilter(): Callback                                     = Callback(toJs.resetGlobalFilter())
   def resetGlobalFilter(defaultState: Boolean): Callback                = Callback(

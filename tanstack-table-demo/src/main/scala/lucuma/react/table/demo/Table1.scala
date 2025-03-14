@@ -122,10 +122,7 @@ object Table1:
                             enableFilters = true,
                             enableGlobalFilter = true,
                             globalFilterFn = (row, colId, value: String, _) =>
-                              println("hello")
-                              row.getValue(colId) match
-                                case Some(v) => value.toLowerCase.contains(v.toString.toLowerCase)
-                                case None    => false,
+                              row.getValue(colId).toString.toLowerCase.contains(value.toLowerCase),
                             initialState =
                               TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
                           )
@@ -134,8 +131,8 @@ object Table1:
         <.input(
           ^.`type`      := "text",
           ^.placeholder := "Global Filter",
-          ^.value       := globalFilter.value,
-          ^.onChange ==> ((e: ReactEventFromInput) => globalFilter.setState(e.target.value))
+          ^.value       := table.getState().globalFilter.getOrElse(""),
+          ^.onChange ==> ((e: ReactEventFromInput) => table.setGlobalFilter(e.target.value.some))
         ),
         HTMLTable(
           table,
