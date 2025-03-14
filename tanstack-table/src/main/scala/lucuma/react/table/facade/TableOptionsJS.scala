@@ -124,3 +124,6 @@ trait TableOptionsJs[T, TM, CM] extends js.Object:
   ] = js.undefined
   var getColumnCanGlobalFilter: js.UndefOr[raw.buildLibTypesMod.Column[T, Any] => Boolean]    =
     js.undefined
+  var getPreFilteredRowModel: js.UndefOr[
+    js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]
+  ] = js.undefined

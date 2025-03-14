@@ -588,9 +588,9 @@ sealed trait TableOptions[T, TM, CM, TF]:
 
   /** WARNING: This mutates the object in-place. */
   def setGlobalFilterFn[TF1](
-    globalFilterFn: Option[
+    globalFilterFn: js.UndefOr[
       BuiltInFilter[TF1] | FilterFn[T, TM, CM, TF1, TF1, Any] |
-        FilterFn.Type[T, TM, CM, TF, TF, Any]
+        FilterFn.Type[T, TM, CM, TF1, TF1, Any]
     ]
   ): TableOptions[T, TM, CM, TF1] =
     copy(_.globalFilterFn =
@@ -600,8 +600,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
             case builtIn: BuiltInFilter[TF1] => builtIn.toJs
             case ff @ FilterFn(_, _, _)      => ff.asInstanceOf[FilterFn[T, TM, CM, TF1, TF1, Any]].toJs
             case fn                          =>
-              FilterFn(fn.asInstanceOf[FilterFn.Type[T, TM, CM, TF, TF, Any]], none, none).toJs
-        .orUndefined
+              FilterFn(fn.asInstanceOf[FilterFn.Type[T, TM, CM, TF1, TF1, Any]], none, none).toJs
     ).asInstanceOf[TableOptions[T, TM, CM, TF1]]
 
   lazy val onGlobalFilterChange: Option[Updater[TF] => Callback] =
@@ -649,7 +648,7 @@ end TableOptions
 
 object TableOptions:
   def apply[T, TM, CM, TF](
-    columns_                : Reusable[List[ColumnDef[T, ?, TM, CM, TF, ?, ?]]],
+    columns_                : Reusable[List[ColumnDef[T, ?, ?, CM, ?, ?, ?]]],
     data_                   : Reusable[List[T]],
     getCoreRowModel:          js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
       js.undefined,
@@ -752,7 +751,7 @@ object TableOptions:
       ) || autoEnableColumnFiltering || autoEnableGlobalFiltering)
 
     new TableOptions[T, TM, CM, TF] {
-      val columns                 = columns_
+      val columns                 = columns_.asInstanceOf[Reusable[List[ColumnDef[T, ?, TM, CM, TF, ?, ?]]]]
       val data                    = data_
       private[table] val toJsBase = new TableOptionsJs[T, TM, CM] {
         var columns         = null // Undefined on purpose, should not be accessible
@@ -803,7 +802,7 @@ object TableOptions:
       .applyOrNot(onColumnFiltersChange, (p, v) => p.setOnColumnFiltersChange(v))
       .applyOrNot(enableColumnFilters, (p, v) => p.setEnableColumnFilters(v.some))
       .applyOrNot(enableGlobalFilter, (p, v) => p.setEnableGlobalFilter(v.some))
-      .applyOrNot(globalFilterFn, (p, v) => p.setGlobalFilterFn(v.some))
+      .applyOrNot(globalFilterFn, _.setGlobalFilterFn(_))
       .applyOrNot(onGlobalFilterChange, (p, v) => p.setOnGlobalFilterChange(v))
       .applyOrNot(getColumnCanGlobalFilter, (p, v) => p.setGetColumnCanGlobalFilter(v.some))
 

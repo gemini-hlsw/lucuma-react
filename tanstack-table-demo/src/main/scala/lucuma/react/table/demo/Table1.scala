@@ -15,7 +15,7 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 object Table1:
-  private val ColDef = ColumnDef[Guitar]
+  private val ColDef = ColumnDef[Guitar].WithGlobalFilter[String]
 
   private val Columns =
     Reusable.always:
@@ -57,7 +57,7 @@ object Table1:
         )
       )
 
-  private def filterRenderer(col: ColDef.ColType): VdomNode =
+  private def filterRenderer(col: ColDef.Type): VdomNode =
     col.id.value match
       case "pickups" =>
         <.input(
@@ -111,19 +111,32 @@ object Table1:
   val component =
     ScalaFnComponent[List[Guitar]]: guitars =>
       for
-        rows  <- useMemo(guitars)(identity)
-        table <- useReactTable:
-                   TableOptions(
-                     Columns,
-                     rows,
-                     enableSorting = true,
-                     enableColumnResizing = true,
-                     enableFilters = true,
-                     initialState =
-                       TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
-                   )
+        rows         <- useMemo(guitars)(identity)
+        globalFilter <- useState("")
+        table        <- useReactTable:
+                          TableOptions(
+                            Columns,
+                            rows,
+                            enableSorting = true,
+                            enableColumnResizing = true,
+                            enableFilters = true,
+                            enableGlobalFilter = true,
+                            globalFilterFn = (row, colId, value: String, _) =>
+                              println("hello")
+                              row.getValue(colId) match
+                                case Some(v) => value.toLowerCase.contains(v.toString.toLowerCase)
+                                case None    => false,
+                            initialState =
+                              TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
+                          )
       yield React.Fragment(
         <.h2("Sortable table"),
+        <.input(
+          ^.`type`      := "text",
+          ^.placeholder := "Global Filter",
+          ^.value       := globalFilter.value,
+          ^.onChange ==> ((e: ReactEventFromInput) => globalFilter.setState(e.target.value))
+        ),
         HTMLTable(
           table,
           Css("guitars"),
