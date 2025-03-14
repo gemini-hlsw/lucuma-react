@@ -7,7 +7,23 @@ import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.ReactEvent
 import lucuma.typed.tanstackTableCore as raw
 
-case class Header[T, A, TM, CM, F, FM] private[table] (
+/**
+ * @tparam T
+ *   The type of the row.
+ * @tparam A
+ *   The type of the column.
+ * @tparam TM
+ *   The type of the metadata for the table.
+ * @tparam CM
+ *   The type of the metadata for the column.
+ * @tparam TF
+ *   The type of the global filter.
+ * @tparam CF
+ *   The type of the column filter.
+ * @tparam FM
+ *   The type of the filter metadata (column specific).
+ */
+case class Header[T, A, TM, CM, TF, CF, FM] private[table] (
   private[table] val toJs: raw.buildLibTypesMod.Header[T, A]
 ):
   /**
@@ -26,7 +42,7 @@ case class Header[T, A, TM, CM, F, FM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  lazy val column: Column[T, A, TM, CM, F, FM] = Column(toJs.column)
+  lazy val column: Column[T, A, TM, CM, TF, CF, FM] = Column(toJs.column)
 
   /**
    * The depth of the header, zero-indexed based.
@@ -45,7 +61,7 @@ case class Header[T, A, TM, CM, F, FM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  def getContext(): HeaderContext[T, A, TM, CM, F, FM] = HeaderContext(toJs.getContext())
+  def getContext(): HeaderContext[T, A, TM, CM, TF, CF, FM] = HeaderContext(toJs.getContext())
 
   /**
    * Returns the leaf headers hierarchically nested under this header.
@@ -54,7 +70,7 @@ case class Header[T, A, TM, CM, F, FM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  def getLeafHeaders(): List[Header[T, Any, TM, CM, Any, Any]] =
+  def getLeafHeaders(): List[Header[T, Any, TM, CM, TF, Any, Any]] =
     toJs.getLeafHeaders().toList.map(Header(_))
 
   /**
@@ -64,7 +80,7 @@ case class Header[T, A, TM, CM, F, FM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  lazy val headerGroup: HeaderGroup[T, TM, CM] = HeaderGroup(toJs.headerGroup)
+  lazy val headerGroup: HeaderGroup[T, TM, CM, TF] = HeaderGroup(toJs.headerGroup)
 
   /**
    * The unique identifier for the header.
@@ -120,8 +136,8 @@ case class Header[T, A, TM, CM, F, FM] private[table] (
    * @link
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
-  lazy val subHeaders: List[Header[T, Any, TM, CM, Any, Any]] =
-    toJs.subHeaders.toList.map(Header(_).asInstanceOf[Header[T, Any, TM, CM, Any, Any]])
+  lazy val subHeaders: List[Header[T, Any, TM, CM, TF, Any, Any]] =
+    toJs.subHeaders.toList.map(Header(_).asInstanceOf[Header[T, Any, TM, CM, TF, Any, Any]])
 
   // ColumnSizingHeader
 

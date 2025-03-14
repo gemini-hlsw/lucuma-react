@@ -11,3 +11,5 @@ object SizePx:
   extension (opaqueValue: SizePx)
     inline def value: Int                   = opaqueValue
     inline def modify(f: Endo[Int]): SizePx = f(opaqueValue)
+    def render: String                      = s"${opaqueValue}px"
+    def toString: String                    = render

@@ -7,28 +7,64 @@ import japgolly.scalajs.react.*
 
 object HooksApiExt:
   sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]):
-    final def useReactTable[T, TM, CM](
-      options: TableOptions[T, TM, CM]
+    /**
+     * @tparam T
+     *   The type of the row.
+     * @tparam A
+     *   The type of the column.
+     * @tparam TM
+     *   The type of the metadata for the table.
+     * @tparam CM
+     *   The type of the metadata for the column.
+     * @tparam TF
+     *   The type of the global filter.
+     */
+    final def useReactTable[T, TM, CM, TF](
+      options: TableOptions[T, TM, CM, TF]
     )(using
       step:    Step
-    ): step.Next[Table[T, TM, CM]] =
+    ): step.Next[Table[T, TM, CM, TF]] =
       useReactTableBy(_ => options)
 
-    final def useReactTableBy[T, TM, CM](
-      options: Ctx => TableOptions[T, TM, CM]
+    /**
+     * @tparam T
+     *   The type of the row.
+     * @tparam A
+     *   The type of the column.
+     * @tparam TM
+     *   The type of the metadata for the table.
+     * @tparam CM
+     *   The type of the metadata for the column.
+     * @tparam TF
+     *   The type of the global filter.
+     */
+    final def useReactTableBy[T, TM, CM, TF](
+      options: Ctx => TableOptions[T, TM, CM, TF]
     )(using
       step:    Step
-    ): step.Next[Table[T, TM, CM]] =
+    ): step.Next[Table[T, TM, CM, TF]] =
       api.customBy(ctx => TableHook.useTableHook(options(ctx)))
 
   final class Secondary[Ctx, CtxFn[_], Step <: HooksApi.SubsequentStep[Ctx, CtxFn]](
     api: HooksApi.Secondary[Ctx, CtxFn, Step]
   ) extends Primary[Ctx, Step](api):
-    def useReactTableBy[T, TM, CM](
-      tableDefWithOptions: CtxFn[TableOptions[T, TM, CM]]
+    /**
+     * @tparam T
+     *   The type of the row.
+     * @tparam A
+     *   The type of the column.
+     * @tparam TM
+     *   The type of the metadata for the table.
+     * @tparam CM
+     *   The type of the metadata for the column.
+     * @tparam TF
+     *   The type of the global filter.
+     */
+    def useReactTableBy[T, TM, CM, TF](
+      tableDefWithOptions: CtxFn[TableOptions[T, TM, CM, TF]]
     )(implicit
       step:                Step
-    ): step.Next[Table[T, TM, CM]] =
+    ): step.Next[Table[T, TM, CM, TF]] =
       super.useReactTableBy(step.squash(tableDefWithOptions)(_))
 
 trait HooksApiExt:

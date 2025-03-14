@@ -10,7 +10,17 @@ import scalajs.js
 package object table extends HooksApiExt:
   export TableHook.useReactTable
 
-  type SortingFn[T, TM, CM] = (Row[T, TM, CM], Row[T, TM, CM], ColumnId) => Int
+  /**
+   * @tparam T
+   *   The type of the row.
+   * @tparam TM
+   *   The type of the metadata for the table.
+   * @tparam CM
+   *   The type of the metadata for the column.
+   * @tparam TF
+   *   The type of the global filter.
+   */
+  type SortingFn[T, TM, CM, TF] = (Row[T, TM, CM, TF], Row[T, TM, CM, TF], ColumnId) => Int
 
   opaque type ColumnId = String
   object ColumnId:

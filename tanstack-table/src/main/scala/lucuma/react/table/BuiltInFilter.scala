@@ -7,6 +7,10 @@ import cats.syntax.option.*
 
 import scalajs.js
 
+/**
+ * @typaram
+ *   F The type of the filter value.
+ */
 enum BuiltInFilter[F](private[table] val toJs: String):
   case IncludesString          extends BuiltInFilter[String]("includesString")
   case IncludesStringSensitive extends BuiltInFilter[String]("includesStringSensitive")
