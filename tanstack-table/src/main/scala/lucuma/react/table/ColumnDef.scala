@@ -85,6 +85,12 @@ object ColumnDef:
   case class Single[T, A, TM, CM, TF, CF, FM](
     private[table] val toJs: ColumnDefJs[T, A, CM]
   ) extends ColumnDef[T, A, TM, CM, TF, CF, FM]:
+    type WithTableMeta[TM1]             = Single[T, A, TM1, CM, TF, CF, FM]
+    type WithColumnMeta[CM1]            = Single[T, A, TM, CM1, TF, CF, FM]
+    type WithGlobalFilter[TF1]          = Single[T, A, TM, CM, TF1, CF, FM]
+    type WithColumnFilter[CF1]          = Single[T, A, TM, CM, TF, CF1, FM]
+    type WithColumnFilterMeta[CF1, FM1] = Single[T, A, TM, CM, TF, CF1, FM1]
+
     lazy val id: ColumnId = ColumnId(toJs.id)
 
     /** WARNING: This mutates the object in-place. */
@@ -406,6 +412,12 @@ object ColumnDef:
   case class Group[T, TM, CM, TF, CF, FM](
     private[table] val toJs: ColumnDefJs[T, Nothing, CM]
   ) extends ColumnDef[T, Nothing, TM, CM, TF, CF, FM]:
+    type WithTableMeta[TM1]             = Group[T, TM1, CM, TF, CF, FM]
+    type WithColumnMeta[CM1]            = Group[T, TM, CM1, TF, CF, FM]
+    type WithGlobalFilter[TF1]          = Group[T, TM, CM, TF1, CF, FM]
+    type WithColumnFilter[CF1]          = Group[T, TM, CM, TF, CF1, FM]
+    type WithColumnFilterMeta[CF1, FM1] = Group[T, TM, CM, TF, CF1, FM1]
+
     lazy val id: ColumnId = ColumnId(toJs.id)
 
     /** WARNING: This mutates the object in-place. */
@@ -616,14 +628,6 @@ object ColumnDef:
   def apply[T]: Applied[T, Nothing, Nothing, Nothing] =
     new Applied[T, Nothing, Nothing, Nothing]
 
-  // object WithTableMeta:
-  //   def apply[T, TM]: Applied[T, TM, Nothing, Nothing] =
-  //     new Applied[T, TM, Nothing, Nothing]
-
-  // object WithColMeta:
-  //   def apply[T, CM]: Applied[T, Nothing, CM, Nothing] =
-  //     new Applied[T, Nothing, CM, Nothing]
-
   class Applied[T, TM, CM, TF]:
     type Type = Column[T, Any, TM, CM, TF, Any, Any]
 
@@ -737,99 +741,4 @@ object ColumnDef:
       )
 
   end Applied
-
-  // object Applied:
-  //   type Simple[T]               = Applied[T, Nothing, Nothing, Nothing]
-  //   type WithTableMeta[T, TM]    = Applied[T, TM, Nothing, Nothing]
-  //   type WithColumnMeta[T, CM]   = Applied[T, Nothing, CM, Nothing]
-  //   type WithGlobalFilter[T, TF] = Applied[T, Nothing, Nothing, TF]
-
-  // class AppliedWithColumnMeta[T, TM, CM, TF]:
-  //   type ColType = Column[T, Any, TM, CM, TF, Any, Any]
-
-  //   def apply[A, CF, FM](
-  //     id:              ColumnId,
-  //     accessor:        js.UndefOr[T => A] = js.undefined,
-  //     header:          js.UndefOr[String | (HeaderContext[T, A, TM, CM, TF, ?, ?] => VdomNode)] =
-  //       js.undefined,
-  //     cell:            js.UndefOr[CellContext[T, A, TM, CM, TF, ?, ?] => VdomNode] = js.undefined,
-  //     footer:          js.UndefOr[HeaderContext[T, A, TM, CM, TF, ?, ?] => VdomNode] = js.undefined,
-  //     meta:            js.UndefOr[CM] = js.undefined,
-  //     // Column Sizing
-  //     enableResizing:  js.UndefOr[Boolean] = js.undefined,
-  //     size:            js.UndefOr[SizePx] = js.undefined,
-  //     minSize:         js.UndefOr[SizePx] = js.undefined,
-  //     maxSize:         js.UndefOr[SizePx] = js.undefined,
-  //     // Column Visibility
-  //     enableHiding:    js.UndefOr[Boolean] = js.undefined,
-  //     // Sorting - We override the default of "true" to "false", so that ordering must be explicitly specified for each column.
-  //     enableSorting:   Boolean = false,
-  //     enableMultiSort: js.UndefOr[Boolean] = js.undefined,
-  //     invertSorting:   js.UndefOr[Boolean] = js.undefined,
-  //     sortDescFirst:   js.UndefOr[Boolean] = js.undefined,
-  //     sortUndefined:   js.UndefOr[UndefinedPriority] = js.undefined,
-  //     sortingFn:       js.UndefOr[BuiltInSorting | SortingFn[T, TM, CM, TF]] = js.undefined,
-  //     // Column Pinning
-  //     enablePinning:   js.UndefOr[Boolean] = js.undefined
-  //   ): Single[T, A, TM, CM, TF, CF, FM] =
-  //     Single(
-  //       id,
-  //       accessor,
-  //       header,
-  //       cell,
-  //       footer,
-  //       meta,
-  //       // Column Sizing
-  //       enableResizing,
-  //       size,
-  //       minSize,
-  //       maxSize,
-  //       // Column Visibility
-  //       enableHiding,
-  //       // Sorting
-  //       enableSorting,
-  //       enableMultiSort,
-  //       invertSorting,
-  //       sortDescFirst,
-  //       sortUndefined,
-  //       sortingFn,
-  //       // Column Pinning
-  //       enablePinning
-  //     )
-
-  //   def group[CF, FM, TF](
-  //     id:             ColumnId,
-  //     header:         js.UndefOr[String | (HeaderContext[T, Nothing, TM, CM, TF, ?, ?] => VdomNode)] =
-  //       js.undefined,
-  //     columns:        List[ColumnDef[T, Any, TM, CM, TF, ?, ?]],
-  //     footer:         js.UndefOr[HeaderContext[T, Nothing, TM, CM, TF, ?, ?] => VdomNode] = js.undefined,
-  //     meta:           js.UndefOr[CM] = js.undefined,
-  //     // Column Sizing
-  //     enableResizing: js.UndefOr[Boolean] = js.undefined,
-  //     size:           js.UndefOr[SizePx] = js.undefined,
-  //     minSize:        js.UndefOr[SizePx] = js.undefined,
-  //     maxSize:        js.UndefOr[SizePx] = js.undefined,
-  //     // Column Visibility
-  //     enableHiding:   js.UndefOr[Boolean] = js.undefined,
-  //     // Column Pinning
-  //     enablePinning:  js.UndefOr[Boolean] = js.undefined
-  //   ): Group[T, TM, CM, TF, CF, FM] =
-  //     Group(
-  //       id,
-  //       header,
-  //       columns,
-  //       footer,
-  //       meta,
-  //       // Column Sizing
-  //       enableResizing,
-  //       size,
-  //       minSize,
-  //       maxSize,
-  //       // Column Visibility
-  //       enableHiding,
-  //       // Column Pinning
-  //       enablePinning
-  //     )
-  // end AppliedWithColumnMeta
-
 end ColumnDef
