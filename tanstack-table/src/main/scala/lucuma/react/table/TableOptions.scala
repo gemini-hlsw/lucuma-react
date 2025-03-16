@@ -115,7 +115,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
         .getCoreRowModel(t.toJs): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
 
   /** WARNING: This mutates the object in-place. */
-  def setGetCoreRowModel(
+  def withGetCoreRowModel(
     getCoreRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]
   ): TableOptions[T, TM, CM, TF] =
     copy:
@@ -125,7 +125,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
           js.Function0[raw.buildLibTypesMod.RowModel[T]]
         ]
 
-  inline def withDefaultGetCoreRowModel: TableOptions[T, TM, CM, TF] =
+  def withDefaultGetCoreRowModel: TableOptions[T, TM, CM, TF] =
     copy(_.getCoreRowModel = rawReact.mod.getCoreRowModel())
 
   lazy val renderFallbackValue: Option[Any] = toJsBase.renderFallbackValue.toOption
@@ -1145,23 +1145,25 @@ object TableOptions:
     onGlobalFilterChange:     js.UndefOr[Updater[TF] => Callback] = js.undefined,
     getColumnCanGlobalFilter: js.UndefOr[Column[T, ?, TM, CM, TF, ?, ?] => Boolean] = js.undefined
   ): TableOptions[T, TM, CM, TF] =
-    val autoEnableSorting: Boolean         = !enableSorting.contains(false) && (
-      enableSorting.contains(true) ||
-        enableMultiSort.contains(true) ||
-        enableSortingRemoval.contains(true) ||
-        enableMultiRemove.contains(true) ||
-        getSortedRowModel.isDefined ||
-        isMultiSortEvent.isDefined ||
-        manualSorting.contains(true) ||
-        maxMultiSortColCount.isDefined ||
-        onSortingChange.isDefined ||
-        sortDescFirst.contains(true)
-    )
-    val autoEnableExpanding: Boolean       = !enableExpanding.contains(false) && (
-      enableExpanding.contains(true) ||
-        getExpandedRowModel.isDefined ||
-        getSubRows.isDefined
-    )
+    val autoEnableSorting: Boolean         =
+      !enableSorting.contains(false) && (
+        enableSorting.contains(true) ||
+          enableMultiSort.contains(true) ||
+          enableSortingRemoval.contains(true) ||
+          enableMultiRemove.contains(true) ||
+          getSortedRowModel.isDefined ||
+          isMultiSortEvent.isDefined ||
+          manualSorting.contains(true) ||
+          maxMultiSortColCount.isDefined ||
+          onSortingChange.isDefined ||
+          sortDescFirst.contains(true)
+      )
+    val autoEnableExpanding: Boolean       =
+      !enableExpanding.contains(false) && (
+        enableExpanding.contains(true) ||
+          getExpandedRowModel.isDefined ||
+          getSubRows.isDefined
+      )
     val autoEnableColumnFiltering: Boolean =
       !enableColumnFilters.contains(false) && (
         enableColumnFilters.contains(true) ||
@@ -1178,9 +1180,11 @@ object TableOptions:
           onGlobalFilterChange.isDefined
       )
     val autoEnableFiltering: Boolean       =
-      !enableFilters.contains(false) && (enableFilters.contains(
-        true
-      ) || autoEnableColumnFiltering || autoEnableGlobalFiltering)
+      !enableFilters.contains(false) && (
+        enableFilters.contains(true) ||
+          autoEnableColumnFiltering ||
+          autoEnableGlobalFiltering
+      )
 
     new TableOptions[T, TM, CM, TF] {
       val columns                 = columns_.asInstanceOf[Reusable[List[ColumnDef[T, ?, TM, CM, TF, ?, ?]]]]
@@ -1191,7 +1195,7 @@ object TableOptions:
         var getCoreRowModel = null
       }
     }
-      .applyOrElse(getCoreRowModel, _.setGetCoreRowModel(_), _.withDefaultGetCoreRowModel)
+      .applyOrElse(getCoreRowModel, _.withGetCoreRowModel(_), _.withDefaultGetCoreRowModel)
       .applyOrElseWhen(
         autoEnableSorting,
         getSortedRowModel,

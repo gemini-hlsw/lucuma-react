@@ -6,6 +6,7 @@ package lucuma.react
 import japgolly.scalajs.react.vdom.TagMod
 
 import scalajs.js
+import scalajs.js.JSConverters.*
 
 package object table extends HooksApiExt:
   export TableHook.useReactTable
@@ -72,8 +73,11 @@ package object table extends HooksApiExt:
     inline private[table] def applyOrNot[A](a: js.UndefOr[A], f: (B, A) => B): B =
       applyOrElse(a, f, identity)
 
-    private[table] def applyOrNull[A](a: Option[A], f: (B, A) => B, fNull: B => B): B =
-      a.fold(fNull(b))(a => f(b, a))
+    inline private[table] def applyOrNull[A](a: Option[A], f: (B, A) => B, fNull: B => B): B =
+      applyOrElse(a.orUndefined, f, fNull)
+
+    private[table] def applyWhen(cond: Boolean, f: B => B): B =
+      if cond then f(b) else b
 
   extension [A](opt: Null | A)
     private[table] def nullToOption: Option[A] = opt match

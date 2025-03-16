@@ -31,28 +31,28 @@ import scalajs.js.JSConverters.*
  */
 sealed trait ColumnDef[T, A, TM, CM, TF, CF, FM]:
   def id: ColumnId
-  def header: js.UndefOr[String | (HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode)]
-  def footer: js.UndefOr[HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode]
-  def meta: js.UndefOr[CM]
+  def header: Option[String | (HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode)]
+  def footer: Option[HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode]
+  def meta: Option[CM]
 
   // Column Sizing
-  def enableResizing: js.UndefOr[Boolean]
-  def size: js.UndefOr[SizePx]
-  def minSize: js.UndefOr[SizePx]
-  def maxSize: js.UndefOr[SizePx]
+  def enableResizing: Option[Boolean]
+  def size: Option[SizePx]
+  def minSize: Option[SizePx]
+  def maxSize: Option[SizePx]
 
   // Column Visibility
-  def enableHiding: js.UndefOr[Boolean]
+  def enableHiding: Option[Boolean]
 
   // Column Pinning
-  def enablePinning: js.UndefOr[Boolean]
+  def enablePinning: Option[Boolean]
 
   // Column Filtering
-  def filterFn: js.UndefOr[BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM]]
-  def enableColumnFilter: js.UndefOr[Boolean]
+  def enableColumnFilter: Option[Boolean]
+  def filterFn: Option[BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM]]
 
   // Global Filtering
-  def enableGlobalFilter: js.UndefOr[Boolean]
+  def enableGlobalFilter: Option[Boolean]
 
   type Type = Column[T, A, TM, CM, TF, CF, FM]
 
@@ -96,16 +96,24 @@ object ColumnDef:
     /** WARNING: This mutates the object in-place. */
     def setId(id: ColumnId): Single[T, A, TM, CM, TF, CF, FM] = Single { toJs.id = id.value; toJs }
 
-    lazy val accessor: js.UndefOr[T => A] =
-      toJs.accessorFn.map(identity) // This makes implicit conversions kick-in
+    lazy val accessor: Option[T => A] =
+      toJs.accessorFn.toOption.map(identity) // This makes implicit conversions kick-in
 
     /** WARNING: This mutates the object in-place. */
-    def setAccessor(accessor: js.UndefOr[T => A]): Single[T, A, TM, CM, TF, CF, FM] = Single {
-      toJs.accessorFn = accessor.map(identity); toJs
+    def setAccessor(accessor: Option[T => A]): Single[T, A, TM, CM, TF, CF, FM] = Single {
+      toJs.accessorFn = accessor.orUndefined.map(identity); toJs
     }
 
-    lazy val header: js.UndefOr[String | (HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode)] =
-      toJs.header.map: v =>
+    /** WARNING: This mutates the object in-place. */
+    inline def withAccessor(accessor: T => A): Single[T, A, TM, CM, TF, CF, FM] =
+      setAccessor(accessor.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutAccessor: Single[T, A, TM, CM, TF, CF, FM] =
+      setAccessor(none)
+
+    lazy val header: Option[String | (HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode)] =
+      toJs.header.toOption.map: v =>
         js.typeOf(v) match
           case "string" => v.asInstanceOf[String]
           case renderFn =>
@@ -118,9 +126,9 @@ object ColumnDef:
 
     /** WARNING: This mutates the object in-place. */
     def setHeader(
-      header: js.UndefOr[String | (HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode)]
+      header: Option[String | (HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode)]
     ): Single[T, A, TM, CM, TF, CF, FM] = Single {
-      toJs.header = header.map:
+      toJs.header = header.orUndefined.map:
         _ match
           case s: String                                                       => s
           case renderFn: (HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode) =>
@@ -129,21 +137,41 @@ object ColumnDef:
       toJs
     }
 
-    lazy val cell: js.UndefOr[CellContext[T, A, TM, CM, TF, CF, FM] => VdomNode] =
-      toJs.cell.map(renderFn => cellContext => VdomNode(renderFn(cellContext.toJs)))
+    /** WARNING: This mutates the object in-place. */
+    inline def withHeader(
+      header: String | (HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode)
+    ): Single[T, A, TM, CM, TF, CF, FM] =
+      setHeader(header.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutHeader: Single[T, A, TM, CM, TF, CF, FM] =
+      setHeader(none)
+
+    lazy val cell: Option[CellContext[T, A, TM, CM, TF, CF, FM] => VdomNode] =
+      toJs.cell.toOption.map(renderFn => cellContext => VdomNode(renderFn(cellContext.toJs)))
 
     /** WARNING: This mutates the object in-place. */
     def setCell(
-      cell: js.UndefOr[CellContext[T, A, TM, CM, TF, CF, FM] => VdomNode]
+      cell: Option[CellContext[T, A, TM, CM, TF, CF, FM] => VdomNode]
     ): Single[T, A, TM, CM, TF, CF, FM] =
       Single {
-        toJs.cell =
-          cell.map(renderFn => cellContextJs => renderFn(CellContext(cellContextJs)).rawNode);
+        toJs.cell = cell.orUndefined.map: renderFn =>
+          cellContextJs => renderFn(CellContext(cellContextJs)).rawNode
         toJs
       }
 
-    lazy val footer: js.UndefOr[HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode] =
-      toJs.footer.map: renderFn =>
+    /** WARNING: This mutates the object in-place. */
+    inline def withCell(
+      cell: CellContext[T, A, TM, CM, TF, CF, FM] => VdomNode
+    ): Single[T, A, TM, CM, TF, CF, FM] =
+      setCell(cell.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutCell: Single[T, A, TM, CM, TF, CF, FM] =
+      setCell(none)
+
+    lazy val footer: Option[HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode] =
+      toJs.footer.toOption.map: renderFn =>
         (headerContext: HeaderContext[T, A, TM, CM, TF, CF, FM]) =>
           VdomNode:
             renderFn
@@ -153,86 +181,189 @@ object ColumnDef:
 
     /** WARNING: This mutates the object in-place. */
     def setFooter(
-      footer: js.UndefOr[HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode]
+      footer: Option[HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode]
     ): Single[T, A, TM, CM, TF, CF, FM] = Single {
-      toJs.footer = footer.map: renderFn =>
+      toJs.footer = footer.orUndefined.map: renderFn =>
         headerContextJs => renderFn(HeaderContext(headerContextJs)).rawNode
       toJs
     }
 
-    lazy val meta: js.UndefOr[CM] = toJs.meta
+    /** WARNING: This mutates the object in-place. */
+    inline def withFooter(
+      footer: HeaderContext[T, A, TM, CM, TF, CF, FM] => VdomNode
+    ): Single[T, A, TM, CM, TF, CF, FM] =
+      setFooter(footer.some)
 
     /** WARNING: This mutates the object in-place. */
-    def setMeta(meta: CM): Single[T, A, TM, CM, TF, CF, FM] = Single { toJs.meta = meta; toJs }
+    inline def withoutFooter: Single[T, A, TM, CM, TF, CF, FM] =
+      setFooter(none)
+
+    lazy val meta: Option[CM] = toJs.meta.toOption
+
+    /** WARNING: This mutates the object in-place. */
+    def setMeta(meta: Option[CM]): Single[T, A, TM, CM, TF, CF, FM] =
+      Single { toJs.meta = meta.orUndefined; toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withMeta(meta: CM): Single[T, A, TM, CM, TF, CF, FM] =
+      setMeta(meta.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutMeta: Single[T, A, TM, CM, TF, CF, FM] =
+      setMeta(none)
 
     // Column Sizing
-    lazy val enableResizing: js.UndefOr[Boolean] = toJs.enableResizing
+    lazy val enableResizing: Option[Boolean] = toJs.enableResizing.toOption
 
     /** WARNING: This mutates the object in-place. */
-    def setEnableResizing(enableResizing: js.UndefOr[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.enableResizing = enableResizing; toJs }
-
-    lazy val size: js.UndefOr[SizePx] = toJs.size.map(SizePx(_))
+    def setEnableResizing(enableResizing: Option[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
+      Single { toJs.enableResizing = enableResizing.orUndefined; toJs }
 
     /** WARNING: This mutates the object in-place. */
-    def setSize(size: js.UndefOr[SizePx]): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.size = size.map(_.value); toJs }
-
-    lazy val minSize: js.UndefOr[SizePx] = toJs.minSize.map(SizePx(_))
+    inline def withEnableResizing(enableResizing: Boolean): Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableResizing(enableResizing.some)
 
     /** WARNING: This mutates the object in-place. */
-    def setMinSize(minSize: js.UndefOr[SizePx]): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.minSize = minSize.map(_.value); toJs }
+    inline def withoutEnableResizing: Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableResizing(none)
 
-    lazy val maxSize: js.UndefOr[SizePx] = toJs.maxSize.map(SizePx(_))
+    lazy val size: Option[SizePx] = toJs.size.toOption.map(SizePx(_))
 
     /** WARNING: This mutates the object in-place. */
-    def setMaxSize(maxSize: js.UndefOr[SizePx]): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.maxSize = maxSize.map(_.value); toJs }
+    def setSize(size: Option[SizePx]): Single[T, A, TM, CM, TF, CF, FM] =
+      Single { toJs.size = size.orUndefined.map(_.value); toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withSize(size: SizePx): Single[T, A, TM, CM, TF, CF, FM] =
+      setSize(size.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutSize: Single[T, A, TM, CM, TF, CF, FM] =
+      setSize(none)
+
+    lazy val minSize: Option[SizePx] = toJs.minSize.toOption.map(SizePx(_))
+
+    /** WARNING: This mutates the object in-place. */
+    def setMinSize(minSize: Option[SizePx]): Single[T, A, TM, CM, TF, CF, FM] =
+      Single { toJs.minSize = minSize.orUndefined.map(_.value); toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withMinSize(minSize: SizePx): Single[T, A, TM, CM, TF, CF, FM] =
+      setMinSize(minSize.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutMinSize: Single[T, A, TM, CM, TF, CF, FM] =
+      setMinSize(none)
+
+    lazy val maxSize: Option[SizePx] = toJs.maxSize.toOption.map(SizePx(_))
+
+    /** WARNING: This mutates the object in-place. */
+    def setMaxSize(maxSize: Option[SizePx]): Single[T, A, TM, CM, TF, CF, FM] =
+      Single { toJs.maxSize = maxSize.orUndefined.map(_.value); toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withMaxSize(maxSize: SizePx): Single[T, A, TM, CM, TF, CF, FM] =
+      setMaxSize(maxSize.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutMaxSize: Single[T, A, TM, CM, TF, CF, FM] =
+      setMaxSize(none)
 
     // Column Visibility
-    lazy val enableHiding: js.UndefOr[Boolean] = toJs.enableHiding
+    lazy val enableHiding: Option[Boolean] = toJs.enableHiding.toOption
 
     /** WARNING: This mutates the object in-place. */
-    def setEnableHiding(enableHiding: js.UndefOr[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.enableHiding = enableHiding; toJs }
+    def setEnableHiding(enableHiding: Option[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
+      Single { toJs.enableHiding = enableHiding.orUndefined; toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withEnableHiding(enableHiding: Boolean): Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableHiding(enableHiding.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutEnableHiding: Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableHiding(none)
 
     // Sorting
-    lazy val enableSorting: Boolean = toJs.enableSorting.getOrElse(true)
+    lazy val enableSorting: Option[Boolean] = toJs.enableSorting.toOption
 
     /** WARNING: This mutates the object in-place. */
-    def setEnableSorting(enableSorting: Boolean): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.enableSorting = enableSorting; toJs }
-
-    lazy val enableMultiSort: js.UndefOr[Boolean] = toJs.enableMultiSort
+    def setEnableSorting(enableSorting: Option[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
+      Single { toJs.enableSorting = enableSorting.orUndefined; toJs }
 
     /** WARNING: This mutates the object in-place. */
-    def setEnableMultiSort(enableMultiSort: js.UndefOr[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.enableMultiSort = enableMultiSort; toJs }
-
-    lazy val invertSorting: js.UndefOr[Boolean] = toJs.invertSorting
+    inline def withEnableSorting(enableSorting: Boolean): Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableSorting(enableSorting.some)
 
     /** WARNING: This mutates the object in-place. */
-    def setInvertSorting(invertSorting: js.UndefOr[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.invertSorting = invertSorting; toJs }
+    inline def withoutEnableSorting: Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableSorting(none)
 
-    lazy val sortDescFirst: js.UndefOr[Boolean] = toJs.sortDescFirst
+    lazy val enableMultiSort: Option[Boolean] = toJs.enableMultiSort.toOption
 
     /** WARNING: This mutates the object in-place. */
-    def setSortDescFirst(sortDescFirst: js.UndefOr[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.sortDescFirst = sortDescFirst; toJs }
+    def setEnableMultiSort(enableMultiSort: Option[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
+      Single { toJs.enableMultiSort = enableMultiSort.orUndefined; toJs }
 
-    lazy val sortUndefined: js.UndefOr[UndefinedPriority] = // Baffingly, we need this cast.
-      toJs.sortUndefined.map(v => UndefinedPriority.fromJs(v.asInstanceOf[UndefinedPriorityJs]))
+    /** WARNING: This mutates the object in-place. */
+    inline def withEnableMultiSort(enableMultiSort: Boolean): Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableMultiSort(enableMultiSort.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutEnableMultiSort: Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableMultiSort(none)
+
+    lazy val invertSorting: Option[Boolean] = toJs.invertSorting.toOption
+
+    /** WARNING: This mutates the object in-place. */
+    def setInvertSorting(invertSorting: Option[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
+      Single { toJs.invertSorting = invertSorting.orUndefined; toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withInvertSorting(invertSorting: Boolean): Single[T, A, TM, CM, TF, CF, FM] =
+      setInvertSorting(invertSorting.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutInvertSorting: Single[T, A, TM, CM, TF, CF, FM] =
+      setInvertSorting(none)
+
+    lazy val sortDescFirst: Option[Boolean] = toJs.sortDescFirst.toOption
+
+    /** WARNING: This mutates the object in-place. */
+    def setSortDescFirst(sortDescFirst: Option[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
+      Single { toJs.sortDescFirst = sortDescFirst.orUndefined; toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withSortDescFirst(sortDescFirst: Boolean): Single[T, A, TM, CM, TF, CF, FM] =
+      setSortDescFirst(sortDescFirst.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutSortDescFirst: Single[T, A, TM, CM, TF, CF, FM] =
+      setSortDescFirst(none)
+
+    lazy val sortUndefined: Option[UndefinedPriority] = // Baffingly, we need this cast.
+      toJs.sortUndefined.toOption.map(v =>
+        UndefinedPriority.fromJs(v.asInstanceOf[UndefinedPriorityJs])
+      )
 
     /** WARNING: This mutates the object in-place. */
     def setSortUndefined(
-      sortUndefined: js.UndefOr[UndefinedPriority]
+      sortUndefined: Option[UndefinedPriority]
     ): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.sortUndefined = sortUndefined.map(_.toJs); toJs }
+      Single { toJs.sortUndefined = sortUndefined.orUndefined.map(_.toJs); toJs }
 
-    lazy val sortingFn: js.UndefOr[BuiltInSorting | SortingFn[T, TM, CM, TF]] =
-      toJs.sortingFn.map(v =>
+    /** WARNING: This mutates the object in-place. */
+    inline def withSortUndefined(
+      sortUndefined: UndefinedPriority
+    ): Single[T, A, TM, CM, TF, CF, FM] =
+      setSortUndefined(sortUndefined.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutSortUndefined: Single[T, A, TM, CM, TF, CF, FM] =
+      setSortUndefined(none)
+
+    lazy val sortingFn: Option[BuiltInSorting | SortingFn[T, TM, CM, TF]] =
+      toJs.sortingFn.toOption.map(v =>
         js.typeOf(v) match
           case "string" => BuiltInSorting.fromJs(v.asInstanceOf[String])
           case fn       =>
@@ -246,27 +377,37 @@ object ColumnDef:
 
     /** WARNING: This mutates the object in-place. */
     def setSortingFn(
-      sortingFn: js.UndefOr[BuiltInSorting | SortingFn[T, TM, CM, TF]]
+      sortingFn: Option[BuiltInSorting | SortingFn[T, TM, CM, TF]]
     ): Single[T, A, TM, CM, TF, CF, FM] =
       Single {
-        toJs.sortingFn = sortingFn match
+        toJs.sortingFn = sortingFn.orUndefined.map:
           case builtIn: BuiltInSorting => builtIn.toJs
           case fn                      =>
-            (rowA, rowB, colId) =>
+            (rowA: raw.buildLibTypesMod.Row[T], rowB: raw.buildLibTypesMod.Row[T], colId: String) =>
               fn.asInstanceOf[SortingFn[T, TM, CM, TF]](Row(rowA), Row(rowB), ColumnId(colId))
                 .toDouble
         toJs
       }
 
     /** WARNING: This mutates the object in-place. */
+    inline def withSortingFn(
+      sortingFn: BuiltInSorting | SortingFn[T, TM, CM, TF]
+    ): Single[T, A, TM, CM, TF, CF, FM] =
+      setSortingFn(sortingFn.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutSortingFn: Single[T, A, TM, CM, TF, CF, FM] =
+      setSortingFn(none)
+
+    /** WARNING: This mutates the object in-place. */
     def sortableBuiltIn(builtIn: BuiltInSorting): Single[T, A, TM, CM, TF, CF, FM] =
-      this.setSortingFn(builtIn).setEnableSorting(true)
+      this.setSortingFn(builtIn.some)
 
     /** WARNING: This mutates the object in-place. */
     def sortableWith[B](f: (A, A) => Int): Single[T, A, TM, CM, TF, CF, FM] =
       val sbfn: SortingFn[T, TM, CM, TF] = (r1, r2, col) =>
         f(r1.getValue[A](col), r2.getValue[A](col))
-      this.setSortingFn(sbfn).setEnableSorting(true)
+      this.setSortingFn(sbfn.some)
 
     /** WARNING: This mutates the object in-place. */
     def sortableBy[B](f: A => B)(using ordering: Ordering[B]): Single[T, A, TM, CM, TF, CF, FM] =
@@ -276,15 +417,23 @@ object ColumnDef:
     def sortable(using Ordering[A]): Single[T, A, TM, CM, TF, CF, FM] = sortableBy(identity)
 
     // Column Pinning
-    lazy val enablePinning: js.UndefOr[Boolean] = toJs.enablePinning
+    lazy val enablePinning: Option[Boolean] = toJs.enablePinning.toOption
 
     /** WARNING: This mutates the object in-place. */
-    def setEnablePinning(enablePinning: js.UndefOr[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.enablePinning = enablePinning; toJs }
+    def setEnablePinning(enablePinning: Option[Boolean]): Single[T, A, TM, CM, TF, CF, FM] =
+      Single { toJs.enablePinning = enablePinning.orUndefined; toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withEnablePinning(enablePinning: Boolean): Single[T, A, TM, CM, TF, CF, FM] =
+      setEnablePinning(enablePinning.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutEnablePinning: Single[T, A, TM, CM, TF, CF, FM] =
+      setEnablePinning(none)
 
     // Column Filtering
-    def filterFn: js.UndefOr[BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM]] =
-      toJs.filterFn.map(v =>
+    lazy val filterFn: Option[BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM]] =
+      toJs.filterFn.toOption.map(v =>
         js.typeOf(v) match
           case "string" =>
             BuiltInFilter.fromJs(v.asInstanceOf[String]).asInstanceOf[BuiltInFilter[CF]]
@@ -294,12 +443,12 @@ object ColumnDef:
 
     /** WARNING: This mutates the object in-place. */
     def setFilterFn[F1, FM1](
-      filterFn: js.UndefOr[
+      filterFn: Option[
         BuiltInFilter[F1] | FilterFn[T, TM, CM, TF, F1, FM1] | FilterFn.Type[T, TM, CM, TF, F1, FM1]
       ]
     ): Single[T, A, TM, CM, TF, F1, FM1] =
       Single {
-        toJs.filterFn = filterFn match
+        toJs.filterFn = filterFn.orUndefined.map:
           case builtIn: BuiltInFilter[F1] => builtIn.toJs
           case ff @ FilterFn(_, _, _)     => ff.asInstanceOf[FilterFn[T, TM, CM, TF, F1, FM1]].toJs
           case fn                         =>
@@ -307,22 +456,53 @@ object ColumnDef:
         toJs
       }
 
-    def enableColumnFilter: js.UndefOr[Boolean] = toJs.enableColumnFilter
+    /** WARNING: This mutates the object in-place. */
+    inline def withFilterFn[F1, FM1](
+      filterFn: BuiltInFilter[F1] | FilterFn[T, TM, CM, TF, F1, FM1] |
+        FilterFn.Type[T, TM, CM, TF, F1, FM1]
+    ): Single[T, A, TM, CM, TF, F1, FM1] =
+      setFilterFn(filterFn.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutFilterFn[F1, FM1]: Single[T, A, TM, CM, TF, F1, FM1] =
+      setFilterFn[F1, FM1](none)
+
+    lazy val enableColumnFilter: Option[Boolean] = toJs.enableColumnFilter.toOption
 
     /** WARNING: This mutates the object in-place. */
     def setEnableColumnFilter(
-      enableColumnFilter: js.UndefOr[Boolean]
+      enableColumnFilter: Option[Boolean]
     ): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.enableColumnFilter = enableColumnFilter; toJs }
+      Single { toJs.enableColumnFilter = enableColumnFilter.orUndefined; toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withEnableColumnFilter(
+      enableColumnFilter: Boolean
+    ): Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableColumnFilter(enableColumnFilter.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutEnableColumnFilter: Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableColumnFilter(none)
 
     // Global Filtering
-    def enableGlobalFilter: js.UndefOr[Boolean] = toJs.enableGlobalFilter
+    lazy val enableGlobalFilter: Option[Boolean] = toJs.enableGlobalFilter.toOption
 
     /** WARNING: This mutates the object in-place. */
     def setEnableGlobalFilter(
-      enableGlobalFilter: js.UndefOr[Boolean]
+      enableGlobalFilter: Option[Boolean]
     ): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.enableGlobalFilter = enableGlobalFilter; toJs }
+      Single { toJs.enableGlobalFilter = enableGlobalFilter.orUndefined; toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withEnableGlobalFilter(
+      enableGlobalFilter: Boolean
+    ): Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableGlobalFilter(enableGlobalFilter.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutEnableGlobalFilter: Single[T, A, TM, CM, TF, CF, FM] =
+      setEnableGlobalFilter(none)
 
   end Single
 
@@ -349,8 +529,7 @@ object ColumnDef:
       maxSize:            js.UndefOr[SizePx] = js.undefined,
       // Column Visibility
       enableHiding:       js.UndefOr[Boolean] = js.undefined,
-      // Sorting - We override the default of "true" to "false", so that ordering must be explicitly specified for each column.
-      enableSorting:      Boolean = false,
+      enableSorting:      js.UndefOr[Boolean] = js.undefined,
       enableMultiSort:    js.UndefOr[Boolean] = js.undefined,
       invertSorting:      js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:      js.UndefOr[Boolean] = js.undefined,
@@ -359,37 +538,65 @@ object ColumnDef:
       // Column Pinning
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
+      enableColumnFilter: js.UndefOr[Boolean] = js.undefined,
       filterFn:           js.UndefOr[
         BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM] | FilterFn.Type[T, TM, CM, TF, CF, FM]
       ] = js.undefined,
-      enableColumnFilter: js.UndefOr[Boolean] = js.undefined,
       // Global Filtering
       enableGlobalFilter: js.UndefOr[Boolean] = js.undefined
     ): Single[T, A, TM, CM, TF, CF, FM] = {
+      val autoEnableResizing: Boolean =
+        !enableResizing.contains(false) && (
+          enableResizing.contains(true) ||
+            size.isDefined ||
+            minSize.isDefined ||
+            maxSize.isDefined
+        )
+
+      val autoEnableSorting: Boolean =
+        !enableSorting.contains(false) && (
+          enableSorting.contains(true) ||
+            enableMultiSort.contains(true) ||
+            invertSorting.isDefined ||
+            sortDescFirst.isDefined ||
+            sortUndefined.isDefined ||
+            sortingFn.isDefined
+        )
+
+      val autoEnableColumnFilter: Boolean =
+        !enableColumnFilter.contains(false) && (
+          enableColumnFilter.contains(true) ||
+            filterFn.isDefined
+        )
+
       val p: ColumnDefJs[T, A, CM] =
         new js.Object().asInstanceOf[ColumnDefJs[T, A, CM]]
       p.id = id.value
+
       Single[T, A, TM, CM, TF, CF, FM](p)
-        .applyOrNot(accessor, _.setAccessor(_))
-        .applyOrNot(header, _.setHeader(_))
-        .applyOrNot(footer, _.setFooter(_))
-        .applyOrNot(cell, _.setCell(_))
-        .applyOrNot(meta, _.setMeta(_))
-        .applyOrNot(enableResizing, _.setEnableResizing(_))
-        .applyOrNot(size, _.setSize(_))
-        .applyOrNot(minSize, _.setMinSize(_))
-        .applyOrNot(maxSize, _.setMaxSize(_))
-        .applyOrNot(enableHiding, _.setEnableHiding(_))
-        .setEnableSorting(enableSorting)
-        .applyOrNot(enableMultiSort, _.setEnableMultiSort(_))
-        .applyOrNot(invertSorting, _.setInvertSorting(_))
-        .applyOrNot(sortDescFirst, _.setSortDescFirst(_))
-        .applyOrNot(sortUndefined, _.setSortUndefined(_))
-        .applyOrNot(sortingFn, _.setSortingFn(_))
-        .applyOrNot(enablePinning, _.setEnablePinning(_))
-        .applyOrNot(filterFn, _.setFilterFn(_))
-        .applyOrNot(enableColumnFilter, _.setEnableColumnFilter(_))
-        .applyOrNot(enableGlobalFilter, _.setEnableGlobalFilter(_))
+        .applyOrNot(accessor, _.withAccessor(_))
+        .applyOrNot(header, _.withHeader(_))
+        .applyOrNot(footer, _.withFooter(_))
+        .applyOrNot(cell, _.withCell(_))
+        .applyOrNot(meta, _.withMeta(_))
+        .applyOrNot(enableResizing, _.withEnableResizing(_))
+        .applyWhen(autoEnableResizing, _.withEnableResizing(true))
+        .applyOrNot(size, _.withSize(_))
+        .applyOrNot(minSize, _.withMinSize(_))
+        .applyOrNot(maxSize, _.withMaxSize(_))
+        .applyOrNot(enableHiding, _.withEnableHiding(_))
+        .applyOrNot(enableSorting, _.withEnableSorting(_))
+        .applyWhen(autoEnableSorting, _.withEnableSorting(true))
+        .applyOrNot(enableMultiSort, _.withEnableMultiSort(_))
+        .applyOrNot(invertSorting, _.withInvertSorting(_))
+        .applyOrNot(sortDescFirst, _.withSortDescFirst(_))
+        .applyOrNot(sortUndefined, _.withSortUndefined(_))
+        .applyOrNot(sortingFn, _.withSortingFn(_))
+        .applyOrNot(enablePinning, _.withEnablePinning(_))
+        .applyOrNot(enableColumnFilter, _.withEnableColumnFilter(_))
+        .applyWhen(autoEnableColumnFilter, _.withEnableColumnFilter(true))
+        .applyOrNot(filterFn, _.withFilterFn(_))
+        .applyOrNot(enableGlobalFilter, _.withEnableGlobalFilter(_))
     }
   end Single
 
@@ -436,9 +643,8 @@ object ColumnDef:
     ): Group[T, TM, CM, TF, CF, FM] =
       Group { toJs.columns = columns.map(_.toJs).toJSArray; toJs }
 
-    lazy val header
-      : js.UndefOr[String | (HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode)] =
-      toJs.header.map: v =>
+    lazy val header: Option[String | (HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode)] =
+      toJs.header.toOption.map: v =>
         js.typeOf(v) match
           case "string" => v.asInstanceOf[String]
           case renderFn =>
@@ -452,19 +658,28 @@ object ColumnDef:
 
     /** WARNING: This mutates the object in-place. */
     def setHeader(
-      header: js.UndefOr[String | (HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode)]
+      header: Option[String | (HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode)]
     ): Group[T, TM, CM, TF, CF, FM] = Group {
-      toJs.header = header.map:
-        _ match
-          case s: String                                                             => s
-          case renderFn: (HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode) =>
-            (headerContextJs: raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing]) =>
-              renderFn(HeaderContext(headerContextJs)).rawNode
+      toJs.header = header.orUndefined.map:
+        case s: String                                                             => s
+        case renderFn: (HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode) =>
+          (headerContextJs: raw.buildLibCoreHeadersMod.HeaderContext[T, Nothing]) =>
+            renderFn(HeaderContext(headerContextJs)).rawNode
       toJs
     }
 
-    lazy val footer: js.UndefOr[HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode] =
-      toJs.footer.map: renderFn =>
+    /** WARNING: This mutates the object in-place. */
+    inline def withHeader(
+      header: String | (HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode)
+    ): Group[T, TM, CM, TF, CF, FM] =
+      setHeader(header.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutHeader: Group[T, TM, CM, TF, CF, FM] =
+      setHeader(none)
+
+    lazy val footer: Option[HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode] =
+      toJs.footer.toOption.map: renderFn =>
         (headerContext: HeaderContext[T, Nothing, TM, CM, TF, CF, FM]) =>
           VdomNode:
             renderFn
@@ -475,95 +690,192 @@ object ColumnDef:
 
     /** WARNING: This mutates the object in-place. */
     def setFooter(
-      footer: js.UndefOr[HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode]
+      footer: Option[HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode]
     ): Group[T, TM, CM, TF, CF, FM] =
       Group {
-        toJs.footer = footer.map: renderFn =>
+        toJs.footer = footer.orUndefined.map: renderFn =>
           headerContextJs => renderFn(HeaderContext(headerContextJs)).rawNode
         toJs
       }
 
-    lazy val meta: js.UndefOr[CM] = toJs.meta
+    /** WARNING: This mutates the object in-place. */
+    inline def withFooter(
+      footer: HeaderContext[T, Nothing, TM, CM, TF, CF, FM] => VdomNode
+    ): Group[T, TM, CM, TF, CF, FM] =
+      setFooter(footer.some)
 
     /** WARNING: This mutates the object in-place. */
-    def setMeta(meta: CM): Group[T, TM, CM, TF, CF, FM] = Group { toJs.meta = meta; toJs }
+    inline def withoutFooter: Group[T, TM, CM, TF, CF, FM] =
+      setFooter(none)
+
+    lazy val meta: Option[CM] = toJs.meta.toOption
+
+    /** WARNING: This mutates the object in-place. */
+    def setMeta(meta: Option[CM]): Group[T, TM, CM, TF, CF, FM] = Group {
+      toJs.meta = meta.orUndefined; toJs
+    }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withMeta(meta: CM): Group[T, TM, CM, TF, CF, FM] =
+      setMeta(meta.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutMeta: Group[T, TM, CM, TF, CF, FM] =
+      setMeta(none)
 
     // Column Sizing
-    lazy val enableResizing: js.UndefOr[Boolean] = toJs.enableResizing
+    lazy val enableResizing: Option[Boolean] = toJs.enableResizing.toOption
 
     /** WARNING: This mutates the object in-place. */
-    def setEnableResizing(enableResizing: js.UndefOr[Boolean]): Group[T, TM, CM, TF, CF, FM] =
-      Group { toJs.enableResizing = enableResizing; toJs }
-
-    lazy val size: js.UndefOr[SizePx] = toJs.size.map(SizePx(_))
+    def setEnableResizing(enableResizing: Option[Boolean]): Group[T, TM, CM, TF, CF, FM] =
+      Group { toJs.enableResizing = enableResizing.orUndefined; toJs }
 
     /** WARNING: This mutates the object in-place. */
-    def setSize(size: js.UndefOr[SizePx]): Group[T, TM, CM, TF, CF, FM] =
-      Group { toJs.size = size.map(_.value); toJs }
-
-    lazy val minSize: js.UndefOr[SizePx] = toJs.minSize.map(SizePx(_))
+    inline def withEnableResizing(enableResizing: Boolean): Group[T, TM, CM, TF, CF, FM] =
+      setEnableResizing(enableResizing.some)
 
     /** WARNING: This mutates the object in-place. */
-    def setMinSize(minSize: js.UndefOr[SizePx]): Group[T, TM, CM, TF, CF, FM] =
-      Group { toJs.minSize = minSize.map(_.value); toJs }
+    inline def withoutEnableResizing: Group[T, TM, CM, TF, CF, FM] =
+      setEnableResizing(none)
 
-    lazy val maxSize: js.UndefOr[SizePx] = toJs.maxSize.map(SizePx(_))
+    lazy val size: Option[SizePx] = toJs.size.toOption.map(SizePx(_))
 
     /** WARNING: This mutates the object in-place. */
-    def setMaxSize(maxSize: js.UndefOr[SizePx]): Group[T, TM, CM, TF, CF, FM] =
-      Group { toJs.maxSize = maxSize.map(_.value); toJs }
+    def setSize(size: Option[SizePx]): Group[T, TM, CM, TF, CF, FM] =
+      Group { toJs.size = size.orUndefined.map(_.value); toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withSize(size: SizePx): Group[T, TM, CM, TF, CF, FM] =
+      setSize(size.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutSize: Group[T, TM, CM, TF, CF, FM] =
+      setSize(none)
+
+    lazy val minSize: Option[SizePx] = toJs.minSize.toOption.map(SizePx(_))
+
+    /** WARNING: This mutates the object in-place. */
+    def setMinSize(minSize: Option[SizePx]): Group[T, TM, CM, TF, CF, FM] =
+      Group { toJs.minSize = minSize.orUndefined.map(_.value); toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withMinSize(minSize: SizePx): Group[T, TM, CM, TF, CF, FM] =
+      setMinSize(minSize.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutMinSize: Group[T, TM, CM, TF, CF, FM] =
+      setMinSize(none)
+
+    lazy val maxSize: Option[SizePx] = toJs.maxSize.toOption.map(SizePx(_))
+
+    /** WARNING: This mutates the object in-place. */
+    def setMaxSize(maxSize: Option[SizePx]): Group[T, TM, CM, TF, CF, FM] =
+      Group { toJs.maxSize = maxSize.orUndefined.map(_.value); toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withMaxSize(maxSize: SizePx): Group[T, TM, CM, TF, CF, FM] =
+      setMaxSize(maxSize.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutMaxSize: Group[T, TM, CM, TF, CF, FM] =
+      setMaxSize(none)
 
     // Column Visibility
-    lazy val enableHiding: js.UndefOr[Boolean] = toJs.enableHiding
+    lazy val enableHiding: Option[Boolean] = toJs.enableHiding.toOption
 
     /** WARNING: This mutates the object in-place. */
-    def setEnableHiding(enableHiding: js.UndefOr[Boolean]): Group[T, TM, CM, TF, CF, FM] =
-      Group { toJs.enableHiding = enableHiding; toJs }
+    def setEnableHiding(enableHiding: Option[Boolean]): Group[T, TM, CM, TF, CF, FM] =
+      Group { toJs.enableHiding = enableHiding.orUndefined; toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withEnableHiding(enableHiding: Boolean): Group[T, TM, CM, TF, CF, FM] =
+      setEnableHiding(enableHiding.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutEnableHiding: Group[T, TM, CM, TF, CF, FM] =
+      setEnableHiding(none)
 
     // Column Pinning
-    lazy val enablePinning: js.UndefOr[Boolean] = toJs.enablePinning
+    lazy val enablePinning: Option[Boolean] = toJs.enablePinning.toOption
 
     /** WARNING: This mutates the object in-place. */
-    def setEnablePinning(enablePinning: js.UndefOr[Boolean]): Group[T, TM, CM, TF, CF, FM] =
-      Group { toJs.enablePinning = enablePinning; toJs }
+    def setEnablePinning(enablePinning: Option[Boolean]): Group[T, TM, CM, TF, CF, FM] =
+      Group { toJs.enablePinning = enablePinning.orUndefined; toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withEnablePinning(enablePinning: Boolean): Group[T, TM, CM, TF, CF, FM] =
+      setEnablePinning(enablePinning.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutEnablePinning: Group[T, TM, CM, TF, CF, FM] =
+      setEnablePinning(none)
 
     // Column Filtering
-    def filterFn: js.UndefOr[BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM]] =
-      toJs.filterFn.map(v =>
+
+    lazy val enableColumnFilter: Option[Boolean] = toJs.enableColumnFilter.toOption
+
+    /** WARNING: This mutates the object in-place. */
+    def setEnableColumnFilter(
+      enableColumnFilter: Option[Boolean]
+    ): Group[T, TM, CM, TF, CF, FM] =
+      Group { toJs.enableColumnFilter = enableColumnFilter.orUndefined; toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withEnableColumnFilter(
+      enableColumnFilter: Boolean
+    ): Group[T, TM, CM, TF, CF, FM] =
+      setEnableColumnFilter(enableColumnFilter.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutEnableColumnFilter: Group[T, TM, CM, TF, CF, FM]             =
+      setEnableColumnFilter(none)
+    lazy val filterFn: Option[BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM]] =
+      toJs.filterFn.toOption.map: v =>
         js.typeOf(v) match
           case "string" =>
             BuiltInFilter.fromJs(v.asInstanceOf[String]).asInstanceOf[BuiltInFilter[CF]]
           case fn       =>
             FilterFn.fromJs(fn.asInstanceOf[raw.buildLibFeaturesColumnFilteringMod.FilterFn[T]])
-      )
 
     /** WARNING: This mutates the object in-place. */
     def setFilterFn[F1, FM1](
-      filterFn: js.UndefOr[BuiltInFilter[F1] | FilterFn[T, TM, CM, TF, F1, FM1]]
+      filterFn: Option[BuiltInFilter[F1] | FilterFn[T, TM, CM, TF, F1, FM1]]
     ): Group[T, TM, CM, TF, F1, FM1] =
       Group {
-        toJs.filterFn = filterFn match
+        toJs.filterFn = filterFn.orUndefined.map:
           case builtIn: BuiltInFilter[F1] => builtIn.toJs
           case fn                         => fn.asInstanceOf[FilterFn[T, TM, CM, TF, F1, FM1]].toJs
         toJs
       }
 
-    def enableColumnFilter: js.UndefOr[Boolean] = toJs.enableColumnFilter
+    /** WARNING: This mutates the object in-place. */
+    inline def withFilterFn[F1, FM1](
+      filterFn: BuiltInFilter[F1] | FilterFn[T, TM, CM, TF, F1, FM1]
+    ): Group[T, TM, CM, TF, F1, FM1] =
+      setFilterFn(filterFn.some)
 
     /** WARNING: This mutates the object in-place. */
-    def setEnableColumnFilter(
-      enableColumnFilter: js.UndefOr[Boolean]
-    ): Group[T, TM, CM, TF, CF, FM] =
-      Group { toJs.enableColumnFilter = enableColumnFilter; toJs }
+    inline def withoutFilterFn[F1, FM1]: Group[T, TM, CM, TF, F1, FM1] =
+      setFilterFn[F1, FM1](none)
 
     // Global Filtering
-    def enableGlobalFilter: js.UndefOr[Boolean] = toJs.enableGlobalFilter
+    lazy val enableGlobalFilter: Option[Boolean] = toJs.enableGlobalFilter.toOption
 
     /** WARNING: This mutates the object in-place. */
     def setEnableGlobalFilter(
-      enableGlobalFilter: js.UndefOr[Boolean]
+      enableGlobalFilter: Option[Boolean]
     ): Group[T, TM, CM, TF, CF, FM] =
-      Group { toJs.enableGlobalFilter = enableGlobalFilter; toJs }
+      Group { toJs.enableGlobalFilter = enableGlobalFilter.orUndefined; toJs }
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withEnableGlobalFilter(
+      enableGlobalFilter: Boolean
+    ): Group[T, TM, CM, TF, CF, FM] =
+      setEnableGlobalFilter(enableGlobalFilter.some)
+
+    /** WARNING: This mutates the object in-place. */
+    inline def withoutEnableGlobalFilter: Group[T, TM, CM, TF, CF, FM] =
+      setEnableGlobalFilter(none)
 
   end Group
 
@@ -592,27 +904,43 @@ object ColumnDef:
       // Column Pinning
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
-      filterFn:           js.UndefOr[BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM]] = js.undefined,
       enableColumnFilter: js.UndefOr[Boolean] = js.undefined,
+      filterFn:           js.UndefOr[BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM]] = js.undefined,
       // Global Filtering
       enableGlobalFilter: js.UndefOr[Boolean] = js.undefined
     ): Group[T, TM, CM, TF, CF, FM] = {
+      val autoEnableResizing: Boolean =
+        !enableResizing.contains(false) && (
+          enableResizing.contains(true) ||
+            size.isDefined ||
+            minSize.isDefined ||
+            maxSize.isDefined
+        )
+
+      val autoEnableColumnFilter: Boolean =
+        !enableColumnFilter.contains(false) && (
+          enableColumnFilter.contains(true) ||
+            filterFn.isDefined
+        )
+
       val p: ColumnDefJs[T, Nothing, CM] =
         new js.Object().asInstanceOf[ColumnDefJs[T, Nothing, CM]]
       p.id = id.value
       p.columns = columns.map(_.toJs).toJSArray
       Group[T, TM, CM, TF, CF, FM](p)
-        .applyOrNot(header, _.setHeader(_))
-        .applyOrNot(meta, _.setMeta(_))
-        .applyOrNot(enableResizing, _.setEnableResizing(_))
-        .applyOrNot(size, _.setSize(_))
-        .applyOrNot(minSize, _.setMinSize(_))
-        .applyOrNot(maxSize, _.setMaxSize(_))
-        .applyOrNot(enableHiding, _.setEnableHiding(_))
-        .applyOrNot(enablePinning, _.setEnablePinning(_))
-        .applyOrNot(filterFn, _.setFilterFn(_))
-        .applyOrNot(enableColumnFilter, _.setEnableColumnFilter(_))
-        .applyOrNot(enableGlobalFilter, _.setEnableGlobalFilter(_))
+        .applyOrNot(header, _.withHeader(_))
+        .applyOrNot(meta, _.withMeta(_))
+        .applyOrNot(enableResizing, _.withEnableResizing(_))
+        .applyWhen(autoEnableResizing, _.withEnableResizing(true))
+        .applyOrNot(size, _.withSize(_))
+        .applyOrNot(minSize, _.withMinSize(_))
+        .applyOrNot(maxSize, _.withMaxSize(_))
+        .applyOrNot(enableHiding, _.withEnableHiding(_))
+        .applyOrNot(enablePinning, _.withEnablePinning(_))
+        .applyOrNot(enableColumnFilter, _.withEnableColumnFilter(_))
+        .applyWhen(autoEnableColumnFilter, _.withEnableColumnFilter(true))
+        .applyOrNot(filterFn, _.withFilterFn(_))
+        .applyOrNot(enableGlobalFilter, _.withEnableGlobalFilter(_))
     }
   end Group
 
@@ -674,10 +1002,12 @@ object ColumnDef:
       // Column Pinning
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
+      enableColumnFilter: js.UndefOr[Boolean] = js.undefined,
       filterFn:           js.UndefOr[
         BuiltInFilter[CF] | FilterFn[T, TM, CM, TF, CF, FM] | FilterFn.Type[T, TM, CM, TF, CF, FM]
       ] = js.undefined,
-      enableColumnFilter: js.UndefOr[Boolean] = js.undefined
+      // Global Filtering
+      enableGlobalFilter: js.UndefOr[Boolean] = js.undefined
     ): Single[T, A, TM, CM, TF, CF, FM] =
       Single(
         id,
@@ -703,8 +1033,10 @@ object ColumnDef:
         // Column Pinning
         enablePinning,
         // Column Filtering
+        enableColumnFilter,
         filterFn,
-        enableColumnFilter
+        // Global Filtering
+        enableGlobalFilter = enableGlobalFilter
       )
 
     def group[CF, FM](
@@ -742,8 +1074,8 @@ object ColumnDef:
         // Column Pinning
         enablePinning,
         // Column Filtering
-        filterFn,
-        enableColumnFilter
+        enableColumnFilter,
+        filterFn
       )
 
   end Applied
