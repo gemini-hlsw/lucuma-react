@@ -629,11 +629,13 @@ object ColumnDef:
     new Applied[T, Nothing, Nothing, Nothing]
 
   class Applied[T, TM, CM, TF]:
-    type Type       = ColumnDef[T, ?, TM, CM, TF, ?, ?]
-    type TypeFor[A] = Single[T, A, TM, CM, TF, ?, ?]
+    type Type                   = ColumnDef[T, ?, TM, CM, TF, Any, Any]
+    type TypeFor[A]             = Single[T, A, TM, CM, TF, Any, Any]
+    type FullTypeFor[A, CM, FM] = Single[T, A, TM, CM, TF, CM, FM]
 
-    type ColType       = Column[T, ?, TM, CM, TF, ?, ?]
-    type ColTypeFor[A] = Column[T, A, TM, CM, TF, ?, ?]
+    type ColType                   = Column[T, ?, TM, CM, TF, Any, Any]
+    type ColTypeFor[A]             = Column[T, A, TM, CM, TF, Any, Any]
+    type ColFullTypeFor[A, CM, FM] = Column[T, A, TM, CM, TF, CM, FM]
 
     type WithTableMeta[TM1]    = Applied[T, TM1, CM, TF]
     type WithColumnMeta[CM1]   = Applied[T, TM, CM1, TF]

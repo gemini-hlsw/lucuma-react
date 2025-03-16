@@ -57,7 +57,7 @@ object Table1:
         )
       )
 
-  private def filterRenderer(col: ColDef.Type): VdomNode =
+  private def filterRenderer(col: ColDef.ColType): VdomNode =
     col.id.value match
       case "pickups" =>
         <.input(

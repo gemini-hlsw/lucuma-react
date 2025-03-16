@@ -116,26 +116,17 @@ sealed trait TableOptions[T, TM, CM, TF]:
 
   /** WARNING: This mutates the object in-place. */
   def setGetCoreRowModel(
-    getCoreRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]]
-  ): TableOptions[T, TM, CM, TF] =
-    copy:
-      _.getCoreRowModel = getCoreRowModel
-        .map: fn =>
-          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t)).map(_.toJs)): js.Function1[
-            raw.buildLibTypesMod.Table[T],
-            js.Function0[raw.buildLibTypesMod.RowModel[T]]
-          ]
-        .getOrElse(rawReact.mod.getCoreRowModel())
-
-  /** WARNING: This mutates the object in-place. */
-  inline def withGetCoreRowModel(
     getCoreRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]
   ): TableOptions[T, TM, CM, TF] =
-    setGetCoreRowModel(getCoreRowModel.some)
+    copy:
+      _.getCoreRowModel =
+        ((t: raw.buildLibTypesMod.Table[T]) => getCoreRowModel(Table(t)).map(_.toJs)): js.Function1[
+          raw.buildLibTypesMod.Table[T],
+          js.Function0[raw.buildLibTypesMod.RowModel[T]]
+        ]
 
-  /** WARNING: This mutates the object in-place. */
-  inline def withoutGetCoreRowModel: TableOptions[T, TM, CM, TF] =
-    setGetCoreRowModel(none)
+  inline def withDefaultGetCoreRowModel: TableOptions[T, TM, CM, TF] =
+    copy(_.getCoreRowModel = rawReact.mod.getCoreRowModel())
 
   lazy val renderFallbackValue: Option[Any] = toJsBase.renderFallbackValue.toOption
 
@@ -432,14 +423,13 @@ sealed trait TableOptions[T, TM, CM, TF]:
     getSortedRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]]
   ): TableOptions[T, TM, CM, TF] =
     copy(_.getSortedRowModel =
-      getSortedRowModel
+      getSortedRowModel.orUndefined
         .map(fn =>
           ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t)).map(_.toJs)): js.Function1[
             raw.buildLibTypesMod.Table[T],
             js.Function0[raw.buildLibTypesMod.RowModel[T]]
           ]
         )
-        .getOrElse(rawReact.mod.getSortedRowModel())
     )
 
   /** WARNING: This mutates the object in-place. */
@@ -451,6 +441,11 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   inline def withoutGetSortedRowModel: TableOptions[T, TM, CM, TF] =
     setGetSortedRowModel(none)
+
+  /** WARNING: This mutates the object in-place. */
+  def withDefaultGetSortedRowModel: TableOptions[T, TM, CM, TF] =
+    copy:
+      _.getSortedRowModel = rawReact.mod.getSortedRowModel()
 
   lazy val isMultiSortEvent: Option[SyntheticEvent[dom.Node] => Boolean] =
     toJsBase.isMultiSortEvent.toOption.map(identity)
@@ -650,14 +645,13 @@ sealed trait TableOptions[T, TM, CM, TF]:
     getExpandedRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]]
   ): TableOptions[T, TM, CM, TF] =
     copy(_.getExpandedRowModel =
-      getExpandedRowModel
+      getExpandedRowModel.orUndefined
         .map(fn =>
           ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t)).map(_.toJs)): js.Function1[
             raw.buildLibTypesMod.Table[T],
             js.Function0[raw.buildLibTypesMod.RowModel[T]]
           ]
         )
-        .getOrElse(rawReact.mod.getExpandedRowModel())
     )
 
   /** WARNING: This mutates the object in-place. */
@@ -669,6 +663,11 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   inline def withoutGetExpandedRowModel: TableOptions[T, TM, CM, TF] =
     setGetExpandedRowModel(none)
+
+  /** WARNING: This mutates the object in-place. */
+  def withDefaultGetExpandedRowModel: TableOptions[T, TM, CM, TF] =
+    copy:
+      _.getExpandedRowModel = rawReact.mod.getExpandedRowModel()
 
   lazy val getSubRows: Option[(T, Int) => Option[List[T]]] =
     toJsBase.getSubRows.toOption.map(fn => (row, idx) => fn(row, idx).toOption.map(_.toList))
@@ -947,7 +946,6 @@ sealed trait TableOptions[T, TM, CM, TF]:
             js.Function0[raw.buildLibTypesMod.RowModel[T]]
           ]
         )
-        .getOrElse(rawReact.mod.getFilteredRowModel())
     )
 
   /** WARNING: This mutates the object in-place. */
@@ -959,6 +957,11 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   inline def withoutGetFilteredRowModel: TableOptions[T, TM, CM, TF] =
     setGetFilteredRowModel(none)
+
+  /** WARNING: This mutates the object in-place. */
+  def withDefaultGetFilteredRowModel: TableOptions[T, TM, CM, TF] =
+    copy:
+      _.getFilteredRowModel = rawReact.mod.getFilteredRowModel()
 
   // Global Filtering
   lazy val enableGlobalFilter: Option[Boolean] = toJsBase.enableGlobalFilter.toOption
@@ -1188,10 +1191,25 @@ object TableOptions:
         var getCoreRowModel = null
       }
     }
-      .withGetCoreRowModel(getCoreRowModel.toOption)
-      .applyWhen(autoEnableSorting, _.withGetSortedRowModel(getSortedRowModel))
-      .applyWhen(autoEnableExpanding, _.withGetExpandedRowModel(getExpandedRowModel))
-      .applyWhen(autoEnableFiltering, _.withGetFilteredRowModel(getFilteredRowModel))
+      .applyOrElse(getCoreRowModel, _.setGetCoreRowModel(_), _.withDefaultGetCoreRowModel)
+      .applyOrElseWhen(
+        autoEnableSorting,
+        getSortedRowModel,
+        _.withGetSortedRowModel(_),
+        _.withDefaultGetSortedRowModel
+      )
+      .applyOrElseWhen(
+        autoEnableExpanding,
+        getExpandedRowModel,
+        _.withGetExpandedRowModel(_),
+        _.withDefaultGetExpandedRowModel
+      )
+      .applyOrElseWhen(
+        autoEnableFiltering,
+        getFilteredRowModel,
+        _.withGetFilteredRowModel(_),
+        _.withDefaultGetFilteredRowModel
+      )
       .applyOrNot(getRowId, _.withGetRowId(_))
       .applyOrNot(onStateChange, _.withOnStateChange(_))
       .applyOrNot(renderFallbackValue, _.withRenderFallbackValue(_))

@@ -173,7 +173,7 @@ trait HTMLTableRenderer[T, TM, CM, TF]:
                           else EmptyVdom,
                           resizer(
                             header,
-                            table.options.columnResizeMode.toOption,
+                            table.options.columnResizeMode,
                             table.getState().columnSizingInfo
                           )
                         )

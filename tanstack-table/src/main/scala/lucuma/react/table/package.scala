@@ -58,14 +58,22 @@ package object table extends HooksApiExt:
     }
 
   extension [B](b: B)
-    private[table] def applyOrNot[A](a: js.UndefOr[A], f: (B, A) => B): B =
-      a.fold(b)(a => f(b, a))
+    private[table] def applyOrElseWhen[A](
+      cond:   Boolean,
+      a:      js.UndefOr[A],
+      f:      (B, A) => B,
+      orElse: B => B
+    ): B =
+      if cond then a.fold(orElse(b))(a => f(b, a)) else b
+
+    inline private[table] def applyOrElse[A](a: js.UndefOr[A], f: (B, A) => B, orElse: B => B): B =
+      applyOrElseWhen(true, a, f, orElse)
+
+    inline private[table] def applyOrNot[A](a: js.UndefOr[A], f: (B, A) => B): B =
+      applyOrElse(a, f, identity)
 
     private[table] def applyOrNull[A](a: Option[A], f: (B, A) => B, fNull: B => B): B =
       a.fold(fNull(b))(a => f(b, a))
-
-    private[table] def applyWhen[A](cond: Boolean, f: B => B): B =
-      if cond then f(b) else b
 
   extension [A](opt: Null | A)
     private[table] def nullToOption: Option[A] = opt match
