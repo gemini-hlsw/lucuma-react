@@ -269,11 +269,11 @@ object ColumnDef:
       this.setSortingFn(sbfn).setEnableSorting(true)
 
     /** WARNING: This mutates the object in-place. */
-    def sortableBy[B](f: A => B)(using ordering: Ordering[B]): ColumnDef[T, A, TM, CM, TF, CF, FM] =
+    def sortableBy[B](f: A => B)(using ordering: Ordering[B]): Single[T, A, TM, CM, TF, CF, FM] =
       sortableWith((a1, a2) => ordering.compare(f(a1), f(a2)))
 
     /** WARNING: This mutates the object in-place. */
-    def sortable(using Ordering[A]) = sortableBy(identity)
+    def sortable(using Ordering[A]): Single[T, A, TM, CM, TF, CF, FM] = sortableBy(identity)
 
     // Column Pinning
     lazy val enablePinning: js.UndefOr[Boolean] = toJs.enablePinning
@@ -629,7 +629,11 @@ object ColumnDef:
     new Applied[T, Nothing, Nothing, Nothing]
 
   class Applied[T, TM, CM, TF]:
-    type Type = Column[T, Any, TM, CM, TF, Any, Any]
+    type Type       = ColumnDef[T, ?, TM, CM, TF, ?, ?]
+    type TypeFor[A] = Single[T, A, TM, CM, TF, ?, ?]
+
+    type ColType       = Column[T, ?, TM, CM, TF, ?, ?]
+    type ColTypeFor[A] = Column[T, A, TM, CM, TF, ?, ?]
 
     type WithTableMeta[TM1]    = Applied[T, TM1, CM, TF]
     type WithColumnMeta[CM1]   = Applied[T, TM, CM1, TF]
