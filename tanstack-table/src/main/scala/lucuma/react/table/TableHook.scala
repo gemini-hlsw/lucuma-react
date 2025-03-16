@@ -19,11 +19,13 @@ object TableHook:
   ): raw.buildLibTypesMod.Table[T] =
     js.native
 
-  def useReactTable[T, TM, CM](options: TableOptions[T, TM, CM]): HookResult[Table[T, TM, CM]] =
+  def useReactTable[T, TM, CM, TF](
+    options: TableOptions[T, TM, CM, TF]
+  ): HookResult[Table[T, TM, CM, TF]] =
     for
       cols <- useMemo(options.columns)(_ => options.columnsJs)
       rows <- useMemo(options.data)(_ => options.dataJs)
-    yield Table[T, TM, CM](useReactTableJs(options.toJs(cols, rows)))
+    yield Table[T, TM, CM, TF](useReactTableJs(options.toJs(cols, rows)))
 
-  def useTableHook[T, TM, CM]: CustomHook[TableOptions[T, TM, CM], Table[T, TM, CM]] =
+  def useTableHook[T, TM, CM, TF]: CustomHook[TableOptions[T, TM, CM, TF], Table[T, TM, CM, TF]] =
     CustomHook.fromHookResult(useReactTable(_))

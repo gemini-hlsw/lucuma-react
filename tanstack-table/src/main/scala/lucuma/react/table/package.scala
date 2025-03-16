@@ -6,11 +6,22 @@ package lucuma.react
 import japgolly.scalajs.react.vdom.TagMod
 
 import scalajs.js
+import scalajs.js.JSConverters.*
 
 package object table extends HooksApiExt:
   export TableHook.useReactTable
 
-  type SortingFn[T, TM, CM] = (Row[T, TM, CM], Row[T, TM, CM], ColumnId) => Int
+  /**
+   * @tparam T
+   *   The type of the row.
+   * @tparam TM
+   *   The type of the metadata for the table.
+   * @tparam CM
+   *   The type of the metadata for the column.
+   * @tparam TF
+   *   The type of the global filter.
+   */
+  type SortingFn[T, TM, CM, TF] = (Row[T, TM, CM, TF], Row[T, TM, CM, TF], ColumnId) => Int
 
   opaque type ColumnId = String
   object ColumnId:
@@ -48,13 +59,24 @@ package object table extends HooksApiExt:
     }
 
   extension [B](b: B)
-    private[table] def applyOrNot[A](a: js.UndefOr[A], f: (B, A) => B): B =
-      a.fold(b)(a => f(b, a))
+    private[table] def applyOrElseWhen[A](
+      cond:   Boolean,
+      a:      js.UndefOr[A],
+      f:      (B, A) => B,
+      orElse: B => B
+    ): B =
+      if cond then a.fold(orElse(b))(a => f(b, a)) else b
 
-    private[table] def applyOrNull[A](a: Option[A], f: (B, A) => B, fNull: B => B): B =
-      a.fold(fNull(b))(a => f(b, a))
+    inline private[table] def applyOrElse[A](a: js.UndefOr[A], f: (B, A) => B, orElse: B => B): B =
+      applyOrElseWhen(true, a, f, orElse)
 
-    private[table] def applyWhen[A](cond: Boolean, f: B => B): B =
+    inline private[table] def applyOrNot[A](a: js.UndefOr[A], f: (B, A) => B): B =
+      applyOrElse(a, f, identity)
+
+    inline private[table] def applyOrNull[A](a: Option[A], f: (B, A) => B, fNull: B => B): B =
+      applyOrElse(a.orUndefined, f, fNull)
+
+    private[table] def applyWhen(cond: Boolean, f: B => B): B =
       if cond then f(b) else b
 
   extension [A](opt: Null | A)

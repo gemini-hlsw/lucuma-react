@@ -12,48 +12,76 @@ import org.scalajs.dom.HTMLElement
 
 import scalajs.js
 
-final case class HTMLTable[T, TM, CM](
-  table:                Table[T, TM, CM],
+/**
+ * @tparam T
+ *   The type of the row.
+ * @tparam A
+ *   The type of the column.
+ * @tparam TM
+ *   The type of the metadata for the table.
+ * @tparam CM
+ *   The type of the metadata for the column.
+ * @tparam TF
+ *   The type of the global filter.
+ */
+final case class HTMLTable[T, TM, CM, TF](
+  table:                Table[T, TM, CM, TF],
   tableMod:             TagMod = TagMod.empty,
   headerMod:            TagMod = TagMod.empty,
-  headerRowMod:         HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
-  headerCellMod:        Header[T, Any, TM, CM, Any, Any] => TagMod =
-    (_: Header[T, Any, TM, CM, Any, Any]) => TagMod.empty,
-  columnFilterRenderer: Column[T, Any, TM, CM, Any, Any] => VdomNode =
-    (_: Column[T, Any, TM, CM, Any, Any]) => EmptyVdom,
+  headerRowMod:         HeaderGroup[T, TM, CM, TF] => TagMod = (_: HeaderGroup[T, TM, CM, TF]) =>
+    TagMod.empty,
+  headerCellMod:        Header[T, Any, TM, CM, TF, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, CM, TF, Any, Any]) => TagMod.empty,
+  columnFilterRenderer: Column[T, Any, TM, CM, TF, Any, Any] => VdomNode =
+    (_: Column[T, Any, TM, CM, TF, Any, Any]) => EmptyVdom,
   bodyMod:              TagMod = TagMod.empty,
-  rowMod:               Row[T, TM, CM] => TagMod = (_: Row[T, TM, CM]) => TagMod.empty,
-  cellMod:              Cell[T, Any, TM, CM, Any, Any] => TagMod = (_: Cell[T, Any, TM, CM, Any, Any]) =>
+  rowMod:               Row[T, TM, CM, TF] => TagMod = (_: Row[T, TM, CM, TF]) => TagMod.empty,
+  cellMod:              Cell[T, Any, TM, CM, TF, Any, Any] => TagMod = (_: Cell[T, Any, TM, CM, TF, Any, Any]) =>
     TagMod.empty,
   footerMod:            TagMod = TagMod.empty,
-  footerRowMod:         HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
-  footerCellMod:        Header[T, Any, TM, CM, Any, Any] => TagMod =
-    (_: Header[T, Any, TM, CM, Any, Any]) => TagMod.empty,
+  footerRowMod:         HeaderGroup[T, TM, CM, TF] => TagMod = (_: HeaderGroup[T, TM, CM, TF]) =>
+    TagMod.empty,
+  footerCellMod:        Header[T, Any, TM, CM, TF, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, CM, TF, Any, Any]) => TagMod.empty,
   emptyMessage:         VdomNode = EmptyVdom
 ) extends ReactFnProps(HTMLTable.component)
-    with HTMLTableProps[T, TM, CM]
+    with HTMLTableProps[T, TM, CM, TF]
 
-final case class HTMLVirtualizedTable[T, TM, CM](
-  table:                Table[T, TM, CM],
+/**
+ * @tparam T
+ *   The type of the row.
+ * @tparam A
+ *   The type of the column.
+ * @tparam TM
+ *   The type of the metadata for the table.
+ * @tparam CM
+ *   The type of the metadata for the column.
+ * @tparam TF
+ *   The type of the global filter.
+ */
+final case class HTMLVirtualizedTable[T, TM, CM, TF](
+  table:                Table[T, TM, CM, TF],
   estimateSize:         Int => SizePx,
   // Table options
   containerMod:         TagMod = TagMod.empty,
   containerRef:         js.UndefOr[Ref.ToVdom[HTMLElement]] = js.undefined,
   tableMod:             TagMod = TagMod.empty,
   headerMod:            TagMod = TagMod.empty,
-  headerRowMod:         HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
-  headerCellMod:        Header[T, Any, TM, CM, Any, Any] => TagMod =
-    (_: Header[T, Any, TM, CM, Any, Any]) => TagMod.empty,
-  columnFilterRenderer: Column[T, Any, TM, CM, Any, Any] => VdomNode =
-    (_: Column[T, Any, TM, CM, Any, Any]) => EmptyVdom,
+  headerRowMod:         HeaderGroup[T, TM, CM, TF] => TagMod = (_: HeaderGroup[T, TM, CM, TF]) =>
+    TagMod.empty,
+  headerCellMod:        Header[T, Any, TM, CM, TF, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, CM, TF, Any, Any]) => TagMod.empty,
+  columnFilterRenderer: Column[T, Any, TM, CM, TF, Any, Any] => VdomNode =
+    (_: Column[T, Any, TM, CM, TF, Any, Any]) => EmptyVdom,
   bodyMod:              TagMod = TagMod.empty,
-  rowMod:               Row[T, TM, CM] => TagMod = (_: Row[T, TM, CM]) => TagMod.empty,
-  cellMod:              Cell[T, Any, TM, CM, Any, Any] => TagMod = (_: Cell[T, Any, TM, CM, Any, Any]) =>
+  rowMod:               Row[T, TM, CM, TF] => TagMod = (_: Row[T, TM, CM, TF]) => TagMod.empty,
+  cellMod:              Cell[T, Any, TM, CM, TF, Any, Any] => TagMod = (_: Cell[T, Any, TM, CM, TF, Any, Any]) =>
     TagMod.empty,
   footerMod:            TagMod = TagMod.empty,
-  footerRowMod:         HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
-  footerCellMod:        Header[T, Any, TM, CM, Any, Any] => TagMod =
-    (_: Header[T, Any, TM, CM, Any, Any]) => TagMod.empty,
+  footerRowMod:         HeaderGroup[T, TM, CM, TF] => TagMod = (_: HeaderGroup[T, TM, CM, TF]) =>
+    TagMod.empty,
+  footerCellMod:        Header[T, Any, TM, CM, TF, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, CM, TF, Any, Any]) => TagMod.empty,
   emptyMessage:         VdomNode = EmptyVdom,
 
   // Virtual options
@@ -63,10 +91,22 @@ final case class HTMLVirtualizedTable[T, TM, CM](
   virtualizerRef:   js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]] = js.undefined,
   debugVirtualizer: js.UndefOr[Boolean] = js.undefined
 ) extends ReactFnProps(HTMLVirtualizedTable.component)
-    with HTMLVirtualizedTableProps[T, TM, CM]
+    with HTMLVirtualizedTableProps[T, TM, CM, TF]
 
-final case class HTMLAutoHeightVirtualizedTable[T, TM, CM](
-  table:                Table[T, TM, CM],
+/**
+ * @tparam T
+ *   The type of the row.
+ * @tparam A
+ *   The type of the column.
+ * @tparam TM
+ *   The type of the metadata for the table.
+ * @tparam CM
+ *   The type of the metadata for the column.
+ * @tparam TF
+ *   The type of the global filter.
+ */
+final case class HTMLAutoHeightVirtualizedTable[T, TM, CM, TF](
+  table:                Table[T, TM, CM, TF],
   estimateSize:         Int => SizePx,
   // Table options
   containerMod:         TagMod = TagMod.empty,
@@ -74,19 +114,21 @@ final case class HTMLAutoHeightVirtualizedTable[T, TM, CM](
   innerContainerMod:    TagMod = TagMod.empty,
   tableMod:             TagMod = TagMod.empty,
   headerMod:            TagMod = TagMod.empty,
-  headerRowMod:         HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
-  headerCellMod:        Header[T, Any, TM, CM, Any, Any] => TagMod =
-    (_: Header[T, Any, TM, CM, Any, Any]) => TagMod.empty,
-  columnFilterRenderer: Column[T, Any, TM, CM, Any, Any] => VdomNode =
-    (_: Column[T, Any, TM, CM, Any, Any]) => EmptyVdom,
+  headerRowMod:         HeaderGroup[T, TM, CM, TF] => TagMod = (_: HeaderGroup[T, TM, CM, TF]) =>
+    TagMod.empty,
+  headerCellMod:        Header[T, Any, TM, CM, TF, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, CM, TF, Any, Any]) => TagMod.empty,
+  columnFilterRenderer: Column[T, Any, TM, CM, TF, Any, Any] => VdomNode =
+    (_: Column[T, Any, TM, CM, TF, Any, Any]) => EmptyVdom,
   bodyMod:              TagMod = TagMod.empty,
-  rowMod:               Row[T, TM, CM] => TagMod = (_: Row[T, TM, CM]) => TagMod.empty,
-  cellMod:              Cell[T, Any, TM, CM, Any, Any] => TagMod = (_: Cell[T, Any, TM, CM, Any, Any]) =>
+  rowMod:               Row[T, TM, CM, TF] => TagMod = (_: Row[T, TM, CM, TF]) => TagMod.empty,
+  cellMod:              Cell[T, Any, TM, CM, TF, Any, Any] => TagMod = (_: Cell[T, Any, TM, CM, TF, Any, Any]) =>
     TagMod.empty,
   footerMod:            TagMod = TagMod.empty,
-  footerRowMod:         HeaderGroup[T, TM, CM] => TagMod = (_: HeaderGroup[T, TM, CM]) => TagMod.empty,
-  footerCellMod:        Header[T, Any, TM, CM, Any, Any] => TagMod =
-    (_: Header[T, Any, TM, CM, Any, Any]) => TagMod.empty,
+  footerRowMod:         HeaderGroup[T, TM, CM, TF] => TagMod = (_: HeaderGroup[T, TM, CM, TF]) =>
+    TagMod.empty,
+  footerCellMod:        Header[T, Any, TM, CM, TF, Any, Any] => TagMod =
+    (_: Header[T, Any, TM, CM, TF, Any, Any]) => TagMod.empty,
   emptyMessage:         VdomNode = EmptyVdom,
   // Virtual options
   overscan:             js.UndefOr[Int] = js.undefined,
@@ -95,24 +137,24 @@ final case class HTMLAutoHeightVirtualizedTable[T, TM, CM](
   virtualizerRef:       js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]] = js.undefined,
   debugVirtualizer:     js.UndefOr[Boolean] = js.undefined
 ) extends ReactFnProps(HTMLAutoHeightVirtualizedTable.component)
-    with HTMLAutoHeightVirtualizedTableProps[T, TM, CM]
+    with HTMLAutoHeightVirtualizedTableProps[T, TM, CM, TF]
 
-private val baseHTMLRenderer: HTMLTableRenderer[Any] =
-  new HTMLTableRenderer[Any] {}
+private val baseHTMLRenderer: HTMLTableRenderer[Any, Any, Any, Any] =
+  new HTMLTableRenderer[Any, Any, Any, Any] {}
 
 object HTMLTable:
   private val component =
-    HTMLTableRenderer.componentBuilder[Any, Any, Any, HTMLTable](baseHTMLRenderer)
+    HTMLTableRenderer.componentBuilder[Any, Any, Any, Any, HTMLTable](baseHTMLRenderer)
 
 object HTMLVirtualizedTable:
   private val component =
-    HTMLTableRenderer.componentBuilderVirtualized[Any, Any, Any, HTMLVirtualizedTable](
+    HTMLTableRenderer.componentBuilderVirtualized[Any, Any, Any, Any, HTMLVirtualizedTable](
       baseHTMLRenderer
     )
 
 object HTMLAutoHeightVirtualizedTable:
   private val component =
     HTMLTableRenderer
-      .componentBuilderAutoHeightVirtualized[Any, Any, Any, HTMLAutoHeightVirtualizedTable](
+      .componentBuilderAutoHeightVirtualized[Any, Any, Any, Any, HTMLAutoHeightVirtualizedTable](
         baseHTMLRenderer
       )

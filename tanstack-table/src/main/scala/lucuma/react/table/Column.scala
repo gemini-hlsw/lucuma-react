@@ -13,24 +13,42 @@ import org.scalajs.dom
 import scalajs.js.JSConverters.*
 import scalajs.js
 
-// Missing: Filters, Grouping
-case class Column[T, A, TM, CM, F, FM] private[table] (val toJs: raw.buildLibTypesMod.Column[T, A]):
-  lazy val id: ColumnId                                        = ColumnId(toJs.id)
-  lazy val depth: Int                                          = toJs.depth.toInt
-  lazy val accessorFn: Option[(T, Int) => A]                   =
+// Missing: Grouping
+/**
+ * @tparam T
+ *   The type of the row.
+ * @tparam A
+ *   The type of the column.
+ * @tparam TM
+ *   The type of the metadata for the table.
+ * @tparam CM
+ *   The type of the metadata for the column.
+ * @tparam TF
+ *   The type of the global filter.
+ * @tparam CF
+ *   The type of the column filter.
+ * @tparam FM
+ *   The type of the filter metadata (column specific).
+ */
+case class Column[T, A, TM, CM, TF, CF, FM] private[table] (
+  val toJs: raw.buildLibTypesMod.Column[T, A]
+):
+  lazy val id: ColumnId                                            = ColumnId(toJs.id)
+  lazy val depth: Int                                              = toJs.depth.toInt
+  lazy val accessorFn: Option[(T, Int) => A]                       =
     toJs.accessorFn.toOption.map(f => (row, index) => f(row, index))
-  lazy val columnDef: ColumnDef[T, A, TM, CM, F, FM]           =
-    ColumnDef.fromJs(toJs.columnDef.asInstanceOf[ColumnDefJs[T, A, TM, CM, F, FM]])
-  lazy val columns: List[Column[T, Any, TM, CM, Any, Any]]     =
+  lazy val columnDef: ColumnDef[T, A, TM, CM, TF, CF, FM]          =
+    ColumnDef.fromJs(toJs.columnDef.asInstanceOf[ColumnDefJs[T, A, CM]])
+  lazy val columns: List[Column[T, Any, TM, CM, TF, Any, Any]]     =
     toJs.columns.toList.map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
-  lazy val parent: Option[Column[T, Any, TM, CM, Any, Any]]    =
+  lazy val parent: Option[Column[T, Any, TM, CM, TF, Any, Any]]    =
     toJs.parent.toOption.map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
-  def getFlatColumns(): List[Column[T, Any, TM, CM, Any, Any]] =
+  def getFlatColumns(): List[Column[T, Any, TM, CM, TF, Any, Any]] =
     toJs
       .getFlatColumns()
       .toList
       .map(col => Column(col.asInstanceOf[raw.buildLibTypesMod.Column[T, Any]]))
-  def getLeafColumns(): List[Column[T, Any, TM, CM, Any, Any]] =
+  def getLeafColumns(): List[Column[T, Any, TM, CM, TF, Any, Any]] =
     toJs
       .getLeafColumns()
       .toList
@@ -48,7 +66,7 @@ case class Column[T, A, TM, CM, F, FM] private[table] (val toJs: raw.buildLibTyp
   def clearSorting(): Callback                                                    = Callback(toJs.clearSorting())
   def getAutoSortDir(): SortDirection                                             =
     SortDirection.fromDescending(toJs.getAutoSortDir() == raw.tanstackTableCoreStrings.desc)
-  def getAutoSortingFn(): SortingFn[T, TM, CM]                                    =
+  def getAutoSortingFn(): SortingFn[T, TM, CM, TF]                                =
     (rowA, rowB, colId) => toJs.getAutoSortingFn()(rowA.toJs, rowB.toJs, colId.value).toInt
   def getCanMultiSort(): Boolean                                                  = toJs.getCanMultiSort()
   def getCanSort(): Boolean                                                       = toJs.getCanSort()
@@ -64,7 +82,7 @@ case class Column[T, A, TM, CM, F, FM] private[table] (val toJs: raw.buildLibTyp
       .filterNot(_ == raw.tanstackTableCoreBooleans.`false`)
       .map(dir => SortDirection.fromDescending(dir == raw.tanstackTableCoreStrings.desc))
   def getSortIndex(): Int                                                         = toJs.getSortIndex().toInt
-  def getSortingFn(): SortingFn[T, TM, CM]                                        =
+  def getSortingFn(): SortingFn[T, TM, CM, TF]                                    =
     (rowA, rowB, colId) => toJs.getSortingFn()(rowA.toJs, rowB.toJs, colId.value).toInt
   def getToggleSortingHandler(): Option[SyntheticEvent[dom.Node] => Callback]     =
     toJs.getToggleSortingHandler().toOption.map(fn => e => Callback(fn(e)))
@@ -93,22 +111,25 @@ case class Column[T, A, TM, CM, F, FM] private[table] (val toJs: raw.buildLibTyp
   )
 
   // Column Filtering
-  def getCanFilter(): Boolean                                  = toJs.getCanFilter()
-  def getFilterIndex(): Int                                    = toJs.getFilterIndex().toInt
-  def getIsFiltered(): Boolean                                 = toJs.getIsFiltered()
-  def getFilterValue(): Option[F]                              =
-    toJs.getFilterValue().asInstanceOf[js.UndefOr[F]].toOption
-  def setFilterValue(value: Option[F]): Callback               = Callback(toJs.setFilterValue(value.orUndefined))
-  def modFilterValue(f: Option[F] => Option[F]): Callback      = Callback(
-    toJs.setFilterValue((v: js.UndefOr[F]) => f(v.toOption).orUndefined)
+  def getCanFilter(): Boolean                                        = toJs.getCanFilter()
+  def getFilterIndex(): Int                                          = toJs.getFilterIndex().toInt
+  def getIsFiltered(): Boolean                                       = toJs.getIsFiltered()
+  def getFilterValue(): Option[CF]                                   =
+    toJs.getFilterValue().asInstanceOf[js.UndefOr[CF]].toOption
+  def setFilterValue(value: Option[CF]): Callback                    = Callback(toJs.setFilterValue(value.orUndefined))
+  def modFilterValue(f: Option[CF] => Option[CF]): Callback          = Callback(
+    toJs.setFilterValue((v: js.UndefOr[CF]) => f(v.toOption).orUndefined)
   )
-  def getAutoFilterFn(): Option[FilterFn[T, TM, CM, F, FM]]    =
+  def getAutoFilterFn(): Option[FilterFn[T, TM, CM, TF, CF, FM]]     =
     toJs
       .getAutoFilterFn()
       .toOption
       .map(FilterFn.fromJs(_))
-  def getFilterFn[F, FM](): Option[FilterFn[T, TM, CM, F, FM]] =
+  def getFilterFn[CF, FM](): Option[FilterFn[T, TM, CM, TF, CF, FM]] =
     toJs
       .getFilterFn()
       .toOption
       .map(FilterFn.fromJs(_))
+
+  // Global Filtering
+  def getCanGlobalFilter(): Boolean = toJs.getCanGlobalFilter()

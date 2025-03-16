@@ -15,7 +15,7 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 object Table1:
-  private val ColDef = ColumnDef[Guitar]
+  private val ColDef = ColumnDef[Guitar].WithGlobalFilter[String]
 
   private val Columns =
     Reusable.always:
@@ -111,19 +111,29 @@ object Table1:
   val component =
     ScalaFnComponent[List[Guitar]]: guitars =>
       for
-        rows  <- useMemo(guitars)(identity)
-        table <- useReactTable:
-                   TableOptions(
-                     Columns,
-                     rows,
-                     enableSorting = true,
-                     enableColumnResizing = true,
-                     enableFilters = true,
-                     initialState =
-                       TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
-                   )
+        rows         <- useMemo(guitars)(identity)
+        globalFilter <- useState("")
+        table        <- useReactTable:
+                          TableOptions(
+                            Columns,
+                            rows,
+                            enableSorting = true,
+                            enableColumnResizing = true,
+                            enableFilters = true,
+                            enableGlobalFilter = true,
+                            globalFilterFn = (row, colId, value: String, _) =>
+                              row.getValue(colId).toString.toLowerCase.contains(value.toLowerCase),
+                            initialState =
+                              TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
+                          )
       yield React.Fragment(
         <.h2("Sortable table"),
+        <.input(
+          ^.`type`      := "text",
+          ^.placeholder := "Global Filter",
+          ^.value       := table.getState().globalFilter.getOrElse(""),
+          ^.onChange ==> ((e: ReactEventFromInput) => table.setGlobalFilter(e.target.value.some))
+        ),
         HTMLTable(
           table,
           Css("guitars"),

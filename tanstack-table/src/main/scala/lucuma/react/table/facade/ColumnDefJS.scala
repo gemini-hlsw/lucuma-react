@@ -8,14 +8,22 @@ import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
 
-trait ColumnDefJs[T, A, TM, CM, F, FM] extends js.Object:
+/**
+ * @tparam T
+ *   The type of the row.
+ * @tparam A
+ *   The type of the column.
+ * @tparam CM
+ *   The type of the metadata for the column.
+ */
+trait ColumnDefJs[T, A, CM] extends js.Object:
   var id: String
   var header: js.UndefOr[
     String | js.Function1[raw.buildLibCoreHeadersMod.HeaderContext[T, A], Node]
   ]
   var accessorFn: js.UndefOr[js.Function1[T, A]]
   var cell: js.UndefOr[js.Function1[raw.buildLibCoreCellMod.CellContext[T, A], Node]]
-  var columns: js.UndefOr[js.Array[ColumnDefJs[T, ?, TM, ?, ?, ?]]]
+  var columns: js.UndefOr[js.Array[ColumnDefJs[T, ?, CM]]]
   var footer: js.UndefOr[js.Function1[raw.buildLibCoreHeadersMod.HeaderContext[T, A], Node]]
   var meta: js.UndefOr[CM]
 
@@ -43,3 +51,6 @@ trait ColumnDefJs[T, A, TM, CM, F, FM] extends js.Object:
   var filterFn: js.UndefOr[String | raw.buildLibFeaturesColumnFilteringMod.FilterFn[T]] =
     js.undefined
   var enableColumnFilter: js.UndefOr[Boolean]                                           = js.undefined
+
+  // Global Filtering
+  var enableGlobalFilter: js.UndefOr[Boolean] = js.undefined

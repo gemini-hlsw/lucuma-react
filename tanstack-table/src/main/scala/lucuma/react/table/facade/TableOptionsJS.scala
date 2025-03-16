@@ -6,10 +6,17 @@ package lucuma.react.table.facade
 import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
-// import raw.buildLibFeaturesColumnFilteringMod.FilterFn
 
+/**
+ * @tparam T
+ *   The type of the row.
+ * @tparam TM
+ *   The type of the metadata for the table.
+ * @tparam CM
+ *   The type of the metadata for the column.
+ */
 trait TableOptionsJs[T, TM, CM] extends js.Object:
-  var columns: js.Array[ColumnDefJs[T, ?, TM, CM, ?, ?]]
+  var columns: js.Array[ColumnDefJs[T, ?, CM]]
   var data: js.Array[T]
 
   var getCoreRowModel: js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[
@@ -95,16 +102,28 @@ trait TableOptionsJs[T, TM, CM] extends js.Object:
     js.undefined
 
   // Column Filtering
-  // var filterFns: js.UndefOr[Record[String, FilterFn[Any]]] = js.undefined
-  var filterFromLeafRows: js.UndefOr[Boolean]   = js.undefined
-  var maxLeafRowFilterDepth: js.UndefOr[Double] = js.undefined
   var enableFilters: js.UndefOr[Boolean]        = js.undefined
-  var manualFiltering: js.UndefOr[Boolean]      = js.undefined
+  var enableColumnFilters: js.UndefOr[Boolean]  = js.undefined
   var onColumnFiltersChange: js.UndefOr[
     raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesColumnFilteringMod.ColumnFiltersState]
   ] =
     js.undefined
-  var enableColumnFilters: js.UndefOr[Boolean]  = js.undefined
+  var filterFromLeafRows: js.UndefOr[Boolean]   = js.undefined
+  var maxLeafRowFilterDepth: js.UndefOr[Double] = js.undefined
+  var manualFiltering: js.UndefOr[Boolean]      = js.undefined
   var getFilteredRowModel: js.UndefOr[
+    js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]
+  ] = js.undefined
+
+  // Global Filtering
+  var enableGlobalFilter: js.UndefOr[Boolean]                                                 = js.undefined
+  var globalFilterFn: js.UndefOr[String | raw.buildLibFeaturesColumnFilteringMod.FilterFn[T]] =
+    js.undefined
+  var onGlobalFilterChange: js.UndefOr[
+    raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesGlobalFilteringMod.GlobalFilterTableState]
+  ] = js.undefined
+  var getColumnCanGlobalFilter: js.UndefOr[raw.buildLibTypesMod.Column[T, Any] => Boolean]    =
+    js.undefined
+  var getPreFilteredRowModel: js.UndefOr[
     js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]
   ] = js.undefined
