@@ -548,7 +548,6 @@ object ColumnDef:
       val autoEnableResizing: Boolean =
         !enableResizing.contains(false) && (
           enableResizing.contains(true) ||
-            size.isDefined ||
             minSize.isDefined ||
             maxSize.isDefined
         )
@@ -912,7 +911,6 @@ object ColumnDef:
       val autoEnableResizing: Boolean =
         !enableResizing.contains(false) && (
           enableResizing.contains(true) ||
-            size.isDefined ||
             minSize.isDefined ||
             maxSize.isDefined
         )
