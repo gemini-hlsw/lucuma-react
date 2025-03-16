@@ -99,6 +99,16 @@ sealed trait TableOptions[T, TM, CM, TF]:
         )
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withOnStateChange(
+    onStateChange: Updater[TableState[TF]] => Callback
+  ): TableOptions[T, TM, CM, TF] =
+    setOnStateChange(onStateChange.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutOnStateChange: TableOptions[T, TM, CM, TF] =
+    setOnStateChange(none)
+
   lazy val getCoreRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF] =
     t =>
       (toJsBase
@@ -117,11 +127,29 @@ sealed trait TableOptions[T, TM, CM, TF]:
           ]
         .getOrElse(rawReact.mod.getCoreRowModel())
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetCoreRowModel(
+    getCoreRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]
+  ): TableOptions[T, TM, CM, TF] =
+    setGetCoreRowModel(getCoreRowModel.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetCoreRowModel: TableOptions[T, TM, CM, TF] =
+    setGetCoreRowModel(none)
+
   lazy val renderFallbackValue: Option[Any] = toJsBase.renderFallbackValue.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setRenderFallbackValue(renderFallbackValue: Option[Any]): TableOptions[T, TM, CM, TF] =
     copy(_.renderFallbackValue = renderFallbackValue.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withRenderFallbackValue(renderFallbackValue: Any): TableOptions[T, TM, CM, TF] =
+    setRenderFallbackValue(renderFallbackValue.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutRenderFallbackValue: TableOptions[T, TM, CM, TF] =
+    setRenderFallbackValue(none)
 
   lazy val state: Option[PartialTableState] =
     toJsBase.state.toOption.map(PartialTableState.apply)
@@ -129,6 +157,14 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   def setState(state: Option[PartialTableState]): TableOptions[T, TM, CM, TF] =
     copy(_.state = state.map(_.toJs).orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withState(state: PartialTableState): TableOptions[T, TM, CM, TF] =
+    setState(state.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutState: TableOptions[T, TM, CM, TF] =
+    setState(none)
 
   lazy val initialState: Option[TableState[TF]] =
     toJsBase.initialState.toOption.map(v =>
@@ -141,11 +177,27 @@ sealed trait TableOptions[T, TM, CM, TF]:
       initialState.map(_.toJs.asInstanceOf[raw.buildLibTypesMod.InitialTableState]).orUndefined
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withInitialState(initialState: TableState[TF]): TableOptions[T, TM, CM, TF] =
+    setInitialState(initialState.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutInitialState: TableOptions[T, TM, CM, TF] =
+    setInitialState(none)
+
   lazy val meta: Option[TM] = toJsBase.meta.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setMeta(meta: Option[TM]): TableOptions[T, TM, CM, TF] =
     copy(_.meta = meta.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withMeta(meta: TM): TableOptions[T, TM, CM, TF] =
+    setMeta(meta.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutMeta: TableOptions[T, TM, CM, TF] =
+    setMeta(none)
 
   // Column Sizing
   lazy val enableColumnResizing: Option[Boolean] = toJsBase.enableColumnResizing.toOption
@@ -156,6 +208,14 @@ sealed trait TableOptions[T, TM, CM, TF]:
   ): TableOptions[T, TM, CM, TF] =
     copy(_.enableColumnResizing = enableColumnResizing.orUndefined)
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableColumnResizing(enableColumnResizing: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableColumnResizing(enableColumnResizing.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableColumnResizing: TableOptions[T, TM, CM, TF] =
+    setEnableColumnResizing(none)
+
   lazy val columnResizeMode: Option[ColumnResizeMode] =
     toJsBase.columnResizeMode.toOption.map(ColumnResizeMode.fromJs)
 
@@ -164,6 +224,14 @@ sealed trait TableOptions[T, TM, CM, TF]:
     columnResizeMode: Option[ColumnResizeMode]
   ): TableOptions[T, TM, CM, TF] =
     copy(_.columnResizeMode = columnResizeMode.map(_.toJs).orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withColumnResizeMode(columnResizeMode: ColumnResizeMode): TableOptions[T, TM, CM, TF] =
+    setColumnResizeMode(columnResizeMode.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutColumnResizeMode: TableOptions[T, TM, CM, TF] =
+    setColumnResizeMode(none)
 
   lazy val onColumnSizingChange: Option[Updater[ColumnSizing] => Callback] =
     toJsBase.onColumnSizingChange.toOption.map(fn =>
@@ -193,6 +261,16 @@ sealed trait TableOptions[T, TM, CM, TF]:
         )
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withOnColumnSizingChange(
+    onColumnSizingChange: Updater[ColumnSizing] => Callback
+  ): TableOptions[T, TM, CM, TF] =
+    setOnColumnSizingChange(onColumnSizingChange.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutOnColumnSizingChange: TableOptions[T, TM, CM, TF] =
+    setOnColumnSizingChange(none)
+
   lazy val onColumnSizingInfoChange: Option[Updater[ColumnSizingInfo] => Callback] =
     toJsBase.onColumnSizingInfoChange.toOption.map(fn =>
       u =>
@@ -221,12 +299,30 @@ sealed trait TableOptions[T, TM, CM, TF]:
         )
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withOnColumnSizingInfoChange(
+    onColumnSizingInfoChange: Updater[ColumnSizingInfo] => Callback
+  ): TableOptions[T, TM, CM, TF] =
+    setOnColumnSizingInfoChange(onColumnSizingInfoChange.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutOnColumnSizingInfoChange: TableOptions[T, TM, CM, TF] =
+    setOnColumnSizingInfoChange(none)
+
   // Column Visibility
   lazy val enableHiding: Option[Boolean] = toJsBase.enableHiding.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setEnableHiding(enableHiding: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.enableHiding = enableHiding.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableHiding(enableHiding: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableHiding(enableHiding.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableHiding: TableOptions[T, TM, CM, TF] =
+    setEnableHiding(none)
 
   // Column Visibility
   lazy val onColumnVisibilityChange: Option[Updater[ColumnVisibility] => Callback] =
@@ -257,6 +353,16 @@ sealed trait TableOptions[T, TM, CM, TF]:
         )
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withOnColumnVisibilityChange(
+    onColumnVisibilityChange: Updater[ColumnVisibility] => Callback
+  ): TableOptions[T, TM, CM, TF] =
+    setOnColumnVisibilityChange(onColumnVisibilityChange.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutOnColumnVisibilityChange: TableOptions[T, TM, CM, TF] =
+    setOnColumnVisibilityChange(none)
+
   // Sorting
   lazy val enableSorting: Boolean = toJsBase.enableSorting.getOrElse(true)
 
@@ -264,11 +370,27 @@ sealed trait TableOptions[T, TM, CM, TF]:
   def setEnableSorting(enableSorting: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.enableSorting = enableSorting.orUndefined)
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableSorting(enableSorting: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableSorting(enableSorting.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableSorting: TableOptions[T, TM, CM, TF] =
+    setEnableSorting(none)
+
   lazy val enableMultiSort: Option[Boolean] = toJsBase.enableMultiSort.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setEnableMultiSort(enableMultiSort: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.enableMultiSort = enableMultiSort.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableMultiSort(enableMultiSort: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableMultiSort(enableMultiSort.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableMultiSort: TableOptions[T, TM, CM, TF] =
+    setEnableMultiSort(none)
 
   lazy val enableSortingRemoval: Option[Boolean] = toJsBase.enableSortingRemoval.toOption
 
@@ -278,11 +400,27 @@ sealed trait TableOptions[T, TM, CM, TF]:
   ): TableOptions[T, TM, CM, TF] =
     copy(_.enableSortingRemoval = enableSortingRemoval.orUndefined)
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableSortingRemoval(enableSortingRemoval: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableSortingRemoval(enableSortingRemoval.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableSortingRemoval: TableOptions[T, TM, CM, TF] =
+    setEnableSortingRemoval(none)
+
   lazy val enableMultiRemove: Option[Boolean] = toJsBase.enableMultiRemove.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setEnableMultiRemove(enableMultiRemove: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.enableMultiRemove = enableMultiRemove.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableMultiRemove(enableMultiRemove: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableMultiRemove(enableMultiRemove.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableMultiRemove: TableOptions[T, TM, CM, TF] =
+    setEnableMultiRemove(none)
 
   lazy val getSortedRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
     toJsBase.getSortedRowModel.toOption.map(fn =>
@@ -304,6 +442,16 @@ sealed trait TableOptions[T, TM, CM, TF]:
         .getOrElse(rawReact.mod.getSortedRowModel())
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetSortedRowModel(
+    getSortedRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]
+  ): TableOptions[T, TM, CM, TF] =
+    setGetSortedRowModel(getSortedRowModel.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetSortedRowModel: TableOptions[T, TM, CM, TF] =
+    setGetSortedRowModel(none)
+
   lazy val isMultiSortEvent: Option[SyntheticEvent[dom.Node] => Boolean] =
     toJsBase.isMultiSortEvent.toOption.map(identity)
 
@@ -315,11 +463,29 @@ sealed trait TableOptions[T, TM, CM, TF]:
       isMultiSortEvent.orUndefined.map(fn => e => fn(e.asInstanceOf[SyntheticEvent[dom.Node]]))
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withIsMultiSortEvent(
+    isMultiSortEvent: SyntheticEvent[dom.Node] => Boolean
+  ): TableOptions[T, TM, CM, TF] =
+    setIsMultiSortEvent(isMultiSortEvent.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutIsMultiSortEvent: TableOptions[T, TM, CM, TF] =
+    setIsMultiSortEvent(none)
+
   lazy val manualSorting: Option[Boolean] = toJsBase.manualSorting.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setManualSorting(manualSorting: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.manualSorting = manualSorting.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withManualSorting(manualSorting: Boolean): TableOptions[T, TM, CM, TF] =
+    setManualSorting(manualSorting.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutManualSorting: TableOptions[T, TM, CM, TF] =
+    setManualSorting(none)
 
   lazy val maxMultiSortColCount: Option[Int] =
     toJsBase.maxMultiSortColCount.toOption.map(_.toInt)
@@ -327,6 +493,14 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   def setMaxMultiSortColCount(maxMultiSortColCount: Option[Int]): TableOptions[T, TM, CM, TF] =
     copy(_.maxMultiSortColCount = maxMultiSortColCount.orUndefined.map(_.toDouble))
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withMaxMultiSortColCount(maxMultiSortColCount: Int): TableOptions[T, TM, CM, TF] =
+    setMaxMultiSortColCount(maxMultiSortColCount.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutMaxMultiSortColCount: TableOptions[T, TM, CM, TF] =
+    setMaxMultiSortColCount(none)
 
   lazy val onSortingChange: Option[Updater[Sorting] => Callback] =
     toJsBase.onSortingChange.toOption.map(fn =>
@@ -356,11 +530,29 @@ sealed trait TableOptions[T, TM, CM, TF]:
         )
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withOnSortingChange(
+    onSortingChange: Updater[Sorting] => Callback
+  ): TableOptions[T, TM, CM, TF] =
+    setOnSortingChange(onSortingChange.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutOnSortingChange: TableOptions[T, TM, CM, TF] =
+    setOnSortingChange(none)
+
   lazy val sortDescFirst: Option[Boolean] = toJsBase.sortDescFirst.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setSortDescFirst(sortDescFirst: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.sortDescFirst = sortDescFirst.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withSortDescFirst(sortDescFirst: Boolean): TableOptions[T, TM, CM, TF] =
+    setSortDescFirst(sortDescFirst.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutSortDescFirst: TableOptions[T, TM, CM, TF] =
+    setSortDescFirst(none)
 
   // Selection
   lazy val enableRowSelection: Option[Boolean] = toJsBase.enableRowSelection.toOption
@@ -369,6 +561,14 @@ sealed trait TableOptions[T, TM, CM, TF]:
   def setEnableRowSelection(enableRowSelection: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.enableRowSelection = enableRowSelection.orUndefined)
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableRowSelection(enableRowSelection: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableRowSelection(enableRowSelection.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableRowSelection: TableOptions[T, TM, CM, TF] =
+    setEnableRowSelection(none)
+
   lazy val enableMultiRowSelection: Option[Boolean] = toJsBase.enableRowSelection.toOption
 
   /** WARNING: This mutates the object in-place. */
@@ -376,6 +576,16 @@ sealed trait TableOptions[T, TM, CM, TF]:
     enableMultiRowSelection: Option[Boolean]
   ): TableOptions[T, TM, CM, TF] =
     copy(_.enableMultiRowSelection = enableMultiRowSelection.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableMultiRowSelection(
+    enableMultiRowSelection: Boolean
+  ): TableOptions[T, TM, CM, TF] =
+    setEnableMultiRowSelection(enableMultiRowSelection.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableMultiRowSelection: TableOptions[T, TM, CM, TF] =
+    setEnableMultiRowSelection(none)
 
   lazy val onRowSelectionChange: Option[Updater[RowSelection] => Callback] =
     toJsBase.onRowSelectionChange.toOption.map(fn =>
@@ -405,12 +615,30 @@ sealed trait TableOptions[T, TM, CM, TF]:
         )
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withOnRowSelectionChange(
+    onRowSelectionChange: Updater[RowSelection] => Callback
+  ): TableOptions[T, TM, CM, TF] =
+    setOnRowSelectionChange(onRowSelectionChange.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutOnRowSelectionChange: TableOptions[T, TM, CM, TF] =
+    setOnRowSelectionChange(none)
+
   // Expanding
   lazy val enableExpanding: Option[Boolean] = toJsBase.enableExpanding.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setEnableExpanding(enableExpanding: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.enableExpanding = enableExpanding.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableExpanding(enableExpanding: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableExpanding(enableExpanding.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableExpanding: TableOptions[T, TM, CM, TF] =
+    setEnableExpanding(none)
 
   lazy val getExpandedRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
     toJsBase.getExpandedRowModel.toOption.map(fn =>
@@ -432,6 +660,16 @@ sealed trait TableOptions[T, TM, CM, TF]:
         .getOrElse(rawReact.mod.getExpandedRowModel())
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetExpandedRowModel(
+    getExpandedRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]
+  ): TableOptions[T, TM, CM, TF] =
+    setGetExpandedRowModel(getExpandedRowModel.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetExpandedRowModel: TableOptions[T, TM, CM, TF] =
+    setGetExpandedRowModel(none)
+
   lazy val getSubRows: Option[(T, Int) => Option[List[T]]] =
     toJsBase.getSubRows.toOption.map(fn => (row, idx) => fn(row, idx).toOption.map(_.toList))
 
@@ -443,12 +681,28 @@ sealed trait TableOptions[T, TM, CM, TF]:
       getSubRows.orUndefined.map(fn => (row, idx) => fn(row, idx).map(_.toJSArray).orUndefined)
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetSubRows(getSubRows: (T, Int) => Option[List[T]]): TableOptions[T, TM, CM, TF] =
+    setGetSubRows(getSubRows.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetSubRows: TableOptions[T, TM, CM, TF] =
+    setGetSubRows(none)
+
   // Pinning
   lazy val enablePinning: Option[Boolean] = toJsBase.enablePinning.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setEnablePinning(enablePinning: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.enablePinning = enablePinning.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnablePinning(enablePinning: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnablePinning(enablePinning.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnablePinning: TableOptions[T, TM, CM, TF] =
+    setEnablePinning(none)
 
   // Column Pinning
   lazy val enableColumnPinning: Option[Boolean] = toJsBase.enableColumnPinning.toOption
@@ -458,6 +712,14 @@ sealed trait TableOptions[T, TM, CM, TF]:
     enableColumnPinning: Option[Boolean]
   ): TableOptions[T, TM, CM, TF] =
     copy(_.enableColumnPinning = enableColumnPinning.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableColumnPinning(enableColumnPinning: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableColumnPinning(enableColumnPinning.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableColumnPinning: TableOptions[T, TM, CM, TF] =
+    setEnableColumnPinning(none)
 
   lazy val onColumnPinningChange: Option[Updater[ColumnPinning] => Callback] =
     toJsBase.onColumnPinningChange.toOption.map: fn =>
@@ -482,6 +744,16 @@ sealed trait TableOptions[T, TM, CM, TF]:
             case Updater.Mod(mod) => Updater.Mod(v => ColumnPinning.fromJs(mod(v.toJs)))
         ).runNow())
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withOnColumnPinningChange(
+    onColumnPinningChange: Updater[ColumnPinning] => Callback
+  ): TableOptions[T, TM, CM, TF] =
+    setOnColumnPinningChange(onColumnPinningChange.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutOnColumnPinningChange: TableOptions[T, TM, CM, TF] =
+    setOnColumnPinningChange(none)
+
   // Row Pinning
   lazy val enableRowPinning: Option[RowPinningEnabled[T, TM, CM, TF]] =
     toJsBase.enableRowPinning.toOption.map(RowPinningEnabled.fromJs)
@@ -492,11 +764,29 @@ sealed trait TableOptions[T, TM, CM, TF]:
   ): TableOptions[T, TM, CM, TF] =
     copy(_.enableRowPinning = enableRowPinning.map(_.toJs).orUndefined)
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableRowPinning(
+    enableRowPinning: RowPinningEnabled[T, TM, CM, TF]
+  ): TableOptions[T, TM, CM, TF] =
+    setEnableRowPinning(enableRowPinning.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableRowPinning: TableOptions[T, TM, CM, TF] =
+    setEnableRowPinning(none)
+
   lazy val keepPinnedRows: Option[Boolean] = toJsBase.keepPinnedRows.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setKeepPinnedRows(keepPinnedRows: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.keepPinnedRows = keepPinnedRows.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withKeepPinnedRows(keepPinnedRows: Boolean): TableOptions[T, TM, CM, TF] =
+    setKeepPinnedRows(keepPinnedRows.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutKeepPinnedRows: TableOptions[T, TM, CM, TF] =
+    setKeepPinnedRows(none)
 
   lazy val onRowPinningChange: Option[Updater[RowPinning] => Callback] =
     toJsBase.onRowPinningChange.toOption.map: fn =>
@@ -521,12 +811,30 @@ sealed trait TableOptions[T, TM, CM, TF]:
             case Updater.Mod(mod) => Updater.Mod(v => RowPinning.fromJs(mod(v.toJs)))
         ).runNow())
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withOnRowPinningChange(
+    onRowPinningChange: Updater[RowPinning] => Callback
+  ): TableOptions[T, TM, CM, TF] =
+    setOnRowPinningChange(onRowPinningChange.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutOnRowPinningChange: TableOptions[T, TM, CM, TF] =
+    setOnRowPinningChange(none)
+
   // Column Filtering
   lazy val filterFromLeafRows: Option[Boolean] = toJsBase.filterFromLeafRows.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setFilterFromLeafRows(filterFromLeafRows: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.filterFromLeafRows = filterFromLeafRows.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withFilterFromLeafRows(filterFromLeafRows: Boolean): TableOptions[T, TM, CM, TF] =
+    setFilterFromLeafRows(filterFromLeafRows.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutFilterFromLeafRows: TableOptions[T, TM, CM, TF] =
+    setFilterFromLeafRows(none)
 
   lazy val maxLeafRowFilterDepth: Option[Double] = toJsBase.maxLeafRowFilterDepth.toOption
 
@@ -536,17 +844,41 @@ sealed trait TableOptions[T, TM, CM, TF]:
   ): TableOptions[T, TM, CM, TF] =
     copy(_.maxLeafRowFilterDepth = maxLeafRowFilterDepth.orUndefined)
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withMaxLeafRowFilterDepth(maxLeafRowFilterDepth: Double): TableOptions[T, TM, CM, TF] =
+    setMaxLeafRowFilterDepth(maxLeafRowFilterDepth.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutMaxLeafRowFilterDepth: TableOptions[T, TM, CM, TF] =
+    setMaxLeafRowFilterDepth(none)
+
   lazy val enableFilters: Option[Boolean] = toJsBase.enableFilters.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setEnableFilters(enableFilters: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.enableFilters = enableFilters.orUndefined)
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableFilters(enableFilters: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableFilters(enableFilters.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableFilters: TableOptions[T, TM, CM, TF] =
+    setEnableFilters(none)
+
   lazy val manualFiltering: Option[Boolean] = toJsBase.manualFiltering.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setManualFiltering(manualFiltering: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.manualFiltering = manualFiltering.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withManualFiltering(manualFiltering: Boolean): TableOptions[T, TM, CM, TF] =
+    setManualFiltering(manualFiltering.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutManualFiltering: TableOptions[T, TM, CM, TF] =
+    setManualFiltering(none)
 
   lazy val onColumnFiltersChange: Option[Updater[ColumnFilters] => Callback] =
     toJsBase.onColumnFiltersChange.toOption
@@ -572,6 +904,16 @@ sealed trait TableOptions[T, TM, CM, TF]:
             case Updater.Mod(mod) => Updater.Mod(v => ColumnFilters.fromJs(mod(v.toJs)))
         ).runNow())
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withOnColumnFiltersChange(
+    onColumnFiltersChange: Updater[ColumnFilters] => Callback
+  ): TableOptions[T, TM, CM, TF] =
+    setOnColumnFiltersChange(onColumnFiltersChange.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutOnColumnFiltersChange: TableOptions[T, TM, CM, TF] =
+    setOnColumnFiltersChange(none)
+
   lazy val enableColumnFilters: Option[Boolean] = toJsBase.enableColumnFilters.toOption
 
   /** WARNING: This mutates the object in-place. */
@@ -579,6 +921,14 @@ sealed trait TableOptions[T, TM, CM, TF]:
     enableColumnFilters: Option[Boolean]
   ): TableOptions[T, TM, CM, TF] =
     copy(_.enableColumnFilters = enableColumnFilters.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableColumnFilters(enableColumnFilters: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableColumnFilters(enableColumnFilters.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableColumnFilters: TableOptions[T, TM, CM, TF] =
+    setEnableColumnFilters(none)
 
   lazy val getFilteredRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
     toJsBase.getFilteredRowModel.toOption.map(fn =>
@@ -600,12 +950,30 @@ sealed trait TableOptions[T, TM, CM, TF]:
         .getOrElse(rawReact.mod.getFilteredRowModel())
     )
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetFilteredRowModel(
+    getFilteredRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]
+  ): TableOptions[T, TM, CM, TF] =
+    setGetFilteredRowModel(getFilteredRowModel.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetFilteredRowModel: TableOptions[T, TM, CM, TF] =
+    setGetFilteredRowModel(none)
+
   // Global Filtering
   lazy val enableGlobalFilter: Option[Boolean] = toJsBase.enableGlobalFilter.toOption
 
   /** WARNING: This mutates the object in-place. */
   def setEnableGlobalFilter(enableGlobalFilter: Option[Boolean]): TableOptions[T, TM, CM, TF] =
     copy(_.enableGlobalFilter = enableGlobalFilter.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withEnableGlobalFilter(enableGlobalFilter: Boolean): TableOptions[T, TM, CM, TF] =
+    setEnableGlobalFilter(enableGlobalFilter.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutEnableGlobalFilter: TableOptions[T, TM, CM, TF] =
+    setEnableGlobalFilter(none)
 
   lazy val globalFilterFn: Option[BuiltInFilter[TF] | FilterFn[T, TM, CM, TF, TF, Any]] =
     toJsBase.globalFilterFn.toOption
@@ -632,6 +1000,17 @@ sealed trait TableOptions[T, TM, CM, TF]:
             case fn                          =>
               FilterFn(fn.asInstanceOf[FilterFn.Type[T, TM, CM, TF1, TF1, Any]], none, none).toJs
     ).asInstanceOf[TableOptions[T, TM, CM, TF1]]
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withGlobalFilterFn[TF1](
+    globalFilterFn: BuiltInFilter[TF1] | FilterFn[T, TM, CM, TF1, TF1, Any] |
+      FilterFn.Type[T, TM, CM, TF1, TF1, Any]
+  ): TableOptions[T, TM, CM, TF1] =
+    setGlobalFilterFn(globalFilterFn.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGlobalFilterFn[TF1]: TableOptions[T, TM, CM, TF1] =
+    setGlobalFilterFn[TF1](none)
 
   lazy val onGlobalFilterChange: Option[Updater[TF] => Callback] =
     toJsBase.onGlobalFilterChange.toOption.map: fn =>
@@ -663,6 +1042,16 @@ sealed trait TableOptions[T, TM, CM, TF]:
               )
         ).runNow())
 
+  /** WARNING: This mutates the object in-place. */
+  inline def withOnGlobalFilterChange(
+    onGlobalFilterChange: Updater[TF] => Callback
+  ): TableOptions[T, TM, CM, TF] =
+    setOnGlobalFilterChange(onGlobalFilterChange.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutOnGlobalFilterChange: TableOptions[T, TM, CM, TF] =
+    setOnGlobalFilterChange(none)
+
   lazy val getColumnCanGlobalFilter: Option[Column[T, Any, TM, CM, TF, Any, Any] => Boolean] =
     toJsBase.getColumnCanGlobalFilter.toOption.map: fn =>
       col => fn(col.toJs)
@@ -673,6 +1062,16 @@ sealed trait TableOptions[T, TM, CM, TF]:
   ): TableOptions[T, TM, CM, TF] =
     copy(_.getColumnCanGlobalFilter = getColumnCanGlobalFilter.orUndefined.map: fn =>
       col => fn(Column(col)))
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetColumnCanGlobalFilter(
+    getColumnCanGlobalFilter: Column[T, ?, TM, CM, TF, ?, ?] => Boolean
+  ): TableOptions[T, TM, CM, TF] =
+    setGetColumnCanGlobalFilter(getColumnCanGlobalFilter.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetColumnCanGlobalFilter: TableOptions[T, TM, CM, TF] =
+    setGetColumnCanGlobalFilter(none)
 
 end TableOptions
 
@@ -789,52 +1188,52 @@ object TableOptions:
         var getCoreRowModel = null
       }
     }
-      .setGetCoreRowModel(getCoreRowModel)
-      .applyWhen(autoEnableSorting, _.setGetSortedRowModel(getSortedRowModel))
-      .applyWhen(autoEnableExpanding, _.setGetExpandedRowModel(getExpandedRowModel))
-      .applyWhen(autoEnableFiltering, _.setGetFilteredRowModel(getFilteredRowModel))
-      .applyOrNot(getRowId, _.setGetRowId(_))
-      .applyOrNot(onStateChange, _.setOnStateChange(_))
-      .applyOrNot(renderFallbackValue, _.setRenderFallbackValue(_))
-      .applyOrNot(state, _.setState(_))
-      .applyOrNot(initialState, _.setInitialState(_))
-      .applyOrNot(meta, _.setMeta(_))
-      .applyOrNot(enableColumnResizing, _.setEnableColumnResizing(_))
-      .applyOrNot(columnResizeMode, _.setColumnResizeMode(_))
-      .applyOrNot(onColumnSizingChange, _.setOnColumnSizingChange(_))
-      .applyOrNot(onColumnSizingInfoChange, _.setOnColumnSizingInfoChange(_))
-      .applyOrNot(enableHiding, _.setEnableHiding(_))
-      .applyOrNot(onColumnVisibilityChange, _.setOnColumnVisibilityChange(_))
-      .applyOrNot(enableSorting, _.setEnableSorting(_))
-      .applyOrNot(enableMultiSort, _.setEnableMultiSort(_))
-      .applyOrNot(enableSortingRemoval, _.setEnableSortingRemoval(_))
-      .applyOrNot(enableMultiRemove, _.setEnableMultiRemove(_))
-      .applyOrNot(isMultiSortEvent, _.setIsMultiSortEvent(_))
-      .applyOrNot(manualSorting, _.setManualSorting(_))
-      .applyOrNot(maxMultiSortColCount, _.setMaxMultiSortColCount(_))
-      .applyOrNot(onSortingChange, _.setOnSortingChange(_))
-      .applyOrNot(sortDescFirst, _.setSortDescFirst(_))
-      .applyOrNot(enableRowSelection, _.setEnableRowSelection(_))
-      .applyOrNot(enableMultiRowSelection, _.setEnableMultiRowSelection(_))
-      .applyOrNot(onRowSelectionChange, _.setOnRowSelectionChange(_))
-      .applyOrNot(enableExpanding, _.setEnableExpanding(_))
-      .applyOrNot(getSubRows, _.setGetSubRows(_))
-      .applyOrNot(enablePinning, _.setEnablePinning(_))
-      .applyOrNot(enableColumnPinning, _.setEnableColumnPinning(_))
-      .applyOrNot(onColumnPinningChange, _.setOnColumnPinningChange(_))
-      .applyOrNot(enableRowPinning, _.setEnableRowPinning(_))
-      .applyOrNot(keepPinnedRows, _.setKeepPinnedRows(_))
-      .applyOrNot(onRowPinningChange, _.setOnRowPinningChange(_))
-      .applyOrNot(filterFromLeafRows, _.setFilterFromLeafRows(_))
-      .applyOrNot(maxLeafRowFilterDepth, _.setMaxLeafRowFilterDepth(_))
-      .applyOrNot(enableFilters, _.setEnableFilters(_))
-      .applyOrNot(manualFiltering, _.setManualFiltering(_))
-      .applyOrNot(onColumnFiltersChange, _.setOnColumnFiltersChange(_))
-      .applyOrNot(enableColumnFilters, _.setEnableColumnFilters(_))
-      .applyOrNot(enableGlobalFilter, _.setEnableGlobalFilter(_))
-      .applyOrNot(globalFilterFn, _.setGlobalFilterFn(_))
-      .applyOrNot(onGlobalFilterChange, _.setOnGlobalFilterChange(_))
-      .applyOrNot(getColumnCanGlobalFilter, _.setGetColumnCanGlobalFilter(_))
+      .withGetCoreRowModel(getCoreRowModel.toOption)
+      .applyWhen(autoEnableSorting, _.withGetSortedRowModel(getSortedRowModel))
+      .applyWhen(autoEnableExpanding, _.withGetExpandedRowModel(getExpandedRowModel))
+      .applyWhen(autoEnableFiltering, _.withGetFilteredRowModel(getFilteredRowModel))
+      .applyOrNot(getRowId, _.withGetRowId(_))
+      .applyOrNot(onStateChange, _.withOnStateChange(_))
+      .applyOrNot(renderFallbackValue, _.withRenderFallbackValue(_))
+      .applyOrNot(state, _.withState(_))
+      .applyOrNot(initialState, _.withInitialState(_))
+      .applyOrNot(meta, _.withMeta(_))
+      .applyOrNot(enableColumnResizing, _.withEnableColumnResizing(_))
+      .applyOrNot(columnResizeMode, _.withColumnResizeMode(_))
+      .applyOrNot(onColumnSizingChange, _.withOnColumnSizingChange(_))
+      .applyOrNot(onColumnSizingInfoChange, _.withOnColumnSizingInfoChange(_))
+      .applyOrNot(enableHiding, _.withEnableHiding(_))
+      .applyOrNot(onColumnVisibilityChange, _.withOnColumnVisibilityChange(_))
+      .applyOrNot(enableSorting, _.withEnableSorting(_))
+      .applyOrNot(enableMultiSort, _.withEnableMultiSort(_))
+      .applyOrNot(enableSortingRemoval, _.withEnableSortingRemoval(_))
+      .applyOrNot(enableMultiRemove, _.withEnableMultiRemove(_))
+      .applyOrNot(isMultiSortEvent, _.withIsMultiSortEvent(_))
+      .applyOrNot(manualSorting, _.withManualSorting(_))
+      .applyOrNot(maxMultiSortColCount, _.withMaxMultiSortColCount(_))
+      .applyOrNot(onSortingChange, _.withOnSortingChange(_))
+      .applyOrNot(sortDescFirst, _.withSortDescFirst(_))
+      .applyOrNot(enableRowSelection, _.withEnableRowSelection(_))
+      .applyOrNot(enableMultiRowSelection, _.withEnableMultiRowSelection(_))
+      .applyOrNot(onRowSelectionChange, _.withOnRowSelectionChange(_))
+      .applyOrNot(enableExpanding, _.withEnableExpanding(_))
+      .applyOrNot(getSubRows, _.withGetSubRows(_))
+      .applyOrNot(enablePinning, _.withEnablePinning(_))
+      .applyOrNot(enableColumnPinning, _.withEnableColumnPinning(_))
+      .applyOrNot(onColumnPinningChange, _.withOnColumnPinningChange(_))
+      .applyOrNot(enableRowPinning, _.withEnableRowPinning(_))
+      .applyOrNot(keepPinnedRows, _.withKeepPinnedRows(_))
+      .applyOrNot(onRowPinningChange, _.withOnRowPinningChange(_))
+      .applyOrNot(filterFromLeafRows, _.withFilterFromLeafRows(_))
+      .applyOrNot(maxLeafRowFilterDepth, _.withMaxLeafRowFilterDepth(_))
+      .applyOrNot(enableFilters, _.withEnableFilters(_))
+      .applyOrNot(manualFiltering, _.withManualFiltering(_))
+      .applyOrNot(onColumnFiltersChange, _.withOnColumnFiltersChange(_))
+      .applyOrNot(enableColumnFilters, _.withEnableColumnFilters(_))
+      .applyOrNot(enableGlobalFilter, _.withEnableGlobalFilter(_))
+      .applyOrNot(globalFilterFn, _.withGlobalFilterFn(_))
+      .applyOrNot(onGlobalFilterChange, _.withOnGlobalFilterChange(_))
+      .applyOrNot(getColumnCanGlobalFilter, _.withGetColumnCanGlobalFilter(_))
 
   private[table] def fromJs[T, TM, CM, TF](
     raw: TableOptionsJs[T, TM, CM]
