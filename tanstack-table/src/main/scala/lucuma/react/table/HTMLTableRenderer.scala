@@ -57,14 +57,18 @@ trait HTMLTableRenderer[T, TM, CM, TF]:
   protected val SortAscIndicator: VdomNode  = "↑"
   protected val SortDescIndicator: VdomNode = "↓"
 
-  protected def sortIndicator(col: Column[T, ?, TM, CM, TF, ?, ?]): VdomNode =
+  protected def sortIndicator(
+    col:                 Column[T, ?, TM, CM, TF, ?, ?],
+    tableSortingEnabled: Boolean
+  ): VdomNode =
     col
       .getIsSorted()
-      .fold(if (col.getCanSort()) SortableIndicator else EmptyVdom): sortDirection =>
-        val index   = if (col.getSortIndex() > 0) (col.getSortIndex() + 1).toInt.toString else ""
-        val ascDesc =
-          if (sortDirection == SortDirection.Descending) SortDescIndicator else SortAscIndicator
-        <.span(ascDesc, <.small(index))
+      .fold(if (col.getCanSort() && tableSortingEnabled) SortableIndicator else EmptyVdom):
+        sortDirection =>
+          val index   = if (col.getSortIndex() > 0) (col.getSortIndex() + 1).toInt.toString else ""
+          val ascDesc =
+            if (sortDirection == SortDirection.Descending) SortDescIndicator else SortAscIndicator
+          <.span(ascDesc, <.small(index))
 
   protected def resizer(
     header:     Header[T, ?, TM, CM, TF, ?, ?],
@@ -165,7 +169,10 @@ trait HTMLTableRenderer[T, TM, CM, TF]:
                                   .toJs
                                   .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
                               ),
-                              sortIndicator(header.column)
+                              sortIndicator(
+                                header.column,
+                                header.getContext().table.options.getSortedRowModel.isDefined
+                              )
                             )
                           ),
                           if (header.column.getCanFilter())

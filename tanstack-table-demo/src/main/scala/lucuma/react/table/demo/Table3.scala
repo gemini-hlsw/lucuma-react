@@ -48,6 +48,7 @@ object Table3:
           cols,
           rows,
           enableExpanding = true,
+          enableSorting = true,
           columnResizeMode = ColumnResizeMode.OnChange,
           getSubRows = (row, _) => row.subRows
         )
