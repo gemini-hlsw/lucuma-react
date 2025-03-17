@@ -990,8 +990,7 @@ object ColumnDef:
       maxSize:            js.UndefOr[SizePx] = js.undefined,
       // Column Visibility
       enableHiding:       js.UndefOr[Boolean] = js.undefined,
-      // Sorting - We override the default of "true" to "false", so that ordering must be explicitly specified for each column.
-      enableSorting:      Boolean = false,
+      enableSorting:      js.UndefOr[Boolean] = js.undefined,
       enableMultiSort:    js.UndefOr[Boolean] = js.undefined,
       invertSorting:      js.UndefOr[Boolean] = js.undefined,
       sortDescFirst:      js.UndefOr[Boolean] = js.undefined,
