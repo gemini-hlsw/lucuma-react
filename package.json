@@ -28,7 +28,7 @@
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
     "sass": "^1.85.1",
-    "styled-components": "^6.1.15",
+    "styled-components": "^6.1.16",
     "typescript": "^5.8.2",
     "vite": "^6.2.2"
   }
