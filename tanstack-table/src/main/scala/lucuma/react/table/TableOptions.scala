@@ -11,9 +11,11 @@ import lucuma.react.table.facade.TableOptionsJs
 import lucuma.typed.tanstackReactTable as rawReact
 import lucuma.typed.tanstackTableCore as raw
 import org.scalajs.dom
+import lucuma.typed.std.{Map => JsMap}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
+import lucuma.typed.std.stdStrings.set
 
 /**
  * @tparam T
@@ -110,20 +112,15 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setOnStateChange(none)
 
   lazy val getCoreRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF] =
-    t =>
-      (toJsBase
-        .getCoreRowModel(t.toJs): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
+    t => () => RowModel(toJsBase.getCoreRowModel(t.toJs)())
 
   /** WARNING: This mutates the object in-place. */
   def withGetCoreRowModel(
     getCoreRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]
   ): TableOptions[T, TM, CM, TF] =
     copy:
-      _.getCoreRowModel =
-        ((t: raw.buildLibTypesMod.Table[T]) => getCoreRowModel(Table(t)).map(_.toJs)): js.Function1[
-          raw.buildLibTypesMod.Table[T],
-          js.Function0[raw.buildLibTypesMod.RowModel[T]]
-        ]
+      _.getCoreRowModel = (t: raw.buildLibTypesMod.Table[T]) =>
+        getCoreRowModel(Table(t)).map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
 
   def withDefaultGetCoreRowModel: TableOptions[T, TM, CM, TF] =
     copy(_.getCoreRowModel = rawReact.mod.getCoreRowModel())
@@ -414,9 +411,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setEnableMultiRemove(none)
 
   lazy val getSortedRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
-    toJsBase.getSortedRowModel.toOption.map(fn =>
-      t => (fn(t.toJs): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
-    )
+    toJsBase.getSortedRowModel.toOption.map(fn => t => () => RowModel(fn(t.toJs)()))
 
   /** WARNING: This mutates the object in-place. */
   def setGetSortedRowModel(
@@ -424,12 +419,9 @@ sealed trait TableOptions[T, TM, CM, TF]:
   ): TableOptions[T, TM, CM, TF] =
     copy(_.getSortedRowModel =
       getSortedRowModel.orUndefined
-        .map(fn =>
-          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t)).map(_.toJs)): js.Function1[
-            raw.buildLibTypesMod.Table[T],
-            js.Function0[raw.buildLibTypesMod.RowModel[T]]
-          ]
-        )
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T]) =>
+            fn(Table(t)).map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
     )
 
   /** WARNING: This mutates the object in-place. */
@@ -636,9 +628,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setEnableExpanding(none)
 
   lazy val getExpandedRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
-    toJsBase.getExpandedRowModel.toOption.map(fn =>
-      t => (fn(t.toJs): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
-    )
+    toJsBase.getExpandedRowModel.toOption.map(fn => t => () => RowModel(fn(t.toJs)()))
 
   /** WARNING: This mutates the object in-place. */
   def setGetExpandedRowModel(
@@ -646,12 +636,9 @@ sealed trait TableOptions[T, TM, CM, TF]:
   ): TableOptions[T, TM, CM, TF] =
     copy(_.getExpandedRowModel =
       getExpandedRowModel.orUndefined
-        .map(fn =>
-          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t)).map(_.toJs)): js.Function1[
-            raw.buildLibTypesMod.Table[T],
-            js.Function0[raw.buildLibTypesMod.RowModel[T]]
-          ]
-        )
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T]) =>
+            fn(Table(t)).map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
     )
 
   /** WARNING: This mutates the object in-place. */
@@ -930,9 +917,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setEnableColumnFilters(none)
 
   lazy val getFilteredRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
-    toJsBase.getFilteredRowModel.toOption.map(fn =>
-      t => (fn(t.toJs): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
-    )
+    toJsBase.getFilteredRowModel.toOption.map(fn => t => () => RowModel(fn(t.toJs)()))
 
   /** WARNING: This mutates the object in-place. */
   def setGetFilteredRowModel(
@@ -940,12 +925,9 @@ sealed trait TableOptions[T, TM, CM, TF]:
   ): TableOptions[T, TM, CM, TF] =
     copy(_.getFilteredRowModel =
       getFilteredRowModel.orUndefined
-        .map(fn =>
-          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t)).map(_.toJs)): js.Function1[
-            raw.buildLibTypesMod.Table[T],
-            js.Function0[raw.buildLibTypesMod.RowModel[T]]
-          ]
-        )
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T]) =>
+            fn(Table(t)).map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
     )
 
   /** WARNING: This mutates the object in-place. */
@@ -1076,6 +1058,107 @@ sealed trait TableOptions[T, TM, CM, TF]:
   inline def withoutGetColumnCanGlobalFilter: TableOptions[T, TM, CM, TF] =
     setGetColumnCanGlobalFilter(none)
 
+  // Column Faceting
+  lazy val getFacetedRowModel
+    : Option[(Table[T, TM, CM, TF], ColumnId) => () => RowModel[T, TM, CM, TF]] =
+    toJsBase.getFacetedRowModel.toOption.map: fn =>
+      (t, colId) =>
+        (fn(t.toJs, colId.value): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
+
+  /** WARNING: This mutates the object in-place. */
+  def setGetFacetedRowModel(
+    getFacetedRowModel: Option[(Table[T, TM, CM, TF], ColumnId) => () => RowModel[T, TM, CM, TF]]
+  ): TableOptions[T, TM, CM, TF] =
+    copy(_.getFacetedRowModel =
+      getFacetedRowModel.orUndefined
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T], colId: String) =>
+            fn(Table(t), ColumnId(colId))
+              .map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
+    )
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetFacetedRowModel(
+    getFacetedRowModel: (Table[T, TM, CM, TF], ColumnId) => () => RowModel[T, TM, CM, TF]
+  ): TableOptions[T, TM, CM, TF] =
+    setGetFacetedRowModel(getFacetedRowModel.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetFacetedRowModel: TableOptions[T, TM, CM, TF] =
+    setGetFacetedRowModel(none)
+
+  /** WARNING: This mutates the object in-place. */
+  def withDefaultGetFacetedRowModel: TableOptions[T, TM, CM, TF] =
+    copy:
+      _.getFacetedRowModel = rawReact.mod.getFacetedRowModel()
+
+  lazy val getFacetedUniqueValues: Option[(Table[T, TM, CM, TF], ColumnId) => () => Map[Any, Int]] =
+    toJsBase.getFacetedUniqueValues.toOption.map: fn =>
+      (t, colId) => () => Map.fromJsMap(fn(t.toJs, colId.value)()).view.mapValues(_.toInt).toMap
+
+  /** WARNING: This mutates the object in-place. */
+  def setGetFacetedUniqueValues(
+    getFacetedUniqueValues: Option[(Table[T, TM, CM, TF], ColumnId) => () => Map[Any, Int]]
+  ): TableOptions[T, TM, CM, TF] =
+    copy(
+      _.getFacetedUniqueValues = getFacetedUniqueValues.orUndefined
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T], colId: String) =>
+            fn(Table(t), ColumnId(colId)).map(
+              _.view.mapValues(_.toDouble).toMap.toJsMap
+            ): js.Function0[JsMap[Any, Double]]
+    )
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetFacetedUniqueValues(
+    getFacetedUniqueValues: (Table[T, TM, CM, TF], ColumnId) => () => Map[Any, Int]
+  ): TableOptions[T, TM, CM, TF] =
+    setGetFacetedUniqueValues(getFacetedUniqueValues.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetFacetedUniqueValues: TableOptions[T, TM, CM, TF] =
+    setGetFacetedUniqueValues(none)
+
+  /** WARNING: This mutates the object in-place. */
+  def withDefaultGetFacetedUniqueValues: TableOptions[T, TM, CM, TF] =
+    copy:
+      _.getFacetedUniqueValues = rawReact.mod.getFacetedUniqueValues()
+
+  lazy val getFacetedMinMaxValues
+    : Option[(Table[T, TM, CM, TF], ColumnId) => () => Option[(Double, Double)]] =
+    toJsBase.getFacetedMinMaxValues.toOption.map: fn =>
+      (t, colId) => () => fn(t.toJs, colId.value)().toOption.map(identity) // Force type cast
+
+  /** WARNING: This mutates the object in-place. */
+  def setGetFacetedMinMaxValues(
+    getFacetedMinMaxValues: Option[
+      (Table[T, TM, CM, TF], ColumnId) => () => Option[(Double, Double)]
+    ]
+  ): TableOptions[T, TM, CM, TF] =
+    copy(
+      _.getFacetedMinMaxValues = getFacetedMinMaxValues.orUndefined
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T], colId: String) =>
+            fn(Table(t), ColumnId(colId)).map(
+              _.orUndefined.map((min, max) => js.Tuple2(min, max))
+            ): js.Function0[js.UndefOr[js.Tuple2[Double, Double]]]
+    )
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetFacetedMinMaxValues(
+    getFacetedMinMaxValues: (Table[T, TM, CM, TF], ColumnId) => () => Option[(Double, Double)]
+  ): TableOptions[T, TM, CM, TF] =
+    setGetFacetedMinMaxValues(getFacetedMinMaxValues.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetFacetedMinMaxValues: TableOptions[T, TM, CM, TF] =
+    setGetFacetedMinMaxValues(none)
+
+  /** WARNING: This mutates the object in-place. */
+  def withDefaultGetFacetedMinMaxValues: TableOptions[T, TM, CM, TF] =
+    copy:
+      _.getFacetedMinMaxValues = rawReact.mod.getFacetedMinMaxValues()
+
 end TableOptions
 
 object TableOptions:
@@ -1143,7 +1226,10 @@ object TableOptions:
       BuiltInFilter[TF] | FilterFn[T, TM, CM, TF, TF, Any] | FilterFn.Type[T, TM, CM, TF, TF, Any]
     ] = js.undefined,
     onGlobalFilterChange:     js.UndefOr[Updater[TF] => Callback] = js.undefined,
-    getColumnCanGlobalFilter: js.UndefOr[Column[T, ?, TM, CM, TF, ?, ?] => Boolean] = js.undefined
+    getColumnCanGlobalFilter: js.UndefOr[Column[T, ?, TM, CM, TF, ?, ?] => Boolean] = js.undefined,
+    // Column Faceting
+    enableColumnFaceting:     Boolean = false, // This is not in the JS API, we add it for convenience
+    getColumnFacetedRowModel: js.UndefOr[ColumnId => RowModel[T, TM, CM, TF]] = js.undefined
   ): TableOptions[T, TM, CM, TF] =
     val autoEnableSorting: Boolean         =
       !enableSorting.contains(false) && (

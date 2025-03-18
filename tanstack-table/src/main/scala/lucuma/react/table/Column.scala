@@ -133,3 +133,10 @@ case class Column[T, A, TM, CM, TF, CF, FM] private[table] (
 
   // Global Filtering
   def getCanGlobalFilter(): Boolean = toJs.getCanGlobalFilter()
+
+  // Column Faceting
+  def getFacetedRowModel(): RowModel[T, TM, CM, TF]      = RowModel(toJs.getFacetedRowModel())
+  def getFacetedUniqueValues(): Map[A, Int]              =
+    Map.fromJsMap(toJs.getFacetedUniqueValues()).map((k, v) => (k.asInstanceOf[A], v.toInt))
+  def getFacetedMinMaxValues(): Option[(Double, Double)] =
+    toJs.getFacetedMinMaxValues().toOption.map(identity) // Force type cast

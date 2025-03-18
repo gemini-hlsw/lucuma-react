@@ -7,6 +7,8 @@ import japgolly.scalajs.react.vdom.TagMod
 
 import scalajs.js
 import scalajs.js.JSConverters.*
+import lucuma.typed.std.{Map => JsMap}
+import scala.scalajs.js.annotation.JSGlobal
 
 package object table extends HooksApiExt:
   export TableHook.useReactTable
@@ -83,3 +85,20 @@ package object table extends HooksApiExt:
     private[table] def nullToOption: Option[A] = opt match
       case null => None
       case a    => Some(a.asInstanceOf[A])
+
+  extension (self: Map.type)
+    def fromJsMap[K, V](jsMap: JsMap[K, V]): Map[K, V] =
+      var builder: Map[K, V] = Map.empty[K, V]
+      jsMap.forEach: (v, k, _) =>
+        builder = builder + (k -> v)
+      builder
+
+  @js.native
+  @JSGlobal("Map")
+  class JsMapConstructor[K, V] extends JsMap[K, V]
+
+  extension [K, V](self: Map[K, V])
+    def toJsMap: JsMap[K, V] =
+      val jsMap = new JsMapConstructor[K, V]
+      self.foreach { case (k, v) => jsMap.set(k, v) }
+      jsMap
