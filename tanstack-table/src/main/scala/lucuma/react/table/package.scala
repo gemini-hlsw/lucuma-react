@@ -4,11 +4,12 @@
 package lucuma.react
 
 import japgolly.scalajs.react.vdom.TagMod
+import lucuma.typed.std.Map as JsMap
+
+import scala.scalajs.js.annotation.JSGlobal
 
 import scalajs.js
 import scalajs.js.JSConverters.*
-import lucuma.typed.std.{Map => JsMap}
-import scala.scalajs.js.annotation.JSGlobal
 
 package object table extends HooksApiExt:
   export TableHook.useReactTable

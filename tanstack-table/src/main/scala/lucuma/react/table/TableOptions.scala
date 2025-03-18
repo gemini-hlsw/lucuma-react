@@ -8,14 +8,13 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.table.facade.ColumnDefJs
 import lucuma.react.table.facade.TableOptionsJs
+import lucuma.typed.std.Map as JsMap
 import lucuma.typed.tanstackReactTable as rawReact
 import lucuma.typed.tanstackTableCore as raw
 import org.scalajs.dom
-import lucuma.typed.std.{Map => JsMap}
 
 import scalajs.js
 import scalajs.js.JSConverters.*
-import lucuma.typed.std.stdStrings.set
 
 /**
  * @tparam T
@@ -1163,75 +1162,84 @@ end TableOptions
 
 object TableOptions:
   def apply[T, TM, CM, TF](
-    columns_                : Reusable[List[ColumnDef[T, ?, TM, CM, TF, ?, ?]]],
-    data_                   : Reusable[List[T]],
-    getCoreRowModel:          js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
+    columns_                 : Reusable[List[ColumnDef[T, ?, TM, CM, TF, ?, ?]]],
+    data_                    : Reusable[List[T]],
+    getCoreRowModel:           js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
       js.undefined,
-    getRowId:                 js.UndefOr[(T, Int, Option[T]) => RowId] = js.undefined,
-    onStateChange:            js.UndefOr[Updater[TableState[TF]] => Callback] = js.undefined,
-    renderFallbackValue:      js.UndefOr[Any] = js.undefined,
-    state:                    js.UndefOr[PartialTableState] = js.undefined,
-    initialState:             js.UndefOr[TableState[TF]] = js.undefined,
-    meta:                     js.UndefOr[TM] = js.undefined,
+    getRowId:                  js.UndefOr[(T, Int, Option[T]) => RowId] = js.undefined,
+    onStateChange:             js.UndefOr[Updater[TableState[TF]] => Callback] = js.undefined,
+    renderFallbackValue:       js.UndefOr[Any] = js.undefined,
+    state:                     js.UndefOr[PartialTableState] = js.undefined,
+    initialState:              js.UndefOr[TableState[TF]] = js.undefined,
+    meta:                      js.UndefOr[TM] = js.undefined,
     // Column Sizing
-    enableColumnResizing:     js.UndefOr[Boolean] = js.undefined,
-    columnResizeMode:         js.UndefOr[ColumnResizeMode] = js.undefined,
-    onColumnSizingChange:     js.UndefOr[Updater[ColumnSizing] => Callback] = js.undefined,
-    onColumnSizingInfoChange: js.UndefOr[Updater[ColumnSizingInfo] => Callback] = js.undefined,
+    enableColumnResizing:      js.UndefOr[Boolean] = js.undefined,
+    columnResizeMode:          js.UndefOr[ColumnResizeMode] = js.undefined,
+    onColumnSizingChange:      js.UndefOr[Updater[ColumnSizing] => Callback] = js.undefined,
+    onColumnSizingInfoChange:  js.UndefOr[Updater[ColumnSizingInfo] => Callback] = js.undefined,
     // Column Visibility
-    enableHiding:             js.UndefOr[Boolean] = js.undefined,
-    onColumnVisibilityChange: js.UndefOr[Updater[ColumnVisibility] => Callback] = js.undefined,
+    enableHiding:              js.UndefOr[Boolean] = js.undefined,
+    onColumnVisibilityChange:  js.UndefOr[Updater[ColumnVisibility] => Callback] = js.undefined,
     // Sorting
-    enableSorting:            js.UndefOr[Boolean] = js.undefined,
-    enableMultiSort:          js.UndefOr[Boolean] = js.undefined,
-    enableSortingRemoval:     js.UndefOr[Boolean] = js.undefined,
-    enableMultiRemove:        js.UndefOr[Boolean] = js.undefined,
-    getSortedRowModel:        js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
+    enableSorting:             js.UndefOr[Boolean] = js.undefined,
+    enableMultiSort:           js.UndefOr[Boolean] = js.undefined,
+    enableSortingRemoval:      js.UndefOr[Boolean] = js.undefined,
+    enableMultiRemove:         js.UndefOr[Boolean] = js.undefined,
+    getSortedRowModel:         js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
       js.undefined,
-    isMultiSortEvent:         js.UndefOr[SyntheticEvent[dom.Node] => Boolean] = js.undefined,
-    manualSorting:            js.UndefOr[Boolean] = js.undefined,
-    maxMultiSortColCount:     js.UndefOr[Int] = js.undefined,
-    onSortingChange:          js.UndefOr[Updater[Sorting] => Callback] = js.undefined,
-    sortDescFirst:            js.UndefOr[Boolean] = js.undefined,
+    isMultiSortEvent:          js.UndefOr[SyntheticEvent[dom.Node] => Boolean] = js.undefined,
+    manualSorting:             js.UndefOr[Boolean] = js.undefined,
+    maxMultiSortColCount:      js.UndefOr[Int] = js.undefined,
+    onSortingChange:           js.UndefOr[Updater[Sorting] => Callback] = js.undefined,
+    sortDescFirst:             js.UndefOr[Boolean] = js.undefined,
     // Selection
-    enableRowSelection:       js.UndefOr[Boolean] = js.undefined,
-    enableMultiRowSelection:  js.UndefOr[Boolean] = js.undefined,
-    onRowSelectionChange:     js.UndefOr[Updater[RowSelection] => Callback] = js.undefined,
+    enableRowSelection:        js.UndefOr[Boolean] = js.undefined,
+    enableMultiRowSelection:   js.UndefOr[Boolean] = js.undefined,
+    onRowSelectionChange:      js.UndefOr[Updater[RowSelection] => Callback] = js.undefined,
     // Expanding
-    enableExpanding:          js.UndefOr[Boolean] = js.undefined,
-    getExpandedRowModel:      js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
+    enableExpanding:           js.UndefOr[Boolean] = js.undefined,
+    getExpandedRowModel:       js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
       js.undefined,
-    getSubRows:               js.UndefOr[(T, Int) => Option[List[T]]] = js.undefined,
+    getSubRows:                js.UndefOr[(T, Int) => Option[List[T]]] = js.undefined,
     // Pinning
-    enablePinning:            js.UndefOr[Boolean] = js.undefined,
+    enablePinning:             js.UndefOr[Boolean] = js.undefined,
     // Column Pinning
-    enableColumnPinning:      js.UndefOr[Boolean] = js.undefined,
-    onColumnPinningChange:    js.UndefOr[Updater[ColumnPinning] => Callback] = js.undefined,
+    enableColumnPinning:       js.UndefOr[Boolean] = js.undefined,
+    onColumnPinningChange:     js.UndefOr[Updater[ColumnPinning] => Callback] = js.undefined,
     // Row Pinning
-    enableRowPinning:         js.UndefOr[RowPinningEnabled[T, TM, CM, TF]] = js.undefined,
-    keepPinnedRows:           js.UndefOr[Boolean] = js.undefined,
-    onRowPinningChange:       js.UndefOr[Updater[RowPinning] => Callback] = js.undefined,
+    enableRowPinning:          js.UndefOr[RowPinningEnabled[T, TM, CM, TF]] = js.undefined,
+    keepPinnedRows:            js.UndefOr[Boolean] = js.undefined,
+    onRowPinningChange:        js.UndefOr[Updater[RowPinning] => Callback] = js.undefined,
     // Column Filtering
-    enableFilters:            js.UndefOr[Boolean] = js.undefined,
-    enableColumnFilters:      js.UndefOr[Boolean] = js.undefined,
-    filterFromLeafRows:       js.UndefOr[Boolean] = js.undefined,
-    maxLeafRowFilterDepth:    js.UndefOr[Double] = js.undefined,
-    manualFiltering:          js.UndefOr[Boolean] = js.undefined,
-    onColumnFiltersChange:    js.UndefOr[Updater[ColumnFilters] => Callback] = js.undefined,
-    getFilteredRowModel:      js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
+    enableFilters:             js.UndefOr[Boolean] = js.undefined,
+    enableColumnFilters:       js.UndefOr[Boolean] = js.undefined,
+    filterFromLeafRows:        js.UndefOr[Boolean] = js.undefined,
+    maxLeafRowFilterDepth:     js.UndefOr[Double] = js.undefined,
+    manualFiltering:           js.UndefOr[Boolean] = js.undefined,
+    onColumnFiltersChange:     js.UndefOr[Updater[ColumnFilters] => Callback] = js.undefined,
+    getFilteredRowModel:       js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
       js.undefined,
     // Global Filtering
-    enableGlobalFilter:       js.UndefOr[Boolean] = js.undefined,
-    globalFilterFn:           js.UndefOr[
+    enableGlobalFilter:        js.UndefOr[Boolean] = js.undefined,
+    globalFilterFn:            js.UndefOr[
       BuiltInFilter[TF] | FilterFn[T, TM, CM, TF, TF, Any] | FilterFn.Type[T, TM, CM, TF, TF, Any]
     ] = js.undefined,
-    onGlobalFilterChange:     js.UndefOr[Updater[TF] => Callback] = js.undefined,
-    getColumnCanGlobalFilter: js.UndefOr[Column[T, ?, TM, CM, TF, ?, ?] => Boolean] = js.undefined,
+    onGlobalFilterChange:      js.UndefOr[Updater[TF] => Callback] = js.undefined,
+    getColumnCanGlobalFilter:  js.UndefOr[Column[T, ?, TM, CM, TF, ?, ?] => Boolean] = js.undefined,
     // Column Faceting
-    enableColumnFaceting:     Boolean = false, // This is not in the JS API, we add it for convenience
-    getColumnFacetedRowModel: js.UndefOr[ColumnId => RowModel[T, TM, CM, TF]] = js.undefined
+    enableFaceting:            js.UndefOr[Boolean] = js.undefined, // Added for convenience
+    getFacetedRowModel:        js.UndefOr[
+      (Table[T, TM, CM, TF], ColumnId) => () => RowModel[T, TM, CM, TF]
+    ] = js.undefined,
+    enableFacetedUniqueValues: js.UndefOr[Boolean] = js.undefined, // Added for convenience
+    getFacetedUniqueValues:    js.UndefOr[(Table[T, TM, CM, TF], ColumnId) => () => Map[Any, Int]] =
+      js.undefined,
+    enableFacetedMinMaxValues: js.UndefOr[Boolean] = js.undefined, // Added for convenience
+    getFacetedMinMaxValues:    js.UndefOr[(Table[T, TM, CM, TF], ColumnId) => () => Option[
+      (Double, Double)
+    ]] = js.undefined
   ): TableOptions[T, TM, CM, TF] =
-    val autoEnableSorting: Boolean         =
+    val autoEnableSorting: Boolean             =
       !enableSorting.contains(false) && (
         enableSorting.contains(true) ||
           enableMultiSort.contains(true) ||
@@ -1244,13 +1252,13 @@ object TableOptions:
           onSortingChange.isDefined ||
           sortDescFirst.contains(true)
       )
-    val autoEnableExpanding: Boolean       =
+    val autoEnableExpanding: Boolean           =
       !enableExpanding.contains(false) && (
         enableExpanding.contains(true) ||
           getExpandedRowModel.isDefined ||
           getSubRows.isDefined
       )
-    val autoEnableColumnFiltering: Boolean =
+    val autoEnableColumnFiltering: Boolean     =
       !enableColumnFilters.contains(false) && (
         enableColumnFilters.contains(true) ||
           filterFromLeafRows.contains(true) ||
@@ -1259,17 +1267,34 @@ object TableOptions:
           onColumnFiltersChange.isDefined ||
           getFilteredRowModel.isDefined
       )
-    val autoEnableGlobalFiltering: Boolean =
+    val autoEnableGlobalFiltering: Boolean     =
       !enableGlobalFilter.contains(false) && (
         enableGlobalFilter.contains(true) ||
           globalFilterFn.isDefined ||
           onGlobalFilterChange.isDefined
       )
-    val autoEnableFiltering: Boolean       =
+    val autoEnableFiltering: Boolean           =
       !enableFilters.contains(false) && (
         enableFilters.contains(true) ||
           autoEnableColumnFiltering ||
           autoEnableGlobalFiltering
+      )
+    val autoEnableFacetedUniqueValues: Boolean =
+      !enableFacetedUniqueValues.contains(false) && (
+        enableFacetedUniqueValues.contains(true) ||
+          getFacetedUniqueValues.isDefined
+      )
+    val autoEnableFacetedMinMaxValues: Boolean =
+      !enableFacetedMinMaxValues.contains(false) && (
+        enableFacetedMinMaxValues.contains(true) ||
+          getFacetedMinMaxValues.isDefined
+      )
+    val autoEnableFaceting: Boolean            =
+      !enableFaceting.contains(false) && (
+        enableFaceting.contains(true) ||
+          getFacetedRowModel.isDefined ||
+          autoEnableFacetedUniqueValues ||
+          autoEnableFacetedMinMaxValues
       )
 
     new TableOptions[T, TM, CM, TF] {
@@ -1299,6 +1324,24 @@ object TableOptions:
         getFilteredRowModel,
         _.withGetFilteredRowModel(_),
         _.withDefaultGetFilteredRowModel
+      )
+      .applyOrElseWhen(
+        autoEnableFaceting,
+        getFacetedRowModel,
+        _.withGetFacetedRowModel(_),
+        _.withDefaultGetFacetedRowModel
+      )
+      .applyOrElseWhen(
+        autoEnableFacetedUniqueValues,
+        getFacetedUniqueValues,
+        _.withGetFacetedUniqueValues(_),
+        _.withDefaultGetFacetedUniqueValues
+      )
+      .applyOrElseWhen(
+        autoEnableFacetedMinMaxValues,
+        getFacetedMinMaxValues,
+        _.withGetFacetedMinMaxValues(_),
+        _.withDefaultGetFacetedMinMaxValues
       )
       .applyOrNot(getRowId, _.withGetRowId(_))
       .applyOrNot(onStateChange, _.withOnStateChange(_))

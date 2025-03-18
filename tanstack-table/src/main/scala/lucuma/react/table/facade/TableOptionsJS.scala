@@ -3,8 +3,8 @@
 
 package lucuma.react.table.facade
 
+import lucuma.typed.std.Map as JsMap
 import lucuma.typed.tanstackTableCore as raw
-import lucuma.typed.std.{Map => JsMap}
 
 import scalajs.js
 
