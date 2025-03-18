@@ -248,3 +248,11 @@ case class Table[T, TM, CM, TF] private[table] (
       .getGlobalFilterFn()
       .toOption
       .map(FilterFn.fromJs(_))
+
+  // Global Faceting
+  def getGlobalFacetedRowModel(): RowModel[T, TM, CM, TF]      =
+    RowModel(toJs.getGlobalFacetedRowModel())
+  def getGlobalFacetedUniqueValues(): Map[Any, Int]            =
+    Map.fromJsMap(toJs.getGlobalFacetedUniqueValues()).view.mapValues(_.toInt).toMap
+  def getGlobalFacetedMinMaxValues(): Option[(Double, Double)] =
+    toJs.getGlobalFacetedMinMaxValues().toOption.map(identity) // Force type cast
