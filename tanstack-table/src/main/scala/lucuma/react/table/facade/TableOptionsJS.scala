@@ -3,6 +3,7 @@
 
 package lucuma.react.table.facade
 
+import lucuma.typed.std.Map as JsMap
 import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
@@ -126,4 +127,21 @@ trait TableOptionsJs[T, TM, CM] extends js.Object:
     js.undefined
   var getPreFilteredRowModel: js.UndefOr[
     js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]
+  ] = js.undefined
+
+  // Column Faceting
+  var getFacetedRowModel: js.UndefOr[
+    js.Function2[raw.buildLibTypesMod.Table[T], String, js.Function0[
+      raw.buildLibTypesMod.RowModel[T]
+    ]]
+  ] = js.undefined
+  var getFacetedUniqueValues: js.UndefOr[
+    js.Function2[raw.buildLibTypesMod.Table[T], String, js.Function0[
+      JsMap[Any, Double]
+    ]]
+  ] = js.undefined
+  var getFacetedMinMaxValues: js.UndefOr[
+    js.Function2[raw.buildLibTypesMod.Table[T], String, js.Function0[
+      js.UndefOr[js.Tuple2[Double, Double]]
+    ]]
   ] = js.undefined

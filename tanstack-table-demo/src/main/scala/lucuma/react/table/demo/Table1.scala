@@ -64,7 +64,11 @@ object Table1:
           ^.`type`      := "tel",
           ^.placeholder := "At least",
           ^.width       := "100%",
-          ^.value       := col.getFilterValue().map(_.toString).getOrElse(""),
+          ^.value       := col
+            .getFilterValue()
+            .orElse(col.getFacetedMinMaxValues().map(_._1))
+            .map(_.toString)
+            .getOrElse(""),
           ^.onChange ==> ((e: ReactEventFromInput) =>
             col.setFilterValue(Try(e.target.value.toInt).toOption)
           )
@@ -74,6 +78,7 @@ object Table1:
           col
             .getFilterValue()
             .map(_.asInstanceOf[js.Tuple2[js.UndefOr[Int], js.UndefOr[Int]]])
+            .orElse(col.getFacetedMinMaxValues().map((min, max) => js.Tuple2(min.toInt, max.toInt)))
             .getOrElse(js.Tuple2(js.undefined, js.undefined))
         <.div(^.display.flex)(
           <.input(
@@ -97,7 +102,7 @@ object Table1:
             )
           )
         )
-      case _         =>
+      case "model"   =>
         <.input(
           ^.`type`      := "text",
           ^.placeholder := "Filter",
@@ -107,25 +112,48 @@ object Table1:
             col.setFilterValue(e.target.value.some.filter(_.nonEmpty))
           )
         )
+      case _         =>
+        <.span(^.display.flex)(
+          <.select(
+            ^.`type`      := "text",
+            ^.placeholder := "Filter",
+            ^.width       := "100%",
+            ^.value       := col.getFilterValue().map(_.toString).getOrElse(""),
+            ^.onChange ==> ((e: ReactEventFromInput) =>
+              col.setFilterValue(e.target.value.some.filter(_.nonEmpty))
+            )
+          )(
+            <.option(^.value := "")("<all>"),
+            col
+              .getFacetedUniqueValues()
+              .map: (value, count) =>
+                <.option(^.value := value.toString)(s"${value.toString} ($count)")
+              .toTagMod
+          ),
+          <.span(^.onClick --> col.setFilterValue(none))("X")
+        )
 
   val component =
     ScalaFnComponent[List[Guitar]]: guitars =>
       for
         rows         <- useMemo(guitars)(identity)
         globalFilter <- useState("")
-        table        <- useReactTable:
-                          TableOptions(
-                            Columns,
-                            rows,
-                            enableSorting = true,
-                            enableColumnResizing = true,
-                            enableFilters = true,
-                            enableGlobalFilter = true,
-                            globalFilterFn = (row, colId, value: String, _) =>
-                              row.getValue(colId).toString.toLowerCase.contains(value.toLowerCase),
-                            initialState =
-                              TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
-                          )
+        table        <-
+          useReactTable:
+            TableOptions(
+              Columns,
+              rows,
+              enableSorting = true,
+              enableColumnResizing = true,
+              enableFilters = true,
+              enableGlobalFilter = true,
+              enableFacetedUniqueValues = true,
+              enableFacetedMinMaxValues = true,
+              globalFilterFn = (row, colId, value: String, _) =>
+                row.getValue(colId).toString.toLowerCase.contains(value.toLowerCase),
+              initialState =
+                TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
+            )
       yield React.Fragment(
         <.h2("Sortable table"),
         <.input(

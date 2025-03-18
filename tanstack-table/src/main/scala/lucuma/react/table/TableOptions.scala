@@ -8,6 +8,7 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.table.facade.ColumnDefJs
 import lucuma.react.table.facade.TableOptionsJs
+import lucuma.typed.std.Map as JsMap
 import lucuma.typed.tanstackReactTable as rawReact
 import lucuma.typed.tanstackTableCore as raw
 import org.scalajs.dom
@@ -110,20 +111,15 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setOnStateChange(none)
 
   lazy val getCoreRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF] =
-    t =>
-      (toJsBase
-        .getCoreRowModel(t.toJs): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
+    t => () => RowModel(toJsBase.getCoreRowModel(t.toJs)())
 
   /** WARNING: This mutates the object in-place. */
   def withGetCoreRowModel(
     getCoreRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]
   ): TableOptions[T, TM, CM, TF] =
     copy:
-      _.getCoreRowModel =
-        ((t: raw.buildLibTypesMod.Table[T]) => getCoreRowModel(Table(t)).map(_.toJs)): js.Function1[
-          raw.buildLibTypesMod.Table[T],
-          js.Function0[raw.buildLibTypesMod.RowModel[T]]
-        ]
+      _.getCoreRowModel = (t: raw.buildLibTypesMod.Table[T]) =>
+        getCoreRowModel(Table(t)).map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
 
   def withDefaultGetCoreRowModel: TableOptions[T, TM, CM, TF] =
     copy(_.getCoreRowModel = rawReact.mod.getCoreRowModel())
@@ -414,9 +410,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setEnableMultiRemove(none)
 
   lazy val getSortedRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
-    toJsBase.getSortedRowModel.toOption.map(fn =>
-      t => (fn(t.toJs): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
-    )
+    toJsBase.getSortedRowModel.toOption.map(fn => t => () => RowModel(fn(t.toJs)()))
 
   /** WARNING: This mutates the object in-place. */
   def setGetSortedRowModel(
@@ -424,12 +418,9 @@ sealed trait TableOptions[T, TM, CM, TF]:
   ): TableOptions[T, TM, CM, TF] =
     copy(_.getSortedRowModel =
       getSortedRowModel.orUndefined
-        .map(fn =>
-          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t)).map(_.toJs)): js.Function1[
-            raw.buildLibTypesMod.Table[T],
-            js.Function0[raw.buildLibTypesMod.RowModel[T]]
-          ]
-        )
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T]) =>
+            fn(Table(t)).map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
     )
 
   /** WARNING: This mutates the object in-place. */
@@ -636,9 +627,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setEnableExpanding(none)
 
   lazy val getExpandedRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
-    toJsBase.getExpandedRowModel.toOption.map(fn =>
-      t => (fn(t.toJs): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
-    )
+    toJsBase.getExpandedRowModel.toOption.map(fn => t => () => RowModel(fn(t.toJs)()))
 
   /** WARNING: This mutates the object in-place. */
   def setGetExpandedRowModel(
@@ -646,12 +635,9 @@ sealed trait TableOptions[T, TM, CM, TF]:
   ): TableOptions[T, TM, CM, TF] =
     copy(_.getExpandedRowModel =
       getExpandedRowModel.orUndefined
-        .map(fn =>
-          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t)).map(_.toJs)): js.Function1[
-            raw.buildLibTypesMod.Table[T],
-            js.Function0[raw.buildLibTypesMod.RowModel[T]]
-          ]
-        )
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T]) =>
+            fn(Table(t)).map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
     )
 
   /** WARNING: This mutates the object in-place. */
@@ -930,9 +916,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setEnableColumnFilters(none)
 
   lazy val getFilteredRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
-    toJsBase.getFilteredRowModel.toOption.map(fn =>
-      t => (fn(t.toJs): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
-    )
+    toJsBase.getFilteredRowModel.toOption.map(fn => t => () => RowModel(fn(t.toJs)()))
 
   /** WARNING: This mutates the object in-place. */
   def setGetFilteredRowModel(
@@ -940,12 +924,9 @@ sealed trait TableOptions[T, TM, CM, TF]:
   ): TableOptions[T, TM, CM, TF] =
     copy(_.getFilteredRowModel =
       getFilteredRowModel.orUndefined
-        .map(fn =>
-          ((t: raw.buildLibTypesMod.Table[T]) => fn(Table(t)).map(_.toJs)): js.Function1[
-            raw.buildLibTypesMod.Table[T],
-            js.Function0[raw.buildLibTypesMod.RowModel[T]]
-          ]
-        )
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T]) =>
+            fn(Table(t)).map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
     )
 
   /** WARNING: This mutates the object in-place. */
@@ -1076,76 +1057,189 @@ sealed trait TableOptions[T, TM, CM, TF]:
   inline def withoutGetColumnCanGlobalFilter: TableOptions[T, TM, CM, TF] =
     setGetColumnCanGlobalFilter(none)
 
+  // Column Faceting
+  lazy val getFacetedRowModel
+    : Option[(Table[T, TM, CM, TF], ColumnId) => () => RowModel[T, TM, CM, TF]] =
+    toJsBase.getFacetedRowModel.toOption.map: fn =>
+      (t, colId) =>
+        (fn(t.toJs, colId.value): (() => raw.buildLibTypesMod.RowModel[T])).map(RowModel(_))
+
+  /** WARNING: This mutates the object in-place. */
+  def setGetFacetedRowModel(
+    getFacetedRowModel: Option[(Table[T, TM, CM, TF], ColumnId) => () => RowModel[T, TM, CM, TF]]
+  ): TableOptions[T, TM, CM, TF] =
+    copy(_.getFacetedRowModel =
+      getFacetedRowModel.orUndefined
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T], colId: String) =>
+            fn(Table(t), ColumnId(colId))
+              .map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
+    )
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetFacetedRowModel(
+    getFacetedRowModel: (Table[T, TM, CM, TF], ColumnId) => () => RowModel[T, TM, CM, TF]
+  ): TableOptions[T, TM, CM, TF] =
+    setGetFacetedRowModel(getFacetedRowModel.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetFacetedRowModel: TableOptions[T, TM, CM, TF] =
+    setGetFacetedRowModel(none)
+
+  /** WARNING: This mutates the object in-place. */
+  def withDefaultGetFacetedRowModel: TableOptions[T, TM, CM, TF] =
+    copy:
+      _.getFacetedRowModel = rawReact.mod.getFacetedRowModel()
+
+  lazy val getFacetedUniqueValues: Option[(Table[T, TM, CM, TF], ColumnId) => () => Map[Any, Int]] =
+    toJsBase.getFacetedUniqueValues.toOption.map: fn =>
+      (t, colId) => () => Map.fromJsMap(fn(t.toJs, colId.value)()).view.mapValues(_.toInt).toMap
+
+  /** WARNING: This mutates the object in-place. */
+  def setGetFacetedUniqueValues(
+    getFacetedUniqueValues: Option[(Table[T, TM, CM, TF], ColumnId) => () => Map[Any, Int]]
+  ): TableOptions[T, TM, CM, TF] =
+    copy(
+      _.getFacetedUniqueValues = getFacetedUniqueValues.orUndefined
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T], colId: String) =>
+            fn(Table(t), ColumnId(colId)).map(
+              _.view.mapValues(_.toDouble).toMap.toJsMap
+            ): js.Function0[JsMap[Any, Double]]
+    )
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetFacetedUniqueValues(
+    getFacetedUniqueValues: (Table[T, TM, CM, TF], ColumnId) => () => Map[Any, Int]
+  ): TableOptions[T, TM, CM, TF] =
+    setGetFacetedUniqueValues(getFacetedUniqueValues.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetFacetedUniqueValues: TableOptions[T, TM, CM, TF] =
+    setGetFacetedUniqueValues(none)
+
+  /** WARNING: This mutates the object in-place. */
+  def withDefaultGetFacetedUniqueValues: TableOptions[T, TM, CM, TF] =
+    copy:
+      _.getFacetedUniqueValues = rawReact.mod.getFacetedUniqueValues()
+
+  lazy val getFacetedMinMaxValues
+    : Option[(Table[T, TM, CM, TF], ColumnId) => () => Option[(Double, Double)]] =
+    toJsBase.getFacetedMinMaxValues.toOption.map: fn =>
+      (t, colId) => () => fn(t.toJs, colId.value)().toOption.map(identity) // Force type cast
+
+  /** WARNING: This mutates the object in-place. */
+  def setGetFacetedMinMaxValues(
+    getFacetedMinMaxValues: Option[
+      (Table[T, TM, CM, TF], ColumnId) => () => Option[(Double, Double)]
+    ]
+  ): TableOptions[T, TM, CM, TF] =
+    copy(
+      _.getFacetedMinMaxValues = getFacetedMinMaxValues.orUndefined
+        .map: fn =>
+          (t: raw.buildLibTypesMod.Table[T], colId: String) =>
+            fn(Table(t), ColumnId(colId)).map(
+              _.orUndefined.map((min, max) => js.Tuple2(min, max))
+            ): js.Function0[js.UndefOr[js.Tuple2[Double, Double]]]
+    )
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withGetFacetedMinMaxValues(
+    getFacetedMinMaxValues: (Table[T, TM, CM, TF], ColumnId) => () => Option[(Double, Double)]
+  ): TableOptions[T, TM, CM, TF] =
+    setGetFacetedMinMaxValues(getFacetedMinMaxValues.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutGetFacetedMinMaxValues: TableOptions[T, TM, CM, TF] =
+    setGetFacetedMinMaxValues(none)
+
+  /** WARNING: This mutates the object in-place. */
+  def withDefaultGetFacetedMinMaxValues: TableOptions[T, TM, CM, TF] =
+    copy:
+      _.getFacetedMinMaxValues = rawReact.mod.getFacetedMinMaxValues()
+
 end TableOptions
 
 object TableOptions:
   def apply[T, TM, CM, TF](
-    columns_                : Reusable[List[ColumnDef[T, ?, TM, CM, TF, ?, ?]]],
-    data_                   : Reusable[List[T]],
-    getCoreRowModel:          js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
+    columns_                 : Reusable[List[ColumnDef[T, ?, TM, CM, TF, ?, ?]]],
+    data_                    : Reusable[List[T]],
+    getCoreRowModel:           js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
       js.undefined,
-    getRowId:                 js.UndefOr[(T, Int, Option[T]) => RowId] = js.undefined,
-    onStateChange:            js.UndefOr[Updater[TableState[TF]] => Callback] = js.undefined,
-    renderFallbackValue:      js.UndefOr[Any] = js.undefined,
-    state:                    js.UndefOr[PartialTableState] = js.undefined,
-    initialState:             js.UndefOr[TableState[TF]] = js.undefined,
-    meta:                     js.UndefOr[TM] = js.undefined,
+    getRowId:                  js.UndefOr[(T, Int, Option[T]) => RowId] = js.undefined,
+    onStateChange:             js.UndefOr[Updater[TableState[TF]] => Callback] = js.undefined,
+    renderFallbackValue:       js.UndefOr[Any] = js.undefined,
+    state:                     js.UndefOr[PartialTableState] = js.undefined,
+    initialState:              js.UndefOr[TableState[TF]] = js.undefined,
+    meta:                      js.UndefOr[TM] = js.undefined,
     // Column Sizing
-    enableColumnResizing:     js.UndefOr[Boolean] = js.undefined,
-    columnResizeMode:         js.UndefOr[ColumnResizeMode] = js.undefined,
-    onColumnSizingChange:     js.UndefOr[Updater[ColumnSizing] => Callback] = js.undefined,
-    onColumnSizingInfoChange: js.UndefOr[Updater[ColumnSizingInfo] => Callback] = js.undefined,
+    enableColumnResizing:      js.UndefOr[Boolean] = js.undefined,
+    columnResizeMode:          js.UndefOr[ColumnResizeMode] = js.undefined,
+    onColumnSizingChange:      js.UndefOr[Updater[ColumnSizing] => Callback] = js.undefined,
+    onColumnSizingInfoChange:  js.UndefOr[Updater[ColumnSizingInfo] => Callback] = js.undefined,
     // Column Visibility
-    enableHiding:             js.UndefOr[Boolean] = js.undefined,
-    onColumnVisibilityChange: js.UndefOr[Updater[ColumnVisibility] => Callback] = js.undefined,
+    enableHiding:              js.UndefOr[Boolean] = js.undefined,
+    onColumnVisibilityChange:  js.UndefOr[Updater[ColumnVisibility] => Callback] = js.undefined,
     // Sorting
-    enableSorting:            js.UndefOr[Boolean] = js.undefined,
-    enableMultiSort:          js.UndefOr[Boolean] = js.undefined,
-    enableSortingRemoval:     js.UndefOr[Boolean] = js.undefined,
-    enableMultiRemove:        js.UndefOr[Boolean] = js.undefined,
-    getSortedRowModel:        js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
+    enableSorting:             js.UndefOr[Boolean] = js.undefined,
+    enableMultiSort:           js.UndefOr[Boolean] = js.undefined,
+    enableSortingRemoval:      js.UndefOr[Boolean] = js.undefined,
+    enableMultiRemove:         js.UndefOr[Boolean] = js.undefined,
+    getSortedRowModel:         js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
       js.undefined,
-    isMultiSortEvent:         js.UndefOr[SyntheticEvent[dom.Node] => Boolean] = js.undefined,
-    manualSorting:            js.UndefOr[Boolean] = js.undefined,
-    maxMultiSortColCount:     js.UndefOr[Int] = js.undefined,
-    onSortingChange:          js.UndefOr[Updater[Sorting] => Callback] = js.undefined,
-    sortDescFirst:            js.UndefOr[Boolean] = js.undefined,
+    isMultiSortEvent:          js.UndefOr[SyntheticEvent[dom.Node] => Boolean] = js.undefined,
+    manualSorting:             js.UndefOr[Boolean] = js.undefined,
+    maxMultiSortColCount:      js.UndefOr[Int] = js.undefined,
+    onSortingChange:           js.UndefOr[Updater[Sorting] => Callback] = js.undefined,
+    sortDescFirst:             js.UndefOr[Boolean] = js.undefined,
     // Selection
-    enableRowSelection:       js.UndefOr[Boolean] = js.undefined,
-    enableMultiRowSelection:  js.UndefOr[Boolean] = js.undefined,
-    onRowSelectionChange:     js.UndefOr[Updater[RowSelection] => Callback] = js.undefined,
+    enableRowSelection:        js.UndefOr[Boolean] = js.undefined,
+    enableMultiRowSelection:   js.UndefOr[Boolean] = js.undefined,
+    onRowSelectionChange:      js.UndefOr[Updater[RowSelection] => Callback] = js.undefined,
     // Expanding
-    enableExpanding:          js.UndefOr[Boolean] = js.undefined,
-    getExpandedRowModel:      js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
+    enableExpanding:           js.UndefOr[Boolean] = js.undefined,
+    getExpandedRowModel:       js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
       js.undefined,
-    getSubRows:               js.UndefOr[(T, Int) => Option[List[T]]] = js.undefined,
+    getSubRows:                js.UndefOr[(T, Int) => Option[List[T]]] = js.undefined,
     // Pinning
-    enablePinning:            js.UndefOr[Boolean] = js.undefined,
+    enablePinning:             js.UndefOr[Boolean] = js.undefined,
     // Column Pinning
-    enableColumnPinning:      js.UndefOr[Boolean] = js.undefined,
-    onColumnPinningChange:    js.UndefOr[Updater[ColumnPinning] => Callback] = js.undefined,
+    enableColumnPinning:       js.UndefOr[Boolean] = js.undefined,
+    onColumnPinningChange:     js.UndefOr[Updater[ColumnPinning] => Callback] = js.undefined,
     // Row Pinning
-    enableRowPinning:         js.UndefOr[RowPinningEnabled[T, TM, CM, TF]] = js.undefined,
-    keepPinnedRows:           js.UndefOr[Boolean] = js.undefined,
-    onRowPinningChange:       js.UndefOr[Updater[RowPinning] => Callback] = js.undefined,
+    enableRowPinning:          js.UndefOr[RowPinningEnabled[T, TM, CM, TF]] = js.undefined,
+    keepPinnedRows:            js.UndefOr[Boolean] = js.undefined,
+    onRowPinningChange:        js.UndefOr[Updater[RowPinning] => Callback] = js.undefined,
     // Column Filtering
-    enableFilters:            js.UndefOr[Boolean] = js.undefined,
-    enableColumnFilters:      js.UndefOr[Boolean] = js.undefined,
-    filterFromLeafRows:       js.UndefOr[Boolean] = js.undefined,
-    maxLeafRowFilterDepth:    js.UndefOr[Double] = js.undefined,
-    manualFiltering:          js.UndefOr[Boolean] = js.undefined,
-    onColumnFiltersChange:    js.UndefOr[Updater[ColumnFilters] => Callback] = js.undefined,
-    getFilteredRowModel:      js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
+    enableFilters:             js.UndefOr[Boolean] = js.undefined,
+    enableColumnFilters:       js.UndefOr[Boolean] = js.undefined,
+    filterFromLeafRows:        js.UndefOr[Boolean] = js.undefined,
+    maxLeafRowFilterDepth:     js.UndefOr[Double] = js.undefined,
+    manualFiltering:           js.UndefOr[Boolean] = js.undefined,
+    onColumnFiltersChange:     js.UndefOr[Updater[ColumnFilters] => Callback] = js.undefined,
+    getFilteredRowModel:       js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
       js.undefined,
     // Global Filtering
-    enableGlobalFilter:       js.UndefOr[Boolean] = js.undefined,
-    globalFilterFn:           js.UndefOr[
+    enableGlobalFilter:        js.UndefOr[Boolean] = js.undefined,
+    globalFilterFn:            js.UndefOr[
       BuiltInFilter[TF] | FilterFn[T, TM, CM, TF, TF, Any] | FilterFn.Type[T, TM, CM, TF, TF, Any]
     ] = js.undefined,
-    onGlobalFilterChange:     js.UndefOr[Updater[TF] => Callback] = js.undefined,
-    getColumnCanGlobalFilter: js.UndefOr[Column[T, ?, TM, CM, TF, ?, ?] => Boolean] = js.undefined
+    onGlobalFilterChange:      js.UndefOr[Updater[TF] => Callback] = js.undefined,
+    getColumnCanGlobalFilter:  js.UndefOr[Column[T, ?, TM, CM, TF, ?, ?] => Boolean] = js.undefined,
+    // Column Faceting
+    enableFaceting:            js.UndefOr[Boolean] = js.undefined, // Added for convenience
+    getFacetedRowModel:        js.UndefOr[
+      (Table[T, TM, CM, TF], ColumnId) => () => RowModel[T, TM, CM, TF]
+    ] = js.undefined,
+    enableFacetedUniqueValues: js.UndefOr[Boolean] = js.undefined, // Added for convenience
+    getFacetedUniqueValues:    js.UndefOr[(Table[T, TM, CM, TF], ColumnId) => () => Map[Any, Int]] =
+      js.undefined,
+    enableFacetedMinMaxValues: js.UndefOr[Boolean] = js.undefined, // Added for convenience
+    getFacetedMinMaxValues:    js.UndefOr[(Table[T, TM, CM, TF], ColumnId) => () => Option[
+      (Double, Double)
+    ]] = js.undefined
   ): TableOptions[T, TM, CM, TF] =
-    val autoEnableSorting: Boolean         =
+    val autoEnableSorting: Boolean             =
       !enableSorting.contains(false) && (
         enableSorting.contains(true) ||
           enableMultiSort.contains(true) ||
@@ -1158,13 +1252,13 @@ object TableOptions:
           onSortingChange.isDefined ||
           sortDescFirst.contains(true)
       )
-    val autoEnableExpanding: Boolean       =
+    val autoEnableExpanding: Boolean           =
       !enableExpanding.contains(false) && (
         enableExpanding.contains(true) ||
           getExpandedRowModel.isDefined ||
           getSubRows.isDefined
       )
-    val autoEnableColumnFiltering: Boolean =
+    val autoEnableColumnFiltering: Boolean     =
       !enableColumnFilters.contains(false) && (
         enableColumnFilters.contains(true) ||
           filterFromLeafRows.contains(true) ||
@@ -1173,17 +1267,34 @@ object TableOptions:
           onColumnFiltersChange.isDefined ||
           getFilteredRowModel.isDefined
       )
-    val autoEnableGlobalFiltering: Boolean =
+    val autoEnableGlobalFiltering: Boolean     =
       !enableGlobalFilter.contains(false) && (
         enableGlobalFilter.contains(true) ||
           globalFilterFn.isDefined ||
           onGlobalFilterChange.isDefined
       )
-    val autoEnableFiltering: Boolean       =
+    val autoEnableFiltering: Boolean           =
       !enableFilters.contains(false) && (
         enableFilters.contains(true) ||
           autoEnableColumnFiltering ||
           autoEnableGlobalFiltering
+      )
+    val autoEnableFacetedUniqueValues: Boolean =
+      !enableFacetedUniqueValues.contains(false) && (
+        enableFacetedUniqueValues.contains(true) ||
+          getFacetedUniqueValues.isDefined
+      )
+    val autoEnableFacetedMinMaxValues: Boolean =
+      !enableFacetedMinMaxValues.contains(false) && (
+        enableFacetedMinMaxValues.contains(true) ||
+          getFacetedMinMaxValues.isDefined
+      )
+    val autoEnableFaceting: Boolean            =
+      !enableFaceting.contains(false) && (
+        enableFaceting.contains(true) ||
+          getFacetedRowModel.isDefined ||
+          autoEnableFacetedUniqueValues ||
+          autoEnableFacetedMinMaxValues
       )
 
     new TableOptions[T, TM, CM, TF] {
@@ -1213,6 +1324,24 @@ object TableOptions:
         getFilteredRowModel,
         _.withGetFilteredRowModel(_),
         _.withDefaultGetFilteredRowModel
+      )
+      .applyOrElseWhen(
+        autoEnableFaceting,
+        getFacetedRowModel,
+        _.withGetFacetedRowModel(_),
+        _.withDefaultGetFacetedRowModel
+      )
+      .applyOrElseWhen(
+        autoEnableFacetedUniqueValues,
+        getFacetedUniqueValues,
+        _.withGetFacetedUniqueValues(_),
+        _.withDefaultGetFacetedUniqueValues
+      )
+      .applyOrElseWhen(
+        autoEnableFacetedMinMaxValues,
+        getFacetedMinMaxValues,
+        _.withGetFacetedMinMaxValues(_),
+        _.withDefaultGetFacetedMinMaxValues
       )
       .applyOrNot(getRowId, _.withGetRowId(_))
       .applyOrNot(onStateChange, _.withOnStateChange(_))
