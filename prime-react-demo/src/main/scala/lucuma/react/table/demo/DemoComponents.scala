@@ -196,7 +196,6 @@ object DemoComponents {
                 )
               )
             ),
-            <.h1("Demo for lucuma-prime-react"),
             <.div(
               DemoStyles.VerticalStack,
               Card(
