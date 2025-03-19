@@ -28,7 +28,9 @@ object Demo:
       .createRoot(container)
       .render(
         <.div(
-          DemoComponents.component()
+          <.h1("Demo for lucuma-prime-react"),
+          DemoComponents.component(),
+          DemoHooks.component()
         )
       )
   }
