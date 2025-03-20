@@ -201,15 +201,19 @@ object ColumnDef:
     lazy val meta: Option[CM] = toJs.meta.toOption
 
     /** WARNING: This mutates the object in-place. */
-    def setMeta(meta: Option[CM]): Single[T, A, TM, CM, TF, CF, FM] =
-      Single { toJs.meta = meta.orUndefined; toJs }
+    def setMeta[CM1](meta: Option[CM1]): Single[T, A, TM, CM1, TF, CF, FM] =
+      Single {
+        val toJs1 = toJs.asInstanceOf[ColumnDefJs[T, A, CM1]]
+        toJs1.meta = meta.orUndefined
+        toJs1
+      }
 
     /** WARNING: This mutates the object in-place. */
-    inline def withMeta(meta: CM): Single[T, A, TM, CM, TF, CF, FM] =
+    inline def withMeta[CM1](meta: CM1): Single[T, A, TM, CM1, TF, CF, FM] =
       setMeta(meta.some)
 
     /** WARNING: This mutates the object in-place. */
-    inline def withoutMeta: Single[T, A, TM, CM, TF, CF, FM] =
+    inline def withoutMeta: Single[T, A, TM, Nothing, TF, CF, FM] =
       setMeta(none)
 
     // Column Sizing
@@ -517,10 +521,10 @@ object ColumnDef:
     def apply[T, A, TM, CM, TF, CF, FM](
       id:                 ColumnId,
       accessor:           js.UndefOr[T => A] = js.undefined,
-      header:             js.UndefOr[String | (HeaderContext[T, A, TM, CM, TF, ?, ?] => VdomNode)] =
+      header:             js.UndefOr[String | (HeaderContext[T, A, TM, ?, TF, ?, ?] => VdomNode)] =
         js.undefined,
-      cell:               js.UndefOr[CellContext[T, A, TM, CM, TF, ?, ?] => VdomNode] = js.undefined,
-      footer:             js.UndefOr[HeaderContext[T, A, TM, CM, TF, ?, ?] => VdomNode] = js.undefined,
+      cell:               js.UndefOr[CellContext[T, A, TM, ?, TF, ?, ?] => VdomNode] = js.undefined,
+      footer:             js.UndefOr[HeaderContext[T, A, TM, ?, TF, ?, ?] => VdomNode] = js.undefined,
       meta:               js.UndefOr[CM] = js.undefined,
       // Column Sizing
       enableResizing:     js.UndefOr[Boolean] = js.undefined,
@@ -888,10 +892,10 @@ object ColumnDef:
 
     def apply[T, TM, CM, TF, CF, FM](
       id:                 ColumnId,
-      header:             js.UndefOr[String | (HeaderContext[T, Nothing, TM, CM, TF, ?, ?] => VdomNode)] =
+      header:             js.UndefOr[String | (HeaderContext[T, Nothing, TM, ?, TF, ?, ?] => VdomNode)] =
         js.undefined,
       columns:            List[ColumnDef[T, ?, TM, CM, TF, ?, ?]],
-      footer:             js.UndefOr[HeaderContext[T, Nothing, TM, CM, TF, ?, ?] => VdomNode] = js.undefined,
+      footer:             js.UndefOr[HeaderContext[T, Nothing, TM, ?, TF, ?, ?] => VdomNode] = js.undefined,
       meta:               js.UndefOr[CM] = js.undefined,
       // Column Sizing
       enableResizing:     js.UndefOr[Boolean] = js.undefined,
@@ -979,10 +983,10 @@ object ColumnDef:
     def apply[A, CF, FM](
       id:                 ColumnId,
       accessor:           js.UndefOr[T => A] = js.undefined,
-      header:             js.UndefOr[String | (HeaderContext[T, A, TM, CM, TF, ?, ?] => VdomNode)] =
+      header:             js.UndefOr[String | (HeaderContext[T, A, TM, ?, TF, ?, ?] => VdomNode)] =
         js.undefined,
-      cell:               js.UndefOr[CellContext[T, A, TM, CM, TF, ?, ?] => VdomNode] = js.undefined,
-      footer:             js.UndefOr[HeaderContext[T, A, TM, CM, TF, ?, ?] => VdomNode] = js.undefined,
+      cell:               js.UndefOr[CellContext[T, A, TM, ?, TF, ?, ?] => VdomNode] = js.undefined,
+      footer:             js.UndefOr[HeaderContext[T, A, TM, ?, TF, ?, ?] => VdomNode] = js.undefined,
       // Column Sizing
       enableResizing:     js.UndefOr[Boolean] = js.undefined,
       size:               js.UndefOr[SizePx] = js.undefined,
@@ -1038,10 +1042,11 @@ object ColumnDef:
 
     def group[CF, FM](
       id:                 ColumnId,
-      header:             js.UndefOr[String | (HeaderContext[T, Nothing, TM, CM, TF, ?, ?] => VdomNode)] =
+      header:             js.UndefOr[String | (HeaderContext[T, Nothing, TM, ?, TF, ?, ?] => VdomNode)] =
         js.undefined,
       columns:            List[ColumnDef[T, ?, TM, CM, TF, ?, ?]],
-      footer:             js.UndefOr[HeaderContext[T, Nothing, TM, CM, TF, ?, ?] => VdomNode] = js.undefined,
+      footer:             js.UndefOr[HeaderContext[T, Nothing, TM, ?, TF, ?, ?] => VdomNode] = js.undefined,
+      meta:               js.UndefOr[CM] = js.undefined,
       // Column Sizing
       enableResizing:     js.UndefOr[Boolean] = js.undefined,
       size:               js.UndefOr[SizePx] = js.undefined,
@@ -1052,15 +1057,17 @@ object ColumnDef:
       // Column Pinning
       enablePinning:      js.UndefOr[Boolean] = js.undefined,
       // Column Filtering
+      enableColumnFilter: js.UndefOr[Boolean] = js.undefined,
       filterFn:           js.UndefOr[FilterFn[T, TM, CM, TF, CF, FM]] = js.undefined,
-      enableColumnFilter: js.UndefOr[Boolean] = js.undefined
+      // Global Filtering
+      enableGlobalFilter: js.UndefOr[Boolean] = js.undefined
     ): Group[T, TM, CM, TF, CF, FM] =
       Group(
         id,
         header,
         columns,
         footer,
-        js.undefined,
+        meta,
         // Column Sizing
         enableResizing,
         size,
@@ -1072,7 +1079,9 @@ object ColumnDef:
         enablePinning,
         // Column Filtering
         enableColumnFilter,
-        filterFn
+        filterFn,
+        // Global Filtering
+        enableGlobalFilter
       )
 
   end Applied

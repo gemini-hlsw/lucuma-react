@@ -175,15 +175,15 @@ sealed trait TableOptions[T, TM, CM, TF]:
   lazy val meta: Option[TM] = toJsBase.meta.toOption
 
   /** WARNING: This mutates the object in-place. */
-  def setMeta(meta: Option[TM]): TableOptions[T, TM, CM, TF] =
-    copy(_.meta = meta.orUndefined)
+  def setMeta[TM1](meta: Option[TM1]): TableOptions[T, TM1, CM, TF] =
+    this.asInstanceOf[TableOptions[T, TM1, CM, TF]].copy(_.meta = meta.orUndefined)
 
   /** WARNING: This mutates the object in-place. */
-  inline def withMeta(meta: TM): TableOptions[T, TM, CM, TF] =
+  inline def withMeta[TM1](meta: TM1): TableOptions[T, TM1, CM, TF] =
     setMeta(meta.some)
 
   /** WARNING: This mutates the object in-place. */
-  inline def withoutMeta: TableOptions[T, TM, CM, TF] =
+  inline def withoutMeta: TableOptions[T, Nothing, CM, TF] =
     setMeta(none)
 
   // Column Sizing
