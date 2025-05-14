@@ -19,8 +19,8 @@ import org.scalajs.dom.*
 import scalajs.js
 
 case class Sidebar(
-  visible:       Boolean,
   onHide:        Callback,
+  visible:       Boolean,
   id:            js.UndefOr[String] = js.undefined,
   position:      js.UndefOr[Sidebar.Position] = js.undefined,           // default: Left
   size:          js.UndefOr[Sidebar.Size] = js.undefined,               // default: Small, but without CSS class
@@ -37,6 +37,7 @@ case class Sidebar(
   clazz:         js.UndefOr[Css] = js.undefined,
   maskClass:     js.UndefOr[Css] = js.undefined,
   onShow:        js.UndefOr[Callback] = js.undefined,
+  content:       js.UndefOr[VdomNode] = js.undefined,
   modifiers:     Seq[TagMod] = Seq.empty
 ) extends ReactFnPropsWithChildren[Sidebar](Sidebar.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
@@ -89,6 +90,7 @@ object Sidebar {
           props.modifiers.toTagMod,
           children
         )
+        .applyOrNot(props.content, (c, p) => c.content(p.rawNode))
     }
 
 }

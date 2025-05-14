@@ -38,6 +38,7 @@ case class Dialog(
   maskClass:       js.UndefOr[Css] = js.undefined,
   appendTo:        js.UndefOr[SelfPosition | HTMLElement] = js.undefined, // default: document.body
   baseZIndex:      js.UndefOr[Double] = js.undefined,                     // default: 0
+  content:         js.UndefOr[VdomNode] = js.undefined,
   modifiers:       Seq[TagMod] = Seq.empty
 ) extends ReactFnPropsWithChildren[Dialog](Dialog.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
@@ -87,5 +88,6 @@ object Dialog {
           .applyOrNot(props.maskClass, (c, p) => c.maskClassName(p.htmlClass))
           .applyOrNot(props.appendTo, _.appendTo(_))
           .applyOrNot(props.baseZIndex, _.baseZIndex(_))(props.modifiers.toTagMod, children)
+          .applyOrNot(props.content, (c, p) => c.content(p.rawNode))
       }
 }
