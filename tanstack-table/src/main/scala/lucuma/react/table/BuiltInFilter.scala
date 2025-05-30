@@ -3,8 +3,6 @@
 
 package lucuma.react.table
 
-import cats.syntax.option.*
-
 import scalajs.js
 
 /**

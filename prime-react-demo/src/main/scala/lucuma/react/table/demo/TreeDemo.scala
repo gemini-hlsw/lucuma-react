@@ -38,7 +38,7 @@ object TreeDemo:
       )
     )                             // Nodes
     .useState(Set.empty[Tree.Id]) // expandedGroups
-    .render { (props, nodes, expandedGroups) =>
+    .render { (_, nodes, expandedGroups) =>
       Panel(header = "Tree")(
         Button(
           label = "Add root node",

@@ -4,7 +4,6 @@
 package lucuma.react.common
 
 import japgolly.scalajs.react.*
-import japgolly.scalajs.react.internal.Box
 import japgolly.scalajs.react.internal.FacadeExports
 import japgolly.scalajs.react.test.*
 import japgolly.scalajs.react.vdom.html_<^.*

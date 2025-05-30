@@ -4,7 +4,6 @@
 package lucuma.react.resizeDetector
 
 import japgolly.scalajs.react.*
-import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js

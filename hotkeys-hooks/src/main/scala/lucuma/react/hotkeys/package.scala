@@ -32,9 +32,9 @@ object HotkeysOptions {
     splitKey:             js.UndefOr[String] = js.undefined
   ): HotkeysOptions =
     val p = js.Dynamic.literal().asInstanceOf[HotkeysOptions]
-    p.enabled.foreach(o => p.enabled = o)
-    p.filterPreventDefault.foreach(o => p.filterPreventDefault = o)
-    p.splitKey.foreach(o => p.splitKey = o)
+    enabled.foreach(o => p.enabled = o)
+    filterPreventDefault.foreach(o => p.filterPreventDefault = o)
+    splitKey.foreach(o => p.splitKey = o)
     p
 }
 
@@ -66,7 +66,7 @@ object UseHotkeysProps {
   ): UseHotkeysProps =
     val p = js.Dynamic.literal().asInstanceOf[UseHotkeysProps]
     p.keys = keys.toJSArray
-    p.callback = (u, h) =>
+    p.callback = (_, h) =>
       callback match
         case c: Callback                   => c.runNow()
         case c: (HotkeysEvent => Callback) => c(h).runNow()

@@ -8,7 +8,6 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.TopNode
 import lucuma.react.common.EnumValue
 import lucuma.react.common.syntax.callback.*
-import org.scalajs.dom
 import org.scalajs.dom.html
 
 import scala.scalajs.js

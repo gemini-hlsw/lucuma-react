@@ -4,7 +4,6 @@
 package lucuma.react.table
 
 import cats.syntax.option.*
-import lucuma.typed.tanstackTableCore as rawCore
 import lucuma.typed.tanstackTableCore.buildLibFeaturesColumnFilteringMod as rawFilter
 import lucuma.typed.tanstackTableCore.buildLibTypesMod as raw
 

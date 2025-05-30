@@ -8,8 +8,6 @@ import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.typed.tanstackTableCore as raw
 import org.scalajs.dom
 
-import scalajs.js.JSConverters.*
-
 /**
  * @tparam T
  *   The type of the row.

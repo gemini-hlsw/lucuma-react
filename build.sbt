@@ -1,8 +1,12 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.83"
+ThisBuild / tlBaseVersion       := "0.84"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
+ThisBuild / scalacOptions ++= Seq(
+  // warning coming out of scalablytyped generated code stBuildingComponent.scala.
+  "-Wconf:msg=method linkingInfo in package scala.scalajs.runtime is deprecated since 1.18.0:s"
+)
 
 ThisBuild / githubWorkflowBuildPreamble ++= Seq(
   WorkflowStep.Use(
@@ -31,7 +35,7 @@ val scalaJsDomV      = "2.8.0"
 val scalaJsReactV    = "3.0.0-beta10"
 val utestV           = "0.8.5"
 
-ThisBuild / crossScalaVersions := Seq("3.6.3")
+ThisBuild / crossScalaVersions := Seq("3.7.1")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(
@@ -44,9 +48,11 @@ lazy val facadeSettings = Seq(
     "com.lihaoyi"                       %%% "utest"       % utestV        % Test,
     "org.scalameta"                     %%% "munit"       % munitV        % Test
   ),
-  jsEnv := new lucuma.LucumaJSDOMNodeJSEnv(),
+  jsEnv                                   := new lucuma.LucumaJSDOMNodeJSEnv(),
   scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-  testFrameworks += new TestFramework("utest.runner.Framework")
+  testFrameworks += new TestFramework("utest.runner.Framework"),
+  // temporary? fix for upgrading to Scala 3.7: https://github.com/scala/scala3/issues/22890
+  libraryDependencies += "org.scala-lang" %% "scala3-library" % scalaVersion.value
 )
 
 lazy val viteConfigGenerate = taskKey[Unit]("Generate vite config")
@@ -201,14 +207,16 @@ lazy val common = project
   .in(file("common"))
   .enablePlugins(ScalaJSPlugin)
   .settings(
-    name := "lucuma-react-common",
+    name                                    := "lucuma-react-common",
     libraryDependencies ++= Seq(
       "com.github.japgolly.scalajs-react" %%% "core"             % scalaJsReactV,
       "org.typelevel"                     %%% "cats-core"        % catsV,
       "org.typelevel"                     %%% "cats-laws"        % catsV            % Test,
       "org.scalameta"                     %%% "munit-scalacheck" % munitScalacheckV % Test,
       "org.typelevel"                     %%% "discipline-munit" % disciplineMunitV % Test
-    )
+    ),
+    // temporary? fix for upgrading to Scala 3.7: https://github.com/scala/scala3/issues/22890
+    libraryDependencies += "org.scala-lang" %% "scala3-library" % scalaVersion.value
   )
 
 lazy val test = project

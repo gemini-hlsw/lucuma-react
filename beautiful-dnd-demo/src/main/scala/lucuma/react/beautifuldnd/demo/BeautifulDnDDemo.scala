@@ -70,6 +70,8 @@ object BeautifulDnDDemo {
             getItemStyle(snapshot.isDragging, provided.draggableStyle)
       )("THIS IS A CLONE")
 
+    // Scalafmt was erroring in CI with "Search state exploded"
+    // format: off
     def render(s: State): VdomElement =
       <.div(
         <.div(^.height := "600px", ^.width := "1000px")(
@@ -81,7 +83,7 @@ object BeautifulDnDDemo {
                 getListStyle(snapshot.isDraggingOver)
               )(
                 <.b("Good to go:"),
-                s.list.zipWithIndex.toTagMod { case (item, index) =>
+                s.list.zipWithIndex.toTagMod( using (item, index) =>
                   Draggable(item.id, index) { case (provided, snapshot, _) =>
                     <.div(
                       provided.innerRef,
@@ -92,14 +94,15 @@ object BeautifulDnDDemo {
                       item.content
                     )
                   }
-                },
+                ),
                 provided.placeholder
               )
             }
           )
         )
       )
-  }
+    }
+    // format: on
 
   val component = ScalaComponent
     .builder[Props]("BeautifulDnDDemo")

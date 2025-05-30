@@ -167,7 +167,7 @@ object Tooltip:
         .withPropsChildren
         // We use state instead of a regular Ref in order to force a rerender when it's set.
         .useState(none[HTMLElement])
-        .render: (props, children, ref) =>
+        .render: (props, _, ref) =>
           React.Fragment(
             Tooltip(
               appendTo = props.appendTo,
