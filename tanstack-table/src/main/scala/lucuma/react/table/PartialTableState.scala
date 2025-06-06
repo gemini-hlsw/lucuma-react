@@ -6,7 +6,6 @@ package lucuma.react.table
 import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
-import scalajs.js.JSConverters.*
 
 // Still missing (everywhere): filters, grouping, pagination
 case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState):
@@ -43,7 +42,7 @@ case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState
     toJs.rowPinning.toOption.map(RowPinning.fromJs)
 
   /** WARNING: This mutates the object in-place. */
-  def setRowPinning(columnPinning: Option[RowPinning]): PartialTableState =
+  def setRowPinning(rowPinning: Option[RowPinning]): PartialTableState =
     PartialTableState(
       rowPinning.fold(toJs.setRowPinningUndefined)(v => toJs.setRowPinning(v.toJs))
     )

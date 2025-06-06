@@ -75,7 +75,7 @@ object DropdownBase {
       .applyOrNot(props.loading, _.loading(_))
       .applyOrNot(props.dropdownIcon, _.dropdownIcon(_))
       .applyOrNot(props.tooltip, _.tooltip(_))
-      .applyOrNot(props.emptyMessage, (c, p) => c.emptyMessage(props.emptyMessage.rawNode))
+      .applyOrNot(props.emptyMessage, (c, _) => c.emptyMessage(props.emptyMessage.rawNode))
       .applyOrNot(
         props.itemTemplate,
         (c, p) =>

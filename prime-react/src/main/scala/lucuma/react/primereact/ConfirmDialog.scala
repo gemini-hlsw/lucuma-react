@@ -73,7 +73,7 @@ object ConfirmDialog {
   // and uncomment the line below.
   // ConfirmDialogReturn(Callback(rawReturn.show()), Callback(rawReturn.hide()))
 
-  private val component = ScalaFnComponent[ConfirmDialog] { props =>
+  private val component = ScalaFnComponent[ConfirmDialog] { _ =>
     CConfirmDialog()
   }
 

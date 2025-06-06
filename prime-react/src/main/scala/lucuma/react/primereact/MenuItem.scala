@@ -16,10 +16,6 @@ trait MenuItem extends js.Object
 
 object MenuItem {
 
-  val MenuSeparator: MenuItem = new MenuItem {
-    val separator: Boolean = true
-  }
-
   trait Separator extends MenuItem {
     var separator: Boolean
   }

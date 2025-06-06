@@ -21,7 +21,7 @@ object DemoMain {
     val App =
       ScalaFnComponent
         .withHooks[Unit]
-        .useGlobalHotkeys(UseHotkeysProps(List("y", "p"), event => Callback.log("got it")))
+        .useGlobalHotkeys(UseHotkeysProps(List("y", "p"), _ => Callback.log("got it")))
         .render(_ => <.div("Hotkeys"))
 
     val container = Option(dom.document.getElementById("root")).getOrElse {

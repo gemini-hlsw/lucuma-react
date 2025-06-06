@@ -46,7 +46,7 @@ object Checkbox {
       .applyOrNot(props.tooltipOptions, (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions]))
       .applyOrNot(
         props.onChange.orElse(props.onChangeE),
-        (c, p) =>
+        (c, _) =>
           c.onChange((e: CheckboxChangeEvent) => changeHandler(e, e.checked.getOrElse(false)))
       )(
         props.modifiers.toTagMod

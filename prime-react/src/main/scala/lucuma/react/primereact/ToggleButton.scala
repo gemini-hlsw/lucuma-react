@@ -52,7 +52,7 @@ object ToggleButton:
     ScalaFnComponent
       .withHooks[ToggleButton]
       .withPropsChildren
-      .render { (props, children) =>
+      .render { (props, _) =>
         val fullCss =
           props.clazz.toOption.orEmpty |+|
             props.size.cls |+|

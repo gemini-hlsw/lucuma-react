@@ -79,7 +79,7 @@ extension (icon: Icon)
 extension [C <: js.Object, B <: StBuildingComponent[C]](b: B)
   def applyOrNot[A](a:                                     js.UndefOr[A], f: (B, A) => B): B = a.fold(b)(a => f(b, a))
 
-extension [A: Eq](list: List[SelectItem[A]] | SelectItemGroups[A])
+extension [A](list: List[SelectItem[A]] | SelectItemGroups[A])
   def toOptionsWithIndex: List[(SelectItem[A], Int)] = list match
     case options: List[SelectItem[A]] => options.zipWithIndex
     case groups: SelectItemGroups[A]  => groups.optionsWithIndex

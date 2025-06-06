@@ -13,7 +13,7 @@ import lucuma.react.resizeDetector.hooks.*
 case class HookDemo() extends ReactFnProps(HookDemo)
 
 object HookDemo
-    extends ReactFnComponent[HookDemo](props =>
+    extends ReactFnComponent[HookDemo](_ =>
       for
         resize <- useResizeDetector
         _      <- useEffect(Callback(println(resize)))

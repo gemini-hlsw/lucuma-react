@@ -5,7 +5,6 @@ package lucuma.react.primereact
 
 import cats.Eq
 import cats.derived.*
-import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*

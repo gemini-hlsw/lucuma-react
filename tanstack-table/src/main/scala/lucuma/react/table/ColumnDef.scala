@@ -931,6 +931,7 @@ object ColumnDef:
       p.columns = columns.map(_.toJs).toJSArray
       Group[T, TM, CM, TF, CF, FM](p)
         .applyOrNot(header, _.withHeader(_))
+        .applyOrNot(footer, _.withFooter(_))
         .applyOrNot(meta, _.withMeta(_))
         .applyOrNot(enableResizing, _.withEnableResizing(_))
         .applyWhen(autoEnableResizing, _.withEnableResizing(true))

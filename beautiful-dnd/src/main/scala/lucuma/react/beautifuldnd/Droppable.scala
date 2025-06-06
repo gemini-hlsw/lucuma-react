@@ -19,7 +19,7 @@ object Provided {
     Provided(
       TagMod.fn(_.addRefFn(provided.innerRef)),
       TagMod.fn(_.addAttrsObject(provided.droppableProps)),
-      js.|.undefOr2ops[Raw.React.Node](provided.placeholder).toOption.whenDefined(identity)
+      js.|.undefOr2ops[Raw.React.Node](provided.placeholder).toOption.whenDefined(using identity)
     )
 }
 
