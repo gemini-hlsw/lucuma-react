@@ -31,7 +31,7 @@ val kittensV         = "3.5.0"
 val lucumaTypedV     = "0.7.0"
 val munitScalacheckV = "1.1.0"
 val munitV           = "1.1.1"
-val scalaJsDomV      = "2.8.0"
+val scalaJsDomV      = "2.8.1"
 val scalaJsReactV    = "3.0.0-beta10"
 val utestV           = "0.8.9"
 
