@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.84"
+ThisBuild / tlBaseVersion       := "0.85"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 ThisBuild / scalacOptions ++= Seq(
@@ -28,7 +28,7 @@ val catsV            = "2.13.0"
 val disciplineMunitV = "2.0.0"
 val http4sV          = "0.23.30"
 val kittensV         = "3.5.0"
-val lucumaTypedV     = "0.7.0"
+val lucumaTypedV     = "0.8.0"
 val munitScalacheckV = "1.1.0"
 val munitV           = "1.1.1"
 val scalaJsDomV      = "2.8.1"
@@ -329,9 +329,6 @@ lazy val datepicker = project
   .settings(
     name := "lucuma-react-datepicker",
     Compile / scalacOptions += "-language:implicitConversions",
-    libraryDependencies ++= Seq(
-      "edu.gemini" %%% "lucuma-typed-react-datepicker" % lucumaTypedV
-    ),
     facadeSettings
   )
 
