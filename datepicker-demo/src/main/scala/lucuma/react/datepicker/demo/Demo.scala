@@ -5,26 +5,18 @@ package lucuma.react.datepicker.demo
 
 import japgolly.scalajs.react.*
 import lucuma.react.datepicker.*
-import lucuma.typed.reactDatepicker.components.ReactDatepicker
 import org.scalajs.dom
 
 import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneOffset
 import scala.scalajs.js
 
 import js.annotation.*
 
 @JSExportTopLevel("Demo")
 object Demo {
-  case class State(date: Option[LocalDate])
+  case class State(date: Option[Instant])
   object State {
-    def now(): State =
-      State(
-        Some(
-          LocalDate.from(Instant.now.atZone(ZoneOffset.UTC))
-        )
-      )
+    def now(): State = State(Some(Instant.now))
   }
 
   val component =
@@ -32,13 +24,15 @@ object Demo {
       .builder[Unit]
       .initialState(State.now())
       .render($ =>
-        ReactDatepicker(onChange =
-          (newValue, _) =>
-            Callback(println(newValue.asInstanceOf[DateOrRange].toLocalDateOpt)) >>
-              $.setState(State(newValue.asInstanceOf[DateOrRange].toLocalDateOpt))
+        Datepicker(
+          onChange = newValue =>
+            val optInstant = newValue.map(_.fromDatePickerJsDate)
+            Callback(println(optInstant)) >>
+              $.setState(State(optInstant))
+          ,
+          selected = $.state.date.map(_.toDatePickerJsDate),
+          dateFormat = "yyyy-MM-dd"
         )
-          .selected($.state.date.map(_.toJsDate).orNull)
-          .dateFormat("yyyy-MM-dd")
       )
       .build
 
