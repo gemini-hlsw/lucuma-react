@@ -3,6 +3,8 @@
 
 package lucuma.react
 
+import cats.syntax.all.*
+
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneOffset
@@ -41,11 +43,15 @@ package object datepicker:
     // See https://github.com/Hacker0x01/react-datepicker/issues/1787
     def toDatePickerJsDate: js.Date =
       val zdt: ZonedDateTime = ZonedDateTime.ofInstant(instant, ZoneOffset.UTC)
-      // init removes the Z timezone
-      new js.Date(js.Date.parse(zdt.toString.init))
+      zdt.toDatePickerJsDate
 
   extension (zdt: ZonedDateTime)
     // DatePicker only works in local timezone, so we trick it by adding the timezone offset.
     // See https://github.com/Hacker0x01/react-datepicker/issues/1787
+    // Also, DatePicker has a problem with dates before 1800 and after 9999, so we'll clamp the year
     def toDatePickerJsDate: js.Date =
-      zdt.toInstant.toDatePickerJsDate
+      val year    = zdt.getYear
+      val newYear = year.max(1800).min(9999)
+      val clamped = if year === newYear then zdt else zdt.withYear(newYear)
+      // init removes the Z timezone
+      new js.Date(js.Date.parse(clamped.toString.init))
