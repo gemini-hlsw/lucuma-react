@@ -52,6 +52,9 @@ case class Datepicker(
   def apply(mods: TagMod*) = addModifiers(mods)
 
 object Datepicker {
+  // Datepicker blows up with dates outside of these ranges.
+  val MinSupportedDate: js.Date = new js.Date(js.Date.parse("1800-01-01T00:00:00Z"))
+  val MaxSupportedDate: js.Date = new js.Date(js.Date.parse("9999-12-31T23:59:59"))
 
   @js.native
   @JSImport("react-datepicker", JSImport.Default)
@@ -82,8 +85,8 @@ object Datepicker {
     val r = (new js.Object).asInstanceOf[Props]
     r.onChange = (t, _) => dp.onChange(t.toOption).runNow()
     r.selected = dp.selected.orNull
-    dp.minDate.foreach(r.minDate = _)
-    dp.maxDate.foreach(r.maxDate = _)
+    r.minDate = dp.minDate.getOrElse(MinSupportedDate)
+    r.maxDate = dp.maxDate.getOrElse(MaxSupportedDate)
     dp.dateFormat.foreach(r.dateFormat = _)
     dp.readonly.foreach(r.readOnly = _)
     dp.className.foreach(v => r.className = v.htmlClass)
