@@ -21,7 +21,7 @@ private[primereact] trait SelectButtonBase {
   val value: GG[AA]
   val options: List[SelectItem[AA]]
   val id: js.UndefOr[String]
-  val multiple: js.UndefOr[Boolean]     // default: false
+  val multiple: js.UndefOr[Boolean] // default: false
   val disabled: js.UndefOr[Boolean]
   val unselectable: js.UndefOr[Boolean] // default: true
   val itemTemplate: js.UndefOr[SelectItem[AA] => VdomNode]

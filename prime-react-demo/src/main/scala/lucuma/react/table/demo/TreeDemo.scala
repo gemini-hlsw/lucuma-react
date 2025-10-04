@@ -36,7 +36,7 @@ object TreeDemo:
           )
         )
       )
-    )                             // Nodes
+    ) // Nodes
     .useState(Set.empty[Tree.Id]) // expandedGroups
     .render { (_, nodes, expandedGroups) =>
       Panel(header = "Tree")(

@@ -58,8 +58,8 @@ object Chart:
     ScalaFnComponent
       .withHooks[Props]
       .useRefToVdom[html.Element] // containerRef
-      .useRef(none[Chart_])       // chartRef
-      .useRef(false)              // isUnmounting
+      .useRef(none[Chart_]) // chartRef
+      .useRef(false) // isUnmounting
       .useEffectOnMountBy: (_, _, _, isUnmounting) =>
         CallbackTo(isUnmounting.set(true))
       .useLayoutEffectWithDepsBy((props, _, _, _) => (props.options, props.allowUpdate)):

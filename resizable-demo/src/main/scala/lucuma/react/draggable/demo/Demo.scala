@@ -101,8 +101,8 @@ object ResizeHandle {
   val jsComponent =
     component
       .cmapCtorProps[JsProps](x => Props(x.left)) // Change props from JS to Scala
-      .toJsComponent                              // Create a new, real JS component
-      .raw                                        // Leave the nice Scala wrappers behind and obtain the underlying JS value
+      .toJsComponent // Create a new, real JS component
+      .raw // Leave the nice Scala wrappers behind and obtain the underlying JS value
   def apply(left: Double) = jsComponent(JsProps(left))
 
 }
