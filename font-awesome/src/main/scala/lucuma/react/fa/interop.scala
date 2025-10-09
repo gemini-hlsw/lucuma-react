@@ -94,8 +94,7 @@ extension (abstractElement: AbstractElement)
         _.foreach: ch =>
           vdomBuilder.appendChild(js.typeOf(ch) match
             case "string" => ch.asInstanceOf[String]
-            case _        => go(ch.asInstanceOf[AbstractElement])
-          )
+            case _        => go(ch.asInstanceOf[AbstractElement]))
       vdomBuilder.render(ae.tag)
 
     VdomElement(go(abstractElement))
