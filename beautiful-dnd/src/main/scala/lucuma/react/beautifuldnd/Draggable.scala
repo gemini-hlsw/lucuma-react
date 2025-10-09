@@ -44,11 +44,11 @@ object Draggable {
       Provided(
         TagMod.fn(_.addRefFn(provided.innerRef)),
         TagMod.fn(_.addAttrsObject(provided.draggableProps, allowAttr = _ != "style")),
-        provided.draggableProps.style.toOption.whenDefined(
-          using draggableStyle => TagMod.fn(_.addStylesObject(draggableStyle))
+        provided.draggableProps.style.toOption.whenDefined(using
+          draggableStyle => TagMod.fn(_.addStylesObject(draggableStyle))
         ),
-        provided.dragHandleProps.toOption.whenDefined(
-          using dragHandleProps => TagMod.fn(_.addAttrsObject(dragHandleProps))
+        provided.dragHandleProps.toOption.whenDefined(using
+          dragHandleProps => TagMod.fn(_.addAttrsObject(dragHandleProps))
         )
       )
   }
