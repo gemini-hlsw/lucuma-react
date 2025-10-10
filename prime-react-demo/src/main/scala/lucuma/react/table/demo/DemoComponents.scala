@@ -688,7 +688,7 @@ object DemoComponents {
                 )(mouseEntered("TabMenu"))
               )
             ),
-            DemoControlsPanel(),
+            DemoControlsPanel(toastRef),
             TreeDemo(),
             Dialog(
               onHide = dialogOptions.modState(_.copy(visible = false)),
