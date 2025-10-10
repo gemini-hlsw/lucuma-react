@@ -21,7 +21,9 @@ import scala.scalajs.js.annotation.JSImport
 
 import scalajs.js
 
-case class DemoControlsPanel() extends ReactFnProps[DemoControlsPanel](DemoControlsPanel.component)
+case class DemoControlsPanel(
+  toastRef: ToastRef
+) extends ReactFnProps[DemoControlsPanel](DemoControlsPanel.component)
 
 object DemoControlsPanel {
   val startOffset = VdomAttr("startOffset")
@@ -69,7 +71,7 @@ object DemoControlsPanel {
     .useState("option-1") // for RadioButton
     .render {
       (
-        _,
+        props,
         inputText,
         inputTextarea,
         inputNumber,
@@ -91,6 +93,8 @@ object DemoControlsPanel {
         progressBar,
         radioButton
       ) =>
+        val toastRef = props.toastRef
+
         val options: List[SelectItem[Int]] =
           List(
             SelectItem(1, "Option 1"),
@@ -111,6 +115,17 @@ object DemoControlsPanel {
             SelectItemGroup(label = <.span("Even Numbers", ^.cls := "pi pi-bolt"),
                             options = List(SelectItem(2, "Option 2"), SelectItem(4, "Option 4"))
             )
+          )
+        )
+
+        val splitButtonMenuItems = List(
+          MenuItem.Item(label = "Item 1",
+                        icon = "pi pi-thumbs-up",
+                        command = toastRef.show(MessageItem(summary = "Item 1 Selected"))
+          ),
+          MenuItem.Item(label = "Item 2",
+                        icon = "pi pi-thumbs-down",
+                        command = toastRef.show(MessageItem(summary = "Item 2 Selected"))
           )
         )
 
@@ -329,6 +344,40 @@ object DemoControlsPanel {
                    onChange = nigelTufnel.setState,
                    strokeWidth = 5,
                    valueTemplate = "Vol: {value}"
+              ),
+              <.label("SplitButton",         ^.htmlFor := "split-button1", DemoStyles.FormFieldLabel),
+              <.div(
+                DemoStyles.FormField,
+                DemoStyles.HorizontalStack,
+                SplitButton(
+                  id = "split-button1",
+                  onClick = toastRef.show(MessageItem(summary = "Split button main action")),
+                  model = splitButtonMenuItems,
+                  label = "Vanilla",
+                  icon = "pi pi-sparkles",
+                  clazz = Css("main-class"),
+                  buttonClass = Css("button-class"),
+                  menuButtonClass = Css("menu-button-class"),
+                  tooltip = "Just a vanilla SplitButton"
+                ),
+                SplitButton(
+                  onClick = toastRef.show(MessageItem(summary = "Split button main action")),
+                  model = splitButtonMenuItems,
+                  label = "Large Rounded",
+                  icon = "pi pi-sparkles",
+                  size = Button.Size.Large,
+                  rounded = true,
+                  severity = Button.Severity.Success
+                ),
+                SplitButton(
+                  onClick = toastRef.show(MessageItem(summary = "Split button main action")),
+                  model = splitButtonMenuItems,
+                  label = "Small Outlined",
+                  icon = "pi pi-sparkles",
+                  size = Button.Size.Small,
+                  outlined = true,
+                  severity = Button.Severity.Danger
+                )
               ),
               <.label("SelectButton",        ^.htmlFor := "select-button", DemoStyles.FormFieldLabel),
               SelectButton(
