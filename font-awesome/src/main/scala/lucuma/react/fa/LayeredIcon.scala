@@ -39,8 +39,7 @@ case class LayeredIcon(
       case t: TagMod          => t
       case c: FontAwesomeIcon => c: VdomElement
       case c: TextLayer       => c: VdomElement
-      case c: CounterLayer    => c: VdomElement
-    )
+      case c: CounterLayer    => c: VdomElement)
   override def faClasses: Css                                                        = super.faClasses // For some reason this is necessary (?!?!?)
 
   def addClass(value:        Css)            = copy(clazz = clazz |+| value)

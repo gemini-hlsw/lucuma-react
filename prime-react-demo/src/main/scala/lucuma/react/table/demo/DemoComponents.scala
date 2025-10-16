@@ -92,12 +92,12 @@ object DemoComponents {
     ScalaFnComponent
       .withHooks[Unit]
       .useState(Toast.Position.TopRight) // toast position
-      .useState(DialogOptions.default)   // dialog options
-      .useState(false)                   // panel collapsed
-      .useState(SidebarOptions.default)  // sidebar options
-      .useState(0)                       // tabview activeIndex
-      .useState(0)                       // tabMenu activeIndex
-      .useState(4.0)                     // menu slider
+      .useState(DialogOptions.default) // dialog options
+      .useState(false) // panel collapsed
+      .useState(SidebarOptions.default) // sidebar options
+      .useState(0) // tabview activeIndex
+      .useState(0) // tabMenu activeIndex
+      .useState(4.0) // menu slider
       .usePopupMenuRef
       .useToastRef
       .useMessagesRef
@@ -688,7 +688,7 @@ object DemoComponents {
                 )(mouseEntered("TabMenu"))
               )
             ),
-            DemoControlsPanel(),
+            DemoControlsPanel(toastRef),
             TreeDemo(),
             Dialog(
               onHide = dialogOptions.modState(_.copy(visible = false)),
