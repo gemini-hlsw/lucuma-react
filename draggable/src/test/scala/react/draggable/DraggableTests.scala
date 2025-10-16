@@ -5,15 +5,15 @@ package lucuma.react
 
 package draggable
 
-import japgolly.scalajs.react.*
+import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.test.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.MouseEvent
 import utest.*
 
-object DraggableTests extends TestSuite {
+class DraggableTests extends TestSuite {
   val tests = Tests {
-    "render" - {
+    test("render") {
       val draggable = Draggable(Draggable.props(), <.div("Abc"))
       ReactTestUtils2.withRendered(draggable) { m =>
         val html =
@@ -22,7 +22,7 @@ object DraggableTests extends TestSuite {
         assert(m.outerHTML() == html)
       }
     }
-    "supportAllowAnyClick" - {
+    test("supportAllowAnyClick") {
       Draggable(Draggable.props(), <.div("Abc")).props.allowAnyClick.toOption ==> Some(false)
       val draggable =
         Draggable(Draggable.props(allowAnyClick = true), <.div("Abc"))
@@ -34,7 +34,7 @@ object DraggableTests extends TestSuite {
       }
       draggable.props.allowAnyClick.toOption ==> Some(true)
     }
-    "supportAxis" - {
+    test("supportAxis") {
       Draggable(Draggable.props(), <.div("Abc")).props.axis.toOption ==> Some("both")
       val draggable = Draggable(Draggable.props(axis = Axis.X), <.div("Abc"))
       ReactTestUtils2.withRendered(draggable) { m =>
@@ -45,10 +45,10 @@ object DraggableTests extends TestSuite {
       }
       draggable.props.axis.toOption ==> Some("x")
     }
-    "boundsDefault" - {
+    test("boundsDefault") {
       Draggable(Draggable.props(), <.div("Abc")).props.bounds.toOption ==> Some(false)
     }
-    "supportBounds1" - {
+    test("supportBounds1") {
       val draggable =
         Draggable(Draggable.props(bounds = FalseBounds), <.div("Abc"))
       ReactTestUtils2.withRendered(draggable) { m =>
@@ -59,7 +59,7 @@ object DraggableTests extends TestSuite {
       }
       draggable.props.bounds.toOption ==> Some(false)
     }
-    "supportBounds2" - {
+    test("supportBounds2") {
       val draggable =
         Draggable(Draggable.props(bounds = "bounds"), <.div("Abc"))
       ReactTestUtils2.withRendered(draggable) { m =>
@@ -70,7 +70,7 @@ object DraggableTests extends TestSuite {
       }
       draggable.props.bounds.toOption ==> Some("bounds")
     }
-    "supportBounds3" - {
+    test("supportBounds3") {
       val draggable =
         Draggable(Draggable.props(bounds = DraggableBounds(1, 2, 3, 4)), <.div("Abc"))
       ReactTestUtils2.withRendered(draggable) { m =>
@@ -82,7 +82,7 @@ object DraggableTests extends TestSuite {
       draggable.props.bounds.toOption
         .map(_.asInstanceOf[DraggableBounds].left) ==> Some(1)
     }
-    "supportCancel" - {
+    test("supportCancel") {
       Draggable(Draggable.props(), <.div("Abc")).props.cancel.toOption ==> None
       val draggable =
         Draggable(Draggable.props(cancel = "cancel"), <.div("Abc"))
@@ -94,7 +94,7 @@ object DraggableTests extends TestSuite {
       }
       draggable.props.cancel.toOption ==> Some("cancel")
     }
-    "supportDefaultClassName" - {
+    test("supportDefaultClassName") {
       Draggable(Draggable.props(), <.div("Abc")).props.defaultClassName.toOption ==> Some(
         "react-draggable"
       )
@@ -108,7 +108,7 @@ object DraggableTests extends TestSuite {
       }
       draggable.props.defaultClassName.toOption ==> Some("draggable")
     }
-    "supportDefaultClassNameDragging" - {
+    test("supportDefaultClassNameDragging") {
       Draggable(Draggable.props(), <.div("Abc")).props.defaultClassNameDragging.toOption ==> Some(
         "react-draggable-dragging"
       )
@@ -122,7 +122,7 @@ object DraggableTests extends TestSuite {
       }
       draggable.props.defaultClassNameDragging.toOption ==> Some("draggable")
     }
-    "supportDefaultClassNameDragged" - {
+    test("supportDefaultClassNameDragged") {
       Draggable(Draggable.props(), <.div("Abc")).props.defaultClassNameDragged.toOption ==> Some(
         "react-draggable-dragged"
       )
@@ -136,7 +136,7 @@ object DraggableTests extends TestSuite {
       }
       draggable.props.defaultClassNameDragged.toOption ==> Some("draggable")
     }
-    "supportDefaultPosition" - {
+    test("supportDefaultPosition") {
       Draggable(Draggable.props(), <.div("Abc")).props.defaultPosition.toOption
         .map(_.x) ==> Some(0)
       Draggable(Draggable.props(), <.div("Abc")).props.defaultPosition.toOption
@@ -152,7 +152,7 @@ object DraggableTests extends TestSuite {
       draggable.props.defaultPosition.toOption.map(_.x) ==> Some(1)
       draggable.props.defaultPosition.toOption.map(_.y) ==> Some(2)
     }
-    "supportDisabled" - {
+    test("supportDisabled") {
       Draggable(Draggable.props(), <.div("Abc")).props.disabled.toOption ==> Some(false)
       val draggable = Draggable(Draggable.props(disabled = true), <.div("Abc"))
       ReactTestUtils2.withRendered(draggable) { m =>
@@ -163,7 +163,7 @@ object DraggableTests extends TestSuite {
       }
       draggable.props.disabled.toOption ==> Some(true)
     }
-    "supportGrid" - {
+    test("supportGrid") {
       Draggable(Draggable.props(), <.div("Abc")).props.grid.toOption ==> None
       val draggable =
         Draggable(Draggable.props(grid = Grid(1, 2)), <.div("Abc"))
@@ -176,7 +176,7 @@ object DraggableTests extends TestSuite {
       draggable.props.grid.toOption.map(_.apply(0)) ==> Some(1)
       draggable.props.grid.toOption.map(_.apply(1)) ==> Some(2)
     }
-    "supportHandle" - {
+    test("supportHandle") {
       Draggable(Draggable.props(), <.div("Abc")).props.handle.toOption ==> None
       val draggable =
         Draggable(Draggable.props(handle = "handle"), <.div("Abc"))
@@ -188,24 +188,24 @@ object DraggableTests extends TestSuite {
       }
       draggable.props.handle.toOption ==> Some("handle")
     }
-    "supportOffsetParent" - {
+    test("supportOffsetParent") {
       Draggable(Draggable.props(), <.div("Abc")).props.offsetParent.toOption ==> None
     }
-    "supportOnMouseDown" -
+    test("supportOnMouseDown"):
       Draggable(Draggable.props(onMouseDown = (_: MouseEvent) => Callback.empty), <.div("Abc"))
-    "supportOnStart" -
+    test("supportOnStart"):
       Draggable(Draggable.props(onStart = (_: MouseEvent, _: DraggableData) => Callback.empty),
                 <.div("Abc")
       )
-    "supportOnDrag" -
+    test("supportOnDrag"):
       Draggable(Draggable.props(onDrag = (_: MouseEvent, _: DraggableData) => Callback.empty),
                 <.div("Abc")
       )
-    "supportOnStop" -
+    test("supportOnStop"):
       Draggable(Draggable.props(onStop = (_: MouseEvent, _: DraggableData) => Callback.empty),
                 <.div("Abc")
       )
-    "supportPosition" - {
+    test("supportPosition") {
       Draggable(Draggable.props(), <.div("Abc")).props.position.toOption ==> None
       val draggable =
         Draggable(Draggable.props(position = ControlPosition(1, 2)), <.div("Abc"))
@@ -218,7 +218,7 @@ object DraggableTests extends TestSuite {
       draggable.props.position.toOption.map(_.x) ==> Some(1)
       draggable.props.position.toOption.map(_.y) ==> Some(2)
     }
-    "supportPositionOffset" - {
+    test("supportPositionOffset") {
       Draggable(Draggable.props(), <.div("Abc")).props.positionOffset.toOption ==> None
       val draggable =
         Draggable(Draggable.props(positionOffset = PositionOffsetControlPosition("10%", "20%")),

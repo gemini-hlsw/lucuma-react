@@ -7,7 +7,7 @@ import japgolly.scalajs.react.Reusable
 import japgolly.scalajs.react.test.*
 import utest.*
 
-object ChartTest extends TestSuite {
+class ChartTest extends TestSuite {
   val tests = Tests {
     test("render") {
       val chart = Chart(Reusable.always(Highcharts.defaultOptions))

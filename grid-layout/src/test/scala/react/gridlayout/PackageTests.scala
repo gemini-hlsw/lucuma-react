@@ -9,7 +9,7 @@ import utest.*
 
 import scala.language.implicitConversions
 
-object PackageTests extends TestSuite {
+class PackageTests extends TestSuite {
 
   val tests = Tests {
     test("layouItem") {
