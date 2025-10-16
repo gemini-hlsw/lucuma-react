@@ -3,7 +3,7 @@
     "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration": "2.0.7",
     "@floating-ui/react": "^0.27.8",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@react-hook/resize-observer": "^2.0.2",
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "v3.13.12",
