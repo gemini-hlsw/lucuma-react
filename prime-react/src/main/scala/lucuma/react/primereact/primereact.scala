@@ -13,6 +13,7 @@ import lucuma.react.common.*
 import lucuma.react.fa.FontAwesomeIcon
 import lucuma.react.fa.LayeredIcon
 import lucuma.typed.StBuildingComponent
+import lucuma.typed.primereact.apiApiMod.InputStyleType
 import lucuma.typed.primereact.primereactStrings.*
 
 import scalajs.js
@@ -41,13 +42,14 @@ enum DialogPosition(
   case TopLeft     extends DialogPosition(`top-left`)
   case TopRight    extends DialogPosition(`top-right`)
 
-case class ConfirmDialogReturn(
-  show: Callback,
-  hide: Callback
-)
+case class ConfirmDialogReturn(show: Callback, hide: Callback)
 
 enum ConfirmDialogHideParm:
   case Accept, Reject, Cancel
+
+enum InputStyle(val toJs: InputStyleType):
+  case Outlined extends InputStyle(InputStyleType.outlined)
+  case Filled   extends InputStyle(InputStyleType.filled)
 
 object ConfirmDialogHideParm {
   def fromString(s: String): ConfirmDialogHideParm =
