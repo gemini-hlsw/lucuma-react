@@ -14,7 +14,6 @@ import scalajs.js
 case class RadioButton[A](
   value:          A,
   id:             js.UndefOr[String] = js.undefined,
-  inputId:        js.UndefOr[String] = js.undefined, // id of the input element
   name:           js.UndefOr[String] = js.undefined, // Name of the radio button
   disabled:       js.UndefOr[Boolean] = js.undefined,
   clazz:          js.UndefOr[Css] = js.undefined,
@@ -37,8 +36,7 @@ object RadioButton {
   private[primereact] val component = ScalaFnComponent[RadioButton[Any]] { props =>
     CRadioButton
       .value(props.value)
-      .applyOrNot(props.id, _.id(_))
-      .applyOrNot(props.inputId, _.inputId(_))
+      .applyOrNot(props.id, _.inputId(_))
       .applyOrNot(props.name, _.name(_))
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.checked, _.checked(_))
