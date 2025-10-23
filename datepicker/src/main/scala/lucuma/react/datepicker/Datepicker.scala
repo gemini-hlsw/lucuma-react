@@ -33,6 +33,7 @@ case class DatepickerRef(
 case class Datepicker(
   onChange:          Option[js.Date] => Callback,
   selected:          Option[js.Date],
+  id:                js.UndefOr[String] = js.undefined,
   minDate:           js.UndefOr[js.Date] = js.undefined,
   maxDate:           js.UndefOr[js.Date] = js.undefined,
   dateFormat:        js.UndefOr[String] = js.undefined,
@@ -71,6 +72,7 @@ object Datepicker {
     var onChange
       : js.Function2[js.UndefOr[js.Date], js.UndefOr[ReactEventFrom[js.Any & Element]], Unit]
     var selected: js.UndefOr[js.Date | Null]
+    var id: js.UndefOr[String]
     var minDate: js.UndefOr[js.Date]
     var maxDate: js.UndefOr[js.Date]
     var dateFormat: js.UndefOr[String]
@@ -87,6 +89,7 @@ object Datepicker {
     r.selected = dp.selected.orNull
     r.minDate = dp.minDate.getOrElse(MinSupportedDate)
     r.maxDate = dp.maxDate.getOrElse(MaxSupportedDate)
+    dp.id.foreach(r.id = _)
     dp.dateFormat.foreach(r.dateFormat = _)
     dp.readonly.foreach(r.readOnly = _)
     dp.className.foreach(v => r.className = v.htmlClass)

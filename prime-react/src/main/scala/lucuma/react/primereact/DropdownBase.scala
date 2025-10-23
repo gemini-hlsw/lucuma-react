@@ -64,7 +64,7 @@ object DropdownBase {
       .value(props.getter)
       .options(props.optionsWithIndex.raw)
       .onChange(changeHandler)
-      .applyOrNot(props.id, _.id(_))
+      .applyOrNot(props.id, _.inputId(_))
       .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.panelClass, (c, p) => c.panelClassName(p.htmlClass))
       .applyOrNot(props.showClear, _.showClear(_))
