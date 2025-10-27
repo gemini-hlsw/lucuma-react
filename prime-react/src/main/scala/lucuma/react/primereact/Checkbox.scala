@@ -8,6 +8,7 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.typed.primereact.checkboxCheckboxMod.CheckboxChangeEvent
 import lucuma.typed.primereact.components.Checkbox as CCheckbox
+import lucuma.typed.primereact.primereactStrings
 import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipOptions as CTooltipOptions
 import org.scalajs.dom.*
 
@@ -23,6 +24,7 @@ case class Checkbox(
   tooltipOptions: js.UndefOr[TooltipOptions] = js.undefined,
   onChange:       js.UndefOr[Boolean => Callback] = js.undefined,
   onChangeE:      js.UndefOr[(Boolean, ReactEventFrom[Element]) => Callback] = js.undefined,
+  variant:        js.UndefOr[Checkbox.Variant] = js.undefined,
   modifiers:      Seq[TagMod] = Seq.empty
 ) extends ReactFnProps[Checkbox](Checkbox.component) {
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
@@ -31,6 +33,10 @@ case class Checkbox(
 }
 
 object Checkbox {
+  enum Variant(val toJs: primereactStrings.outlined | primereactStrings.filled):
+    case Outlined extends Variant(primereactStrings.outlined)
+    case Filled   extends Variant(primereactStrings.filled)
+
   private val component = ScalaFnComponent[Checkbox] { props =>
     val changeHandler: (CheckboxChangeEvent, Boolean) => Callback =
       (e, b) =>
@@ -48,7 +54,8 @@ object Checkbox {
         props.onChange.orElse(props.onChangeE),
         (c, _) =>
           c.onChange((e: CheckboxChangeEvent) => changeHandler(e, e.checked.getOrElse(false)))
-      )(
+      )
+      .applyOrNot(props.variant, (c, p) => c.variant(p.toJs))(
         props.modifiers.toTagMod
       )
   }
