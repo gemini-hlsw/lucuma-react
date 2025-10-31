@@ -26,7 +26,7 @@ ThisBuild / mergifyPrRules +=
 
 val catsV            = "2.13.0"
 val disciplineMunitV = "2.0.0"
-val http4sV          = "0.23.32"
+val http4sV          = "0.23.33"
 val kittensV         = "3.5.0"
 val lucumaTypedV     = "0.8.0"
 val munitScalacheckV = "1.2.0"
