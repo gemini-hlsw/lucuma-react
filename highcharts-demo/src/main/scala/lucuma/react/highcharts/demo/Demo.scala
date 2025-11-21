@@ -7,15 +7,10 @@ import japgolly.scalajs.react.ReactDOMClient
 import japgolly.scalajs.react.Reusable
 import japgolly.scalajs.react.callback.Callback
 import lucuma.react.highcharts.Chart
-import lucuma.react.highcharts.Highcharts
-import lucuma.react.highcharts.WrapProceed
 import lucuma.react.highcharts.implicits.*
-import lucuma.react.highcharts.mods.seriesLabel.SeriesLabelPoint
-import lucuma.react.highcharts.mods.seriesLabel.SeriesLabelSeries
-import lucuma.react.highcharts.seriesLabel
 import lucuma.typed.highcharts.highchartsStrings.areaspline
+import lucuma.typed.highcharts.mod as Highcharts
 import lucuma.typed.highcharts.mod.AxisTypeValue
-import lucuma.typed.highcharts.mod.CSSObject
 import lucuma.typed.highcharts.mod.Chart_
 import lucuma.typed.highcharts.mod.CreditsOptions
 import lucuma.typed.highcharts.mod.CursorValue
@@ -24,21 +19,17 @@ import lucuma.typed.highcharts.mod.Options
 import lucuma.typed.highcharts.mod.PlotAreasplineOptions
 import lucuma.typed.highcharts.mod.PlotOptions
 import lucuma.typed.highcharts.mod.PlotSeriesOptions
-import lucuma.typed.highcharts.mod.Point
 import lucuma.typed.highcharts.mod.PointMarkerOptionsObject
 import lucuma.typed.highcharts.mod.PointOptionsObject
-import lucuma.typed.highcharts.mod.PositionObject
 import lucuma.typed.highcharts.mod.Series
 import lucuma.typed.highcharts.mod.SeriesAreasplineOptions
 import lucuma.typed.highcharts.mod.SeriesClickEventObject
 import lucuma.typed.highcharts.mod.SeriesEventsOptionsObject
-import lucuma.typed.highcharts.mod.SeriesLabelOptionsObject
 import lucuma.typed.highcharts.mod.SeriesOptionsType
 import lucuma.typed.highcharts.mod.SeriesStatesHoverOptionsObject
 import lucuma.typed.highcharts.mod.SeriesStatesOptionsObject
 import lucuma.typed.highcharts.mod.TitleOptions
 import lucuma.typed.highcharts.mod.TooltipOptions
-import lucuma.typed.highcharts.mod.TooltipPositionerCallbackFunction
 import lucuma.typed.highcharts.mod.TooltipShapeValue
 import lucuma.typed.highcharts.mod.XAxisOptions
 import lucuma.typed.highcharts.mod.XAxisPlotBandsLabelOptions
@@ -48,57 +39,16 @@ import lucuma.typed.highcharts.mod.YAxisOptions
 import lucuma.typed.highcharts.mod.YAxisTitleOptions
 import org.scalajs.dom
 
-import scala.annotation.nowarn
 import scala.scalajs.js
 
 import js.annotation.*
 import js.JSConverters.*
-
-// Reproducing https://jsfiddle.net/rpiaggio/xdz4pLg9/105/
 
 @JSExportTopLevel("Demo")
 object Demo {
 
   @JSExport
   def main(): Unit = {
-
-    // Enable series-label Mod
-    seriesLabel.enable
-
-    // we need the prototype of the series mod Chart!
-    Highcharts.wrapThis(
-      Highcharts.Chart.asInstanceOf[js.Dynamic].prototype,
-      "drawSeriesLabels",
-      (chart: Chart_, proceed: WrapProceed) => {
-        // chart should be of a subtype of Chart_ specific to series-label mod...
-        // https://github.com/highcharts/highcharts/blob/master/ts/modules/series-label.src.ts
-        // For the moment, we only make the Series and Point specific, which suffices for our use.
-
-        proceed.apply(chart)
-
-        val plotTop  = chart.plotTop
-        val plotLeft = chart.plotLeft
-        val height   =
-          chart.yAxis(0).asInstanceOf[js.Dynamic].height.asInstanceOf[Double]
-        val series   = chart.series.asInstanceOf[js.Array[SeriesLabelSeries]]
-
-        series.foreach { s =>
-          val left        = s.data(0).asInstanceOf[SeriesLabelPoint].plotX.toOption.get
-          val right       =
-            s.data(s.data.length - 1).asInstanceOf[SeriesLabelPoint].plotX.toOption.get
-          val center      = (right - left) / 2
-          val labelHeight = s.labelBySeries
-            .map(_.attr("height").asInstanceOf[Double] / 2)
-            .getOrElse(0.0)
-
-          s.labelBySeries.foreach(
-            _.attr("x", (plotLeft + left + center - labelHeight).toString)
-              .attr("y", (height + plotTop - 20).toString)
-              .attr("rotation", "-90")
-          )
-        }
-      }
-    )
 
     val container = Option(dom.document.getElementById("root")).getOrElse {
       val elem = dom.document.createElement("div")
@@ -107,28 +57,6 @@ object Demo {
       elem
     }
 
-    val tooltipPositioner
-      : TooltipPositionerCallbackFunction = // https://www.highcharts.com/forum/viewtopic.php?t=41971
-      (tooltip, _, labelHeight, _) =>
-        Option(tooltip.chart.hoverPoint.asInstanceOf[Point]).map { point =>
-          val s = point.series
-
-          val left   = s.data(0).asInstanceOf[SeriesLabelPoint].plotX.toOption.get
-          val right  =
-            s.data(s.data.length - 1).asInstanceOf[SeriesLabelPoint].plotX.toOption.get
-          val center = (right - left) / 2
-          // Assumes even X spacing (and odd number of points)
-          val y      = s
-            .data((s.data.length / 2).toInt)
-            .asInstanceOf[SeriesLabelPoint]
-            .plotY
-            .toOption
-            .get - labelHeight
-
-          PositionObject(left + center, y)
-        }.get
-
-    @nowarn
     val options = Options()
       .setTitle(TitleOptions().setText(""))
       .setLegend(LegendOptions().setEnabled(false))
@@ -140,7 +68,6 @@ object Demo {
           .setSnap(0)
           .setAnimation(false)
           .setShape(TooltipShapeValue.rect)
-          .setPositioner(tooltipPositioner)
       )
       .setXAxis(
         XAxisOptions()
@@ -188,10 +115,6 @@ object Demo {
           .setAreaspline(
             PlotAreasplineOptions()
               .setTrackByArea(true)
-              .setLabel(
-                SeriesLabelOptionsObject()
-                  .setStyle(CSSObject().setColor("black"))
-              )
           )
           .setSeries(
             PlotSeriesOptions()
@@ -201,7 +124,6 @@ object Demo {
                 SeriesStatesOptionsObject()
                   .setHover(SeriesStatesHoverOptionsObject().setEnabled(false))
               )
-              // .setOpacity(0.5)
               .setCursor(CursorValue.pointer)
               .setEvents(
                 SeriesEventsOptionsObject()
@@ -211,7 +133,7 @@ object Demo {
       )
       .setSeries(
         List(
-          SeriesAreasplineOptions(areaspline, js.undefined)
+          SeriesAreasplineOptions((), (), areaspline)
             .setName("Observation-1")
             .setData(
               List(
@@ -222,7 +144,7 @@ object Demo {
                 (1584655240000.0, 14.0)
               )
             ),
-          SeriesAreasplineOptions(areaspline, js.undefined)
+          SeriesAreasplineOptions((), (), areaspline)
             .setName("Observation-2")
             .setData(
               List(
@@ -250,7 +172,10 @@ object Demo {
 
     ReactDOMClient
       .createRoot(container)
-      .render(Chart(Reusable.always(options), onCreate = onCreate).toUnmounted)
+      .render:
+        Chart(Reusable.always(options), onCreate = onCreate)
+          .withModules(Chart.Module.SeriesLabel)
+          .toUnmounted
 
   }
 }
