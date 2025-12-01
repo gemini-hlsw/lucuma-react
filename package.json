@@ -24,7 +24,7 @@
     "react-markdown": "10.1.0",
     "react-resizable": "^3.0.5",
     "react-table": "^7.8.0",
-    "react-virtuoso": "^4.15.0",
+    "react-virtuoso": "^4.16.1",
     "rehype-katex": "^7.0.1",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
