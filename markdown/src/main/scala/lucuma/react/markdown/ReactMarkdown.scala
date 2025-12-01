@@ -5,7 +5,6 @@ package lucuma.react.markdown
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.*
-import lucuma.react.common.Css
 import lucuma.react.common.GenericFnComponentPA
 import org.http4s.Uri
 
@@ -61,7 +60,6 @@ object RehypePlugin {
 
 case class ReactMarkdown(
   content:                js.UndefOr[String],
-  clazz:                  js.UndefOr[Css] = js.undefined,
   urlTransform:           js.UndefOr[Uri => Uri] = js.undefined,
   remarkPlugins:          js.UndefOr[List[RemarkPlugin]] = js.undefined,
   rehypePlugins:          js.UndefOr[List[RehypePlugin]] = js.undefined,
@@ -83,25 +81,22 @@ object ReactMarkdown {
   @js.native
   trait Props extends js.Object {
     var children: js.UndefOr[String]
-    var className: js.UndefOr[String]
     var urlTransform: js.UndefOr[js.Function1[String, String]]
     var remarkPlugins: js.UndefOr[js.Array[js.Object]]
     var rehypePlugins: js.UndefOr[js.Array[js.Object]]
   }
 
   protected def props(p: ReactMarkdown): Props =
-    rawprops(p.content, p.clazz, p.urlTransform, p.remarkPlugins, p.rehypePlugins)
+    rawprops(p.content, p.urlTransform, p.remarkPlugins, p.rehypePlugins)
 
   protected def rawprops(
     content:       js.UndefOr[String],
-    clazz:         js.UndefOr[Css],
     urlTransform:  js.UndefOr[Uri => Uri],
     remarkPlugins: js.UndefOr[List[RemarkPlugin]],
     rehypePlugins: js.UndefOr[List[RehypePlugin]]
   ): Props = {
     val p = (new js.Object).asInstanceOf[Props]
     content.foreach(v => p.children = v)
-    clazz.foreach(v => p.className = v.htmlClass)
     urlTransform.foreach(v =>
       p.urlTransform =
         ((u: String) => v(Uri.unsafeFromString(u)).toString()): js.Function1[String, String]
