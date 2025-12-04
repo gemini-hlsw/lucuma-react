@@ -33,7 +33,8 @@ case class ToastRef(
 case class Toast(
   position:   js.UndefOr[Toast.Position] = js.undefined, // default: TopRight
   modifiers:  Seq[TagMod] = Seq.empty,
-  baseZIndex: js.UndefOr[Int] = js.undefined
+  baseZIndex: js.UndefOr[Int] = js.undefined,
+  appendTo:   js.UndefOr[String] = js.undefined          // "self" or "body"
 ) extends GenericComponentPAF[ToastProps, Toast, Facade]:
   override protected def cprops: ToastProps                                              = Toast.props(this)
   override protected val component: ComponentWithFacade[ToastProps, Null, Facade, Props] =
@@ -66,12 +67,14 @@ object Toast {
   trait ToastProps extends js.Object {
     var position: js.UndefOr[String] = js.native
     var baseZIndex: js.UndefOr[Int]  = js.native
+    var appendTo: js.UndefOr[String] = js.native
   }
 
   def props(t: Toast): ToastProps = {
     val r = (new js.Object).asInstanceOf[ToastProps]
     t.position.foreach(v => r.position = v.value)
     t.baseZIndex.foreach(v => r.baseZIndex = v)
+    t.appendTo.foreach(v => r.appendTo = v)
     r
   }
 
