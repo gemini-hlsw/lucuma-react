@@ -10,6 +10,7 @@ import japgolly.scalajs.react.CtorType.Props
 import japgolly.scalajs.react.component.Js.ComponentWithFacade
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
+import org.scalajs.dom
 
 import scalajs.js.annotation.JSImport
 import scalajs.js
@@ -34,9 +35,10 @@ case class Toast(
   position:   js.UndefOr[Toast.Position] = js.undefined, // default: TopRight
   modifiers:  Seq[TagMod] = Seq.empty,
   baseZIndex: js.UndefOr[Int] = js.undefined,
-  appendTo:   js.UndefOr[String] = js.undefined          // "self" or "body"
+  appendTo:   js.UndefOr[String | dom.Element] = js.undefined
 ) extends GenericComponentPAF[ToastProps, Toast, Facade]:
-  override protected def cprops: ToastProps                                              = Toast.props(this)
+  override protected def cprops: ToastProps                                              =
+    Toast.props(this)
   override protected val component: ComponentWithFacade[ToastProps, Null, Facade, Props] =
     Toast.component
   override def addModifiers(modifiers: Seq[TagMod]): Toast                               =
@@ -65,9 +67,9 @@ object Toast {
 
   @js.native
   trait ToastProps extends js.Object {
-    var position: js.UndefOr[String] = js.native
-    var baseZIndex: js.UndefOr[Int]  = js.native
-    var appendTo: js.UndefOr[String] = js.native
+    var position: js.UndefOr[String]               = js.native
+    var baseZIndex: js.UndefOr[Int]                = js.native
+    var appendTo: js.UndefOr[String | dom.Element] = js.native
   }
 
   def props(t: Toast): ToastProps = {
