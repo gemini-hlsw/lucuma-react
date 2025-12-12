@@ -16,7 +16,6 @@ import lucuma.typed.primereact.primereactStrings.focus
 import lucuma.typed.primereact.primereactStrings.hover
 import lucuma.typed.primereact.primereactStrings.left
 import lucuma.typed.primereact.primereactStrings.right
-import lucuma.typed.primereact.primereactStrings.self
 import lucuma.typed.primereact.primereactStrings.top
 import lucuma.typed.primereact.tooltipTooltipoptionsMod.TooltipEvent
 import org.scalajs.dom.HTMLElement
@@ -30,7 +29,7 @@ import scalajs.js
 // `Tooltip.Fragment` provides a convenient shorthand for when you want to use a tooltip with a single element.
 //   It can be used with the syntax: <HTMLElement>.withTooltip(<options>...)
 case class Tooltip(
-  appendTo:       js.UndefOr[Tooltip.AppendTo] = js.undefined,
+  appendTo:       js.UndefOr[AppendTo] = js.undefined,
   at:             js.UndefOr[String] = js.undefined,
   autoHide:       js.UndefOr[Boolean] = js.undefined,          // default: true
   autoZIndex:     js.UndefOr[Boolean] = js.undefined,          // default: true
@@ -67,10 +66,6 @@ case class Tooltip(
 }
 
 object Tooltip:
-  enum AppendTo(val toJs: self | HTMLElement):
-    case Self                          extends AppendTo(self)
-    case Element(element: HTMLElement) extends AppendTo(element)
-
   enum Event(val toJs: hover | focus | both):
     case Hover extends Event(hover)
     case Focus extends Event(focus)
@@ -132,7 +127,7 @@ object Tooltip:
           )
 
   case class Fragment(
-    appendTo:       js.UndefOr[Tooltip.AppendTo] = js.undefined,
+    appendTo:       js.UndefOr[AppendTo] = js.undefined,
     at:             js.UndefOr[String] = js.undefined,
     autoHide:       js.UndefOr[Boolean] = js.undefined,          // default: true
     autoZIndex:     js.UndefOr[Boolean] = js.undefined,          // default: true
