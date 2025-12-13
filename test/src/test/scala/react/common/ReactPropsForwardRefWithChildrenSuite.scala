@@ -35,13 +35,11 @@ class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite:
     assertEquals(ref, None)
     assertEquals(props, PropsWithChildren())
     assertEquals(children.count, 1)
-    ReactTestUtils2.withRendered(p.toUnmounted) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div></div>""")
+    ReactTestUtils.withRenderedSync(p.toUnmounted) { mountNode =>
+      mountNode.outerHTML.assert("""<div></div>""")
     }
-    ReactTestUtils2.withRendered(u) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div><div></div></div>""")
+    ReactTestUtils.withRenderedSync(u) { mountNode =>
+      mountNode.outerHTML.assert("""<div><div></div></div>""")
     }
 
   test("propsWithChildren.withKey"):
@@ -55,13 +53,11 @@ class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite:
     assertEquals(ref, None)
     assertEquals(props, PropsWithChildren())
     assertEquals(children.count, 1)
-    ReactTestUtils2.withRendered(p.toUnmounted) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div></div>""")
+    ReactTestUtils.withRenderedSync(p.toUnmounted) { mountNode =>
+      mountNode.outerHTML.assert("""<div></div>""")
     }
-    ReactTestUtils2.withRendered(u) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div><div></div></div>""")
+    ReactTestUtils.withRenderedSync(u) { mountNode =>
+      mountNode.outerHTML.assert("""<div><div></div></div>""")
     }
 
   test("propsWithChildren.withRef"):
@@ -77,13 +73,11 @@ class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite:
     assertEquals(ref.map(_.raw), Some(r.raw))
     assertEquals(props, PropsWithChildren())
     assertEquals(children.count, 1)
-    ReactTestUtils2.withRendered(pr.toUnmounted) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div></div>""")
+    ReactTestUtils.withRenderedSync(pr.toUnmounted) { mountNode =>
+      mountNode.outerHTML.assert("""<div></div>""")
     }
-    ReactTestUtils2.withRendered(u) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div><div></div></div>""")
+    ReactTestUtils.withRenderedSync(u) { mountNode =>
+      mountNode.outerHTML.assert("""<div><div></div></div>""")
     }
 
   test("propsWithChildren.withRef.withKey"):
@@ -99,11 +93,9 @@ class ReactPropsForwardRefWithChildrenSuite extends munit.FunSuite:
     assertEquals(ref.map(_.raw), Some(r.raw))
     assertEquals(props, PropsWithChildren())
     assertEquals(children.count, 1)
-    ReactTestUtils2.withRendered(pr.toUnmounted) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div></div>""")
+    ReactTestUtils.withRenderedSync(pr.toUnmounted) { mountNode =>
+      mountNode.outerHTML.assert("""<div></div>""")
     }
-    ReactTestUtils2.withRendered(u) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div><div></div></div>""")
+    ReactTestUtils.withRenderedSync(u) { mountNode =>
+      mountNode.outerHTML.assert("""<div><div></div></div>""")
     }
