@@ -52,7 +52,7 @@ object TooltipOptions:
   val ShowOnDisabled: TooltipOptions = TooltipOptions(showOnDisabled = true)
 
   def apply(
-    appendTo:       js.UndefOr[Tooltip.AppendTo] = js.undefined,
+    appendTo:       js.UndefOr[AppendTo] = js.undefined,
     at:             js.UndefOr[String] = js.undefined,
     autoHide:       js.UndefOr[Boolean] = js.undefined,          // default: true
     autoZIndex:     js.UndefOr[Boolean] = js.undefined,          // default: true

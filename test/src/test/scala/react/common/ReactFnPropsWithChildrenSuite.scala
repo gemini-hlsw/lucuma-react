@@ -24,13 +24,11 @@ class ReactFnPropsWithChildrenSuite extends munit.FunSuite:
     assertEquals(props, PropsWithChildren())
     assertEquals(children.count, 1)
 
-    ReactTestUtils2.withRendered(p.toUnmounted) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div></div>""")
+    ReactTestUtils.withRenderedSync(p.toUnmounted) { mountNode =>
+      mountNode.outerHTML.assert("""<div></div>""")
     }
-    ReactTestUtils2.withRendered(u) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div><div></div></div>""")
+    ReactTestUtils.withRenderedSync(u) { mountNode =>
+      mountNode.outerHTML.assert("""<div><div></div></div>""")
     }
 
   test("propsWithChildren.withKey"):
@@ -42,11 +40,9 @@ class ReactFnPropsWithChildrenSuite extends munit.FunSuite:
     assertEquals(key, Some("key": FacadeExports.Key))
     assertEquals(props, PropsWithChildren())
     assertEquals(children.count, 1)
-    ReactTestUtils2.withRendered(p.toUnmounted) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div></div>""")
+    ReactTestUtils.withRenderedSync(p.toUnmounted) { mountNode =>
+      mountNode.outerHTML.assert("""<div></div>""")
     }
-    ReactTestUtils2.withRendered(u) { mountNode =>
-      val html = mountNode.outerHTML()
-      assertEquals(html, """<div><div></div></div>""")
+    ReactTestUtils.withRenderedSync(u) { mountNode =>
+      mountNode.outerHTML.assert("""<div><div></div></div>""")
     }

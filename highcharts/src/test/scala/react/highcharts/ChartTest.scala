@@ -12,13 +12,14 @@ class ChartTest extends TestSuite {
   val tests = Tests {
     test("render") {
       val chart = Chart(Reusable.always(Highcharts.defaultOptions))
-      ReactTestUtils2.withRendered(chart.toUnmounted) { m =>
-        val html           = m.outerHTML()
+      ReactTestUtils.withRenderedSync(chart.toUnmounted) { m =>
+        val html           =
+          m.outerHTML()
         val normalizedHTML =
           html
-            .replaceAll(" id=\"highcharts-\\w{7}-\\d-?\"", "")
+            .replaceAll(""" id="highcharts-\w{7}-\d-?"""", "")
             .replaceAll(
-              "Created with Highcharts \\d+\\.\\d+\\.\\d+",
+              """Created with Highcharts \d+\.\d+\.\d+""",
               "Created with Highcharts x.y.z"
             )
 

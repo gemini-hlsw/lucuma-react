@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.89"
+ThisBuild / tlBaseVersion       := "0.90"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 ThisBuild / scalacOptions ++= Seq(
@@ -32,10 +32,10 @@ val lucumaTypedV     = "0.9.0"
 val munitScalacheckV = "1.2.0"
 val munitV           = "1.2.1"
 val scalaJsDomV      = "2.8.1"
-val scalaJsReactV    = "3.0.0-beta10"
+val scalaJsReactV    = "3.0.0-rc1"
 val utestV           = "0.9.4"
 
-ThisBuild / crossScalaVersions := Seq("3.7.3")
+ThisBuild / crossScalaVersions := Seq("3.7.4")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(

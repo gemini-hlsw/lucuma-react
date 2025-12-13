@@ -8,6 +8,7 @@ import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.TopNode
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.Css
+import lucuma.react.primereact.AppendTo
 import lucuma.react.primereact.Tooltip
 import org.scalajs.dom.HTMLElement
 
@@ -115,7 +116,7 @@ extension [E <: TopNode](self: TagOf[E])
 
 extension (self: TagOf[HTMLElement])
   def withTooltip(
-    appendTo:       js.UndefOr[Tooltip.AppendTo] = js.undefined,
+    appendTo:       js.UndefOr[AppendTo] = js.undefined,
     at:             js.UndefOr[String] = js.undefined,
     autoHide:       js.UndefOr[Boolean] = js.undefined,          // default: true
     autoZIndex:     js.UndefOr[Boolean] = js.undefined,          // default: true
