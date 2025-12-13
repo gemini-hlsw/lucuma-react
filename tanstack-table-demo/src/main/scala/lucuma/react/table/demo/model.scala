@@ -7,17 +7,17 @@ import japgolly.scalajs.react.Reusability
 
 case class Details(year: Int, pickups: Int, color: String)
 object Details {
-  given Reusability[Details] = Reusability.derive
+  given Reusability[Details] = Reusability.by_==
 }
 
 case class Guitar(id: Int, make: String, model: String, details: Details)
 
 object Guitar {
-  given Reusability[Guitar] = Reusability.derive
+  given Reusability[Guitar] = Reusability.by_==
 }
 
 case class Person(id: Int, first: String, last: String, age: Int)
 
 object Person {
-  given Reusability[Person] = Reusability.derive
+  given Reusability[Person] = Reusability.by_==
 }
