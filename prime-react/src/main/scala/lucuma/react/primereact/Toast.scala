@@ -67,19 +67,16 @@ object Toast {
 
   @js.native
   trait ToastProps extends js.Object {
-    var position: js.UndefOr[String]               = js.native
-    var baseZIndex: js.UndefOr[Int]                = js.native
-    var appendTo: js.UndefOr[String | dom.Element] = js.native
+    var position: js.UndefOr[String]                     = js.native
+    var baseZIndex: js.UndefOr[Int]                      = js.native
+    var appendTo: js.UndefOr[SelfPosition | dom.Element] = js.native
   }
 
   def props(t: Toast): ToastProps = {
     val r = (new js.Object).asInstanceOf[ToastProps]
     t.position.foreach(v => r.position = v.value)
     t.baseZIndex.foreach(v => r.baseZIndex = v)
-    t.appendTo.foreach {
-      case AppendTo.Self       => r.appendTo = "self"
-      case AppendTo.Element(e) => r.appendTo = e
-    }
+    t.appendTo.foreach { v => r.appendTo = v.toJs }
     r
   }
 
