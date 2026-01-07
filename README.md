@@ -6,7 +6,7 @@ Example running a demo:
 ```sh
 sbt primeReactDemo/fastLinkJS
 npm install
-npx vite -c primeReactDemo/vite.config.js
+npx vite -c prime-react-demo/vite.config.js
 ```
 
 Note that vite should be run from the root directory, but point at the config file for a particular module. To generate/update the vite config for a module use `sbt viteConfigGenerate`. It will get stale with every Scala 3 patch release.

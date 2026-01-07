@@ -418,7 +418,8 @@ object DemoControlsPanel {
                   offIcon = "pi pi-thumbs-down",
                   iconPos = ToggleButton.IconPosition.Right,
                   checked = toggleButton.value,
-                  onChange = toggleButton.setState
+                  onChange = toggleButton.setState,
+                  link = true
                 )
               ),
               <.label("Layered Icon Button", DemoStyles.FormFieldLabel),

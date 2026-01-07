@@ -40,6 +40,7 @@ trait PrimeStyles {
   val ButtonRounded: Css  = Css("p-button-rounded")
   val ButtonText: Css     = Css("p-button-text")
   val ButtonIconOnly: Css = Css("p-button-icon-only")
+  val ButtonLink: Css     = Css("p-button-link")
 
   val ButtonSet: Css = Css("p-buttonset")
 

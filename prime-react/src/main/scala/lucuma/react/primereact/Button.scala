@@ -41,6 +41,7 @@ case class Button(
   raised:         Boolean = false,
   rounded:        Boolean = false,
   text:           Boolean = false,
+  link:           Boolean = false,
   tooltip:        js.UndefOr[String] = js.undefined,
   tooltipOptions: js.UndefOr[TooltipOptions] = js.undefined,
   modifiers:      Seq[TagMod] = Seq.empty
@@ -96,6 +97,7 @@ object Button {
             PrimeStyles.ButtonRaised.when_(props.raised) |+|
             PrimeStyles.ButtonRounded.when_(props.rounded) |+|
             PrimeStyles.ButtonText.when_(props.text) |+|
+            PrimeStyles.ButtonLink.when_(props.link) |+|
             props.iconPos.buttonCls
 
         val iconWithClass =
