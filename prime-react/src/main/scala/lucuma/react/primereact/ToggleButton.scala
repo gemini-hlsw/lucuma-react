@@ -29,6 +29,7 @@ case class ToggleButton(
   tooltip:        js.UndefOr[String] = js.undefined,
   tooltipOptions: js.UndefOr[TooltipOptions] = js.undefined,
   clazz:          js.UndefOr[Css] = js.undefined,
+  disabled:       js.UndefOr[Boolean] = js.undefined,
   onChange:       js.UndefOr[Boolean => Callback] = js.undefined,
   onChangeE:      js.UndefOr[(ReactEventFrom[Element], Boolean) => Callback] = js.undefined,
   size:           Button.Size = Button.Size.Normal,
@@ -37,6 +38,7 @@ case class ToggleButton(
   raised:         Boolean = false,
   rounded:        Boolean = false,
   text:           Boolean = false,
+  link:           Boolean = false,
   modifiers:      Seq[TagMod] = Seq.empty
 ) extends ReactFnPropsWithChildren(ToggleButton.component):
   def addModifiers(modifiers: Seq[TagMod]) = copy(modifiers = this.modifiers ++ modifiers)
@@ -61,6 +63,7 @@ object ToggleButton:
             PrimeStyles.ButtonRaised.when_(props.raised) |+|
             PrimeStyles.ButtonRounded.when_(props.rounded) |+|
             PrimeStyles.ButtonText.when_(props.text) |+|
+            PrimeStyles.ButtonLink.when_(props.link) |+|
             props.iconPos.buttonCls
 
         val onIconWithClass =
@@ -77,6 +80,7 @@ object ToggleButton:
           .applyOrNot(props.onLabel, _.onLabel(_))
           .applyOrNot(props.offLabel, _.offLabel(_))
           .applyOrNot(props.checked, _.checked(_))
+          .applyOrNot(props.disabled, _.disabled(_))
           .applyOrNot(props.tabIndex, _.tabIndex(_))
           .applyOrNot(props.tooltip, _.tooltip(_))
           .applyOrNot(
