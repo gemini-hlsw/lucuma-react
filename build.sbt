@@ -32,21 +32,21 @@ val lucumaTypedV     = "0.9.0"
 val munitScalacheckV = "1.2.0"
 val munitV           = "1.2.1"
 val scalaJsDomV      = "2.8.1"
-val scalaJsReactV    = "3.0.0-rc1"
+val scalaJsReactV    = "3.0.0"
 val utestV           = "0.9.5"
 
 ThisBuild / crossScalaVersions := Seq("3.7.4")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(
-    "com.github.japgolly.scalajs-react" %%% "core"        % scalaJsReactV,
-    "com.github.japgolly.scalajs-react" %%% "extra"       % scalaJsReactV,
-    "com.github.japgolly.scalajs-react" %%% "test"        % scalaJsReactV % Test,
-    "org.typelevel"                     %%% "cats-core"   % catsV,
-    "org.typelevel"                     %%% "kittens"     % kittensV,
-    "org.scala-js"                      %%% "scalajs-dom" % scalaJsDomV,
-    "com.lihaoyi"                       %%% "utest"       % utestV        % Test,
-    "org.scalameta"                     %%% "munit"       % munitV        % Test
+    "com.github.japgolly.scalajs-react" %%% "core-bundle-cb_io" % scalaJsReactV,
+    "com.github.japgolly.scalajs-react" %%% "extra"             % scalaJsReactV,
+    "com.github.japgolly.scalajs-react" %%% "test"              % scalaJsReactV % Test,
+    "org.typelevel"                     %%% "cats-core"         % catsV,
+    "org.typelevel"                     %%% "kittens"           % kittensV,
+    "org.scala-js"                      %%% "scalajs-dom"       % scalaJsDomV,
+    "com.lihaoyi"                       %%% "utest"             % utestV        % Test,
+    "org.scalameta"                     %%% "munit"             % munitV        % Test
   ),
   jsEnv                                   := new lucuma.LucumaJSDOMNodeJSEnv(),
   scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
@@ -145,6 +145,8 @@ lazy val root = project
     datepickerDemo,
     beautifulDnd,
     beautifulDndDemo,
+    pragmaticDnd,
+    pragmaticDndDemo,
     resizeDetector,
     resizeDetectorDemo,
     fontAwesome,
@@ -174,6 +176,8 @@ lazy val rootDatepicker    =
   project.aggregate(datepicker, datepickerDemo).enablePlugins(NoPublishPlugin)
 lazy val rootBeautifulDnd  =
   project.aggregate(beautifulDnd, beautifulDndDemo).enablePlugins(NoPublishPlugin)
+lazy val rootPragmaticDnd  =
+  project.aggregate(pragmaticDnd, pragmaticDndDemo).enablePlugins(NoPublishPlugin)
 lazy val rootFontAwesome   =
   project.aggregate(fontAwesome, fontAwesomeDemo).enablePlugins(NoPublishPlugin)
 lazy val rootHotkeys       =
@@ -192,6 +196,7 @@ val projects = List(
   rootHighcharts,
   rootDatepicker,
   rootBeautifulDnd,
+  rootPragmaticDnd,
   rootFontAwesome,
   rootHotkeys,
   rootResizable,
@@ -357,6 +362,24 @@ lazy val beautifulDndDemo = project
   .in(file("beautiful-dnd-demo"))
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
   .dependsOn(beautifulDnd)
+  .settings(
+    Compile / scalacOptions += "-language:implicitConversions",
+    demoSettings
+  )
+
+lazy val pragmaticDnd = project
+  .in(file("pragmatic-dnd"))
+  .enablePlugins(ScalaJSPlugin)
+  .dependsOn(common)
+  .settings(
+    name := "lucuma-react-pragmatic-dnd",
+    facadeSettings
+  )
+
+lazy val pragmaticDndDemo = project
+  .in(file("pragmatic-dnd-demo"))
+  .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
+  .dependsOn(pragmaticDnd)
   .settings(
     Compile / scalacOptions += "-language:implicitConversions",
     demoSettings
