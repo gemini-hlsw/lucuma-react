@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration": "2.0.8",
+    "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration": "2.0.10",
     "@floating-ui/react": "^0.27.8",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
