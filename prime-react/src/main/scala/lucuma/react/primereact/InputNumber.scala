@@ -16,6 +16,7 @@ import scalajs.js
 
 case class InputNumber(
   id:                String,
+  clazz:             js.UndefOr[Css] = js.undefined,
   size:              js.UndefOr[Int] = js.undefined,
   value:             js.UndefOr[Double] = js.undefined,
   disabled:          js.UndefOr[Boolean] = js.undefined,
@@ -56,6 +57,7 @@ object InputNumber:
     CInputNumber
       .id(props.id)
       .applyOrNot(props.value, _.value(_))
+      .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))
       .applyOrNot(props.size, _.size(_))
       .applyOrNot(props.disabled, _.disabled(_))
       .applyOrNot(props.placeholder, _.placeholder(_))
