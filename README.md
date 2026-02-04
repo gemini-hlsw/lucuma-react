@@ -19,7 +19,8 @@ Note that vite should be run from the root directory, but point at the config fi
 
 ## Facades
 
-- lucuma-react-beautiful-dnd
+- lucuma-react-beautiful-dnd (deprecated in favor of pragmatic-dnd)
+- lucuma-react-pragmatic-dnd
 - lucuma-react-clipboard
 - lucuma-react-datepicker
 - lucuma-react-draggable
