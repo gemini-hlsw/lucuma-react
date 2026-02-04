@@ -3,6 +3,7 @@
 
 package lucuma.react.pragmaticdnd.demo
 
+import cats.syntax.eq.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.pragmaticdnd.*
@@ -60,10 +61,11 @@ object Demo:
         dropped    <- useState[StateType]((None, None))
         dndContext <- useDragAndDropContext[Int, LensType](
                         onDrop = payload =>
-                          dropped.modState { current =>
-                            val lens = payload.location.current.dropTargets(0).data
-                            lens.replace(Some(payload.source.data))(current)
-                          }
+                          if payload.location.current.dropTargets.length === 0 then Callback.empty
+                          else
+                            dropped.modState: current =>
+                              val lens = payload.location.current.dropTargets(0).data
+                              lens.replace(Some(payload.source.data))(current)
                       )
       yield dndContext(
         <.div(
@@ -74,9 +76,10 @@ object Demo:
             <.br,
             dropped.value._1.map(i => s"You dropped #$i HERE!")
           ).dropTarget(getData = _ => CallbackTo(first)),
-          <.div(DropTargetStyle)("OR HERE",
-                                 <.br,
-                                 dropped.value._2.map(i => s"You dropped #$i HERE!")
+          <.div(DropTargetStyle)(
+            "OR HERE",
+            <.br,
+            dropped.value._2.map(i => s"You dropped #$i HERE!")
           )
             .dropTarget(getData = _ => CallbackTo(second))
         )
@@ -84,5 +87,5 @@ object Demo:
 
     ReactDOMClient
       .createRoot(container)
-      .render(App())
+      .render(<.div(^.display.flex)(App(), App()))
   }
