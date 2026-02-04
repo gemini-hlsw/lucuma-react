@@ -31,3 +31,15 @@ trait DragLocationHistory[T] extends js.Object {
    */
   var previous: DropTargets[T]
 }
+
+object DragLocationHistory:
+  def apply[T](
+    initial:  DragLocation[T],
+    current:  DragLocation[T],
+    previous: DropTargets[T]
+  ): DragLocationHistory[T] =
+    val p = (new js.Object).asInstanceOf[DragLocationHistory[T]]
+    p.initial = initial
+    p.current = current
+    p.previous = previous
+    p

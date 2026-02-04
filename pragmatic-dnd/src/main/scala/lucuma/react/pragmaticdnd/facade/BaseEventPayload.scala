@@ -26,3 +26,13 @@ trait BaseEventPayload[S, T] extends js.Object {
    */
   var source: ElementDragPayload[S]
 }
+
+object BaseEventPayload:
+  def apply[S, T](
+    location: DragLocationHistory[T],
+    source:   ElementDragPayload[S]
+  ): BaseEventPayload[S, T] =
+    val p = (new js.Object).asInstanceOf[BaseEventPayload[S, T]]
+    p.location = location
+    p.source = source
+    p

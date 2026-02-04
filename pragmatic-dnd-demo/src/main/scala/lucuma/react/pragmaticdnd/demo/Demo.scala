@@ -57,24 +57,29 @@ object Demo:
 
     val App = ScalaFnComponent[Unit]: _ =>
       for
-        dropped <- useState[StateType]((None, None))
-        _       <- useDragAndDropMonitor[Int, LensType](
-                     onDrop = payload =>
-                       dropped.modState { current =>
-                         val lens = payload.location.current.dropTargets(0).data
-                         lens.replace(Some(payload.source.data))(current)
-                       }
-                   )
-      yield <.div(
-        <.div(DraggableStyle, "DRAG ME").draggable(getInitialData = _ => CallbackTo(1)),
-        <.div(DraggableStyle, "OR ME").draggable(getInitialData = _ => CallbackTo(2)),
-        <.div(DropTargetStyle)(
-          "DROP HERE",
-          <.br,
-          dropped.value._1.map(i => s"You dropped #$i HERE!")
-        ).dropTarget(getData = _ => CallbackTo(first)),
-        <.div(DropTargetStyle)("OR HERE", <.br, dropped.value._2.map(i => s"You dropped #$i HERE!"))
-          .dropTarget(getData = _ => CallbackTo(second))
+        dropped    <- useState[StateType]((None, None))
+        dndContext <- useDragAndDropContext[Int, LensType](
+                        onDrop = payload =>
+                          dropped.modState { current =>
+                            val lens = payload.location.current.dropTargets(0).data
+                            lens.replace(Some(payload.source.data))(current)
+                          }
+                      )
+      yield dndContext(
+        <.div(
+          <.div(DraggableStyle, "DRAG ME").draggable(getInitialData = _ => CallbackTo(1)),
+          <.div(DraggableStyle, "OR ME").draggable(getInitialData = _ => CallbackTo(2)),
+          <.div(DropTargetStyle)(
+            "DROP HERE",
+            <.br,
+            dropped.value._1.map(i => s"You dropped #$i HERE!")
+          ).dropTarget(getData = _ => CallbackTo(first)),
+          <.div(DropTargetStyle)("OR HERE",
+                                 <.br,
+                                 dropped.value._2.map(i => s"You dropped #$i HERE!")
+          )
+            .dropTarget(getData = _ => CallbackTo(second))
+        )
       )
 
     ReactDOMClient

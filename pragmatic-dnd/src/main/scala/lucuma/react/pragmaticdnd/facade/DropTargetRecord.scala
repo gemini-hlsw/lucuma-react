@@ -38,3 +38,17 @@ trait DropTargetRecord[T] extends js.Object {
    */
   var isActiveDueToStickiness: Boolean
 }
+
+object DropTargetRecord:
+  def apply[T](
+    element:                 HTMLElement,
+    data:                    T,
+    // dropEffect:              DropTargetAllowedDropEffect,
+    isActiveDueToStickiness: Boolean
+  ): DropTargetRecord[T] =
+    val p = (new js.Object).asInstanceOf[DropTargetRecord[T]]
+    p.element = element
+    p.data = data
+    // p.dropEffect = dropEffect
+    p.isActiveDueToStickiness = isActiveDueToStickiness
+    p

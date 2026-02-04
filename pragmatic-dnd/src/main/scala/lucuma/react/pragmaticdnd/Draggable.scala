@@ -6,9 +6,7 @@ package lucuma.react.pragmaticdnd
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.TagOf
 import lucuma.react.common.*
-import lucuma.react.pragmaticdnd
 import lucuma.react.pragmaticdnd.facade.*
-import lucuma.react.pragmaticdnd.facade.BaseEventPayload
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js

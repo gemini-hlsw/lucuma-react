@@ -18,3 +18,13 @@ trait MonitorGetFeedbackArgs[S, T] extends js.Object {
    */
   var source: ElementDragPayload[S]
 }
+
+object MonitorGetFeedbackArgs:
+  def apply[S, T](
+    initial: DragLocation[T],
+    source:  ElementDragPayload[S]
+  ): MonitorGetFeedbackArgs[S, T] =
+    val p = (new js.Object).asInstanceOf[MonitorGetFeedbackArgs[S, T]]
+    p.initial = initial
+    p.source = source
+    p
