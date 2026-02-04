@@ -7,6 +7,18 @@ import scalajs.js
 
 type DropTargetEventPayload[S, T] = BaseEventPayload[S, T] & DropTargetLocalizedData[T]
 
+object DropTargetEventPayload:
+  def apply[S, T](
+    location: DragLocationHistory[T],
+    source:   ElementDragPayload[S],
+    self:     DropTargetRecord[T]
+  ): DropTargetEventPayload[S, T] =
+    val p = (new js.Object).asInstanceOf[DropTargetEventPayload[S, T]]
+    p.location = location
+    p.source = source
+    p.self = self
+    p
+
 @js.native
 trait DropTargetEvents[S, T] extends CommonEvents[DropTargetEventPayload[S, T]] {
 

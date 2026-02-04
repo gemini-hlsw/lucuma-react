@@ -25,3 +25,15 @@ trait DropTargetGetFeedbackArgs[S] extends js.Object {
    */
   var element: HTMLElement
 }
+
+object DropTargetGetFeedbackArgs:
+  def apply[S](
+    input:   Input,
+    source:  ElementDragPayload[S],
+    element: HTMLElement
+  ): DropTargetGetFeedbackArgs[S] =
+    val p = (new js.Object).asInstanceOf[DropTargetGetFeedbackArgs[S]]
+    p.input = input
+    p.source = source
+    p.element = element
+    p

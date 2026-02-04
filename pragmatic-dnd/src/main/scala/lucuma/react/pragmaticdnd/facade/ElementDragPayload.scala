@@ -9,7 +9,19 @@ import scalajs.js
 
 @js.native
 trait ElementDragPayload[S] extends js.Object {
-  var element: HTMLElement;
-  var dragHandle: js.UndefOr[HTMLElement];
-  var data: S;
+  var element: HTMLElement
+  var dragHandle: js.UndefOr[HTMLElement]
+  var data: S
 }
+
+object ElementDragPayload:
+  def apply[S](
+    element:    HTMLElement,
+    dragHandle: js.UndefOr[HTMLElement],
+    data:       S
+  ): ElementDragPayload[S] =
+    val p = (new js.Object).asInstanceOf[ElementDragPayload[S]]
+    p.element = element
+    p.dragHandle = dragHandle
+    p.data = data
+    p

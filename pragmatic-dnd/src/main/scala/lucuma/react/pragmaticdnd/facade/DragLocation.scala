@@ -13,3 +13,10 @@ trait DragLocation[T] extends DropTargets[T] {
    */
   var input: Input
 }
+
+object DragLocation:
+  def apply[T](input: Input, dropTargets: js.Array[DropTargetRecord[T]]): DragLocation[T] =
+    val p = (new js.Object).asInstanceOf[DragLocation[T]]
+    p.input = input
+    p.dropTargets = dropTargets
+    p

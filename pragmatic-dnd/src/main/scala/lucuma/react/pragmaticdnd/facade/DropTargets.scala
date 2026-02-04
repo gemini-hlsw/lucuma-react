@@ -16,3 +16,10 @@ trait DropTargets[T] extends js.Object {
    */
   var dropTargets: js.Array[DropTargetRecord[T]]
 }
+
+object DropTargets {
+  def apply[T](dropTargets: js.Array[DropTargetRecord[T]]): DropTargets[T] =
+    val p = (new js.Object).asInstanceOf[DropTargets[T]]
+    p.dropTargets = dropTargets
+    p
+}
