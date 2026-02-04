@@ -382,6 +382,7 @@ lazy val pragmaticDndDemo = project
   .dependsOn(pragmaticDnd)
   .settings(
     Compile / scalacOptions += "-language:implicitConversions",
+    libraryDependencies += "dev.optics" %%% "monocle-core" % "3.3.0",
     demoSettings
   )
 
