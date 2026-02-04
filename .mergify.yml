@@ -21,6 +21,7 @@ pull_request_rules:
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootHighcharts)
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootDatepicker)
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootBeautifulDnd)
+  - status-success=Test (ubuntu-22.04, 3, temurin@17, rootPragmaticDnd)
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootFontAwesome)
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootHotkeys)
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootResizable)
@@ -165,6 +166,22 @@ pull_request_rules:
       add:
       - markdown
       remove: []
+- name: Label pragmatic-dnd PRs
+  conditions:
+  - files~=^pragmatic-dnd/
+  actions:
+    label:
+      add:
+      - pragmatic-dnd
+      remove: []
+- name: Label pragmatic-dnd-demo PRs
+  conditions:
+  - files~=^pragmatic-dnd-demo/
+  actions:
+    label:
+      add:
+      - pragmatic-dnd-demo
+      remove: []
 - name: Label prime-react PRs
   conditions:
   - files~=^prime-react/
@@ -285,6 +302,14 @@ pull_request_rules:
       add:
       - rootHotkeys
       remove: []
+- name: Label rootPragmaticDnd PRs
+  conditions:
+  - files~=^rootPragmaticDnd/
+  actions:
+    label:
+      add:
+      - rootPragmaticDnd
+      remove: []
 - name: Label rootPrimeReact PRs
   conditions:
   - files~=^rootPrimeReact/
@@ -344,6 +369,7 @@ pull_request_rules:
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootHighcharts)
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootDatepicker)
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootBeautifulDnd)
+  - status-success=Test (ubuntu-22.04, 3, temurin@17, rootPragmaticDnd)
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootFontAwesome)
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootHotkeys)
   - status-success=Test (ubuntu-22.04, 3, temurin@17, rootResizable)
