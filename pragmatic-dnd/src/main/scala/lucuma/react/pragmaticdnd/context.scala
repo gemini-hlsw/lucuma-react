@@ -154,7 +154,8 @@ private def decontextualizeCanMonitor[S, T](context: DragAndDropContext)(
     CallbackTo:
       val isInContext: Boolean =
         args.source.data.context === context &&
-          args.initial.dropTargets(0).data.context === context
+          (args.initial.dropTargets.length === 0 ||
+            args.initial.dropTargets(0).data.context === context)
       isInContext && f.fold(true): canMonitor =>
         canMonitor(
           MonitorGetFeedbackArgs(
