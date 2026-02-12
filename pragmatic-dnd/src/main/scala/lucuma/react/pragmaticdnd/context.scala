@@ -116,50 +116,47 @@ private def decontextualizeDropTargetEventHandler[S, T](
       handler(decontextualizeDropTargetEventPayload(payload))
 
 private def contextualizeGetInitialData[S](context: DragAndDropContext)(
-  f: js.UndefOr[DraggableGetFeedbackArgs => CallbackTo[S]]
-): js.UndefOr[DraggableGetFeedbackArgs => CallbackTo[ContextData[S]]] =
-  f.map(getter => args => getter(args).map(s => ContextData(context, s)))
+  f: js.UndefOr[DraggableGetFeedbackArgs => S]
+): js.UndefOr[DraggableGetFeedbackArgs => ContextData[S]] =
+  f.map(getter => args => ContextData(context, getter(args)))
 
 private def decontextualizeDropTargetBooleanFunction[S, T](
-  f: js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[Boolean]]
-): js.UndefOr[DropTargetGetFeedbackArgs[ContextData[S]] => CallbackTo[Boolean]] =
+  f: js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean]
+): js.UndefOr[DropTargetGetFeedbackArgs[ContextData[S]] => Boolean] =
   f.map: func =>
     args => func(decontextualizeDropTargetGetFeedbackArgs(args))
 
 private def contextualizeGetData[S, T](context: DragAndDropContext)(
-  f: js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[T]]
-): js.UndefOr[DropTargetGetFeedbackArgs[ContextData[S]] => CallbackTo[ContextData[T]]] =
+  f: js.UndefOr[DropTargetGetFeedbackArgs[S] => T]
+): js.UndefOr[DropTargetGetFeedbackArgs[ContextData[S]] => ContextData[T]] =
   f.map: getter =>
-    args => getter(decontextualizeDropTargetGetFeedbackArgs(args)).map(t => ContextData(context, t))
+    args => ContextData(context, getter(decontextualizeDropTargetGetFeedbackArgs(args)))
 
 private def decontextualizeCanDrop[S](context: DragAndDropContext)(
-  f: js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[Boolean]]
-): DropTargetGetFeedbackArgs[ContextData[S]] => CallbackTo[Boolean] =
+  f: js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean]
+): DropTargetGetFeedbackArgs[ContextData[S]] => Boolean =
   args =>
-    CallbackTo:
-      val isInContext: Boolean = args.source.data.context === context
-      isInContext && f.fold(true): canDrop =>
-        canDrop(
-          DropTargetGetFeedbackArgs(
-            args.input,
-            decontextualizeElementDragPayload(args.source),
-            args.element
-          )
-        ).runNow()
+    val isInContext: Boolean = args.source.data.context === context
+    isInContext && f.fold(true): canDrop =>
+      canDrop(
+        DropTargetGetFeedbackArgs(
+          args.input,
+          decontextualizeElementDragPayload(args.source),
+          args.element
+        )
+      )
 
 private def decontextualizeCanMonitor[S, T](context: DragAndDropContext)(
-  f: js.UndefOr[MonitorGetFeedbackArgs[S, T] => CallbackTo[Boolean]]
-): MonitorGetFeedbackArgs[ContextData[S], ContextData[T]] => CallbackTo[Boolean] =
+  f: js.UndefOr[MonitorGetFeedbackArgs[S, T] => Boolean]
+): MonitorGetFeedbackArgs[ContextData[S], ContextData[T]] => Boolean =
   args =>
-    CallbackTo:
-      val isInContext: Boolean =
-        args.source.data.context === context &&
-          (args.initial.dropTargets.length === 0 ||
-            args.initial.dropTargets(0).data.context === context)
-      isInContext && f.fold(true): canMonitor =>
-        canMonitor(
-          MonitorGetFeedbackArgs(
-            decontextualizeDragLocation(args.initial),
-            decontextualizeElementDragPayload(args.source)
-          )
-        ).runNow()
+    val isInContext: Boolean =
+      args.source.data.context === context &&
+        args.initial.dropTargets.headOption.forall(_.data.context === context)
+    isInContext && f.fold(true): canMonitor =>
+      canMonitor(
+        MonitorGetFeedbackArgs(
+          decontextualizeDragLocation(args.initial),
+          decontextualizeElementDragPayload(args.source)
+        )
+      )

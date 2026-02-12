@@ -13,8 +13,8 @@ object ElementAdapter:
   def draggable[S, T](
     element:               HTMLElement,
     dragHandle:            js.UndefOr[HTMLElement] = js.undefined,
-    canDrag:               js.UndefOr[DraggableGetFeedbackArgs => CallbackTo[Boolean]] = js.undefined,
-    getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => CallbackTo[S]] = js.undefined,
+    canDrag:               js.UndefOr[DraggableGetFeedbackArgs => Boolean] = js.undefined,
+    getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => S] = js.undefined,
     onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
@@ -39,9 +39,9 @@ object ElementAdapter:
 
   def dropTarget[S, T](
     element:               HTMLElement,
-    getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[T]] = js.undefined,
-    canDrop:               js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[Boolean]] = js.undefined,
-    getIsSticky:           js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[Boolean]] = js.undefined,
+    getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => T] = js.undefined,
+    canDrop:               js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
+    getIsSticky:           js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
     onGenerateDragPreview: js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
     onDragStart:           js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
     onDrag:                js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
@@ -68,7 +68,7 @@ object ElementAdapter:
           )
 
   def monitor[S, T](
-    canMonitor:            js.UndefOr[MonitorGetFeedbackArgs[S, T] => CallbackTo[Boolean]] = js.undefined,
+    canMonitor:            js.UndefOr[MonitorGetFeedbackArgs[S, T] => Boolean] = js.undefined,
     onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,

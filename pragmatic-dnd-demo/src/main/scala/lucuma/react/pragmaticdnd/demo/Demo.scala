@@ -69,23 +69,24 @@ object Demo:
                       )
       yield dndContext(
         <.div(
-          <.div(DraggableStyle, "DRAG ME").draggable(getInitialData = _ => CallbackTo(1)),
-          <.div(DraggableStyle, "OR ME").draggable(getInitialData = _ => CallbackTo(2)),
+          <.div(DraggableStyle, "DRAG ME").draggable(getInitialData = _ => 1),
+          <.div(DraggableStyle, "OR ME").draggable(getInitialData = _ => 2),
           <.div(DropTargetStyle)(
             "DROP HERE",
             <.br,
             dropped.value._1.map(i => s"You dropped #$i HERE!")
-          ).dropTarget(getData = _ => CallbackTo(first)),
+          ).dropTarget(getData = _ => first),
           <.div(DropTargetStyle)(
             "OR HERE",
             <.br,
             dropped.value._2.map(i => s"You dropped #$i HERE!")
           )
-            .dropTarget(getData = _ => CallbackTo(second))
+            .dropTarget(getData = _ => second)
         )
       )
 
     ReactDOMClient
       .createRoot(container)
-      .render(<.div(^.display.flex)(App(), App()))
+      .render:
+        <.div(^.display.flex)(App(), App())
   }

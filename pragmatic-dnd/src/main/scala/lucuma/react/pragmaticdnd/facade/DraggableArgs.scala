@@ -39,8 +39,8 @@ object DraggableArgs {
   def apply[S, T](
     element:               HTMLElement,
     dragHandle:            js.UndefOr[HTMLElement] = js.undefined,
-    canDrag:               js.UndefOr[DraggableGetFeedbackArgs => CallbackTo[Boolean]] = js.undefined,
-    getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => CallbackTo[S]] = js.undefined,
+    canDrag:               js.UndefOr[DraggableGetFeedbackArgs => Boolean] = js.undefined,
+    getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => S] = js.undefined,
     onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
@@ -50,8 +50,8 @@ object DraggableArgs {
     val p = (new js.Object).asInstanceOf[DraggableArgs[S, T]]
     p.element = element
     p.applyOrNot(dragHandle, _.dragHandle = _)
-      .applyOrNot(canDrag, (p, f) => p.canDrag = args => f(args).runNow())
-      .applyOrNot(getInitialData, (p, f) => p.getInitialData = args => f(args).runNow())
+      .applyOrNot(canDrag, (p, f) => p.canDrag = args => f(args))
+      .applyOrNot(getInitialData, (p, f) => p.getInitialData = args => f(args))
       .applyOrNot(
         onGenerateDragPreview,
         (p, f) => p.onGenerateDragPreview = args => f(args).runNow()

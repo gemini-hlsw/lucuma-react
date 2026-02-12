@@ -55,9 +55,9 @@ trait DropTargetArgs[S, T] extends DropTargetEvents[S, T] {
 object DropTargetArgs {
   def apply[S, T](
     element:               HTMLElement,
-    getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[T]] = js.undefined,
-    canDrop:               js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[Boolean]] = js.undefined,
-    getIsSticky:           js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[Boolean]] = js.undefined,
+    getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => T] = js.undefined,
+    canDrop:               js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
+    getIsSticky:           js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
     onGenerateDragPreview: js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
     onDragStart:           js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
     onDrag:                js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
@@ -68,9 +68,9 @@ object DropTargetArgs {
   ): DropTargetArgs[S, T] = {
     val p = (new js.Object).asInstanceOf[DropTargetArgs[S, T]]
     p.element = element
-    p.applyOrNot(getData, (p, f) => p.getData = args => f(args).runNow())
-      .applyOrNot(canDrop, (p, f) => p.canDrop = args => f(args).runNow())
-      .applyOrNot(getIsSticky, (p, f) => p.getIsSticky = args => f(args).runNow())
+    p.applyOrNot(getData, (p, f) => p.getData = args => f(args))
+      .applyOrNot(canDrop, (p, f) => p.canDrop = args => f(args))
+      .applyOrNot(getIsSticky, (p, f) => p.getIsSticky = args => f(args))
       .applyOrNot(
         onGenerateDragPreview,
         (p, f) => p.onGenerateDragPreview = args => f(args).runNow()
