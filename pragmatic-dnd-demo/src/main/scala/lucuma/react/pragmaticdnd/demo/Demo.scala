@@ -85,8 +85,19 @@ object Demo:
         )
       )
 
+    val guitars =
+      List(
+        Guitar(1, "Fender", "Stratocaster", Details(2019, 3, "Sunburst")),
+        Guitar(2, "Gibson", "Les Paul", Details(1958, 2, "Gold top")),
+        Guitar(3, "Fender", "Telecaster", Details(1971, 2, "Ivory")),
+        Guitar(4, "Godin", "LG", Details(2008, 2, "Burgundy"))
+      )
+
     ReactDOMClient
       .createRoot(container)
       .render:
-        <.div(^.display.flex)(App(), App())
+        <.div(
+          <.div(^.display.flex)(App(), App())
+          Table1.component(guitars)
+        )
   }

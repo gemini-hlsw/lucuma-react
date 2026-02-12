@@ -379,7 +379,7 @@ lazy val pragmaticDnd = project
 lazy val pragmaticDndDemo = project
   .in(file("pragmatic-dnd-demo"))
   .enablePlugins(ScalaJSPlugin, NoPublishPlugin)
-  .dependsOn(pragmaticDnd)
+  .dependsOn(pragmaticDnd, tanstackTable)
   .settings(
     Compile / scalacOptions += "-language:implicitConversions",
     libraryDependencies += "dev.optics" %%% "monocle-core" % "3.3.0",

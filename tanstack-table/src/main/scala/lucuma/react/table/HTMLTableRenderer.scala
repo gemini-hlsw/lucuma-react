@@ -18,6 +18,8 @@ import org.scalajs.dom.HTMLDivElement
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js
+import japgolly.scalajs.react.vdom.TagOf
+import org.scalajs.dom.HTMLElement
 
 /**
  * Customizable renderer for tables.

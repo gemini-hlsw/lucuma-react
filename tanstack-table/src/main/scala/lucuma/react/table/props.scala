@@ -17,6 +17,7 @@ import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js
+import japgolly.scalajs.react.vdom.TagOf
 
 /**
  * @tparam T
