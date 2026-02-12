@@ -3,194 +3,69 @@
 
 package lucuma.react.pragmaticdnd.demo
 
-import cats.syntax.option.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.table.*
+import lucuma.react.syntax.*
 import lucuma.react.pragmaticdnd.*
 import org.scalajs.dom.HTMLElement
 
-import scala.util.Try
-
 import scalajs.js
-import scalajs.js.JSConverters.*
-import lucuma.react.pragmaticdnd.DraggableWithHandle
-import lucuma.react.pragmaticdnd.DropTarget
+import japgolly.scalajs.react.vdom.TagOf
 
 object Table1:
-  private val ColDef = ColumnDef[Guitar].WithGlobalFilter[String]
+  private val ColDef = ColumnDef[Guitar]
 
   private val Columns =
     Reusable.always:
       List(
-        ColDef(
-          ColumnId("id"),
-          _.id,
-          "Id",
-          ctx => s"g-${ctx.value}",
-          enableColumnFilter = false
-        ).sortable,
-        ColDef(ColumnId("make"), _.make, _ => "Make", filterFn = BuiltInFilter.IncludesString),
-        ColDef(ColumnId("model"), _.model, _ => "Model", filterFn = BuiltInFilter.IncludesString)
-          .sortableBy(_.length),
+        ColDef(ColumnId("handle"), cell = _ => <.span(^.fontSize.large, "≡")).withSize(20.toPx),
+        ColDef(ColumnId("id"), _.id, "Id", ctx => s"g-${ctx.value}"),
+        ColDef(ColumnId("make"), _.make, _ => "Make"),
+        ColDef(ColumnId("model"), _.model, _ => "Model"),
         ColDef.group(
           ColumnId("details"),
           _ => <.div(^.textAlign.center)("Details"),
           List(
-            ColDef(
-              ColumnId("year"),
-              _.details.year,
-              _ => "Year",
-              filterFn = BuiltInFilter.InNumberRange
-            ),
-            ColDef(
-              ColumnId("pickups"),
-              _.details.pickups,
-              _ => "Pickups",
-              filterFn = (
-                row,
-                colId,
-                filterValue: Int,
-                _
-              ) => row.getValue[Int](colId) >= filterValue,
-              footer = _.table.getRowModel().rows.map(_.original.details.pickups).sum
-            ),
-            ColDef(ColumnId("color"), _.details.color, _ => "Color", enableSorting = false)
+            ColDef(ColumnId("year"), _.details.year, _ => "Year"),
+            ColDef(ColumnId("pickups"), _.details.pickups, _ => "Pickups"),
+            ColDef(ColumnId("color"), _.details.color, _ => "Color")
           )
         )
       )
 
-  private def filterRenderer(col: ColDef.ColType): VdomNode =
-    col.id.value match
-      case "pickups" =>
-        <.input(
-          ^.`type`      := "tel",
-          ^.placeholder := "At least",
-          ^.width       := "100%",
-          ^.value       := col
-            .getFilterValue()
-            .orElse(col.getFacetedMinMaxValues().map(_._1))
-            .map(_.toString)
-            .getOrElse(""),
-          ^.onChange ==> ((e: ReactEventFromInput) =>
-            col.setFilterValue(Try(e.target.value.toInt).toOption)
-          )
-        )
-      case "year"    =>
-        val value: js.Tuple2[js.UndefOr[Int], js.UndefOr[Int]] =
-          col
-            .getFilterValue()
-            .map(_.asInstanceOf[js.Tuple2[js.UndefOr[Int], js.UndefOr[Int]]])
-            .orElse(col.getFacetedMinMaxValues().map((min, max) => js.Tuple2(min.toInt, max.toInt)))
-            .getOrElse(js.Tuple2(js.undefined, js.undefined))
-        <.div(^.display.flex)(
-          <.input(
-            ^.`type`      := "tel",
-            ^.placeholder := "From",
-            ^.width       := "100%",
-            ^.value       := value._1.map(_.toString).getOrElse(""),
-            ^.onChange ==> ((e: ReactEventFromInput) =>
-              col.setFilterValue:
-                js.Tuple2(Try(e.target.value.toDouble).toOption.orUndefined, value._2).some
-            )
-          ),
-          <.input(
-            ^.`type`      := "tel",
-            ^.placeholder := "To",
-            ^.width       := "100%",
-            ^.value       := value._2.map(_.toString).getOrElse(""),
-            ^.onChange ==> ((e: ReactEventFromInput) =>
-              col.setFilterValue:
-                js.Tuple2(value._1, Try(e.target.value.toDouble).toOption.orUndefined).some
-            )
-          )
-        )
-      case "model"   =>
-        <.input(
-          ^.`type`      := "text",
-          ^.placeholder := "Filter",
-          ^.width       := "100%",
-          ^.value       := col.getFilterValue().map(_.toString).getOrElse(""),
-          ^.onChange ==> ((e: ReactEventFromInput) =>
-            col.setFilterValue(e.target.value.some.filter(_.nonEmpty))
-          )
-        )
-      case _         =>
-        <.span(^.display.flex)(
-          <.select(
-            ^.`type`      := "text",
-            ^.placeholder := "Filter",
-            ^.width       := "100%",
-            ^.value       := col.getFilterValue().map(_.toString).getOrElse(""),
-            ^.onChange ==> ((e: ReactEventFromInput) =>
-              col.setFilterValue(e.target.value.some.filter(_.nonEmpty))
-            )
-          )(
-            <.option(^.value := "")("<all>"),
-            col
-              .getFacetedUniqueValues()
-              .map: (value, count) =>
-                <.option(^.value := value.toString)(s"${value.toString} ($count)")
-              .toTagMod
-          ),
-          <.span(^.onClick --> col.setFilterValue(none))("X")
-        )
-
   val component =
     ScalaFnComponent[List[Guitar]]: guitars =>
       for
-        rows         <- useMemo(guitars)(identity)
-        globalFilter <- useState("")
-        dndContext   <-
+        rows       <- useMemo(guitars)(identity)
+        dndContext <-
           useDragAndDropContext[Int, Int](
             onDrop = payload =>
               Callback.log(
                 s"Dropped ${payload.source.data} on ${payload.location.current.dropTargets.headOption.map(_.data).getOrElse("nothing")}"
               )
           )
-        table        <-
+        table      <-
           useReactTable:
-            TableOptions(
-              Columns,
-              rows,
-              enableSorting = true,
-              enableColumnResizing = true,
-              enableFilters = true,
-              enableGlobalFilter = true,
-              enableFacetedUniqueValues = true,
-              enableFacetedMinMaxValues = true,
-              globalFilterFn = (row, colId, value: String, _) =>
-                row.getValue(colId).toString.toLowerCase.contains(value.toLowerCase),
-              initialState =
-                TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
-            )
+            TableOptions(Columns, rows, enableColumnResizing = true)
       yield dndContext(
-        <.h2("Sortable table"),
-        <.input(
-          ^.`type`      := "text",
-          ^.placeholder := "Global Filter",
-          ^.value       := table.getState().globalFilter.getOrElse(""),
-          ^.onChange ==> ((e: ReactEventFromInput) => table.setGlobalFilter(e.target.value.some))
-        ),
+        <.h2("Drag and drop table"),
         HTMLTable(
           table,
-          Css("guitars"),
-          columnFilterRenderer = filterRenderer,
-          rowMod = (row, render) =>
+          Css("guitars"), // In next line, specifying types binds row context type RC
+          rowMod = (row, render: Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]) =>
             React.Fragment(
-              DraggableWithHandle(
-                handleRef => render(RowContext.Data(handleRef)),
-                getInitialData = _ => row.original.id
-              ),
-              DropTarget(<.tr(<.td("Drop here")), getData = _ => row.original.id)
+              DraggableDropTargetWithHandle(
+                handleRef => render(Some(handleRef)),
+                getInitialData = _ => row.original.id,
+                getData = _ => row.original.id
+              )
             ),
           cellMod = (cell, context, render) =>
-            if cell.column.id.value == "id" then
-              render.withRef(
-                context.asInstanceOf[RowContext.Data].value.asInstanceOf[Ref.ToVdom[HTMLElement]]
-              )
-            else render
-        ),
-        "Click header to sort. Shift-Click for multi-sort."
+            context
+              .filter(_ => cell.column.id.value == "handle")
+              .map(handleRef => render.withRef(handleRef))
+              .getOrElse(render)
+        )
       )
