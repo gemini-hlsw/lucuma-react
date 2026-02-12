@@ -97,7 +97,7 @@ object Demo:
       .createRoot(container)
       .render:
         <.div(
-          <.div(^.display.flex)(App(), App())
+          <.div(^.display.flex)(App(), App()),
           Table1.component(guitars)
         )
   }
