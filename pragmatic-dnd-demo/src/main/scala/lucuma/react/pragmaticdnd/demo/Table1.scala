@@ -181,9 +181,9 @@ object Table1:
             React.Fragment(
               DraggableWithHandle(
                 handleRef => render(RowContext.Data(handleRef)),
-                getInitialData = _ => CallbackTo(row.original.id)
+                getInitialData = _ => row.original.id
               ),
-              DropTarget(<.tr(<.td("Drop here")), getData = _ => CallbackTo(row.original.id))
+              DropTarget(<.tr(<.td("Drop here")), getData = _ => row.original.id)
             ),
           cellMod = (cell, context, render) =>
             if cell.column.id.value == "id" then
