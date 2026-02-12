@@ -4,7 +4,6 @@
 package lucuma.react.datepicker
 
 import japgolly.scalajs.react.*
-import japgolly.scalajs.react.component.Js.ComponentWithFacade
 import japgolly.scalajs.react.facade.React.Node as RawNode
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.html_<^.*

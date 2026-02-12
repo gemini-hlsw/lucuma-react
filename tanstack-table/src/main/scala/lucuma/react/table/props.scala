@@ -7,6 +7,7 @@ import japgolly.scalajs.react.NonEmptyRef
 import japgolly.scalajs.react.Ref
 import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.vdom.TagMod
+import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.react.SizePx
 import lucuma.react.common.style.Css
@@ -28,8 +29,10 @@ import scalajs.js
  *   The type of the metadata for the column.
  * @tparam TF
  *   The type of the global filter.
+ * @tparam RC
+ *   The type of the row context.
  */
-trait HTMLTableProps[T, TM, CM, TF]:
+trait HTMLTableProps[T, TM, CM, TF, RC]:
   def table: Table[T, TM, CM, TF]
   def tableMod: TagMod
   def headerMod: TagMod
@@ -37,8 +40,8 @@ trait HTMLTableProps[T, TM, CM, TF]:
   def columnFilterRenderer: Column[T, Any, TM, CM, TF, Any, Any] => VdomNode
   def headerCellMod: Header[T, Any, TM, CM, TF, Any, Any] => TagMod
   def bodyMod: TagMod
-  def rowMod: Row[T, TM, CM, TF] => TagMod
-  def cellMod: Cell[T, Any, TM, CM, TF, Any, Any] => TagMod
+  def rowMod: (Row[T, TM, CM, TF], Option[RC] => TagOf[HTMLElement]) => VdomNode
+  def cellMod: (Cell[T, Any, TM, CM, TF, Any, Any], Option[RC], TagOf[HTMLElement]) => VdomNode
   def footerMod: TagMod
   def footerRowMod: HeaderGroup[T, TM, CM, TF] => TagMod
   def footerCellMod: Header[T, Any, TM, CM, TF, Any, Any] => TagMod
@@ -60,8 +63,10 @@ type HTMLTableVirtualizer = Virtualizer[HTMLElement, Element]
  *   The type of the metadata for the column.
  * @tparam TF
  *   The type of the global filter.
+ * @tparam RC
+ *   The type of the row context.
  */
-trait HTMLVirtualizedTableProps[T, TM, CM, TF] extends HTMLTableProps[T, TM, CM, TF]:
+trait HTMLVirtualizedTableProps[T, TM, CM, TF, RC] extends HTMLTableProps[T, TM, CM, TF, RC]:
   def estimateSize: Int => SizePx
   // Table options
   def containerMod: TagMod
@@ -84,7 +89,9 @@ trait HTMLVirtualizedTableProps[T, TM, CM, TF] extends HTMLTableProps[T, TM, CM,
  *   The type of the metadata for the column.
  * @tparam TF
  *   The type of the global filter.
+ * @tparam RC
+ *   The type of the row context.
  */
-trait HTMLAutoHeightVirtualizedTableProps[T, TM, CM, TF]
-    extends HTMLVirtualizedTableProps[T, TM, CM, TF]:
+trait HTMLAutoHeightVirtualizedTableProps[T, TM, CM, TF, RC]
+    extends HTMLVirtualizedTableProps[T, TM, CM, TF, RC]:
   def innerContainerMod: TagMod
