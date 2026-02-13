@@ -103,11 +103,3 @@ package object table extends HooksApiExt:
       val jsMap = new JsMapConstructor[K, V]
       self.foreach { case (k, v) => jsMap.set(k, v) }
       jsMap
-
-  // enum RowContext[T]:
-  // TODO Propagate context type
-  // enum RowContext:
-  //   case Empty            extends RowContext
-  //   case Data(value: Any) extends RowContext
-
-  type RowContext[RC] = Option[RC]
