@@ -14,7 +14,7 @@ trait MonitorArgs[S, T] extends CommonEvents[BaseEventPayload[S, T]] {
 
 object MonitorArgs {
   def apply[S, T](
-    canMonitor:            js.UndefOr[MonitorGetFeedbackArgs[S, T] => CallbackTo[Boolean]] = js.undefined,
+    canMonitor:            js.UndefOr[MonitorGetFeedbackArgs[S, T] => Boolean] = js.undefined,
     onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
@@ -22,7 +22,7 @@ object MonitorArgs {
     onDrop:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined
   ): MonitorArgs[S, T] = {
     val p = (new js.Object).asInstanceOf[MonitorArgs[S, T]]
-    p.applyOrNot(canMonitor, (p, f) => p.canMonitor = args => f(args).runNow())
+    p.applyOrNot(canMonitor, (p, f) => p.canMonitor = args => f(args))
       .applyOrNot(
         onGenerateDragPreview,
         (p, f) => p.onGenerateDragPreview = args => f(args).runNow()

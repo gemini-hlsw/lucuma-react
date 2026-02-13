@@ -13,8 +13,8 @@ import org.scalajs.dom.HTMLElement
 import scalajs.js
 
 def useDraggableWithHandleRefs[S, T](
-  canDrag:               js.UndefOr[DraggableGetFeedbackArgs => CallbackTo[Boolean]] = js.undefined,
-  getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => CallbackTo[S]] = js.undefined,
+  canDrag:               js.UndefOr[DraggableGetFeedbackArgs => Boolean] = js.undefined,
+  getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => S] = js.undefined,
   onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
@@ -42,8 +42,8 @@ def useDraggableWithHandleRefs[S, T](
   yield (ref, handleRef)
 
 def useDraggableRef[S, T](
-  canDrag:               js.UndefOr[DraggableGetFeedbackArgs => CallbackTo[Boolean]] = js.undefined,
-  getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => CallbackTo[S]] = js.undefined,
+  canDrag:               js.UndefOr[DraggableGetFeedbackArgs => Boolean] = js.undefined,
+  getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => S] = js.undefined,
   onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
@@ -70,9 +70,9 @@ def useDraggableRef[S, T](
   yield ref
 
 def useDropTargetRef[S, T](
-  getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[T]] = js.undefined,
-  canDrop:               js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[Boolean]] = js.undefined,
-  getIsSticky:           js.UndefOr[DropTargetGetFeedbackArgs[S] => CallbackTo[Boolean]] = js.undefined,
+  getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => T] = js.undefined,
+  canDrop:               js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
+  getIsSticky:           js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
   onGenerateDragPreview: js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
   onDragStart:           js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
   onDrag:                js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
@@ -102,12 +102,124 @@ def useDropTargetRef[S, T](
                      )
   yield ref
 
+// Combined Draggable + Drop Target
+def useDraggableDropTargetWithHandleRefs[S, T](
+  canDrag:                         js.UndefOr[DraggableGetFeedbackArgs => Boolean] = js.undefined,
+  canDrop:                         js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
+  getInitialData:                  js.UndefOr[DraggableGetFeedbackArgs => S] = js.undefined,
+  getData:                         js.UndefOr[DropTargetGetFeedbackArgs[S] => T] = js.undefined,
+  getIsSticky:                     js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
+  onDraggableGenerateDragPreview:  js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDraggableDragStart:            js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDraggableDrag:                 js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDraggableDropTargetChange:     js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDraggableDrop:                 js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDropTargetChange:    js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDrop:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDragEnter:           js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDragLeave:           js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined
+): HookResult[(Ref.ToVdom[HTMLElement], Ref.ToVdom[HTMLElement])] =
+  for
+    context   <- useContext(DragAndDropContext.ctx)
+    ref       <- useRefToVdom[HTMLElement]
+    handleRef <- useRefToVdom[HTMLElement]
+    _         <- useEffectOnMount:
+                   (ref.get, handleRef.get).tupled.flatMap: (refValue, handleRefValue) =>
+                     (refValue, handleRefValue).tupled.foldMap: (elem, handleElem) =>
+                       for
+                         draggableCleanup  <-
+                           ElementAdapter.draggable[ContextData[S], ContextData[T]](
+                             elem,
+                             handleElem,
+                             canDrag,
+                             contextualizeGetInitialData(context)(getInitialData),
+                             decontextualizeBaseEventHandler(onDraggableGenerateDragPreview),
+                             decontextualizeBaseEventHandler(onDraggableDragStart),
+                             decontextualizeBaseEventHandler(onDraggableDrag),
+                             decontextualizeBaseEventHandler(onDraggableDropTargetChange),
+                             decontextualizeBaseEventHandler(onDraggableDrop)
+                           )
+                         dropTargetCleanup <-
+                           ElementAdapter.dropTarget[ContextData[S], ContextData[T]](
+                             elem,
+                             contextualizeGetData(context)(getData),
+                             decontextualizeCanDrop(context)(canDrop),
+                             decontextualizeDropTargetBooleanFunction(getIsSticky),
+                             decontextualizeDropTargetEventHandler(onDropTargetGenerateDragPreview),
+                             decontextualizeDropTargetEventHandler(onDropTargetDragStart),
+                             decontextualizeDropTargetEventHandler(onDropTargetDrag),
+                             decontextualizeDropTargetEventHandler(onDropTargetDropTargetChange),
+                             decontextualizeDropTargetEventHandler(onDropTargetDrop),
+                             decontextualizeDropTargetEventHandler(onDropTargetDragEnter),
+                             decontextualizeDropTargetEventHandler(onDropTargetDragLeave)
+                           )
+                       yield draggableCleanup >> dropTargetCleanup
+  yield (ref, handleRef)
+
+def useDraggableDropTargetRef[S, T](
+  canDrag:                         js.UndefOr[DraggableGetFeedbackArgs => Boolean] = js.undefined,
+  canDrop:                         js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
+  getInitialData:                  js.UndefOr[DraggableGetFeedbackArgs => S] = js.undefined,
+  getData:                         js.UndefOr[DropTargetGetFeedbackArgs[S] => T] = js.undefined,
+  getIsSticky:                     js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
+  onDraggableGenerateDragPreview:  js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDraggableDragStart:            js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDraggableDrag:                 js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDraggableDropTargetChange:     js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDraggableDrop:                 js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDropTargetChange:    js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDrop:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDragEnter:           js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetDragLeave:           js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined
+): HookResult[Ref.ToVdom[HTMLElement]] =
+  for
+    context <- useContext(DragAndDropContext.ctx)
+    ref     <- useRefToVdom[HTMLElement]
+    _       <- useEffectOnMount:
+                 ref.get.flatMap: refValue =>
+                   refValue.foldMap: elem =>
+                     for
+                       draggableCleanup  <-
+                         ElementAdapter.draggable[ContextData[S], ContextData[T]](
+                           elem,
+                           js.undefined,
+                           canDrag,
+                           contextualizeGetInitialData(context)(getInitialData),
+                           decontextualizeBaseEventHandler(onDraggableGenerateDragPreview),
+                           decontextualizeBaseEventHandler(onDraggableDragStart),
+                           decontextualizeBaseEventHandler(onDraggableDrag),
+                           decontextualizeBaseEventHandler(onDraggableDropTargetChange),
+                           decontextualizeBaseEventHandler(onDraggableDrop)
+                         )
+                       dropTargetCleanup <-
+                         ElementAdapter.dropTarget[ContextData[S], ContextData[T]](
+                           elem,
+                           contextualizeGetData(context)(getData),
+                           decontextualizeCanDrop(context)(canDrop),
+                           decontextualizeDropTargetBooleanFunction(getIsSticky),
+                           decontextualizeDropTargetEventHandler(onDropTargetGenerateDragPreview),
+                           decontextualizeDropTargetEventHandler(onDropTargetDragStart),
+                           decontextualizeDropTargetEventHandler(onDropTargetDrag),
+                           decontextualizeDropTargetEventHandler(onDropTargetDropTargetChange),
+                           decontextualizeDropTargetEventHandler(onDropTargetDrop),
+                           decontextualizeDropTargetEventHandler(onDropTargetDragEnter),
+                           decontextualizeDropTargetEventHandler(onDropTargetDragLeave)
+                         )
+                     yield draggableCleanup >> dropTargetCleanup
+  yield ref
+
 /**
  * Low-level. Will monitor globally! Unless you are doing something funky, use
  * `useDragAndDropContext` instead.
  */
 def useDragAndDropMonitor[S, T](
-  canMonitor:            js.UndefOr[MonitorGetFeedbackArgs[S, T] => CallbackTo[Boolean]] = js.undefined,
+  canMonitor:            js.UndefOr[MonitorGetFeedbackArgs[S, T] => Boolean] = js.undefined,
   onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
@@ -125,7 +237,7 @@ def useDragAndDropMonitor[S, T](
     )
 
 def useDragAndDropContext[S, T](
-  canMonitor:            js.UndefOr[MonitorGetFeedbackArgs[S, T] => CallbackTo[Boolean]] = js.undefined,
+  canMonitor:            js.UndefOr[MonitorGetFeedbackArgs[S, T] => Boolean] = js.undefined,
   onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
