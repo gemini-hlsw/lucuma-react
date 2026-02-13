@@ -6,6 +6,7 @@ package lucuma.react.table
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.hooks.Hooks
+import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.common.style.Css
@@ -14,6 +15,7 @@ import lucuma.typed.tanstackReactTable as rawReact
 import lucuma.typed.tanstackTableCore as raw
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLDivElement
+import org.scalajs.dom.HTMLElement
 
 import scalajs.js
 
@@ -32,8 +34,10 @@ import scalajs.js
  *   The type of the metadata for the column.
  * @tparam TF
  *   The type of the global filter.
+ * @tparam RC
+ *   The type of the row context.
  */
-trait HTMLTableRenderer[T, TM, CM, TF]:
+trait HTMLTableRenderer[T, TM, CM, TF, RC]:
   protected val TableClass: Css       = Css("react-table")
   protected val TheadClass: Css       = Css.Empty
   protected val TheadTrClass: Css     = Css.Empty
@@ -104,9 +108,10 @@ trait HTMLTableRenderer[T, TM, CM, TF]:
     columnFilterRenderer: Column[T, Any, TM, CM, TF, Any, Any] => VdomNode =
       (_: Column[T, Any, TM, CM, TF, Any, Any]) => EmptyVdom,
     bodyMod:              TagMod = TagMod.empty,
-    rowMod:               Row[T, TM, CM, TF] => TagMod = (_: Row[T, TM, CM, TF]) => TagMod.empty,
-    cellMod:              Cell[T, Any, TM, CM, TF, Any, Any] => TagMod =
-      (_: Cell[T, Any, TM, CM, TF, Any, Any]) => TagMod.empty,
+    rowMod:               (Row[T, TM, CM, TF], Option[RC] => TagOf[HTMLElement]) => VdomNode =
+      (_: Row[T, TM, CM, TF], render) => render(None),
+    cellMod:              (Cell[T, Any, TM, CM, TF, Any, Any], Option[RC], TagOf[HTMLElement]) => VdomNode =
+      (_: Cell[T, Any, TM, CM, TF, Any, Any], _, render) => render,
     footerMod:            TagMod = TagMod.empty,
     footerRowMod:         HeaderGroup[T, TM, CM, TF] => TagMod = (_: HeaderGroup[T, TM, CM, TF]) =>
       TagMod.empty,
@@ -224,33 +229,39 @@ trait HTMLTableRenderer[T, TM, CM, TF]:
         ),
         rows.zipWithIndex
           .map((row, index) =>
-            <.tr(
-              TbodyTrClass,
-              TbodyTrEvenClass.when((index + indexOffset) % 2 =!= 0),
-              rowMod(row),
-              ^.key := row.id.value
-            )(
-              row
-                .getVisibleCells()
-                .map(cell =>
-                  <.td(
-                    TbodyTdClass,
-                    ^.key   := cell.id.value,
-                    ^.width := s"${cell.column.getSize().value}px",
-                    cellMod(cell)
-                  )(
-                    cell.column.columnDef match
-                      case colDef @ ColumnDef.Single(_) =>
-                        rawReact.mod.flexRender(
-                          colDef.toJs.cell
-                            .asInstanceOf[rawReact.mod.Renderable[
-                              raw.buildLibCoreCellMod.CellContext[T, Any]
-                            ]],
-                          cell.getContext().toJs
+            rowMod(
+              row,
+              rowContext =>
+                <.tr(
+                  TbodyTrClass,
+                  TbodyTrEvenClass.when((index + indexOffset) % 2 =!= 0),
+                  ^.key := row.id.value
+                )(
+                  row
+                    .getVisibleCells()
+                    .map(cell =>
+                      cellMod(
+                        cell,
+                        rowContext,
+                        <.td(
+                          TbodyTdClass,
+                          ^.key   := cell.id.value,
+                          ^.width := s"${cell.column.getSize().value}px"
+                        )(
+                          cell.column.columnDef match
+                            case colDef @ ColumnDef.Single(_) =>
+                              rawReact.mod.flexRender(
+                                colDef.toJs.cell
+                                  .asInstanceOf[rawReact.mod.Renderable[
+                                    raw.buildLibCoreCellMod.CellContext[T, Any]
+                                  ]],
+                                cell.getContext().toJs
+                              )
                         )
-                  )
+                      )
+                    )
+                    .toTagMod
                 )
-                .toTagMod
             )
           )
           .toTagMod
@@ -324,10 +335,10 @@ object HTMLTableRenderer:
    * @tparam TF
    *   The type of the global filter.
    */
-  def componentBuilder[T, TM, CM, TF, Props <: HTMLTableProps[_, _, _, _]](
-    renderer: HTMLTableRenderer[T, TM, CM, TF]
+  def componentBuilder[T, TM, CM, TF, RC, Props <: HTMLTableProps[_, _, _, _, _]](
+    renderer: HTMLTableRenderer[T, TM, CM, TF, RC]
   ) =
-    ScalaFnComponent[Props[T, TM, CM, TF]]: props =>
+    ScalaFnComponent[Props[T, TM, CM, TF, RC]]: props =>
       renderer.render(
         props.table,
         props.table.getRowModel().rows,
@@ -356,12 +367,20 @@ object HTMLTableRenderer:
    *   The type of the metadata for the column.
    * @tparam TF
    *   The type of the global filter.
+   * @tparam RC
+   *   The type of the row context.
    */
-  def componentBuilderVirtualized[T, TM, CM, TF, Props <: HTMLVirtualizedTableProps[_, _, _, _]](
-    renderer: HTMLTableRenderer[T, TM, CM, TF]
+  def componentBuilderVirtualized[T, TM, CM, TF, RC, Props <: HTMLVirtualizedTableProps[
+    _,
+    _,
+    _,
+    _,
+    _
+  ]](
+    renderer: HTMLTableRenderer[T, TM, CM, TF, RC]
   ) =
     ScalaFnComponent
-      .withHooks[Props[T, TM, CM, TF]]
+      .withHooks[Props[T, TM, CM, TF, RC]]
       .useRefToVdom[HTMLDivElement]
       .useVirtualizerBy: (props, ref) =>
         VirtualOptions(
@@ -416,23 +435,27 @@ object HTMLTableRenderer:
    *   The type of the metadata for the column.
    * @tparam TF
    *   The type of the global filter.
+   * @tparam RC
+   *   The type of the row context.
    */
   def componentBuilderAutoHeightVirtualized[
     T,
     TM,
     CM,
     TF,
+    RC,
     Props <: HTMLAutoHeightVirtualizedTableProps[
+      _,
       _,
       _,
       _,
       _
     ]
   ](
-    renderer: HTMLTableRenderer[T, TM, CM, TF]
+    renderer: HTMLTableRenderer[T, TM, CM, TF, RC]
   ) =
     ScalaFnComponent
-      .withHooks[Props[T, TM, CM, TF]]
+      .withHooks[Props[T, TM, CM, TF, RC]]
       .useRefToVdom[HTMLDivElement]
       .localValBy((props, ownRef) => props.containerRef.getOrElse(ownRef)) // containerRef
       .useVirtualizerBy: (props, _, containerRef) =>

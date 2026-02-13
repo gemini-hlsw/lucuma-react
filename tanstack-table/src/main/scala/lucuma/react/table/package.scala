@@ -4,7 +4,10 @@
 package lucuma.react
 
 import japgolly.scalajs.react.vdom.TagMod
+import japgolly.scalajs.react.vdom.TagOf
+import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.typed.std.Map as JsMap
+import org.scalajs.dom.HTMLElement
 
 import scala.scalajs.js.annotation.JSGlobal
 
@@ -103,3 +106,15 @@ package object table extends HooksApiExt:
       val jsMap = new JsMapConstructor[K, V]
       self.foreach { case (k, v) => jsMap.set(k, v) }
       jsMap
+
+  // Useful for the common case of just adding a TagMod to the row
+  def rowTagMod[T, TM, CM, TF, RC](
+    f: Row[T, TM, CM, TF] => TagMod
+  ): (Row[T, TM, CM, TF], Option[RC] => TagOf[HTMLElement]) => VdomNode =
+    (row, render) => render(None)(f(row))
+
+  // Useful for the common case of just adding a TagMod to the cell
+  def cellTagMod[T, TM, CM, TF, RC](
+    f: Cell[T, Any, TM, CM, TF, Any, Any] => TagMod
+  ): (Cell[T, Any, TM, CM, TF, Any, Any], Option[RC], TagOf[HTMLElement]) => VdomNode =
+    (cell, _, render) => render(f(cell))
