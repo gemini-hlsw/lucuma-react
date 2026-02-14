@@ -6,7 +6,6 @@ package lucuma.react.table
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.hooks.Hooks
-import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.common.style.Css
@@ -15,7 +14,6 @@ import lucuma.typed.tanstackReactTable as rawReact
 import lucuma.typed.tanstackTableCore as raw
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLDivElement
-import org.scalajs.dom.HTMLElement
 
 import scalajs.js
 import japgolly.scalajs.react.vdom.TagOf

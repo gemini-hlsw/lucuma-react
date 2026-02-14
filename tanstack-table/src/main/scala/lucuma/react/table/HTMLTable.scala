@@ -4,7 +4,6 @@
 package lucuma.react.table
 
 import japgolly.scalajs.react.*
-import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.SizePx
 import lucuma.react.common.*

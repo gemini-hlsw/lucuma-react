@@ -64,8 +64,8 @@ object Demo:
                           if payload.location.current.dropTargets.length === 0 then Callback.empty
                           else
                             dropped.modState: current =>
-                              val lens = payload.location.current.dropTargets(0).data
-                              lens.replace(Some(payload.source.data))(current)
+                              val lens = payload.location.current.dropTargets(0).data.value
+                              lens.replace(Some(payload.source.data.value))(current)
                       )
       yield dndContext(
         <.div(

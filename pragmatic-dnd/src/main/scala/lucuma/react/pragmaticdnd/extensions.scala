@@ -14,7 +14,7 @@ import scalajs.js
 extension (tag: TagOf[HTMLElement])
   def draggable[S, T](
     canDrag:               js.UndefOr[DraggableGetFeedbackArgs => Boolean] = js.undefined,
-    getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => S] = js.undefined,
+    getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => Data[S]] = js.undefined,
     onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
@@ -33,7 +33,7 @@ extension (tag: TagOf[HTMLElement])
     )
 
   def dropTarget[S, T](
-    getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => T] = js.undefined,
+    getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => Data[T]] = js.undefined,
     canDrop:               js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
     getIsSticky:           js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
     onGenerateDragPreview: js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,

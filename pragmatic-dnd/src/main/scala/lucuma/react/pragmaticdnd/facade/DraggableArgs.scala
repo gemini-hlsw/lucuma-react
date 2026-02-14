@@ -32,7 +32,7 @@ trait DraggableArgs[S, T] extends CommonEvents[BaseEventPayload[S, T]] {
   /**
    * Used to attach data to a drag operation. Called once just before the drag starts
    */
-  var getInitialData: js.UndefOr[js.Function1[DraggableGetFeedbackArgs, S]]
+  var getInitialData: js.UndefOr[js.Function1[DraggableGetFeedbackArgs, Data[S]]]
 }
 
 object DraggableArgs {
@@ -40,7 +40,7 @@ object DraggableArgs {
     element:               HTMLElement,
     dragHandle:            js.UndefOr[HTMLElement] = js.undefined,
     canDrag:               js.UndefOr[DraggableGetFeedbackArgs => Boolean] = js.undefined,
-    getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => S] = js.undefined,
+    getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => Data[S]] = js.undefined,
     onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
