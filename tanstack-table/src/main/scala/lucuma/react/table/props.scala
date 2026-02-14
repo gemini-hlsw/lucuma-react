@@ -7,6 +7,7 @@ import japgolly.scalajs.react.NonEmptyRef
 import japgolly.scalajs.react.Ref
 import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.vdom.TagMod
+import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.react.SizePx
 import lucuma.react.common.style.Css
@@ -16,7 +17,6 @@ import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js
-import japgolly.scalajs.react.vdom.TagOf
 
 /**
  * @tparam T

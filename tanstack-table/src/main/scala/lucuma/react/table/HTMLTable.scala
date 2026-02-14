@@ -4,6 +4,7 @@
 package lucuma.react.table
 
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.SizePx
 import lucuma.react.common.*
@@ -11,7 +12,6 @@ import lucuma.typed.tanstackVirtualCore as rawVirtual
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js
-import japgolly.scalajs.react.vdom.TagOf
 
 /**
  * @tparam T

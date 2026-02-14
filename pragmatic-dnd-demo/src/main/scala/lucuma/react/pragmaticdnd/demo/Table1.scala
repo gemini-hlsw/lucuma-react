@@ -3,21 +3,20 @@
 
 package lucuma.react.pragmaticdnd.demo
 
-import cats.syntax.option.*
+import cats.syntax.all.*
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
-import lucuma.react.table.*
-import lucuma.react.syntax.*
 import lucuma.react.pragmaticdnd.*
-// import lucuma.react.pragmaticdnd.hitbox.*
+import lucuma.react.pragmaticdnd.hitbox.AttachClosestEdgeArgs
+import lucuma.react.pragmaticdnd.hitbox.ClosestEdgeRaw
+import lucuma.react.pragmaticdnd.hitbox.Edge
+import lucuma.react.syntax.*
+import lucuma.react.table.*
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js
-import japgolly.scalajs.react.vdom.TagOf
-import lucuma.react.pragmaticdnd.hitbox.ClosestEdgeRaw
-import lucuma.react.pragmaticdnd.hitbox.AttachClosestEdgeArgs
-import lucuma.react.pragmaticdnd.hitbox.Edge
 
 object Table1:
   private val ColDef = ColumnDef[Guitar]
@@ -44,16 +43,22 @@ object Table1:
     ScalaFnComponent[List[Guitar]]: guitars =>
       for
         rows       <- useMemo(guitars)(identity)
-        dragging   <- useState[Option[Int]](none)
+        preDrag    <- useState[Option[Int]](none)
+        dragging   <- useState[Option[(Int, Int)]](none)
         dragOver   <- useState[Option[(Int, Edge)]](none)
-        _          <- useEffect(Callback.log(s"DRAGGING: ${dragging.value} - DRAGOVER: ${dragOver.value}"))
         dndContext <-
           useDragAndDropContext[Int, Int](
+            onDrag = payload =>
+              val data = payload.location.current.dropTargets.headOption.map(_.data)
+              val edge = data.flatMap(ClosestEdgeRaw.extractClosestEdge(_).toOption)
+              dragOver.setState((data.map(_.value), edge).tupled)
+            ,
             onDrop = payload =>
-              dragging.setState(none) >>
+              preDrag.setState(none) >>
+                dragging.setState(none) >>
                 dragOver.setState(none) >>
                 Callback.log:
-                  s"Dropped ${payload.source.data.value} on: ${payload.location.current.dropTargets.headOption.map(_.data.value).get}"
+                  s"Dropped ${payload.source.data.value} on: ${payload.location.current.dropTargets.headOption.map(_.data.value)}"
           )
         table      <-
           useReactTable:
@@ -64,34 +69,65 @@ object Table1:
           table,
           Css("guitars"), // In next line, specifying types binds row context type RC
           rowMod = (row, render: Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]) =>
-            if dragging.value.contains(row.original.id) then <.tr
-            else
-              DraggableDropTargetWithHandle(
-                handleRef => render(Some(handleRef)),
-                getInitialData = _ => row.original.id,
-                getData = args =>
-                  ClosestEdgeRaw.attachClosestEdge(
-                    Data(row.original.id),
-                    AttachClosestEdgeArgs(args.element, args.input, Edge.Vertical)
-                  ),
-                onDraggableDragStart = payload => dragging.setState(payload.source.data.value.some),
-                onDraggableDrop = _ => dragging.setState(none),
-                onDropTargetDrag = payload =>
-                  val data = payload.location.current.dropTargets.headOption.map(_.data).get
-                  val edge = ClosestEdgeRaw.extractClosestEdge(data)
-                  dragOver.setState(edge.toOption.map((data, _)))
-              )
+            dragging.value match
+              case Some((id, height)) if id === row.original.id =>
+                <.tr((^.height := s"${height}px").when(dragOver.value.isEmpty))
+              case _                                            =>
+                DraggableDropTargetWithHandle(
+                  handleRef =>
+                    render(Some(handleRef))(
+                      (^.boxShadow := "inset 0 -2px green")
+                        .unless(preDrag.value.contains_(row.original.id))
+                        // .unless(preDrag.value.isDefined)
+                    ),
+                  getInitialData = _ => row.original.id,
+                  getData = args =>
+                    ClosestEdgeRaw.attachClosestEdge(
+                      Data(row.original.id),
+                      AttachClosestEdgeArgs(args.element, args.input, Edge.Vertical)
+                    ),
+                  // onDraggableGenerateDragPreview = payload =>
+                  //   Callback.log(
+                  //     s"Generating preview for ${payload.source.data.value} - boxshadow: ${payload.source.element.style.boxShadow}"
+                  //   ) >>
+                  //     // Callback(payload.source.element.style.setProperty("boxShadow", "none")) >>
+                  //     Callback {
+                  //       println(payload.source.element.style.boxShadow)
+                  //       payload.source.element.style.boxShadow = "none"
+                  //       println(payload.source.element.style.boxShadow)
+                  //       // payload.source.element =
+                  //       //   org.scalajs.dom.document.createElement("div").asInstanceOf[HTMLElement]
+                  //     } >>
+                  //     Callback.log(
+                  //       s"Generated preview for ${payload.source.data.value} - boxshadow: ${payload.source.element.style.boxShadow}"
+                  //     ),
+                  onDraggableDragStart = payload =>
+                    dragging.setState(
+                      (payload.source.data.value,
+                       payload.source.element.getBoundingClientRect().height.toInt
+                      ).some
+                    ),
+                  onDraggableDrop = _ => dragging.setState(none)
+                )
           ,
           cellMod = (cell, context, render) =>
             context
-              .filter(_ => cell.column.id.value == "handle")
-              .map(handleRef => render.withRef(handleRef))
+              .filter(_ => cell.column.id.value == "handle") // TODO Cursor, with grab
+              .map(handleRef =>
+                render.withRef(handleRef)(
+                  ^.onMouseDown --> preDrag.setState(cell.row.original.id.some),
+                  ^.onMouseUp --> preDrag.setState(none)
+                )
+              )
               .getOrElse(render)(
-                dragOver.value match // TODO Transition. Translate instead of padding? Can we translate without border?
-                  case Some((id, Edge.Top)) if id == cell.row.original.id    => ^.paddingTop := "20px"
-                  case Some((id, Edge.Bottom)) if id == cell.row.original.id =>
-                    ^.paddingBottom := "20px"
-                  case _                                                     => TagMod.empty
+                (dragOver.value, dragging.value) match
+                  case (Some((id, Edge.Top)), Some(sid, height))
+                      if id == cell.row.original.id && id =!= sid => // padding color?
+                    TagMod(^.paddingTop := s"${height}px", ^.transitionDuration := "0.1s")
+                  case (Some((id, Edge.Bottom)), Some(sid, height))
+                      if id == cell.row.original.id && id =!= sid =>
+                    TagMod(^.paddingBottom := s"${height}px", ^.transitionDuration := "0.1s")
+                  case _ => TagMod.empty
               )
         )
       )

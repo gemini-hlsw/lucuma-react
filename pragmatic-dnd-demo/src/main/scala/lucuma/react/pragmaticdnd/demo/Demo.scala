@@ -7,6 +7,7 @@ import cats.syntax.eq.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.pragmaticdnd.*
+import lucuma.react.pragmaticdnd.facade.*
 import monocle.Focus
 import monocle.Lens
 import org.scalajs.dom
@@ -20,6 +21,14 @@ object Demo:
 
   @JSExport
   def main(): Unit = {
+
+    // ElementAdapterRaw.monitorForElements(
+    //   MonitorArgs(onDrop =
+    //     payload =>
+    //       Callback.log:
+    //         s"[MONITOR] Dropped ${payload.source.data.value} on: ${payload.location.current.dropTargets.headOption.map(_.data.value)}"
+    //   )
+    // )
 
     val container = Option(dom.document.getElementById("root")).getOrElse {
       val elem = dom.document.createElement("div")

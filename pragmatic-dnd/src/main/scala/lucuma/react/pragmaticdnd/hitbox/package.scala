@@ -3,12 +3,14 @@
 
 package lucuma.react.pragmaticdnd.hitbox
 
+import lucuma.react.pragmaticdnd.facade.Data
+import lucuma.react.pragmaticdnd.facade.Input
+import org.scalajs.dom.Element
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
-import org.scalajs.dom.Element
-import lucuma.react.pragmaticdnd.facade.Input
+
 import scalajs.js.JSConverters.*
-import lucuma.react.pragmaticdnd.facade.Data
 
 type EdgeRaw = String
 
