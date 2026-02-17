@@ -3,8 +3,10 @@
 
 package lucuma.react.pragmaticdnd.demo
 
+import cats.Eq
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.feature.Context
 import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
@@ -16,9 +18,9 @@ import lucuma.react.syntax.*
 import lucuma.react.table.*
 import org.scalajs.dom.HTMLElement
 
+import scala.annotation.unused
+
 import scalajs.js
-import japgolly.scalajs.react.feature.Context
-import cats.Eq
 
 object Table1:
   private val ColDef = ColumnDef[Guitar]
@@ -46,27 +48,66 @@ object Table1:
 
   final case class RowDraggingInfo[D](isDragging: Option[D], isDraggingOver: Option[Target[D]])
 
-  final case class UseDragAndDropTable[D, T, TM, CM, TF](
-    rowMod:     (Row[T, TM, CM, TF], Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]) => (
-      (Row[T, TM, CM, TF], RowDraggingInfo[D]) => TagMod
+  final case class UseTableDragAndDrop[D, T, TM, CM, TF](
+    rowMod:  ((Row[T, TM, CM, TF], RowDraggingInfo[D]) => TagMod) => (
+      Row[T, TM, CM, TF],
+      Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]
     ) => VdomNode,
-    cellMod:    (
+    cellMod: ((Cell[T, Any, TM, CM, TF, Any, Any], RowDraggingInfo[D]) => TagMod) => (
       Cell[T, Any, TM, CM, TF, Any, Any],
       Option[Ref.ToVdom[HTMLElement]],
       TagOf[HTMLElement]
-    ) => ((Cell[T, Any, TM, CM, TF, Any, Any], RowDraggingInfo[D]) => TagMod) => VdomNode,
-    getData:    Row[T, TM, CM, TF] => Data[D],
-    dndContext: Context.Provided[DragAndDropContext]
+    ) => VdomNode,
+    context: Context.Provided[DragAndDropContext]
   )
 
-  def useDragAndDropTable[D: Eq, T, TM, CM, TF](
-    getData: Row[T, TM, CM, TF] => D,
-    onDrop:  (D, Option[Target[D]]) => Callback = (_: D, _: Option[Target[D]]) => Callback.empty
-    // rowTagMod:  => TagMod = TagMod.empty, // TODO! Integrate
-    // cellTagMod: => TagMod = TagMod.empty  // TODO! Integrate
-  ): HookResult[UseDragAndDropTable[D, T, TM, CM, TF]] =
+  // Auto apply with TagMod.empty if no parameters specified
+  given autoApplyRowMod[D, T, TM, CM, TF]: Conversion[
+    ((Row[T, TM, CM, TF], RowDraggingInfo[D]) => TagMod) => (
+      Row[T, TM, CM, TF],
+      Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]
+    ) => VdomNode,
+    (Row[T, TM, CM, TF], Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]) => VdomNode
+  ] with
+    def apply(
+      rowMod: ((Row[T, TM, CM, TF], RowDraggingInfo[D]) => TagMod) => (
+        Row[T, TM, CM, TF],
+        Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]
+      ) => VdomNode
+    ): (Row[T, TM, CM, TF], Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]) => VdomNode =
+      rowMod((_, _) => TagMod.empty)
+
+  given autoApplyCellMod[D, T, TM, CM, TF]: Conversion[
+    ((Cell[T, Any, TM, CM, TF, Any, Any], RowDraggingInfo[D]) => TagMod) => (
+      Cell[T, Any, TM, CM, TF, Any, Any],
+      Option[Ref.ToVdom[HTMLElement]],
+      TagOf[HTMLElement]
+    ) => VdomNode,
+    (
+      Cell[T, Any, TM, CM, TF, Any, Any],
+      Option[Ref.ToVdom[HTMLElement]],
+      TagOf[HTMLElement]
+    ) => VdomNode
+  ] with
+    def apply(
+      cellMod: ((Cell[T, Any, TM, CM, TF, Any, Any], RowDraggingInfo[D]) => TagMod) => (
+        Cell[T, Any, TM, CM, TF, Any, Any],
+        Option[Ref.ToVdom[HTMLElement]],
+        TagOf[HTMLElement]
+      ) => VdomNode
+    ): (
+      Cell[T, Any, TM, CM, TF, Any, Any],
+      Option[Ref.ToVdom[HTMLElement]],
+      TagOf[HTMLElement]
+    ) => VdomNode =
+      cellMod((_, _) => TagMod.empty)
+
+  def useTableDragAndDrop[D: Eq, T, TM, CM, TF](
+    @unused table: Table[T, TM, CM, TF], // Not used, just to infer type parameters.
+    getData:       Row[T, TM, CM, TF] => D,
+    onDrop:        (D, Option[Target[D]]) => Callback = (_: D, _: Option[Target[D]]) => Callback.empty
+  ): HookResult[UseTableDragAndDrop[D, T, TM, CM, TF]] =
     for
-      // preDrag    <- useState[Option[Int]](none)
       dragging   <- useState[Option[Source[D]]](none)
       dragOver   <- useState[Option[Target[D]]](none)
       dndContext <- useDragAndDropContext[D, D](
@@ -96,8 +137,11 @@ object Table1:
         RowDraggingInfo(dragging.value.map(_.data), dragOver.value)
 
       val rowMod =
-        (row: Row[T, TM, CM, TF], render: Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]) =>
-          (tagMod: (Row[T, TM, CM, TF], RowDraggingInfo[D]) => TagMod) =>
+        (tagMod: (Row[T, TM, CM, TF], RowDraggingInfo[D]) => TagMod) =>
+          (
+            row:    Row[T, TM, CM, TF],
+            render: Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]
+          ) =>
             val rowData: D = getData(row)
             dragging.value match
               case Some((data, height)) if data === rowData =>
@@ -105,10 +149,6 @@ object Table1:
               case _                                        =>
                 DraggableDropTargetWithHandle(
                   handleRef => render(Some(handleRef))(tagMod(row, draggingInfo)),
-                  // ^.boxShadow := "inset 0 -2px green"
-                  // .unless(preDrag.value.contains_(row.original.id))
-                  // .unless(preDrag.value.isDefined)
-                  // ),
                   getInitialData = _ => Data(rowData),
                   getData = args =>
                     ClosestEdgeRaw.attachClosestEdge(
@@ -124,140 +164,50 @@ object Table1:
                   onDraggableDrop = _ => dragging.setState(none)
                 ): VdomNode
 
-      val cellMod = (
-        cell:    Cell[T, Any, TM, CM, TF, Any, Any],
-        context: Option[Ref.ToVdom[HTMLElement]],
-        render:  TagOf[HTMLElement]
-      ) =>
+      val cellMod =
         (tagMod: (Cell[T, Any, TM, CM, TF, Any, Any], RowDraggingInfo[D]) => TagMod) =>
-          val rowData: D = getData(cell.row)
+          (
+            cell:    Cell[T, Any, TM, CM, TF, Any, Any],
+            context: Option[Ref.ToVdom[HTMLElement]],
+            render:  TagOf[HTMLElement]
+          ) =>
+            val rowData: D = getData(cell.row)
 
-          context
-            .filter(_ => cell.column.id.value == "handle") // TODO Cursor, with grab
-            .map(handleRef =>
-              render.withRef(handleRef)(
-                // ^.onMouseDown --> preDrag.setState(cell.row.original.id.some),
-                // ^.onMouseUp --> preDrag.setState(none)
-              )
-            )
-            .getOrElse(render)(
-              (dragOver.value, dragging.value) match
-                case (Some((data, Edge.Top)), Some((sData, height)))
-                    if data === rowData && data =!= sData => // padding color?
-                  TagMod(^.paddingTop := s"${height}px", ^.transitionDuration := "0.1s")
-                case (Some((data, Edge.Bottom)), Some((sData, height)))
-                    if data === rowData && data =!= sData =>
-                  TagMod(^.paddingBottom := s"${height}px", ^.transitionDuration := "0.1s")
-                case _ => TagMod.empty
-            )(tagMod(cell, draggingInfo))
+            context
+              .filter(_ => cell.column.id.value == "handle") // TODO Cursor, with grab
+              .map(handleRef => render.withRef(handleRef))
+              .getOrElse(render)(
+                (dragOver.value, dragging.value) match
+                  case (Some((data, Edge.Top)), Some((sData, height)))
+                      if data === rowData && data =!= sData => // padding color?
+                    TagMod(^.paddingTop := s"${height}px", ^.transitionDuration := "0.1s")
+                  case (Some((data, Edge.Bottom)), Some((sData, height)))
+                      if data === rowData && data =!= sData =>
+                    TagMod(^.paddingBottom := s"${height}px", ^.transitionDuration := "0.1s")
+                  case _ => TagMod.empty
+              )(tagMod(cell, draggingInfo))
 
-      UseDragAndDropTable[D, T, TM, CM, TF](
-        rowMod,
-        cellMod,
-        null,
-        dndContext
-      )
+      UseTableDragAndDrop[D, T, TM, CM, TF](rowMod, cellMod, dndContext)
 
   val component =
     ScalaFnComponent[List[Guitar]]: guitars =>
       for
-        rows             <- useMemo(guitars)(identity)
-        preDrag          <- useState[Option[Int]](none)
-        // dragging   <- useState[Option[(Int, Int)]](none)
-        // dragOver   <- useState[Option[(Int, Edge)]](none)
-        // dndContext <-
-        //   useDragAndDropContext[Int, Int](
-        //     onDrag = payload =>
-        //       val data = payload.location.current.dropTargets.headOption.map(_.data)
-        //       val edge = data.flatMap(ClosestEdgeRaw.extractClosestEdge(_).toOption)
-        //       dragOver.setState((data.map(_.value), edge).tupled)
-        //     ,
-        //     onDrop = payload =>
-        //       preDrag.setState(none) >>
-        //         dragging.setState(none) >>
-        //         dragOver.setState(none) >>
-        //         Callback.log:
-        //           s"Dropped ${payload.source.data.value} on: ${payload.location.current.dropTargets.headOption.map(_.data.value)}"
-        //   )
-        dragAndDropTable <-
-          useDragAndDropTable[Int, Guitar, Nothing, Nothing, Nothing](
-            getData = _.original.id,
-            onDrop = (sourceData, target) =>
-              Callback.log:
-                s"Dropped ${sourceData} on: ${target.map(_.data)} - edge: ${target.map(_.edge)}"
-          )
-        table            <-
-          useReactTable:
-            TableOptions(Columns, rows, enableColumnResizing = true)
-      yield dragAndDropTable.dndContext(
+        rows     <- useMemo(guitars)(identity)
+        table    <- useReactTable:
+                      TableOptions(Columns, rows, enableColumnResizing = true)
+        tableDnd <- useTableDragAndDrop(
+                      table,
+                      getData = _.original.id,
+                      onDrop = (sourceData, target) =>
+                        Callback.log:
+                          s"Dropped $sourceData on: $target"
+                    )
+      yield tableDnd.context(
         <.h2("Drag and drop table"),
         HTMLTable(
           table,
-          Css("guitars"), // In next line, specifying types binds row context type RC
-          rowMod =
-            // c, render: Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]) =>
-            // dragAndDropTable.rowMod(c, render)
-            dragAndDropTable.rowMod(_, _)((_, _) => ^.boxShadow := "inset 0 -2px green"),
-          // (row, render: Option[Ref.ToVdom[HTMLElement]] => TagOf[HTMLElement]) =>
-          // dragging.value match
-          //   case Some((id, height)) if id === row.original.id =>
-          //     <.tr((^.height := s"${height}px").when(dragOver.value.isEmpty))
-          //   case _                                            =>
-          //     DraggableDropTargetWithHandle(
-          //       handleRef =>
-          //         render(Some(handleRef))(
-          //           (^.boxShadow := "inset 0 -2px green")
-          //             .unless(preDrag.value.contains_(row.original.id))
-          //             // .unless(preDrag.value.isDefined)
-          //         ),
-          //       getInitialData = _ => row.original.id,
-          //       getData = args =>
-          //         ClosestEdgeRaw.attachClosestEdge(
-          //           Data(row.original.id),
-          //           AttachClosestEdgeArgs(args.element, args.input, Edge.Vertical)
-          //         ),
-          //       // onDraggableGenerateDragPreview = payload =>
-          //       //   Callback.log(
-          //       //     s"Generating preview for ${payload.source.data.value} - boxshadow: ${payload.source.element.style.boxShadow}"
-          //       //   ) >>
-          //       //     // Callback(payload.source.element.style.setProperty("boxShadow", "none")) >>
-          //       //     Callback {
-          //       //       println(payload.source.element.style.boxShadow)
-          //       //       payload.source.element.style.boxShadow = "none"
-          //       //       println(payload.source.element.style.boxShadow)
-          //       //       // payload.source.element =
-          //       //       //   org.scalajs.dom.document.createElement("div").asInstanceOf[HTMLElement]
-          //       //     } >>
-          //       //     Callback.log(
-          //       //       s"Generated preview for ${payload.source.data.value} - boxshadow: ${payload.source.element.style.boxShadow}"
-          //       //     ),
-          //       onDraggableDragStart = payload =>
-          //         dragging.setState(
-          //           (payload.source.data.value,
-          //            payload.source.element.getBoundingClientRect().height.toInt
-          //           ).some
-          //         ),
-          //       onDraggableDrop = _ => dragging.setState(none)
-          //     )
-          cellMod = dragAndDropTable.cellMod(_, _, _)((_, _) => TagMod.empty)
-          // (cell, context, render) =>
-          // context
-          //   .filter(_ => cell.column.id.value == "handle") // TODO Cursor, with grab
-          //   .map(handleRef =>
-          //     render.withRef(handleRef)(
-          //       ^.onMouseDown --> preDrag.setState(cell.row.original.id.some),
-          //       ^.onMouseUp --> preDrag.setState(none)
-          //     )
-          //   )
-          //   .getOrElse(render)(
-          //     (dragOver.value, dragging.value) match
-          //       case (Some((id, Edge.Top)), Some(sid, height))
-          //           if id == cell.row.original.id && id =!= sid => // padding color?
-          //         TagMod(^.paddingTop := s"${height}px", ^.transitionDuration := "0.1s")
-          //       case (Some((id, Edge.Bottom)), Some(sid, height))
-          //           if id == cell.row.original.id && id =!= sid =>
-          //         TagMod(^.paddingBottom := s"${height}px", ^.transitionDuration := "0.1s")
-          //       case _ => TagMod.empty
-          //   )
+          Css("guitars"),
+          rowMod = tableDnd.rowMod((_, _) => ^.boxShadow := "inset 0 -2px green"),
+          cellMod = tableDnd.cellMod
         )
       )
