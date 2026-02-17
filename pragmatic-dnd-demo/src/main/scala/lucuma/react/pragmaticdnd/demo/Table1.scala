@@ -207,7 +207,10 @@ object Table1:
         HTMLTable(
           table,
           Css("guitars"),
-          rowMod = tableDnd.rowMod((_, _) => ^.boxShadow := "inset 0 -2px green"),
+          rowMod = tableDnd.rowMod((c, draggingInfo) =>
+            (^.boxShadow := "inset 0 -2px green")
+              .unless(draggingInfo.isDragging.contains(c.original.id))
+          ),
           cellMod = tableDnd.cellMod
         )
       )
