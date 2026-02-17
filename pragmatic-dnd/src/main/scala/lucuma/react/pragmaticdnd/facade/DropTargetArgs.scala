@@ -21,7 +21,7 @@ trait DropTargetArgs[S, T] extends DropTargetEvents[S, T] {
    * t A function that returns `data` you want to attach to the drop target. `getData()` is called
    * _repeatedly_ while the user is dragging over the drop target in order to power addons
    */
-  var getData: js.UndefOr[js.Function1[DropTargetGetFeedbackArgs[S], T]]
+  var getData: js.UndefOr[js.Function1[DropTargetGetFeedbackArgs[S], Data[T]]]
 
   /**
    * Used to conditionally block dropping. By default a drop target can be dropped on.
@@ -55,7 +55,7 @@ trait DropTargetArgs[S, T] extends DropTargetEvents[S, T] {
 object DropTargetArgs {
   def apply[S, T](
     element:               HTMLElement,
-    getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => T] = js.undefined,
+    getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => Data[T]] = js.undefined,
     canDrop:               js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
     getIsSticky:           js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
     onGenerateDragPreview: js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,

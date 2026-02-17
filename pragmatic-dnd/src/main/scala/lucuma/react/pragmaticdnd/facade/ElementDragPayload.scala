@@ -11,14 +11,14 @@ import scalajs.js
 trait ElementDragPayload[S] extends js.Object {
   var element: HTMLElement
   var dragHandle: js.UndefOr[HTMLElement]
-  var data: S
+  var data: Data[S]
 }
 
 object ElementDragPayload:
   def apply[S](
     element:    HTMLElement,
     dragHandle: js.UndefOr[HTMLElement],
-    data:       S
+    data:       Data[S]
   ): ElementDragPayload[S] =
     val p = (new js.Object).asInstanceOf[ElementDragPayload[S]]
     p.element = element

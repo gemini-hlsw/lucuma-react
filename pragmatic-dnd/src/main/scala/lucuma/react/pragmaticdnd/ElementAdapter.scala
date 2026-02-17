@@ -14,7 +14,7 @@ object ElementAdapter:
     element:               HTMLElement,
     dragHandle:            js.UndefOr[HTMLElement] = js.undefined,
     canDrag:               js.UndefOr[DraggableGetFeedbackArgs => Boolean] = js.undefined,
-    getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => S] = js.undefined,
+    getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => Data[S]] = js.undefined,
     onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
     onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
@@ -39,7 +39,7 @@ object ElementAdapter:
 
   def dropTarget[S, T](
     element:               HTMLElement,
-    getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => T] = js.undefined,
+    getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => Data[T]] = js.undefined,
     canDrop:               js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
     getIsSticky:           js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
     onGenerateDragPreview: js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,

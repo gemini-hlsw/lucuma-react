@@ -24,7 +24,7 @@ trait DropTargetRecord[T] extends js.Object {
    *
    * (Collected by `getData()`)
    */
-  var data: T
+  var data: Data[T]
 
   /**
    * The drop effect for the drop target
@@ -42,7 +42,7 @@ trait DropTargetRecord[T] extends js.Object {
 object DropTargetRecord:
   def apply[T](
     element:                 HTMLElement,
-    data:                    T,
+    data:                    Data[T],
     // dropEffect:              DropTargetAllowedDropEffect,
     isActiveDueToStickiness: Boolean
   ): DropTargetRecord[T] =
