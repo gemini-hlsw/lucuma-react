@@ -13,7 +13,7 @@ import scalajs.js
 
 final case class DropTarget[S, T](
   tag:                   TagOf[HTMLElement],
-  getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => T] = js.undefined,
+  getData:               js.UndefOr[DropTargetGetFeedbackArgs[S] => Data[T]] = js.undefined,
   canDrop:               js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
   getIsSticky:           js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
   onGenerateDragPreview: js.UndefOr[DropTargetEventPayload[S, T] => Callback] = js.undefined,
