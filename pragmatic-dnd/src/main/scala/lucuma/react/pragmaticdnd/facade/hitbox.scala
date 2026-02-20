@@ -12,17 +12,12 @@ import scala.scalajs.js.annotation.JSImport
 
 import scalajs.js.JSConverters.*
 
-type EdgeRaw = String
-
 opaque type Edge = String
 object Edge:
   val Top: Edge    = "top"
   val Right: Edge  = "right"
   val Bottom: Edge = "bottom"
   val Left: Edge   = "left"
-
-  val Vertical: List[Edge]   = List(Top, Bottom)
-  val Horizontal: List[Edge] = List(Right, Left)
 
 @js.native
 trait AttachClosestEdgeArgs extends js.Object:

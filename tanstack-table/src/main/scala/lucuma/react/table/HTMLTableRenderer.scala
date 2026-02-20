@@ -382,19 +382,20 @@ object HTMLTableRenderer:
     ScalaFnComponent
       .withHooks[Props[T, TM, CM, TF, RC]]
       .useRefToVdom[HTMLDivElement]
-      .useVirtualizerBy: (props, ref) =>
+      .localValBy((props, ownRef) => props.containerRef.getOrElse(ownRef)) // containerRef
+      .useVirtualizerBy: (props, _, containerRef) =>
         VirtualOptions(
           count = props.table.getRowModel().rows.length,
           estimateSize = props.estimateSize,
-          getScrollElement = ref.get,
+          getScrollElement = containerRef.get,
           overscan = props.overscan,
           getItemKey = props.getItemKey,
           onChange = props.onChange,
           debug = props.debugVirtualizer
         )
-      .useEffectOnMountBy: (props, _, virtualizer) => // Allow external access to Virtualizer
+      .useEffectOnMountBy: (props, _, _, virtualizer) => // Allow external access to Virtualizer
         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
-      .render: (props, ref, virtualizer) =>
+      .render: (props, _, ref, virtualizer) =>
         val rows =
           props.table.getTopRows() ++ props.table.getCenterRows() ++ props.table.getBottomRows()
 
