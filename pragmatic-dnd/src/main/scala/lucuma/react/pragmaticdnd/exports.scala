@@ -3,4 +3,4 @@
 
 package lucuma.react.pragmaticdnd
 
-export facade.Data, facade.Edge
+export facade.Data, facade.Edge, facade.Axis, facade.PublicConfig

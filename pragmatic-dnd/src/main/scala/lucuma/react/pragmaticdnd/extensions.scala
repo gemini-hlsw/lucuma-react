@@ -68,3 +68,10 @@ extension [D](data: Data[D])
 
   def extractClosestEdge: Option[Edge] =
     ClosestEdgeRaw.extractClosestEdge(data).toOption
+
+extension (axis: Axis)
+  def edges: List[Edge] =
+    axis match
+      case Axis.Vertical   => List(Edge.Top, Edge.Bottom)
+      case Axis.Horizontal => List(Edge.Left, Edge.Right)
+      case Axis.All        => List(Edge.Top, Edge.Bottom, Edge.Left, Edge.Right)

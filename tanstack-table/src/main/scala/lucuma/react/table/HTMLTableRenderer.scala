@@ -379,22 +379,23 @@ object HTMLTableRenderer:
   ]](
     renderer: HTMLTableRenderer[T, TM, CM, TF, RC]
   ) =
-    ScalaFnComponent
-      .withHooks[Props[T, TM, CM, TF, RC]]
-      .useRefToVdom[HTMLDivElement]
-      .useVirtualizerBy: (props, ref) =>
-        VirtualOptions(
-          count = props.table.getRowModel().rows.length,
-          estimateSize = props.estimateSize,
-          getScrollElement = ref.get,
-          overscan = props.overscan,
-          getItemKey = props.getItemKey,
-          onChange = props.onChange,
-          debug = props.debugVirtualizer
-        )
-      .useEffectOnMountBy: (props, _, virtualizer) => // Allow external access to Virtualizer
-        props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
-      .render: (props, ref, virtualizer) =>
+    ScalaFnComponent[Props[T, TM, CM, TF, RC]]: props =>
+      for
+        ownRef      <- useRefToVdom[HTMLDivElement]
+        actualRef    = props.containerRef.getOrElse(ownRef)
+        virtualizer <- useVirtualizer:
+                         VirtualOptions(
+                           count = props.table.getRowModel().rows.length,
+                           estimateSize = props.estimateSize,
+                           getScrollElement = actualRef.get,
+                           overscan = props.overscan,
+                           getItemKey = props.getItemKey,
+                           onChange = props.onChange,
+                           debug = props.debugVirtualizer
+                         )
+        _           <- useEffectOnMount: // Allow external access to Virtualizer
+                         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
+      yield
         val rows =
           props.table.getTopRows() ++ props.table.getCenterRows() ++ props.table.getBottomRows()
 
@@ -402,7 +403,7 @@ object HTMLTableRenderer:
           virtualOffsets(virtualizer, props.debugVirtualizer)
 
         // TODO Should we attempt to make the <table>  the container (scroll element) and <tbody> the virtualized element?
-        <.div.withRef(ref)(^.overflowY.auto, props.containerMod)(
+        <.div.withRef(actualRef)(^.overflowY.auto, props.containerMod)(
           renderer.render(
             props.table,
             virtualizer.getVirtualItems().toList.map(virtualItem => rows(virtualItem.index.toInt)),
@@ -454,24 +455,23 @@ object HTMLTableRenderer:
   ](
     renderer: HTMLTableRenderer[T, TM, CM, TF, RC]
   ) =
-    ScalaFnComponent
-      .withHooks[Props[T, TM, CM, TF, RC]]
-      .useRefToVdom[HTMLDivElement]
-      .localValBy((props, ownRef) => props.containerRef.getOrElse(ownRef)) // containerRef
-      .useVirtualizerBy: (props, _, containerRef) =>
-        VirtualOptions(
-          count = props.table.getRowModel().rows.length,
-          estimateSize = props.estimateSize,
-          getScrollElement = containerRef.get,
-          overscan = props.overscan,
-          getItemKey = props.getItemKey,
-          onChange = props.onChange,
-          debug = props.debugVirtualizer
-        )
-      .useEffectOnMountBy: (props, _, _, virtualizer) =>
-        // Allow external access to Virtualizer if a ref is passed
-        props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
-      .render: (props, _, containerRef, virtualizer) =>
+    ScalaFnComponent[Props[T, TM, CM, TF, RC]]: props =>
+      for
+        ownRef      <- useRefToVdom[HTMLDivElement]
+        actualRef    = props.containerRef.getOrElse(ownRef)
+        virtualizer <- useVirtualizer:
+                         VirtualOptions(
+                           count = props.table.getRowModel().rows.length,
+                           estimateSize = props.estimateSize,
+                           getScrollElement = actualRef.get,
+                           overscan = props.overscan,
+                           getItemKey = props.getItemKey,
+                           onChange = props.onChange,
+                           debug = props.debugVirtualizer
+                         )
+        _           <- useEffectOnMount: // Allow external access to Virtualizer if a ref is passed
+                         props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
+      yield
         val rows =
           props.table.getTopRows() ++ props.table.getCenterRows() ++ props.table.getBottomRows()
 
@@ -485,7 +485,7 @@ object HTMLTableRenderer:
         // We create 2 more containers: an outer one, with position: relative and height: 100%,
         // and an inner one, with position: absolute, and top: 0, bottom: 0.
         // The scrolling element has to be the outer one.
-        <.div.withRef(containerRef)(
+        <.div.withRef(actualRef)(
           ^.position.relative,
           ^.height := "100%",
           ^.overflow.auto,
