@@ -5,7 +5,6 @@ package lucuma.react.pragmaticdnd.facade
 
 import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.callback.CallbackTo
-import lucuma.react.pragmaticdnd.facade.Edge
 import lucuma.react.pragmaticdnd.facade.ElementDragPayload
 import lucuma.react.pragmaticdnd.facade.Input
 import org.scalajs.dom.HTMLElement
@@ -29,13 +28,6 @@ object Axis:
   val Vertical: Axis   = "vertical"
   val Horizontal: Axis = "horizontal"
   val All: Axis        = "all"
-
-  extension (axis: Axis)
-    def edges: List[Edge] =
-      axis match
-        case Vertical   => List(Edge.Top, Edge.Bottom)
-        case Horizontal => List(Edge.Left, Edge.Right)
-        case All        => List(Edge.Top, Edge.Bottom, Edge.Left, Edge.Right)
 
 opaque type ScrollSpeed = String
 object ScrollSpeed:
