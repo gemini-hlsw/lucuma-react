@@ -255,3 +255,16 @@ def useDragAndDropContext[S, T](
                    onDrop
                  )
   yield DragAndDropContext.ctx.provide(contextId.some)
+
+def useAutoScrollRef[S](
+  canScroll:        js.UndefOr[ElementGetFeedbackArgs[S] => Boolean] = js.undefined,
+  getAllowedAxis:   js.UndefOr[ElementGetFeedbackArgs[S] => Axis] = js.undefined,
+  getConfiguration: js.UndefOr[ElementGetFeedbackArgs[S] => PublicConfig] = js.undefined
+): HookResult[Ref.ToVdom[HTMLElement]] =
+  for
+    containerRef <- useRefToVdom[HTMLElement]
+    _            <- useEffectOnMount:
+                      containerRef.get.flatMap: refValue =>
+                        refValue.foldMap: elem =>
+                          AutoScroll.forElement(elem, canScroll, getAllowedAxis, getConfiguration)
+  yield containerRef
