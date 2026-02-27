@@ -44,7 +44,7 @@ case class Table[T, TM, CM, TF] private[table] (
   def getState(): TableState[TF]                                                     = TableState(toJs.getState())
   lazy val initialState: TableState[TF]                                              = TableState(toJs.initialState)
   lazy val options: TableOptions[T, TM, CM, TF]                                      =
-    TableOptions.fromJs(toJs.options.asInstanceOf[TableOptionsJs[T, TM, CM]])
+    TableOptions.fromJs(toJs.options.asInstanceOf[TableOptionsJs[T, TM, CM, TF]])
   def reset(): Callback                                                              = Callback(toJs.reset())
   def setState(value: TableState[TF]): Callback                                      = Callback(toJs.setState(value.toJs))
   def modState(f: Endo[TableState[TF]]): Callback                                    =

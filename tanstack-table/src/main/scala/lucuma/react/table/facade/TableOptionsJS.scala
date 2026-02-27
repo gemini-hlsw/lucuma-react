@@ -16,7 +16,7 @@ import scalajs.js
  * @tparam CM
  *   The type of the metadata for the column.
  */
-trait TableOptionsJs[T, TM, CM] extends js.Object:
+trait TableOptionsJs[T, TM, CM, TF] extends js.Object:
   var columns: js.Array[ColumnDefJs[T, ?, CM]]
   var data: js.Array[T]
 
@@ -120,9 +120,7 @@ trait TableOptionsJs[T, TM, CM] extends js.Object:
   var enableGlobalFilter: js.UndefOr[Boolean]                                                 = js.undefined
   var globalFilterFn: js.UndefOr[String | raw.buildLibFeaturesColumnFilteringMod.FilterFn[T]] =
     js.undefined
-  var onGlobalFilterChange: js.UndefOr[
-    raw.buildLibTypesMod.OnChangeFn[raw.buildLibFeaturesGlobalFilteringMod.GlobalFilterTableState]
-  ] = js.undefined
+  var onGlobalFilterChange: js.UndefOr[raw.buildLibTypesMod.OnChangeFn[TF]]                   = js.undefined
   var getColumnCanGlobalFilter: js.UndefOr[raw.buildLibTypesMod.Column[T, Any] => Boolean]    =
     js.undefined
   var getPreFilteredRowModel: js.UndefOr[

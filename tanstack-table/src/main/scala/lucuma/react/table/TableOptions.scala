@@ -31,7 +31,7 @@ import scalajs.js.JSConverters.*
 sealed trait TableOptions[T, TM, CM, TF]:
   def columns: Reusable[List[ColumnDef[T, ?, TM, CM, TF, ?, ?]]]
   def data: Reusable[List[T]]
-  private[table] def toJsBase: TableOptionsJs[T, TM, CM]
+  private[table] def toJsBase: TableOptionsJs[T, TM, CM, TF]
 
   private[table] def columnsJs: js.Array[ColumnDefJs[T, ?, CM]] =
     columns.toJSArray.map(_.toJs)
@@ -41,12 +41,12 @@ sealed trait TableOptions[T, TM, CM, TF]:
   private[table] def toJs(
     cols: js.Array[ColumnDefJs[T, ?, CM]],
     rows: js.Array[T]
-  ): TableOptionsJs[T, TM, CM] =
+  ): TableOptionsJs[T, TM, CM, TF] =
     toJsBase.columns = cols
     toJsBase.data = rows
     toJsBase
 
-  private def copy(toJsMod: TableOptionsJs[T, TM, CM] => Unit): TableOptions[T, TM, CM, TF] =
+  private def copy(toJsMod: TableOptionsJs[T, TM, CM, TF] => Unit): TableOptions[T, TM, CM, TF] =
     val self = this
     new TableOptions[T, TM, CM, TF]:
       def columns                 = self.columns
@@ -138,15 +138,17 @@ sealed trait TableOptions[T, TM, CM, TF]:
   inline def withoutRenderFallbackValue: TableOptions[T, TM, CM, TF] =
     setRenderFallbackValue(none)
 
-  lazy val state: Option[PartialTableState] =
+  lazy val state: Option[PartialTableState[TF]] =
     toJsBase.state.toOption.map(PartialTableState.apply)
 
   /** WARNING: This mutates the object in-place. */
-  def setState(state: Option[PartialTableState]): TableOptions[T, TM, CM, TF] =
+  def setState(state: Option[Reusable[PartialTableState[TF]]]): TableOptions[T, TM, CM, TF] =
+    // Reusability doesn't need special treatment to have a stable JS instance, since
+    // the JS instance is already embedded in PartialTableState.
     copy(_.state = state.map(_.toJs).orUndefined)
 
   /** WARNING: This mutates the object in-place. */
-  inline def withState(state: PartialTableState): TableOptions[T, TM, CM, TF] =
+  inline def withState(state: Reusable[PartialTableState[TF]]): TableOptions[T, TM, CM, TF] =
     setState(state.some)
 
   /** WARNING: This mutates the object in-place. */
@@ -998,33 +1000,14 @@ sealed trait TableOptions[T, TM, CM, TF]:
 
   lazy val onGlobalFilterChange: Option[Updater[TF] => Callback] =
     toJsBase.onGlobalFilterChange.toOption.map: fn =>
-      u =>
-        Callback(fn((u match
-          case Updater.Set(v)   =>
-            Updater.Set(raw.buildLibFeaturesGlobalFilteringMod.GlobalFilterTableState(v))
-          case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.buildLibFeaturesGlobalFilteringMod.GlobalFilterTableState) =>
-              raw.buildLibFeaturesGlobalFilteringMod.GlobalFilterTableState(
-                mod(v.globalFilter.asInstanceOf[TF])
-              )
-            )
-        ).toJs))
+      u => Callback(fn(u.toJs))
 
   /** WARNING: This mutates the object in-place. */
   def setOnGlobalFilterChange(
     onGlobalFilterChange: Option[Updater[TF] => Callback]
   ): TableOptions[T, TM, CM, TF] =
     copy(_.onGlobalFilterChange = onGlobalFilterChange.orUndefined.map: fn =>
-      u =>
-        fn(
-          Updater.fromJs(u) match
-            case Updater.Set(v)   => Updater.Set(v.globalFilter.asInstanceOf[TF])
-            case Updater.Mod(mod) =>
-              Updater.Mod(v =>
-                mod(raw.buildLibFeaturesGlobalFilteringMod.GlobalFilterTableState(v)).globalFilter
-                  .asInstanceOf[TF]
-              )
-        ).runNow())
+      u => fn(Updater.fromJs(u)).runNow())
 
   /** WARNING: This mutates the object in-place. */
   inline def withOnGlobalFilterChange(
@@ -1169,7 +1152,7 @@ object TableOptions:
     getRowId:                  js.UndefOr[(T, Int, Option[T]) => RowId] = js.undefined,
     onStateChange:             js.UndefOr[Updater[TableState[TF]] => Callback] = js.undefined,
     renderFallbackValue:       js.UndefOr[Any] = js.undefined,
-    state:                     js.UndefOr[PartialTableState] = js.undefined,
+    state:                     js.UndefOr[Reusable[PartialTableState[TF]]] = js.undefined,
     initialState:              js.UndefOr[TableState[TF]] = js.undefined,
     meta:                      js.UndefOr[TM] = js.undefined,
     // Column Sizing
@@ -1300,7 +1283,7 @@ object TableOptions:
     new TableOptions[T, TM, CM, TF] {
       val columns                 = columns_.asInstanceOf[Reusable[List[ColumnDef[T, ?, TM, CM, TF, ?, ?]]]]
       val data                    = data_
-      private[table] val toJsBase = new TableOptionsJs[T, TM, CM] {
+      private[table] val toJsBase = new TableOptionsJs[T, TM, CM, TF] {
         var columns         = null // Undefined on purpose, should not be accessible
         var data            = null // Undefined on purpose, should not be accessible
         var getCoreRowModel = null
@@ -1387,7 +1370,7 @@ object TableOptions:
       .applyOrNot(getColumnCanGlobalFilter, _.withGetColumnCanGlobalFilter(_))
 
   private[table] def fromJs[T, TM, CM, TF](
-    raw: TableOptionsJs[T, TM, CM]
+    raw: TableOptionsJs[T, TM, CM, TF]
   ): TableOptions[T, TM, CM, TF] =
     new TableOptions[T, TM, CM, TF]:
       lazy val columns            = Reusable.always(raw.columns.toList.map(ColumnDef.fromJs))

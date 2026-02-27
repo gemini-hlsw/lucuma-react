@@ -7,13 +7,13 @@ import lucuma.typed.tanstackTableCore as raw
 
 import scalajs.js
 
-// Still missing (everywhere): filters, grouping, pagination
-case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState):
+// Still missing (everywhere): grouping, pagination
+case class PartialTableState[+TF](private[table] val toJs: raw.anon.PartialTableState):
   lazy val columnVisibility: Option[ColumnVisibility] =
     toJs.columnVisibility.toOption.map(ColumnVisibility.fromJs)
 
   /** WARNING: This mutates the object in-place. */
-  def setColumnVisibility(columnVisibility: Option[ColumnVisibility]): PartialTableState =
+  def setColumnVisibility(columnVisibility: Option[ColumnVisibility]): PartialTableState[TF] =
     PartialTableState(
       columnVisibility.fold(toJs.setColumnVisibilityUndefined)(v =>
         toJs.setColumnVisibility(v.toJs)
@@ -24,7 +24,7 @@ case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState
     toJs.columnOrder.toOption.map(ColumnOrder.fromJs)
 
   /** WARNING: This mutates the object in-place. */
-  def setColumnOrder(columnOrder: Option[ColumnOrder]): PartialTableState =
+  def setColumnOrder(columnOrder: Option[ColumnOrder]): PartialTableState[TF] =
     PartialTableState(
       columnOrder.fold(toJs.setColumnOrderUndefined)(v => toJs.setColumnOrder(v.toJs))
     )
@@ -33,7 +33,7 @@ case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState
     toJs.columnPinning.toOption.map(ColumnPinning.fromJs)
 
   /** WARNING: This mutates the object in-place. */
-  def setColumnPinning(columnPinning: Option[ColumnPinning]): PartialTableState =
+  def setColumnPinning(columnPinning: Option[ColumnPinning]): PartialTableState[TF] =
     PartialTableState(
       columnPinning.fold(toJs.setColumnPinningUndefined)(v => toJs.setColumnPinning(v.toJs))
     )
@@ -42,7 +42,7 @@ case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState
     toJs.rowPinning.toOption.map(RowPinning.fromJs)
 
   /** WARNING: This mutates the object in-place. */
-  def setRowPinning(rowPinning: Option[RowPinning]): PartialTableState =
+  def setRowPinning(rowPinning: Option[RowPinning]): PartialTableState[TF] =
     PartialTableState(
       rowPinning.fold(toJs.setRowPinningUndefined)(v => toJs.setRowPinning(v.toJs))
     )
@@ -51,7 +51,7 @@ case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState
     toJs.sorting.toOption.map(Sorting.fromJs)
 
   /** WARNING: This mutates the object in-place. */
-  def setSorting(sorting: Option[Sorting]): PartialTableState =
+  def setSorting(sorting: Option[Sorting]): PartialTableState[TF] =
     PartialTableState(
       sorting.fold(toJs.setSortingUndefined)(v => toJs.setSorting(v.toJs))
     )
@@ -60,7 +60,7 @@ case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState
     toJs.expanded.toOption.map(Expanded.fromJs)
 
   /** WARNING: This mutates the object in-place. */
-  def setExpanded(expanded: Option[Expanded]): PartialTableState =
+  def setExpanded(expanded: Option[Expanded]): PartialTableState[TF] =
     PartialTableState(
       expanded.fold(toJs.setExpandedUndefined)(v => toJs.setExpanded(v.toJs))
     )
@@ -69,7 +69,7 @@ case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState
     toJs.columnSizing.toOption.map(ColumnSizing.fromJs)
 
   /** WARNING: This mutates the object in-place. */
-  def setColumnSizing(columnSizing: Option[ColumnSizing]): PartialTableState =
+  def setColumnSizing(columnSizing: Option[ColumnSizing]): PartialTableState[TF] =
     PartialTableState(
       columnSizing.fold(toJs.setColumnSizingUndefined)(v => toJs.setColumnSizing(v.toJs))
     )
@@ -78,7 +78,7 @@ case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState
     toJs.columnSizingInfo.toOption.map(ColumnSizingInfo.fromJs)
 
   /** WARNING: This mutates the object in-place. */
-  def setColumnSizingInfo(columnSizingInfo: Option[ColumnSizingInfo]): PartialTableState =
+  def setColumnSizingInfo(columnSizingInfo: Option[ColumnSizingInfo]): PartialTableState[TF] =
     PartialTableState(
       columnSizingInfo.fold(toJs.setColumnSizingInfoUndefined)(v =>
         toJs.setColumnSizingInfo(v.toJs)
@@ -89,13 +89,31 @@ case class PartialTableState(private[table] val toJs: raw.anon.PartialTableState
     toJs.rowSelection.toOption.map(RowSelection.fromJs)
 
   /** WARNING: This mutates the object in-place. */
-  def setRowSelection(rowSelection: Option[RowSelection]): PartialTableState =
+  def setRowSelection(rowSelection: Option[RowSelection]): PartialTableState[TF] =
     PartialTableState(
       rowSelection.fold(toJs.setRowSelectionUndefined)(v => toJs.setRowSelection(v.toJs))
     )
 
+  lazy val globalFilter: Option[TF] =
+    toJs.globalFilter.toOption.map(_.asInstanceOf[TF])
+
+  /** WARNING: This mutates the object in-place. */
+  def setGlobalFilter[TF1 >: TF](globalFilter: Option[TF1]): PartialTableState[TF1] =
+    PartialTableState(
+      globalFilter.fold(toJs.setGlobalFilterUndefined)(v => toJs.setGlobalFilter(v))
+    )
+
+  lazy val columnFilters: Option[ColumnFilters] =
+    toJs.columnFilters.toOption.map(ColumnFilters.fromJs)
+
+  /** WARNING: This mutates the object in-place. */
+  def setColumnFilters(columnFilters: Option[ColumnFilters]): PartialTableState[TF] =
+    PartialTableState(
+      columnFilters.fold(toJs.setColumnFiltersUndefined)(v => toJs.setColumnFilters(v.toJs))
+    )
+
 object PartialTableState:
-  def apply(
+  def apply[TF](
     columnVisibility: js.UndefOr[ColumnVisibility] = js.undefined,
     columnOrder:      js.UndefOr[ColumnOrder] = js.undefined,
     columnPinning:    js.UndefOr[ColumnPinning] = js.undefined,
@@ -104,8 +122,10 @@ object PartialTableState:
     expanded:         js.UndefOr[Expanded] = js.undefined,
     columnSizing:     js.UndefOr[ColumnSizing] = js.undefined,
     columnSizingInfo: js.UndefOr[ColumnSizingInfo] = js.undefined,
-    rowSelection:     js.UndefOr[RowSelection] = js.undefined
-  ): PartialTableState = PartialTableState(
+    rowSelection:     js.UndefOr[RowSelection] = js.undefined,
+    globalFilter:     js.UndefOr[TF] = js.undefined,
+    columnFilters:    js.UndefOr[ColumnFilters] = js.undefined
+  ): PartialTableState[TF] = PartialTableState(
     raw.anon
       .PartialTableState()
       .applyOrNot(columnVisibility, (s, p) => s.setColumnVisibility(p.toJs))
@@ -117,4 +137,6 @@ object PartialTableState:
       .applyOrNot(columnSizing, (s, p) => s.setColumnSizing(p.toJs))
       .applyOrNot(columnSizingInfo, (s, p) => s.setColumnSizingInfo(p.toJs))
       .applyOrNot(rowSelection, (s, p) => s.setRowSelection(p.toJs))
+      .applyOrNot(globalFilter, (s, p) => s.setGlobalFilter(p))
+      .applyOrNot(columnFilters, (s, p) => s.setColumnFilters(p.toJs))
   )
