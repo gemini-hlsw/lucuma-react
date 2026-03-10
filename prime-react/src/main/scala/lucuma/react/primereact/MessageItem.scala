@@ -17,17 +17,17 @@ import scalajs.js
 // name conflicts and confusion, I renamed this one.
 @js.native
 trait MessageItem extends js.Object {
-  var id: js.UndefOr[String]               = js.native
-  var severity: js.UndefOr[String]         = js.native
-  var summary: js.UndefOr[String]          = js.native
-  var detail: js.UndefOr[String]           = js.native
-  var content: js.UndefOr[Node]            = js.native
-  var className: js.UndefOr[String]        = js.native
-  var contentClassName: js.UndefOr[String] = js.native
-  var closable: js.UndefOr[Boolean]        = js.native
-  var sticky: js.UndefOr[Boolean]          = js.native
-  var life: js.UndefOr[Int]                = js.native
-  var icon: js.UndefOr[Node]               = js.native
+  var id: js.UndefOr[String]                   = js.native
+  var severity: js.UndefOr[String]             = js.native
+  var summary: js.UndefOr[String]              = js.native
+  var detail: js.UndefOr[String]               = js.native
+  var content: js.UndefOr[MessageItem => Node] = js.native
+  var className: js.UndefOr[String]            = js.native
+  var contentClassName: js.UndefOr[String]     = js.native
+  var closable: js.UndefOr[Boolean]            = js.native
+  var sticky: js.UndefOr[Boolean]              = js.native
+  var life: js.UndefOr[Int]                    = js.native
+  var icon: js.UndefOr[Node]                   = js.native
 }
 
 object MessageItem {
@@ -49,7 +49,9 @@ object MessageItem {
     m.severity = severity.value.asInstanceOf[String]
     summary.foreach(v => m.summary = v)
     detail.foreach(v => m.detail = v)
-    content.foreach(v => m.content = v.rawNode)
+    content.foreach: v =>
+      val contFn: js.Function1[MessageItem, Node] = (_: MessageItem) => v.rawNode
+      m.content = contFn
     clazz.foreach(v => m.className = v.htmlClass)
     contentClass.foreach(v => m.contentClassName = v.htmlClass)
     closable.foreach(v => m.closable = v)
