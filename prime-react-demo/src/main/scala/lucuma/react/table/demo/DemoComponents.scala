@@ -343,6 +343,14 @@ object DemoComponents {
                     Button(
                       label = "Toast With Content",
                       onClick = toastRef.show(MessageItem(content = <.h1("Big Content")))
+                    ),
+                    Button(
+                      label = "Content + Auto Dismiss",
+                      onClick = toastRef.show(
+                        MessageItem(content = <.div("Toast 1 - dismisses in 2s"), life = 2000),
+                        MessageItem(content = <.div("Toast 2 - dismisses in 4s"), life = 4000),
+                        MessageItem(content = <.div("Toast 3 - dismisses in 6s"), life = 6000)
+                      )
                     )
                   ),
                   <.div(
