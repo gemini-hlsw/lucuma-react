@@ -33,7 +33,7 @@
     "remark-math": "^6.0.0",
     "sass": "^1.98.0",
     "styled-components": "^6.1.19",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "vite": "^7.3.0"
   }
 }
