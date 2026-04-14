@@ -9,7 +9,7 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 // Still missing (everywhere):  grouping, pagination
-case class TableState[TF](private[table] val toJs: raw.buildLibTypesMod.TableState):
+case class TableState[TF](toJs: raw.buildLibTypesMod.TableState):
   lazy val columnVisibility: ColumnVisibility = ColumnVisibility.fromJs(toJs.columnVisibility)
 
   /** WARNING: This mutates the object in-place. */
@@ -105,3 +105,6 @@ object TableState:
       .applyOrNot(globalFilter, (s, p) => s.setGlobalFilter(p))
       .asInstanceOf[raw.buildLibTypesMod.TableState]
   )
+
+  def fromJs[TF](js: raw.buildLibTypesMod.TableState): TableState[TF] =
+    TableState(js)
