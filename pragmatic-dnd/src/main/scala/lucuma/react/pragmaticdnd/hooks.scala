@@ -256,6 +256,34 @@ def useDragAndDropContext[S, T](
                  )
   yield DragAndDropContext.ctx.provide(contextId.some)
 
+def useDragAndDropScope[S, T](
+  canMonitor:            js.UndefOr[MonitorGetFeedbackArgs[S, T] => Boolean] = js.undefined,
+  onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDropTargetChange:    js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
+  onDrop:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined
+): HookResult[DragAndDropScope[S, T]] =
+  for
+    dragging <- useState[Option[Data[S]]](none)
+    dragOver <- useState[List[DropTargetRecord[T]]](List.empty)
+    provider <- useDragAndDropContext[S, T](
+                  canMonitor,
+                  onGenerateDragPreview,
+                  onDragStart = payload =>
+                    dragging.setState(payload.source.data.some) >>
+                      onDragStart.toOption.foldMap(_(payload)),
+                  onDrag = payload =>
+                    dragOver.setState(payload.location.current.dropTargets.toList) >>
+                      onDrag.toOption.foldMap(_(payload)),
+                  onDropTargetChange,
+                  onDrop = payload =>
+                    dragging.setState(none) >>
+                      dragOver.setState(List.empty) >>
+                      onDrop.toOption.foldMap(_(payload))
+                )
+  yield DragAndDropScope[S, T](provider, dragging.value, dragOver.value)
+
 def useAutoScrollRef[S](
   canScroll:        js.UndefOr[ElementGetFeedbackArgs[S] => Boolean] = js.undefined,
   getAllowedAxis:   js.UndefOr[ElementGetFeedbackArgs[S] => Axis] = js.undefined,
