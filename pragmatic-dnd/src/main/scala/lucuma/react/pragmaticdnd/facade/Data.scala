@@ -15,6 +15,9 @@ object Data:
     p.value = value
     p
 
+  def unapply[D](data: Data[D]): Option[D] =
+    Some(data.value)
+
   given [D]: Conversion[D, Data[D]] with
     def apply(d: D): Data[D] = Data(d)
 

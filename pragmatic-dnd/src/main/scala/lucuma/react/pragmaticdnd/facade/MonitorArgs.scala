@@ -29,7 +29,7 @@ object MonitorArgs {
       )
       .applyOrNot(
         onDragStart,
-        (p, f) => p.onDragStart = args => { println("HELLO"); f(args).runNow() }
+        (p, f) => p.onDragStart = args => f(args).runNow()
       )
       .applyOrNot(onDrag, (p, f) => p.onDrag = args => f(args).runNow())
       .applyOrNot(onDropTargetChange, (p, f) => p.onDropTargetChange = args => f(args).runNow())
