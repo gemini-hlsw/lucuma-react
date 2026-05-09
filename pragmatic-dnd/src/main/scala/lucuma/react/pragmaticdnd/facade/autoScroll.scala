@@ -23,11 +23,11 @@ trait WindowGetFeedbackArgs[S] extends js.Object:
   var input: Input
   var source: ElementDragPayload[S]
 
-opaque type Axis = String
-object Axis:
-  val Vertical: Axis   = "vertical"
-  val Horizontal: Axis = "horizontal"
-  val All: Axis        = "all"
+opaque type Axes = String
+object Axes:
+  val Vertical: Axes   = "vertical"
+  val Horizontal: Axes = "horizontal"
+  val All: Axes        = "all"
 
 opaque type ScrollSpeed = String
 object ScrollSpeed:
@@ -48,14 +48,14 @@ object PublicConfig:
 trait ElementAutoScrollArgs[S] extends js.Object:
   var element: HTMLElement
   var canScroll: js.UndefOr[js.Function1[ElementGetFeedbackArgs[S], Boolean]]
-  var getAllowedAxis: js.UndefOr[js.Function1[ElementGetFeedbackArgs[S], Axis]]
+  var getAllowedAxis: js.UndefOr[js.Function1[ElementGetFeedbackArgs[S], Axes]]
   var getConfiguration: js.UndefOr[js.Function1[ElementGetFeedbackArgs[S], PublicConfig]]
 
 object ElementAutoScrollArgs:
   def apply[S](
     element:          HTMLElement,
     canScroll:        js.UndefOr[ElementGetFeedbackArgs[S] => Boolean] = js.undefined,
-    getAllowedAxis:   js.UndefOr[ElementGetFeedbackArgs[S] => Axis] = js.undefined,
+    getAllowedAxis:   js.UndefOr[ElementGetFeedbackArgs[S] => Axes] = js.undefined,
     getConfiguration: js.UndefOr[ElementGetFeedbackArgs[S] => PublicConfig] = js.undefined
   ): ElementAutoScrollArgs[S] =
     val p = (new js.Object).asInstanceOf[ElementAutoScrollArgs[S]]
@@ -68,13 +68,13 @@ object ElementAutoScrollArgs:
 @js.native
 trait WindowAutoScrollArgs[S] extends js.Object:
   var canScroll: js.UndefOr[js.Function1[WindowGetFeedbackArgs[S], Boolean]]
-  var getAllowedAxis: js.UndefOr[js.Function1[WindowGetFeedbackArgs[S], Axis]]
+  var getAllowedAxis: js.UndefOr[js.Function1[WindowGetFeedbackArgs[S], Axes]]
   var getConfiguration: js.UndefOr[js.Function1[WindowGetFeedbackArgs[S], PublicConfig]]
 
 object WindowAutoScrollArgs:
   def apply[S](
     canScroll:        js.UndefOr[WindowGetFeedbackArgs[S] => Boolean] = js.undefined,
-    getAllowedAxis:   js.UndefOr[WindowGetFeedbackArgs[S] => Axis] = js.undefined,
+    getAllowedAxis:   js.UndefOr[WindowGetFeedbackArgs[S] => Axes] = js.undefined,
     getConfiguration: js.UndefOr[WindowGetFeedbackArgs[S] => PublicConfig] = js.undefined
   ): WindowAutoScrollArgs[S] =
     val p = (new js.Object).asInstanceOf[WindowAutoScrollArgs[S]]
@@ -93,7 +93,7 @@ object AutoScroll:
   def forElement[S](
     element:          HTMLElement,
     canScroll:        js.UndefOr[ElementGetFeedbackArgs[S] => Boolean] = js.undefined,
-    getAllowedAxis:   js.UndefOr[ElementGetFeedbackArgs[S] => Axis] = js.undefined,
+    getAllowedAxis:   js.UndefOr[ElementGetFeedbackArgs[S] => Axes] = js.undefined,
     getConfiguration: js.UndefOr[ElementGetFeedbackArgs[S] => PublicConfig] = js.undefined
   ): CallbackTo[Callback] =
     CallbackTo:
@@ -103,7 +103,7 @@ object AutoScroll:
 
   def forWindow[S](
     canScroll:        js.UndefOr[WindowGetFeedbackArgs[S] => Boolean] = js.undefined,
-    getAllowedAxis:   js.UndefOr[WindowGetFeedbackArgs[S] => Axis] = js.undefined,
+    getAllowedAxis:   js.UndefOr[WindowGetFeedbackArgs[S] => Axes] = js.undefined,
     getConfiguration: js.UndefOr[WindowGetFeedbackArgs[S] => PublicConfig] = js.undefined
   ): CallbackTo[Callback] =
     CallbackTo:
