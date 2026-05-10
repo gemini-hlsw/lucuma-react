@@ -286,7 +286,7 @@ def useDragAndDropScope[S, T](
 
 def useAutoScrollRef[S](
   canScroll:        js.UndefOr[ElementGetFeedbackArgs[S] => Boolean] = js.undefined,
-  getAllowedAxis:   js.UndefOr[ElementGetFeedbackArgs[S] => Axis] = js.undefined,
+  getAllowedAxis:   js.UndefOr[ElementGetFeedbackArgs[S] => Axes] = js.undefined,
   getConfiguration: js.UndefOr[ElementGetFeedbackArgs[S] => PublicConfig] = js.undefined,
   containerRef:     js.UndefOr[Ref.ToVdom[HTMLElement]] = js.undefined
 ): HookResult[Ref.ToVdom[HTMLElement]] =

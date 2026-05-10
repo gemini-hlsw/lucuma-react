@@ -67,11 +67,36 @@ extension [D](data: Data[D])
     attachClosestEdge(args.element, args.input, allowedEdges)
 
   def extractClosestEdge: Option[Edge] =
-    ClosestEdgeRaw.extractClosestEdge(data).toOption
+    Option(ClosestEdgeRaw.extractClosestEdge(data))
 
-extension (axis: Axis)
+  def attachInstruction(
+    operations: Operations,
+    element:    Element,
+    input:      Input,
+    axis:       Axis
+  ): Data[D] =
+    ListItemRaw.attachInstruction(data, AttachInstructionArgs(operations, element, input, axis))
+
+  def attachInstruction(
+    operations: Operations,
+    element:    Element,
+    input:      Input
+  ): Data[D] =
+    attachInstruction(operations, element, input, Axis.Vertical)
+
+  def attachInstruction[S](
+    args:       DropTargetGetFeedbackArgs[S],
+    operations: Operations,
+    axis:       Axis = Axis.Vertical
+  ): Data[D] =
+    attachInstruction(operations, args.element, args.input, axis)
+
+  def extractInstruction: Option[Instruction] =
+    Option(ListItemRaw.extractInstruction(data))
+
+extension (axis: Axes)
   def edges: List[Edge] =
     axis match
-      case Axis.Vertical   => List(Edge.Top, Edge.Bottom)
-      case Axis.Horizontal => List(Edge.Left, Edge.Right)
-      case Axis.All        => List(Edge.Top, Edge.Bottom, Edge.Left, Edge.Right)
+      case Axes.Vertical   => List(Edge.Top, Edge.Bottom)
+      case Axes.Horizontal => List(Edge.Left, Edge.Right)
+      case Axes.All        => List(Edge.Top, Edge.Bottom, Edge.Left, Edge.Right)
