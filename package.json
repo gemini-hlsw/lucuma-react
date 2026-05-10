@@ -7,7 +7,7 @@
     "@atlaskit/pragmatic-drag-and-drop-react-drop-indicator": "3.2.15",
     "@floating-ui/react": "^0.27.8",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@react-hook/resize-observer": "^2.0.2",
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "v3.13.13",
