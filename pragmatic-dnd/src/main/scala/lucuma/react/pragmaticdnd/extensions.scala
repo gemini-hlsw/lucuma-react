@@ -67,7 +67,7 @@ extension [D](data: Data[D])
     attachClosestEdge(args.element, args.input, allowedEdges)
 
   def extractClosestEdge: Option[Edge] =
-    ClosestEdgeRaw.extractClosestEdge(data).toOption
+    Option(ClosestEdgeRaw.extractClosestEdge(data))
 
   def attachInstruction(
     operations: Operations,
@@ -92,7 +92,7 @@ extension [D](data: Data[D])
     attachInstruction(operations, args.element, args.input, axis)
 
   def extractInstruction: Option[Instruction] =
-    ListItemRaw.extractInstruction(data).toOption
+    Option(ListItemRaw.extractInstruction(data))
 
 extension (axis: Axes)
   def edges: List[Edge] =

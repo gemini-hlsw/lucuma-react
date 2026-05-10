@@ -41,7 +41,7 @@ object ClosestEdgeRaw extends js.Object:
     args: AttachClosestEdgeArgs
   ): Data[T] = js.native
 
-  def extractClosestEdge[T](data: Data[T]): js.UndefOr[Edge] = js.native
+  def extractClosestEdge[T](data: Data[T]): Edge | Null = js.native
 
 opaque type Operation = String
 object Operation:
@@ -89,10 +89,11 @@ object Operations:
   def available(operations: Operation*): Operations =
     operations.map(_ -> Availability.Available).toMap
 
-  val Reorder: Operations = available(Operation.ReorderBefore, Operation.ReorderAfter)
-  val Combine: Operations = available(Operation.Combine)
-  val All: Operations     =
+  val Reorder: Operations                = available(Operation.ReorderBefore, Operation.ReorderAfter)
+  val Combine: Operations                = available(Operation.Combine)
+  val All: Operations                    =
     available(Operation.ReorderBefore, Operation.ReorderAfter, Operation.Combine)
+  val ReorderOnExpandedGroup: Operations = available(Operation.ReorderBefore, Operation.Combine)
 
 object AttachInstructionArgs:
   def apply(
@@ -116,4 +117,4 @@ object ListItemRaw extends js.Object:
     args: AttachInstructionArgs
   ): Data[T] = js.native
 
-  def extractInstruction[T](data: Data[T]): js.UndefOr[Instruction] = js.native
+  def extractInstruction[T](data: Data[T]): Instruction | Null = js.native
