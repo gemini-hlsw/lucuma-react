@@ -5,8 +5,10 @@ package lucuma.react.pragmaticdnd.facade
 
 import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.callback.CallbackTo
+import lucuma.react.pragmaticdnd.OptionalCallbackTo
 import lucuma.react.pragmaticdnd.facade.ElementDragPayload
 import lucuma.react.pragmaticdnd.facade.Input
+import lucuma.react.pragmaticdnd.resolve
 import org.scalajs.dom.HTMLElement
 
 import scalajs.js
@@ -92,14 +94,21 @@ object AutoScrollRaw extends js.Object:
 object AutoScroll:
   def forElement[S](
     element:          HTMLElement,
-    canScroll:        js.UndefOr[ElementGetFeedbackArgs[S] => Boolean] = js.undefined,
-    getAllowedAxis:   js.UndefOr[ElementGetFeedbackArgs[S] => Axes] = js.undefined,
-    getConfiguration: js.UndefOr[ElementGetFeedbackArgs[S] => PublicConfig] = js.undefined
+    canScroll:        js.UndefOr[ElementGetFeedbackArgs[S] => OptionalCallbackTo[Boolean]] = js.undefined,
+    getAllowedAxis:   js.UndefOr[ElementGetFeedbackArgs[S] => OptionalCallbackTo[Axes]] =
+      js.undefined,
+    getConfiguration: js.UndefOr[ElementGetFeedbackArgs[S] => OptionalCallbackTo[PublicConfig]] =
+      js.undefined
   ): CallbackTo[Callback] =
     CallbackTo:
       Callback.fromJsFn:
         AutoScrollRaw.autoScrollForElements:
-          ElementAutoScrollArgs(element, canScroll, getAllowedAxis, getConfiguration)
+          ElementAutoScrollArgs(
+            element,
+            canScroll.resolve,
+            getAllowedAxis.resolve,
+            getConfiguration.resolve
+          )
 
   def forWindow[S](
     canScroll:        js.UndefOr[WindowGetFeedbackArgs[S] => Boolean] = js.undefined,
