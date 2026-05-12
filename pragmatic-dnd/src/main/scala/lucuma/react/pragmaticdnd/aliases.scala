@@ -11,16 +11,16 @@ import scala.scalajs.js
 type OptionalCallbackTo[A] = A | CallbackTo[A]
 
 extension [A](x: OptionalCallbackTo[A])
-  def resolve: A =
+  private[pragmaticdnd] def resolve: A =
     x match
       case cb: CallbackTo[?] => cb.asInstanceOf[CallbackTo[A]].runNow()
       case a                 => a.asInstanceOf[A]
 
 extension [A, B](f: B => OptionalCallbackTo[A])
-  def resolve: B => A =
+  private[pragmaticdnd] def resolve: B => A =
     b => f(b).resolve
 
 extension [A, B](f: js.UndefOr[B => OptionalCallbackTo[A]])
   @targetName("resolveFnInUndef")
-  def resolve: js.UndefOr[B => A] =
+  private[pragmaticdnd] def resolve: js.UndefOr[B => A] =
     f.map(_.resolve)
