@@ -14,10 +14,12 @@ import scalajs.js
 final case class DraggableDropTargetWithHandle[S, T](
   tag:                             Ref.ToVdom[HTMLElement] => TagOf[HTMLElement],
   canDrag:                         js.UndefOr[DraggableGetFeedbackArgs => Boolean] = js.undefined,
-  canDrop:                         js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
-  getInitialData:                  js.UndefOr[DraggableGetFeedbackArgs => Data[S]] = js.undefined,
-  getData:                         js.UndefOr[DropTargetGetFeedbackArgs[S] => Data[T]] = js.undefined,
-  getIsSticky:                     js.UndefOr[DropTargetGetFeedbackArgs[S] => Boolean] = js.undefined,
+  canDrop:                         js.UndefOr[DropTargetGetFeedbackArgs[S] => OptionalCallbackTo[Boolean]] = js.undefined,
+  getInitialData:                  js.UndefOr[DraggableGetFeedbackArgs => OptionalCallbackTo[Data[S]]] =
+    js.undefined,
+  getData:                         js.UndefOr[DropTargetGetFeedbackArgs[S] => OptionalCallbackTo[Data[T]]] = js.undefined,
+  getIsSticky:                     js.UndefOr[DropTargetGetFeedbackArgs[S] => OptionalCallbackTo[Boolean]] =
+    js.undefined,
   onDraggableGenerateDragPreview:  js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDraggableDragStart:            js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDraggableDrag:                 js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,

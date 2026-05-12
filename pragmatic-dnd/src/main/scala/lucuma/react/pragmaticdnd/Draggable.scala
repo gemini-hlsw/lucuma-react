@@ -13,8 +13,9 @@ import scalajs.js
 
 final case class Draggable[S, T](
   tag:                   TagOf[HTMLElement],
-  canDrag:               js.UndefOr[DraggableGetFeedbackArgs => Boolean] = js.undefined,
-  getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => Data[S]] = js.undefined,
+  canDrag:               js.UndefOr[DraggableGetFeedbackArgs => OptionalCallbackTo[Boolean]] = js.undefined,
+  getInitialData:        js.UndefOr[DraggableGetFeedbackArgs => OptionalCallbackTo[Data[S]]] =
+    js.undefined,
   onGenerateDragPreview: js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDragStart:           js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
   onDrag:                js.UndefOr[BaseEventPayload[S, T] => Callback] = js.undefined,
