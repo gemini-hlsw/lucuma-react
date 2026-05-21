@@ -4,4 +4,5 @@
 package lucuma.react.pragmaticdnd
 
 export facade.Data, facade.Edge, facade.Axis, facade.Axes, facade.PublicConfig, facade.Instruction,
-  facade.Operation, facade.Operations, facade.ListItemDropIndicator, facade.LineType, facade.CssSize
+  facade.Operation, facade.Operations, facade.ListItemDropIndicator, facade.BoxDropIndicator,
+  facade.LineType, facade.CssSize, facade.LineAppearance

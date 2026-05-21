@@ -23,9 +23,14 @@ object LineType:
   val NoTerminal: LineType      = "no-terminal"
   val TerminalNoBleed: LineType = "terminal-no-bleed"
 
+opaque type LineAppearance = String
+object LineAppearance:
+  val Default: LineAppearance = "default"
+  val Warning: LineAppearance = "warning"
+
 final case class ListItemDropIndicator(
   instruction: Instruction,
-  lineGap:     js.UndefOr[CssSize] = js.undefined,
+  gap:         js.UndefOr[CssSize] = js.undefined,
   lineType:    js.UndefOr[LineType] = js.undefined
 ) extends GenericFnComponentP[ListItemDropIndicator.Props]:
   override protected def cprops = ListItemDropIndicator.props(this)
@@ -34,7 +39,7 @@ final case class ListItemDropIndicator(
 object ListItemDropIndicator:
   @js.native
   @JSImport("@atlaskit/pragmatic-drag-and-drop-react-drop-indicator/list-item", "DropIndicator")
-  object RawDropIndicator extends js.Object
+  object RawListItemDropIndicator extends js.Object
 
   @js.native
   trait Props extends js.Object:
@@ -45,8 +50,42 @@ object ListItemDropIndicator:
   private def props(p: ListItemDropIndicator): Props =
     val r = (new js.Object).asInstanceOf[Props]
     r.instruction = p.instruction
-    p.lineGap.foreach(v => r.lineGap = v)
+    p.gap.foreach(v => r.lineGap = v)
     p.lineType.foreach(v => r.lineType = v)
     r
 
-  val component = JsFnComponent[Props, Children.None](RawDropIndicator)
+  val component = JsFnComponent[Props, Children.None](RawListItemDropIndicator)
+
+final case class BoxDropIndicator(
+  edge:       Edge,
+  gap:        js.UndefOr[CssSize] = js.undefined,
+  appearance: js.UndefOr[LineAppearance] = js.undefined,
+  lineType:   js.UndefOr[LineType] = js.undefined,
+  indent:     js.UndefOr[CssSize] = js.undefined
+) extends GenericFnComponentP[BoxDropIndicator.Props]:
+  override protected def cprops = BoxDropIndicator.props(this)
+  override def render           = BoxDropIndicator.component(cprops)
+
+object BoxDropIndicator:
+  @js.native
+  @JSImport("@atlaskit/pragmatic-drag-and-drop-react-drop-indicator/box", "DropIndicator")
+  object RawBoxDropIndicator extends js.Object
+
+  @js.native
+  trait Props extends js.Object:
+    var edge: Edge
+    var gap: js.UndefOr[CssSize]
+    var appearance: js.UndefOr[LineAppearance]
+    var `type`: js.UndefOr[LineType]
+    var indent: js.UndefOr[CssSize]
+
+  private def props(p: BoxDropIndicator): Props =
+    val r = (new js.Object).asInstanceOf[Props]
+    r.edge = p.edge
+    p.gap.foreach(v => r.gap = v)
+    p.appearance.foreach(v => r.appearance = v)
+    p.lineType.foreach(v => r.`type` = v)
+    p.indent.foreach(v => r.indent = v)
+    r
+
+  val component = JsFnComponent[Props, Children.None](RawBoxDropIndicator)
