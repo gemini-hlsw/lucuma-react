@@ -17,7 +17,7 @@ object ColumnOrder:
   inline def apply(values: ColumnId*): ColumnOrder      = values.toList
   private[table] def fromJs(
     rawValue: raw.buildLibFeaturesColumnOrderingMod.ColumnOrderState
-  ): ColumnOrder =
+  ): ColumnOrder                                        =
     rawValue.toList.map(ColumnId(_))
 
   extension (opaqueValue: ColumnOrder)

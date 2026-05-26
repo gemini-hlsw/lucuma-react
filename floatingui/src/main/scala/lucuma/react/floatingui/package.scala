@@ -240,7 +240,7 @@ object use {
     ^.asInstanceOf[js.Dynamic].applyDynamic("useFloating")().asInstanceOf[UseFloatingReturn]
   inline def useFloating(
     props: UseFloatingProps
-  ): UseFloatingReturn =
+  ): UseFloatingReturn                        =
     ^.asInstanceOf[js.Dynamic].applyDynamic("useFloating")(props).asInstanceOf[UseFloatingReturn]
 
   inline def useInteractions(propsList: js.Array[ElementProps | Unit]): UseFloatingReturn =

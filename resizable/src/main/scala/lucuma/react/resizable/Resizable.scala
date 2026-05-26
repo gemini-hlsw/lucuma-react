@@ -172,7 +172,7 @@ object Resizable {
     resizeHandles:   js.UndefOr[List[ResizeHandleAxis]] = js.undefined,
     transformScale:  js.UndefOr[Double] = js.undefined,
     width:           Double
-  ): Props = {
+  ): Props                       = {
     val p = (new js.Object).asInstanceOf[Props]
     axis.foreach((v: Axis) => p.axis = v.toJs)
     (className, clazz).cssToJs.foreach(v => p.className = v)

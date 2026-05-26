@@ -39,7 +39,7 @@ case class OverlayPanel(
                                                         Null,
                                                         OverlayPanel.Facade,
                                                         PropsAndChildren
-  ] =
+  ]                             =
     OverlayPanel.component
 
   override def addModifiers(modifiers: Seq[TagMod]): OverlayPanel =

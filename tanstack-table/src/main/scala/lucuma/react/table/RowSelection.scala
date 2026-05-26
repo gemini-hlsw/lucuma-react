@@ -14,7 +14,7 @@ object RowSelection:
   inline def apply(values: (RowId, Boolean)*): RowSelection   = values.toMap
   private[table] def fromJs(
     rawValue: raw.buildLibFeaturesRowSelectionMod.RowSelectionState
-  ): RowSelection =
+  ): RowSelection                                             =
     rawValue.toList.map((row, selected) => RowId(row) -> selected).toMap
 
   extension (opaqueValue: RowSelection)

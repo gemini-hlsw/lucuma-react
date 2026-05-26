@@ -19,7 +19,7 @@ object Sorting:
     values.toList.map(ColumnSort.apply.tupled)
   protected[table] def fromJs(
     rawValue: js.Array[raw.buildLibFeaturesRowSortingMod.ColumnSort]
-  ): Sorting =
+  ): Sorting                                                    =
     rawValue.toList.map(ColumnSort.fromJs)
 
   extension (opaqueValue: Sorting)
