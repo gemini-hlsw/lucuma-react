@@ -16,7 +16,7 @@ object ColumnVisibility:
   inline def apply(values: (ColumnId, Visibility)*): ColumnVisibility   = values.toMap
   private[table] def fromJs(
     rawValue: raw.buildLibFeaturesColumnVisibilityMod.VisibilityState
-  ): ColumnVisibility =
+  ): ColumnVisibility                                                   =
     rawValue.toList.map((col, visible) => ColumnId(col) -> Visibility.fromVisible(visible)).toMap
 
   extension (opaqueValue: ColumnVisibility)

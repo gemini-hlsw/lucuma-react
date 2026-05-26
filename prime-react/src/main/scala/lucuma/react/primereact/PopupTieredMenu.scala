@@ -27,7 +27,7 @@ case class PopupTieredMenu(
   onShow:     js.UndefOr[Callback] = js.undefined,
   modifiers:  Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAF[PopupMenu.PopupMenuProps, PopupTieredMenu, PopupMenu.Facade]:
-  override protected def cprops = PopupTieredMenu.props(this)
+  override protected def cprops                                                    = PopupTieredMenu.props(this)
   override protected val component
     : ComponentWithFacade[PopupMenu.PopupMenuProps, Null, PopupMenu.Facade, Props] =
     PopupTieredMenu.component

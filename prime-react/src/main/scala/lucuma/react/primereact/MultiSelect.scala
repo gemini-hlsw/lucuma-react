@@ -132,7 +132,6 @@ object MultiSelect:
     case Chip  extends Display(chip)
 
   private def componentBuilder[A] = ScalaFnComponent[MultiSelect[A]] { props =>
-
     val changeHandler: MultiSelectChangeEvent => Callback =
       parms =>
         val a = parms.value.asInstanceOf[js.Array[Int]].toList.map(props.finder)

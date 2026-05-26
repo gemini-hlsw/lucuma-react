@@ -17,7 +17,7 @@ object ColumnSizing:
   inline def apply(values: (ColumnId, SizePx)*): ColumnSizing   = values.toMap
   private[table] def fromJs(
     rawValue: raw.buildLibFeaturesColumnSizingMod.ColumnSizingState
-  ): ColumnSizing =
+  ): ColumnSizing                                               =
     rawValue.toList.map((col, size) => ColumnId(col) -> SizePx(size.toInt)).toMap
 
   extension (opaqueValue: ColumnSizing)

@@ -17,7 +17,7 @@ object ColumnFilters:
   inline def apply(values: (ColumnId, Any)*): ColumnFilters   = values.toMap
   private[table] def fromJs(
     rawValue: raw.buildLibFeaturesColumnFilteringMod.ColumnFiltersState
-  ): ColumnFilters =
+  ): ColumnFilters                                            =
     rawValue.map(f => (ColumnId(f.id), f.value)).toMap
 
   extension (opaqueValue: ColumnFilters)

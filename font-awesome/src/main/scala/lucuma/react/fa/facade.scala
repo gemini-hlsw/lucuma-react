@@ -181,7 +181,7 @@ object FontAwesome extends js.Object {
   def counter(
     content: String | Float | Double | Int | Short | Byte,
     params:  js.UndefOr[CounterParams]
-  ): Counter = js.native
+  ): Counter                                                                                  = js.native
   def icon(icon: FAIcon | IconLookup, params: js.UndefOr[IconParams] = js.undefined): IconRaw =
     js.native
 
