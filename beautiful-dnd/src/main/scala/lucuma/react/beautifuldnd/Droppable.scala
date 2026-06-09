@@ -5,6 +5,7 @@ package lucuma.react.beautifuldnd
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade as Raw
+import japgolly.scalajs.react.vdom.ImplicitsFromRaw.*
 import japgolly.scalajs.react.vdom.html_<^.*
 import org.scalajs.dom.html
 
@@ -19,7 +20,7 @@ object Provided {
     Provided(
       TagMod.fn(_.addRefFn(provided.innerRef)),
       TagMod.fn(_.addAttrsObject(provided.droppableProps)),
-      js.|.undefOr2ops[Raw.React.Node](provided.placeholder).toOption.whenDefined(using identity)
+      provided.placeholder.toOption.whenDefined
     )
 }
 

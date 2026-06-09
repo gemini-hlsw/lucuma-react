@@ -10,11 +10,15 @@ ThisBuild / scalacOptions ++= Seq(
 
 ThisBuild / githubWorkflowBuildPreamble ++= Seq(
   WorkflowStep.Use(
-    UseRef.Public("actions", "setup-node", "v4"),
-    name = Some("Setup Node"),
-    params = Map("node-version" -> "26", "cache" -> "npm")
+    UseRef.Public("pnpm", "action-setup", "v6"),
+    name = Some("Setup pnpm")
   ),
-  WorkflowStep.Run(List("npm ci"))
+  WorkflowStep.Use(
+    UseRef.Public("actions", "setup-node", "v6"),
+    name = Some("Setup Node"),
+    params = Map("node-version" -> "26", "cache" -> "pnpm")
+  ),
+  WorkflowStep.Run(List("pnpm ci --prefer-offline"))
 )
 
 ThisBuild / mergifyPrRules +=
@@ -32,7 +36,7 @@ val lucumaTypedV     = "0.11.1"
 val munitScalacheckV = "1.3.0"
 val munitV           = "1.3.3"
 val scalaJsDomV      = "2.8.1"
-val scalaJsReactV    = "3.0.0"
+val scalaJsReactV    = "4.0.0"
 
 ThisBuild / crossScalaVersions := Seq("3.8.4")
 

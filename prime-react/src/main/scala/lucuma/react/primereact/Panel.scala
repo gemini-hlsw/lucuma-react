@@ -38,7 +38,7 @@ object Panel {
       .render { (props, children) =>
         CPanel
           .applyOrNot(props.id, _.id(_))
-          .applyOrNot(props.header, (c, p) => c.header(p.rawNode))
+          .applyOrNot(props.header, (c, p) => c.header(p))
           .applyOrNot(props.toggleable, _.toggleable(_))
           .applyOrNot(props.collapsed, _.collapsed(_))
           .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))

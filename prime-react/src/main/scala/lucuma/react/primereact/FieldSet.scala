@@ -39,7 +39,7 @@ object FieldSet:
       .render: (props, children) =>
         CFieldSet
           .applyOrNot(props.id, _.id(_))
-          .applyOrNot(props.legend, (c, p) => c.legend(p.rawNode))
+          .applyOrNot(props.legend, (c, p) => c.legend(p))
           .applyOrNot(props.toggleable, _.toggleable(_))
           .applyOrNot(props.collapsed, _.collapsed(_))
           .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))

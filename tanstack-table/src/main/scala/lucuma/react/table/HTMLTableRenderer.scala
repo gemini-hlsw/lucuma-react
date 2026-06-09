@@ -6,6 +6,7 @@ package lucuma.react.table
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.hooks.Hooks
+import japgolly.scalajs.react.vdom.ImplicitsFromRaw.vdomNodeFromRawReactNode
 import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
