@@ -12,13 +12,13 @@ class StyleSuite extends munit.FunSuite with TestUtils:
     val a: Style = Style(Map("height" -> 42, "background" -> "black"))
     val b: Style = Style(Map("height" -> 42, "background" -> "black"))
     val c: Style = Style(Map("height" -> 42, "background" -> "black"))
-    assert((a |+| b) === c)
+    assertEquals(a |+| b, c)
 
   test("extract"):
     val a: Style = Style(Map("height" -> 42, "background" -> "black"))
-    assert(a.extract[Int]("height") == 42.some)
+    assertEquals(a.extract[Int]("height"), 42.some)
     assert(a.extract[String]("height").isEmpty)
-    assert(a.extract[String]("background") == "black".some)
+    assertEquals(a.extract[String]("background"), "black".some)
 
   test("remove"):
     val a: Style = Style(Map("height" -> 42, "background" -> "black"))
