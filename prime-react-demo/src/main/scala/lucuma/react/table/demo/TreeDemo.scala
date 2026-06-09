@@ -59,7 +59,7 @@ object TreeDemo:
             selectionMode = Tree.SelectionMode.Single,
             expandedKeys = expandedGroups.value,
             onToggle = expandedGroups.setState,
-            nodeTemplate = (i, _) => <.span(<.b("Hello there, "), i).rawNode,
+            nodeTemplate = (i, _) => <.span(<.b("Hello there, "), i),
             onSelect = (d, e) => Callback(println(s"selected $d")) *> Callback.log(e),
             dragDropScope = "tree-demo",
             onDragDrop = e =>

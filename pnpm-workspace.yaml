@@ -1,0 +1,4 @@
+allowBuilds:
+  '@parcel/watcher': false
+minimumReleaseAgeExclude:
+  - '@atlaskit/tokens@13.3.1'
