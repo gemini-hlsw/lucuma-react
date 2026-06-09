@@ -12,7 +12,7 @@ ThisBuild / githubWorkflowBuildPreamble ++= Seq(
   WorkflowStep.Use(
     UseRef.Public("actions", "setup-node", "v4"),
     name = Some("Setup Node"),
-    params = Map("node-version" -> "20", "cache" -> "npm")
+    params = Map("node-version" -> "26", "cache" -> "npm")
   ),
   WorkflowStep.Run(List("npm ci"))
 )
@@ -33,7 +33,6 @@ val munitScalacheckV = "1.3.0"
 val munitV           = "1.3.3"
 val scalaJsDomV      = "2.8.1"
 val scalaJsReactV    = "3.0.0"
-val utestV           = "0.9.5"
 
 ThisBuild / crossScalaVersions := Seq("3.8.4")
 
@@ -45,12 +44,10 @@ lazy val facadeSettings = Seq(
     "org.typelevel"                     %%% "cats-core"         % catsV,
     "org.typelevel"                     %%% "kittens"           % kittensV,
     "org.scala-js"                      %%% "scalajs-dom"       % scalaJsDomV,
-    "com.lihaoyi"                       %%% "utest"             % utestV        % Test,
     "org.scalameta"                     %%% "munit"             % munitV        % Test
   ),
   jsEnv                                   := new lucuma.LucumaJSDOMNodeJSEnv(),
   scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-  testFrameworks += new TestFramework("utest.runner.Framework"),
   // temporary? fix for upgrading to Scala 3.7: https://github.com/scala/scala3/issues/22890
   libraryDependencies += "org.scala-lang" %% "scala3-library" % scalaVersion.value
 )
