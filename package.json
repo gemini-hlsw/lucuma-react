@@ -10,7 +10,7 @@
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@react-hook/resize-observer": "^2.0.2",
     "@tanstack/react-table": "^8.21.3",
-    "@tanstack/react-virtual": "v3.13.13",
+    "@tanstack/react-virtual": "v3.14.2",
     "@vitejs/plugin-react": "^6.0.1",
     "fomantic-ui-less": "^2.9.4",
     "highcharts": "^12.4.0",
