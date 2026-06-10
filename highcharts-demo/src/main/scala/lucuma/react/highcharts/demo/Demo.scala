@@ -8,7 +8,6 @@ import japgolly.scalajs.react.Reusable
 import japgolly.scalajs.react.callback.Callback
 import lucuma.react.highcharts.Chart
 import lucuma.react.highcharts.implicits.*
-import lucuma.typed.highcharts.highchartsStrings.areaspline
 import lucuma.typed.highcharts.mod as Highcharts
 import lucuma.typed.highcharts.mod.AxisTypeValue
 import lucuma.typed.highcharts.mod.Chart_
@@ -133,7 +132,7 @@ object Demo {
       )
       .setSeries(
         List(
-          SeriesAreasplineOptions((), (), areaspline)
+          SeriesAreasplineOptions((), ())
             .setName("Observation-1")
             .setData(
               List(
@@ -144,7 +143,7 @@ object Demo {
                 (1584655240000.0, 14.0)
               )
             ),
-          SeriesAreasplineOptions((), (), areaspline)
+          SeriesAreasplineOptions((), ())
             .setName("Observation-2")
             .setData(
               List(
