@@ -12,6 +12,11 @@ export default ({ command, mode }) => {
   const themeSite = path.resolve(webapp, "theme/site");
   return {
     root: "grid-layout-demo/src/main/webapp",
+    // react-draggable 4.6.0 bug
+    // https://github.com/react-grid-layout/react-draggable/issues/806
+    define: {
+      "process.env.DRAGGABLE_DEBUG": "false",
+    },
     resolve: {
       alias: [
         {

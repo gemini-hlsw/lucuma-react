@@ -55,6 +55,13 @@ trait BaseProps extends js.Object {
 
 object BaseProps {
 
+  // Strip undefined keys so only the values we actually set survive the merge.
+  private[gridlayout] def pruneUndef[A <: js.Object](o: A): A = {
+    val dict = o.asInstanceOf[js.Dictionary[js.Any]]
+    js.Object.keys(o).foreach(k => if (js.isUndefined(dict(k))) js.special.delete(o, k))
+    o
+  }
+
   private def dragConfig(
     isDraggable:     js.UndefOr[Boolean],
     isBounded:       js.UndefOr[Boolean],
@@ -66,7 +73,9 @@ object BaseProps {
       isDraggable.isDefined || isBounded.isDefined || draggableHandle.isDefined ||
       draggableCancel.isDefined || dragThreshold.isDefined
     )
-      new raw.DragConfig(isDraggable, isBounded, draggableHandle, draggableCancel, dragThreshold)
+      pruneUndef(
+        new raw.DragConfig(isDraggable, isBounded, draggableHandle, draggableCancel, dragThreshold)
+      )
     else js.undefined
 
   private def resizeConfig(
@@ -74,7 +83,7 @@ object BaseProps {
     resizeHandles: js.UndefOr[List[ResizeHandle]]
   ): js.UndefOr[raw.ResizeConfig] =
     if (isResizable.isDefined || resizeHandles.isDefined)
-      new raw.ResizeConfig(isResizable, resizeHandles.map(_.toJSArray.map(_.toJs)))
+      pruneUndef(new raw.ResizeConfig(isResizable, resizeHandles.map(_.toJSArray.map(_.toJs))))
     else js.undefined
 
   private def dropConfig(
@@ -82,11 +91,9 @@ object BaseProps {
     droppingItem: js.UndefOr[DroppingItem]
   ): js.UndefOr[raw.DropConfig] =
     if (isDroppable.isDefined || droppingItem.isDefined)
-      new raw.DropConfig(isDroppable, droppingItem.map(_.toRaw))
+      pruneUndef(new raw.DropConfig(isDroppable, droppingItem.map(_.toRaw)))
     else js.undefined
 
-  // Translate the v1-style compactType / verticalCompact / preventCollision into a v2 Compactor.
-  // Leaving it undefined preserves v2's default (vertical compaction).
   private def compactor(
     compactType:      js.UndefOr[CompactType],
     verticalCompact:  js.UndefOr[Boolean],
@@ -96,11 +103,10 @@ object BaseProps {
       raw.Core.getCompactor(compactType.toJs, js.undefined, preventCollision)
     else
       verticalCompact.toOption match {
-        // verticalCompact = false means "no compaction" -> null compactType
+        // verticalCompact = false means "no compaction"
         case Some(false) => raw.Core.getCompactor(null, js.undefined, preventCollision)
         case Some(true)  => raw.Core.getCompactor("vertical", js.undefined, preventCollision)
         case None        =>
-          // Only preventCollision was supplied: keep the default (vertical) compaction.
           if (preventCollision.isDefined)
             raw.Core.getCompactor("vertical", js.undefined, preventCollision)
           else js.undefined

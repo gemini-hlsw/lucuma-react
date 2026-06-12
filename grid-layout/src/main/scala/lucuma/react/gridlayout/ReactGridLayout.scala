@@ -83,12 +83,14 @@ object ReactGridLayout {
       cols.isDefined || rowHeight.isDefined || margin.isDefined ||
       containerPadding.isDefined || maxRows.isDefined
     )
-      new raw.GridConfig(
-        cols,
-        rowHeight,
-        margin.map(x => js.Array(x._1.toDouble, x._2.toDouble)),
-        containerPadding.map(x => js.Array(x._1.toDouble, x._2.toDouble)),
-        maxRows
+      BaseProps.pruneUndef(
+        new raw.GridConfig(
+          cols,
+          rowHeight,
+          margin.map(x => js.Array(x._1.toDouble, x._2.toDouble)),
+          containerPadding.map(x => js.Array(x._1.toDouble, x._2.toDouble)),
+          maxRows
+        )
       )
     else js.undefined
 
