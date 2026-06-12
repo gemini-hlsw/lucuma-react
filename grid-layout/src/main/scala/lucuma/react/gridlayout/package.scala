@@ -13,7 +13,6 @@ import org.scalajs.dom.html.Element as HTMLElement
 
 import scala.scalajs.js
 
-import js.annotation.JSImport
 import js.JSConverters.*
 
 package object gridlayout {
@@ -37,23 +36,13 @@ package object gridlayout {
           .map { case (x, w) => x.name -> w }
       )
     BreakpointName(
-      ResponsiveUtils.getBreakpointFromWidth(currentBreakpoints.toJSDictionary, width.toDouble)
+      raw.Core.getBreakpointFromWidth(currentBreakpoints.toJSDictionary, width.toDouble)
     )
   }
 
 }
 
 package gridlayout {
-
-  /**
-   * Facade for ResponsiveUtils
-   */
-  @js.native
-  @JSImport("react-grid-layout", "Responsive.utils")
-  object ResponsiveUtils extends js.Object {
-    // Method from js land to get the breakpoint from the width
-    def getBreakpointFromWidth(breakpoints: js.Dictionary[Int], width: Double): String = js.native
-  }
 
   opaque type BreakpointName = String
 
@@ -110,13 +99,8 @@ package gridlayout {
     w: Int,
     h: Int
   ) {
-    def toRaw: raw.DroppingItem = {
-      val p = (new js.Object).asInstanceOf[raw.DroppingItem]
-      p.i = i
-      p.w = w
-      p.h = h
-      p
-    }
+    // v2 expresses the dropping placeholder through dropConfig.defaultItem, which only carries w/h.
+    def toRaw: raw.DropDefaultItem = new raw.DropDefaultItem(w, h)
   }
 
   case class BreakpointLayout(name: BreakpointName, layout: Layout) derives Eq
@@ -252,7 +236,7 @@ package gridlayout {
   }
 
   enum CompactType {
-    case Vertical, Horizontal
+    case Vertical, Horizontal, Wrap
   }
 
   object CompactType {

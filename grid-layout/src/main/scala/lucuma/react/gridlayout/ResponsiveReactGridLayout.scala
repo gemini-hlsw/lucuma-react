@@ -39,6 +39,7 @@ final case class ResponsiveReactGridLayout(
   transformScale:         js.UndefOr[Int] = js.undefined,
   droppingItem:           js.UndefOr[DroppingItem] = js.undefined,
   resizeHandles:          js.UndefOr[List[ResizeHandle]] = js.undefined,
+  dragThreshold:          js.UndefOr[Int] = js.undefined,
   onLayoutChange:         OnLayoutsChange = (_, _) => Callback.empty,
   onDragStart:            ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onDrag:                 ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -75,6 +76,12 @@ object ResponsiveReactGridLayout {
     // layouts is an object mapping breakpoints to layouts.
     // e.g. {lg: Layout, md: Layout, ...}
     var layouts: js.Object     = js.native
+
+    // On the responsive component these grid metrics remain flat props (not in gridConfig).
+    var rowHeight: js.UndefOr[Int]                     = js.native
+    var maxRows: js.UndefOr[Int]                       = js.native
+    var margin: js.UndefOr[js.Array[Double]]           = js.native
+    var containerPadding: js.UndefOr[js.Array[Double]] = js.native
 
     // Calls back with breakpoint and new # cols
     var onBreakpointChange: raw.BreakpointChangeCallback = js.native
@@ -113,6 +120,7 @@ object ResponsiveReactGridLayout {
       q.transformScale,
       q.droppingItem,
       q.resizeHandles,
+      q.dragThreshold,
       q.onLayoutChange,
       q.onDragStart,
       q.onDrag,
@@ -148,6 +156,7 @@ object ResponsiveReactGridLayout {
     transformScale:     js.UndefOr[Int] = js.undefined,
     droppingItem:       js.UndefOr[DroppingItem] = js.undefined,
     resizeHandles:      js.UndefOr[List[ResizeHandle]] = js.undefined,
+    dragThreshold:      js.UndefOr[Int] = js.undefined,
     onLayoutChange:     OnLayoutsChange = (_, _) => Callback.empty,
     onDragStart:        ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onDrag:             ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -168,10 +177,6 @@ object ResponsiveReactGridLayout {
       draggableHandle,
       verticalCompact,
       compactType,
-      margin,
-      containerPadding,
-      rowHeight,
-      maxRows,
       isDraggable,
       isResizable,
       isBounded,
@@ -181,6 +186,7 @@ object ResponsiveReactGridLayout {
       transformScale.map(_.toDouble),
       droppingItem,
       resizeHandles,
+      dragThreshold,
       onDragStart,
       onDrag,
       onDragStop,
@@ -194,6 +200,10 @@ object ResponsiveReactGridLayout {
     r.breakpoints = br.toRaw
     r.cols = cl.toRaw
     r.layouts = ly.toRaw
+    r.rowHeight = rowHeight
+    r.maxRows = maxRows
+    r.margin = margin.map(x => js.Array(x._1.toDouble, x._2.toDouble))
+    r.containerPadding = containerPadding.map(x => js.Array(x._1.toDouble, x._2.toDouble))
     r.onBreakpointChange = (newBreakpoint: raw.Breakpoint, newCol: Int) =>
       onBreakpointChange(BreakpointName(newBreakpoint), newCol).runNow()
     r.onLayoutChange = (currentLayout: raw.Layout, allLayouts: js.Object) =>

@@ -39,6 +39,7 @@ final case class ReactGridLayout(
   transformScale:         js.UndefOr[Double] = js.undefined,
   droppingItem:           js.UndefOr[DroppingItem] = js.undefined,
   resizeHandles:          js.UndefOr[List[ResizeHandle]] = js.undefined,
+  dragThreshold:          js.UndefOr[Int] = js.undefined,
   onLayoutChange:         OnLayoutChange = _ => Callback.empty,
   onDragStart:            ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onDrag:                 ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -62,14 +63,34 @@ object ReactGridLayout {
 
   @js.native
   trait ReactGridLayoutProps extends BaseProps {
-    // # of cols.
-    var cols: js.UndefOr[Int]
+    // { cols, rowHeight, margin, containerPadding, maxRows }
+    var gridConfig: js.UndefOr[raw.GridConfig]
     // layout is an array of object with the format:
     // {x: Number, y: Number, w: Number, h: Number, i: String}
     var layout: js.UndefOr[raw.Layout]
     // Callback so you can save the layout. Calls after each drag & resize stops.
     var onLayoutChange: raw.RawLayoutChange
   }
+
+  private def gridConfig(
+    cols:             js.UndefOr[Int],
+    rowHeight:        js.UndefOr[Int],
+    margin:           js.UndefOr[Margin],
+    containerPadding: js.UndefOr[ContainerPadding],
+    maxRows:          js.UndefOr[Int]
+  ): js.UndefOr[raw.GridConfig] =
+    if (
+      cols.isDefined || rowHeight.isDefined || margin.isDefined ||
+      containerPadding.isDefined || maxRows.isDefined
+    )
+      new raw.GridConfig(
+        cols,
+        rowHeight,
+        margin.map(x => js.Array(x._1.toDouble, x._2.toDouble)),
+        containerPadding.map(x => js.Array(x._1.toDouble, x._2.toDouble)),
+        maxRows
+      )
+    else js.undefined
 
   def props(q: ReactGridLayout): ReactGridLayoutProps =
     rawprops(
@@ -96,6 +117,7 @@ object ReactGridLayout {
       q.transformScale,
       q.droppingItem,
       q.resizeHandles,
+      q.dragThreshold,
       q.onLayoutChange,
       q.onDragStart,
       q.onDrag,
@@ -130,6 +152,7 @@ object ReactGridLayout {
     transformScale:   js.UndefOr[Double] = js.undefined,
     droppingItem:     js.UndefOr[DroppingItem] = js.undefined,
     resizeHandles:    js.UndefOr[List[ResizeHandle]] = js.undefined,
+    dragThreshold:    js.UndefOr[Int] = js.undefined,
     onLayoutChange:   OnLayoutChange = _ => Callback.empty,
     onDragStart:      ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onDrag:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -148,10 +171,6 @@ object ReactGridLayout {
       draggableHandle,
       verticalCompact,
       compactType,
-      margin,
-      containerPadding,
-      rowHeight,
-      maxRows,
       isDraggable,
       isResizable,
       isBounded,
@@ -161,6 +180,7 @@ object ReactGridLayout {
       transformScale,
       droppingItem,
       resizeHandles,
+      dragThreshold,
       onDragStart,
       onDrag,
       onDragStop,
@@ -170,7 +190,7 @@ object ReactGridLayout {
       onDrop
     )
     val r = p.asInstanceOf[ReactGridLayoutProps]
-    r.cols = cols
+    r.gridConfig = gridConfig(cols, rowHeight, margin, containerPadding, maxRows)
     r.layout = layout.toRaw
     r.onLayoutChange = (x: raw.Layout) => onLayoutChange(Layout.fromRaw(x)).runNow()
     r

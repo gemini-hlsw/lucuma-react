@@ -44,5 +44,25 @@ class PackageTests extends FunSuite {
           .replaceAll("[\n\r]", "")
       m.outerHTML.assert(html)
     }
+    test("getBreakpointFromWidth") {
+      // Exercises the react-grid-layout/core import (moved from Responsive.utils in v1).
+      val breakpoints =
+        Map(BreakpointName.lg -> 1200, BreakpointName.md -> 996, BreakpointName.sm -> 768)
+      assert(getBreakpointFromWidth(breakpoints, 1300) == BreakpointName.lg)
+      assert(getBreakpointFromWidth(breakpoints, 800) == BreakpointName.sm)
+    }
+    test("compactorAndStrategy") {
+      // Exercises getCompactor + createScaledStrategy (react-grid-layout/core) at runtime.
+      val layout =
+        ReactGridLayout(200, compactType = CompactType.Horizontal, transformScale = 0.5)(
+          <.div("Abc")
+        )
+      ReactTestUtils.withRenderedSync(layout.raw) { m =>
+        val html =
+          """<div class="react-grid-layout" style="height: 10px;"></div>""".stripMargin
+            .replaceAll("[\n\r]", "")
+        m.outerHTML.assert(html)
+      }
+    }
   }
 }

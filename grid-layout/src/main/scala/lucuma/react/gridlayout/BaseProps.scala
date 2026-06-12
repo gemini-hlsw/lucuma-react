@@ -15,6 +15,10 @@ import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
 
+// Props shared by both react-grid-layout v2 components (GridLayout and ResponsiveGridLayout).
+// The historical "flat" v1 props are still exposed by the Scala API; they are translated here
+// into v2's composable configuration objects (dragConfig / resizeConfig / dropConfig), the
+// compaction strategy (compactor) and the CSS positioning strategy (positionStrategy).
 @js.native
 trait BaseProps extends js.Object {
   var className: js.UndefOr[String]
@@ -22,53 +26,16 @@ trait BaseProps extends js.Object {
   var width: Double
   // If true, the container height swells and contracts to fit contents
   var autoSize: js.UndefOr[Boolean]
-  // A selector that will not be draggable.
-  var draggableCancel: js.UndefOr[String]
-  // A selector for the draggable handler
-  var draggableHandle: js.UndefOr[String]
-  var verticalCompact: js.UndefOr[Boolean]
-  // Choose vertical or hotizontal compaction
-  var compactType: js.UndefOr[String]
-  // Margin between items [x, y] in px
-  var margin: js.UndefOr[js.Array[Double]]
-  // Padding inside the container [x, y] in px
-  var containerPadding: js.UndefOr[js.Array[Double]]
-  // Rows have a static height, but you can change this based on breakpoints if you like
-  var rowHeight: js.UndefOr[Int]
-  var maxRows: js.UndefOr[Int]
-  var isDraggable: js.UndefOr[Boolean]
-  var isResizable: js.UndefOr[Boolean]
-  var isBounded: js.UndefOr[Boolean]
-  // If true, droppable elements (with `draggable={true}` attribute)
-  // can be dropped on the grid. It triggers "onDrop" callback
-  // with position and event object as parameters.
-  // It can be useful for dropping an element in a specific position
-  //
-  // NOTE: In case of using Firefox you should add
-  // `onDragStart={e => e.dataTransfer.setData('text/plain', '')}` attribute
-  // along with `draggable={true}` otherwise this feature will work incorrect.
-  // onDragStart attribute is required for Firefox for a dragging initialization
-  // @see https://bugzilla.mozilla.org/show_bug.cgi?id=568313
-  var isDroppable: js.UndefOr[Boolean]
-  // If true, grid items won't change position when being dragged over.
-  var preventCollision: js.UndefOr[Boolean]
-  // Use CSS transforms instead of top/left
-  var useCSSTransforms: js.UndefOr[Boolean]
-// If parent DOM node of ResponsiveReactGridLayout or ReactGridLayout has "transform: scale(n)" css property,
-// we should set scale coefficient to avoid render artefacts while dragging.
-  var transformScale: js.UndefOr[Double]
-  var droppingItem: js.UndefOr[raw.DroppingItem]
-  // Defines which resize handles should be rendered (default: 'se')
-  // Allows for any combination of:
-  // 's' - South handle (bottom-center)
-  // 'w' - West handle (left-center)
-  // 'e' - East handle (right-center)
-  // 'n' - North handle (top-center)
-  // 'sw' - Southwest handle (bottom-left)
-  // 'nw' - Northwest handle (top-left)
-  // 'se' - Southeast handle (bottom-right)
-  // 'ne' - Northeast handle (top-right)
-  var resizeHandles: js.UndefOr[js.Array[String]]
+  // { enabled, bounded, handle, cancel, threshold }
+  var dragConfig: js.UndefOr[raw.DragConfig]
+  // { enabled, handles }
+  var resizeConfig: js.UndefOr[raw.ResizeConfig]
+  // { enabled, defaultItem }
+  var dropConfig: js.UndefOr[raw.DropConfig]
+  // Pluggable compaction strategy (replaces compactType / verticalCompact / preventCollision)
+  var compactor: js.UndefOr[raw.Compactor]
+  // CSS positioning strategy (replaces useCSSTransforms / transformScale)
+  var positionStrategy: js.UndefOr[raw.PositionStrategy]
 
   // Calls when drag starts. Callback is of the signature (layout, oldItem, newItem, placeholder, e, ?node).
   // All callbacks below have the same signature. 'start' and 'stop' callbacks omit the 'placeholder'.
@@ -87,6 +54,89 @@ trait BaseProps extends js.Object {
 }
 
 object BaseProps {
+
+  private def dragConfig(
+    isDraggable:     js.UndefOr[Boolean],
+    isBounded:       js.UndefOr[Boolean],
+    draggableHandle: js.UndefOr[String],
+    draggableCancel: js.UndefOr[String],
+    dragThreshold:   js.UndefOr[Int]
+  ): js.UndefOr[raw.DragConfig] =
+    if (
+      isDraggable.isDefined || isBounded.isDefined || draggableHandle.isDefined ||
+      draggableCancel.isDefined || dragThreshold.isDefined
+    )
+      new raw.DragConfig(isDraggable, isBounded, draggableHandle, draggableCancel, dragThreshold)
+    else js.undefined
+
+  private def resizeConfig(
+    isResizable:   js.UndefOr[Boolean],
+    resizeHandles: js.UndefOr[List[ResizeHandle]]
+  ): js.UndefOr[raw.ResizeConfig] =
+    if (isResizable.isDefined || resizeHandles.isDefined)
+      new raw.ResizeConfig(isResizable, resizeHandles.map(_.toJSArray.map(_.toJs)))
+    else js.undefined
+
+  private def dropConfig(
+    isDroppable:  js.UndefOr[Boolean],
+    droppingItem: js.UndefOr[DroppingItem]
+  ): js.UndefOr[raw.DropConfig] =
+    if (isDroppable.isDefined || droppingItem.isDefined)
+      new raw.DropConfig(isDroppable, droppingItem.map(_.toRaw))
+    else js.undefined
+
+  // Translate the v1-style compactType / verticalCompact / preventCollision into a v2 Compactor.
+  // Leaving it undefined preserves v2's default (vertical compaction).
+  private def compactor(
+    compactType:      js.UndefOr[CompactType],
+    verticalCompact:  js.UndefOr[Boolean],
+    preventCollision: js.UndefOr[Boolean]
+  ): js.UndefOr[raw.Compactor] =
+    if (compactType.isDefined)
+      raw.Core.getCompactor(compactType.toJs, js.undefined, preventCollision)
+    else
+      verticalCompact.toOption match {
+        // verticalCompact = false means "no compaction" -> null compactType
+        case Some(false) => raw.Core.getCompactor(null, js.undefined, preventCollision)
+        case Some(true)  => raw.Core.getCompactor("vertical", js.undefined, preventCollision)
+        case None        =>
+          // Only preventCollision was supplied: keep the default (vertical) compaction.
+          if (preventCollision.isDefined)
+            raw.Core.getCompactor("vertical", js.undefined, preventCollision)
+          else js.undefined
+      }
+
+  private def positionStrategy(
+    useCSSTransforms: js.UndefOr[Boolean],
+    transformScale:   js.UndefOr[Double]
+  ): js.UndefOr[raw.PositionStrategy] =
+    transformScale.toOption match {
+      case Some(scale) => raw.Core.createScaledStrategy(scale)
+      case None        =>
+        useCSSTransforms.toOption match {
+          case Some(false) => raw.Core.absoluteStrategy
+          case _           => js.undefined
+        }
+    }
+
+  private def itemCallback(cb: ItemCallback): raw.RawItemCallback =
+    (
+      layout:      raw.Layout,
+      oldItem:     raw.LayoutItem,
+      newItem:     raw.LayoutItem,
+      placeholder: raw.LayoutItem,
+      e:           Event,
+      element:     js.UndefOr[HTMLElement]
+    ) =>
+      cb(
+        Layout.fromRaw(layout),
+        LayoutItem.fromRaw(oldItem),
+        LayoutItem.fromRaw(newItem),
+        LayoutItem.fromRawO(placeholder),
+        e.asInstanceOf[MouseEvent],
+        element.getOrElse(null.asInstanceOf[HTMLElement])
+      ).runNow()
+
   def props(
     width:            Double,
     className:        js.UndefOr[String] = js.undefined,
@@ -96,10 +146,6 @@ object BaseProps {
     draggableHandle:  js.UndefOr[String] = js.undefined,
     verticalCompact:  js.UndefOr[Boolean] = js.undefined,
     compactType:      js.UndefOr[CompactType] = js.undefined,
-    margin:           js.UndefOr[Margin] = js.undefined,
-    containerPadding: js.UndefOr[ContainerPadding] = js.undefined,
-    rowHeight:        js.UndefOr[Int] = js.undefined,
-    maxRows:          js.UndefOr[Int] = js.undefined,
     isDraggable:      js.UndefOr[Boolean] = js.undefined,
     isResizable:      js.UndefOr[Boolean] = js.undefined,
     isBounded:        js.UndefOr[Boolean] = js.undefined,
@@ -109,6 +155,7 @@ object BaseProps {
     transformScale:   js.UndefOr[Double] = js.undefined,
     droppingItem:     js.UndefOr[DroppingItem] = js.undefined,
     resizeHandles:    js.UndefOr[List[ResizeHandle]] = js.undefined,
+    dragThreshold:    js.UndefOr[Int] = js.undefined,
     onDragStart:      ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onDrag:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onDragStop:       ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -122,118 +169,26 @@ object BaseProps {
     p.width = width
     p.style = style.map(_.toJsObject)
     p.autoSize = autoSize
-    p.draggableCancel = draggableCancel
-    p.draggableHandle = draggableHandle
-    p.verticalCompact = verticalCompact
-    p.compactType = compactType.toJs
-    p.margin = margin.map(x => js.Array(x._1.toDouble, x._2.toDouble))
-    p.containerPadding = containerPadding.map(x => js.Array(x._1.toDouble, x._2.toDouble))
-    p.rowHeight = rowHeight
-    p.maxRows = maxRows
-    p.isDraggable = isDraggable
-    p.isResizable = isResizable
-    p.isBounded = isBounded
-    p.isDroppable = isDroppable
-    p.preventCollision = preventCollision
-    p.useCSSTransforms = useCSSTransforms
-    p.transformScale = transformScale
-    p.droppingItem = droppingItem.map(_.toRaw)
-    p.resizeHandles = resizeHandles.map(_.toJSArray.map(_.toJs))
-    p.onDragStart = (
-      layout:      raw.Layout,
-      oldItem:     raw.LayoutItem,
-      newItem:     raw.LayoutItem,
-      placeholder: raw.LayoutItem,
-      e:           MouseEvent,
-      element:     HTMLElement
-    ) =>
-      onDragStart(Layout.fromRaw(layout),
-                  LayoutItem.fromRaw(oldItem),
-                  LayoutItem.fromRaw(newItem),
-                  LayoutItem.fromRawO(placeholder),
-                  e,
-                  element
-      ).runNow()
-    p.onDrag = (
-      layout:      raw.Layout,
-      oldItem:     raw.LayoutItem,
-      newItem:     raw.LayoutItem,
-      placeholder: raw.LayoutItem,
-      e:           MouseEvent,
-      element:     HTMLElement
-    ) =>
-      onDrag(Layout.fromRaw(layout),
-             LayoutItem.fromRaw(oldItem),
-             LayoutItem.fromRaw(newItem),
-             LayoutItem.fromRawO(placeholder),
-             e,
-             element
-      ).runNow()
-    p.onDragStop = (
-      layout:      raw.Layout,
-      oldItem:     raw.LayoutItem,
-      newItem:     raw.LayoutItem,
-      placeholder: raw.LayoutItem,
-      e:           MouseEvent,
-      element:     HTMLElement
-    ) =>
-      onDragStop(Layout.fromRaw(layout),
-                 LayoutItem.fromRaw(oldItem),
-                 LayoutItem.fromRaw(newItem),
-                 LayoutItem.fromRawO(placeholder),
-                 e,
-                 element
-      ).runNow()
-    p.onResizeStart = (
-      layout:      raw.Layout,
-      oldItem:     raw.LayoutItem,
-      newItem:     raw.LayoutItem,
-      placeholder: raw.LayoutItem,
-      e:           MouseEvent,
-      element:     HTMLElement
-    ) =>
-      onResizeStart(Layout.fromRaw(layout),
-                    LayoutItem.fromRaw(oldItem),
-                    LayoutItem.fromRaw(newItem),
-                    LayoutItem.fromRawO(placeholder),
-                    e,
-                    element
-      ).runNow()
-    p.onResize = (
-      layout:      raw.Layout,
-      oldItem:     raw.LayoutItem,
-      newItem:     raw.LayoutItem,
-      placeholder: raw.LayoutItem,
-      e:           MouseEvent,
-      element:     HTMLElement
-    ) =>
-      onResize(Layout.fromRaw(layout),
-               LayoutItem.fromRaw(oldItem),
-               LayoutItem.fromRaw(newItem),
-               LayoutItem.fromRawO(placeholder),
-               e,
-               element
-      ).runNow()
-    p.onResizeStop = (
-      layout:      raw.Layout,
-      oldItem:     raw.LayoutItem,
-      newItem:     raw.LayoutItem,
-      placeholder: raw.LayoutItem,
-      e:           MouseEvent,
-      element:     HTMLElement
-    ) =>
-      onResizeStop(Layout.fromRaw(layout),
-                   LayoutItem.fromRaw(oldItem),
-                   LayoutItem.fromRaw(newItem),
-                   LayoutItem.fromRawO(placeholder),
-                   e,
-                   element
-      ).runNow()
+    p.dragConfig =
+      dragConfig(isDraggable, isBounded, draggableHandle, draggableCancel, dragThreshold)
+    p.resizeConfig = resizeConfig(isResizable, resizeHandles)
+    p.dropConfig = dropConfig(isDroppable, droppingItem)
+    p.compactor = compactor(compactType, verticalCompact, preventCollision)
+    p.positionStrategy = positionStrategy(useCSSTransforms, transformScale)
+    p.onDragStart = itemCallback(onDragStart)
+    p.onDrag = itemCallback(onDrag)
+    p.onDragStop = itemCallback(onDragStop)
+    p.onResizeStart = itemCallback(onResizeStart)
+    p.onResize = itemCallback(onResize)
+    p.onResizeStop = itemCallback(onResizeStop)
     p.onDrop = (
       layout: raw.Layout,
-      item:   raw.LayoutItem,
+      item:   js.UndefOr[raw.LayoutItem],
       event:  Event
-    ) => onDrop(Layout.fromRaw(layout), LayoutItem.fromRaw(item), event).runNow()
+    ) =>
+      item.toOption.foreach(it =>
+        onDrop(Layout.fromRaw(layout), LayoutItem.fromRaw(it), event).runNow()
+      )
     p
   }
 }
