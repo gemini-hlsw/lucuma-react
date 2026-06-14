@@ -18,28 +18,24 @@ import js.annotation.JSImport
 
 final case class ResponsiveReactGridLayout(
   width:                  Double,
-  layouts:                Map[BreakpointName, (Int, Int, Layout)],
-  className:              js.UndefOr[String] = js.undefined,
-  style:                  js.UndefOr[Style] = js.undefined,
-  autoSize:               js.UndefOr[Boolean] = js.undefined,
-  draggableCancel:        js.UndefOr[String] = js.undefined,
-  draggableHandle:        js.UndefOr[String] = js.undefined,
-  verticalCompact:        js.UndefOr[Boolean] = js.undefined,
-  compactType:            js.UndefOr[CompactType] = js.undefined,
-  margin:                 js.UndefOr[Margin] = js.undefined,
-  containerPadding:       js.UndefOr[ContainerPadding] = js.undefined,
+  breakpoints:            Map[BreakpointName, Int],
+  cols:                   Map[BreakpointName, Int],
+  layouts:                ResponsiveLayouts,
   rowHeight:              js.UndefOr[Int] = js.undefined,
   maxRows:                js.UndefOr[Int] = js.undefined,
-  isDraggable:            js.UndefOr[Boolean] = js.undefined,
-  isResizable:            js.UndefOr[Boolean] = js.undefined,
-  isBounded:              js.UndefOr[Boolean] = js.undefined,
-  isDroppable:            js.UndefOr[Boolean] = js.undefined,
-  preventCollision:       js.UndefOr[Boolean] = js.undefined,
-  useCSSTransforms:       js.UndefOr[Boolean] = js.undefined,
-  transformScale:         js.UndefOr[Int] = js.undefined,
-  droppingItem:           js.UndefOr[DroppingItem] = js.undefined,
-  resizeHandles:          js.UndefOr[List[ResizeHandle]] = js.undefined,
+  margin:                 js.UndefOr[Margin] = js.undefined,
+  containerPadding:       js.UndefOr[ContainerPadding] = js.undefined,
+  dragConfig:             js.UndefOr[DragConfig] = js.undefined,
+  resizeConfig:           js.UndefOr[ResizeConfig] = js.undefined,
+  dropConfig:             js.UndefOr[DropConfig] = js.undefined,
+  compactor:              js.UndefOr[Compactor] = js.undefined,
+  positionStrategy:       js.UndefOr[PositionStrategy] = js.undefined,
+  autoSize:               js.UndefOr[Boolean] = js.undefined,
+  className:              js.UndefOr[String] = js.undefined,
+  style:                  js.UndefOr[Style] = js.undefined,
   onLayoutChange:         OnLayoutsChange = (_, _) => Callback.empty,
+  onBreakpointChange:     OnBreakpointChange = (_, _) => Callback.empty,
+  onWidthChange:          OnWidthChange = (_, _, _, _) => Callback.empty,
   onDragStart:            ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onDrag:                 ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onDragStop:             ItemCallback = (_, _, _, _, _, _) => Callback.empty,
@@ -47,8 +43,6 @@ final case class ResponsiveReactGridLayout(
   onResize:               ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onResizeStop:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
   onDrop:                 DropCallback = (_, _, _) => Callback.empty,
-  onBreakpointChange:     OnBreakpointChange = (_, _) => Callback.empty,
-  onWidthChange:          OnWidthChange = (_, _, _, _) => Callback.empty,
   override val modifiers: Seq[TagMod] = Seq.empty
 ) extends GenericComponentPAC[
       ResponsiveReactGridLayout.ResponsiveReactGridLayoutProps,
@@ -68,119 +62,116 @@ object ResponsiveReactGridLayout {
   @js.native
   trait ResponsiveReactGridLayoutProps extends BaseProps {
     // {name: pxVal}, e.g. {lg: 1200, md: 996, sm: 768, xs: 480}
-    // Breakpoint names are arbitrary but must match in the cols and layouts objects.
     var breakpoints: js.Object = js.native
     // # of cols. This is a breakpoint -> cols map, e.g. {lg: 12, md: 10, ...}
     var cols: js.Object        = js.native
-    // layouts is an object mapping breakpoints to layouts.
-    // e.g. {lg: Layout, md: Layout, ...}
+    // layouts is an object mapping breakpoints to layouts, e.g. {lg: Layout, md: Layout, ...}
     var layouts: js.Object     = js.native
+
+    // On the responsive component these grid metrics remain flat props (not in gridConfig).
+    var rowHeight: js.UndefOr[Int]                     = js.native
+    var maxRows: js.UndefOr[Int]                       = js.native
+    var margin: js.UndefOr[js.Array[Double]]           = js.native
+    var containerPadding: js.UndefOr[js.Array[Double]] = js.native
 
     // Calls back with breakpoint and new # cols
     var onBreakpointChange: raw.BreakpointChangeCallback = js.native
+    // Callback so you can save the layout. allLayouts are keyed by breakpoint.
+    var onLayoutChange: raw.LayoutChangeCallback         = js.native
+    // (containerWidth, margin: [n, n], cols, containerPadding: [n, n] | null)
+    var onWidthChange: raw.WidthChangeCallback           = js.native
+  }
 
-    // Callback so you can save the layout.
-    // AllLayouts are keyed by breakpoint.
-    var onLayoutChange: raw.LayoutChangeCallback = js.native
-    // (currentLayout: Layout, allLayouts: {[key: $Keys<breakpoints>]: Layout}) => void,
-    // Callback when the width changes, so you can modify the layout as needed.
-    var onWidthChange: raw.WidthChangeCallback   = js.native
-    // (containerWidth: number, margin: [number, number], cols: number, containerPadding: [number, number]) => void;
+  private def intMapToRaw(m: Map[BreakpointName, Int]): js.Object = {
+    val p = js.Dynamic.literal()
+    m.foreach { case (k, v) => p.updateDynamic(k.name)(v.asInstanceOf[js.Any]) }
+    p
+  }
 
+  private def layoutsToRaw(m: ResponsiveLayouts): js.Object = {
+    val p = js.Dynamic.literal()
+    m.foreach { case (k, v) => p.updateDynamic(k.name)(v.toRaw) }
+    p
+  }
+
+  private def layoutsFromRaw(o: js.Object): ResponsiveLayouts = {
+    val dict = o.asInstanceOf[js.Dictionary[js.Any]]
+    js.Object
+      .getOwnPropertyNames(o)
+      .flatMap(p =>
+        dict.get(p).map(v => BreakpointName(p) -> Layout.fromRaw(v.asInstanceOf[raw.Layout]))
+      )
+      .toMap
   }
 
   def props(q: ResponsiveReactGridLayout): ResponsiveReactGridLayoutProps =
     rawprops(
       q.width,
+      q.breakpoints,
+      q.cols,
       q.layouts,
-      q.className,
-      q.style,
-      q.autoSize,
-      q.draggableCancel,
-      q.draggableHandle,
-      q.verticalCompact,
-      q.compactType,
-      q.margin,
-      q.containerPadding,
       q.rowHeight,
       q.maxRows,
-      q.isDraggable,
-      q.isResizable,
-      q.isBounded,
-      q.isDroppable,
-      q.preventCollision,
-      q.useCSSTransforms,
-      q.transformScale,
-      q.droppingItem,
-      q.resizeHandles,
+      q.margin,
+      q.containerPadding,
+      q.dragConfig,
+      q.resizeConfig,
+      q.dropConfig,
+      q.compactor,
+      q.positionStrategy,
+      q.autoSize,
+      q.className,
+      q.style,
       q.onLayoutChange,
+      q.onBreakpointChange,
+      q.onWidthChange,
       q.onDragStart,
       q.onDrag,
       q.onDragStop,
       q.onResizeStart,
       q.onResize,
       q.onResizeStop,
-      q.onDrop,
-      q.onBreakpointChange,
-      q.onWidthChange
+      q.onDrop
     )
 
   def rawprops(
     width:              Double,
-    layouts:            Map[BreakpointName, (Int, Int, Layout)],
-    className:          js.UndefOr[String] = js.undefined,
-    style:              js.UndefOr[Style] = js.undefined,
-    autoSize:           js.UndefOr[Boolean] = js.undefined,
-    draggableCancel:    js.UndefOr[String] = js.undefined,
-    draggableHandle:    js.UndefOr[String] = js.undefined,
-    verticalCompact:    js.UndefOr[Boolean] = js.undefined,
-    compactType:        js.UndefOr[CompactType] = js.undefined,
-    margin:             js.UndefOr[Margin] = js.undefined,
-    containerPadding:   js.UndefOr[ContainerPadding] = js.undefined,
+    breakpoints:        Map[BreakpointName, Int],
+    cols:               Map[BreakpointName, Int],
+    layouts:            ResponsiveLayouts,
     rowHeight:          js.UndefOr[Int] = js.undefined,
     maxRows:            js.UndefOr[Int] = js.undefined,
-    isDraggable:        js.UndefOr[Boolean] = js.undefined,
-    isResizable:        js.UndefOr[Boolean] = js.undefined,
-    isBounded:          js.UndefOr[Boolean] = js.undefined,
-    isDroppable:        js.UndefOr[Boolean] = js.undefined,
-    preventCollision:   js.UndefOr[Boolean] = js.undefined,
-    useCSSTransforms:   js.UndefOr[Boolean] = js.undefined,
-    transformScale:     js.UndefOr[Int] = js.undefined,
-    droppingItem:       js.UndefOr[DroppingItem] = js.undefined,
-    resizeHandles:      js.UndefOr[List[ResizeHandle]] = js.undefined,
+    margin:             js.UndefOr[Margin] = js.undefined,
+    containerPadding:   js.UndefOr[ContainerPadding] = js.undefined,
+    dragConfig:         js.UndefOr[DragConfig] = js.undefined,
+    resizeConfig:       js.UndefOr[ResizeConfig] = js.undefined,
+    dropConfig:         js.UndefOr[DropConfig] = js.undefined,
+    compactor:          js.UndefOr[Compactor] = js.undefined,
+    positionStrategy:   js.UndefOr[PositionStrategy] = js.undefined,
+    autoSize:           js.UndefOr[Boolean] = js.undefined,
+    className:          js.UndefOr[String] = js.undefined,
+    style:              js.UndefOr[Style] = js.undefined,
     onLayoutChange:     OnLayoutsChange = (_, _) => Callback.empty,
+    onBreakpointChange: OnBreakpointChange = (_, _) => Callback.empty,
+    onWidthChange:      OnWidthChange = (_, _, _, _) => Callback.empty,
     onDragStart:        ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onDrag:             ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onDragStop:         ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResizeStart:      ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResize:           ItemCallback = (_, _, _, _, _, _) => Callback.empty,
     onResizeStop:       ItemCallback = (_, _, _, _, _, _) => Callback.empty,
-    onDrop:             DropCallback = (_, _, _) => Callback.empty,
-    onBreakpointChange: OnBreakpointChange = (_, _) => Callback.empty,
-    onWidthChange:      OnWidthChange = (_, _, _, _) => Callback.empty
+    onDrop:             DropCallback = (_, _, _) => Callback.empty
   ): ResponsiveReactGridLayoutProps = {
-    val p                                           = BaseProps.props(
+    val p = BaseProps.props(
       width,
       className,
       style,
       autoSize,
-      draggableCancel,
-      draggableHandle,
-      verticalCompact,
-      compactType,
-      margin,
-      containerPadding,
-      rowHeight,
-      maxRows,
-      isDraggable,
-      isResizable,
-      isBounded,
-      isDroppable,
-      preventCollision,
-      useCSSTransforms,
-      transformScale.map(_.toDouble),
-      droppingItem,
-      resizeHandles,
+      dragConfig,
+      resizeConfig,
+      dropConfig,
+      compactor,
+      positionStrategy,
       onDragStart,
       onDrag,
       onDragStop,
@@ -189,15 +180,18 @@ object ResponsiveReactGridLayout {
       onResizeStop,
       onDrop
     )
-    val r                                           = p.asInstanceOf[ResponsiveReactGridLayoutProps]
-    val (br: Breakpoints, cl: Columns, ly: Layouts) = build(layouts)
-    r.breakpoints = br.toRaw
-    r.cols = cl.toRaw
-    r.layouts = ly.toRaw
+    val r = p.asInstanceOf[ResponsiveReactGridLayoutProps]
+    r.breakpoints = intMapToRaw(breakpoints)
+    r.cols = intMapToRaw(cols)
+    r.layouts = layoutsToRaw(layouts)
+    r.rowHeight = rowHeight
+    r.maxRows = maxRows
+    r.margin = margin.map(m => js.Array(m._1.toDouble, m._2.toDouble))
+    r.containerPadding = containerPadding.map(p => js.Array(p._1.toDouble, p._2.toDouble))
     r.onBreakpointChange = (newBreakpoint: raw.Breakpoint, newCol: Int) =>
       onBreakpointChange(BreakpointName(newBreakpoint), newCol).runNow()
     r.onLayoutChange = (currentLayout: raw.Layout, allLayouts: js.Object) =>
-      onLayoutChange(Layout.fromRaw(currentLayout), Layouts.fromRaw(allLayouts)).runNow()
+      onLayoutChange(Layout.fromRaw(currentLayout), layoutsFromRaw(allLayouts)).runNow()
     r.onWidthChange = (
       containerWidth:   Int,
       margin:           js.Array[Int],
@@ -212,28 +206,22 @@ object ResponsiveReactGridLayout {
     r
   }
 
-  def build(
-    values: Map[BreakpointName, (Int, Int, Layout)]
-  ): (Breakpoints, Columns, Layouts) =
-    (Breakpoints(values.collect { case (v, (w, _, _)) =>
-       Breakpoint(v, w)
-     }.toList),
-     Columns(values.collect { case (v, (_, c, _)) =>
-       Column(v, c)
-     }.toList),
-     Layouts(values.collect { case (v, (_, _, l)) =>
-       BreakpointLayout(v, l)
-     }.toList)
-    )
-
   val component =
     JsComponent.force[ResponsiveReactGridLayoutProps, Children.Varargs, Null](RawComponent)
 
   def apply(
-    width:   Double,
-    layouts: Map[BreakpointName, (Int, Int, Layout)],
-    content: TagMod*
+    width:       Double,
+    breakpoints: Map[BreakpointName, Int],
+    cols:        Map[BreakpointName, Int],
+    layouts:     ResponsiveLayouts,
+    content:     TagMod*
   ): ResponsiveReactGridLayout =
-    new ResponsiveReactGridLayout(width = width, layouts = layouts, modifiers = content)
+    new ResponsiveReactGridLayout(
+      width = width,
+      breakpoints = breakpoints,
+      cols = cols,
+      layouts = layouts,
+      modifiers = content
+    )
 
 }
