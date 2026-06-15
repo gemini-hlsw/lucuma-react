@@ -19,13 +19,14 @@
         devShell = pkgs.devshell.mkShell {
           imports = [ typelevel-nix.typelevelShell ];
           packages = [
-            pkgs.nodePackages.vscode-langservers-extracted
+            pkgs.vscode-langservers-extracted
           ];
           typelevelShell = {
             nodejs.enable = true;
-            jdk.package = pkgs.jdk21;
+            jdk.package = pkgs.jdk25;
           };
         };
       }
+
     );
 }

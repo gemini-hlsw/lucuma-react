@@ -23,40 +23,45 @@ object RGLDemo {
     .useCallback((x: Int, y: Int) => Callback.log(s"$x $y"))
     .useResizeDetectorBy((_, f) => UseResizeDetectorProps(onResize = f.value))
     .renderWithReuse { (_, _, useResize) =>
-      val layout                                           = Layout(
+      val layout                                = Layout(
         List(
           LayoutItem(x = 0, y = 0, w = 6, h = 2, i = "a", static = true),
           LayoutItem(x = 1, y = 0, w = 3, h = 2, i = "b", minW = 2, maxW = 4),
           LayoutItem(x = 4, y = 0, w = 1, h = 2, i = "c")
         )
       )
-      val layouts: Map[BreakpointName, (Int, Int, Layout)] =
-        Map(
-          (BreakpointName.lg, (1200, 12, layout)),
-          (BreakpointName.md, (996, 10, layout)),
-          (BreakpointName.sm, (768, 8, layout)),
-          (BreakpointName.xs, (480, 6, layout))
+      val breakpoints: Map[BreakpointName, Int] =
+        Map(BreakpointName.lg -> 1200,
+            BreakpointName.md -> 996,
+            BreakpointName.sm -> 768,
+            BreakpointName.xs -> 480
         )
+      val cols: Map[BreakpointName, Int]        =
+        Map(BreakpointName.lg -> 12,
+            BreakpointName.md -> 10,
+            BreakpointName.sm -> 8,
+            BreakpointName.xs -> 6
+        )
+      val layouts: ResponsiveLayouts            =
+        breakpoints.map { case (bp, _) => bp -> layout }
 
-      println(
-        getBreakpointFromWidth(layouts.map { case (x, (w, _, _)) => x -> w },
-                               useResize.width.orEmpty
-        )
-      )
+      println(getBreakpointFromWidth(breakpoints, useResize.width.orEmpty))
 
       <.div(
         ^.width  := "80%",
         ^.border := "red solid 1px",
         <.div(
           ResponsiveReactGridLayout(
-            useResize.width.orEmpty.toDouble,
+            width = useResize.width.orEmpty.toDouble,
+            breakpoints = breakpoints,
+            cols = cols,
+            layouts = layouts,
             // onLayoutChange = (_, b) => Callback.log(pprint.apply(b).toString),
             margin = (10, 10),
             containerPadding = (10, 10),
             className = "layout",
-            draggableHandle = ".item",
-            rowHeight = 30,
-            layouts = layouts
+            dragConfig = DragConfig(handle = ".item"),
+            rowHeight = 30
           )(
             <.div(^.key := "a", "a"),
             <.div(^.key := "c", "c"),
