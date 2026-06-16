@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@atlaskit/pragmatic-drag-and-drop':
-        specifier: 1.8.1
-        version: 1.8.1
+        specifier: 2.0.0
+        version: 2.0.0
       '@atlaskit/pragmatic-drag-and-drop-auto-scroll':
         specifier: 2.1.5
         version: 2.1.5
@@ -169,6 +169,9 @@ packages:
 
   '@atlaskit/pragmatic-drag-and-drop@1.8.1':
     resolution: {integrity: sha512-uXWNPpL8n4OmTVbduH7nq8pk8htqGo/prR5cYEE8sVCPJGAUMWn6lzvWTfI+4VCeQvHiDRODVz4YzH06OVAxhw==}
+
+  '@atlaskit/pragmatic-drag-and-drop@2.0.0':
+    resolution: {integrity: sha512-38njbVl18idN4qk8XkIeuUhHFkD2qn+pvixgRK1KfZ4GSorgTsrhbIJYGLbUO8YdSNbShFVohapBtJh1gLdxRg==}
 
   '@atlaskit/tokens@13.3.1':
     resolution: {integrity: sha512-orspxE7ujBuND2xIujQWNtP24/S5UM2r16SFAWBHrs3KA46zofn8qLzIvJuo3bK/jIjvDvoigK/6O9DRdHFI0Q==}
@@ -1743,6 +1746,12 @@ snapshots:
       - supports-color
 
   '@atlaskit/pragmatic-drag-and-drop@1.8.1':
+    dependencies:
+      '@babel/runtime': 7.29.7
+      bind-event-listener: 3.0.0
+      raf-schd: 4.0.3
+
+  '@atlaskit/pragmatic-drag-and-drop@2.0.0':
     dependencies:
       '@babel/runtime': 7.29.7
       bind-event-listener: 3.0.0
