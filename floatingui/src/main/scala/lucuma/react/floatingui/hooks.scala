@@ -20,10 +20,10 @@ object HooksApiExt {
   private val floatingHook: CustomHook[UseFloatingProps, UseFloatingReturn] =
     CustomHook.fromHookResult(useFloating(_))
 
-  val useInteractions: ElementPropsList => HookResult[UseFloatingReturn] =
+  val useInteractions: ElementPropsList => HookResult[UseInteractionsReturn] =
     HookResult.fromFunction(use.useInteractions(_)).contramap(_.toJSArray)
 
-  private val interactionsHook: CustomHook[ElementPropsList, UseFloatingReturn] =
+  private val interactionsHook: CustomHook[ElementPropsList, UseInteractionsReturn] =
     CustomHook.fromHookResult(useInteractions(_))
 
   sealed class Primary[Ctx, Step <: HooksApi.AbstractStep](api: HooksApi.Primary[Ctx, Step]) {
@@ -40,12 +40,12 @@ object HooksApiExt {
 
     final def useInteractions(pos: ElementPropsList)(implicit
       step: Step
-    ): step.Next[UseFloatingReturn] =
+    ): step.Next[UseInteractionsReturn] =
       useInteractionsBy(_ => pos)
 
     final def useInteractionsBy(pos: Ctx => ElementPropsList)(implicit
       step: Step
-    ): step.Next[UseFloatingReturn] =
+    ): step.Next[UseInteractionsReturn] =
       api.customBy(ctx => interactionsHook(pos(ctx)))
   }
 
@@ -60,7 +60,7 @@ object HooksApiExt {
 
     def useInteractionsBy(pos: CtxFn[ElementPropsList])(implicit
       step: Step
-    ): step.Next[UseFloatingReturn] =
+    ): step.Next[UseInteractionsReturn] =
       useInteractionsBy(step.squash(pos)(_))
 
   }

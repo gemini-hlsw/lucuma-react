@@ -5,13 +5,12 @@ package lucuma.react.floatingui
 
 import japgolly.scalajs.react.*
 import japgolly.scalajs.react.feature.ReactFragment
+import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.ReactFnProps
 import lucuma.react.common.Style
 import lucuma.react.floatingui.hooks.*
 import org.scalajs.dom
-
-import scala.scalajs.js
 
 /**
  * Tooltip base on floating ui see: https://floating-ui.com/docs/react-dom
@@ -47,7 +46,7 @@ object Tooltip {
       .useInteractionsBy { (_, _, _, h) =>
         List(middleware.useHover(h.context))
       }
-      .render { (props, open, arrow, floating, _) =>
+      .render { (props, open, arrow, floating, interactions) =>
         val display: Map[String, String | Int] =
           if (open.value) Map.empty[String, String | Int]
           else Map[String, String | Int]("display" -> "none")
@@ -114,10 +113,15 @@ object Tooltip {
         val arrowStyle =
           arrowOpt.fold(Style(display))(_ => Style(display ++ arrowStyleMap ++ placementStyle))
         ReactFragment(
-          props.trigger(^.untypedRef(floating.refs.setReference)),
+          // Both the stable ref and the interaction props are required: see `Interactions`.
+          props.trigger(
+            Interactions.stableRef(floating.refs.setReference),
+            TagMod.fn(_.addAttrsObject(interactions.getReferenceProps()))
+          ),
           if (open.value)
             <.div(
-              ^.untypedRef(floating.refs.setFloating),
+              Interactions.stableRef(floating.refs.setFloating),
+              TagMod.fn(_.addAttrsObject(interactions.getFloatingProps())),
               ^.cls   := "tooltip",
               ^.style := style.toJsObject,
               props.tooltip,
