@@ -5,7 +5,9 @@ package lucuma.react.floatingui
 
 import cats.syntax.all.*
 import japgolly.scalajs.react.*
+import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.TopNode
+import japgolly.scalajs.react.vdom.VdomBuilder
 import lucuma.react.common.EnumValue
 import lucuma.react.common.syntax.callback.*
 import org.scalajs.dom.html
@@ -70,6 +72,25 @@ trait FloatingRefs extends js.Object {
   var setReference: js.Function1[TopNode, Unit] = js.native
   var setFloating: js.Function1[TopNode, Unit]  = js.native
 }
+
+/**
+ * Result of [[use.useInteractions]]
+ */
+@js.native
+trait UseInteractionsReturn extends js.Object {
+  def getReferenceProps(): js.Object = js.native
+  def getFloatingProps(): js.Object  = js.native
+}
+
+/** Helpers for applying floating-ui prop-getter results to scalajs-react vdom. */
+object Interactions:
+
+  /**
+   * Attach a floating-ui ref setter as a React `ref` without re-wrapping it. Unlike
+   * `^.untypedRef(fn)`, which wraps `fn` in a fresh closure every render.
+   */
+  def stableRef(fn: js.Function1[TopNode, Unit]): TagMod =
+    TagMod.fn((b: VdomBuilder) => b.addAttr("ref", fn))
 
 @js.native
 trait UseFloatingReturn extends js.Object {
@@ -243,8 +264,8 @@ object use {
   ): UseFloatingReturn                        =
     ^.asInstanceOf[js.Dynamic].applyDynamic("useFloating")(props).asInstanceOf[UseFloatingReturn]
 
-  inline def useInteractions(propsList: js.Array[ElementProps | Unit]): UseFloatingReturn =
+  inline def useInteractions(propsList: js.Array[ElementProps | Unit]): UseInteractionsReturn =
     ^.asInstanceOf[js.Dynamic]
       .applyDynamic("useInteractions")(propsList.asInstanceOf[js.Any])
-      .asInstanceOf[UseFloatingReturn]
+      .asInstanceOf[UseInteractionsReturn]
 }
