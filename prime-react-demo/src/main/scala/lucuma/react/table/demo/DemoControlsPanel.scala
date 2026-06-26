@@ -352,7 +352,7 @@ object DemoControlsPanel {
                 SplitButton(
                   id = "split-button1",
                   onClick = toastRef.show(MessageItem(summary = "Split button main action")),
-                  model = splitButtonMenuItems,
+                  model = Reusable.always(splitButtonMenuItems),
                   label = "Vanilla",
                   icon = "pi pi-sparkles",
                   clazz = Css("main-class"),
@@ -362,7 +362,7 @@ object DemoControlsPanel {
                 ),
                 SplitButton(
                   onClick = toastRef.show(MessageItem(summary = "Split button main action")),
-                  model = splitButtonMenuItems,
+                  model = Reusable.always(splitButtonMenuItems),
                   label = "Large Rounded",
                   icon = "pi pi-sparkles",
                   size = Button.Size.Large,
@@ -371,7 +371,7 @@ object DemoControlsPanel {
                 ),
                 SplitButton(
                   onClick = toastRef.show(MessageItem(summary = "Split button main action")),
-                  model = splitButtonMenuItems,
+                  model = Reusable.always(splitButtonMenuItems),
                   label = "Small Outlined",
                   icon = "pi pi-sparkles",
                   size = Button.Size.Small,

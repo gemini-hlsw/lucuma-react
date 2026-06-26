@@ -683,7 +683,7 @@ object DemoComponents {
               <.div(
                 DemoStyles.VerticalStack,
                 <.label("Inline Menu", DemoStyles.FormFieldLabel),
-                InlineMenu(model = menuItems)(mouseEntered("InlineMenu")),
+                InlineMenu(model = Reusable.always(menuItems))(mouseEntered("InlineMenu")),
                 <.label("Tab Menu", DemoStyles.FormFieldLabel),
                 TabMenu(
                   model = List(MenuItem.Item("Tab 1", icon = "pi pi-hourglass"),
@@ -725,7 +725,7 @@ object DemoComponents {
             ConfirmPopup(),
             ConfirmDialog(),
             PopupTieredMenu(
-              menuItems,
+              Reusable.always(menuItems),
               onShow = Callback.log("Showing PopupMenu"),
               onHide = Callback.log("Hiding PopupMenu")
             ).withMods(

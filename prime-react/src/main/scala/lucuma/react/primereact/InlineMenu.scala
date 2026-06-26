@@ -12,7 +12,7 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 case class InlineMenu(
-  model:     List[MenuItem],
+  model:     Reusable[List[MenuItem]],
   id:        js.UndefOr[String] = js.undefined,
   clazz:     js.UndefOr[Css] = js.undefined,
   modifiers: Seq[TagMod] = Seq.empty
@@ -25,8 +25,9 @@ case class InlineMenu(
 object InlineMenu {
   private val component =
     ScalaFnComponent[InlineMenu] { props =>
-      CMenu
-        .model(props.model.map(_.asInstanceOf[Any]).toJSArray)
+      for modelArray <- useMemo(props.model)(_.value.map(_.asInstanceOf[Any]).toJSArray)
+      yield CMenu
+        .model(modelArray.value)
         .applyOrNot(props.id, _.id(_))
         .applyOrNot(props.clazz, (c, p) => c.className(p.htmlClass))(
           props.modifiers.toTagMod
