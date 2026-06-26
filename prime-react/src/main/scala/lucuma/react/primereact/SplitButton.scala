@@ -15,7 +15,9 @@ import scalajs.js
 import scalajs.js.JSConverters.*
 
 final case class SplitButton(
-  model:           List[MenuItem],
+  // Must be reference-stable across renders: primereact's menu effect has no equality guard, and
+  // Reusability[MenuItem] is byRef, so a fresh List each render loops with "Maximum update depth exceeded".
+  model:           Reusable[List[MenuItem]],
   label:           js.UndefOr[String] = js.undefined,
   icon:            js.UndefOr[Icon] = js.undefined,
   id:              js.UndefOr[String] = js.undefined,
@@ -47,39 +49,44 @@ object SplitButton {
 
   private val component =
     ScalaFnComponent[SplitButton] { props =>
-      val fullCss =
-        props.clazz.toOption.orEmpty |+|
-          props.size.cls |+|
-          props.severity.cls |+|
-          PrimeStyles.ButtonOutlined.when_(props.outlined) |+|
-          PrimeStyles.ButtonRaised.when_(props.raised) |+|
-          PrimeStyles.ButtonRounded.when_(props.rounded) |+|
-          PrimeStyles.ButtonText.when_(props.text)
+      // Rebuild the JS array when `props.model` signals a change.
+      // primereact's `TieredMenu` runs a `useEffect([props.model])` that calls `setState`,
+      // so the array must keep a stable reference across renders or the component loops.
+      for modelArray <- useMemo(props.model)(_.value.map(_.asInstanceOf[Any]).toJSArray)
+      yield
+        val fullCss =
+          props.clazz.toOption.orEmpty |+|
+            props.size.cls |+|
+            props.severity.cls |+|
+            PrimeStyles.ButtonOutlined.when_(props.outlined) |+|
+            PrimeStyles.ButtonRaised.when_(props.raised) |+|
+            PrimeStyles.ButtonRounded.when_(props.rounded) |+|
+            PrimeStyles.ButtonText.when_(props.text)
 
-      val iconWithClass         =
-        props.icon.map(_.toPrimeWithClass(PrimeStyles.ButtonIcon))
-      val dropdownIconWithClass =
-        props.dropdownIcon.map(_.toPrimeWithClass(PrimeStyles.ButtonIcon))
+        val iconWithClass         =
+          props.icon.map(_.toPrimeWithClass(PrimeStyles.ButtonIcon))
+        val dropdownIconWithClass =
+          props.dropdownIcon.map(_.toPrimeWithClass(PrimeStyles.ButtonIcon))
 
-      CSplitButton
-        .model(props.model.map(_.asInstanceOf[Any]).toJSArray)
-        .onClick(e => props.onClick >> props.onClickE(e))
-        .applyOrNot(props.label, _.label(_))
-        .applyOrNot(props.id, _.id(_))
-        .applyOrNot(iconWithClass, _.icon(_))
-        .applyOrNot(dropdownIconWithClass, _.dropdownIcon(_))
-        .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))
-        .applyOrNot(props.buttonClass, (c, p) => c.buttonClassName(p.htmlClass))
-        .applyOrNot(props.menuButtonClass, (c, p) => c.menuButtonClassName(p.htmlClass))
-        .applyOrNot(props.tooltip, _.tooltip(_))
-        .applyOrNot(props.disabled, _.disabled(_))
-        .applyOrNot(props.loading, _.loading(_))
-        .applyOrNot(props.loadingIcon, (c, p) => c.loadingIcon(p.toPrime))
-        .applyOrNot(
-          props.tooltipOptions,
-          (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions])
-        )(
-          props.modifiers.toTagMod
-        )
+        CSplitButton
+          .model(modelArray.value)
+          .onClick(e => props.onClick >> props.onClickE(e))
+          .applyOrNot(props.label, _.label(_))
+          .applyOrNot(props.id, _.id(_))
+          .applyOrNot(iconWithClass, _.icon(_))
+          .applyOrNot(dropdownIconWithClass, _.dropdownIcon(_))
+          .applyOrNot(fullCss, (c, p) => c.className(p.htmlClass))
+          .applyOrNot(props.buttonClass, (c, p) => c.buttonClassName(p.htmlClass))
+          .applyOrNot(props.menuButtonClass, (c, p) => c.menuButtonClassName(p.htmlClass))
+          .applyOrNot(props.tooltip, _.tooltip(_))
+          .applyOrNot(props.disabled, _.disabled(_))
+          .applyOrNot(props.loading, _.loading(_))
+          .applyOrNot(props.loadingIcon, (c, p) => c.loadingIcon(p.toPrime))
+          .applyOrNot(
+            props.tooltipOptions,
+            (c, p) => c.tooltipOptions(p.asInstanceOf[CTooltipOptions])
+          )(
+            props.modifiers.toTagMod
+          )
     }
 }
