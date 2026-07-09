@@ -34,7 +34,7 @@ val http4sV          = "0.23.36"
 val kittensV         = "3.5.0"
 val lucumaTypedV     = "0.12.0"
 val munitScalacheckV = "1.3.0"
-val munitV           = "1.3.3"
+val munitV           = "1.3.4"
 val scalaJsDomV      = "2.8.1"
 val scalaJsReactV    = "4.0.0"
 
