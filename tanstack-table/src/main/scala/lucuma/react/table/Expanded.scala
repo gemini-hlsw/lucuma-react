@@ -4,7 +4,7 @@
 package lucuma.react.table
 
 import lucuma.typed.std.Record
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 import org.scalablytyped.runtime.StringDictionary
 
 enum Expanded:

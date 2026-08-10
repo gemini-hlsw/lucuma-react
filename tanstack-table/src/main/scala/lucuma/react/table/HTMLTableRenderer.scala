@@ -13,7 +13,7 @@ import lucuma.react.common.*
 import lucuma.react.common.style.Css
 import lucuma.react.virtual.*
 import lucuma.typed.tanstackReactTable as rawReact
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 import org.scalajs.dom.HTMLDivElement
 import org.scalajs.dom.HTMLElement
 

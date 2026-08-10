@@ -8,7 +8,7 @@ import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.SizePx
 import lucuma.react.table.facade.TableOptionsJs
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 import org.scalajs.dom
 
 import scalajs.js

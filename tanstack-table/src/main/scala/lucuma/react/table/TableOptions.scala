@@ -10,7 +10,7 @@ import lucuma.react.table.facade.ColumnDefJs
 import lucuma.react.table.facade.TableOptionsJs
 import lucuma.typed.std.Map as JsMap
 import lucuma.typed.tanstackReactTable as rawReact
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 import org.scalajs.dom
 
 import scalajs.js

@@ -8,7 +8,7 @@ import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.react.SizePx
 import lucuma.react.table.facade.*
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 
 import scalajs.js
 import scalajs.js.JSConverters.*

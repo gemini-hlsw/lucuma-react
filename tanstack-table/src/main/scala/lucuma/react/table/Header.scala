@@ -5,7 +5,7 @@ package lucuma.react.table
 
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.ReactEvent
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 
 /**
  * @tparam T
