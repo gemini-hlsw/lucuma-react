@@ -48,7 +48,7 @@ case class Table[T, TM, CM, TF] private[table] (
   def reset(): Callback                                                              = Callback(toJs.reset())
   def setState(value: TableState[TF]): Callback                                      = Callback(toJs.setState(value.toJs))
   def modState(f: Endo[TableState[TF]]): Callback                                    =
-    Callback(toJs.setState(rawState => f(TableState(rawState)).toJs))
+    Callback(toJs.setState((rawState: raw.buildLibTypesMod.TableState) => f(TableState(rawState)).toJs))
 
   // Headers
   def getFlatHeaders(): List[Header[T, Any, TM, CM, TF, Any, Any]] =
@@ -66,9 +66,9 @@ case class Table[T, TM, CM, TF] private[table] (
   def getIsAllColumnsVisible(): Boolean                                            = toJs.getIsAllColumnsVisible()
   def getIsSomeColumnsVisible(): Boolean                                           = toJs.getIsSomeColumnsVisible()
   def getLeftVisibleLeafColumns(): List[Column[T, Any, TM, CM, TF, Any, Any]]      =
-    toJs.getLeftVisibleLeafColumns().toList.map(Column(_))
+    toJs.getStartVisibleLeafColumns().toList.map(Column(_))
   def getRightVisibleLeafColumns(): List[Column[T, Any, TM, CM, TF, Any, Any]]     =
-    toJs.getRightVisibleLeafColumns().toList.map(Column(_))
+    toJs.getEndVisibleLeafColumns().toList.map(Column(_))
   def getToggleAllColumnsVisibilityHandler(): SyntheticEvent[dom.Node] => Callback =
     e => Callback(toJs.getToggleAllColumnsVisibilityHandler()(e))
   def getVisibleFlatColumns(): List[Column[T, Any, TM, CM, TF, Any, Any]]          =
@@ -97,8 +97,8 @@ case class Table[T, TM, CM, TF] private[table] (
 
   // ColumnSizing
   def getCenterTotalSize(): SizePx                             = SizePx(toJs.getCenterTotalSize().toInt)
-  def getLeftTotalSize(): SizePx                               = SizePx(toJs.getLeftTotalSize().toInt)
-  def getRightTotalSize(): SizePx                              = SizePx(toJs.getRightTotalSize().toInt)
+  def getLeftTotalSize(): SizePx                               = SizePx(toJs.getStartTotalSize().toInt)
+  def getRightTotalSize(): SizePx                              = SizePx(toJs.getEndTotalSize().toInt)
   def getTotalSize(): SizePx                                   = SizePx(toJs.getTotalSize().toInt)
   def resetColumnSizing(): Callback                            = Callback(toJs.resetColumnSizing())
   def resetColumnSizing(defaultState: Boolean): Callback       =
@@ -110,9 +110,9 @@ case class Table[T, TM, CM, TF] private[table] (
   def modColumnSizing(f: Endo[ColumnSizing]): Callback         =
     Callback(toJs.setColumnSizing(v => f(ColumnSizing.fromJs(v)).toJs))
   def setColumnSizingInfo(value: ColumnSizingInfo): Callback   =
-    Callback(toJs.setColumnSizingInfo(value.toJs))
+    Callback(toJs.setColumnResizing(value.toJs))
   def modColumnSizingInfo(f: Endo[ColumnSizingInfo]): Callback =
-    Callback(toJs.setColumnSizingInfo(v => f(ColumnSizingInfo.fromJs(v)).toJs))
+    Callback(toJs.setColumnResizing(v => f(ColumnSizingInfo.fromJs(v)).toJs))
 
   // Expanded
   def getCanSomeRowsExpand(): Boolean                                         = toJs.getCanSomeRowsExpand()
@@ -181,21 +181,21 @@ case class Table[T, TM, CM, TF] private[table] (
   def getCenterLeafHeaders(): List[Header[T, Any, TM, CM, TF, Any, Any]] =
     toJs.getCenterLeafHeaders().toList.map(Header(_))
   def getLeftFlatHeaders(): List[Header[T, Any, TM, CM, TF, Any, Any]]   =
-    toJs.getLeftFlatHeaders().toList.map(Header(_))
+    toJs.getStartFlatHeaders().toList.map(Header(_))
   def getLeftFooterGroups(): List[HeaderGroup[T, TM, CM, TF]]            =
-    toJs.getLeftFooterGroups().toList.map(HeaderGroup(_))
+    toJs.getStartFooterGroups().toList.map(HeaderGroup(_))
   def getLeftHeaderGroups(): List[HeaderGroup[T, TM, CM, TF]]            =
-    toJs.getLeftHeaderGroups().toList.map(HeaderGroup(_))
+    toJs.getStartHeaderGroups().toList.map(HeaderGroup(_))
   def getLeftLeafHeaders(): List[Header[T, Any, TM, CM, TF, Any, Any]]   =
-    toJs.getLeftLeafHeaders().toList.map(Header(_))
+    toJs.getStartLeafHeaders().toList.map(Header(_))
   def getRightFlatHeaders(): List[Header[T, Any, TM, CM, TF, Any, Any]]  =
-    toJs.getRightFlatHeaders().toList.map(Header(_))
+    toJs.getEndFlatHeaders().toList.map(Header(_))
   def getRightFooterGroups(): List[HeaderGroup[T, TM, CM, TF]]           =
-    toJs.getRightFooterGroups().toList.map(HeaderGroup(_))
+    toJs.getEndFooterGroups().toList.map(HeaderGroup(_))
   def getRightHeaderGroups(): List[HeaderGroup[T, TM, CM, TF]]           =
-    toJs.getRightHeaderGroups().toList.map(HeaderGroup(_))
+    toJs.getEndHeaderGroups().toList.map(HeaderGroup(_))
   def getRightLeafHeaders(): List[Header[T, Any, TM, CM, TF, Any, Any]]  =
-    toJs.getRightLeafHeaders().toList.map(Header(_))
+    toJs.getEndLeafHeaders().toList.map(Header(_))
   // Row Pinning
   def setRowPinning(value:    RowPinning): Callback                      = Callback(toJs.setRowPinning(value.toJs))
   def modRowPinning(f: Endo[RowPinning]): Callback                       = Callback:

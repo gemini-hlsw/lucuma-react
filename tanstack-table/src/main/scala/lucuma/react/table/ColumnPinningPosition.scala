@@ -4,14 +4,14 @@
 package lucuma.react.table
 
 import cats.syntax.all.*
-import lucuma.typed.tanstackTableCore.buildLibFeaturesColumnPinningMod as raw
+import lucuma.react.table.facade.compat.buildLibFeaturesColumnPinningMod as raw
 
 enum ColumnPinningPosition(private[table] val toJs: raw.ColumnPinningPosition):
-  case Left  extends ColumnPinningPosition(raw.ColumnPinningPosition.left)
-  case Right extends ColumnPinningPosition(raw.ColumnPinningPosition.right)
+  case Left  extends ColumnPinningPosition(raw.ColumnPinningPosition.start)
+  case Right extends ColumnPinningPosition(raw.ColumnPinningPosition.end)
 
 object ColumnPinningPosition:
   def fromJs(rawValue: raw.ColumnPinningPosition): Option[ColumnPinningPosition] =
-    if rawValue == raw.ColumnPinningPosition.left then Left.some
-    else if rawValue == raw.ColumnPinningPosition.right then Right.some
+    if rawValue == raw.ColumnPinningPosition.start then Left.some
+    else if rawValue == raw.ColumnPinningPosition.end then Right.some
     else none

@@ -10,14 +10,10 @@ import scalajs.js.JSConverters.*
 
 case class ColumnPinning(left: List[ColumnId] = List.empty, right: List[ColumnId] = List.empty):
   def toJs: raw.buildLibFeaturesColumnPinningMod.ColumnPinningState =
-    val base        = raw.buildLibFeaturesColumnPinningMod.ColumnPinningState()
-    val leftApplied =
-      left match
-        case Nil      => base
-        case nonEmpty => base.setLeft(nonEmpty.map(_.value).toJSArray)
-    right match
-      case Nil      => leftApplied
-      case nonEmpty => leftApplied.setRight(nonEmpty.map(_.value).toJSArray)
+    raw.buildLibFeaturesColumnPinningMod.ColumnPinningState(
+      right.map(_.value).toJSArray,
+      left.map(_.value).toJSArray
+    )
 
   def addedLeft(columnId: ColumnId): ColumnPinning =
     copy(left = left :+ columnId)
@@ -42,6 +38,6 @@ object ColumnPinning:
     rawValue: raw.buildLibFeaturesColumnPinningMod.ColumnPinningState
   ): ColumnPinning =
     ColumnPinning(
-      rawValue.left.toOption.map(_.toList.map(ColumnId(_))).orEmpty,
-      rawValue.right.toOption.map(_.toList.map(ColumnId(_))).orEmpty
+      rawValue.start.toList.map(ColumnId(_)),
+      rawValue.end.toList.map(ColumnId(_))
     )

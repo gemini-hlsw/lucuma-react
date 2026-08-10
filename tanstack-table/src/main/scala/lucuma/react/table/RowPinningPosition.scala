@@ -4,7 +4,7 @@
 package lucuma.react.table
 
 import cats.syntax.all.*
-import lucuma.typed.tanstackTableCore.buildLibFeaturesRowPinningMod as raw
+import lucuma.react.table.facade.compat.buildLibFeaturesRowPinningMod as raw
 
 enum RowPinningPosition(val toJs: raw.RowPinningPosition):
   case Top    extends RowPinningPosition(raw.RowPinningPosition.top)

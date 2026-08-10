@@ -7,6 +7,8 @@ import cats.Endo
 import lucuma.react.table.facade.compat as raw
 import org.scalablytyped.runtime.StringDictionary
 
+import scalajs.js
+
 opaque type RowSelection = Map[RowId, Boolean]
 
 object RowSelection:
@@ -15,7 +17,7 @@ object RowSelection:
   private[table] def fromJs(
     rawValue: raw.buildLibFeaturesRowSelectionMod.RowSelectionState
   ): RowSelection                                             =
-    rawValue.toList.map((row, selected) => RowId(row) -> selected).toMap
+    rawValue.toList.map((row, selected) => RowId(row) -> selected.asInstanceOf[Boolean]).toMap
 
   extension (opaqueValue: RowSelection)
     inline def value: Map[RowId, Boolean]                           =
@@ -23,6 +25,6 @@ object RowSelection:
     inline def modify(f: Endo[Map[RowId, Boolean]]): RowSelection   =
       f(opaqueValue)
     def toJs: raw.buildLibFeaturesRowSelectionMod.RowSelectionState =
-      StringDictionary(
-        opaqueValue.map((rowId, selected) => rowId.value -> selected).toSeq*
-      )
+      val obj = js.Dynamic.literal()
+      opaqueValue.foreach { case (rowId, selected) => obj.updateDynamic(rowId.value)(selected) }
+      obj.asInstanceOf[raw.buildLibFeaturesRowSelectionMod.RowSelectionState]

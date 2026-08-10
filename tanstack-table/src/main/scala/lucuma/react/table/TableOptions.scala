@@ -9,7 +9,7 @@ import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.table.facade.ColumnDefJs
 import lucuma.react.table.facade.TableOptionsJs
 import lucuma.typed.std.Map as JsMap
-import lucuma.typed.tanstackReactTable as rawReact
+import lucuma.typed.tanstackReactTable.distLegacyMod as legacyMod
 import lucuma.react.table.facade.compat as raw
 import org.scalajs.dom
 
@@ -122,7 +122,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
         getCoreRowModel(Table(t)).map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
 
   def withDefaultGetCoreRowModel: TableOptions[T, TM, CM, TF] =
-    copy(_.getCoreRowModel = rawReact.mod.getCoreRowModel())
+    copy(_.getCoreRowModel = legacyMod.getCoreRowModel().asInstanceOf[js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]])
 
   lazy val renderFallbackValue: Option[Any] = toJsBase.renderFallbackValue.toOption
 
@@ -438,7 +438,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   def withDefaultGetSortedRowModel: TableOptions[T, TM, CM, TF] =
     copy:
-      _.getSortedRowModel = rawReact.mod.getSortedRowModel()
+      _.getSortedRowModel = legacyMod.getSortedRowModel().asInstanceOf[js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]]
 
   lazy val isMultiSortEvent: Option[SyntheticEvent[dom.Node] => Boolean] =
     toJsBase.isMultiSortEvent.toOption.map(identity)
@@ -655,7 +655,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   def withDefaultGetExpandedRowModel: TableOptions[T, TM, CM, TF] =
     copy:
-      _.getExpandedRowModel = rawReact.mod.getExpandedRowModel()
+      _.getExpandedRowModel = legacyMod.getExpandedRowModel().asInstanceOf[js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]]
 
   lazy val getSubRows: Option[(T, Int) => Option[List[T]]] =
     toJsBase.getSubRows.toOption.map(fn => (row, idx) => fn(row, idx).toOption.map(_.toList))
@@ -944,7 +944,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   def withDefaultGetFilteredRowModel: TableOptions[T, TM, CM, TF] =
     copy:
-      _.getFilteredRowModel = rawReact.mod.getFilteredRowModel()
+      _.getFilteredRowModel = legacyMod.getFilteredRowModel().asInstanceOf[js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]]
 
   // Global Filtering
   lazy val enableGlobalFilter: Option[Boolean] = toJsBase.enableGlobalFilter.toOption
@@ -1072,7 +1072,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   def withDefaultGetFacetedRowModel: TableOptions[T, TM, CM, TF] =
     copy:
-      _.getFacetedRowModel = rawReact.mod.getFacetedRowModel()
+      _.getFacetedRowModel = legacyMod.getFacetedRowModel().asInstanceOf[js.Function2[raw.buildLibTypesMod.Table[T], String, js.Function0[raw.buildLibTypesMod.RowModel[T]]]]
 
   lazy val getFacetedUniqueValues: Option[(Table[T, TM, CM, TF], ColumnId) => () => Map[Any, Int]] =
     toJsBase.getFacetedUniqueValues.toOption.map: fn =>
@@ -1104,7 +1104,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   def withDefaultGetFacetedUniqueValues: TableOptions[T, TM, CM, TF] =
     copy:
-      _.getFacetedUniqueValues = rawReact.mod.getFacetedUniqueValues()
+      _.getFacetedUniqueValues = legacyMod.getFacetedUniqueValues().asInstanceOf[js.Function2[raw.buildLibTypesMod.Table[T], String, js.Function0[JsMap[Any, Double]]]]
 
   lazy val getFacetedMinMaxValues
     : Option[(Table[T, TM, CM, TF], ColumnId) => () => Option[(Double, Double)]] =
@@ -1139,7 +1139,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   def withDefaultGetFacetedMinMaxValues: TableOptions[T, TM, CM, TF] =
     copy:
-      _.getFacetedMinMaxValues = rawReact.mod.getFacetedMinMaxValues()
+      _.getFacetedMinMaxValues = legacyMod.getFacetedMinMaxValues().asInstanceOf[js.Function2[raw.buildLibTypesMod.Table[T], String, js.Function0[js.UndefOr[js.Tuple2[Double, Double]]]]]
 
 end TableOptions
 

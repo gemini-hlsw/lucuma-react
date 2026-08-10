@@ -42,7 +42,7 @@ trait ColumnDefJs[T, A, CM] extends js.Object:
   var invertSorting: js.UndefOr[Boolean]                                             = js.undefined
   var sortDescFirst: js.UndefOr[Boolean]                                             = js.undefined
   var sortUndefined: js.UndefOr[UndefinedPriorityJs]                                 = js.undefined
-  var sortingFn: js.UndefOr[String | raw.buildLibFeaturesRowSortingMod.SortingFn[T]] = js.undefined
+  var sortFn: js.UndefOr[String | raw.buildLibFeaturesRowSortingMod.SortingFn[T]] = js.undefined
 
   // Column Pinning
   var enablePinning: js.UndefOr[Boolean] = js.undefined

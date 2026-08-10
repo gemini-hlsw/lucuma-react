@@ -4,16 +4,16 @@
 package lucuma.react.table
 
 import cats.syntax.all.*
-import lucuma.typed.tanstackTableCore.buildLibFeaturesRowPinningMod as raw
+import lucuma.react.table.facade.compat.buildLibFeaturesRowPinningMod as raw
 
 import scalajs.js.JSConverters.*
 
 case class RowPinning(bottom: List[RowId] = List.empty, top: List[RowId] = List.empty):
   def toJs: raw.RowPinningState =
-    raw
-      .RowPinningState()
-      .setBottom(bottom.map(_.value).toJSArray)
-      .setTop(top.map(_.value).toJSArray)
+    raw.RowPinningState(
+      bottom.map(_.value).toJSArray,
+      top.map(_.value).toJSArray
+    )
 
   def addedBottom(rowId: RowId): RowPinning =
     copy(bottom = bottom :+ rowId)
@@ -36,6 +36,6 @@ object RowPinning:
 
   def fromJs(rawValue: raw.RowPinningState): RowPinning =
     RowPinning(
-      rawValue.bottom.map(_.toList.map(RowId(_))).toOption.orEmpty,
-      rawValue.top.map(_.toList.map(RowId(_))).toOption.orEmpty
+      rawValue.bottom.toList.map(RowId(_)),
+      rawValue.top.toList.map(RowId(_))
     )

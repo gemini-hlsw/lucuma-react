@@ -6,15 +6,43 @@ package lucuma.react
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.VdomNode
+import lucuma.react.table.facade.{compat, instance}
 import lucuma.typed.std.Map as JsMap
+import lucuma.typed.tanstackReactTable.distUseLegacyTableMod.LegacyFeatures
+import lucuma.typed.tanstackTableCore.distTypesCellMod
+import lucuma.typed.tanstackTableCore.distTypesColumnMod
+import lucuma.typed.tanstackTableCore.distTypesHeaderGroupMod
+import lucuma.typed.tanstackTableCore.distTypesHeaderMod
+import lucuma.typed.tanstackTableCore.distTypesRowMod
+import lucuma.typed.tanstackTableCore.distTypesTableMod
+import lucuma.typed.tanstackTableCore.distTypesTableStateMod
 import org.scalajs.dom.HTMLElement
 
+import scala.language.implicitConversions
 import scala.scalajs.js.annotation.JSGlobal
 
 import scalajs.js
 import scalajs.js.JSConverters.*
 
 package object table extends HooksApiExt:
+  // v9's public typed types (distTypes*Mod.X[LegacyFeatures, T]) and our aggregated instance
+  // traits (facade.instance.X[T]) describe the same runtime objects but are disjoint to the
+  // compiler. These identity conversions bridge the boundary at wrapper construction and at
+  // interop call sites, so the facade code needs no scattered `.asInstanceOf` casts.
+  given toInstanceRow[T]:    Conversion[distTypesRowMod.Row[LegacyFeatures, T], instance.Row[T]]            = _.asInstanceOf
+  given fromInstanceRow[T]:   Conversion[instance.Row[T], distTypesRowMod.Row[LegacyFeatures, T]]            = _.asInstanceOf
+  given toInstanceColumn[T, V]: Conversion[distTypesColumnMod.Column[LegacyFeatures, T, V], instance.Column[T, V]] = _.asInstanceOf
+  given fromInstanceColumn[T, V]: Conversion[instance.Column[T, V], distTypesColumnMod.Column[LegacyFeatures, T, V]] = _.asInstanceOf
+  given toInstanceCell[T, V]:     Conversion[distTypesCellMod.Cell[LegacyFeatures, T, V], instance.Cell[T, V]]     = _.asInstanceOf
+  given fromInstanceCell[T, V]:   Conversion[instance.Cell[T, V], distTypesCellMod.Cell[LegacyFeatures, T, V]]     = _.asInstanceOf
+  given toInstanceHeader[T, V]:  Conversion[distTypesHeaderMod.Header[LegacyFeatures, T, V], instance.Header[T, V]] = _.asInstanceOf
+  given fromInstanceHeader[T, V]: Conversion[instance.Header[T, V], distTypesHeaderMod.Header[LegacyFeatures, T, V]] = _.asInstanceOf
+  given toInstanceHeaderGroup[T]: Conversion[distTypesHeaderGroupMod.HeaderGroup[LegacyFeatures, T], instance.HeaderGroup[T]] = _.asInstanceOf
+  given fromInstanceHeaderGroup[T]: Conversion[instance.HeaderGroup[T], distTypesHeaderGroupMod.HeaderGroup[LegacyFeatures, T]] = _.asInstanceOf
+  given toInstanceTable[T]:    Conversion[distTypesTableMod.Table[LegacyFeatures, T], instance.Table[T]] = _.asInstanceOf
+  given fromInstanceTable[T]:  Conversion[instance.Table[T], distTypesTableMod.Table[LegacyFeatures, T]] = _.asInstanceOf
+  given toInstanceState[T]:    Conversion[distTypesTableStateMod.TableState[LegacyFeatures], instance.TableState] = _.asInstanceOf
+
   export TableHook.useReactTable
 
   /**

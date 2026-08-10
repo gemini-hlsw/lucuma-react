@@ -67,7 +67,7 @@ case class Column[T, A, TM, CM, TF, CF, FM] private[table] (
   def getAutoSortDir(): SortDirection                                             =
     SortDirection.fromDescending(toJs.getAutoSortDir() == raw.tanstackTableCoreStrings.desc)
   def getAutoSortingFn(): SortingFn[T, TM, CM, TF]                                =
-    (rowA, rowB, colId) => toJs.getAutoSortingFn()(rowA.toJs, rowB.toJs, colId.value).toInt
+    (rowA, rowB, colId) => toJs.getAutoSortFn()(rowA.toJs, rowB.toJs, colId.value).toInt
   def getCanMultiSort(): Boolean                                                  = toJs.getCanMultiSort()
   def getCanSort(): Boolean                                                       = toJs.getCanSort()
   def getFirstSortDir(): SortDirection                                            = SortDirection.fromDescending(
@@ -83,7 +83,7 @@ case class Column[T, A, TM, CM, TF, CF, FM] private[table] (
       .map(dir => SortDirection.fromDescending(dir == raw.tanstackTableCoreStrings.desc))
   def getSortIndex(): Int                                                         = toJs.getSortIndex().toInt
   def getSortingFn(): SortingFn[T, TM, CM, TF]                                    =
-    (rowA, rowB, colId) => toJs.getSortingFn()(rowA.toJs, rowB.toJs, colId.value).toInt
+    (rowA, rowB, colId) => toJs.getSortFn()(rowA.toJs, rowB.toJs, colId.value).toInt
   def getToggleSortingHandler(): Option[SyntheticEvent[dom.Node] => Callback]     =
     toJs.getToggleSortingHandler().toOption.map(fn => e => Callback(fn(e)))
   def toggleSorting(): Callback                                                   = Callback(toJs.toggleSorting())
@@ -121,15 +121,9 @@ case class Column[T, A, TM, CM, TF, CF, FM] private[table] (
     toJs.setFilterValue((v: js.UndefOr[CF]) => f(v.toOption).orUndefined)
   )
   def getAutoFilterFn(): Option[FilterFn[T, TM, CM, TF, CF, FM]]     =
-    toJs
-      .getAutoFilterFn()
-      .toOption
-      .map(FilterFn.fromJs(_))
+    Some(FilterFn.fromJs(toJs.getAutoFilterFn()))
   def getFilterFn[CF, FM](): Option[FilterFn[T, TM, CM, TF, CF, FM]] =
-    toJs
-      .getFilterFn()
-      .toOption
-      .map(FilterFn.fromJs(_))
+    Some(FilterFn.fromJs(toJs.getFilterFn()))
 
   // Global Filtering
   def getCanGlobalFilter(): Boolean = toJs.getCanGlobalFilter()

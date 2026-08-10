@@ -29,7 +29,6 @@ import distFeaturesRowSelectionRowSelectionFeatureDottypesMod.*
 import distFeaturesRowSortingRowSortingFeatureDottypesMod.*
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSGlobal
 
 /**
  * Aggregated `@js.native` instance traits for TanStack Table v9.
@@ -46,7 +45,6 @@ object instance:
   private type LF = LegacyFeatures
 
   @js.native
-  @JSGlobal
   trait Column[T, V] extends js.Object
     with ColumnColumn[LF, T, V]
     with ColumnColumnVisibility
@@ -62,7 +60,6 @@ object instance:
     with ColumnIndexes
 
   @js.native
-  @JSGlobal
   trait Row[T] extends js.Object
     with RowRow[LF, T]
     with RowRowExpanding
@@ -74,15 +71,15 @@ object instance:
     with RowColumnFiltering[LF, T]
 
   @js.native
-  @JSGlobal
   trait Cell[T, V] extends js.Object
     with CellCell[LF, T, V]
     with CellCellSelection
     with CellCellSpanning
-    with CellColumnGrouping
+    with CellColumnGrouping:
+    // v8 grouping-cell concept; removed from v9 core but present on legacy instances.
+    def getIsAggregated(): Boolean = js.native
 
   @js.native
-  @JSGlobal
   trait Table[T] extends js.Object
     with TableTable[LF, T]
     with TableColumns[LF, T]
@@ -110,21 +107,50 @@ object instance:
     with TableRowModelsFiltered[LF, T]
     with TableRowModelsGrouped[LF, T]
     with TableRowModelsPaginated[LF, T]
-    with TableRowModelsSorted[LF, T]
+    with TableRowModelsSorted[LF, T]:
+    // Legacy v8-style state access (v9 removed these in favour of table.store/state).
+    def getState(): lucuma.typed.tanstackTableCore.distTypesTableStateMod.TableState[LF] = js.native
+    def setState(stateOrUpdater: js.Any): Unit                                              = js.native
 
   @js.native
-  @JSGlobal
   trait Header[T, V] extends js.Object
     with HeaderHeader[LF, T, V]
     with HeaderColumnSizing
     with HeaderColumnResizing
 
   @js.native
-  @JSGlobal
   trait HeaderGroup[T] extends js.Object
     with HeaderGroupHeader[LF, T, Any]
 
   // RowModel keeps its generated type (no feature extraction issue): alias through.
   type RowModel[T] = distCoreRowModelsCoreRowModelsFeatureDottypesMod.RowModel[LF, T]
+
+  // --- Table state (public TableState reduces to memberless js.Any via ExtractFeatureMapTypes) ---
+  @js.native
+  trait TableState extends js.Object
+    with TableStateColumnVisibility
+    with TableStateColumnOrdering
+    with TableStateColumnPinning
+    with TableStateRowPinning
+    with TableStateRowSorting
+    with TableStateRowExpanding
+    with TableStateColumnSizing
+    with TableStateColumnResizing
+    with TableStateRowSelection
+    with TableStateColumnFiltering
+    with TableStateGlobalFiltering:
+    // v9 state objects expose plain fields; these mutating setters mirror the v8 builder API the
+    // facade relies on (they assign + return self). Read access comes from the TableState* mixins.
+    def setColumnVisibility(v: distFeaturesColumnVisibilityColumnVisibilityFeatureDottypesMod.ColumnVisibilityState): this.type   = js.native
+    def setColumnOrder(v: distFeaturesColumnOrderingColumnOrderingFeatureDottypesMod.ColumnOrderState): this.type                 = js.native
+    def setColumnPinning(v: distFeaturesColumnPinningColumnPinningFeatureDottypesMod.ColumnPinningState): this.type               = js.native
+    def setRowPinning(v: distFeaturesRowPinningRowPinningFeatureDottypesMod.RowPinningState): this.type                         = js.native
+    def setSorting(v: distFeaturesRowSortingRowSortingFeatureDottypesMod.SortingState): this.type                               = js.native
+    def setExpanded(v: distFeaturesRowExpandingRowExpandingFeatureDottypesMod.ExpandedState): this.type                         = js.native
+    def setColumnSizing(v: distFeaturesColumnSizingColumnSizingFeatureDottypesMod.ColumnSizingState): this.type                 = js.native
+    def setColumnResizing(v: distFeaturesColumnResizingColumnResizingFeatureDottypesMod.columnResizingState): this.type          = js.native
+    def setRowSelection(v: distFeaturesRowSelectionRowSelectionFeatureDottypesMod.RowSelectionState): this.type                 = js.native
+    def setColumnFilters(v: distFeaturesColumnFilteringColumnFilteringFeatureDottypesMod.ColumnFiltersState): this.type          = js.native
+    def setGlobalFilter(v: js.Any): this.type                                                                                    = js.native
 
 end instance

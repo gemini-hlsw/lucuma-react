@@ -32,7 +32,8 @@ val catsV            = "2.13.0"
 val disciplineMunitV = "2.0.0"
 val http4sV          = "0.23.36"
 val kittensV         = "3.5.0"
-val lucumaTypedV     = "0.13.0-LOCAL"
+val lucumaTypedV          = "0.12.0"
+val lucumaTypedTanstackV  = "0.13.0-LOCAL" // tanstack facades regenerated for table v9 (highcharts/primereact still 0.12.0)
 val munitScalacheckV = "1.3.0"
 val munitV           = "1.3.5"
 val scalaJsDomV      = "2.8.1"
@@ -284,8 +285,8 @@ lazy val tanstackTable = project
     name := "lucuma-react-tanstack-table",
     Compile / scalacOptions += "-language:implicitConversions",
     libraryDependencies ++= Seq(
-      "edu.gemini" %%% "lucuma-typed-tanstack-react-table"   % lucumaTypedV,
-      "edu.gemini" %%% "lucuma-typed-tanstack-react-virtual" % lucumaTypedV
+      "edu.gemini" %%% "lucuma-typed-tanstack-react-table"   % lucumaTypedTanstackV,
+      "edu.gemini" %%% "lucuma-typed-tanstack-react-virtual" % lucumaTypedTanstackV
     )
   )
 

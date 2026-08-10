@@ -35,11 +35,12 @@ object compat:
     type Header[T, V]        = instance.Header[T, V]
     type HeaderGroup[T]      = instance.HeaderGroup[T]
     type RowModel[T]         = instance.RowModel[T]
-    type TableState          = lucuma.typed.tanstackTableCore.distTypesTableStateMod.TableState[LF]
+    type TableState          = instance.TableState
     type OnChangeFn[T]       = lucuma.typed.tanstackTableCore.distTypesTypeUtilsMod.OnChangeFn[T]
     type Updater[T]          = lucuma.typed.tanstackTableCore.distTypesTypeUtilsMod.Updater[T]
-    type InitialTableState   =
-      lucuma.typed.tanstackTableCore.distCoreTableConstructTableMod.InitialTableState
+    type InitialTableState   = instance.TableState
+    val InitialTableState: lucuma.typed.tanstackTableCore.anon.PartialTableStateAll.type =
+      lucuma.typed.tanstackTableCore.anon.PartialTableStateAll
 
   // --- Core contexts (was buildLibCoreHeadersMod / buildLibCoreCellMod) ---
   object buildLibCoreHeadersMod:
@@ -57,10 +58,11 @@ object compat:
     lucuma.typed.tanstackTableCore.distFeaturesColumnSizingColumnSizingFeatureDottypesMod
 
   object buildLibFeaturesColumnSizingMod:
-    type ColumnSizingState       = sizingMod.ColumnSizingState
+    type ColumnSizingState     = sizingMod.ColumnSizingState
     // v9 split sizing from resizing; the "info" state is now the resizing state.
-    type ColumnSizingInfoState   = resizingMod.columnResizingState
-    type ColumnResizeMode        = resizingMod.ColumnResizeMode
+    type ColumnSizingInfoState = resizingMod.columnResizingState
+    val ColumnSizingInfoState: resizingMod.columnResizingState.type = resizingMod.columnResizingState
+    type ColumnResizeMode      = resizingMod.ColumnResizeMode
     val ColumnResizeMode: resizingMod.ColumnResizeMode.type = resizingMod.ColumnResizeMode
 
   // --- Column Filtering (was buildLibFeaturesColumnFilteringMod) ---
@@ -70,21 +72,25 @@ object compat:
     type ColumnFiltersState = filteringMod.ColumnFiltersState
     type FilterFn[T]        = filteringMod.FilterFn[LF, T]
     type ColumnFilter       = filteringMod.ColumnFilter
+    val ColumnFilter: filteringMod.ColumnFilter.type = filteringMod.ColumnFilter
+    type FilterMeta         = filteringMod.FilterMeta
 
   // --- Row Sorting (was buildLibFeaturesRowSortingMod) ---
   private val sortingMod =
     lucuma.typed.tanstackTableCore.distFeaturesRowSortingRowSortingFeatureDottypesMod
   object buildLibFeaturesRowSortingMod:
-    type ColumnSort     = sortingMod.ColumnSort
-    type SortingState   = sortingMod.SortingState
-    type SortingFn[T]   = sortingMod.SortFn[LF, T]
+    type ColumnSort   = sortingMod.ColumnSort
+    val ColumnSort: sortingMod.ColumnSort.type = sortingMod.ColumnSort
+    type SortingState = sortingMod.SortingState
+    type SortingFn[T] = sortingMod.SortFn[LF, T]
 
   // --- Column Pinning (was buildLibFeaturesColumnPinningMod) ---
   private val colPinningMod =
     lucuma.typed.tanstackTableCore.distFeaturesColumnPinningColumnPinningFeatureDottypesMod
   object buildLibFeaturesColumnPinningMod:
-    type ColumnPinningState                               = colPinningMod.ColumnPinningState
-    type ColumnPinningPosition                            = colPinningMod.ColumnPinningPosition
+    type ColumnPinningState     = colPinningMod.ColumnPinningState
+    val ColumnPinningState: colPinningMod.ColumnPinningState.type = colPinningMod.ColumnPinningState
+    type ColumnPinningPosition  = colPinningMod.ColumnPinningPosition
     val ColumnPinningPosition: colPinningMod.ColumnPinningPosition.type =
       colPinningMod.ColumnPinningPosition
 
@@ -96,14 +102,15 @@ object compat:
   // --- Column Visibility (was buildLibFeaturesColumnVisibilityMod) ---
   object buildLibFeaturesColumnVisibilityMod:
     type VisibilityState =
-      lucuma.typed.tanstackTableCore.distFeaturesColumnVisibilityColumnVisibilityFeatureDottypesMod.VisibilityState
+      lucuma.typed.tanstackTableCore.distFeaturesColumnVisibilityColumnVisibilityFeatureDottypesMod.ColumnVisibilityState
 
   // --- Row Pinning (was buildLibFeaturesRowPinningMod) ---
   private val rowPinningMod =
     lucuma.typed.tanstackTableCore.distFeaturesRowPinningRowPinningFeatureDottypesMod
   object buildLibFeaturesRowPinningMod:
-    type RowPinningState                          = rowPinningMod.RowPinningState
-    type RowPinningPosition                       = rowPinningMod.RowPinningPosition
+    type RowPinningState    = rowPinningMod.RowPinningState
+    val RowPinningState: rowPinningMod.RowPinningState.type = rowPinningMod.RowPinningState
+    type RowPinningPosition = rowPinningMod.RowPinningPosition
     val RowPinningPosition: rowPinningMod.RowPinningPosition.type =
       rowPinningMod.RowPinningPosition
 
@@ -126,5 +133,7 @@ object compat:
   // --- anonymous helper types (was raw.anon) ---
   object anon:
     type PartialTableState = lucuma.typed.tanstackTableCore.anon.PartialTableStateAll
+    val PartialTableState: lucuma.typed.tanstackTableCore.anon.PartialTableStateAll.type =
+      lucuma.typed.tanstackTableCore.anon.PartialTableStateAll
 
 end compat
