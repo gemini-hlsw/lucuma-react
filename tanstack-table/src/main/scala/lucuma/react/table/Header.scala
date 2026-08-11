@@ -71,7 +71,10 @@ case class Header[T, A, TM, CM, TF, CF, FM] private[table] (
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
   def getLeafHeaders(): List[Header[T, Any, TM, CM, TF, Any, Any]] =
-    toJs.getLeafHeaders().toList.map(h => Header(h.asInstanceOf[raw.buildLibTypesMod.Header[T, Any]]))
+    toJs
+      .getLeafHeaders()
+      .toList
+      .map(h => Header(h.asInstanceOf[raw.buildLibTypesMod.Header[T, Any]]))
 
   /**
    * The header's associated header group object.

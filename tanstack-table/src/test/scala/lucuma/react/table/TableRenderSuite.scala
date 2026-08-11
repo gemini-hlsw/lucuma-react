@@ -36,11 +36,14 @@ class TableRenderSuite extends FunSuite:
     <.table(
       <.tbody(
         TagMod.fromTraversableOnce(
-          table.getRowModel().rows.map: row =>
-            <.tr(
-              <.td(row.getValue[String](ColumnId("name"))),
-              <.td(row.getValue[Int](ColumnId("age")).toString)
-            )
+          table
+            .getRowModel()
+            .rows
+            .map: row =>
+              <.tr(
+                <.td(row.getValue[String](ColumnId("name"))),
+                <.td(row.getValue[Int](ColumnId("age")).toString)
+              )
         )
       )
     )
@@ -50,11 +53,11 @@ class TableRenderSuite extends FunSuite:
       rows  <- useMemo(data)(identity)
       cols  <- useMemo(columns)(identity)
       table <- useReactTable:
-        TableOptions(
-          cols,
-          rows,
-          initialState = initialSorting.map(s => TableState(sorting = s)).orUndefined
-        ).withDefaultGetSortedRowModel
+                 TableOptions(
+                   cols,
+                   rows,
+                   initialState = initialSorting.map(s => TableState(sorting = s)).orUndefined
+                 ).withDefaultGetSortedRowModel
     yield rowsHtml(table)
 
   test("v9 table renders its row model via useLegacyTable"):
@@ -66,9 +69,10 @@ class TableRenderSuite extends FunSuite:
   test("v9 table sorts rows by the initial sorting state"):
     // Ascending by age: Bob(25) must precede Alice(30) — different from data order (Alice, Bob),
     // so this proves the sort is actually applied.
-    ReactTestUtils.withRenderedSync(component(Some(Sorting(ColumnId("age") -> SortDirection.Ascending)))()):
-      m =>
-        val expected =
-          """<table><tbody><tr><td>Bob</td><td>25</td></tr><tr><td>Alice</td><td>30</td></tr></tbody></table>"""
-        m.outerHTML.assert(expected)
+    ReactTestUtils.withRenderedSync(
+      component(Some(Sorting(ColumnId("age") -> SortDirection.Ascending)))()
+    ): m =>
+      val expected =
+        """<table><tbody><tr><td>Bob</td><td>25</td></tr><tr><td>Alice</td><td>30</td></tr></tbody></table>"""
+      m.outerHTML.assert(expected)
 end TableRenderSuite

@@ -48,7 +48,9 @@ case class Table[T, TM, CM, TF] private[table] (
   def reset(): Callback                                                              = Callback(toJs.reset())
   def setState(value: TableState[TF]): Callback                                      = Callback(toJs.setState(value.toJs))
   def modState(f: Endo[TableState[TF]]): Callback                                    =
-    Callback(toJs.setState((rawState: raw.buildLibTypesMod.TableState) => f(TableState(rawState)).toJs))
+    Callback(
+      toJs.setState((rawState: raw.buildLibTypesMod.TableState) => f(TableState(rawState)).toJs)
+    )
 
   // Headers
   def getFlatHeaders(): List[Header[T, Any, TM, CM, TF, Any, Any]] =

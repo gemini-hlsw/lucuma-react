@@ -37,11 +37,11 @@ trait ColumnDefJs[T, A, CM] extends js.Object:
   var enableHiding: js.UndefOr[Boolean] = js.undefined
 
   // Sorting
-  var enableMultiSort: js.UndefOr[Boolean]                                           = js.undefined
-  var enableSorting: js.UndefOr[Boolean]                                             = js.undefined
-  var invertSorting: js.UndefOr[Boolean]                                             = js.undefined
-  var sortDescFirst: js.UndefOr[Boolean]                                             = js.undefined
-  var sortUndefined: js.UndefOr[UndefinedPriorityJs]                                 = js.undefined
+  var enableMultiSort: js.UndefOr[Boolean]                                        = js.undefined
+  var enableSorting: js.UndefOr[Boolean]                                          = js.undefined
+  var invertSorting: js.UndefOr[Boolean]                                          = js.undefined
+  var sortDescFirst: js.UndefOr[Boolean]                                          = js.undefined
+  var sortUndefined: js.UndefOr[UndefinedPriorityJs]                              = js.undefined
   var sortFn: js.UndefOr[String | raw.buildLibFeaturesRowSortingMod.SortingFn[T]] = js.undefined
 
   // Column Pinning

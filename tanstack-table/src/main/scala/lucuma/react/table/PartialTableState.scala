@@ -80,9 +80,7 @@ case class PartialTableState[+TF](private[table] val toJs: raw.anon.PartialTable
   /** WARNING: This mutates the object in-place. */
   def setColumnSizingInfo(columnSizingInfo: Option[ColumnSizingInfo]): PartialTableState[TF] =
     PartialTableState(
-      columnSizingInfo.fold(toJs.setColumnResizingUndefined)(v =>
-        toJs.setColumnResizing(v.toJs)
-      )
+      columnSizingInfo.fold(toJs.setColumnResizingUndefined)(v => toJs.setColumnResizing(v.toJs))
     )
 
   lazy val rowSelection: Option[RowSelection] =

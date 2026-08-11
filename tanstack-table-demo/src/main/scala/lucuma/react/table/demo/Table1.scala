@@ -153,12 +153,7 @@ object Table1:
                 row.getValue(colId).toString.toLowerCase.contains(value.toLowerCase),
               initialState =
                 TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
-            )
-              .withDefaultGetSortedRowModel
-              .withDefaultGetFilteredRowModel
-              .withDefaultGetFacetedRowModel
-              .withDefaultGetFacetedUniqueValues
-              .withDefaultGetFacetedMinMaxValues
+            ).withDefaultGetSortedRowModel.withDefaultGetFilteredRowModel.withDefaultGetFacetedRowModel.withDefaultGetFacetedUniqueValues.withDefaultGetFacetedMinMaxValues
       yield React.Fragment(
         <.h2("Sortable table"),
         <.input(

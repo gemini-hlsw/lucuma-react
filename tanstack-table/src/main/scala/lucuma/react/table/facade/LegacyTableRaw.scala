@@ -19,10 +19,10 @@ import scala.scalajs.js.annotation.JSImport
 @js.native
 @JSImport("@tanstack/react-table/legacy", JSImport.Namespace)
 object LegacyTableRaw extends js.Object:
-  def getCoreRowModel[T](): js.Any         = js.native
-  def getSortedRowModel[T](): js.Any       = js.native
-  def getFilteredRowModel[T](): js.Any     = js.native
-  def getExpandedRowModel[T](): js.Any     = js.native
-  def getFacetedRowModel[T](): js.Any      = js.native
-  def getFacetedUniqueValues[T](): js.Any  = js.native
-  def getFacetedMinMaxValues[T](): js.Any  = js.native
+  def getCoreRowModel[T](): js.Any        = js.native
+  def getSortedRowModel[T](): js.Any      = js.native
+  def getFilteredRowModel[T](): js.Any    = js.native
+  def getExpandedRowModel[T](): js.Any    = js.native
+  def getFacetedRowModel[T](): js.Any     = js.native
+  def getFacetedUniqueValues[T](): js.Any = js.native
+  def getFacetedMinMaxValues[T](): js.Any = js.native

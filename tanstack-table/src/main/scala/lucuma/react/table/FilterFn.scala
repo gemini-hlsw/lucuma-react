@@ -49,21 +49,27 @@ case class FilterFn[T, TM, CM, TF, F, FM](
         )
 
     val p: rawFilter.FilterFn[T] = jsFn.asInstanceOf[rawFilter.FilterFn[T]]
-    val dp                    = p.asInstanceOf[js.Dynamic]
-    dp.updateDynamic("resolveFilterValue")(resolveFilterValue
-      .map: f =>
-        val jsFn: js.Function2[Any, js.UndefOr[raw.Column[T, Any]], Any] =
-          (filterValue: Any, col: js.UndefOr[raw.Column[T, Any]]) =>
-            f(filterValue.asInstanceOf[F], col.map(Column(_)).toOption)
-        jsFn
-      .orUndefined.asInstanceOf[js.Any])
-    dp.updateDynamic("autoRemove")(autoRemove
-      .map: f =>
-        val jsFn: js.Function2[Any, js.UndefOr[raw.Column[T, Any]], Boolean] =
-          (filterValue: Any, col: js.UndefOr[raw.Column[T, Any]]) =>
-            f(filterValue.asInstanceOf[F], col.map(Column(_)).toOption)
-        jsFn
-      .orUndefined.asInstanceOf[js.Any])
+    val dp                       = p.asInstanceOf[js.Dynamic]
+    dp.updateDynamic("resolveFilterValue")(
+      resolveFilterValue
+        .map: f =>
+          val jsFn: js.Function2[Any, js.UndefOr[raw.Column[T, Any]], Any] =
+            (filterValue: Any, col: js.UndefOr[raw.Column[T, Any]]) =>
+              f(filterValue.asInstanceOf[F], col.map(Column(_)).toOption)
+          jsFn
+        .orUndefined
+        .asInstanceOf[js.Any]
+    )
+    dp.updateDynamic("autoRemove")(
+      autoRemove
+        .map: f =>
+          val jsFn: js.Function2[Any, js.UndefOr[raw.Column[T, Any]], Boolean] =
+            (filterValue: Any, col: js.UndefOr[raw.Column[T, Any]]) =>
+              f(filterValue.asInstanceOf[F], col.map(Column(_)).toOption)
+          jsFn
+        .orUndefined
+        .asInstanceOf[js.Any]
+    )
 
     p
 }

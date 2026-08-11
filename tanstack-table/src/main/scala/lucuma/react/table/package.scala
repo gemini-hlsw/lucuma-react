@@ -29,19 +29,39 @@ package object table extends HooksApiExt:
   // traits (facade.instance.X[T]) describe the same runtime objects but are disjoint to the
   // compiler. These identity conversions bridge the boundary at wrapper construction and at
   // interop call sites, so the facade code needs no scattered `.asInstanceOf` casts.
-  given toInstanceRow[T]:    Conversion[distTypesRowMod.Row[LegacyFeatures, T], instance.Row[T]]            = _.asInstanceOf
-  given fromInstanceRow[T]:   Conversion[instance.Row[T], distTypesRowMod.Row[LegacyFeatures, T]]            = _.asInstanceOf
-  given toInstanceColumn[T, V]: Conversion[distTypesColumnMod.Column[LegacyFeatures, T, V], instance.Column[T, V]] = _.asInstanceOf
-  given fromInstanceColumn[T, V]: Conversion[instance.Column[T, V], distTypesColumnMod.Column[LegacyFeatures, T, V]] = _.asInstanceOf
-  given toInstanceCell[T, V]:     Conversion[distTypesCellMod.Cell[LegacyFeatures, T, V], instance.Cell[T, V]]     = _.asInstanceOf
-  given fromInstanceCell[T, V]:   Conversion[instance.Cell[T, V], distTypesCellMod.Cell[LegacyFeatures, T, V]]     = _.asInstanceOf
-  given toInstanceHeader[T, V]:  Conversion[distTypesHeaderMod.Header[LegacyFeatures, T, V], instance.Header[T, V]] = _.asInstanceOf
-  given fromInstanceHeader[T, V]: Conversion[instance.Header[T, V], distTypesHeaderMod.Header[LegacyFeatures, T, V]] = _.asInstanceOf
-  given toInstanceHeaderGroup[T]: Conversion[distTypesHeaderGroupMod.HeaderGroup[LegacyFeatures, T], instance.HeaderGroup[T]] = _.asInstanceOf
-  given fromInstanceHeaderGroup[T]: Conversion[instance.HeaderGroup[T], distTypesHeaderGroupMod.HeaderGroup[LegacyFeatures, T]] = _.asInstanceOf
-  given toInstanceTable[T]:    Conversion[distTypesTableMod.Table[LegacyFeatures, T], instance.Table[T]] = _.asInstanceOf
-  given fromInstanceTable[T]:  Conversion[instance.Table[T], distTypesTableMod.Table[LegacyFeatures, T]] = _.asInstanceOf
-  given toInstanceState[T]:    Conversion[distTypesTableStateMod.TableState[LegacyFeatures], instance.TableState] = _.asInstanceOf
+  given toInstanceRow[T]: Conversion[distTypesRowMod.Row[LegacyFeatures, T], instance.Row[T]]     =
+    _.asInstanceOf
+  given fromInstanceRow[T]: Conversion[instance.Row[T], distTypesRowMod.Row[LegacyFeatures, T]]   =
+    _.asInstanceOf
+  given toInstanceColumn[T, V]
+    : Conversion[distTypesColumnMod.Column[LegacyFeatures, T, V], instance.Column[T, V]]          =
+    _.asInstanceOf
+  given fromInstanceColumn[T, V]
+    : Conversion[instance.Column[T, V], distTypesColumnMod.Column[LegacyFeatures, T, V]]          =
+    _.asInstanceOf
+  given toInstanceCell[T, V]
+    : Conversion[distTypesCellMod.Cell[LegacyFeatures, T, V], instance.Cell[T, V]]                = _.asInstanceOf
+  given fromInstanceCell[T, V]
+    : Conversion[instance.Cell[T, V], distTypesCellMod.Cell[LegacyFeatures, T, V]]                = _.asInstanceOf
+  given toInstanceHeader[T, V]
+    : Conversion[distTypesHeaderMod.Header[LegacyFeatures, T, V], instance.Header[T, V]]          =
+    _.asInstanceOf
+  given fromInstanceHeader[T, V]
+    : Conversion[instance.Header[T, V], distTypesHeaderMod.Header[LegacyFeatures, T, V]]          =
+    _.asInstanceOf
+  given toInstanceHeaderGroup[T]
+    : Conversion[distTypesHeaderGroupMod.HeaderGroup[LegacyFeatures, T], instance.HeaderGroup[T]] =
+    _.asInstanceOf
+  given fromInstanceHeaderGroup[T]
+    : Conversion[instance.HeaderGroup[T], distTypesHeaderGroupMod.HeaderGroup[LegacyFeatures, T]] =
+    _.asInstanceOf
+  given toInstanceTable[T]
+    : Conversion[distTypesTableMod.Table[LegacyFeatures, T], instance.Table[T]]                   = _.asInstanceOf
+  given fromInstanceTable[T]
+    : Conversion[instance.Table[T], distTypesTableMod.Table[LegacyFeatures, T]]                   = _.asInstanceOf
+  given toInstanceState[T]
+    : Conversion[distTypesTableStateMod.TableState[LegacyFeatures], instance.TableState]          =
+    _.asInstanceOf
 
   export TableHook.useReactTable
 

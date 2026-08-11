@@ -51,9 +51,7 @@ object Table3:
           enableSorting = true,
           columnResizeMode = ColumnResizeMode.OnChange,
           getSubRows = (row, _) => row.subRows
-        )
-          .withDefaultGetSortedRowModel
-          .withDefaultGetExpandedRowModel
+        ).withDefaultGetSortedRowModel.withDefaultGetExpandedRowModel
       )
       .render((_, _, _, table) =>
         React.Fragment(
