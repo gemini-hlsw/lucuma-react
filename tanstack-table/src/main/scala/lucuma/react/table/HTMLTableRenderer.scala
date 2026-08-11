@@ -12,7 +12,7 @@ import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.common.style.Css
 import lucuma.react.virtual.*
-import lucuma.typed.tanstackReactTable.distFlexRenderMod_ as flexMod
+import lucuma.react.table.facade.{FlexRenderRaw as flexMod, Renderable}
 import lucuma.react.table.facade.compat as raw
 import org.scalajs.dom.HTMLDivElement
 import org.scalajs.dom.HTMLElement
@@ -166,7 +166,7 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
                                 header.column.columnDef.toJs
                                   .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
                                   .header
-                                  .asInstanceOf[flexMod.Renderable[
+                                  .asInstanceOf[Renderable[
                                     raw.buildLibCoreHeadersMod.HeaderContext[T, Any]
                                   ]],
                                 header
@@ -252,7 +252,7 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
                             case colDef @ ColumnDef.Single(_) =>
                               flexMod.flexRender(
                                 colDef.toJs.cell
-                                  .asInstanceOf[flexMod.Renderable[
+                                  .asInstanceOf[Renderable[
                                     raw.buildLibCoreCellMod.CellContext[T, Any]
                                   ]],
                                 cell.getContext().toJs
@@ -306,7 +306,7 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
                       TagMod.unless(footer.isPlaceholder)(
                         flexMod.flexRender(
                           footer.column.columnDef.toJs.footer
-                            .asInstanceOf[flexMod.Renderable[
+                            .asInstanceOf[Renderable[
                               raw.buildLibCoreHeadersMod.HeaderContext[T, Any]
                             ]],
                           footer.getContext().toJs
