@@ -24,13 +24,11 @@ trait TableOptionsJs[T, TM, CM, TF] extends js.Object:
     raw.buildLibTypesMod.RowModel[T]
   ]]
 
-  var getRowId: js.UndefOr[js.Function3[T, Int, js.UndefOr[T], String]]                           = js.undefined
-  var onStateChange: js.UndefOr[raw.buildLibTypesMod.OnChangeFn[raw.buildLibTypesMod.TableState]] =
-    js.undefined
-  var renderFallbackValue: js.UndefOr[Any]                                                        = js.undefined
-  var state: js.UndefOr[raw.anon.PartialTableState]                                               = js.undefined
-  var initialState: js.UndefOr[raw.buildLibTypesMod.InitialTableState]                            = js.undefined
-  var meta: js.UndefOr[TM]                                                                        = js.undefined
+  var getRowId: js.UndefOr[js.Function3[T, Int, js.UndefOr[T], String]] = js.undefined
+  var renderFallbackValue: js.UndefOr[Any]                              = js.undefined
+  var state: js.UndefOr[raw.anon.PartialTableState]                     = js.undefined
+  var initialState: js.UndefOr[raw.buildLibTypesMod.InitialTableState]  = js.undefined
+  var meta: js.UndefOr[TM]                                              = js.undefined
 
   // Column Sizing // TODO Rest of the properties
   var enableColumnResizing: js.UndefOr[Boolean]                                          = js.undefined

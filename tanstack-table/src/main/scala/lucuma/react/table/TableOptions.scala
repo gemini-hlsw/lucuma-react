@@ -9,7 +9,6 @@ import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.table.facade.ColumnDefJs
 import lucuma.react.table.facade.TableOptionsJs
 import lucuma.typed.std.Map as JsMap
-import lucuma.react.table.facade.LegacyTableRaw as legacyMod
 import lucuma.react.table.facade.compat as raw
 import org.scalajs.dom
 
@@ -74,42 +73,6 @@ sealed trait TableOptions[T, TM, CM, TF]:
   inline def withoutGetRowId: TableOptions[T, TM, CM, TF] =
     setGetRowId(none)
 
-  lazy val onStateChange: Option[Updater[TableState[TF]] => Callback] =
-    toJsBase.onStateChange.toOption.map(fn =>
-      u =>
-        Callback(fn((u match
-          case Updater.Set(v)   => Updater.Set(v.toJs)
-          case Updater.Mod(mod) =>
-            Updater.Mod((v: raw.buildLibTypesMod.TableState) => mod(TableState(v)).toJs)
-        ).toJs))
-    )
-
-  /** WARNING: This mutates the object in-place. */
-  def setOnStateChange(
-    onStateChange: Option[Updater[TableState[TF]] => Callback]
-  ): TableOptions[T, TM, CM, TF] =
-    copy(_.onStateChange =
-      onStateChange.orUndefined
-        .map(fn =>
-          u =>
-            fn(
-              Updater.fromJs(u) match
-                case Updater.Set(v)   => Updater.Set(TableState(v))
-                case Updater.Mod(mod) => Updater.Mod(v => TableState(mod(v.toJs)))
-            ).runNow()
-        )
-    )
-
-  /** WARNING: This mutates the object in-place. */
-  inline def withOnStateChange(
-    onStateChange: Updater[TableState[TF]] => Callback
-  ): TableOptions[T, TM, CM, TF] =
-    setOnStateChange(onStateChange.some)
-
-  /** WARNING: This mutates the object in-place. */
-  inline def withoutOnStateChange: TableOptions[T, TM, CM, TF] =
-    setOnStateChange(none)
-
   lazy val getCoreRowModel: Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF] =
     t => () => RowModel(toJsBase.getCoreRowModel(t.toJs)())
 
@@ -121,14 +84,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
       _.getCoreRowModel = (t: raw.buildLibTypesMod.Table[T]) =>
         getCoreRowModel(Table(t)).map(_.toJs): js.Function0[raw.buildLibTypesMod.RowModel[T]]
 
-  def withDefaultGetCoreRowModel: TableOptions[T, TM, CM, TF] =
-    copy(_.getCoreRowModel =
-      legacyMod
-        .getCoreRowModel()
-        .asInstanceOf[js.Function1[raw.buildLibTypesMod.Table[T],
-                                   js.Function0[raw.buildLibTypesMod.RowModel[T]]
-        ]]
-    )
+  def withDefaultGetCoreRowModel: TableOptions[T, TM, CM, TF] = this
 
   lazy val renderFallbackValue: Option[Any] = toJsBase.renderFallbackValue.toOption
 
@@ -442,13 +398,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setGetSortedRowModel(none)
 
   /** WARNING: This mutates the object in-place. */
-  def withDefaultGetSortedRowModel: TableOptions[T, TM, CM, TF] =
-    copy:
-      _.getSortedRowModel = legacyMod
-        .getSortedRowModel()
-        .asInstanceOf[js.Function1[raw.buildLibTypesMod.Table[T],
-                                   js.Function0[raw.buildLibTypesMod.RowModel[T]]
-        ]]
+  def withDefaultGetSortedRowModel: TableOptions[T, TM, CM, TF] = this
 
   lazy val isMultiSortEvent: Option[SyntheticEvent[dom.Node] => Boolean] =
     toJsBase.isMultiSortEvent.toOption.map(identity)
@@ -663,13 +613,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setGetExpandedRowModel(none)
 
   /** WARNING: This mutates the object in-place. */
-  def withDefaultGetExpandedRowModel: TableOptions[T, TM, CM, TF] =
-    copy:
-      _.getExpandedRowModel = legacyMod
-        .getExpandedRowModel()
-        .asInstanceOf[js.Function1[raw.buildLibTypesMod.Table[T],
-                                   js.Function0[raw.buildLibTypesMod.RowModel[T]]
-        ]]
+  def withDefaultGetExpandedRowModel: TableOptions[T, TM, CM, TF] = this
 
   lazy val getSubRows: Option[(T, Int) => Option[List[T]]] =
     toJsBase.getSubRows.toOption.map(fn => (row, idx) => fn(row, idx).toOption.map(_.toList))
@@ -956,13 +900,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setGetFilteredRowModel(none)
 
   /** WARNING: This mutates the object in-place. */
-  def withDefaultGetFilteredRowModel: TableOptions[T, TM, CM, TF] =
-    copy:
-      _.getFilteredRowModel = legacyMod
-        .getFilteredRowModel()
-        .asInstanceOf[js.Function1[raw.buildLibTypesMod.Table[T],
-                                   js.Function0[raw.buildLibTypesMod.RowModel[T]]
-        ]]
+  def withDefaultGetFilteredRowModel: TableOptions[T, TM, CM, TF] = this
 
   // Global Filtering
   lazy val enableGlobalFilter: Option[Boolean] = toJsBase.enableGlobalFilter.toOption
@@ -1088,14 +1026,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setGetFacetedRowModel(none)
 
   /** WARNING: This mutates the object in-place. */
-  def withDefaultGetFacetedRowModel: TableOptions[T, TM, CM, TF] =
-    copy:
-      _.getFacetedRowModel = legacyMod
-        .getFacetedRowModel()
-        .asInstanceOf[js.Function2[raw.buildLibTypesMod.Table[T],
-                                   String,
-                                   js.Function0[raw.buildLibTypesMod.RowModel[T]]
-        ]]
+  def withDefaultGetFacetedRowModel: TableOptions[T, TM, CM, TF] = this
 
   lazy val getFacetedUniqueValues: Option[(Table[T, TM, CM, TF], ColumnId) => () => Map[Any, Int]] =
     toJsBase.getFacetedUniqueValues.toOption.map: fn =>
@@ -1125,13 +1056,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setGetFacetedUniqueValues(none)
 
   /** WARNING: This mutates the object in-place. */
-  def withDefaultGetFacetedUniqueValues: TableOptions[T, TM, CM, TF] =
-    copy:
-      _.getFacetedUniqueValues = legacyMod
-        .getFacetedUniqueValues()
-        .asInstanceOf[js.Function2[raw.buildLibTypesMod.Table[T], String, js.Function0[JsMap[Any,
-                                                                                             Double
-        ]]]]
+  def withDefaultGetFacetedUniqueValues: TableOptions[T, TM, CM, TF] = this
 
   lazy val getFacetedMinMaxValues
     : Option[(Table[T, TM, CM, TF], ColumnId) => () => Option[(Double, Double)]] =
@@ -1164,14 +1089,7 @@ sealed trait TableOptions[T, TM, CM, TF]:
     setGetFacetedMinMaxValues(none)
 
   /** WARNING: This mutates the object in-place. */
-  def withDefaultGetFacetedMinMaxValues: TableOptions[T, TM, CM, TF] =
-    copy:
-      _.getFacetedMinMaxValues = legacyMod
-        .getFacetedMinMaxValues()
-        .asInstanceOf[js.Function2[raw.buildLibTypesMod.Table[T],
-                                   String,
-                                   js.Function0[js.UndefOr[js.Tuple2[Double, Double]]]
-        ]]
+  def withDefaultGetFacetedMinMaxValues: TableOptions[T, TM, CM, TF] = this
 
 end TableOptions
 
@@ -1182,7 +1100,6 @@ object TableOptions:
     getCoreRowModel:           js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
       js.undefined,
     getRowId:                  js.UndefOr[(T, Int, Option[T]) => RowId] = js.undefined,
-    onStateChange:             js.UndefOr[Updater[TableState[TF]] => Callback] = js.undefined,
     renderFallbackValue:       js.UndefOr[Any] = js.undefined,
     state:                     js.UndefOr[Reusable[PartialTableState[TF]]] = js.undefined,
     initialState:              js.UndefOr[TableState[TF]] = js.undefined,
@@ -1359,7 +1276,6 @@ object TableOptions:
         _.withDefaultGetFacetedMinMaxValues
       )
       .applyOrNot(getRowId, _.withGetRowId(_))
-      .applyOrNot(onStateChange, _.withOnStateChange(_))
       .applyOrNot(renderFallbackValue, _.withRenderFallbackValue(_))
       .applyOrNot(state, _.withState(_))
       .applyOrNot(initialState, _.withInitialState(_))

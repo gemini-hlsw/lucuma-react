@@ -57,7 +57,7 @@ class TableRenderSuite extends FunSuite:
                    cols,
                    rows,
                    initialState = initialSorting.map(s => TableState(sorting = s)).orUndefined
-                 ).withDefaultGetSortedRowModel
+                 )
     yield rowsHtml(table)
 
   test("v9 table renders its row model via useLegacyTable"):

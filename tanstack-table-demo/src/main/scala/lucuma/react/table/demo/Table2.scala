@@ -27,11 +27,7 @@ object Table2:
       // rows
       .useMemoBy((people, _) => people)((_, _) => identity)
       .useReactTableBy((_, cols, rows) =>
-        TableOptions(cols,
-                     rows,
-                     enableSorting = true,
-                     enableColumnResizing = false
-        ).withDefaultGetSortedRowModel
+        TableOptions(cols, rows, enableSorting = true, enableColumnResizing = false)
       )
       .render((_, _, _, table) =>
         React.Fragment(
