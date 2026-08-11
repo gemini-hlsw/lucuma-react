@@ -154,6 +154,11 @@ object Table1:
               initialState =
                 TableState(sorting = Sorting(ColumnId("model") -> SortDirection.Descending))
             )
+              .withDefaultGetSortedRowModel
+              .withDefaultGetFilteredRowModel
+              .withDefaultGetFacetedRowModel
+              .withDefaultGetFacetedUniqueValues
+              .withDefaultGetFacetedMinMaxValues
       yield React.Fragment(
         <.h2("Sortable table"),
         <.input(
