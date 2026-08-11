@@ -283,6 +283,7 @@ lazy val tanstackTable = project
   .dependsOn(common)
   .settings(
     name := "lucuma-react-tanstack-table",
+    facadeSettings,
     Compile / scalacOptions += "-language:implicitConversions",
     libraryDependencies ++= Seq(
       "edu.gemini" %%% "lucuma-typed-tanstack-react-table"   % lucumaTypedTanstackV,
