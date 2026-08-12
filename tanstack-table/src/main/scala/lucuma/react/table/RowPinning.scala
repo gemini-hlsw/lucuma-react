@@ -3,7 +3,6 @@
 
 package lucuma.react.table
 
-import cats.syntax.all.*
 import lucuma.react.table.facade.compat.buildLibFeaturesRowPinningMod as raw
 
 import scalajs.js.JSConverters.*

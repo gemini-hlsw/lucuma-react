@@ -18,14 +18,14 @@ import scala.scalajs.js.annotation.JSImport
 @js.native
 @JSImport("@tanstack/react-table", JSImport.Namespace)
 object ReactTableRaw extends js.Object:
-  def useTable(options: js.Any): js.Any                                                 = js.native
-  val stockFeatures: js.Any                                                             = js.native
-  def tableFeatures(slots: js.Any): js.Any                                              = js.native
-  def createSortedRowModel(): js.Any                                                    = js.native
-  def createFilteredRowModel(): js.Any                                                  = js.native
-  def createExpandedRowModel(): js.Any                                                  = js.native
-  def createGroupedRowModel(): js.Any                                                   = js.native
-  def createPaginatedRowModel(): js.Any                                                 = js.native
-  def createFacetedRowModel(): js.Any                                                   = js.native
-  def createFacetedUniqueValues(): js.Any                                               = js.native
-  def createFacetedMinMaxValues(): js.Any                                               = js.native
+  def useTable(options:    js.Any): js.Any = js.native
+  val stockFeatures: js.Any                = js.native
+  def tableFeatures(slots: js.Any): js.Any = js.native
+  def createSortedRowModel(): js.Any       = js.native
+  def createFilteredRowModel(): js.Any     = js.native
+  def createExpandedRowModel(): js.Any     = js.native
+  def createGroupedRowModel(): js.Any      = js.native
+  def createPaginatedRowModel(): js.Any    = js.native
+  def createFacetedRowModel(): js.Any      = js.native
+  def createFacetedUniqueValues(): js.Any  = js.native
+  def createFacetedMinMaxValues(): js.Any  = js.native

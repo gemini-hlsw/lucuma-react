@@ -6,7 +6,7 @@ package lucuma.react
 import japgolly.scalajs.react.vdom.TagMod
 import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.VdomNode
-import lucuma.react.table.facade.{compat, instance}
+import lucuma.react.table.facade.instance
 import lucuma.typed.std.Map as JsMap
 import lucuma.typed.tanstackReactTable.distUseLegacyTableMod.LegacyFeatures
 import lucuma.typed.tanstackTableCore.distTypesCellMod
