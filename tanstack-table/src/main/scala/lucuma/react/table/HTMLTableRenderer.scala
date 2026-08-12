@@ -11,9 +11,10 @@ import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.common.style.Css
-import lucuma.react.virtual.*
-import lucuma.react.table.facade.{FlexRenderRaw as flexMod, Renderable}
+import lucuma.react.table.facade.FlexRenderRaw as flexMod
+import lucuma.react.table.facade.Renderable
 import lucuma.react.table.facade.compat as raw
+import lucuma.react.virtual.*
 import org.scalajs.dom.HTMLDivElement
 import org.scalajs.dom.HTMLElement
 

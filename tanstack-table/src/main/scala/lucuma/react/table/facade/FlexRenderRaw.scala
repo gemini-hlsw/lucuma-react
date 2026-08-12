@@ -3,7 +3,8 @@
 
 package lucuma.react.table.facade
 
-import japgolly.scalajs.react.facade.React.{ComponentType, Node}
+import japgolly.scalajs.react.facade.React.ComponentType
+import japgolly.scalajs.react.facade.React.Node
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport

@@ -3,8 +3,8 @@
 
 package lucuma.react.table
 
-import lucuma.typed.std.Record
 import lucuma.react.table.facade.compat as raw
+import lucuma.typed.std.Record
 import org.scalablytyped.runtime.StringDictionary
 
 enum Expanded:

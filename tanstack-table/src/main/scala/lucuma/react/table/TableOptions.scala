@@ -8,8 +8,8 @@ import japgolly.scalajs.react.*
 import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.table.facade.ColumnDefJs
 import lucuma.react.table.facade.TableOptionsJs
-import lucuma.typed.std.Map as JsMap
 import lucuma.react.table.facade.compat as raw
+import lucuma.typed.std.Map as JsMap
 import org.scalajs.dom
 
 import scalajs.js

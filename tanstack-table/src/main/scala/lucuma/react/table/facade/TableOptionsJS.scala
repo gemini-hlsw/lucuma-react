@@ -3,8 +3,8 @@
 
 package lucuma.react.table.facade
 
-import lucuma.typed.std.Map as JsMap
 import lucuma.react.table.facade.compat as raw
+import lucuma.typed.std.Map as JsMap
 
 import scalajs.js
 

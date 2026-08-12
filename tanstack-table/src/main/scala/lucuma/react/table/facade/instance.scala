@@ -5,6 +5,9 @@ package lucuma.react.table.facade
 
 import lucuma.typed.tanstackReactTable.distUseLegacyTableMod.LegacyFeatures
 import lucuma.typed.tanstackTableCore.*
+
+import scala.scalajs.js
+
 import distCoreCellsCoreCellsFeatureDottypesMod.*
 import distCoreColumnsCoreColumnsFeatureDottypesMod.*
 import distCoreHeadersCoreHeadersFeatureDottypesMod.*
@@ -27,8 +30,6 @@ import distFeaturesRowPaginationRowPaginationFeatureDottypesMod.*
 import distFeaturesRowPinningRowPinningFeatureDottypesMod.*
 import distFeaturesRowSelectionRowSelectionFeatureDottypesMod.*
 import distFeaturesRowSortingRowSortingFeatureDottypesMod.*
-
-import scala.scalajs.js
 
 /**
  * Aggregated `@js.native` instance traits for TanStack Table v9.
