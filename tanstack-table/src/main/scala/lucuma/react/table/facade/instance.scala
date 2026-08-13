@@ -114,8 +114,9 @@ object instance:
       with TableRowModelsPaginated[LF, T]
       with TableRowModelsSorted[LF, T]:
     // v9 surfaces the selected state via the `state` property (the full TableState when useTable
-    // is called without a selector, which TableHook does). Imperative state writes go through
-    // `setOptions` (inherited from TableTable). v8's getState/setState instance methods are gone.
+    // is called without a selector, which TableHook does). The backing `store` (for subscriptions)
+    // is inherited from TableTable. Imperative state writes go through `setOptions` (also
+    // inherited). v8's getState/setState instance methods are gone.
     def state: lucuma.typed.tanstackTableCore.distTypesTableStateMod.TableState[LF] = js.native
 
   @js.native

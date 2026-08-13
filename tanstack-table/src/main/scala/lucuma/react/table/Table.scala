@@ -7,6 +7,7 @@ import cats.Endo
 import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.facade.SyntheticEvent
 import lucuma.react.SizePx
+import lucuma.react.table.facade.Store
 import lucuma.react.table.facade.TableOptionsJs
 import lucuma.react.table.facade.compat as raw
 import org.scalajs.dom
@@ -42,17 +43,25 @@ case class Table[T, TM, CM, TF] private[table] (
   def getRow(id: String): Row[T, TM, CM, TF]                                    = Row(toJs.getRow(id))
   def getRowModel(): RowModel[T, TM, CM, TF]                                    = RowModel(toJs.getRowModel())
   def getState(): TableState[TF]                                                = TableState(toJs.state)
-  lazy val initialState: TableState[TF]                                         =
+
+  /**
+   * The v9 backing store. Read `.state` or `.subscribe(cb)` (cb receives the new full TableState;
+   * the returned `Subscription` has `.unsubscribe()`). This is the v9 replacement for the removed
+   * `onStateChange` option for "notify me on any state change".
+   */
+  def store: Store[raw.buildLibTypesMod.TableState] =
+    toJs.store.asInstanceOf[Store[raw.buildLibTypesMod.TableState]]
+  lazy val initialState: TableState[TF]             =
     TableState(
-      toJs.options
+      toJs
         .asInstanceOf[js.Dynamic]
         .initialState
         .asInstanceOf[raw.buildLibTypesMod.TableState]
     )
-  lazy val options: TableOptions[T, TM, CM, TF]                                 =
+  lazy val options: TableOptions[T, TM, CM, TF]     =
     TableOptions.fromJs(toJs.options.asInstanceOf[TableOptionsJs[T, TM, CM, TF]])
-  def reset(): Callback                                                         = Callback(toJs.reset())
-  def setState(value: TableState[TF]): Callback                                 = Callback(
+  def reset(): Callback                             = Callback(toJs.reset())
+  def setState(value: TableState[TF]): Callback     = Callback(
     toJs
       .asInstanceOf[js.Dynamic]
       .setOptions((prev: js.Dynamic) =>
@@ -62,7 +71,7 @@ case class Table[T, TM, CM, TF] private[table] (
         )
       )
   )
-  def modState(f: Endo[TableState[TF]]): Callback                               =
+  def modState(f: Endo[TableState[TF]]): Callback   =
     Callback(
       toJs
         .asInstanceOf[js.Dynamic]

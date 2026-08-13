@@ -34,7 +34,7 @@ class TableRenderSuite extends FunSuite:
 
   private def rowsHtml(table: Table[Person, ?, ?, ?]): VdomElement =
     <.table(
-      <.caption(table.getState().sorting.value.map(_.columnId.value).mkString(",")),
+      <.caption(table.store.state.sorting.toList.map(_.id).mkString(",")),
       <.tbody(
         TagMod.fromTraversableOnce(
           table
