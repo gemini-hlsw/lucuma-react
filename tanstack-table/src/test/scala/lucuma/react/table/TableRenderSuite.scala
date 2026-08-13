@@ -34,6 +34,7 @@ class TableRenderSuite extends FunSuite:
 
   private def rowsHtml(table: Table[Person, ?, ?, ?]): VdomElement =
     <.table(
+      <.caption(table.getState().sorting.value.map(_.columnId.value).mkString(",")),
       <.tbody(
         TagMod.fromTraversableOnce(
           table
@@ -63,16 +64,17 @@ class TableRenderSuite extends FunSuite:
   test("v9 table renders its row model via useLegacyTable"):
     ReactTestUtils.withRenderedSync(component(None)()): m =>
       val expected =
-        """<table><tbody><tr><td>Alice</td><td>30</td></tr><tr><td>Bob</td><td>25</td></tr></tbody></table>"""
+        """<table><caption></caption><tbody><tr><td>Alice</td><td>30</td></tr><tr><td>Bob</td><td>25</td></tr></tbody></table>"""
       m.outerHTML.assert(expected)
 
   test("v9 table sorts rows by the initial sorting state"):
     // Ascending by age: Bob(25) must precede Alice(30) — different from data order (Alice, Bob),
-    // so this proves the sort is actually applied.
+    // so this proves the sort is actually applied. The <caption> reads getState().sorting, which
+    // also exercises the v9 state-read path (getState -> table.state).
     ReactTestUtils.withRenderedSync(
       component(Some(Sorting(ColumnId("age") -> SortDirection.Ascending)))()
     ): m =>
       val expected =
-        """<table><tbody><tr><td>Bob</td><td>25</td></tr><tr><td>Alice</td><td>30</td></tr></tbody></table>"""
+        """<table><caption>age</caption><tbody><tr><td>Bob</td><td>25</td></tr><tr><td>Alice</td><td>30</td></tr></tbody></table>"""
       m.outerHTML.assert(expected)
 end TableRenderSuite

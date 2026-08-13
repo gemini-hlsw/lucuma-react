@@ -30,26 +30,49 @@ import scalajs.js.JSConverters.*
 case class Table[T, TM, CM, TF] private[table] (
   private[table] val toJs: raw.buildLibTypesMod.Table[T]
 ):
-  def getAllColumns(): List[Column[T, Any, TM, CM, TF, Any, Any]]                    =
+  def getAllColumns(): List[Column[T, Any, TM, CM, TF, Any, Any]]               =
     toJs.getAllColumns().toList.map(Column(_))
-  def getAllFlatColumns(): List[Column[T, Any, TM, CM, TF, Any, Any]]                =
+  def getAllFlatColumns(): List[Column[T, Any, TM, CM, TF, Any, Any]]           =
     toJs.getAllFlatColumns().toList.map(Column(_))
-  def getAllLeafColumns(): List[Column[T, Any, TM, CM, TF, Any, Any]]                =
+  def getAllLeafColumns(): List[Column[T, Any, TM, CM, TF, Any, Any]]           =
     toJs.getAllLeafColumns().toList.map(Column(_))
-  def getColumn(columnId: String): Option[Column[T, Any, TM, CM, TF, Any, Any]]      =
+  def getColumn(columnId: String): Option[Column[T, Any, TM, CM, TF, Any, Any]] =
     toJs.getColumn(columnId).toOption.map(Column(_))
-  def getCoreRowModel(): RowModel[T, TM, CM, TF]                                     = RowModel(toJs.getCoreRowModel())
-  def getRow(id:      String): Row[T, TM, CM, TF]                                    = Row(toJs.getRow(id))
-  def getRowModel(): RowModel[T, TM, CM, TF]                                         = RowModel(toJs.getRowModel())
-  def getState(): TableState[TF]                                                     = TableState(toJs.getState())
-  lazy val initialState: TableState[TF]                                              = TableState(toJs.initialState)
-  lazy val options: TableOptions[T, TM, CM, TF]                                      =
+  def getCoreRowModel(): RowModel[T, TM, CM, TF]                                = RowModel(toJs.getCoreRowModel())
+  def getRow(id: String): Row[T, TM, CM, TF]                                    = Row(toJs.getRow(id))
+  def getRowModel(): RowModel[T, TM, CM, TF]                                    = RowModel(toJs.getRowModel())
+  def getState(): TableState[TF]                                                = TableState(toJs.state)
+  lazy val initialState: TableState[TF]                                         =
+    TableState(
+      toJs.options
+        .asInstanceOf[js.Dynamic]
+        .initialState
+        .asInstanceOf[raw.buildLibTypesMod.TableState]
+    )
+  lazy val options: TableOptions[T, TM, CM, TF]                                 =
     TableOptions.fromJs(toJs.options.asInstanceOf[TableOptionsJs[T, TM, CM, TF]])
-  def reset(): Callback                                                              = Callback(toJs.reset())
-  def setState(value: TableState[TF]): Callback                                      = Callback(toJs.setState(value.toJs))
-  def modState(f: Endo[TableState[TF]]): Callback                                    =
+  def reset(): Callback                                                         = Callback(toJs.reset())
+  def setState(value: TableState[TF]): Callback                                 = Callback(
+    toJs
+      .asInstanceOf[js.Dynamic]
+      .setOptions((prev: js.Dynamic) =>
+        js.Object.assign(js.Dynamic.literal(),
+                         prev.asInstanceOf[js.Object],
+                         js.Dynamic.literal("state" -> value.toJs)
+        )
+      )
+  )
+  def modState(f: Endo[TableState[TF]]): Callback                               =
     Callback(
-      toJs.setState((rawState: raw.buildLibTypesMod.TableState) => f(TableState(rawState)).toJs)
+      toJs
+        .asInstanceOf[js.Dynamic]
+        .setOptions((prev: js.Dynamic) =>
+          val cur = prev.state.asInstanceOf[raw.buildLibTypesMod.TableState]
+          js.Object.assign(js.Dynamic.literal(),
+                           prev.asInstanceOf[js.Object],
+                           js.Dynamic.literal("state" -> f(TableState(cur)).toJs)
+          )
+        )
     )
 
   // Headers
