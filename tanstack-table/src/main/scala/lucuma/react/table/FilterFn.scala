@@ -4,12 +4,12 @@
 package lucuma.react.table
 
 import cats.syntax.option.*
-import lucuma.typed.tanstackTableCore.buildLibFeaturesColumnFilteringMod as rawFilter
-import lucuma.typed.tanstackTableCore.buildLibTypesMod as raw
+import lucuma.react.table.facade.compat.buildLibFeaturesColumnFilteringMod as rawFilter
+import lucuma.react.table.facade.compat.buildLibTypesMod as raw
 
 import scalajs.js
 import scalajs.js.JSConverters.*
-import raw.FilterMeta
+import rawFilter.FilterMeta
 
 /**
  * @tparam T
@@ -49,20 +49,27 @@ case class FilterFn[T, TM, CM, TF, F, FM](
         )
 
     val p: rawFilter.FilterFn[T] = jsFn.asInstanceOf[rawFilter.FilterFn[T]]
-    p.resolveFilterValue = resolveFilterValue
-      .map: f =>
-        val jsFn: js.Function2[Any, js.UndefOr[raw.Column[T, Any]], Any] =
-          (filterValue: Any, col: js.UndefOr[raw.Column[T, Any]]) =>
-            f(filterValue.asInstanceOf[F], col.map(Column(_)).toOption)
-        jsFn
-      .orUndefined
-    p.autoRemove = autoRemove
-      .map: f =>
-        val jsFn: js.Function2[Any, js.UndefOr[raw.Column[T, Any]], Boolean] =
-          (filterValue: Any, col: js.UndefOr[raw.Column[T, Any]]) =>
-            f(filterValue.asInstanceOf[F], col.map(Column(_)).toOption)
-        jsFn
-      .orUndefined
+    val dp                       = p.asInstanceOf[js.Dynamic]
+    dp.updateDynamic("resolveFilterValue")(
+      resolveFilterValue
+        .map: f =>
+          val jsFn: js.Function2[Any, js.UndefOr[raw.Column[T, Any]], Any] =
+            (filterValue: Any, col: js.UndefOr[raw.Column[T, Any]]) =>
+              f(filterValue.asInstanceOf[F], col.map(Column(_)).toOption)
+          jsFn
+        .orUndefined
+        .asInstanceOf[js.Any]
+    )
+    dp.updateDynamic("autoRemove")(
+      autoRemove
+        .map: f =>
+          val jsFn: js.Function2[Any, js.UndefOr[raw.Column[T, Any]], Boolean] =
+            (filterValue: Any, col: js.UndefOr[raw.Column[T, Any]]) =>
+              f(filterValue.asInstanceOf[F], col.map(Column(_)).toOption)
+          jsFn
+        .orUndefined
+        .asInstanceOf[js.Any]
+    )
 
     p
 }
@@ -80,8 +87,14 @@ object FilterFn:
         fn(row.toJs, colId.value, filterValue, (m: Any) => addMeta(m.asInstanceOf[FM])),
       resolveFilterValue = fn.resolveFilterValue.toOption.map: f =>
         (filterValue: F, col: Option[Column[T, Any, TM, CM, TF, F, FM]]) =>
-          f(filterValue, col.map(_.toJs).orUndefined).asInstanceOf[F],
+          f.asInstanceOf[js.Function2[Any, js.Any, Any]](
+            filterValue,
+            col.map(_.toJs).orUndefined.asInstanceOf[js.Any]
+          ).asInstanceOf[F],
       autoRemove = fn.autoRemove.toOption.map: f =>
         (filterValue: F, col: Option[Column[T, Any, TM, CM, TF, F, FM]]) =>
-          f(filterValue, col.map(_.toJs).orUndefined)
+          f.asInstanceOf[js.Function2[Any, js.Any, Any]](
+            filterValue,
+            col.map(_.toJs).orUndefined.asInstanceOf[js.Any]
+          ).asInstanceOf[Boolean]
     )

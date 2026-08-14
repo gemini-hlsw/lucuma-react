@@ -5,7 +5,7 @@ package lucuma.react.table
 
 import japgolly.scalajs.react.callback.Callback
 import japgolly.scalajs.react.facade.SyntheticEvent
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 import org.scalajs.dom
 
 /**
@@ -40,9 +40,9 @@ case class Row[T, TM, CM, TF] private[table] (private[table] val toJs: raw.build
   def getCenterVisibleCells(): List[Cell[T, Any, TM, CM, TF, Any, Any]] =
     toJs.getCenterVisibleCells().toList.map(Cell(_))
   def getLeftVisibleCells(): List[Cell[T, Any, TM, CM, TF, Any, Any]]   =
-    toJs.getLeftVisibleCells().toList.map(Cell(_))
+    toJs.getStartVisibleCells().toList.map(Cell(_))
   def getRightVisibleCells(): List[Cell[T, Any, TM, CM, TF, Any, Any]]  =
-    toJs.getRightVisibleCells().toList.map(Cell(_))
+    toJs.getEndVisibleCells().toList.map(Cell(_))
 
   // Row Grouping
   def getIsGrouped(): Boolean               = toJs.getIsGrouped()

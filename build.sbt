@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
 
-ThisBuild / tlBaseVersion       := "0.103"
+ThisBuild / tlBaseVersion       := "0.104"
 ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / githubWorkflowTargetBranches += "!dependabot/**"
 ThisBuild / scalacOptions ++= Seq(
@@ -32,7 +32,7 @@ val catsV            = "2.13.0"
 val disciplineMunitV = "2.0.0"
 val http4sV          = "0.23.36"
 val kittensV         = "3.5.0"
-val lucumaTypedV     = "0.12.0"
+val lucumaTypedV     = "0.13.0"
 val munitScalacheckV = "1.3.0"
 val munitV           = "1.3.5"
 val scalaJsDomV      = "2.8.1"
@@ -282,6 +282,7 @@ lazy val tanstackTable = project
   .dependsOn(common)
   .settings(
     name := "lucuma-react-tanstack-table",
+    facadeSettings,
     Compile / scalacOptions += "-language:implicitConversions",
     libraryDependencies ++= Seq(
       "edu.gemini" %%% "lucuma-typed-tanstack-react-table"   % lucumaTypedV,

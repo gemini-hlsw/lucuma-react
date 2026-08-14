@@ -3,7 +3,7 @@
 
 package lucuma.react.table
 
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 
 enum ColumnResizeMode:
   case OnChange, OnEnd

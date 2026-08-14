@@ -4,7 +4,7 @@
 package lucuma.react.table.facade
 
 import japgolly.scalajs.react.facade.React.Node
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 
 import scalajs.js
 
@@ -37,12 +37,12 @@ trait ColumnDefJs[T, A, CM] extends js.Object:
   var enableHiding: js.UndefOr[Boolean] = js.undefined
 
   // Sorting
-  var enableMultiSort: js.UndefOr[Boolean]                                           = js.undefined
-  var enableSorting: js.UndefOr[Boolean]                                             = js.undefined
-  var invertSorting: js.UndefOr[Boolean]                                             = js.undefined
-  var sortDescFirst: js.UndefOr[Boolean]                                             = js.undefined
-  var sortUndefined: js.UndefOr[UndefinedPriorityJs]                                 = js.undefined
-  var sortingFn: js.UndefOr[String | raw.buildLibFeaturesRowSortingMod.SortingFn[T]] = js.undefined
+  var enableMultiSort: js.UndefOr[Boolean]                                        = js.undefined
+  var enableSorting: js.UndefOr[Boolean]                                          = js.undefined
+  var invertSorting: js.UndefOr[Boolean]                                          = js.undefined
+  var sortDescFirst: js.UndefOr[Boolean]                                          = js.undefined
+  var sortUndefined: js.UndefOr[UndefinedPriorityJs]                              = js.undefined
+  var sortFn: js.UndefOr[String | raw.buildLibFeaturesRowSortingMod.SortingFn[T]] = js.undefined
 
   // Column Pinning
   var enablePinning: js.UndefOr[Boolean] = js.undefined

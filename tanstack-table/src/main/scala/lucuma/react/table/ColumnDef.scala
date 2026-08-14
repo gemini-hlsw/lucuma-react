@@ -8,7 +8,7 @@ import japgolly.scalajs.react.facade.React.Node
 import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.react.SizePx
 import lucuma.react.table.facade.*
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -367,7 +367,7 @@ object ColumnDef:
       setSortUndefined(none)
 
     lazy val sortingFn: Option[BuiltInSorting | SortingFn[T, TM, CM, TF]] =
-      toJs.sortingFn.toOption.map(v =>
+      toJs.sortFn.toOption.map(v =>
         js.typeOf(v) match
           case "string" => BuiltInSorting.fromJs(v.asInstanceOf[String])
           case fn       =>
@@ -384,12 +384,22 @@ object ColumnDef:
       sortingFn: Option[BuiltInSorting | SortingFn[T, TM, CM, TF]]
     ): Single[T, A, TM, CM, TF, CF, FM] =
       Single {
-        toJs.sortingFn = sortingFn.orUndefined.map:
-          case builtIn: BuiltInSorting => builtIn.toJs
-          case fn                      =>
-            (rowA: raw.buildLibTypesMod.Row[T], rowB: raw.buildLibTypesMod.Row[T], colId: String) =>
-              fn.asInstanceOf[SortingFn[T, TM, CM, TF]](Row(rowA), Row(rowB), ColumnId(colId))
-                .toDouble
+        toJs
+          .asInstanceOf[js.Dynamic]
+          .updateDynamic("sortFn")(
+            sortingFn.orUndefined
+              .map:
+                case builtIn: BuiltInSorting => builtIn.toJs
+                case fn                      =>
+                  (
+                    rowA:  raw.buildLibTypesMod.Row[T],
+                    rowB:  raw.buildLibTypesMod.Row[T],
+                    colId: String
+                  ) =>
+                    fn.asInstanceOf[SortingFn[T, TM, CM, TF]](Row(rowA), Row(rowB), ColumnId(colId))
+                      .toDouble
+              .asInstanceOf[js.Any]
+          )
         toJs
       }
 

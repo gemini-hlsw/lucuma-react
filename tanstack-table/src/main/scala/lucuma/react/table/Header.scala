@@ -5,7 +5,7 @@ package lucuma.react.table
 
 import japgolly.scalajs.react.Callback
 import japgolly.scalajs.react.ReactEvent
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 
 /**
  * @tparam T
@@ -71,7 +71,10 @@ case class Header[T, A, TM, CM, TF, CF, FM] private[table] (
    *   [Guide](https://tanstack.com/table/v8/docs/guide/headers)
    */
   def getLeafHeaders(): List[Header[T, Any, TM, CM, TF, Any, Any]] =
-    toJs.getLeafHeaders().toList.map(Header(_))
+    toJs
+      .getLeafHeaders()
+      .toList
+      .map(h => Header(h.asInstanceOf[raw.buildLibTypesMod.Header[T, Any]]))
 
   /**
    * The header's associated header group object.

@@ -11,9 +11,10 @@ import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.common.*
 import lucuma.react.common.style.Css
+import lucuma.react.table.facade.FlexRenderRaw as flexMod
+import lucuma.react.table.facade.Renderable
+import lucuma.react.table.facade.compat as raw
 import lucuma.react.virtual.*
-import lucuma.typed.tanstackReactTable as rawReact
-import lucuma.typed.tanstackTableCore as raw
 import org.scalajs.dom.HTMLDivElement
 import org.scalajs.dom.HTMLElement
 
@@ -162,11 +163,11 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
                               .whenDefined
                           )(
                             <.div(
-                              rawReact.mod.flexRender(
+                              flexMod.flexRender(
                                 header.column.columnDef.toJs
                                   .asInstanceOf[raw.buildLibCoreHeadersMod.HeaderContext[T, Any]]
                                   .header
-                                  .asInstanceOf[rawReact.mod.Renderable[
+                                  .asInstanceOf[Renderable[
                                     raw.buildLibCoreHeadersMod.HeaderContext[T, Any]
                                   ]],
                                 header
@@ -250,9 +251,9 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
                         )(
                           cell.column.columnDef match
                             case colDef @ ColumnDef.Single(_) =>
-                              rawReact.mod.flexRender(
+                              flexMod.flexRender(
                                 colDef.toJs.cell
-                                  .asInstanceOf[rawReact.mod.Renderable[
+                                  .asInstanceOf[Renderable[
                                     raw.buildLibCoreCellMod.CellContext[T, Any]
                                   ]],
                                 cell.getContext().toJs
@@ -304,9 +305,9 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
                       ^.width   := s"${footer.getSize().toInt}px"
                     )(
                       TagMod.unless(footer.isPlaceholder)(
-                        rawReact.mod.flexRender(
+                        flexMod.flexRender(
                           footer.column.columnDef.toJs.footer
-                            .asInstanceOf[rawReact.mod.Renderable[
+                            .asInstanceOf[Renderable[
                               raw.buildLibCoreHeadersMod.HeaderContext[T, Any]
                             ]],
                           footer.getContext().toJs

@@ -3,7 +3,7 @@
 
 package lucuma.react.table
 
-import lucuma.typed.tanstackTableCore as raw
+import lucuma.react.table.facade.compat as raw
 
 import scalajs.js
 import scalajs.js.JSConverters.*
@@ -52,11 +52,11 @@ case class TableState[TF](toJs: raw.buildLibTypesMod.TableState):
   def setColumnSizing(columnSizing: ColumnSizing): TableState[TF] =
     TableState(toJs.setColumnSizing(columnSizing.toJs))
 
-  lazy val columnSizingInfo: ColumnSizingInfo = ColumnSizingInfo.fromJs(toJs.columnSizingInfo)
+  lazy val columnSizingInfo: ColumnSizingInfo = ColumnSizingInfo.fromJs(toJs.columnResizing)
 
   /** WARNING: This mutates the object in-place. */
   def setColumnSizingInfo(columnSizingInfo: ColumnSizingInfo): TableState[TF] =
-    TableState(toJs.setColumnSizingInfo(columnSizingInfo.toJs))
+    TableState(toJs.setColumnResizing(columnSizingInfo.toJs))
 
   lazy val rowSelection: RowSelection = RowSelection.fromJs(toJs.rowSelection)
 
@@ -99,7 +99,7 @@ object TableState:
       .applyOrNot(sorting, (s, p) => s.setSorting(p.toJs))
       .applyOrNot(expanded, (s, p) => s.setExpanded(p.toJs))
       .applyOrNot(columnSizing, (s, p) => s.setColumnSizing(p.toJs))
-      .applyOrNot(columnSizingInfo, (s, p) => s.setColumnSizingInfo(p.toJs))
+      .applyOrNot(columnSizingInfo, (s, p) => s.setColumnResizing(p.toJs))
       .applyOrNot(rowSelection, (s, p) => s.setRowSelection(p.toJs))
       .applyOrNot(columnFilters, (s, p) => s.setColumnFilters(p.toJs))
       .applyOrNot(globalFilter, (s, p) => s.setGlobalFilter(p))
