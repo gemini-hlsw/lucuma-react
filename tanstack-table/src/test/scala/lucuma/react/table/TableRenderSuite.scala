@@ -67,6 +67,20 @@ class TableRenderSuite extends FunSuite:
         """<table><caption></caption><tbody><tr><td>Alice</td><td>30</td></tr><tr><td>Bob</td><td>25</td></tr></tbody></table>"""
       m.outerHTML.assert(expected)
 
+  test("v9 table renders all rows, not just the default 10-row page"):
+    // v9 always wires the paginated row model; without the facade's pageSize=Infinity default,
+    // getRowModel() would slice to tanstack's default pageSize of 10 and drop rows 11+.
+    val manyPeople   = Reusable.always((1 to 15).toList.map(i => Person(i, s"P$i", 20 + i)))
+    val manyRowsComp = ScalaFnComponent[Unit]: _ =>
+      for
+        rows  <- useMemo(manyPeople)(identity)
+        cols  <- useMemo(columns)(identity)
+        table <- useReactTable(TableOptions(cols, rows))
+      yield rowsHtml(table)
+    ReactTestUtils.withRenderedSync(manyRowsComp()): m =>
+      val expectedRows = (1 to 15).map(i => s"<tr><td>P$i</td><td>${20 + i}</td></tr>").mkString
+      m.outerHTML.assert(s"<table><caption></caption><tbody>$expectedRows</tbody></table>")
+
   test("v9 table sorts rows by the initial sorting state"):
     // Ascending by age: Bob(25) must precede Alice(30) — different from data order (Alice, Bob),
     // so this proves the sort is actually applied. The <caption> reads getState().sorting, which

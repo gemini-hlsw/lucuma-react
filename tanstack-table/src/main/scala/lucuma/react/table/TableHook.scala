@@ -36,10 +36,26 @@ object TableHook:
       )
     )
 
+  // With `paginatedRowModel` always wired, v9's default pagination state ({pageIndex: 0,
+  // pageSize: 10}) would silently truncate every table to its first 10 rows. Default to
+  // pageSize Infinity (which v9 treats as "don't slice") unless the caller provided its own
+  // pagination state. The public facade doesn't expose pagination yet, so today this always
+  // applies; the guard future-proofs against it being added.
+  private def ensureUnpaginatedByDefault(options: js.Dynamic): Unit =
+    val statePagination        =
+      !js.isUndefined(options.state) && !js.isUndefined(options.state.pagination)
+    val initialStatePagination =
+      !js.isUndefined(options.initialState) && !js.isUndefined(options.initialState.pagination)
+    if !statePagination && !initialStatePagination then
+      if js.isUndefined(options.initialState) then options.initialState = js.Dynamic.literal()
+      options.initialState.pagination =
+        js.Dynamic.literal(pageIndex = 0, pageSize = Double.PositiveInfinity)
+
   private def useReactTableJs[T, TM, CM, TF](
     options: TableOptionsJs[T, TM, CM, TF]
   ): raw.buildLibTypesMod.Table[T] =
     options.asInstanceOf[js.Dynamic].updateDynamic("features")(defaultFeatures())
+    ensureUnpaginatedByDefault(options.asInstanceOf[js.Dynamic])
     ReactTableRaw.useTable(options).asInstanceOf[instance.Table[T]]
 
   def useReactTable[T, TM, CM, TF](
