@@ -91,4 +91,64 @@ class TableRenderSuite extends FunSuite:
       val expected =
         """<table><caption>age</caption><tbody><tr><td>Bob</td><td>25</td></tr><tr><td>Alice</td><td>30</td></tr></tbody></table>"""
       m.outerHTML.assert(expected)
+
+  test("v9 custom sortFn is stored as a JS function applying the Scala comparator"):
+    // TanStack v9 resolves a custom sort fn with an `instanceof Function` check and silently
+    // falls back to `basic` otherwise, so the Scala comparator must be stored as a genuine JS
+    // function
+    import scalajs.js
+    val people = Reusable.always(List(Person(1, "Alice", 30), Person(2, "Bob", 25)))
+    val cols   = Reusable.always:
+      List(
+        ColDef(ColumnId("name"), _.name, "Name"),
+        ColDef(ColumnId("age"), _.age, "Age").sortableWith((a, b) => b.compare(a))
+      )
+    val ageDef = cols.value(1).toJs.asInstanceOf[js.Dynamic]
+    assertEquals(js.typeOf(ageDef.selectDynamic("sortFn")), "function")
+
+    var result = Option.empty[Double]
+    val comp   = ScalaFnComponent[Unit]: _ =>
+      for
+        rows  <- useMemo(people)(identity)
+        cs    <- useMemo(cols)(identity)
+        table <- useReactTable(TableOptions(cs, rows))
+      yield
+        val rs    = table.getRowModel().rows
+        val alice = rs.find(_.getValue[Int](ColumnId("age")) == 30).get
+        val bob   = rs.find(_.getValue[Int](ColumnId("age")) == 25).get
+        result = Some(
+          ageDef
+            .applyDynamic("sortFn")(alice.toJs, bob.toJs, "age")
+            .asInstanceOf[Double]
+        )
+        <.div()
+    ReactTestUtils.withRenderedSync(comp()): _ =>
+      // The comparator is reversed: (Alice=30, Bob=25) must compare negative;
+      assert(result.exists(_ < 0), s"custom comparator not applied, got $result")
+
+  test("v9 table resolves built-in sort fns through the registry"):
+    // "P2" vs "P10" ascending by name: alphanumeric puts P2 first; both the basic fallback
+    // and the unsorted data order put P10 first.
+    val people       = Reusable.always(List(Person(1, "P10", 1), Person(2, "P2", 2)))
+    val alphaNumCols = Reusable.always:
+      List(
+        ColDef(ColumnId("name"), _.name, "Name").sortableBuiltIn(BuiltInSorting.Alphanumeric),
+        ColDef(ColumnId("age"), _.age, "Age")
+      )
+    val comp         = ScalaFnComponent[Unit]: _ =>
+      for
+        rows  <- useMemo(people)(identity)
+        cols  <- useMemo(alphaNumCols)(identity)
+        table <- useReactTable:
+                   TableOptions(
+                     cols,
+                     rows,
+                     initialState =
+                       TableState(sorting = Sorting(ColumnId("name") -> SortDirection.Ascending))
+                   )
+      yield rowsHtml(table)
+    ReactTestUtils.withRenderedSync(comp()): m =>
+      val expected =
+        """<table><caption>name</caption><tbody><tr><td>P2</td><td>2</td></tr><tr><td>P10</td><td>1</td></tr></tbody></table>"""
+      m.outerHTML.assert(expected)
 end TableRenderSuite

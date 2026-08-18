@@ -25,6 +25,11 @@ object TableHook:
       js.Dynamic.literal(),
       ReactTableRaw.stockFeatures.asInstanceOf[js.Object],
       js.Dynamic.literal(
+        // v9 resolves string-named (built-in / "auto") sort, filter and aggregation fns
+        // through these registries; without them everything falls back to `basic`.
+        sortFns = ReactTableRaw.sortFns,
+        filterFns = ReactTableRaw.filterFns,
+        aggregationFns = ReactTableRaw.aggregationFns,
         sortedRowModel = ReactTableRaw.createSortedRowModel(),
         filteredRowModel = ReactTableRaw.createFilteredRowModel(),
         expandedRowModel = ReactTableRaw.createExpandedRowModel(),
