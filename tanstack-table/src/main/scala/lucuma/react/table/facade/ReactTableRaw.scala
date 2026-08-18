@@ -20,6 +20,9 @@ import scala.scalajs.js.annotation.JSImport
 object ReactTableRaw extends js.Object:
   def useTable(options:    js.Any): js.Any = js.native
   val stockFeatures: js.Any                = js.native
+  val sortFns: js.Any                      = js.native
+  val filterFns: js.Any                    = js.native
+  val aggregationFns: js.Any               = js.native
   def tableFeatures(slots: js.Any): js.Any = js.native
   def createSortedRowModel(): js.Any       = js.native
   def createFilteredRowModel(): js.Any     = js.native

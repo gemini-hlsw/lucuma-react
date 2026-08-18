@@ -391,13 +391,20 @@ object ColumnDef:
               .map:
                 case builtIn: BuiltInSorting => builtIn.toJs
                 case fn                      =>
-                  (
-                    rowA:  raw.buildLibTypesMod.Row[T],
-                    rowB:  raw.buildLibTypesMod.Row[T],
-                    colId: String
-                  ) =>
-                    fn.asInstanceOf[SortingFn[T, TM, CM, TF]](Row(rowA), Row(rowB), ColumnId(colId))
-                      .toDouble
+                  // Must be an actual JS function: v9 resolves custom sort fns with an
+                  // `instanceof Function` check and silently falls back to `basic` otherwise.
+                  val jsFn: js.Function3[
+                    raw.buildLibTypesMod.Row[T],
+                    raw.buildLibTypesMod.Row[T],
+                    String,
+                    Double
+                  ] =
+                    (rowA, rowB, colId) =>
+                      fn.asInstanceOf[SortingFn[T, TM, CM, TF]](Row(rowA),
+                                                                Row(rowB),
+                                                                ColumnId(colId)
+                      ).toDouble
+                  jsFn
               .asInstanceOf[js.Any]
           )
         toJs
