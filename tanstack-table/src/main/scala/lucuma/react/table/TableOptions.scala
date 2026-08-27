@@ -150,6 +150,20 @@ sealed trait TableOptions[T, TM, CM, TF]:
   inline def withoutMeta: TableOptions[T, Nothing, CM, TF] =
     setMeta(none)
 
+  lazy val autoResetAll: Option[Boolean] = toJsBase.autoResetAll.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setAutoResetAll(autoResetAll: Option[Boolean]): TableOptions[T, TM, CM, TF] =
+    copy(_.autoResetAll = autoResetAll.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withAutoResetAll(autoResetAll: Boolean): TableOptions[T, TM, CM, TF] =
+    setAutoResetAll(autoResetAll.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutAutoResetAll: TableOptions[T, TM, CM, TF] =
+    setAutoResetAll(none)
+
   // Column Sizing
   lazy val enableColumnResizing: Option[Boolean] = toJsBase.enableColumnResizing.toOption
 
@@ -587,6 +601,34 @@ sealed trait TableOptions[T, TM, CM, TF]:
   /** WARNING: This mutates the object in-place. */
   inline def withoutEnableExpanding: TableOptions[T, TM, CM, TF] =
     setEnableExpanding(none)
+
+  lazy val autoResetExpanded: Option[Boolean] = toJsBase.autoResetExpanded.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setAutoResetExpanded(autoResetExpanded: Option[Boolean]): TableOptions[T, TM, CM, TF] =
+    copy(_.autoResetExpanded = autoResetExpanded.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withAutoResetExpanded(autoResetExpanded: Boolean): TableOptions[T, TM, CM, TF] =
+    setAutoResetExpanded(autoResetExpanded.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutAutoResetExpanded: TableOptions[T, TM, CM, TF] =
+    setAutoResetExpanded(none)
+
+  lazy val manualExpanding: Option[Boolean] = toJsBase.manualExpanding.toOption
+
+  /** WARNING: This mutates the object in-place. */
+  def setManualExpanding(manualExpanding: Option[Boolean]): TableOptions[T, TM, CM, TF] =
+    copy(_.manualExpanding = manualExpanding.orUndefined)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withManualExpanding(manualExpanding: Boolean): TableOptions[T, TM, CM, TF] =
+    setManualExpanding(manualExpanding.some)
+
+  /** WARNING: This mutates the object in-place. */
+  inline def withoutManualExpanding: TableOptions[T, TM, CM, TF] =
+    setManualExpanding(none)
 
   lazy val getExpandedRowModel: Option[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
     toJsBase.getExpandedRowModel.toOption.map(fn => t => () => RowModel(fn(t.toJs)()))
@@ -1104,6 +1146,7 @@ object TableOptions:
     state:                     js.UndefOr[Reusable[PartialTableState[TF]]] = js.undefined,
     initialState:              js.UndefOr[TableState[TF]] = js.undefined,
     meta:                      js.UndefOr[TM] = js.undefined,
+    autoResetAll:              js.UndefOr[Boolean] = js.undefined,
     // Column Sizing
     enableColumnResizing:      js.UndefOr[Boolean] = js.undefined,
     columnResizeMode:          js.UndefOr[ColumnResizeMode] = js.undefined,
@@ -1130,6 +1173,8 @@ object TableOptions:
     onRowSelectionChange:      js.UndefOr[Updater[RowSelection] => Callback] = js.undefined,
     // Expanding
     enableExpanding:           js.UndefOr[Boolean] = js.undefined,
+    autoResetExpanded:         js.UndefOr[Boolean] = js.undefined,
+    manualExpanding:           js.UndefOr[Boolean] = js.undefined,
     getExpandedRowModel:       js.UndefOr[Table[T, TM, CM, TF] => () => RowModel[T, TM, CM, TF]] =
       js.undefined,
     getSubRows:                js.UndefOr[(T, Int) => Option[List[T]]] = js.undefined,
@@ -1188,7 +1233,9 @@ object TableOptions:
       !enableExpanding.contains(false) && (
         enableExpanding.contains(true) ||
           getExpandedRowModel.isDefined ||
-          getSubRows.isDefined
+          getSubRows.isDefined ||
+          autoResetExpanded.isDefined ||
+          manualExpanding.contains(true)
       )
     val autoEnableColumnFiltering: Boolean     =
       !enableColumnFilters.contains(false) && (
@@ -1280,6 +1327,7 @@ object TableOptions:
       .applyOrNot(state, _.withState(_))
       .applyOrNot(initialState, _.withInitialState(_))
       .applyOrNot(meta, _.withMeta(_))
+      .applyOrNot(autoResetAll, _.withAutoResetAll(_))
       .applyOrNot(enableColumnResizing, _.withEnableColumnResizing(_))
       .applyOrNot(columnResizeMode, _.withColumnResizeMode(_))
       .applyOrNot(onColumnSizingChange, _.withOnColumnSizingChange(_))
@@ -1299,6 +1347,8 @@ object TableOptions:
       .applyOrNot(enableMultiRowSelection, _.withEnableMultiRowSelection(_))
       .applyOrNot(onRowSelectionChange, _.withOnRowSelectionChange(_))
       .applyOrNot(enableExpanding, _.withEnableExpanding(_))
+      .applyOrNot(autoResetExpanded, _.withAutoResetExpanded(_))
+      .applyOrNot(manualExpanding, _.withManualExpanding(_))
       .applyOrNot(getSubRows, _.withGetSubRows(_))
       .applyOrNot(enablePinning, _.withEnablePinning(_))
       .applyOrNot(enableColumnPinning, _.withEnableColumnPinning(_))
