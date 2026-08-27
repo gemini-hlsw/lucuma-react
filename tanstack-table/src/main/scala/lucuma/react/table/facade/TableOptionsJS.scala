@@ -29,6 +29,7 @@ trait TableOptionsJs[T, TM, CM, TF] extends js.Object:
   var state: js.UndefOr[raw.anon.PartialTableState]                     = js.undefined
   var initialState: js.UndefOr[raw.buildLibTypesMod.InitialTableState]  = js.undefined
   var meta: js.UndefOr[TM]                                              = js.undefined
+  var autoResetAll: js.UndefOr[Boolean]                                 = js.undefined
 
   // Column Sizing // TODO Rest of the properties
   var enableColumnResizing: js.UndefOr[Boolean]                                          = js.undefined
@@ -75,6 +76,8 @@ trait TableOptionsJs[T, TM, CM, TF] extends js.Object:
 
   // Expanding
   var enableExpanding: js.UndefOr[Boolean]                                  = js.undefined
+  var autoResetExpanded: js.UndefOr[Boolean]                                = js.undefined
+  var manualExpanding: js.UndefOr[Boolean]                                  = js.undefined
   var getExpandedRowModel: js.UndefOr[
     js.Function1[raw.buildLibTypesMod.Table[T], js.Function0[raw.buildLibTypesMod.RowModel[T]]]
   ]                                                                         = js.undefined
