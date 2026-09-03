@@ -38,7 +38,7 @@ val munitV           = "1.3.6"
 val scalaJsDomV      = "2.8.1"
 val scalaJsReactV    = "4.0.0"
 
-ThisBuild / crossScalaVersions := Seq("3.8.4")
+ThisBuild / crossScalaVersions := Seq("3.9.0")
 
 lazy val facadeSettings = Seq(
   libraryDependencies ++= Seq(
