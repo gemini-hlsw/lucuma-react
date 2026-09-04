@@ -88,11 +88,20 @@ jobs:
         if: matrix.java == 'temurin@25' && matrix.os == 'ubuntu-22.04'
         run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' doc
 
-      - name: Aggregate coverage reports
-        run: sbt '++ ${{ matrix.scala }}' 'project ${{ matrix.project }}' coverageReport coverageAggregate
+      - name: Make target directories
+        if: github.event_name != 'pull_request' && (startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main')
+        run: mkdir -p floatingui/target test/target circular-progressbar/target prime-react/target highcharts/target tanstack-table/target resize-detector/target resizable/target font-awesome/target hotkeys-hooks/target pragmatic-dnd/target grid-layout/target datepicker/target common/target draggable/target beautiful-dnd/target markdown/target project/target
 
-      - name: Upload code coverage data
-        uses: codecov/codecov-action@v6
+      - name: Compress target directories
+        if: github.event_name != 'pull_request' && (startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main')
+        run: tar cf targets.tar floatingui/target test/target circular-progressbar/target prime-react/target highcharts/target tanstack-table/target resize-detector/target resizable/target font-awesome/target hotkeys-hooks/target pragmatic-dnd/target grid-layout/target datepicker/target common/target draggable/target beautiful-dnd/target markdown/target project/target
+
+      - name: Upload target directories
+        if: github.event_name != 'pull_request' && (startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main')
+        uses: actions/upload-artifact@v5
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-${{ matrix.scala }}-${{ matrix.project }}
+          path: targets.tar
 
   publish:
     name: Publish Artifacts
@@ -124,6 +133,156 @@ jobs:
       - name: sbt update
         if: matrix.java == 'temurin@25' && steps.setup-java-temurin-25.outputs.cache-hit == 'false'
         run: sbt +update
+
+      - name: Download target directories (3, rootCore)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootCore
+
+      - name: Inflate target directories (3, rootCore)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootGridLayout)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootGridLayout
+
+      - name: Inflate target directories (3, rootGridLayout)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootDraggable)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootDraggable
+
+      - name: Inflate target directories (3, rootDraggable)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootFloatingui)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootFloatingui
+
+      - name: Inflate target directories (3, rootFloatingui)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootTanstackTable)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootTanstackTable
+
+      - name: Inflate target directories (3, rootTanstackTable)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootHighcharts)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootHighcharts
+
+      - name: Inflate target directories (3, rootHighcharts)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootDatepicker)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootDatepicker
+
+      - name: Inflate target directories (3, rootDatepicker)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootBeautifulDnd)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootBeautifulDnd
+
+      - name: Inflate target directories (3, rootBeautifulDnd)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootPragmaticDnd)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootPragmaticDnd
+
+      - name: Inflate target directories (3, rootPragmaticDnd)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootFontAwesome)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootFontAwesome
+
+      - name: Inflate target directories (3, rootFontAwesome)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootHotkeys)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootHotkeys
+
+      - name: Inflate target directories (3, rootHotkeys)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootResizable)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootResizable
+
+      - name: Inflate target directories (3, rootResizable)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, rootPrimeReact)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-rootPrimeReact
+
+      - name: Inflate target directories (3, rootPrimeReact)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, circularProgressbar)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-circularProgressbar
+
+      - name: Inflate target directories (3, circularProgressbar)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
+
+      - name: Download target directories (3, markdown)
+        uses: actions/download-artifact@v6
+        with:
+          name: target-${{ matrix.os }}-${{ matrix.java }}-3-markdown
+
+      - name: Inflate target directories (3, markdown)
+        run: |
+          tar xf targets.tar
+          rm targets.tar
 
       - name: Import signing key
         if: env.PGP_SECRET != '' && env.PGP_PASSPHRASE == ''
