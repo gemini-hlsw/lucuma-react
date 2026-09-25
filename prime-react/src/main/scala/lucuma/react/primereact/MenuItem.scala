@@ -32,6 +32,7 @@ object MenuItem {
       js.undefined // Visibility of submenu - not sure how to use this.
     var visible: js.UndefOr[Boolean]  = js.undefined
     var className: js.UndefOr[String] = js.undefined
+    var id: js.UndefOr[String]        = js.undefined
   }
 
   def SubMenu(
@@ -40,7 +41,8 @@ object MenuItem {
     disabled: js.UndefOr[Boolean] = js.undefined,
     expanded: js.UndefOr[Boolean] = js.undefined,
     visible:  js.UndefOr[Boolean] = js.undefined,
-    clazz:    js.UndefOr[Css] = js.undefined
+    clazz:    js.UndefOr[Css] = js.undefined,
+    id:       js.UndefOr[String] = js.undefined
   )(items: MenuItem*): MenuItem = {
     val sm = js.Dynamic.literal(label = label, items = items.toJSArray).asInstanceOf[SubMenu]
     icon.foreach(i => sm.icon = i.toPrimeWithClass(PrimeStyles.MenuItemIcon))
@@ -48,6 +50,7 @@ object MenuItem {
     expanded.foreach(v => sm.expanded = v)
     visible.foreach(v => sm.visible = v)
     clazz.foreach(v => sm.className = v.htmlClass)
+    id.foreach(v => sm.id = v)
     sm
   }
 
@@ -60,6 +63,7 @@ object MenuItem {
     var visible: js.UndefOr[Boolean]                 = js.undefined
     var target: js.UndefOr[String]                   = js.undefined // where to open linked document
     var className: js.UndefOr[String]                = js.undefined
+    var id: js.UndefOr[String]                       = js.undefined
   }
 
   // Not all properties work with all menu types.
@@ -71,7 +75,8 @@ object MenuItem {
     disabled: js.UndefOr[Boolean] = js.undefined,
     visible:  js.UndefOr[Boolean] = js.undefined,
     target:   js.UndefOr[String] = js.undefined,
-    clazz:    js.UndefOr[Css] = js.undefined
+    clazz:    js.UndefOr[Css] = js.undefined,
+    id:       js.UndefOr[String] = js.undefined
   ): Item = {
     val l = js.Dynamic.literal(label = label).asInstanceOf[Item]
     icon.foreach(i => l.icon = i.toPrimeWithClass(PrimeStyles.MenuItemIcon))
@@ -81,6 +86,7 @@ object MenuItem {
     visible.foreach(v => l.visible = v)
     target.foreach(v => l.target = v)
     clazz.foreach(v => l.className = v.htmlClass)
+    id.foreach(v => l.id = v)
     l
   }
 
