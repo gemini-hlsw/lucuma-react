@@ -36,7 +36,7 @@ val lucumaTypedV     = "0.13.0"
 val munitScalacheckV = "1.3.1"
 val munitV           = "1.3.6"
 val scalaJsDomV      = "2.8.1"
-val scalaJsReactV    = "4.0.0"
+val scalaJsReactV    = "4.1.0"
 
 ThisBuild / crossScalaVersions := Seq("3.9.0")
 
