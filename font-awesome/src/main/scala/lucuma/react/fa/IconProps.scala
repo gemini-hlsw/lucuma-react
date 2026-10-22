@@ -17,7 +17,10 @@ trait IconProps:
   def clazz: Css
   def fade: Boolean
   def flash: Boolean
+  // Since Font Awesome 7, icons are fixed width (1.25em) by default: `fixedWidth` only restores that
+  // under an ancestor setting `--fa-width`, while `widthAuto` sizes the icon to its own aspect ratio.
   def fixedWidth: Boolean
+  def widthAuto: Boolean
   def inverse: Boolean
   def flip: js.UndefOr[Flip]
   def listItem: Boolean
@@ -44,6 +47,7 @@ trait IconProps:
       classIf(fade, "fa-fade"),
       classIf(flash, "fa-flash"),
       classIf(fixedWidth, "fa-fw"),
+      classIf(widthAuto, "fa-width-auto"),
       classIf(inverse, "fa-inverse"),
       classIf(flip.exists(List(Flip.Horizontal, Flip.Both).contains), "fa-flip-horizontal"),
       classIf(flip.exists(List(Flip.Vertical, Flip.Both).contains), "fa-flip-vertical"),
