@@ -25,6 +25,7 @@ case class TextLayer(
   flash:       Boolean = false,
   flip:        js.UndefOr[Flip] = js.undefined,
   fixedWidth:  Boolean = false,
+  widthAuto:   Boolean = false,
   inverse:     Boolean = false,
   listItem:    Boolean = false,
   pull:        js.UndefOr[Pull] = js.undefined,
@@ -54,7 +55,12 @@ case class TextLayer(
   def withFade(value:        Boolean = true) = copy(fade = value)
   def withFlash(value:       Boolean = true) = copy(flash = value)
   def withFlip(value:        Flip)           = copy(flip = value)
+  @deprecated(
+    "Icons are fixed width by default since Font Awesome 7; use withWidthAuto to opt out",
+    "0.108.0"
+  )
   def withFixedWidth(value:  Boolean = true) = copy(fixedWidth = value)
+  def withWidthAuto(value:   Boolean = true) = copy(widthAuto = value)
   def withInverse(value:     Boolean = true) = copy(inverse = value)
   def withListItem(value:    Boolean = true) = copy(listItem = value)
   def withPull(value:        Pull)           = copy(pull = value)

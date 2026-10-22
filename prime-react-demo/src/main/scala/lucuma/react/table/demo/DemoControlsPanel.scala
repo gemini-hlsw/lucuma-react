@@ -43,7 +43,7 @@ object DemoControlsPanel {
 
     inline def Pause = FontAwesomeIcon(faPause)
 
-    val CancelPause = LayeredIcon()(Pause.withInverse(), Ban.withSize(IconSize.LG)).withFixedWidth()
+    val CancelPause = LayeredIcon()(Pause.withInverse(), Ban.withSize(IconSize.LG))
 
   def mouseEntered(msg: String) = ^.onMouseEnter --> Callback.log(s"Mouse entered: $msg")
 
