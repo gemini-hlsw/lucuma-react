@@ -23,7 +23,7 @@ case class OverlayPanelRef(
 ) {
   def toggle: ReactEvent => Callback = e => ref.get.map(_.fold(())(_.raw.toggle(e)))
   def show: ReactEvent => Callback   = e => ref.get.map(_.fold(())(_.raw.show(e)))
-  def hide: Callback                 = ref.get.map(_.foldMap(_.raw.hide))
+  def hide: Callback                 = ref.get.map(_.foldMap(_.raw.hide()))
 }
 
 case class OverlayPanel(
@@ -55,7 +55,7 @@ object OverlayPanel {
   @js.native
   trait Facade extends js.Object {
     def show(event:   ReactEvent): Unit = js.native
-    def hide: Unit                      = js.native
+    def hide(): Unit                    = js.native
     def toggle(event: ReactEvent): Unit = js.native
   }
 
