@@ -121,9 +121,47 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
     indexOffset:          Int = 0,
     paddingTop:           Option[Int] = none,
     paddingBottom:        Option[Int] = none,
-    emptyMessage:         VdomNode = EmptyVdom
+    emptyMessage:         VdomNode = EmptyVdom,
+    leadingRows:          List[(Row[T, TM, CM, TF], Int)] = List.empty
   ) =
     val visibleColumnCount: Int = table.getAllLeafColumns().filter(_.getIsVisible()).length
+
+    // The index is the row's position in the model, used for striping.
+    def renderBodyRow(row: Row[T, TM, CM, TF], index: Int): VdomNode =
+      rowMod(
+        row,
+        rowContext =>
+          <.tr(
+            TbodyTrClass,
+            TbodyTrEvenClass.when(index % 2 =!= 0),
+            ^.key := row.id.value
+          )(
+            row
+              .getVisibleCells()
+              .map(cell =>
+                cellMod(
+                  cell,
+                  rowContext,
+                  <.td(
+                    TbodyTdClass,
+                    ^.key   := cell.id.value,
+                    ^.width := s"${cell.column.getSize().value}px"
+                  )(
+                    cell.column.columnDef match
+                      case colDef @ ColumnDef.Single(_) =>
+                        flexMod.flexRender(
+                          colDef.toJs.cell
+                            .asInstanceOf[Renderable[
+                              raw.buildLibCoreCellMod.CellContext[T, Any]
+                            ]],
+                          cell.getContext().toJs
+                        )
+                  )
+                )
+              )
+              .toTagMod
+          )
+      )
 
     <.table(TableClass, tableMod)(
       TagMod.when(
@@ -200,6 +238,9 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
         )
       ),
       <.tbody(TbodyClass, bodyMod)(
+        // Rows a range extractor kept before the visible range (e.g. sticky headers).
+        leadingRows.map(renderBodyRow).toTagMod
+      )(
         paddingTop
           .filter(_ > 1)
           .map(p =>
@@ -229,42 +270,7 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
           )
         ),
         rows.zipWithIndex
-          .map((row, index) =>
-            rowMod(
-              row,
-              rowContext =>
-                <.tr(
-                  TbodyTrClass,
-                  TbodyTrEvenClass.when((index + indexOffset) % 2 =!= 0),
-                  ^.key := row.id.value
-                )(
-                  row
-                    .getVisibleCells()
-                    .map(cell =>
-                      cellMod(
-                        cell,
-                        rowContext,
-                        <.td(
-                          TbodyTdClass,
-                          ^.key   := cell.id.value,
-                          ^.width := s"${cell.column.getSize().value}px"
-                        )(
-                          cell.column.columnDef match
-                            case colDef @ ColumnDef.Single(_) =>
-                              flexMod.flexRender(
-                                colDef.toJs.cell
-                                  .asInstanceOf[Renderable[
-                                    raw.buildLibCoreCellMod.CellContext[T, Any]
-                                  ]],
-                                cell.getContext().toJs
-                              )
-                        )
-                      )
-                    )
-                    .toTagMod
-                )
-            )
-          )
+          .map((row, index) => renderBodyRow(row, index + indexOffset))
           .toTagMod
       )(
         paddingBottom
@@ -391,6 +397,7 @@ object HTMLTableRenderer:
                            getScrollElement = actualRef.get,
                            overscan = props.overscan,
                            getItemKey = props.getItemKey,
+                           rangeExtractor = props.rangeExtractor,
                            onChange = props.onChange,
                            debug = props.debugVirtualizer
                          )
@@ -403,11 +410,12 @@ object HTMLTableRenderer:
         val (indexOffset, paddingBefore, paddingAfter) =
           virtualOffsets(virtualizer, props.debugVirtualizer)
 
-        // TODO Should we attempt to make the <table>  the container (scroll element) and <tbody> the virtualized element?
+        val (leadingItems, rangeItems) = splitLeadingItems(virtualizer)
+
         <.div.withRef(actualRef)(^.overflowY.auto, props.containerMod)(
           renderer.render(
             props.table,
-            virtualizer.getVirtualItems().toList.map(virtualItem => rows(virtualItem.index.toInt)),
+            rangeItems.map(virtualItem => rows(virtualItem.index.toInt)),
             TagMod(props.tableMod, props.extraTableClasses),
             props.headerMod,
             props.headerRowMod,
@@ -422,7 +430,8 @@ object HTMLTableRenderer:
             indexOffset,
             paddingBefore.some,
             paddingAfter.some,
-            props.emptyMessage
+            props.emptyMessage,
+            leadingItems.map(item => (rows(item.index.toInt), item.index.toInt))
           )
         )
 
@@ -467,6 +476,7 @@ object HTMLTableRenderer:
                            getScrollElement = actualRef.get,
                            overscan = props.overscan,
                            getItemKey = props.getItemKey,
+                           rangeExtractor = props.rangeExtractor,
                            onChange = props.onChange,
                            debug = props.debugVirtualizer
                          )
@@ -480,6 +490,8 @@ object HTMLTableRenderer:
         // the right number of elements on either side.
         val (indexOffset, paddingBefore, paddingAfter) =
           virtualOffsets(virtualizer, props.debugVirtualizer)
+
+        val (leadingItems, rangeItems) = splitLeadingItems(virtualizer)
 
         // We use this trick to get a component whose height adjusts to the container.
         // See https://stackoverflow.com/a/1230666
@@ -500,10 +512,7 @@ object HTMLTableRenderer:
           )(
             renderer.render(
               props.table,
-              virtualizer
-                .getVirtualItems()
-                .toList
-                .map(virtualItem => rows(virtualItem.index.toInt)),
+              rangeItems.map(virtualItem => rows(virtualItem.index.toInt)),
               TagMod(props.tableMod, props.extraTableClasses),
               props.headerMod,
               props.headerRowMod,
@@ -518,7 +527,8 @@ object HTMLTableRenderer:
               indexOffset,
               paddingBefore.some,
               paddingAfter.some,
-              props.emptyMessage
+              props.emptyMessage,
+              leadingItems.map(item => (rows(item.index.toInt), item.index.toInt))
             )
           )
         )
