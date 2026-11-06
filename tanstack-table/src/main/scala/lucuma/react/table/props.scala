@@ -74,6 +74,10 @@ trait HTMLVirtualizedTableProps[T, TM, CM, TF, RC] extends HTMLTableProps[T, TM,
   // Virtual options
   def overscan: js.UndefOr[Int]
   def getItemKey: js.UndefOr[Int => rawVirtual.mod.Key]
+  // Rows that stick to the top while scrolled past, by id. The nearest one above the viewport is
+  // kept rendered (before the top padding row) and all of them get the sticky row class; the
+  // positioning itself (position: sticky and top) is left to CSS.
+  def stickyRowIds: Set[RowId]
   def onChange: js.UndefOr[HTMLTableVirtualizer => Callback]
   def virtualizerRef: js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]]
   def debugVirtualizer: js.UndefOr[Boolean]

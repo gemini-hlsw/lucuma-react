@@ -10,6 +10,8 @@ import lucuma.react.virtual.facade.Virtualizer
 import lucuma.typed.tanstackVirtualCore as rawVirtual
 import org.scalajs.dom.Element
 
+import scala.collection.immutable.SortedSet
+
 import scalajs.js
 import scalajs.js.JSConverters.*
 
@@ -85,7 +87,7 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
    * visible range, eg. rendering sticky items, headers, footers, etc. The default range extractor
    * implementation will return the visible range indexes and is exported as defaultRangeExtractor.
    */
-  rangeExtractor:        js.UndefOr[rawVirtual.mod.Range => List[Int]] = js.undefined,
+  rangeExtractor:        js.UndefOr[VirtualRange => SortedSet[Int]] = js.undefined,
   /**
    * Enables/disables smooth scrolling. Smooth scrolling is enabled by default, but may result in
    * inaccurate landing positions when dynamically measuring elements (a common use case and
@@ -204,7 +206,7 @@ case class VirtualOptions[TScrollElement <: Element, TItemElement <: Element](
     scrollPaddingEnd.foreach(v => p.scrollPaddingEnd = v.value)
     initialOffset.foreach(v => p.initialOffset = v.value)
     getItemKey.foreach(v => p.getItemKey = v)
-    rangeExtractor.foreach(v => p.rangeExtractor = v.andThen(_.toJSArray))
+    rangeExtractor.foreach(v => p.rangeExtractor = r => v(VirtualRange.fromJs(r)).toJSArray)
     enableSmoothScroll.foreach(v => p.enableSmoothScroll = v)
     scrollToFn.foreach(v =>
       (offset: Int, canSmooth: Boolean, instance: Virtualizer[TScrollElement, TItemElement]) =>
