@@ -11,13 +11,10 @@ import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.VdomNode
 import lucuma.react.SizePx
 import lucuma.react.common.style.Css
-import lucuma.react.virtual.VirtualRange
 import lucuma.react.virtual.facade.Virtualizer
 import lucuma.typed.tanstackVirtualCore as rawVirtual
 import org.scalajs.dom.Element
 import org.scalajs.dom.HTMLElement
-
-import scala.collection.immutable.SortedSet
 
 import scalajs.js
 
@@ -77,9 +74,10 @@ trait HTMLVirtualizedTableProps[T, TM, CM, TF, RC] extends HTMLTableProps[T, TM,
   // Virtual options
   def overscan: js.UndefOr[Int]
   def getItemKey: js.UndefOr[Int => rawVirtual.mod.Key]
-  // May add indices before the visible range (e.g. sticky headers); those rows are rendered
-  // before the top padding row. Indices added after the visible range are not supported.
-  def rangeExtractor: js.UndefOr[VirtualRange => SortedSet[Int]]
+  // Rows that stick to the top while scrolled past, by id. The nearest one above the viewport is
+  // kept rendered (before the top padding row) and all of them get the sticky row class; the
+  // positioning itself (position: sticky and top) is left to CSS.
+  def stickyRowIds: Set[RowId]
   def onChange: js.UndefOr[HTMLTableVirtualizer => Callback]
   def virtualizerRef: js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]]
   def debugVirtualizer: js.UndefOr[Boolean]

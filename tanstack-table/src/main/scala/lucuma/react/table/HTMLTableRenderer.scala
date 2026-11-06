@@ -18,6 +18,8 @@ import lucuma.react.virtual.*
 import org.scalajs.dom.HTMLDivElement
 import org.scalajs.dom.HTMLElement
 
+import scala.collection.immutable.SortedSet
+
 import scalajs.js
 
 /**
@@ -39,18 +41,19 @@ import scalajs.js
  *   The type of the row context.
  */
 trait HTMLTableRenderer[T, TM, CM, TF, RC]:
-  protected val TableClass: Css       = Css("react-table")
-  protected val TheadClass: Css       = Css.Empty
-  protected val TheadTrClass: Css     = Css.Empty
-  protected val TheadThClass: Css     = Css.Empty
-  protected val TbodyClass: Css       = Css.Empty
-  protected val TbodyTrClass: Css     = Css.Empty
-  protected val TbodyTrEvenClass: Css = Css("row-even")
-  protected val TbodyTdClass: Css     = Css.Empty
-  protected val TfootClass: Css       = Css.Empty
-  protected val TfootTrClass: Css     = Css.Empty
-  protected val TfootTdClass: Css     = Css.Empty
-  protected val EmptyMessage: Css     = Css.Empty
+  protected val TableClass: Css         = Css("react-table")
+  protected val TheadClass: Css         = Css.Empty
+  protected val TheadTrClass: Css       = Css.Empty
+  protected val TheadThClass: Css       = Css.Empty
+  protected val TbodyClass: Css         = Css.Empty
+  protected val TbodyTrClass: Css       = Css.Empty
+  protected val TbodyTrEvenClass: Css   = Css("row-even")
+  protected val TbodyTrStickyClass: Css = Css("sticky-row")
+  protected val TbodyTdClass: Css       = Css.Empty
+  protected val TfootClass: Css         = Css.Empty
+  protected val TfootTrClass: Css       = Css.Empty
+  protected val TfootTdClass: Css       = Css.Empty
+  protected val EmptyMessage: Css       = Css.Empty
 
   protected val ResizerClass: Css         = Css("resizer")
   protected val IsResizingTHeadClass: Css = Css("isResizing")
@@ -122,7 +125,8 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
     paddingTop:           Option[Int] = none,
     paddingBottom:        Option[Int] = none,
     emptyMessage:         VdomNode = EmptyVdom,
-    leadingRows:          List[(Row[T, TM, CM, TF], Int)] = List.empty
+    leadingRows:          List[(Row[T, TM, CM, TF], Int)] = List.empty,
+    stickyRowIds:         Set[RowId] = Set.empty
   ) =
     val visibleColumnCount: Int = table.getAllLeafColumns().filter(_.getIsVisible()).length
 
@@ -134,6 +138,7 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
           <.tr(
             TbodyTrClass,
             TbodyTrEvenClass.when(index % 2 =!= 0),
+            TbodyTrStickyClass.when(stickyRowIds.contains(row.id)),
             ^.key := row.id.value
           )(
             row
@@ -330,6 +335,19 @@ trait HTMLTableRenderer[T, TM, CM, TF, RC]:
     )
 
 object HTMLTableRenderer:
+  // Keeps the nearest sticky row above the viewport rendered, so that it can stick to the top.
+  private def stickyRangeExtractor[T, TM, CM, TF](
+    rows:         List[Row[T, TM, CM, TF]],
+    stickyRowIds: Set[RowId]
+  ): js.UndefOr[VirtualRange => SortedSet[Int]] =
+    if stickyRowIds.isEmpty then js.undefined
+    else
+      val stickyIndices: List[Int] =
+        rows.zipWithIndex.collect:
+          case (row, index) if stickyRowIds.contains(row.id) => index
+      (range: VirtualRange) =>
+        range.withOverscan ++ stickyIndices.filter(_ <= range.startIndex).lastOption
+
   /**
    * @tparam T
    *   The type of the row.
@@ -390,23 +408,22 @@ object HTMLTableRenderer:
       for
         ownRef      <- useRefToVdom[HTMLDivElement]
         actualRef    = props.containerRef.getOrElse(ownRef)
+        rows         =
+          props.table.getTopRows() ++ props.table.getCenterRows() ++ props.table.getBottomRows()
         virtualizer <- useVirtualizer:
                          VirtualOptions(
-                           count = props.table.getRowModel().rows.length,
+                           count = rows.length,
                            estimateSize = props.estimateSize,
                            getScrollElement = actualRef.get,
                            overscan = props.overscan,
                            getItemKey = props.getItemKey,
-                           rangeExtractor = props.rangeExtractor,
+                           rangeExtractor = stickyRangeExtractor(rows, props.stickyRowIds),
                            onChange = props.onChange,
                            debug = props.debugVirtualizer
                          )
         _           <- useEffectOnMount: // Allow external access to Virtualizer
                          props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
       yield
-        val rows =
-          props.table.getTopRows() ++ props.table.getCenterRows() ++ props.table.getBottomRows()
-
         val (indexOffset, paddingBefore, paddingAfter) =
           virtualOffsets(virtualizer, props.debugVirtualizer)
 
@@ -431,7 +448,8 @@ object HTMLTableRenderer:
             paddingBefore.some,
             paddingAfter.some,
             props.emptyMessage,
-            leadingItems.map(item => (rows(item.index.toInt), item.index.toInt))
+            leadingItems.map(item => (rows(item.index.toInt), item.index.toInt)),
+            props.stickyRowIds
           )
         )
 
@@ -469,23 +487,22 @@ object HTMLTableRenderer:
       for
         ownRef      <- useRefToVdom[HTMLDivElement]
         actualRef    = props.containerRef.getOrElse(ownRef)
+        rows         =
+          props.table.getTopRows() ++ props.table.getCenterRows() ++ props.table.getBottomRows()
         virtualizer <- useVirtualizer:
                          VirtualOptions(
-                           count = props.table.getRowModel().rows.length,
+                           count = rows.length,
                            estimateSize = props.estimateSize,
                            getScrollElement = actualRef.get,
                            overscan = props.overscan,
                            getItemKey = props.getItemKey,
-                           rangeExtractor = props.rangeExtractor,
+                           rangeExtractor = stickyRangeExtractor(rows, props.stickyRowIds),
                            onChange = props.onChange,
                            debug = props.debugVirtualizer
                          )
         _           <- useEffectOnMount: // Allow external access to Virtualizer if a ref is passed
                          props.virtualizerRef.toOption.map(_.set(virtualizer.some)).getOrEmpty
       yield
-        val rows =
-          props.table.getTopRows() ++ props.table.getCenterRows() ++ props.table.getBottomRows()
-
         // This is artificially added space on top and bottom so that the scroll bar is shown as if there were
         // the right number of elements on either side.
         val (indexOffset, paddingBefore, paddingAfter) =
@@ -528,7 +545,8 @@ object HTMLTableRenderer:
               paddingBefore.some,
               paddingAfter.some,
               props.emptyMessage,
-              leadingItems.map(item => (rows(item.index.toInt), item.index.toInt))
+              leadingItems.map(item => (rows(item.index.toInt), item.index.toInt)),
+              props.stickyRowIds
             )
           )
         )

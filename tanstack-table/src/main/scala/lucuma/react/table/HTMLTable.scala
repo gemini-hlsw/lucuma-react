@@ -8,11 +8,8 @@ import japgolly.scalajs.react.vdom.TagOf
 import japgolly.scalajs.react.vdom.html_<^.*
 import lucuma.react.SizePx
 import lucuma.react.common.*
-import lucuma.react.virtual.VirtualRange
 import lucuma.typed.tanstackVirtualCore as rawVirtual
 import org.scalajs.dom.HTMLElement
-
-import scala.collection.immutable.SortedSet
 
 import scalajs.js
 
@@ -97,7 +94,7 @@ final case class HTMLVirtualizedTable[T, TM, CM, TF, RC](
   // Virtual options
   overscan:         js.UndefOr[Int] = js.undefined,
   getItemKey:       js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined,
-  rangeExtractor:   js.UndefOr[VirtualRange => SortedSet[Int]] = js.undefined,
+  stickyRowIds:     Set[RowId] = Set.empty,
   onChange:         js.UndefOr[HTMLTableVirtualizer => Callback] = js.undefined,
   virtualizerRef:   js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]] = js.undefined,
   debugVirtualizer: js.UndefOr[Boolean] = js.undefined
@@ -145,7 +142,7 @@ final case class HTMLAutoHeightVirtualizedTable[T, TM, CM, TF, RC](
   // Virtual options
   overscan:             js.UndefOr[Int] = js.undefined,
   getItemKey:           js.UndefOr[Int => rawVirtual.mod.Key] = js.undefined,
-  rangeExtractor:       js.UndefOr[VirtualRange => SortedSet[Int]] = js.undefined,
+  stickyRowIds:         Set[RowId] = Set.empty,
   onChange:             js.UndefOr[HTMLTableVirtualizer => Callback] = js.undefined,
   virtualizerRef:       js.UndefOr[NonEmptyRef.Simple[Option[HTMLTableVirtualizer]]] = js.undefined,
   debugVirtualizer:     js.UndefOr[Boolean] = js.undefined
