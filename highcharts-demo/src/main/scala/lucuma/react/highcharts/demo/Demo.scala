@@ -126,13 +126,15 @@ object Demo {
               .setCursor(CursorValue.pointer)
               .setEvents(
                 SeriesEventsOptionsObject()
-                  .setClick((s: Series, _: SeriesClickEventObject) => dom.window.alert(s.name))
+                  .setClick((s: Series, _: SeriesClickEventObject, _: js.UndefOr[Series]) =>
+                    dom.window.alert(s.name)
+                  )
               )
           )
       )
       .setSeries(
         List(
-          SeriesAreasplineOptions((), ())
+          SeriesAreasplineOptions()
             .setName("Observation-1")
             .setData(
               List(
@@ -143,7 +145,7 @@ object Demo {
                 (1584655240000.0, 14.0)
               )
             ),
-          SeriesAreasplineOptions((), ())
+          SeriesAreasplineOptions()
             .setName("Observation-2")
             .setData(
               List(
