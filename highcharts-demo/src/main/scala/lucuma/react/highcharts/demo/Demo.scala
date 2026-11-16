@@ -19,6 +19,7 @@ import lucuma.typed.highcharts.mod.Options
 import lucuma.typed.highcharts.mod.PlotAreasplineOptions
 import lucuma.typed.highcharts.mod.PlotOptions
 import lucuma.typed.highcharts.mod.PlotSeriesOptions
+import lucuma.typed.highcharts.mod.PlotXrangeDataLabelsOptions
 import lucuma.typed.highcharts.mod.PointMarkerOptionsObject
 import lucuma.typed.highcharts.mod.PointOptionsObject
 import lucuma.typed.highcharts.mod.Series
@@ -28,6 +29,7 @@ import lucuma.typed.highcharts.mod.SeriesEventsOptionsObject
 import lucuma.typed.highcharts.mod.SeriesOptionsType
 import lucuma.typed.highcharts.mod.SeriesStatesHoverOptionsObject
 import lucuma.typed.highcharts.mod.SeriesStatesOptionsObject
+import lucuma.typed.highcharts.mod.SeriesXrangeOptions
 import lucuma.typed.highcharts.mod.TitleOptions
 import lucuma.typed.highcharts.mod.TooltipOptions
 import lucuma.typed.highcharts.mod.TooltipShapeValue
@@ -166,16 +168,14 @@ object Demo {
       partialFill.foldLeft(XrangePointOptionsObject().setX(start).setX2(end).setY(row)): (p, a) =>
         p.setPartialFill(XrangePointPartialFillOptionsObject().setAmount(a))
 
-    // lucuma-typed has no SeriesXrangeOptions, so the series is built as a literal.
     val xrangeSeries =
-      js.Dynamic
-        .literal(
-          `type` = "xrange",
-          name = "Project 1",
-          borderColor = "gray",
-          pointWidth = 20,
-          dataLabels = js.Dynamic.literal(enabled = true),
-          data = js.Array(
+      SeriesXrangeOptions((), (), ())
+        .setName("Project 1")
+        .setBorderColor("gray")
+        .setPointWidth(20)
+        .setDataLabels(PlotXrangeDataLabelsOptions().setEnabled(true))
+        .setData(
+          js.Array(
             xrangePoint(js.Date.UTC(2014, 10, 21), js.Date.UTC(2014, 11, 2), 0, Some(0.25)),
             xrangePoint(js.Date.UTC(2014, 11, 2), js.Date.UTC(2014, 11, 5), 1),
             xrangePoint(js.Date.UTC(2014, 11, 8), js.Date.UTC(2014, 11, 9), 2),

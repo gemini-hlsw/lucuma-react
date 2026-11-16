@@ -36,7 +36,7 @@ object Chart:
         extends Module(Callback(lucuma.typed.highcharts.modulesAccessibilityMod.default.^))
     case SeriesLabel
         extends Module(Callback(lucuma.typed.highcharts.modulesSeriesLabelMod.default.^))
-    case XRange extends Module(Callback(XRangeModule))
+    case XRange extends Module(Callback(lucuma.typed.highcharts.modulesXrangeMod.default.^))
 
   type Data =
     Double |
