@@ -316,6 +316,7 @@ lazy val highcharts = project
       case "highcharts/esm/highcharts.js"            => "highcharts"
       case "highcharts/esm/modules/accessibility.js" => "highcharts/modules/accessibility"
       case "highcharts/esm/modules/series-label.js"  => "highcharts/modules/series-label"
+      case "highcharts/esm/modules/xrange.js"        => "highcharts/modules/xrange"
       case other                                     => other
     }
   )

@@ -3,6 +3,7 @@
 
 package lucuma.react.highcharts.demo
 
+import japgolly.scalajs.react.React
 import japgolly.scalajs.react.ReactDOMClient
 import japgolly.scalajs.react.Reusable
 import japgolly.scalajs.react.callback.Callback
@@ -33,6 +34,8 @@ import lucuma.typed.highcharts.mod.TooltipShapeValue
 import lucuma.typed.highcharts.mod.XAxisOptions
 import lucuma.typed.highcharts.mod.XAxisPlotBandsLabelOptions
 import lucuma.typed.highcharts.mod.XAxisPlotBandsOptions
+import lucuma.typed.highcharts.mod.XrangePointOptionsObject
+import lucuma.typed.highcharts.mod.XrangePointPartialFillOptionsObject
 import lucuma.typed.highcharts.mod.YAxisLabelsOptions
 import lucuma.typed.highcharts.mod.YAxisOptions
 import lucuma.typed.highcharts.mod.YAxisTitleOptions
@@ -159,6 +162,41 @@ object Demo {
         ).map(_.asInstanceOf[SeriesOptionsType]).toJSArray
       )
 
+    def xrangePoint(start: Double, end: Double, row: Int, partialFill: Option[Double] = None) =
+      partialFill.foldLeft(XrangePointOptionsObject().setX(start).setX2(end).setY(row)): (p, a) =>
+        p.setPartialFill(XrangePointPartialFillOptionsObject().setAmount(a))
+
+    // lucuma-typed has no SeriesXrangeOptions, so the series is built as a literal.
+    val xrangeSeries =
+      js.Dynamic
+        .literal(
+          `type` = "xrange",
+          name = "Project 1",
+          borderColor = "gray",
+          pointWidth = 20,
+          dataLabels = js.Dynamic.literal(enabled = true),
+          data = js.Array(
+            xrangePoint(js.Date.UTC(2014, 10, 21), js.Date.UTC(2014, 11, 2), 0, Some(0.25)),
+            xrangePoint(js.Date.UTC(2014, 11, 2), js.Date.UTC(2014, 11, 5), 1),
+            xrangePoint(js.Date.UTC(2014, 11, 8), js.Date.UTC(2014, 11, 9), 2),
+            xrangePoint(js.Date.UTC(2014, 11, 9), js.Date.UTC(2014, 11, 19), 1),
+            xrangePoint(js.Date.UTC(2014, 11, 10), js.Date.UTC(2014, 11, 23), 2)
+          )
+        )
+        .asInstanceOf[SeriesOptionsType]
+
+    val xrangeOptions = Options()
+      .setTitle(TitleOptions().setText("X-range"))
+      .setCredits(CreditsOptions().setEnabled(false))
+      .setXAxis(XAxisOptions().setType(AxisTypeValue.datetime))
+      .setYAxis(
+        YAxisOptions()
+          .setTitle(YAxisTitleOptions().setText(""))
+          .setCategoriesVarargs("Prototyping", "Development", "Testing")
+          .setReversed(true)
+      )
+      .setSeries(js.Array(xrangeSeries))
+
     def onCreate(chart: Chart_) =
       Callback.log(chart) >>
         Callback(
@@ -174,9 +212,12 @@ object Demo {
     ReactDOMClient
       .createRoot(container)
       .render:
-        Chart(Reusable.always(options), onCreate = onCreate)
-          .withModules(Chart.Module.SeriesLabel)
-          .toUnmounted
+        React.Fragment(
+          Chart(Reusable.always(options), onCreate = onCreate)
+            .withModules(Chart.Module.SeriesLabel)
+            .toUnmounted,
+          Chart(Reusable.always(xrangeOptions)).withModules(Chart.Module.XRange).toUnmounted
+        )
 
   }
 }
