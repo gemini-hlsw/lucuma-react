@@ -35,7 +35,7 @@ sbt "scalafixAll --check"
 sbt compile
 
 # Run a demo (example: grid-layout) — vite runs from the root, pointed at the module's config
-sbt gridLayoutDemo/fastLinkJS && npx vite -c grid-layout-demo/vite.config.js
+sbt gridLayoutDemo/fastLinkJS && pnpm exec vite -c grid-layout-demo/vite.config.js
 
 # Regenerate a demo's vite config (goes stale on every Scala 3 patch release)
 sbt gridLayoutDemo/viteConfigGenerate
@@ -43,7 +43,7 @@ sbt gridLayoutDemo/viteConfigGenerate
 
 ## Key Versions
 
-- Scala 3.8.4 · scalajs-react 4.0.0 · cats 2.13.0 · lucuma-typed 0.12.0
+- Scala 3.9.0 · scalajs-react 4.1.0 · cats 2.13.0 · lucuma-typed 0.13.x
 
 ## Architecture
 
@@ -91,6 +91,6 @@ stable** and absorbing the change in the raw-props builder, so downstream consum
 ## Conventions
 
 - Single root `package.json` shared by all modules (keeps shared dep versions in sync); add deps
-  with `npm install --save-dev <pkg>`.
+  with `pnpm add -D <pkg>` (the repo uses pnpm; `npm install` fails).
 - License headers (BSD-3-Clause) required on all source files.
 - Spaces, not tabs; no trailing whitespace.

@@ -32,7 +32,7 @@ val catsV            = "2.13.0"
 val disciplineMunitV = "2.0.0"
 val http4sV          = "0.23.38"
 val kittensV         = "3.5.0"
-val lucumaTypedV     = "0.13.0"
+val lucumaTypedV     = "0.14.0"
 val munitScalacheckV = "1.3.1"
 val munitV           = "1.3.6"
 val scalaJsDomV      = "2.8.1"
@@ -313,10 +313,11 @@ lazy val highcharts = project
     ),
     facadeSettings,
     Test / scalaJSImportMap := {
-      case "highcharts/es-modules/masters/highcharts.src.js"            => "highcharts"
-      case "highcharts/es-modules/masters/modules/accessibility.src.js" =>
-        "highcharts/modules/accessibility"
-      case other                                                        => other
+      case "highcharts/esm/highcharts.js"            => "highcharts"
+      case "highcharts/esm/modules/accessibility.js" => "highcharts/modules/accessibility"
+      case "highcharts/esm/modules/series-label.js"  => "highcharts/modules/series-label"
+      case "highcharts/esm/modules/xrange.js"        => "highcharts/modules/xrange"
+      case other                                     => other
     }
   )
 

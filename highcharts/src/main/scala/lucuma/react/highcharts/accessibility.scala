@@ -7,5 +7,5 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
 @js.native
-@JSImport("highcharts/es-modules/masters/modules/accessibility.src.js", JSImport.Default)
+@JSImport("highcharts/esm/modules/accessibility.js", JSImport.Default)
 object enable extends js.Object
