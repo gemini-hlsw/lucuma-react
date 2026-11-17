@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@atlaskit/pragmatic-drag-and-drop':
-        specifier: 1.8.1
-        version: 1.8.1
+        specifier: 4.0.0
+        version: 4.0.0
       '@atlaskit/pragmatic-drag-and-drop-auto-scroll':
         specifier: 2.1.5
         version: 2.1.5
