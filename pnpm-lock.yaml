@@ -51,8 +51,8 @@ importers:
         specifier: 9.3.1
         version: 9.3.1
       '@tanstack/virtual-core':
-        specifier: 3.17.0
-        version: 3.17.0
+        specifier: 3.19.11
+        version: 3.19.11
       '@vitejs/plugin-react':
         specifier: ^6.0.2
         version: 6.0.2(vite@8.0.16(less@4.6.6)(sass@1.101.0))
@@ -641,6 +641,9 @@ packages:
 
   '@tanstack/virtual-core@3.17.0':
     resolution: {integrity: sha512-gOxY/hFkPh/XQYhnThBHzkbkX3Ed+z/iushyz+R+JAr213aXxUDgQoTgTdrDpBSRsjFM73P/KfUyWmaF9WHMkQ==}
+
+  '@tanstack/virtual-core@3.19.11':
+    resolution: {integrity: sha512-/5iHb0RHBvj8Di59FDs4ESNm45jls33aZAi4zccVXZjc/6ZvwQP6nzEYeT6weXjTf9E6/vrp2JhYWRyO+ZP13A==}
 
   '@tybys/wasm-util@0.10.2':
     resolution: {integrity: sha512-RoBvJ2X0wuKlWFIjrwffGw1IqZHKQqzIchKaadZZfnNpsAYp2mM0h36JtPCjNDAHGgYez/15uMBpfGwchhiMgg==}
@@ -2217,6 +2220,8 @@ snapshots:
       '@tanstack/store': 0.11.2
 
   '@tanstack/virtual-core@3.17.0': {}
+
+  '@tanstack/virtual-core@3.19.11': {}
 
   '@tybys/wasm-util@0.10.2':
     dependencies:
