@@ -18,8 +18,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration':
-        specifier: 3.4.5
-        version: 3.4.5(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: 3.5.0
+        version: 3.5.0(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@atlaskit/pragmatic-drag-and-drop-react-drop-indicator':
         specifier: 4.3.0
         version: 4.3.0(react@19.2.7)
@@ -156,8 +156,8 @@ packages:
   '@atlaskit/feature-gate-js-client@8.0.0':
     resolution: {integrity: sha512-K6ib83R3AROC/Jmgpru9ku3S6CUwloO1yoOY915/gAcPnAI2bGcMetUwmZGVXdw+/Ravfy6lxgZQsN2GUHJraQ==}
 
-  '@atlaskit/flag-client@1.1.0':
-    resolution: {integrity: sha512-0DmiFU9Wsc0bHEzMb5NXRU5+kT+fYQxW7Km9xS7THak8MvzKrclZhoqN5Xyo4F6BymqMS/s7eukbaDsiRPH2qg==}
+  '@atlaskit/flag-client@1.2.0':
+    resolution: {integrity: sha512-j5j5kANGnhJW9/XV1mh/j1rCgNh/tD7KRoKIFYNxAbcsrJy85/58iaq0FXvp13fJ/JcgHrwGTitGlL3pWHbMGg==}
 
   '@atlaskit/platform-feature-flags@2.2.2':
     resolution: {integrity: sha512-2vVqXpUH2qW2bAAetiT7eOT5gu3cvyg0RNRknTSASlN7hGD3zJc5lcc28GC7f9ayy2DdteRoG7teiSKrinU1jw==}
@@ -171,8 +171,8 @@ packages:
   '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-autoscroll@3.2.1':
     resolution: {integrity: sha512-18dNiWVT2dhWVypbZ93cHpWfvThtxYZyFQqZLj+iwXa3JMjsu5mBikizqA5HBDrL5zpL+N8yvzcub4GCUcB6Zw==}
 
-  '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration@3.4.5':
-    resolution: {integrity: sha512-yID//BX7RnfPF/QZehLxtNNRQUPTX7wMvqzrt3B/wu/2wMxb3xuHIzMjx91GuR2B3ecfoj3OSk86lUMsHMK2wA==}
+  '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration@3.5.0':
+    resolution: {integrity: sha512-yhamlE2vfcxXi3v4wsDtLPENa/B9d0WWPmuYU/fIY1TdkhRPgbn4r9fSpE9cCAUay2Woe3/ghaM9HG/MdWiveQ==}
     peerDependencies:
       react: ^18.2.0 || ^19.0.0
       react-dom: ^18.2.0 || ^19.0.0
@@ -1727,7 +1727,7 @@ snapshots:
   '@atlaskit/feature-gate-js-client@8.0.0(react@19.2.7)':
     dependencies:
       '@atlaskit/atlassian-context': 2.0.0(react@19.2.7)
-      '@atlaskit/flag-client': 1.1.0
+      '@atlaskit/flag-client': 1.2.0
       '@babel/runtime': 7.29.14
       '@statsig/client-core': 3.30.2
       '@statsig/js-client': 3.30.2
@@ -1735,7 +1735,7 @@ snapshots:
     transitivePeerDependencies:
       - react
 
-  '@atlaskit/flag-client@1.1.0':
+  '@atlaskit/flag-client@1.2.0':
     dependencies:
       '@babel/runtime': 7.29.14
       hash-wasm: 4.13.0
@@ -1763,7 +1763,7 @@ snapshots:
       '@babel/runtime': 7.29.14
       css-box-model: 1.2.1
 
-  '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration@3.4.5(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration@3.5.0(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@atlaskit/pragmatic-drag-and-drop': 4.0.0
       '@atlaskit/pragmatic-drag-and-drop-hitbox': 3.0.0
