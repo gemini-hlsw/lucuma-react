@@ -11,7 +11,7 @@
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@react-hook/resize-observer": "^2.0.2",
     "@tanstack/react-store": "0.11.1",
-    "@tanstack/react-table": "9.1.2",
+    "@tanstack/react-table": "9.3.1",
     "@tanstack/react-virtual": "v3.14.26",
     "@tanstack/store": "0.11.1",
     "@tanstack/table-core": "9.3.1",
