@@ -21,7 +21,7 @@
     "highcharts": "^13.1.1",
     "jsdom": "29.1.1",
     "less": "^4.6.6",
-    "primeicons": "^7.0.0",
+    "primeicons": "^8.0.2",
     "primereact": "^10.9.8",
     "react": "^19.2.7",
     "react-circular-progressbar": "^2.2.0",
