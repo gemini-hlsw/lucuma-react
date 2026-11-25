@@ -99,8 +99,8 @@ importers:
         specifier: 10.1.0
         version: 10.1.0(@types/react@19.2.17)(react@19.2.7)
       react-resizable:
-        specifier: ^4.0.1
-        version: 4.0.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^4.0.2
+        version: 4.0.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react-virtuoso:
         specifier: ^4.18.23
         version: 4.18.23(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -1415,8 +1415,8 @@ packages:
       react: '>= 16.3'
       react-dom: '>= 16.3'
 
-  react-resizable@4.0.1:
-    resolution: {integrity: sha512-FR25Rcfxpi1iKiC7taIrqc1Tz6VnslqM94/IrA1LxoM5C3ap2EqaKLnCit/aKrcn3H4wfzO0nFBadFBc+SzEWA==}
+  react-resizable@4.0.2:
+    resolution: {integrity: sha512-jZD9ghYRmyJCw0+awYctSZ+9pmX1WXQvzDrTovELYc8obC/BShTI2r4c14LIVzeQ+vJZNb0yKM7bG2eqv7Vfyg==}
     peerDependencies:
       react: '>= 16.3'
       react-dom: '>= 16.3'
@@ -3231,7 +3231,7 @@ snapshots:
       react-dom: 19.2.7(react@19.2.7)
       react-draggable: 4.7.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
 
-  react-resizable@4.0.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
+  react-resizable@4.0.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
     dependencies:
       prop-types: 15.8.1
       react: 19.2.7
