@@ -27,7 +27,7 @@
     "react-circular-progressbar": "^2.2.0",
     "react-datepicker": "^9.1.0",
     "react-dom": "^19.2.7",
-    "react-draggable": "^4.5.0",
+    "react-draggable": "^4.7.2",
     "react-grid-layout": "^2.2.3",
     "react-hotkeys-hook": "5.4.0",
     "react-markdown": "10.1.0",
