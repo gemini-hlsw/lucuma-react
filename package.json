@@ -16,7 +16,7 @@
     "@tanstack/store": "0.11.3",
     "@tanstack/table-core": "9.3.1",
     "@tanstack/virtual-core": "3.19.11",
-    "@vitejs/plugin-react": "^6.0.2",
+    "@vitejs/plugin-react": "^6.3.0",
     "fomantic-ui-less": "^2.9.4",
     "highcharts": "^13.1.1",
     "jsdom": "29.1.1",
